@@ -313,6 +313,20 @@ previous language. (You can change these names later.)}"
 "yesno_language_0030","In order to change the game's display language,
 your settings will be saved and the game will relaunch.
 Do you want to proceed?"
+"yesno_language_0040","In order to change the game's display language,
+you will be returned to the title screen.
+Do you want to proceed?
+
+{fc9The names of the protagonist and Digimon will remain in the
+previous language. Additionally, since the font data will be
+changed, the names of the protagonist and Digimon may
+not display correctly. (You can change these names later.)}"
+"yesno_language_0050","In order to change the game's display language,
+you will be returned to the title screen.
+Do you want to proceed?
+
+{fc9The names of the protagonist and Digimon will remain in the
+previous language. (You can change these names later.)}"
 "yesno_giveup_0010","Give up on this battle?"
 "yesno_taransfer_0010","Demo version save data found.
 Import this save data and start a new game?

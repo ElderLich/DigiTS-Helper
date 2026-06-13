@@ -1,0 +1,83 @@
+string2 0,string 1,string 2,string 3
+"s070_056_010","char_MINERVAMON","Hmm... HMM...",""
+"s070_056_020","char_PLAYER_M","{next}What is it this time?",""
+"s070_056_021","char_PLAYER_M","{next}Do you often watch movies?",""
+"s070_056_022","char_PLAYER_M","{end}I'll leave you alone. See you.",""
+"s070_056_030","char_MINERVAMON","Ah, I've been waiting for you. There's something else
+bothering me about love.",""
+"s070_056_040","char_MINERVAMON","I've got to say, movies are amazing, aren't they?
+Something's still bothering me, though!",""
+"s070_056_050","char_MINERVAMON","Hmm...",""
+"s070_056_060","char_MINERVAMON","After all that I've learned, I feel human love's rather
+insignificant at its core.",""
+"s070_056_070","char_MINERVAMON","There's no need to let it dictate your actions. That's my
+conclusion, anyway.",""
+"s070_056_080","char_MINERVAMON","However, there's one topic in need of further examination...
+love between Digimon!",""
+"s070_056_090","char_PLAYER_M","{next}Good point.",""
+"s070_056_091","char_PLAYER_M","{next}Is there no end to this?",""
+"s070_056_092","char_PLAYER_M","{next}Y-You don't say...?",""
+"s070_056_100","char_MINERVAMON","Isn't it? I doubt anyone but me could've come up with the
+subject.",""
+"s070_056_110","char_MINERVAMON","Don't say that. After all, I'm a Digimon, right? Surely, we
+must consider them, too?",""
+"s070_056_120","char_MINERVAMON","Quit trying to get out of this. You've come this far, so you
+can't turn back now.",""
+"s070_056_130","char_MINERVAMON","At any rate, I need to perform more research on love between
+Digimon.",""
+"s070_056_140","char_MINERVAMON","Sooooo... If you know of any worthy Digimon out there, be
+sure to let me know!",""
+"s070_056_150","char_MINERVAMON","I'm curious to see if meeting them will set my heart
+aflutter.",""
+"s070_056_160","char_PLAYER_M","{next}What do you consider ""worthy,"" Minervamon?",""
+"s070_056_161","char_PLAYER_M","{next}And what if they do set your heart aflutter?",""
+"s070_056_162","char_PLAYER_M","{next}There's a good human right in front of you...",""
+"s070_056_170","char_MINERVAMON","Good point... I don't really care about things like facial
+structure or body size.",""
+"s070_056_180","char_MINERVAMON","Well, we know that's definitely not going to happen! I
+merely wish to prove my hypothesis.",""
+"s070_056_190","char_MINERVAMON","Enough with the lame jokes, already! Now, get out there and
+find me someone.",""
+"s070_056_200","char_MINERVAMON","Wait... I really liked that motorcycle in the movie the
+other day! It was super cool!",""
+"s070_056_210","char_MINERVAMON","Try to find a Digimon as cool as that! First, we need some
+info. Try that kid over there.",""
+"s070_056_220","char_MINERVAMON","The kid's playing a card game, and, as such, probably knows
+a lot about Digimon!",""
+"s070_056_230","char_TANEMON","Hey! Look at this card I just pulled! It's a Beelzemon!",""
+"s070_056_240","char_TANEMON","Ah, yes. It's the only Digimon to ride the human vehicle
+called a motorcycle. Way cool!",""
+"s070_056_250","char_TANEMON","Oh, look! It's the real, live Beelzemon, standing right here
+in front of me...!",""
+"s070_056_260","char_TANEMON","I've got your card, Beelzemon! I'm your biggest fan!",""
+"s070_056_270","char_TANEMON","If I could just be seen sitting on the bike, I couldn't
+imagine anything better...",""
+"s070_056_280","char_TANEMON","Wow! It's a motorcycle! I don't think I've ever seen
+anything so cool in all my life!",""
+"s070_056_290","char_TANEMON","I bet someone like that would be the most popular individual
+that ever lived.",""
+"s070_056_300","char_MINERVAMON","Have you brought me a ""worthy"" Digimon?
+Hmm... Not yet, from the looks of it.",""
+"s070_056_310","char_MINERVAMON","Well, I'll be waiting here until you do.",""
+"s070_056_320","char_MINERVAMON","Ah, you're back. Well? Did you find a worthy Digimon for me?",""
+"s070_056_330","char_BEELZEBUMON","Hm? What's this?",""
+"s070_056_331","char_BEELZEMON_BM","Hm? What's this?",""
+"s070_056_340","char_MINERVAMON","...",""
+"s070_056_350","char_MINERVAMON","...!",""
+"s070_056_360","char_BEELZEBUMON","What's the matter with you? You hit your head or something?",""
+"s070_056_361","char_BEELZEMON_BM","What's the matter with you? You hit your
+head or something?",""
+"s070_056_370","char_MINERVAMON","I... feel strange, somehow. I guess I'll go try to clear my
+head in the sewers.",""
+"s070_056_380","char_MINERVAMON","Ah, there you are. Um... Something came over me back
+there...",""
+"s070_056_390","char_MINERVAMON","I feel warmth in my chest, yet tightness and pain at the
+same time. What is this feeling?",""
+"s070_056_400","char_MINERVAMON","I'll stay here until I can figure out what this is. Here.
+This is for you. Thanks again.",""
+"s070_056_410","char_TANEMON","I love playing card games! Next time, I'll show you the very
+best card in my collection!",""
+"s070_056_420","char_PLAYER_M","Let's card battle.",""
+"s070_056_421","char_PLAYER_M","{end}I'm too busy right now.",""
+"s070_056_430","char_TANEMON","Darn it! I lost! My poor Beelzemon...!",""
+"s070_056_440","char_TANEMON","I won! I knew Beelzemon was the strongest.",""

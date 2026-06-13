@@ -1,0 +1,115 @@
+string2 0,string 1,string 2,string 3
+"s200_150_010","char_WANYAMON","I heard the Titans were gone, so I came to visit from
+Central Town.",""
+"s200_150_020","char_WANYAMON","Good thing the Titans aren't here, but neither is anyone
+else. The village is empty.",""
+"s200_150_030","char_WANYAMON","It's lonely all by myself... Let's all put on swimsuits and
+go swimming in the ocean!",""
+"s200_150_040","char_WANYAMON","Hey, you're wearing a swimsuit! Are you gonna go swimming?
+Are you? Are you?!",""
+"s200_150_050","char_WANYAMON","Hey, you're wearing a swimsuit! But some of you aren't...",""
+"s200_150_060","char_WANYAMON","It's no fun being left out. I think everyone should wear a
+swimsuit!",""
+"s200_150_070","char_PLAYER_M","{next}Yes, we are.",""
+"s200_150_071","char_PLAYER_M","No, we're not.",""
+"s200_150_072","char_PLAYER_M","No, this is just what I usually wear.",""
+"s200_150_080","char_WANYAMON","I knew it! You can't fool me!",""
+"s200_150_090","char_WANYAMON","Even though you're wearing a swimsuit...? That's kinda
+weird.",""
+"s200_150_100","char_WANYAMON","Well, you should wear proper clothes sometimes, too. You
+don't wanna catch a cold!",""
+"s200_150_110","char_WANYAMON","...Can I join you? I'm lonely all by myself, so I wanna tag
+along with you to the ocean!",""
+"s200_150_120","char_PLAYER_M","{next}Sure.",""
+"s200_150_121","char_PLAYER_M","{end}Sorry.",""
+"s200_150_130","char_WANYAMON","Yay! Thank you so much!",""
+"s200_150_140","char_WANYAMON","Aww... Darn...",""
+"s200_150_150","char_WANYAMON","Let's go, then!",""
+"s200_150_160","char_WANYAMON","Whoa... The ocean's so big! And really blue!",""
+"s200_150_170","char_AEGIOMON","Hehe. I can hear the excitement!",""
+"s200_150_180","char_INORI","I bet you're pretty excited yourself, Aegiomon!",""
+"s200_150_190","char_PLAYER_M","{next}I'm excited, too.",""
+"s200_150_191","char_PLAYER_M","{next}We should do some warmup exercises before swimming.",""
+"s200_150_192","char_PLAYER_M","{next}I see something sinister.",""
+"s200_150_200","char_INORI","Hee hee. To be honest, so am I!",""
+"s200_150_210","char_INORI","You're right. There's no one to help us here if someone gets
+a leg cramp or something.",""
+"s200_150_220","char_INORI","Hm? What are you talking about? I don't see anything.",""
+"s200_150_230","char_WANYAMON","Hey, what's that triangle thing over there?",""
+"s200_150_240","char_AEGIOMON","You're right. There's something over there...",""
+"s200_150_250","char_INORI","Oh, my gosh! It's coming this way!",""
+"s200_150_260","char_PLAYER_M","{next}Let's get closer.",""
+"s200_150_261","char_PLAYER_M","{end}Let's stay back and see what happens.",""
+"s200_150_270","char_INORI","But i-if anything happens, you have to protect me, okay?",""
+"s200_150_280","char_INORI","I agree. We shouldn't get any closer.",""
+"s200_150_290","char_SEADRAMON","Just when Titans finally go... now YOU! This MY
+territory...!",""
+"s200_150_300","char_SEADRAMON","Darn...! You be sorry...! Me telling my boss!",""
+"s200_150_310","char_WANYAMON","Ha! Now you know how strong I am!",""
+"s200_150_320","char_AEGIOMON","Hey... Do you see a bunch of things gathering over there...?",""
+"s200_150_330","char_MEGASEADRAMON","Me hear you not treat our little friend nice!",""
+"s200_150_340","char_WARUSEADRAMON","You must work for the Titans! Well, we won't be so easily
+defeated this time!",""
+"s200_150_350","char_INORI","Wait! This is a misunderstanding...! Oh, no. They won't
+listen to us.",""
+"s200_150_360","char_MEGASEADRAMON","Darn! This not over yet!",""
+"s200_150_370","char_WARUSEADRAMON","Let's tell the boss we were attacked!",""
+"s200_150_380","char_METALSEADRAMON","No need. Seadramon already reported to me that Titans
+invaded again.",""
+"s200_150_390","char_PLAYER_M","{next}All we wanna do is have some fun in the ocean...",""
+"s200_150_391","char_PLAYER_M","{next}Do we look like Titans?",""
+"s200_150_392","char_PLAYER_M","{next}Huh?! Titans?! Where?!",""
+"s200_150_400","char_METALSEADRAMON","You mean have some fun raiding our territory, right?!",""
+"s200_150_410","char_METALSEADRAMON","I have no idea. So we have to eliminate anyone suspicious.",""
+"s200_150_420","char_METALSEADRAMON","Stop looking around. I know you're Titans!",""
+"s200_150_430","char_METALSEADRAMON","Now you're going to get some payback for showing our little
+friend a good time!",""
+"s200_150_440","char_METALSEADRAMON","Damn. We lost... This ocean is yours. Do what you want with
+it.",""
+"s200_150_450","char_AEGIOMON","We don't want it. And we're not Titans, either.",""
+"s200_150_460","char_METALSEADRAMON","...What?",""
+"s200_150_470","char_PLAYER_M","{next}We actually drove the Titans away.",""
+"s200_150_471","char_PLAYER_M","{next}Can we just have a swim real quick?",""
+"s200_150_472","char_PLAYER_M","{next}Do what we want with it? Even, say, boiling it?",""
+"s200_150_480","char_METALSEADRAMON","So you're the ones who got rid of that Sharkmon...?!",""
+"s200_150_490","char_METALSEADRAMON","...I guess it's true you're really not here to try and rule
+the area...",""
+"s200_150_500","char_METALSEADRAMON","I did say do what you want, but why boil it?!
+Honestly, I don't really sense any ill will in you.",""
+"s200_150_510","char_METALSEADRAMON","Well, we hope you forgive us for our mistake. I'll tell the
+others. Have fun in the ocean.",""
+"s200_150_520","char_WANYAMON","You guys are so strong! I'm amazed.",""
+"s200_150_530","char_WANYAMON","Okay, let's play! Prepare to be splashed!",""
+"s200_150_535","char_INORI","Eek! A surprise attack!",""
+"s200_150_540","char_INORI","Here comes a toss! Yah!",""
+"s200_150_550","char_AEGIOMON","Tah!",""
+"s200_150_560","char_WANYAMON","Argh, I missed!",""
+"s200_150_570","char_WANYAMON","You're doing good. Straight ahead!",""
+"s200_150_580","char_AEGIOMON","A little to the left! Now! Attack!",""
+"s200_150_590","char_PLAYER_M","{next}[Attack to the left.]",""
+"s200_150_591","char_PLAYER_M","{next}[Attack straight ahead.]",""
+"s200_150_592","char_PLAYER_M","{next}[Attack to the right.]",""
+"s200_150_600","char_INORI","Wow! You did it! Great job!",""
+"s200_150_610","char_INORI","Aww. It was a little more to the left!",""
+"s200_150_620","char_INORI","Whoa! That was a close one. It was coming this way!",""
+"s200_150_630","char_INORI","It's more wobbly than I thought... I have to hold onto it
+more firmly.",""
+"s200_150_640","char_WANYAMON","Here it comes! Get ready for the Big Wave!",""
+"s200_150_650","char_AEGIOMON","Yay! Hahaha!",""
+"s200_150_660","char_PLAYER_M","{next}I got water in my mouth.",""
+"s200_150_661","char_PLAYER_M","{next}I got water in my ears.",""
+"s200_150_662","char_PLAYER_M","{next}I lost my swimwear.",""
+"s200_150_670","char_INORI","Hee hee. I see that seawater in this world is just as salty
+as in our own!",""
+"s200_150_680","char_INORI","Are you okay? Just tilt your head to the side and tap your
+head.",""
+"s200_150_690","char_INORI","You what?! O-Oh, look! It's floating over there!",""
+"s200_150_700","char_INORI","It seems like you had a good time! Okay, let's head back to
+the station now!",""
+"s200_150_710","char_WANYAMON","That was super fun! Thanks!",""
+"s200_150_720","char_WANYAMON","Here... I want you to have this.",""
+"s200_150_730","char_WANYAMON","See you later!",""
+"s200_150_740","char_WANYAMON","That swimsuit...! I remember the time we all went down to
+the ocean.",""
+"s200_150_750","char_WANYAMON","That was so much fun!",""
+"s200_150_760","char_WANYAMON","It's been a while. We had fun that time, didn't we?",""

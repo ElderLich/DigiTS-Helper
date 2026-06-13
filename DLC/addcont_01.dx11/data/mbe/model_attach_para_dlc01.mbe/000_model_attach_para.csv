@@ -1,0 +1,5 @@
+string2 0,string2 1,empty 2,string2 3,string2 4,empty 5,empty 6,string2 7,float 8,float 9,float 10,float 11,float 12,float 13,float 14,bool 15
+"npc004a_2","npc004a",,"2","ATCdigivice01",,,"l_props",0,0,0,0,0,0,1,true
+"npc005a_1","npc005a",,"1","ATCdigivice01",,,"r_props",0,0,0,0,0,0,1,true
+"npc005a_2","npc005a",,"2","ATCshield01",,,"l_props",0,0,0,0,0,0,1,true
+"npc008a_1","npc008a",,"1","ATCdigivice01",,,"r_props",0,0,0,0,0,0,1,true

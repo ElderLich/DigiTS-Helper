@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "1","Unlocks Valor-based bonds with your Digimon, allowing you to
 enhance Brave, Zealous, Daring, and Reckless Digimon."
 "2","Boosts the SPD of Brave, Zealous, Daring, and Reckless Digimon by
@@ -40,8 +40,8 @@ Digivolution target's Base Personality match."
 Reckless battle and reserve Digimon by {d0}% for each Agent Rank."
 "20","Boosts the DEF of Brave, Zealous, Daring, and Reckless Digimon by
 {d3}%."
-"21","Zealous Digimon recover HP by {d0}% when
-taking damage while Guarding."
+"21","Zealous Digimon recover HP by {d0}% when taking damage while
+Guarding."
 "22","Boosts the DEF of Brave, Zealous, Daring, and Reckless Digimon by
 {d3}%."
 "23","Boosts the HP of Brave, Zealous, Daring, and Reckless Digimon by

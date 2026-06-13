@@ -1,0 +1,110 @@
+string2 0,string 1,string 2,string 3
+"s020_019_010","char_JUMBOGAMEMON","Oh! You remember me? Me used to be Kamemon.
+We went Shellmon house together.",""
+"s020_019_020","char_JUMBOGAMEMON","Me make big find! But now stuck here...",""
+"s020_019_030","char_JUMBOGAMEMON","This, Titan trap! Them up to no good. Them stay here long
+time.",""
+"s020_019_040","char_PLAYER_M","{next}How can I get you out?",""
+"s020_019_041","char_PLAYER_M","{next}What's this ""big find""?",""
+"s020_019_042","char_PLAYER_M","{next}So, how've you been?",""
+"s020_019_050","char_JUMBOGAMEMON","Me think hard, look all over cell, but no way out.",""
+"s020_019_060","char_JUMBOGAMEMON","No can show. Stuck in here. But me find big vein.",""
+"s020_019_070","char_JUMBOGAMEMON","What you think...?! Wait. Sorry. Long time, no see. But me
+not good.",""
+"s020_019_080","char_JUMBOGAMEMON","Me want go free, but cell too strong. No can break.",""
+"s020_019_090","char_JUMBOGAMEMON","This cell, very hard rock. Same as rock nearby. Big hits
+can't break.",""
+"s020_019_100","char_JUMBOGAMEMON","Even strong arm can't break. Only hope is...",""
+"s020_019_110","char_PLAYER_M","{next}The king of the sea?",""
+"s020_019_111","char_PLAYER_M","{next}To unlock the door?",""
+"s020_019_112","char_PLAYER_M","{next}Hang on. Let me give it a whack!",""
+"s020_019_120","char_JUMBOGAMEMON","Yes... maybe. King of sea very strong. Maybe king can break.",""
+"s020_019_130","char_JUMBOGAMEMON","Me find keyhole, but key not here. And keyhole filled in. No
+good.",""
+"s020_019_140","char_JUMBOGAMEMON","S-Stop! You just get hurt! Hand break.",""
+"s020_019_150","char_JUMBOGAMEMON","Chrondigizoit ore vein, not far. Maybe before, this cell
+keep ore safe.",""
+"s020_019_160","char_JUMBOGAMEMON","King of sea can maybe break cell. But king no come for me.",""
+"s020_019_170","char_JUMBOGAMEMON","Me talk before, but nobody listen! No use.",""
+"s020_019_180","char_PLAYER_M","{next}I'll bring the king here.",""
+"s020_019_181","char_PLAYER_M","{next}What happened before?",""
+"s020_019_182","char_PLAYER_M","{end}I'll think how to save you and come back.",""
+"s020_019_190","char_JUMBOGAMEMON","King no come. King not care. Just like before.",""
+"s020_019_200","char_JUMBOGAMEMON","Me tell everybody, water bad. Me want to help! But no good.",""
+"s020_019_210","char_JUMBOGAMEMON","Thinking no use... But me thank you!",""
+"s020_019_220","char_JUMBOGAMEMON","You think how to help? Me no believe... Still, me hope!",""
+"s020_019_230","char_PLAYER_M","{next}I got this.",""
+"s020_019_231","char_PLAYER_M","{end}Not yet...",""
+"s020_019_240","char_JUMBOGAMEMON","Me trust in you! You not like others. You not like new king
+of sea.",""
+"s020_019_250","char_JUMBOGAMEMON","See? This problem tough. But if you think of way, you tell
+me!",""
+"s020_019_260","char_JUMBOGAMEMON","Me tell them over and over. But nobody listen.",""
+"s020_019_270","char_JUMBOGAMEMON","Nobody believe me. So new king of sea no help.",""
+"s020_019_280","char_JUMBOGAMEMON","You still want to meet new king of sea? It no good. But
+trying not bad.",""
+"s020_019_290","char_NEPTUNEMON","What is it? You seem upset. ...What? Someone is trapped in
+an impact-resistant cell?",""
+"s020_019_300","char_NEPTUNEMON","I had no idea such a thing even existed. You remember where
+it is, right? Show me the way!",""
+"s020_019_310","char_NEPTUNEMON","I shall crack open that cell as if it were dead coral! Let
+us set out at once!",""
+"s020_019_320","char_NEPTUNEMON","Well? Are you ready to rescue that trapped Digimon? I need
+you to show me the way.",""
+"s020_019_330","char_PLAYER_M","{next}Let's go.",""
+"s020_019_331","char_PLAYER_M","{end}No, not yet.",""
+"s020_019_340","char_NEPTUNEMON","Then let us be off!",""
+"s020_019_350","char_NEPTUNEMON","I see... Then I suppose the matter must wait. But, please,
+come back as quickly as you can!",""
+"s020_019_360","char_NEPTUNEMON","Ah, there you are. Come. Let us set out at once.",""
+"s020_019_370","char_PLAYER_M","{next}All right.",""
+"s020_019_371","char_PLAYER_M","{end}I need a little more time to prepare.",""
+"s020_019_380","char_NEPTUNEMON","Please, take me to where JumboGamemon has been trapped.",""
+"s020_019_390","char_NEPTUNEMON","Very well, then. I shall wait for you here. Let me know as
+soon as you are prepared.",""
+"s020_019_400","","Suspend the rescue of JumboGamemon and leave the area?",""
+"s020_019_410","char_PLAYER_M","Suspend the rescue.",""
+"s020_019_411","char_PLAYER_M","{end}Continue with the rescue.",""
+"s020_019_420","char_NEPTUNEMON","What? Urgent business calls you away? Very well. See me at
+my throne when you are done.",""
+"s020_019_430","char_NEPTUNEMON","We had best proceed with all haste.",""
+"s020_019_440","char_JUMBOGAMEMON","You back?! And with you... No! You really bring...?",""
+"s020_019_450","char_NEPTUNEMON","Please accept my apologies for not coming sooner. You must
+have been in great distress.",""
+"s020_019_460","char_JUMBOGAMEMON","New... king of sea?",""
+"s020_019_470","char_NEPTUNEMON","Hmm... This cell is sturdy indeed. Yet even these walls are
+no match for my strength.",""
+"s020_019_480","char_NEPTUNEMON","Back away, now... Yaaah!",""
+"s020_019_490","char_JUMBOGAMEMON","Whoa! Me... Me not believe it! Just one blow...!",""
+"s020_019_500","char_NEPTUNEMON","Excellent. That went just as I hoped. JumboGamemon, are you
+unhurt?",""
+"s020_019_510","char_JUMBOGAMEMON","JumboGamemon... just fine.",""
+"s020_019_520","char_NEPTUNEMON","So, there is a vein of Chrondigizoit ore here! And you
+found it, did you? Well done!",""
+"s020_019_530","char_NEPTUNEMON","But you must be exhausted. Please, come with me. I shall
+make up for all the worry—",""
+"s020_019_540","char_JUMBOGAMEMON","M-Me not go with you!",""
+"s020_019_550","char_JUMBOGAMEMON","Me thank you for breaking cell. But me still not trust you!",""
+"s020_019_560","char_NEPTUNEMON","So... you feel betrayed. That, too, is my fault. If only I
+knew what happened sooner.",""
+"s020_019_570","char_NEPTUNEMON","I am sorry.",""
+"s020_019_580","char_JUMBOGAMEMON","...",""
+"s020_019_590","char_NEPTUNEMON","I know from experience how easy it is to lose faith in
+others when you have been abandoned.",""
+"s020_019_600","char_NEPTUNEMON","So, I promise you, upon the sea, I will never let you go
+through anything like that again.",""
+"s020_019_610","char_JUMBOGAMEMON","You... promise?",""
+"s020_019_620","char_NEPTUNEMON","Yes, and I invite you to come live in the Abyss Sanctuary. I
+would welcome you there.",""
+"s020_019_630","char_JUMBOGAMEMON","Well... if you invite me... maybe me try it out.",""
+"s020_019_640","char_NEPTUNEMON","Now, JumboGamemon's rescue and the discovery of a 
+Chrondigizoit vein are thanks to you.",""
+"s020_019_650","char_NEPTUNEMON","That means I can repair my armor whenever I wish, though it
+does not get damaged often.",""
+"s020_019_660","char_NEPTUNEMON","In any case, please accept this token of my appreciation.
+Oh, and come see me any time.",""
+"s020_019_670","char_JUMBOGAMEMON","Hi! You doing well? Me living here now.",""
+"s020_019_680","char_JUMBOGAMEMON","Me still not sure of new king of sea, but seem nice.",""
+"s020_019_690","char_JUMBOGAMEMON","N-Not that me done testing yet!",""
+"s020_019_700","char_NEPTUNEMON","Where are you going? I need you to show me where that
+Digimon is trapped in a cell!",""

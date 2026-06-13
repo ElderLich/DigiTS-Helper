@@ -1,0 +1,71 @@
+string2 0,string 1,string 2,string 3
+"d150_010_010","char_AEGIOMON","There! It's Parallelmon!","d150_010_010"
+"d150_010_020","char_PARALLELMON","Why do you try to stop me?","d150_010_020"
+"d150_010_030","char_PARALLELMON","Resistance is futile.","d150_010_030"
+"d150_010_040","char_PARALLELMON","I can see the future.
+None may triumph over fate.","d150_010_040"
+"d150_010_050","char_AEGIOMON","If they can see the future, does that mean they
+already know the results of this battle...?","d150_010_050"
+"d150_010_060","char_AEGIOMON","If so, then they'll never choose to fight a losing battle, right?","d150_010_060"
+"d150_010_070","char_OMEGAMON_ALTER-S","Ah, I understand now. If we were somehow able to
+defeat this being that can see the future...","d150_010_070"
+"d150_010_080","char_OMEGAMON_ALTER-B","...Then that would be incontrovertible proof
+that the future is not set in stone!","d150_010_080"
+"d150_010_090","char_AEGIOMON","Let's do this!
+We're all going back—to our own worlds!","d150_010_090"
+"d150_020_010","char_PARALLELMON","You shall pay dearly for this...","d150_020_010"
+"d150_020_020","char_PARALLELMON","I exist across countless worlds...
+I am infinite...","d150_020_020"
+"d150_020_030","char_AEGIOMON","We did it!","d150_020_030"
+"d150_020_040","char_INORI","Whoa!","d150_020_040"
+"d150_020_050","char_MIREI","This Akashic Backdoor is becoming unstable,
+now that its keeper has been defeated.","d150_020_050"
+"d150_020_060","char_MIREI","If you don't hurry and get out of there, you might end up
+disappearing into some far-flung corner of space-time.","d150_020_060"
+"d150_020_070","char_OMEGAMON_ALTER-S","What became of the bubbles?","d150_020_070"
+"d150_020_080","char_OMEGAMON_ALTER-B","We must hurry and rescue our partners!","d150_020_080"
+"d150_020_090","char_AEGIOMON","Let's hurry back!","d150_020_090"
+"d150_030_010","char_OMEGAMON_ALTER-S","I can still hear their voices...
+They're all right!","d150_030_010"
+"d150_030_020","char_OMEGAMON_ALTER-B","They tell us to meet them in our original world!","d150_030_020"
+"d150_030_030","char_OMEGAMON_ALTER-S","It seems that we're next.","d150_030_030"
+"d150_030_040","char_OMEGAMON_ALTER-B","Thank you. You have our gratitude.","d150_030_040"
+"d150_030_050","char_INORI","No, we should be the ones thanking you!","d150_030_050"
+"d150_030_060","char_AEGIOMON","Without you, we never would've been able to defeat Parallelmon.","d150_030_060"
+"d150_030_070","char_OMEGAMON_ALTER-S","We will never forget you!","d150_030_070"
+"d150_030_080","char_OMEGAMON_ALTER-B","One day, we will make sure to repay the favor!","d150_030_080"
+"d150_030_090","char_AEGIOMON","They're gone...","d150_030_090"
+"d150_030_100","char_AEGIOMON","Huh...?","d150_030_100"
+"d150_030_110","char_AEGIOMON","I guess it's our turn next.","d150_030_110"
+"d150_030_120","char_INORI","Wait... {player} isn't glowing.","d150_030_120"
+"d150_030_130","char_AEGIOMON","Does that mean we're from different worlds...?","d150_030_130"
+"d150_030_140","char_AEGIOMON","I wonder if the {player} in our world knows what happened here...","d150_030_140"
+"d150_030_150","char_INORI","Let's make sure to tell our {player} that this {player}
+from another world is also an amazing person.","d150_030_150"
+"d150_030_160","char_INORI","You should tell the versions of us in your world, too.
+Tell them just how great the three of us were together!","d150_030_160"
+"d150_030_170","char_AEGIOMON","I'm not sure about all that, but, in any case...
+See you later, {player} from another world!","d150_030_170"
+"d150_040_010","char_KUREMIKYOKO","It looks like this is goodbye.
+Thanks again for all your help.","d150_040_010"
+"d150_040_020","char_KUREMIKYOKO","The future we're returning to may be a bleak one,
+but I refuse to stop trying to make it better.","d150_040_020"
+"d150_040_030","char_KUREMIKYOKO","I learned that... by watching my dad here.","d150_040_030"
+"d150_040_040","char_KUREMIKYOKO","I wish you luck as well.","d150_040_040"
+"d150_040_050","char_KUREMIKYOKO","And should you ever run into your world's version of me,
+please... tell her not to fight with her father.","d150_040_050"
+"d150_040_060","char_KUREMIKYOKO","If you can, of course.
+Meanwhile, I'll be praying for peace in your world.","d150_040_060"
+"d150_040_070","char_KUREMIKYOKO","Destiny can be changed.
+I'm confident you're the one who can bring it about.","d150_040_070"
+"d150_040_080","char_KUREMIKYOKO","I'm leaving the future to you.","d150_040_080"
+"d150_050_010","char_MIREI","That Akashic Backdoor has been cut off
+from the rest of space-time.",""
+"d150_050_020","char_MIREI","It should no longer function as a pathway, meaning
+the threat it posed to the laws of reality has passed.",""
+"d150_050_030","char_MIREI","However, Parallelmon can travel across space-time.",""
+"d150_050_040","char_MIREI","That means it's possible that a Parallelmon born in
+another timeline could start causing trouble again.",""
+"d150_050_050","char_MIREI","Until then, you'd better rest up. You are sure to
+have your work cut out for you again at that point.",""
+"d150_050_060","char_MIREI","For now, though... well done.",""

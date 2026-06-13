@@ -1,0 +1,14 @@
+char_key,empty_001,empty_002,chr_id,numeric_id,empty_005,gender_flag,flag_007,motion_ref,flag_009,model_ref,flag_011,empty_012,flag_013
+"char_OMEGAMON-X",,,"chr357","1357",,0,0,"mmb002",0,"mpc357",0,"",0
+"char_OMEGAMON-X_BIG",,,"chr854","1357",,0,0,"mmb002",0,"mpc357",0,"",0
+"char_DUKEMON_X",,,"chr358","1358",,0,0,"ymb007",0,"mpc358",0,"",0
+"char_DUKEMON_X_BIG",,,"chr855","1358",,0,0,"ymb007",0,"mpc358",0,"",0
+"char_ULFORCEVDRAMON_X",,,"chr418","1418",,0,0,"yma003",0,"mpc418",0,"",0
+"char_ULFORCEVDRAMON_X_BIG",,,"chr856","1418",,0,0,"yma003",0,"mpc418",0,"",0
+"char_MAGNAMON_X",,,"chr432","1432",,0,0,"yma015",0,"mpc432",0,"",0
+"char_MAGNAMON_X_BIG",,,"chr857","1432",,0,0,"yma015",0,"mpc432",0,"",0
+"char_JESMON_X",,,"chr468","1468",,0,0,"yma007",0,"mpc468",0,"",0
+"char_JESMON_X_BIG",,,"chr859","1468",,0,0,"yma007",0,"mpc468",0,"",0
+"char_SIMMONS_02",,,"npc404a","3004",,1,0,"",0,"npc004",0,"",0
+"char_DORUMON_02",,,"chr112","1112",,0,0,"",0,"mpc112",0,"",0
+"char_ALPHAMON_02",,,"chr416","1416",,0,0,"mmb001",0,"mpc416",0,"",0

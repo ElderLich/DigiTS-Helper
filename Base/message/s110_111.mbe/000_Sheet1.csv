@@ -1,0 +1,105 @@
+string2 0,string 1,string 2,string 3
+"s110_111_010","char_GANKOOMON","Bored! I'm sooo bored!",""
+"s110_111_020","char_PLAYER_M","{next}You look really bored.",""
+"s110_111_021","char_PLAYER_M","{next}Why are you so bored?",""
+"s110_111_022","char_PLAYER_M","{next}Wanna hear a funny joke?",""
+"s110_111_030","char_GANKOOMON","That's right. I'm bored. I came here to get rid of that
+boredom by fighting, but no luck.",""
+"s110_111_040","char_GANKOOMON","Because nothing is going my way. I wish at least my own
+apprentice would do as I say.",""
+"s110_111_050","char_GANKOOMON","A joke? ...Nah, forget it. I've never heard a ""funny joke""
+that was actually funny.",""
+"s110_111_060","char_GANKOOMON","I'm a member of the Royal Knights, a strong and proud
+knight.",""
+"s110_111_070","char_GANKOOMON","I'm tempted to throw a fit about that apprentice of mine but
+I was told to refrain.",""
+"s110_111_080","char_GANKOOMON","So here I am, quietly waiting for my apprentice, but he
+still hasn't shown up.",""
+"s110_111_090","char_PLAYER_M","{next}I met King Drasil, by the way.",""
+"s110_111_091","char_PLAYER_M","{next}Apprentice?",""
+"s110_111_092","char_PLAYER_M","{next}Maybe he ran away.",""
+"s110_111_100","char_GANKOOMON","Oh, you met King Drasil? I hope they're doing well.",""
+"s110_111_110","char_GANKOOMON","Yeah, Jesmon, an apprentice I raised up with great care.",""
+"s110_111_120","char_GANKOOMON","Impossible! Jesmon may be late a lot, but he's competitive
+and hates to lose, so no.",""
+"s110_111_130","char_GANKOOMON","If ya find Jesmon, could ya let him know that I'm waiting?",""
+"s110_111_140","char_GANKOOMON","He went out to try the ramen of this world and never came
+back. I'm counting on ya!",""
+"s110_111_150","char_JESMON","I am sorry to keep you waiting, Master! This world's
+Yaro-kei ramen was truly amazing!",""
+"s110_111_160","char_GANKOOMON","It's about time! ...So, ya found Jesmon for me, did ya?",""
+"s110_111_170","char_GANKOOMON","And, thanks to you, we now know where to meet the others. I
+should thank ya in some way.",""
+"s110_111_180","char_PLAYER_M","{next}Yes, please.",""
+"s110_111_181","char_PLAYER_M","{next}What are you giving me?",""
+"s110_111_182","char_PLAYER_M","{next}Are you giving me candy?",""
+"s110_111_190","char_GANKOOMON","Hm. I'll give ya the best thing I have to offer. This old
+man's iron fist!",""
+"s110_111_200","char_GANKOOMON","This old man's iron fist, of course!",""
+"s110_111_210","char_GANKOOMON","Sorry. I don't have that kind of stuff. But I'll give ya
+this old man's iron fist!",""
+"s110_111_220","char_JESMON","That is a great idea! It is an honor to be able to train
+with my master, you know.",""
+"s110_111_230","char_GANKOOMON","Seems ya weren't expecting this. How about if ya beat me,
+I'll give ya something else?",""
+"s110_111_240","char_GANKOOMON","I'll be waiting at the arena. ...Jesmon! You fight alongside, 
+too. Let's see if ya got rusty.",""
+"s110_111_250","char_JESMON","I have been looking forward to training with my master
+again! Good luck to both of us!",""
+"s110_111_260","char_GANKOOMON","Let's do this!",""
+"s110_111_270","char_JESMON","It is almost time!",""
+"s110_111_280","char_GANKOOMON","You were amazing! As promised, here's yer reward. It's yers
+to keep.",""
+"s110_111_290","char_GANKOOMON","It was actually pretty fun. Fighting with humans isn't half
+bad.",""
+"s110_111_300","char_JESMON","Master, I think we had better head for the rendezvous
+point now.",""
+"s110_111_310","char_GANKOOMON","Calm down, now. Truth is... I could've gone there any time
+if I wanted...",""
+"s110_111_320","char_GANKOOMON","But someone told me to refrain from acting as a Royal Knight
+and to keep quiet. Guess who?",""
+"s110_111_330","char_PLAYER_M","{next}I have no idea.",""
+"s110_111_331","char_PLAYER_M","{next}King Drasil?",""
+"s110_111_332","char_PLAYER_M","{next}Omnimon?",""
+"s110_111_340","char_GANKOOMON","Haha. I bet ya don't. It was Alphamon.",""
+"s110_111_350","char_GANKOOMON","Now, why would King Drasil tell me to refrain from acting as
+a Royal Knight?",""
+"s110_111_360","char_GANKOOMON","It's Alphamon who told me to keep quiet.",""
+"s110_111_370","char_GANKOOMON","No way! Why would I obey Omnimon's orders?!",""
+"s110_111_380","char_GANKOOMON","It's Alphamon who told me to keep quiet.",""
+"s110_111_390","char_JESMON","I thought Alphamon was a vacant member of the Royal Knights.
+Why would it say such a thing?",""
+"s110_111_400","char_GANKOOMON","I'm sure there's a reason. I dunno what, but something may
+have happened in this world.",""
+"s110_111_410","char_GANKOOMON","It was blathering on, asking what the point of the foolish
+human race surviving was...",""
+"s110_111_420","char_PLAYER_M","{next}I'm sure there's a point.",""
+"s110_111_421","char_PLAYER_M","{next}We're not in a position to decide.",""
+"s110_111_422","char_PLAYER_M","{next}Maybe there is no point.",""
+"s110_111_430","char_GANKOOMON","As somebody from the human side, of course you would say
+that.",""
+"s110_111_440","char_GANKOOMON","That's right. It's not up to you or me to decide. But that
+goes for Alphamon, too.",""
+"s110_111_450","char_GANKOOMON","Haha. Another human I know well said the same thing.",""
+"s110_111_460","char_GANKOOMON","We tend to be dualistic, just wanting to distinguish between 
+zero and one.",""
+"s110_111_470","char_GANKOOMON","With that in mind, I was pondering whether I should listen
+to Alphamon or King Drasil.",""
+"s110_111_480","char_GANKOOMON","I want you and Jesmon to accompany me while I make my final
+decision.",""
+"s110_111_490","char_PLAYER_M","{next}Sure.",""
+"s110_111_491","char_PLAYER_M","{next}What do you plan on doing?",""
+"s110_111_492","char_PLAYER_M","{next}That's a lot of pressure.",""
+"s110_111_500","char_GANKOOMON","Alright, you'll be a witness to my final decision. I'll send
+ya the coordinates later.",""
+"s110_111_510","char_GANKOOMON","It'd take too long to explain. The quickest way is to just
+let ya see in person.",""
+"s110_111_520","char_GANKOOMON","Ya sure don't look like you're under pressure. Humans are
+interesting things.",""
+"s110_111_530","char_GANKOOMON","I'm going ahead, then. Check that Digiline thing for the
+location. See ya.",""
+"s110_111_540","char_JESMON","This is becoming a big deal. The very survival of the human 
+race is at stake.",""
+"s110_111_550","char_JESMON","I am sorry, but could you stay with us a bit longer?
+I shall go when I am ready, too.",""
+"s110_111_560","char_GANKOOMON","Where did Jesmon go? I'm counting on ya!",""

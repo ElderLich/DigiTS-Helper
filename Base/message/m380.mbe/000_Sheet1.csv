@@ -1,0 +1,35 @@
+string2 0,string 1,string 2,string 3
+"m380_010_010","char_APOLLOMON","Minerva must be inside—along with the knowledge you seek.","m380_010_010"
+"m380_010_020","char_APOLLOMON","I have not been this fired up in quite some time... Come,
+now. Onward we go.","m380_010_020"
+"m380_020_010","char_APOLLOMON","Minerva!","m380_020_010"
+"m380_020_020","char_MINERVAMON","...?","m380_020_020"
+"m380_020_030","char_MINERVAMON","Corona...mon?","m380_020_030"
+"m380_020_040","char_APOLLOMON","Why are you in jail?! What has transpired here?!","m380_020_040"
+"m380_020_050","char_MINERVAMON","You see—","m380_020_050"
+"m380_020_060","char_MINERVAMON","Wait. What?!","m380_020_060"
+"m380_020_070","char_MINERVAMON","That person with you...!","m380_020_070"
+"m380_020_080","char_PLAYER_M","It's been quite a while.",""
+"m380_020_081","char_PLAYER_M","I see you remember me.",""
+"m380_020_082","char_PLAYER_M","You haven't changed a bit.",""
+"m380_020_090","char_MINERVAMON","How long has it been?","m380_020_090"
+"m380_020_100","char_APOLLOMON","We will have you out of there in—","m380_020_100"
+"m380_020_110","char_MINERVAMON","This cell isn't so easily broken. Trust me. I've tried.","m380_020_110"
+"m380_020_120","char_MINERVAMON","More importantly... I need you to convey a message to
+Merukimon.","m380_020_120"
+"m380_020_130","char_MINERVAMON","The one who locked me away here... was Junomon.","m380_020_130"
+"m380_020_140","char_APOLLOMON","...What?","m380_020_140"
+"m380_020_150","char_MINERVAMON","And that's not all.","m380_020_150"
+"m380_020_160","char_MINERVAMON","At the time of the disturbance that happened in Shinjuku
+eight years ago...","m380_020_160"
+"m380_020_170","char_MINERVAMON","...several Digimon—including a few Titans—were captured by
+humans.","m380_020_170"
+"m380_020_180","char_MINERVAMON","Rumor has it... they were used in some awful experiments.","m380_020_180"
+"m380_020_190","char_MINERVAMON","The Titans flew into a rage when they heard about it. They
+even plotted to invade the human world.","m380_020_190"
+"m380_020_200","char_MINERVAMON","Apparently, that's why they were planning to open the gate
+of the temple.","m380_020_200"
+"m380_020_210","char_MINERVAMON","I tried to report this to Junomon, but as soon as I started
+talking... Junomon suddenly changed completely...","m380_020_210"
+"m380_020_220","char_MINERVAMON","Hurry up and tell my story. There'll be plenty of time to
+get me out of here afterward.","m380_020_220"

@@ -1,0 +1,197 @@
+string2 0,string 1,string 2,string 3
+"s080_059_010","char_LUNAMON","So Blimpmon is back? Yay! Now we can go anywhere we want
+again!",""
+"s080_059_020","char_BLIMPMON","Sorry to worry ya. I'm fixed up good as new, so I'm fit to
+fly anywhere!",""
+"s080_059_030","char_CORONAMON","Blimpmon is so cool. But they won't beat me!",""
+"s080_059_040","char_PLAYER_M","{next}You can do it!",""
+"s080_059_041","char_PLAYER_M","{next}Beat you at what?",""
+"s080_059_042","char_PLAYER_M","{next}Can you even fly?",""
+"s080_059_050","char_CORONAMON","Well, yeah, of course I can! I'm going to do big things.
+Just you watch!",""
+"s080_059_060","char_CORONAMON","I'll win by showing I can work even harder than Blimpmon!
+You know, by, um...",""
+"s080_059_070","char_CORONAMON","That's not what I mean! I'm talking more like, um, you
+know...",""
+"s080_059_080","char_CORONAMON","Now I can go to the Cosmic Area! Training in a legendary
+spot'll get me in awesome shape!",""
+"s080_059_090","char_PLAYER_M","{next}Get you in awesome shape?",""
+"s080_059_091","char_PLAYER_M","{next}The Cosmic Area?",""
+"s080_059_092","char_PLAYER_M","{next}Be happy with who you are now.",""
+"s080_059_100","char_CORONAMON","Yeah! Me falling behind you guys was all just some kind of
+mistake!",""
+"s080_059_110","char_CORONAMON","A fabled place at the world's end, full of harsh
+environments and battle-scarred vets!",""
+"s080_059_120","char_CORONAMON","I-I am happy with who I am now! It's everyone else who can't
+see how great I am!",""
+"s080_059_130","char_CORONAMON","So I'm gonna train in the Cosmic Area and become a big shot
+in both rep and reality!",""
+"s080_059_140","char_CORONAMON","Those Titans'll think twice about messing with our town!
+Even if you aren't around!",""
+"s080_059_150","char_LUNAMON","Coronamon...",""
+"s080_059_160","char_BLIMPMON","Hate to butt in while you're gettin' so fired up, but...",""
+"s080_059_170","char_CORONAMON","What is it? You getting excited, too, Blimpmon?",""
+"s080_059_180","char_BLIMPMON","...I can't go to the Cosmic Area, kid.",""
+"s080_059_190","char_CORONAMON","...Huh?",""
+"s080_059_200","char_BLIMPMON","Apparently, it's got a crazy climate with scorchin' heat AND
+bitter cold!",""
+"s080_059_210","char_BLIMPMON","And I only just got fixed up, so I'm not kitted out for a
+trip to the ends of Iliad.",""
+"s080_059_220","char_BLIMPMON","If I overdo it and end up grounded again, it'll only be more
+trouble for everybody.",""
+"s080_059_230","char_CORONAMON","B-But...",""
+"s080_059_240","char_LUNAMON","Phew, thank goodness...",""
+"s080_059_250","char_CORONAMON","What was that you said?",""
+"s080_059_260","char_LUNAMON","N-No, nothing at all!",""
+"s080_059_270","char_LUNAMON","But you get it now, right? You can't go to the Cosmic Area!",""
+"s080_059_280","char_LUNAMON","If you want to train, do it here in town!",""
+"s080_059_290","char_CORONAMON","D-Dang it. This isn't fair... The legendary Cosmic Area is
+the only place that—",""
+"s080_059_300","char_LUNAMON","Now, let's go! We all have our roles to play and jobs to do!",""
+"s080_059_310","char_CORONAMON","O-Okay, f-fine. I've got it...!",""
+"s080_059_320","char_BLIMPMON","Man... Those kids sure got a lotta energy. Maybe there's
+hope for this town, after all!",""
+"s080_059_330","char_PLAYER_M","{next}Is there any way to reach the Cosmic Area?",""
+"s080_059_331","char_PLAYER_M","{next}I wanna help realize our friend's wish.",""
+"s080_059_332","char_PLAYER_M","{next}Too much energy.",""
+"s080_059_340","char_BLIMPMON","What? Now you wanna go there, too? I wouldn't recommend it,
+but... Hmm...",""
+"s080_059_350","char_BLIMPMON","I hear ya. I feel the same way, too...",""
+"s080_059_360","char_BLIMPMON","Hehehe. Ya aren't wrong! Anybody who'd wanna visit the
+Cosmic Area has energy to burn.",""
+"s080_059_370","char_BLIMPMON","I'm pretty sure there's a way to get there, but I still
+don't have the necessary gear.",""
+"s080_059_380","char_BLIMPMON","For Heat Cosmic, I need a cooler, and for Chill Cosmic, I
+need a heater.",""
+"s080_059_390","char_PLAYER_M","{next}Let's go find some.",""
+"s080_059_391","char_PLAYER_M","Heat Cosmic?",""
+"s080_059_392","char_PLAYER_M","Chill Cosmic?",""
+"s080_059_400","char_BLIMPMON","What? Seriously? Wow... Ya really mean it about helping
+those kids, huh!",""
+"s080_059_410","char_BLIMPMON","Now that it's back up and running, the Factorial Area might
+have a cooler.",""
+"s080_059_420","char_BLIMPMON","I go to the Factorial Area for work sometimes, but never to
+the village...",""
+"s080_059_430","char_BLIMPMON","It's so hot there, I feel like I'm gonna melt. Without a
+cooler, I'd break down.",""
+"s080_059_440","char_BLIMPMON","It'll freeze a pineapple solid enough to use as a hammer!
+I'd be a fool to go in there without a heater.",""
+"s080_059_450","char_PLAYER_M","{next}I'll go take a look.",""
+"s080_059_451","char_PLAYER_M","Is there a cooler in the village?",""
+"s080_059_452","char_PLAYER_M","The village is a no-go?",""
+"s080_059_460","char_BLIMPMON","Wha... Really?! That'd be way too cool of ya!",""
+"s080_059_470","char_BLIMPMON","If ya do find a cooler, bring it my way! I'll get the
+engineer Datamon to install it!",""
+"s080_059_480","char_BLIMPMON","This is all hearsay, but word is that they use coolers
+there.",""
+"s080_059_490","char_BLIMPMON","I'd be in the way if I went to the village, anyway. I can
+only land in wide-open spaces.",""
+"s080_059_500","char_CORONAMON","Aw, man... If only I could get to the Cosmic Area.",""
+"s080_059_510","char_CORONAMON","Then I could train super hard and get super strong. *sigh* I
+just can't let it go...",""
+"s080_059_520","char_LUNAMON","Honest opinion? I'm relieved Blimpmon said no.",""
+"s080_059_530","char_LUNAMON","You're thinking way too recklessly. That place is as
+dangerous as it gets!",""
+"s080_059_540","char_GOTTSUMON","...Insulation material? I'm afraid the Titans made off with
+every last bit of it.",""
+"s080_059_550","char_GOTTSUMON","They're probably still in the area. They may drop some if
+you give them a good walloping.",""
+"s080_059_560","char_GOTTSUMON","Looking for a cooler? They're useful for controlling
+blast furnace heat.",""
+"s080_059_570","char_GOTTSUMON","You can buy one from that merchant over there, but they
+tend to change the price on a whim.",""
+"s080_059_580","char_BLIMPMON","Hey! Look who it is! Where are we off to today?",""
+"s080_059_590","char_PLAYER_M","{next}I brought you a cooler.",""
+"s080_059_591","char_PLAYER_M","Where can I find a cooler again?",""
+"s080_059_592","char_PLAYER_M","{end}I'll be back later.",""
+"s080_059_600","char_BLIMPMON","Wow, you're amazing! You actually found one.",""
+"s080_059_610","char_BLIMPMON","I'll ask Datamon to install it right away.",""
+"s080_059_620","char_BLIMPMON","They say the village in the Factorial Area has coolers.",""
+"s080_059_630","char_BLIMPMON","It's just hearsay, so you'll have to go there and ask to
+find out exactly where, though.",""
+"s080_059_640","char_BLIMPMON","I've got a cooler at last! Hot places are no longer a worry.",""
+"s080_059_650","char_BLIMPMON","I'm sure we can reach Heat Cosmic, too, as long as we steer
+clear of any cold zones.",""
+"s080_059_660","char_BLIMPMON","Can you go and let Coronamon know? Tell that kid I'm ready
+to fly anytime!",""
+"s080_059_670","char_CORONAMON","What's up? ...Wait. Blimpmon had a cooler installed?!",""
+"s080_059_680","char_CORONAMON","Now I can go to the Cosmic Area! I'll get Blimpmon to take
+me there right away!",""
+"s080_059_690","char_LUNAMON","H-Hold on, now. You really intend to go there?",""
+"s080_059_700","char_CORONAMON","Naturally! It'll be fine. Now, let's go see Blimpmon!",""
+"s080_059_710","char_CORONAMON","Blimpmon! Is it true you can go to the Cosmic Area now? You
+don't look any different...",""
+"s080_059_720","char_BLIMPMON","Don't you worry. I may not look it, but I'm ready to beat
+the heat. So, shall we be off?",""
+"s080_059_730","char_CORONAMON","Yeah!",""
+"s080_059_740","char_LUNAMON","*sigh* So we're really, really going, huh? I sure hope this
+works out.",""
+"s080_059_750","char_CORONAMON","No, it's only me going.",""
+"s080_059_760","char_LUNAMON","What?",""
+"s080_059_770","char_CORONAMON","You can wait here. It's only me that needs to train, right?",""
+"s080_059_780","char_CORONAMON","After all, only one can be the strongest! And then I'll
+protect everyone!",""
+"s080_059_790","char_LUNAMON","But...!",""
+"s080_059_800","char_CORONAMON","Just relax and wait here. I'll be back once I've Digivolved!",""
+"s080_059_810","char_CORONAMON","Sorry for the wait, Blimpmon. Let's get moving!",""
+"s080_059_820","char_LUNAMON","Hey, wait! I wasn't finished talking to yo—",""
+"s080_059_830","char_LUNAMON","Oh, no... They're gone. Will Coronamon be okay...?",""
+"s080_059_840","char_PLAYER_M","{next}I'm sure he will.",""
+"s080_059_841","char_PLAYER_M","{next}Should we go, too?",""
+"s080_059_842","char_PLAYER_M","{next}I forgot to ask for a reward!",""
+"s080_059_850","char_LUNAMON","I really hope so... But where does this leave me...?",""
+"s080_059_860","char_LUNAMON","That's not really possible. Blimpmon's gone.",""
+"s080_059_870","char_LUNAMON","Oh, I think I can help you with that.",""
+"s080_059_880","char_LUNAMON","I got this for Coronamon when he said he wanted to travel,
+but I'm giving it to you.",""
+"s080_059_890","char_LUNAMON","*sigh* So what now? I need to come up with a game plan, too.",""
+"s080_059_900","char_LUNAMON","Coronamon makes me so mad! I'm gonna sic Minnie on him as
+soon as he gets back!",""
+"s080_059_910","char_LUNAMON","But, anyway, thanks for everything. You were a big help.",""
+"s080_059_920","char_VADEMON","Gegege. Hi there.",""
+"s080_059_930","char_VADEMON","If it's a cooler ya want, today's your lucky day.",""
+"s080_059_940","char_VADEMON","Right here, right now, I'll offer ya one at the massive
+discount price of 10,000,000 YEN.",""
+"s080_059_950","char_PLAYER_M","{next}I'll take it.",""
+"s080_059_951","char_PLAYER_M","That's way too much!",""
+"s080_059_952","char_PLAYER_M","{end}Let me think about it.",""
+"s080_059_960","char_VADEMON","All right, fine. 10,000 YEN, then, as a special offer.",""
+"s080_059_965","char_VADEMON","But only for you, my friend... Don't go tellin' anybody
+else! Gegege...",""
+"s080_059_970","char_PLAYER_M","{next}I'll take it.",""
+"s080_059_971","char_PLAYER_M","That's still too much!",""
+"s080_059_972","char_PLAYER_M","{end}Let me think about it.",""
+"s080_059_980","char_VADEMON","Hey, I gotta make a livin' too, ya know. How about 5,000
+YEN? That's like givin' it away.",""
+"s080_059_990","char_PLAYER_M","{next}I'll take it.",""
+"s080_059_991","char_PLAYER_M","Just a little lower!",""
+"s080_059_992","char_PLAYER_M","{end}Let me think about it.",""
+"s080_059_1000","char_VADEMON","You're a real piece of work, aren't ya...? Fine. 1,000 YEN,
+and then get outta my face!",""
+"s080_059_1010","char_VADEMON","",""
+"s080_059_1020","char_PLAYER_M","Lower, please!",""
+"s080_059_1021","char_PLAYER_M","{next}I'll take it.",""
+"s080_059_1022","char_PLAYER_M","{end}Let me think about it.",""
+"s080_059_1030","char_VADEMON","Don't play with me, kid... I ain't runnin' a daycare,
+here...",""
+"s080_059_1040","char_VADEMON","I got nothin' to sell to a cheapskate like you. But if ya
+insist, the price is 10,000 YEN.",""
+"s080_059_1050","char_PLAYER_M","{next}Please let me buy one.",""
+"s080_059_1051","char_PLAYER_M","{end}I'll just be leaving, then.",""
+"s080_059_1060","char_VADEMON","Tch... Now get outta here, ya swindler...",""
+"s080_059_1065","char_VADEMON","Short on funds...? Then leave. No window-shoppers allowed.",""
+"s080_059_1070","char_VADEMON","Hmph. Come back the day before yesterday.",""
+"s080_059_1080","char_VADEMON","Thanks... Now get outta here, ya swindler...",""
+"s080_059_1090","char_VADEMON","By all means, think it over. Gegege.",""
+"s080_059_1100","char_VADEMON","Hi there. What'll it be today?",""
+"s080_059_1110","char_PLAYER_M","{next}I wanna buy a cooler.",""
+"s080_059_1111","char_PLAYER_M","Show me what you've got.",""
+"s080_059_1112","char_PLAYER_M","{end}Nothing right now.",""
+"s080_059_1120","char_VADEMON","The cooler costs 10,000 YEN. Well...?",""
+"s080_059_1130","char_VADEMON","It's a very popular item. Always sells out right away.
+Gegege.",""
+"s080_059_1140","char_VADEMON","The cooler costs 5,000 YEN. Well...?",""
+"s080_059_1150","char_VADEMON","The cooler costs 1,000 YEN.",""
+"s080_059_1160","char_VADEMON","You're really, really pushing me to the limit here, pal...
+I got kids at home to feed...",""
+"s080_059_1170","char_VADEMON","Shoulda said so from the get-go. Fine, I'll sell ya one.",""

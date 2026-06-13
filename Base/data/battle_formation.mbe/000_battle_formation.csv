@@ -1,4 +1,4 @@
-int32 0,empty 1,string2 2,string2 3
+formation_id,empty_001,formation_type,formation_key
 1,,"em001",""
 2,,"em002",""
 3,,"em003",""
@@ -58,3 +58,6 @@ int32 0,empty 1,string2 2,string2 3
 805,,"pl004",""
 806,,"pl005",""
 807,,"pl006",""
+808,,"pl007",""
+809,,"pl008",""
+810,,"pl009",""

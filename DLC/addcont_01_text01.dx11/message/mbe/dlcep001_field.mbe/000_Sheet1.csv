@@ -1,0 +1,47 @@
+string2 0,string 1,string 2,string 3
+"dlc001_0000_0010","char_MIREI","...Wake up.",""
+"dlc001_0000_0020","char_MIREI","Once you're ready, begin your investigation anew.
+I have faith in you.",""
+"dlc001_0000_0030","char_MIREI","",""
+"dlc001_0000_0040","char_MIREI","",""
+"dlcep001_0010_0010","","A Backdoor Key is required in order to proceed beyond this
+point.",""
+"dlcep001_0020_0010","","The Backdoor Key has been verified.",""
+"dlcep001_0030_0010","char_BLITZGREYMON","I sense a presence from beyond the door. 
+I believe it to be our ally Omnimon Zwart.",""
+"dlcep001_0030_0011","char_KUREMIKYOKO","Then you-know-who must be up ahead, too. I hope he's okay...
+Wait, why should I even be worried about him?!",""
+"dlcep001_0030_0012","char_KUREMIKYOKO","I ought to give him a piece of my mind!
+Come on, let's head through the door. Are you ready?",""
+"dlcep001_0030_0013","char_KUREMIKYOKO","Let's head on through the door. Are you ready?",""
+"dlcep001_0030_0020","char_NONAME","{next}I'm ready.",""
+"dlcep001_0030_0021","char_NONAME","{end}I need a little more time.",""
+"dlcep001_0040_0010","char_KUREMIKYOKO","...I'm glad we followed him.
+I was reminded of feelings I had long forgotten.",""
+"dlcep001_0040_0020","char_KUREMIKYOKO","So this is what it feels like to trust someone... to share
+a bond with them... I must say, it isn't half bad.",""
+"dlcep001_0040_0030","char_KUREMIKYOKO","After meeting you guys, I, too, want to believe in 
+the bond that exists between humans and Digimon!",""
+"dlcep001_0040_0040","char_KUREMIKYOKO","I'll be waiting here. I can't leave him...
+I can't leave my dad's side.",""
+"dlcep001_0050_0010","char_KUREMIKYOKO","They're fast asleep...",""
+"dlc001_0060_0010","char_NONAME","You can use this to return to the In-Between Theater.
+However, all of your progress up to this point will be lost.",""
+"dlc001_0060_0020","char_NONAME","{end}[Continue investigating.]",""
+"dlc001_0060_0021","char_NONAME","[Quit.]",""
+"dlcep001_0070_0010","char_KUREMIKYOKO","There's no end to them!
+We should leave this room and try to regroup.",""
+"dlcep001_0080_0010","char_NONAME","They won't respond.
+It's like they can't even see you.",""
+"dlcep001_0090_0010","char_KUREMIKYOKO","Here. I want you to take this, in my place.
+I hope it proves useful...",""
+"dlcep001_0100_0010","char_CRESGARURUMON","We can't afford to waste any time here. Our partners will be
+absorbed by Parallelmon if we don't move quickly.",""
+"dlcep001_0110_0005","char_BLITZGREYMON","It looks like they are about to attack... 
+Is Parallelmon behind this?",""
+"dlcep001_0110_0010","char_BLITZGREYMON","This is gonna end up taking even more of our precious time...!
+We need to reach Parallelmon before our partners are absorbed!",""
+"dlcep001_0120_0010","char_AEGIOMON","The battle ahead is gonna be fierce. 
+You ready for this?",""
+"dlcep001_0120_0020","char_NONAME","{next}Yes. Let's go defeat Parallelmon!",""
+"dlcep001_0120_0021","char_NONAME","{end}I need some more time.",""

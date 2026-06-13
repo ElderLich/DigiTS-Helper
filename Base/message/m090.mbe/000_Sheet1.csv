@@ -1,0 +1,147 @@
+string2 0,string 1,string 2,string 3
+"m090_010_010","char_OPERATOR_M","It looks like you didn't get much sleep, did you, Agent {player}?","m090_010_010_M m090_010_010_F "
+"m090_010_020","char_OPERATOR_M","I'm afraid I couldn't help but overhear... Did what Inori Misono
+say get to you?","m090_010_020_M m090_010_020_F"
+"m090_010_040","char_OPERATOR_M","I ask since you couldn't seem to step through that door to the roof...
+At any rate, it seems she lost her family.","m090_010_040_M m090_010_040_F"
+"m090_010_050","char_OPERATOR_M","It's only natural you'd identify with her. After all, you...
+lost the person who raised you to an anomaly, as well.","m090_010_050_M m090_010_050_F"
+"m090_010_060","char_OPERATOR_M","That said, you can't let your emotions get tied up in this. Inori Misono
+and Aegiomon are anomalies themselves.","m090_010_060_M m090_010_060_F"
+"m090_010_070","char_OPERATOR_M","Remember, they're just subjects of our investigation. You're
+trying to stop a global collapse. Get back to the mission.","m090_010_070_M m090_010_070_F"
+"m090_020_010","char_INORI","Good morning, {player}! I made breakfast!","m090_020_010"
+"m090_020_020","char_INORI","H-Hey, look!","m090_020_020"
+"m090_020_030","char_NEWS_AUDIO","We have word of a bizarre development in Shinjuku. A spatial
+distortion has been confirmed in the streets of Kabukicho.","m090_020_030"
+"m090_020_040","char_NEWS_AUDIO","Some believe this to be another example of the paranormal
+phenomena we've been seeing so many of recently.","m090_020_040"
+"m090_020_050","char_NEWS_AUDIO","Riot police are being dispatched to the scene.","m090_020_050"
+"m090_020_060","char_INORI","Oh, no! Do you think this is related to the Digimon, too, somehow?","m090_020_060"
+"m090_020_070","char_INORI","Maybe we shouldn't tell Aegiomon about this...","m090_020_070"
+"m090_020_080","char_PLAYER_M","I don't think you need to worry about him so much.{next}",""
+"m090_020_081","char_PLAYER_M","Yeah. Maybe keep it on the down-low for now.{next}",""
+"m090_020_090","char_INORI","No? I hope you're right...","m090_020_090"
+"m090_020_100","char_INORI","What happened yesterday really seemed to throw him for a
+loop, though...","m090_020_100"
+"m090_020_110","char_INORI","Yeah...","m090_020_110"
+"m090_020_120","char_INORI","I can't stop worrying about it, though. I'm going to go 
+check on him. But you go ahead and eat!","m090_020_120"
+"m090_020_130","char_OPERATOR_M","So... strange things are happening in Shinjuku's Kabukicho?","m090_020_130_M m090_020_130_F"
+"m090_020_140","char_OPERATOR_M","Once you know how this town's going to meet its end, every 
+new incident takes on greater significance.","m090_020_140_M m090_020_140_F"
+"m090_020_150","char_OPERATOR_M","I think it couldn't hurt to look into it.","m090_020_150_M m090_020_150_F"
+"m090_020_160","char_PLAYER_M","Copy that. Starting investigation.{next}",""
+"m090_030_010","char_BOY","Look...",""
+"m090_030_020","char_BOY","It's not like I came to apologize or anything!",""
+"m090_030_030","char_BOY","I just thought I'd... give him... this.",""
+"m090_030_040","char_BOY","It's not an apology, okay?! But you HAVE to give it to him!",""
+"m090_040_001","char_MINERVAMON","AAAAAAAAAGH!","m090_040_001"
+"m090_040_201","char_MINERVAMON","Ngh...!","m090_040_201"
+"m090_040_100","","Graaaaagh!","m090_040_100"
+"m090_040_202","char_MINERVAMON","Ungh...!","m090_040_202"
+"m090_040_101","","Graaagh!","m090_040_101"
+"m090_040_203","char_MINERVAMON","*gasp*","m090_040_203"
+"m090_040_204","char_MINERVAMON","Yah!","m090_040_204"
+"m090_040_205","char_MINERVAMON","Hiyaaaaah!","m090_040_205"
+"m090_040_002","char_MINERVAMON","Ungh...!","m090_040_002"
+"m090_040_102","","Gaaagh!","m090_040_102"
+"m090_040_003","char_MINERVAMON","AAAAAGH!","m090_040_003"
+"m090_040_004","char_MINERVAMON","Ngh!","m090_040_004"
+"m090_040_005","char_MINERVAMON","Ahhhhh...","m090_040_005"
+"m090_040_305","char_MINERVAMON","Hmm?","m090_040_305"
+"m090_040_006","char_MINERVAMON","Wha—? *confused noises*","m090_040_006"
+"m090_040_010","char_MINERVAMON","You! Egg thief!","m090_040_010"
+"m090_040_011","char_MINERVAMON","Ngh...!","m090_040_011"
+"m090_040_012","char_MINERVAMON","Huh?!","m090_040_012"
+"m090_040_103","","Gwaaaaargh!","m090_040_103"
+"m090_040_104","","Gaaaaargh!","m090_040_104"
+"m090_040_105","","Graaaaaaaaagh!","m090_040_105"
+"m090_040_030","char_MINERVAMON","...Right, egg thief! It's kind of your fault things turned out 
+this way!","m090_040_030"
+"m090_040_040","char_MINERVAMON","So take some responsibility... and help us out.","m090_040_040"
+"m090_040_050","char_MINERVAMON","And you'd better believe what I'm saying, or your world is
+in big trouble too, egg thief!","m090_040_050"
+"m090_050_010","char_MINERVAMON","Greymon, huh? I know that bad boy's weakness!",""
+"m090_050_020","char_MINERVAMON","And I've got just the thing!",""
+"m090_050_030","char_MINERVAMON","I'll make an opening for you! I'll set 'em up, and you knock them down!",""
+"m090_060_010","char_MINERVAMON","Good. Now's our chance...","m090_060_010"
+"m090_060_020","char_MINERVAMON","RUN! Lead the way!","m090_060_020"
+"m090_060_030","char_PLAYER_M","Run? Where to?!{next}",""
+"m090_060_031","char_PLAYER_M","In that case... Shall we go to my place? {next}",""
+"m090_060_040","char_MINERVAMON","How the heck am I supposed to know?! Anywhere's better than here!","m090_060_040"
+"m090_060_050","char_MINERVAMON","Maybe your place or something? Whatever! Let's just get out of here!","m090_060_050"
+"m090_060_060","char_MINERVAMON","No clue where that is, but fine by me!","m090_060_060"
+"m090_060_070","char_MINERVAMON","Go on. I'm right behind you!","m090_060_070"
+"m090_060_080","char_TOUDO","That human in the weird outfit... quickly got along with the phase
+electron lifeform.","m090_060_080"
+"m090_060_090","char_TOUDO","Who—or what—is that...?","m090_060_090"
+"m090_060_100","char_OPERATOR_M","It would be strange if that battle wasn't recorded, but I
+can't find any data on it eight years later...",""
+"m090_060_110","char_OPERATOR_M","This is... definitely an anomaly.",""
+"m090_070_010","char_AEGIOMON","That thing... Is that what I'm like, too?","m090_070_010"
+"m090_070_020","char_AEGIOMON","Hey, {player}! Look at this!","m090_070_020"
+"m090_070_030","char_AEGIOMON","...Huh?","m090_070_030"
+"m090_070_040","char_INORI","You're the one... we just saw on TV!","m090_070_040"
+"m090_070_050","char_INORI_AEGIOMON","What in the world is going on here?","m090_070_050"
+"m090_080_010","char_MINERVAMON","Finally, a moment's peace. Thanks for this.","m090_080_010"
+"m090_080_020","char_INORI","I'm glad you like it.","m090_080_020"
+"m090_080_030","char_INORI","Now, I've got a few questions to ask... Well, more like, too
+many questions!","m090_080_030"
+"m090_080_040","char_INORI","{player}, can I count on you to help me make sense out of
+all this?","m090_080_040"
+"m090_080_050","char_MINERVAMON","Sure. Let's sort out our situation first. Ask me anything you want, 
+egg thief.","m090_080_050"
+"m090_080_060","char_PLAYER_M","Who are you?",""
+"m090_080_061","char_PLAYER_M","Where did you come from?",""
+"m090_080_062","char_PLAYER_M","Tell us about that huge Digimon.",""
+"m090_080_063","char_PLAYER_M","I'm not an egg thief!",""
+"m090_080_064","char_PLAYER_M","I'm all out of questions.{next}",""
+"m090_080_070","char_MINERVAMON","I'm Minervamon, and I came to this world on a certain mission.","m090_080_070"
+"m090_080_080","char_MINERVAMON","But things have taken quite a turn since then...","m090_080_080"
+"m090_080_090","char_MINERVAMON","I come from Iliad, a Digital World that's kind of a parallel
+universe to the Material World you live in.","m090_080_090"
+"m090_080_100","char_MINERVAMON","You came to our temple once, remember? Well, that temple
+exists in a world completely separate from this one.","m090_080_100"
+"m090_080_110","char_MINERVAMON","That was one of the Titans that are wreaking havoc in our world.","m090_080_110"
+"m090_080_120","char_MINERVAMON","It seems they've been popping up in this world, too.","m090_080_120"
+"m090_080_130","char_MINERVAMON","I know, but the nickname stuck. What do you want me to say?
+Still, how'd a human like you end up at the temple, anyway?","m090_080_130"
+"m090_080_140","char_MINERVAMON","But I guess that's a question for another time. More
+importantly right now, I could really use your help.","m090_080_140"
+"m090_080_150","char_MINERVAMON","So, any other questions? I'm all ears, egg thief.","m090_080_150"
+"m090_080_160","char_MINERVAMON","I see. In that case, it's your turn to hear me out. Will you 
+help me fulfill my mission?","m090_080_160"
+"m090_080_170","char_PLAYER_M","Sure, I'll lend you a hand.{next}",""
+"m090_080_171","char_PLAYER_M","What's your mission?",""
+"m090_080_172","char_PLAYER_M","I have my own job to do.",""
+"m090_080_173","char_PLAYER_M","Sure, I'll lend you a hand.{next}",""
+"m090_080_180","char_MINERVAMON","I'm searching for that egg. You know the one. I'm positive
+it fell into this world somewhere, but...","m090_080_180"
+"m090_080_190","char_MINERVAMON","...there are a lot of things I don't know about your world.
+That's why I need your help.","m090_080_190"
+"m090_080_200","char_MINERVAMON","I see. And what job is that?","m090_080_200"
+"m090_080_210","char_MINERVAMON","Hmm... That's all pretty vague, don't you think?","m090_080_210"
+"m090_080_220","char_MINERVAMON","Still, I get the feeling your job and my mission aren't
+exactly unrelated.","m090_080_220"
+"m090_080_230","char_MINERVAMON","Good. Thanks, appreciate it.","m090_080_230"
+"m090_080_240","char_MINERVAMON","Anyway, we've gotta decide where to start.","m090_080_240"
+"m090_080_250","char_INORI","This is all a lot for us to take in...","m090_080_250"
+"m090_080_260","char_INORI","It's already getting late. Why don't we call it a night, and
+figure out our next steps tomorrow?","m090_080_260"
+"m090_080_270","char_MINERVAMON","All right. I'll go look for a place to sleep tonight.","m090_080_270"
+"m090_080_275","char_INORI","Well...","m090_080_275"
+"m090_080_280","char_INORI","Why don't you stay here? The way you look, you're bound to
+call attention to yourself out there.","m090_080_280"
+"m090_080_290","char_INORI","Who knows what kind of trouble would happen if you
+run into the police.","m090_080_290"
+"m090_080_300","char_INORI","Besides...","m090_080_300"
+"m090_080_310","char_INORI","...I'm sure Aegiomon would love the chance to talk to you.","m090_080_310"
+"m090_080_320","char_AEGIOMON","Me...?","m090_080_320"
+"m090_080_330","char_MINERVAMON","I admit, I'm a bit curious about him, myself.","m090_080_330"
+"m090_080_340","char_MINERVAMON","Why's a Digimon living with humans, anyway?","m090_080_340"
+"m090_080_350","char_INORI","I bet you have lots of questions, too, right, Aegiomon?","m090_080_350"
+"m090_080_360","char_AEGIOMON","...Yeah.","m090_080_360"
+"m090_080_370","char_INORI","Don't worry about my dad. He already gave the okay.","m090_080_370"
+"m090_080_380","char_INORI","So let's turn in for the night. We'll have plenty to discuss
+in the morning!","m090_080_380"

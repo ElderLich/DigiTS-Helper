@@ -1,0 +1,179 @@
+string2 0,string 1,string 2,string 3
+"m010_001_010","char_DESCRIPTIVE_PART","O child of fate, bound to the endless cycle of death and rebirth...
+Thou hast been granted the chance to atone.",""
+"m010_001_011","char_DESCRIPTIVE_PART","Choose a figure suitable for fulfilling thy mission.",""
+"m010_001_020","char_PLAYER_M","Type L",""
+"m010_001_021","char_PLAYER_M","Type R",""
+"m010_001_030","char_DESCRIPTIVE_PART","Inscribe for thyself a new name, and thou shalt be reborn
+into the world.",""
+"m010_001_040","char_DESCRIPTIVE_PART","Confirm",""
+"m010_001_041","char_DESCRIPTIVE_PART","Start Over",""
+"m010_001_050","char_MIREI","Take your seat and wait for the show to start. ""A story about 
+the natural laws of the world"" is about to begin.","m010_001_050"
+"m010_010_005","char_DESCRIPTIVE_PART","Agent Alpha",""
+"m010_010_010","char_DESCRIPTIVE_PART","Production: OcculTokyo TV",""
+"m010_020_010","char_OPERATOR_M","Uh-oh. Looks like we've been overdoing it a little lately.
+The world is starting to wake up to our existence.","m010_020_010_M m010_020_010_F"
+"m010_020_020","char_OPERATOR_M","Ironic, really. A secret organization that hunts down urban
+legends is becoming an urban legend in its own right...","m010_020_020_M m010_020_020_F"
+"m010_020_030","char_OPERATOR_M","If that anime you just saw gets too popular, you can forget
+about going around dressed like that anymore.","m010_020_030_M m010_020_030_F"
+"m010_020_040","char_OPERATOR_M","I'll go ahead and put in a request for budget for a new uniform,
+but for this mission you'll need to keep a low profile.","m010_020_040_M m010_020_040_F"
+"m010_020_050","char_OPERATOR_M","Is that clear, Agent {player}?","m010_020_050_M m010_020_050_F"
+"m010_020_060","char_OPERATOR_M","Now, then. Are you already aware of the anomalous phenomena
+that have been observed in this city?","m010_020_060_M m010_020_060_F"
+"m010_020_070","char_PLAYER_M","Of course I am.{next}",""
+"m010_020_071","char_PLAYER_M","Anomalous phenomena?",""
+"m010_020_072","char_PLAYER_M","Who are you again?",""
+"m010_020_080","char_OPERATOR_M","Inexplicable explosions, sightings of mysterious lifeforms, localized earthquakes,
+abnormal weather patterns... There's no shortage of strange reports.","m010_020_080_M m010_020_080_F"
+"m010_020_090","char_OPERATOR_M","All typical anomalies, so it's time for ADAMAS to step in.
+The top brass have high hopes for us, I'm told.","m010_020_090_M m010_020_090_F"
+"m010_020_100","char_OPERATOR_M","Especially after our last mission...","m010_020_100_M m010_020_100_F"
+"m010_020_110","char_OPERATOR_M","They were particularly pleased with our investigation of the unidentified
+weapons loaded with technology far surpassing current human levels.","m010_020_110_M m010_020_110_F"
+"m010_020_120","char_OPERATOR_M","So, I'm hoping we can make this mission a repeat performance.","m010_020_120_M m010_020_120_F"
+"m010_020_130","char_OPERATOR_M","You know, paranormal occurrences that can't be explained
+by today's science. It's our specialty, remember?","m010_020_130_M m010_020_130_F"
+"m010_020_140","char_OPERATOR_M","Similar phenomena have been confirmed in Japan's
+Shinjuku area. It's a routine mission, you know the drill.","m010_020_140_M m010_020_140_F"
+"m010_020_150","char_OPERATOR_M","I know it's been a while, but come on.","m010_020_150_M m010_020_150_F"
+"m010_020_160","char_OPERATOR_M","I relay orders and info from HQ, and you handle the
+investigation in the field.","m010_020_160_M m010_020_160_F"
+"m010_020_170","char_OPERATOR_M","Regulations forbid me from sharing my name, but you can
+call me ""Operator,"" as usual.","m010_020_170_M m010_020_170_F"
+"m010_020_180","char_OPERATOR_M","Getting back to the mission... Are you already aware of the
+anomalous phenomena that have been observed in this city?","m010_020_180_M m010_020_180_F"
+"m010_020_190","char_PLAYER_M","Understood.{next}",""
+"m010_020_191","char_PLAYER_M","Repeat performance?",""
+"m010_020_192","char_PLAYER_M","ADAMAS?",""
+"m010_020_200","char_OPERATOR_M","I'll send the coordinates to your Digivice. Check your
+map and approach the target location.","m010_020_200_M m010_020_200_F"
+"m010_020_210","char_OPERATOR_M","Again, don't blow your cover. And let's pray that the anime
+from earlier doesn't become too popular.","m010_020_210_M m010_020_210_F"
+"m010_020_220","char_OPERATOR_M","Now, then. It's time to start the mission. I'm counting on you.","m010_020_220_M m010_020_220_F"
+"m010_020_230","char_OPERATOR_M","I personally wasn't satisfied with the results of our last mission, 
+since we let the target escape at the last minute...","m010_020_230_M m010_020_230_F"
+"m010_020_240","char_OPERATOR_M","...but the higher-ups really value the data we obtained during
+the mission. Hence, their high hopes for us today.","m010_020_240_M m010_020_240_F"
+"m010_020_250","char_OPERATOR_M","Our organization. ADAMAS is a special investigation bureau that
+looks into these kinds of anomalies away from the public eye.","m010_020_250_M m010_020_250_F"
+"m010_020_260","char_OPERATOR_M","This mission is no exception, of course, so do take utmost care
+to maintain secrecy and remain hidden.","m010_020_260_M m010_020_260_F"
+"m010_040_010","char_OPERATOR_M","I see you've reached the specified coordinates. Give me a sitrep.","m010_040_010_M m010_040_010_F"
+"m010_040_020","char_PLAYER_M","A crowd has been confirmed around the target coordinates.{next}",""
+"m010_040_021","char_PLAYER_M","Is this some kind of protest?",""
+"m010_040_022","char_PLAYER_M","What exactly is that wall?",""
+"m010_040_030","char_OPERATOR_M","Yes, apparently. The government never fully explained why they
+closed off Nishi-Shinjuku with the Wall of Hope.","m010_040_030_M m010_040_030_F"
+"m010_040_040","char_OPERATOR_M","The official explanation is that some equipment exploded at
+an underground construction site... ","m010_040_040_M m010_040_040_F"
+"m010_040_050","char_OPERATOR_M","But a wall of this scale, for something like that? That clearly doesn't
+add up—hence the angry crowd demanding some real answers.","m010_040_050_M m010_040_050_F"
+"m010_040_060","char_OPERATOR_M","It's called the ""Wall of Hope."" There was a big, mysterious
+explosion in Nishi-Shinjuku eight years ago.","m010_040_060_M m010_040_060_F"
+"m010_040_070","char_OPERATOR_M","The Wall was built just after that, ostensibly for public safety,
+but the truth remains murky.","m010_040_070_M m010_040_070_F"
+"m010_040_080","char_OPERATOR_M","The phenomena we've been sent to investigate are seen most often around
+this Wall. Best to assume we'll be investigating what's on the inside as well.","m010_040_080_M m010_040_080_F"
+"m010_040_090","char_OPERATOR_M","You can really feel the fear and anger of the crowd.","m010_040_090_M m010_040_090_F"
+"m010_040_100","char_OPERATOR_M","Our studies indicate an odd correlation between an increase in the
+frequency of anomalies and heightened social unrest.","m010_040_100_M m010_040_100_F"
+"m010_040_110","char_OPERATOR_M","Anomalies have been occurring exponentially more often of late,
+at a rate only seen a handful of times in history.","m010_040_110_M m010_040_110_F"
+"m010_040_120","char_OPERATOR_M","And though we aren't sure why, almost all those precedents were
+accompanied by complete societal collapse...","m010_040_120_M m010_040_120_F"
+"m010_040_130","char_OPERATOR_M","...be it from an epidemic, a natural disaster... even war.","m010_040_130_M m010_040_130_F"
+"m010_040_140","char_OPERATOR_M","That's why we're in such a hurry. But, in our haste, I'm afraid
+we've alerted the world to our existence...","m010_040_140_M m010_040_140_F"
+"m010_040_150","char_OPERATOR_M","Nevertheless, our ultimate mission is to uncover the causality between
+these anomalies, and the horrible tragedies that follow.","m010_040_150_M m010_040_150_F"
+"m010_040_160","char_OPERATOR_M","Try investigating that area a little further.","m010_040_160_M m010_040_160_F"
+"m010_060_010","char_WOMAN","*screaming*","m010_060_010"
+"m010_060_020","char_SPECIAL_FORCES","Are you all right?!","m010_060_020"
+"m010_070_010","char_OPERATOR_M","That tremor just now was likely one of our anomalous phenomena.","m010_070_010_M m010_070_010_F"
+"m010_070_020","char_OPERATOR_M","I managed to narrow the target coordinates down, thanks to
+some videos from eight years ago.","m010_070_020_M m010_070_020_F"
+"m010_070_030","char_OPERATOR_M","Footage of the anomaly in this district was uploaded to the
+internet back then by some civilians.","m010_070_030_M m010_070_030_F"
+"m010_070_040","char_OPERATOR_M","The actual videos have since been removed, but the comments still
+remain, and they tell us that those videos...","m010_070_040_M m010_070_040_F"
+"m010_070_050","char_OPERATOR_M","...were all recorded in areas that are now on the inside of that Wall.","m010_070_050_M m010_070_050_F"
+"m010_070_060","char_OPERATOR_M","Check again to see if there isn't some way to get beyond that Wall.","m010_070_060_M m010_070_060_F"
+"m010_080_010","char_OPERATOR_M","An update. I'm sending you an additional mission. Someone is
+requesting aid near the target coordinates.","m010_080_010_M m010_080_010_F"
+"m010_080_020","char_OPERATOR_M","That person had already been approved to contact your Digivice.","m010_080_020_M m010_080_020_F"
+"m010_080_030","char_OPERATOR_M","Normally I'd assume that to mean they're a member of the organization...
+At any rate, do what you can to keep whoever it is safe.","m010_080_030_M m010_080_030_F"
+"m010_080_040","char_PLAYER_M","Copy that. Continuing the mission.{next}",""
+"m010_090_010","char_OPERATOR_M","It seems you've discovered some phase electron lifeforms.","m010_090_010_M m010_090_010_F"
+"m010_090_020","char_OPERATOR_M","Phase electron lifeforms are mysterious organisms often found in
+the vicinity of anomalies.","m010_090_020_M m010_090_020_F"
+"m010_090_030","char_OPERATOR_M","ADAMAS has been studying them for years, but the truth of their
+nature still eludes us.","m010_090_030_M m010_090_030_F"
+"m010_090_040","char_OPERATOR_M","The analysis department at HQ finally decided on a name for these
+creatures in a report they put out the other day.","m010_090_040_M m010_090_040_F"
+"m010_090_050","char_OPERATOR_M","Going forward, they're to be referred to as ""Digital Monsters,""
+or ""Digimon"" for short!","m010_090_050_M m010_090_050_F"
+"m010_090_060","char_OPERATOR_M","Naturally, we won't send you out defenseless. I'll transmit
+some firepower to you right now.","m010_090_060_M m010_090_060_F"
+"m010_090_070","char_OPERATOR_M","The connection will only allow me to send one, however,
+so make your choice.","m010_090_070_M m010_090_070_F"
+"m010_090_080","char_PLAYER_M","Patamon.",""
+"m010_090_081","char_PLAYER_M","DemiDevimon.",""
+"m010_090_082","char_PLAYER_M","Gomamon.",""
+"m010_090_090","char_OPERATOR_M","Reinforcements have been pre-loaded onto your Digivice.","m010_090_090_M m010_090_090_F"
+"m010_090_100","char_OPERATOR_M","If you end up in a battle, don't hesitate.
+You must complete your mission.","m010_090_100_M m010_090_100_F"
+"m010_120_010","char_OPERATOR_M","Contact with hostile Digimon confirmed!","m010_120_010_M m010_120_010_F"
+"m010_120_020","char_OPERATOR_M","Digivice activated! Execute the Digimon Summoning Program!","m010_120_020_M m010_120_020_F"
+"m010_150_010","char_OPERATOR_M","The target coordinates are just ahead... but there appears
+to be an obstacle in your path.","m010_150_010_M m010_150_010_F"
+"m010_150_020","char_OPERATOR_M","Your Digimon should be able to remove it easily. Give it a try.","m010_150_020_M m010_150_020_F"
+"m010_190_010","char_METALGREYMON","Graaaaagh!","m010_190_010"
+"m010_190_020","char_MYSTERIOUS_GIRL","Hey, over here!","m010_190_020"
+"m010_190_030","char_MYSTERIOUS_GIRL","Come on!","m010_190_030"
+"m010_190_040","char_MYSTERIOUS_GIRL","This way! Run!","m010_190_040"
+"m010_190_050","char_METALGREYMON","Fsssh! Fsssh!","m010_190_050"
+"m010_190_060","char_METALGREYMON","Hrrrrrnh... Graaagh!","m010_190_060"
+"m010_190_070","char_METALGREYMON","Graaaaagh!","m010_190_070"
+"m010_190_080","char_METALGREYMON","GRAAAAAAAGH!","m010_190_080"
+"m010_190_090","char_MYSTERIOUS_GIRL","Hurry...!","m010_190_090"
+"m010_190_100","char_MYSTERIOUS_GIRL","Hnnnh...!","m010_190_100"
+"m010_190_110","char_METALGREYMON","Graaaaagh...","m010_190_110"
+"m010_190_120","char_METALGREYMON","Hrnh... Hrnh...!","m010_190_120"
+"m010_190_130","char_METALGREYMON","Fsssh! Fsssh!","m010_190_130"
+"m010_190_140","char_MYSTERIOUS_GIRL","Whew!","m010_190_140"
+"m010_190_150","char_MYSTERIOUS_GIRL","Okay.","m010_190_150"
+"m010_190_160","char_MYSTERIOUS_GIRL","Let's go!","m010_190_160"
+"m010_200_010","char_MYSTERIOUS_GIRL","*sigh* Thank goodness we finally found each other again!","m010_200_010"
+"m010_200_020","char_PLAYER_M","Did you call for help? What're you doing here?{next}",""
+"m010_200_021","char_PLAYER_M","Do we know each other?{next}",""
+"m010_200_022","char_PLAYER_M","It's almost as if we were destined to meet.{next}",""
+"m010_200_030","char_MYSTERIOUS_GIRL","What do you mean? I was trying to catch up with you, of course!","m010_200_030"
+"m010_200_040","char_MYSTERIOUS_GIRL","Huh...? Enough with the jokes, already. Now is hardly the time,
+don't you think?","m010_200_040"
+"m010_200_050","char_MYSTERIOUS_GIRL","Y-Yeah, I suppose it is, in a sense... But please, phrasing!","m010_200_050"
+"m010_200_055","char_MYSTERIOUS_GIRL","Hey. Where did he go? Wasn't he with you?","m010_200_055"
+"m010_200_060","char_MYSTERIOUS_GIRL","Well... maybe he went on ahead. C'mon. We need to hurry up
+to the roof of the government building!","m010_200_060"
+"m010_200_070","char_PLAYER_M","The roof of the government building?{next}",""
+"m010_200_071","char_PLAYER_M","Who are you?{next}",""
+"m010_200_072","char_PLAYER_M","""He,"" who? Who are you talking about?{next}",""
+"m010_200_080","char_MYSTERIOUS_GIRL","Seriously, what's with you?! I mean, isn't a war supposed
+to break out?!","m010_200_080"
+"m010_200_090","char_MYSTERIOUS_GIRL","We have to get to the roof of the Tokyo Metropolitan 
+Government Building!","m010_200_090"
+"m010_200_100","char_OPERATOR_M","I'm guessing... She's the target for our additional mission.
+She's not making a whole lot of sense though...","m010_200_100_M m010_200_100_F"
+"m010_200_110","char_OPERATOR_M","It's highly probable that she's been affected by an anomaly.","m010_200_110_M m010_200_110_F"
+"m010_200_120","char_OPERATOR_M","What I still want to know, though, is why she was already
+approved to contact your Digivice.","m010_200_120_M m010_200_120_F"
+"m010_200_130","char_OPERATOR_M","I'll check the database again. If I learn anything, I'll be
+in touch right away.","m010_200_130_M m010_200_130_F"
+"m010_200_140","char_OPERATOR_M","Even though she piques my interest... we need to do something
+about that giant Digimon first.","m010_200_140_M m010_200_140_F"
+"m010_200_150","char_OPERATOR_M","We can't allow it into the city. For now, please proceed with
+the primary mission.","m010_200_150_M m010_200_150_F"
+"m010_200_160","char_PLAYER_M","Roger. Securing the target and continuing on!{next}",""

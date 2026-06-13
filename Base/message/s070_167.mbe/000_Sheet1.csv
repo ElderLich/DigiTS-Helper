@@ -1,0 +1,125 @@
+string2 0,string 1,string 2,string 3
+"s070_167_010","char_MIREI","",""
+"s070_167_020","char_MIREI","",""
+"s070_167_030","char_PLAYER_M","",""
+"s070_167_031","char_PLAYER_M","",""
+"s070_167_032","char_PLAYER_M","",""
+"s070_167_040","char_MIREI","",""
+"s070_167_050","char_MIREI","",""
+"s070_167_060","char_MIREI","",""
+"s070_167_070","char_MIREI","",""
+"s070_167_080","char_MINERVAMON","Thanks for coming. I have... something I can't speak to
+my younger siblings about...",""
+"s070_167_090","char_PLAYER_M","{next}Sounds serious.",""
+"s070_167_091","char_PLAYER_M","{next}Am I really the right person for this?",""
+"s070_167_092","char_PLAYER_M","{next}Well, I've got somewhere to be, so...",""
+"s070_167_100","char_MINERVAMON","Yes. It is fairly serious. That's why I called you here.",""
+"s070_167_110","char_MINERVAMON","Actually, you're the only person for this. Just goes to
+show how much I trust you, no?",""
+"s070_167_120","char_MINERVAMON","Trying to slink off because you sense trouble?
+Well, I won't let you!",""
+"s070_167_130","char_MINERVAMON","So, I happened to hear a little rumor. The word is that...",""
+"s070_167_140","char_MINERVAMON","Another Beelzemon is apparently near the Factorial Area. 
+But not the same Beelzemon as before...",""
+"s070_167_145","char_MINERVAMON","We're dealing with the Seven Great Demon Lords, here.
+I want to go and see for myself, but...",""
+"s070_167_150","char_PLAYER_M","{next}You're hesitant to do so?",""
+"s070_167_151","char_PLAYER_M","{next}Check? Isn't Beelzemon feeling well?",""
+"s070_167_152","char_PLAYER_M","{next}You mean you wanna go see Beelzemon?",""
+"s070_167_160","char_MINERVAMON","Yes, for various reasons. It's more a matter of whether we
+can face the Seven Great Demon Lords and win, is all.",""
+"s070_167_170","char_MINERVAMON","No, I'm fine, but the thought of meeting Beelzemon
+face to face is too much for me.",""
+"s070_167_190","char_MINERVAMON","Wouldn't you be concerned if some being that could
+destroy the world was lurking around?",""
+"s070_167_200","char_MINERVAMON","",""
+"s070_167_210","char_MINERVAMON","I don't have anyone I can talk to...",""
+"s070_167_220","char_MINERVAMON","And so I find myself turning to you for help. You'll go
+with me, right?",""
+"s070_167_230","char_PLAYER_M","{next}All right.",""
+"s070_167_231","char_PLAYER_M","{end}I don't feel like it right now.",""
+"s070_167_240","char_MINERVAMON","Thank you...! I knew I was right to turn to you.",""
+"s070_167_250","char_MINERVAMON","Well, let me know when you do feel like it. You're my
+only hope, here.",""
+"s070_167_260","char_MINERVAMON","If Apollomon caught wind of this, he'd blow his top
+and rush to the attack!",""
+"s070_167_265","char_MINERVAMON","You're the only one I can talk to about this kind of thing.
+Now, let's head for Beelzemon!",""
+"s070_167_270","char_BEELZEBUMON","Damn. I can't even get to half-throttle like this!",""
+"s070_167_280","char_MINERVAMON","Beelzemon...!",""
+"s070_167_290","char_BEELZEBUMON","You're quite the lucky ones. Normally, I'd gun you down
+without a thought, but...",""
+"s070_167_300","char_BEELZEBUMON","...my guns and bike are out of commission. So you get to
+live until I can fix 'em.",""
+"s070_167_310","char_PLAYER_M","{next}I'm picking up on an incredible aura, here.",""
+"s070_167_311","char_PLAYER_M","{next}Why are they out of commission?",""
+"s070_167_312","char_PLAYER_M","{next}Now's our chance to take Beelzemon down!",""
+"s070_167_320","char_BEELZEBUMON","Heh. How honest. You're funny, kid. I'll kill you last.",""
+"s070_167_330","char_BEELZEBUMON","My gear can't keep up with the rest of me. One of the
+tricky parts of being too strong.",""
+"s070_167_340","char_BEELZEBUMON","Maybe it is... But it seems your friend there would
+prefer a fair fight.",""
+"s070_167_345","char_MINERVAMON","True. Striking while you're unarmed would give us an edge.
+But even if we prevail...",""
+"s070_167_350","char_MINERVAMON","...I wouldn't be satisfied with such a victory. It'd
+continue to gnaw at me.",""
+"s070_167_360","char_BEELZEBUMON","Heh... At least one of you has a sense of pride.",""
+"s070_167_370","char_MINERVAMON","...We'll help you repair your guns and bike. And then we'll fight.",""
+"s070_167_380","char_PLAYER_M","{next}You're gonna help Beelzemon power up, Minervamon?",""
+"s070_167_381","char_PLAYER_M","{next}So, how do we repair your things, Beelzemon?",""
+"s070_167_382","char_PLAYER_M","{next}...Attack! Now!",""
+"s070_167_390","char_MINERVAMON","Yes, or else my problem won't be solved. Sorry...
+I know I'm being selfish.",""
+"s070_167_400","char_BEELZEBUMON","Well, well. So you're keen on the idea, too.",""
+"s070_167_410","char_MINERVAMON","The issue isn't that simple. Defeating Beelzemon as
+he is now won't solve anything.",""
+"s070_167_412","char_MINERVAMON","Beelzemon, promise you'll fight me once the repairs
+are done and you're at full strength.",""
+"s070_167_414","char_MINERVAMON","And, if I win, you'll leave quietly and without incident.
+Do we have a deal?",""
+"s070_167_416","char_BEELZEBUMON","How amusing! Very well. I suppose it'll at least keep
+me from getting bored.",""
+"s070_167_420","char_BEELZEBUMON","I'll send the parts I need for my guns and bike to your Digivice.",""
+"s070_167_430","char_BEELZEBUMON","Report back to me once you've found everything.",""
+"s070_167_440","char_BEELZEBUMON","These are some very fine parts, indeed. Once they're in
+place, I can fight at 120% power.",""
+"s070_167_450","char_BEELZEBUMON","And then it would be only polite to face you in battle.
+You'll see what I'm capable of!",""
+"s070_167_460","char_MINERVAMON","Incredible...! So this is what we'll be fighting?!",""
+"s070_167_470","char_BEELZEMON_BM","Fighting here won't do. Let's switch to a suitable venue
+so that we can give our all.",""
+"s070_167_480","char_BEELZEMON_BM","We can go all out here without fear of collateral damage.
+Show me what you've got!",""
+"s070_167_490","char_MINERVAMON","Beelzemon at full strength... I'm not sure this fight is
+winnable, but I have no choice!",""
+"s070_167_500","char_BEELZEMON_BM","Is that all you've got? If you ever want a rematch, I could
+use the distraction.",""
+"s070_167_510","char_MINERVAMON","Ngh! I'll defeat you next time...!",""
+"s070_167_520","char_MINERVAMON","Do you want to fight Beelzemon at the Paradise Colosseum?",""
+"s070_167_530","char_PLAYER_M","{next}Yes, I want to face off against Beelzemon.",""
+"s070_167_531","char_PLAYER_M","{end}I need to prepare a little more first.",""
+"s070_167_540","char_MINERVAMON","Good! I do, too! And this time, it'll be us who wins!",""
+"s070_167_550","char_MINERVAMON","Yes. Beelzemon doesn't seem to be planning to destroy
+the world right now, so we should take time to prepare.",""
+"s070_167_560","char_BEELZEMON_BM","I'll gun you down as many times as it takes to break your
+spirit!",""
+"s070_167_570","char_BEELZEMON_BM","I admit my defeat.",""
+"s070_167_580","char_MINERVAMON","We won! We beat Beelzemon!",""
+"s070_167_590","char_PLAYER_M","{next}We did it!",""
+"s070_167_591","char_PLAYER_M","{next}Happy now?",""
+"s070_167_592","char_PLAYER_M","{next}That was fun!",""
+"s070_167_600","char_MINERVAMON","Thanks! And I owe it all to you!",""
+"s070_167_610","char_MINERVAMON","Yes. After seeing my siblings get stronger, it's a relief to
+see that I've still got it.",""
+"s070_167_620","char_MINERVAMON","That was your idea of fun...? You really are something else!",""
+"s070_167_630","char_BEELZEMON_BM","I had fun back there. So, as promised, I'll be leaving now.
+Farewell.",""
+"s070_167_640","char_MINERVAMON","I feel like a weight has been lifted. I... no longer find
+myself simply admiring another.",""
+"s070_167_650","char_MINERVAMON","I wish to continue bettering myself. That's my answer. Here.
+This is to thank you.",""
+"s070_167_660","char_MINERVAMON","I like this Paradise Colosseum. No worry of damage, even
+with intense battles like that.",""
+"s070_167_670","char_MINERVAMON","Maybe I'll invite everyone else here. After all, this place
+is so fun!",""
+"s070_167_680","char_MINERVAMON","Anyway, I'll see you later! Let's make our next duel here!",""

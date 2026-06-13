@@ -1,4 +1,4 @@
-string3 0,string3 1
+chr_id,locator_ref
 "chr000","chr000LOC"
 "chr001","chr001LOC"
 "chr002","chr002LOC"
@@ -463,3 +463,5 @@ string3 0,string3 1
 "npc110a","npc110aLOC"
 "pc001a","pc001aLOC"
 "pc002a","pc002aLOC"
+"chr449","chr449LOC"
+"npc012a","npc012aLOC"

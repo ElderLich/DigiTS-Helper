@@ -1,0 +1,64 @@
+string2 0,string 1,string 2,string 3
+"s110_109_010","char_LALAMON","Hey, you! There's a tough Digimon rampaging around right
+now, so you'd better leave!",""
+"s110_109_020","char_PLAYER_M","{next}Is it a Titan?",""
+"s110_109_021","char_PLAYER_M","{next}What did it look like?",""
+"s110_109_022","char_PLAYER_M","{next}Might be a good way to test myself.",""
+"s110_109_030","char_LALAMON","Hmm. I don't think so. It was beating up the Titans, too.",""
+"s110_109_040","char_LALAMON","Let's see... It had wings and sharp claws, and its mane was
+fuzzy!",""
+"s110_109_050","char_LALAMON","What? I wouldn't, if I were you. It was even beating up the
+Titans, you know!",""
+"s110_109_060","char_LALAMON","One day it just wandered in here and started being violent.
+It's totally out of control.",""
+"s110_109_070","char_LALAMON","If you see it, you should run! Be careful!",""
+"s110_109_080","char_DUFTMON_LM","What am I supposed to do?! It is nearly impossible to
+satisfy everyone!",""
+"s110_109_090","char_DUFTMON_LM","Everyone is so selfish! They should know what it is to feel
+my blood, sweat and tears!",""
+"s110_109_100","char_DUFTMON_LM","*gasp* What was I doing...?",""
+"s110_109_110","char_PLAYER_M","{next}You were on a rampage.",""
+"s110_109_111","char_PLAYER_M","{next}That's what we wanna know.",""
+"s110_109_112","char_PLAYER_M","{next}Were you stressed out?",""
+"s110_109_120","char_DUFTMON_LM","How could I have been so foolish? Thank you for stopping me.",""
+"s110_109_130","char_DUFTMON_LM","Apparently, I totally lost control of myself. Thank you for
+stopping me.",""
+"s110_109_140","char_DUFTMON_LM","Apparently so... I feel exhilarated now. Thank you for
+helping me release my stress.",""
+"s110_109_150","char_DUFTMON_LM","But how impolite of me to speak to you in my fighting form.
+Excuse me a moment...",""
+"s110_109_160","char_DUFTMON","That is better... Now, let us continue. I am Leopardmon,
+the leader of the Royal Knights.",""
+"s110_109_170","char_DUFTMON","But they are so selfish! I tried to assemble them, but then
+they scattered everywhere.",""
+"s110_109_180","char_PLAYER_M","{next}Sounds like you've been having a tough time.",""
+"s110_109_181","char_PLAYER_M","{next}King Drasil has been struggling, too.",""
+"s110_109_182","char_PLAYER_M","{next}Sounds like a school teacher.",""
+"s110_109_190","char_DUFTMON","I never thought anyone would understand my struggles...
+Thank you. Thank you so much.",""
+"s110_109_200","char_DUFTMON","Is that so...? So, you have already met with King Drasil?",""
+"s110_109_210","char_DUFTMON","We are supposed to be an elite force protecting this
+world... How embarrassing.",""
+"s110_109_220","char_DUFTMON","Before I knew it, I was alone and wondering what to do.
+After thinking for a long time...",""
+"s110_109_230","char_DUFTMON","...I found myself becoming one with nature here. Then I lost
+track of time.",""
+"s110_109_240","char_PLAYER_M","{next}I want you to try and remember.",""
+"s110_109_241","char_PLAYER_M","{next}Agumon and the others are at the rendezvous point.",""
+"s110_109_242","char_PLAYER_M","{next}An escape from reality, huh?",""
+"s110_109_250","char_DUFTMON","You are right... I cannot pretend that I do not remember
+forever...",""
+"s110_109_260","char_DUFTMON","...I see. Central Tower, is it? I must not forget the
+rendezvous point.",""
+"s110_109_270","char_DUFTMON","I should keep my cool at all times... I probably need more
+training as a leader.",""
+"s110_109_280","char_DUFTMON","I am not confident about being able to organize and lead
+them well at the moment...",""
+"s110_109_290","char_DUFTMON","I would like to stay here and reflect a while longer, then I
+will go to the rendezvous point.",""
+"s110_109_300","char_DUFTMON","This is to thank you for helping me remember my true task.
+Please accept it.",""
+"s110_109_310","char_DUFTMON","Hello. Thank you for helping me back then. Sadly, I still
+have not decided what to do.",""
+"s110_109_320","char_DUFTMON","I think I will stay here and watch the world go by a little
+longer.",""

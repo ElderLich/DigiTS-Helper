@@ -1,0 +1,62 @@
+string2 0,string 1,string 2,string 3
+"s050_039_010","char_ZUDOMON","Hey, help a guy out, here... I need a hand. It's my
+hammer... my precious hammer!",""
+"s050_039_020","char_ZUDOMON","Ah, you're here! I wasn't sure if you'd actually come or
+not. Anyway, listen closely.",""
+"s050_039_030","char_ZUDOMON","My hammer is my life... and now it's broken! It's chipped
+really bad.",""
+"s050_039_040","char_ZUDOMON","I usually take good care of it, but... I got a little
+carried away while working.",""
+"s050_039_050","char_PLAYER_M","{next}Always sad when a beloved tool breaks.",""
+"s050_039_051","char_PLAYER_M","{next}Is there any way to fix it?",""
+"s050_039_052","char_PLAYER_M","{next}I'll get you another one!",""
+"s050_039_060","char_ZUDOMON","So you understand my pain! We craftsmen pour our souls into
+our tools, after all.",""
+"s050_039_070","char_ZUDOMON","Actually, that's why I called you here. I was hoping we
+could discuss repairing my hammer.",""
+"s050_039_080","char_ZUDOMON","That's very kind, but I'm afraid for me, it's my trusty
+hammer here or nothing at all.",""
+"s050_039_090","char_ZUDOMON","But there's still a way to fix my hammer. All I need is
+some Chrondigizoit Metal.",""
+"s050_039_100","char_ZUDOMON","It's quite the rarity, though. About the only place you'll
+find it is the Factorial Area.",""
+"s050_039_110","char_ZUDOMON","You got that area under control, right? Would you mind going
+to have a look for me?",""
+"s050_039_120","char_PLAYER_M","{next}Sure. Just sit tight.",""
+"s050_039_121","char_PLAYER_M","{next}I'll look, but that's it.",""
+"s050_039_122","char_PLAYER_M","{end}I can't go right now.",""
+"s050_039_130","char_ZUDOMON","Thanks! And rest assured I'll make it worth your while!",""
+"s050_039_140","char_ZUDOMON","I was hoping you'd do more than just look. Maybe actually
+find it and bring it back?",""
+"s050_039_150","char_ZUDOMON","That's too bad, but I know you're busy, too. Come see me
+once your schedule opens up!",""
+"s050_039_160","char_ZUDOMON","So, got some time now? I was hoping you could help with
+finding some Chrondigizoit Metal.",""
+"s050_039_170","char_PLAYER_M","{next}You got it.",""
+"s050_039_171","char_PLAYER_M","{end}I still can't.",""
+"s050_039_180","char_ZUDOMON","Oh, so you'll do it? Thanks a lot!",""
+"s050_039_190","char_ZUDOMON","All right. Come back when you've got time. I'll be here!",""
+"s050_039_200","char_ZUDOMON","Okay, your destination is the Factorial Area, and you're
+looking for Chrondigizoit Metal.",""
+"s050_039_210","char_ZUDOMON","If you find any, see if you can get me a little bit.",""
+"s050_039_220","char_ZUDOMON","Once I have that Chrondigizoit Metal, I can manage the rest.
+Happy hunting!",""
+"s050_039_230","char_ZUDOMON","Hey, is that Chrondigizoit Metal I see?! Well, give 'er here.
+Now I can fix my hammer!",""
+"s050_039_240","char_ZUDOMON","This hammer is my partner in work and in battle. Without it,
+I might as well be dead.",""
+"s050_039_250","char_ZUDOMON","Which means, I pretty much owe you my life. Here. Take this. 
+It's the least I can do.",""
+"s050_039_260","char_ZUDOMON","Now I can keep hammering away! I'm planning to make lots of
+stuff, so stay tuned!",""
+"s050_039_270","char_ZUDOMON","I'd love to go to the reactor someday. Making things with
+Vulcanusmon would be so cool!",""
+"s050_039_280","char_MONODRAMON","",""
+"s050_039_290","char_MONODRAMON","",""
+"s050_039_300","char_MONODRAMON","",""
+"s050_039_310","char_MONODRAMON","",""
+"s050_039_320","char_MONODRAMON","",""
+"s050_039_330","char_MONODRAMON","",""
+"s050_039_340","char_ZUDOMON","",""
+"s050_039_350","char_ZUDOMON","",""
+"s050_039_360","char_ZUDOMON","",""

@@ -1,0 +1,111 @@
+string2 0,string 1,string 2,string 3
+"m285_010_010","char_AEGIOMON","We're back again... What is even happening...
+Were... we really able to change the past...?","m285_010_010"
+"m285_010_020","char_INORI","Ugh! Feels like my head is going to explode... Well, first off,
+let's go see Venusmon and see what's going on.","m285_010_020"
+"m285_020_010","char_VENUSMON","*sigh* Bless the stars! I feared the worst when you disappeared
+so suddenly after your fight with Lanamon.","m285_020_010"
+"m285_020_020","char_VENUSMON","Given all that you have done for us these past eight
+years... how can I possibly express my gratitude?","m285_020_020"
+"m285_020_030","char_AEGIOMON","You don't owe us anything. After all...","m285_020_030"
+"m285_020_040","char_INORI","That's right. After all, we still remember, just like it
+was yesterday.","m285_020_040"
+"m285_020_050","char_INORI","We said it to each other the first time we met, when you
+were sheltering Divermon.","m285_020_050"
+"m285_020_060","char_INORI","What do we need a reason to help someone for?","m285_020_060"
+"m285_020_070","char_AEGIOMON","We're just doing the same thing as you.","m285_020_070"
+"m285_020_080","char_AEGIOMON","So... where did Neptunemon go?","m285_020_080"
+"m285_020_090","char_VENUSMON","Back to the bottom of the ocean.","m285_020_090"
+"m285_020_100","char_VENUSMON","And, from what I hear, Neptunemon is keeping the Titans in
+the vicinity in check—just as Neptunemon has always done.","m285_020_100"
+"m285_020_110","char_VENUSMON","Even if it means... continuing to defy orders from above.","m285_020_110"
+"m285_020_120","char_VENUSMON","And I hear the Current under Neptunemon's dominion will be
+reopened as well.","m285_020_120"
+"m285_020_130","char_AEGIOMON","Do you think he's gonna be okay?","m285_020_130"
+"m285_020_140","char_VENUSMON","I admit, I'm worried as well... But that is all the more reason
+to support Neptunemon's wishes.","m285_020_140"
+"m285_020_150","char_VENUSMON","I want to put an end to the infighting between Digimon.","m285_020_150"
+"m285_020_160","char_VENUSMON","If only within the Abyss Area to start with...","m285_020_160"
+"m285_020_170","char_INORI","That... sounds amazing.","m285_020_170"
+"m285_020_180","char_VENUSMON","This village will be just fine. As such, let us turn our
+attention to the matter you brought up.","m285_020_180"
+"m285_020_190","char_AEGIOMON","Oh, that's right! We've gotta get back to Merukimon right away!","m285_020_190"
+"m285_020_200","char_VENUSMON","Merukimon... You said he's in the human world?","m285_020_200"
+"m285_020_210","char_VENUSMON","Could you take me to him?","m285_020_210"
+"m285_030_010","char_INORI","Say, Aegiomon...",""
+"m285_030_020","char_INORI","This is the second time we've traveled through time, huh?",""
+"m285_030_030","char_INORI","The first time... was when you absorbed the power of the
+treasure, back in Shinjuku eight years ago.",""
+"m285_030_040","char_INORI","So I thought that maybe that's what is causing the time travel...",""
+"m285_030_050","char_AEGIOMON","Yeah... I was thinking the same thing...",""
+"m285_030_060","char_AEGIOMON","...that it's Chronomon's power that I absorbed from
+the treasure that is making the time travel happen...",""
+"m285_030_070","char_AEGIOMON","But what triggers the whole process...?
+I mean, what makes that power activate...?",""
+"m285_030_080","char_INORI","You know, now that I think about it...",""
+"m285_030_090","char_INORI","...I thought I saw some kind of dark shadow just before we
+time traveled...",""
+"m285_030_100","char_INORI","I wonder if that has anything to do with it...",""
+"m285_030_110","char_AEGIOMON","Yeah, I wonder...",""
+"m285_030_120","char_AEGIOMON","If only I could use Chronomon's power whenever I wanted to,
+of my own free will... then I'd be able to do anything!",""
+"m285_030_130","char_OPERATOR_M","He's right. I imagine he could pretty much make anything he
+wanted happen.",""
+"m285_030_140","char_OPERATOR_M","A sort of ""godlike power,"" if you will.",""
+"m285_030_150","char_OPERATOR_M","And if such a thing were actually possible... the very
+precepts of our world would be turned on their head.",""
+"m285_030_160","char_OPERATOR_M","You'd better keep a very close watch over this Digimon
+called Aegiomon...",""
+"m285_030_170","char_OPERATOR_M","I'm starting to get a bad feeling about all of this...",""
+"m285_040_010","char_VENUSMON","So where is this gate?","m285_040_010"
+"m285_040_020","char_AEGIOMON","It's in the underground below Central Town. Come on. We'd
+better hurry!","m285_040_020"
+"m285_040_030","char_OPERATOR_M","Regarding our previous discussion... ADAMAS has
+reached a consensus.","m285_040_030_M m285_040_030_F"
+"m285_040_040","char_OPERATOR_M","The ability to time travel that dwells within Aegiomon
+has been ruled a new class-S anomaly.","m285_040_040_M m285_040_040_F"
+"m285_040_050","char_OPERATOR_M","""Class-S"" is defined as ""having an unstable state of
+equilibrium that could bring disaster upon the world.""","m285_040_050_M m285_040_050_F"
+"m285_040_060","char_OPERATOR_M","Am I making myself clear? It means we've deemed
+that Digimon to be a threat.","m285_040_060_M m285_040_060_F"
+"m285_040_070","char_OPERATOR_M","Don't you see how terrifying it would be if someone
+had the ability to manipulate history like that?","m285_040_070_M m285_040_070_F"
+"m285_040_080","char_OPERATOR_M","Imagine, one minute a person could exist... The next,
+poof! It's like they were never here to begin with.","m285_040_080_M m285_040_080_F"
+"m285_040_090","char_OPERATOR_M","I suggest you start considering worst-case scenarios
+here and now, while you still can...","m285_040_090_M m285_040_090_F"
+"m285_050_010","char_INORI","I hope Merukimon is still doing all right.",""
+"m285_050_020","char_PLAYER_M","Let's go.{next}",""
+"m285_050_021","char_PLAYER_M","We should hurry!{next}",""
+"m285_050_022","char_PLAYER_M","We'd better keep moving.{next}",""
+"m285_060_010","char_SIMMONS","...Sure took your sweet time, didn't you?","m285_060_010"
+"m285_060_020","char_SIMMONS","The situation's developing at a startling pace.","m285_060_020"
+"m285_060_030","char_TOUDO","Merukimon passed out the second you all left.","m285_060_030"
+"m285_060_040","char_SIMMONS","The other Digimon have been like headless chickens with
+their leader out of commission.","m285_060_040"
+"m285_060_050","char_VENUSMON","Hmm...I see. In that case, please take me to Merukimon's
+location at once.","m285_060_050"
+"m285_070_010","char_VENUSMON","Merukimon's body... is being consumed by poison.",""
+"m285_070_020","char_VENUSMON","I'm guessing the substance entered Merukimon's system
+from wounds inflicted in previous battles.",""
+"m285_070_030","char_VENUSMON","To be frank, I am afraid there is no hope at this point...",""
+"m285_070_040","char_WEREGARURUMON","No! It can't be true!",""
+"m285_070_050","char_VENUSMON","I know the nature of this poison very well...",""
+"m285_070_060","char_VENUSMON","...because it's the same... as the poison Lanamon put into that
+bottle of wine.",""
+"m285_070_070","char_AEGIOMON","You mean that stuff loaded aboard MasterBlimpmon...?",""
+"m285_070_080","char_VENUSMON","Precisely. A foul concoction most likely created by the Titans...",""
+"m285_070_090","char_VENUSMON","I did a bit more research, and found another poison similar
+in composition.",""
+"m285_070_100","char_VENUSMON","The same antidote may work on this one.",""
+"m285_070_110","char_WEREGARURUMON","Wh-Where do we get this antidote?!",""
+"m285_070_120","char_VENUSMON","We need to compound it from the fruit of Karpos Hulē.",""
+"m285_070_130","char_VENUSMON","The fruit is precious and not readily available... but it can be 
+harvested from the Gear Forest on rare occasions.",""
+"m285_070_140","char_WEREGARURUMON","The Gear Forest... Over in the direction of the sanctuary,
+right? The Current flows strong through the soil there.",""
+"m285_070_150","char_WEREGARURUMON","Sounds like a perfect target for the Titans.",""
+"m285_070_160","char_AEGIOMON","Let's go see what we can find!",""
+"m285_070_170","char_AEGIOMON","After all... we promised Merukimon we'd get those villages
+back from the Titans and stop the fighting.",""
+"m285_070_180","char_INORI","Hopefully, it all can be resolved through negotiation.",""

@@ -1,0 +1,146 @@
+string2 0,string 1,string 2,string 3
+"s010_002_010","char_HIROKO","Hee hee... I'm starting to go places. The tip for this lead
+came in through social media!",""
+"s010_002_020","char_PLAYER_M","{next}Tell me all about it.",""
+"s010_002_021","char_PLAYER_M","{next}Who gave you the info?",""
+"s010_002_022","char_PLAYER_M","{next}And... you're sure it's trustworthy?",""
+"s010_002_030","char_HIROKO","Really draws you in, doesn't it? I'm telling you, this one's
+juicy!",""
+"s010_002_040","char_HIROKO","A fellow fan of the occult who just started following me.
+We're like birds of a feather.",""
+"s010_002_050","char_HIROKO","You can't do this work if you can't spot a fake from a mile
+away. I trust my instincts.",""
+"s010_002_060","char_HIROKO","I'll cut to the chase. The tip's worth acting on because my
+contact's directly involved.",""
+"s010_002_070","char_HIROKO","The kid who messaged me is really into programming.
+Apparently, they do it for fun.",""
+"s010_002_080","char_PLAYER_M","{next}Kids these days sure are something.",""
+"s010_002_081","char_PLAYER_M","{next}What kind of programming?",""
+"s010_002_082","char_PLAYER_M","{next}Nothing illegal, I hope.",""
+"s010_002_090","char_HIROKO","I was surprised, too. Apparently, they got so good, they
+even made their own character.",""
+"s010_002_100","char_HIROKO","They say they made their own character based on a monster
+they saw. Makes you think, huh?",""
+"s010_002_110","char_HIROKO","I seriously doubt it. Apparently, all they did was make
+their own character.",""
+"s010_002_120","char_HIROKO","I saw an image of it, too, and it was really cute! Then one
+day, all its data disappeared.",""
+"s010_002_130","char_HIROKO","Then they got some weird message telling them to visit the
+back alleys of Akihabara.",""
+"s010_002_140","char_HIROKO","That's when the kid got scared and reached out to me. Don't
+we just have to help them?",""
+"s010_002_150","char_PLAYER_M","{next}Absolutely. Let's help that kid out!",""
+"s010_002_151","char_PLAYER_M","{next}As long as it's worth my while.",""
+"s010_002_152","char_PLAYER_M","{end}Maybe some other time.",""
+"s010_002_160","char_HIROKO","I knew you'd say that! I'm sure that kid will appreciate
+your help, and so will I!",""
+"s010_002_170","char_HIROKO","Okay, okay. If you lend a hand, I'll make sure you get your
+reward.",""
+"s010_002_180","char_HIROKO","Oh, are you busy? In that case, just let me know when you're
+free.",""
+"s010_002_190","char_HIROKO","Well? Got the time to do some investigating?",""
+"s010_002_200","char_PLAYER_M","{next}Yeah. Let's go.",""
+"s010_002_201","char_PLAYER_M","{end}No, not yet.",""
+"s010_002_210","char_HIROKO","Just what I was hoping to hear!",""
+"s010_002_220","char_HIROKO","Oh, okay. Let me know when you've got some time on your
+hands.",""
+"s010_002_230","char_HIROKO","That message mentioned the back alleys of Akihabara, but
+didn't specify where.",""
+"s010_002_235","char_HIROKO","I guess we'll just have to wander around and see what we can
+find. Keep your eyes peeled.",""
+"s010_002_240","char_HIROKO","Huh?! What's this?
+Looks like some sort of toy blocks.",""
+"s010_002_250","char_HIROKO","Maybe some kid dropped them here by mistake.
+But, then again...",""
+"s010_002_260","char_???","Don't touch that!",""
+"s010_002_270","char_HIROKO","Aaaaagh! It's a gh-ghooooost!",""
+"s010_002_280","char_SUMERAGI","The public safety office is investigating that object. We're
+just low on police tape.",""
+"s010_002_290","char_HIROKO","Th-That was terrifying! Brought back bad memories of that
+one public safety officer...",""
+"s010_002_295","char_SUMERAGI","What was that?",""
+"s010_002_300","char_HIROKO","N-Nothing! I d-didn't say a word. Hahaha...",""
+"s010_002_305","char_HIROKO","But... is public safety really concerned about a little
+block like this?",""
+"s010_002_310","char_SUMERAGI","That's no ordinary toy block. We've gotten readings off of
+it from Dr. Simmons' device.",""
+"s010_002_320","char_HIROKO","I don't know who that is, but if they're a doctor, they must
+be on to something.",""
+"s010_002_330","char_SUMERAGI","We believe there are others like it, too, since we picked up
+similar readings nearby.",""
+"s010_002_340","char_HIROKO","What? Really?! And have you investigated any other places
+with similar readings?",""
+"s010_002_350","char_SUMERAGI","That's what I'd like to be doing right now, but as you can
+see, I can't leave my post.",""
+"s010_002_360","char_HIROKO","Then why don't we take a look around for you? These blocks
+don't seem that dangerous.",""
+"s010_002_365","char_SUMERAGI","You're civilians. I can't ask you to help, but... I won't
+stop you from looking around.",""
+"s010_002_370","char_SUMERAGI","Still, I want you to run at the first sign of danger.
+Promise me you'll do that, okay?",""
+"s010_002_375","char_SUMERAGI","There are two places with similar readings nearby. And
+remember. Be ready to run.",""
+"s010_002_380","char_HIROKO","Bingo! This block is just like the other one. It's gotta be
+causing one of the readings.",""
+"s010_002_390","char_HIROKO","Hm... I'm not seeing a stream in this, but we can at least
+take the block to that officer.",""
+"s010_002_400","char_HIROKO","Okay. Let's go find the source of that other reading!",""
+"s010_002_410","char_HIROKO","Aha! Here's another one!",""
+"s010_002_420","char_HIROKO","This toy block is just like the others. Let's give it to
+that public safety officer, too!",""
+"s010_002_430","char_HIROKO","Now let's go report back.",""
+"s010_002_431","char_SUMERAGI","What? Weren't you going to investigate for me? I can't leave
+my post. Go get searching!",""
+"s010_002_440","char_SUMERAGI","Good. You're back. You didn't do anything reckless, did you?",""
+"s010_002_450","char_HIROKO","We found two other toy blocks like the one here.",""
+"s010_002_460","char_SUMERAGI","Y-You brought the blocks here?! That was a risky move!
+Though I am curious about them...",""
+"s010_002_470","char_HIROKO","Oh! I just remembered! Listen. About that tip we came here
+to investigate...",""
+"s010_002_472","char_HIROKO","That character whose data disappeared looked like a dinosaur
+made of toy blocks!",""
+"s010_002_474","char_HIROKO","This might have something to do with that. We should keep
+investigating—",""
+"s010_002_480","char_SUMERAGI","Wait... Quick! Get away from those blocks!",""
+"s010_002_490","char_HIROKO","Huh? Whoa! The toy blocks are moving!",""
+"s010_002_500","char_SUMERAGI","They're... joining together?",""
+"s010_002_510","char_TOYAGUMON","Ngh... Gaaah...",""
+"s010_002_520","char_HIROKO","Look! It's a monster!",""
+"s010_002_530","char_HIROKO","Now's my chance for the perfect shot! Say cheese!",""
+"s010_002_540","char_SUMERAGI","What? Are you insane?! Get out of here! That thing's going
+to attack!",""
+"s010_002_550","char_TOYAGUMON","So lonely... I just want... a friend... C'mon... Let's
+play... Let's play...!",""
+"s010_002_560","char_TOYAGUMON","Let's plaaay! Yaaah!",""
+"s010_002_570","char_HIROKO","Oh! The monster disappeared. Where could it have gone to?",""
+"s010_002_580","char_SUMERAGI","That was no monster. It's a strange kind of lifeform we're
+trying to hunt down.",""
+"s010_002_590","char_SUMERAGI","They're highly dangerous creatures that can't be allowed to
+roam free.",""
+"s010_002_600","char_HIROKO","Hey! Could you not jump to conclusions? That was probably a
+character designed by a child.",""
+"s010_002_610","char_SUMERAGI","I'm headed back to HQ. This needs to be reported right away.",""
+"s010_002_620","char_SUMERAGI","I appreciate you helping out with this, but it's time you
+cleared out, too.",""
+"s010_002_630","char_HIROKO","We'll probably get in trouble if we stay here. Let's head
+somewhere else for now.",""
+"s010_002_640","char_HIROKO","*sigh* That officer just would NOT listen to reason. That
+was no trick. I'm sure of it!",""
+"s010_002_650","char_HIROKO","Earlier, I left out how the kid who messaged me just changed
+schools, and has no friends.",""
+"s010_002_660","char_HIROKO","They hardly ever see their parents, either, which is why the
+kid turned to programming.",""
+"s010_002_670","char_PLAYER_M","{next}It said it was lonely.",""
+"s010_002_671","char_PLAYER_M","{next}You think that's why the Digimon went crazy?",""
+"s010_002_672","char_PLAYER_M","{next}Then we should be that kid's friends!",""
+"s010_002_680","char_HIROKO","Right, I heard that, too. I bet that kid's feelings had a
+major impact on that Digimon.",""
+"s010_002_690","char_HIROKO","That Digimon said it was lonely. I bet it was influenced by
+how that child felt.",""
+"s010_002_700","char_HIROKO","That's a great idea! But I want them to be friends with kids
+their age, too.",""
+"s010_002_710","char_HIROKO","I doubt that Digimon meant to go berserk. It was just lonely
+and didn't know what to do.",""
+"s010_002_720","char_HIROKO","But we should head back. Oh, and I almost forgot!",""
+"s010_002_730","char_HIROKO","Here's your reward for helping out this time. See you
+around!",""

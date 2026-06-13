@@ -1,0 +1,112 @@
+string2 0,string 1,string 2,string 3
+"s110_102_010","char_ULFORCEVDRAMON","I came here to see Lord Neptunemon's Blue Digizoid armor,
+but...",""
+"s110_102_020","char_ULFORCEVDRAMON","...I am unsure of how to talk to Lord Neptunemon about it.",""
+"s110_102_030","char_ULFORCEVDRAMON","We would be talking about an extremely rare material. I do
+not want to seem suspicious.",""
+"s110_102_040","char_PLAYER_M","{next}I'll mention you to Neptunemon.",""
+"s110_102_041","char_PLAYER_M","{next}You wanna just sneak in?",""
+"s110_102_042","char_PLAYER_M","{end}Let's talk again later.",""
+"s110_102_050","char_ULFORCEVDRAMON","Would you do that for me? I am sure that will make it go
+much smoother!",""
+"s110_102_060","char_ULFORCEVDRAMON","My body stands out, so I could not ""sneak in""... No! I do
+not want to be suspicious!",""
+"s110_102_070","char_ULFORCEVDRAMON","Ah, you are busy. I apologize. I shall see you later.",""
+"s110_102_080","char_ULFORCEVDRAMON","I am sorry to ask this of you, but please talk to Lord
+Neptunemon for me.",""
+"s110_102_090","char_ULFORCEVDRAMON","Let us go right away!",""
+"s110_102_100","char_JUMBOGAMEMON","Good to see ya. Me doin' good and feelin' at home here now.",""
+"s110_102_110","char_NEPTUNEMON","Thank you for coming all this way. Is anything wrong?",""
+"s110_102_120","char_ULFORCEVDRAMON","I hope you will forgive me for such a sudden visit. To get
+right to it, I...",""
+"s110_102_130","char_NEPTUNEMON","...Understood, UlforceVeedramon. So you want to repair your
+armor, do you?",""
+"s110_102_140","char_NEPTUNEMON","Yes, just as you said, my armor is made of Blue Digizoid.",""
+"s110_102_150","char_ULFORCEVDRAMON","How do you usually repair your armor?",""
+"s110_102_160","char_NEPTUNEMON","It is seldom damaged, but if need be, I have access to a
+vein of Chrondigizoit ore.",""
+"s110_102_170","char_NEPTUNEMON","And that is thanks to JumboGamemon over there.",""
+"s110_102_180","char_JUMBOGAMEMON","Hehehe. Me found vein of ore!",""
+"s110_102_190","char_ULFORCEVDRAMON","Could you possibly spare some, then?!",""
+"s110_102_200","char_NEPTUNEMON","I wish I could say, ""Of course,"" but...",""
+"s110_102_210","char_NEPTUNEMON","...even though I have enough for now, Chrondigizoit ore is
+still a very rare material.",""
+"s110_102_220","char_NEPTUNEMON","I cannot hand it out to just anyone.",""
+"s110_102_230","char_ULFORCEVDRAMON","I see. So I must show you that I am worthy?",""
+"s110_102_240","char_NEPTUNEMON","Exactly. Think of it as a battle ritual to prove yourself.",""
+"s110_102_250","char_NEPTUNEMON","However, the ocean is my arena. If we fight here, I would
+have too much of an advantage.",""
+"s110_102_260","char_ULFORCEVDRAMON","I would not mind. I am the one asking for a favor.",""
+"s110_102_270","char_NEPTUNEMON","This must be fair. I cannot measure your true strength
+without a level playing field.",""
+"s110_102_280","char_NEPTUNEMON","That is true...",""
+"s110_102_290","char_NEPTUNEMON","You there, one who saved the ocean... Why not join
+UlforceVeedramon? You are partners, no?",""
+"s110_102_300","char_ULFORCEVDRAMON","Not exactly. I have asked this human to bring me here, but
+it is really a personal matter.",""
+"s110_102_310","char_ULFORCEVDRAMON","I want to do this without the help of others.",""
+"s110_102_320","char_PLAYER_M","{next}Let me fight alongside you.",""
+"s110_102_321","char_PLAYER_M","{next}You should accept Neptunemon's terms.",""
+"s110_102_322","char_PLAYER_M","{next}It's too late to turn back now.",""
+"s110_102_330","char_ULFORCEVDRAMON","Well... When I think it over rationally, I realize that
+would be the best thing to do...",""
+"s110_102_340","char_ULFORCEVDRAMON","Hmm... Indeed, it is a condition offered by the opponent. It
+may be rude to decline it...",""
+"s110_102_350","char_ULFORCEVDRAMON","I know how dependable you are. It is just a matter of my own
+pride...",""
+"s110_102_360","char_ULFORCEVDRAMON","...but I suppose this is no time for such foolishness.",""
+"s110_102_370","char_ULFORCEVDRAMON","Understood. The two of us shall fight together. Lord
+Neptunemon, is it agreed?",""
+"s110_102_380","char_NEPTUNEMON","Of course. Shall we start the battle right away?",""
+"s110_102_390","char_PLAYER_M","{next}Yes, right away.",""
+"s110_102_391","char_PLAYER_M","{end}I need to get ready first.",""
+"s110_102_400","char_NEPTUNEMON","All right, then. Let us begin. No need to go easy on me.
+Come, now!",""
+"s110_102_410","char_NEPTUNEMON","Very well. Let me know when you are ready, then.",""
+"s110_102_420","char_NEPTUNEMON","Are you ready now?",""
+"s110_102_430","char_PLAYER_M","{next}Yes, I'm ready.",""
+"s110_102_431","char_PLAYER_M","{end}Not quite yet.",""
+"s110_102_440","char_NEPTUNEMON","All right, then. Let us begin. No need to go easy on me.
+Come, now!",""
+"s110_102_450","char_NEPTUNEMON","Very well. Let me know when you are ready, then.",""
+"s110_102_460","char_JUMBOGAMEMON","Neptunemon want ya to fight hard. Ya better be really ready!",""
+"s110_102_470","char_NEPTUNEMON","You have certainly shown me what you are capable of and your
+true feelings.",""
+"s110_102_480","char_NEPTUNEMON","There is no dishonesty in your words. I can tell after
+crossing swords with you.",""
+"s110_102_490","char_NEPTUNEMON","As promised, I shall share the material to repair your
+armor.",""
+"s110_102_500","char_ULFORCEVDRAMON","You will?! Thank you very much!",""
+"s110_102_510","char_NEPTUNEMON","JumboGamemon, could you go to the Factorial Area and have
+Chrondigizoit ore processed?",""
+"s110_102_520","char_JUMBOGAMEMON","No problem! Me go to Factorial Area right away!",""
+"s110_102_530","char_JUMBOGAMEMON","We can meet at Guardromon's place. You come after take
+break.",""
+"s110_102_540","char_ULFORCEVDRAMON","All right. Let us get going, too! You will stick with me to
+the end, right?",""
+"s110_102_550","char_NEPTUNEMON","You are leaving so soon? I enjoyed fighting with you.",""
+"s110_102_560","char_NEPTUNEMON","Actually, I have a favor to ask of you. It is about a
+different matter...",""
+"s110_102_570","char_NEPTUNEMON","You are going with UlforceVeedramon, no? When you are done
+and have time, could you return?",""
+"s110_102_580","char_ULFORCEVDRAMON","I apologize, Lord Neptunemon, for taking this person away
+from you for now...",""
+"s110_102_590","char_NEPTUNEMON","Of course. Have a safe trip.",""
+"s110_102_600","char_JUMBOGAMEMON","Me give Blue Chrondigizoit Metal to UlforceVeedramon just now.",""
+"s110_102_610","char_JUMBOGAMEMON","Me happy! JumboGamemon useful!",""
+"s110_102_620","char_GUARDROMON","Production is going smoothly, thanks to your assistance.
+Now, what can I do for you?",""
+"s110_102_630","char_PLAYER_M","I wanna repair Zudomon's hammer.",""
+"s110_102_631","char_PLAYER_M","I need to fix Blimpmon.",""
+"s110_102_632","char_PLAYER_M","{end}Nothing right now.",""
+"s110_102_640","char_ULFORCEVDRAMON","I just received the Blue Chrondigizoit Metal. Now I can 
+repair my armor!",""
+"s110_102_650","char_ULFORCEVDRAMON","Honestly, without you, I might not have been able to show
+Lord Neptunemon I was serious.",""
+"s110_102_660","char_ULFORCEVDRAMON","Here, take this. Consider it a reward! I shall head for
+the rendezvous point now. So long!",""
+"s110_102_670","char_ULFORCEVDRAMON","By the way, I remember Lord Neptunemon saying something
+about asking a favor of you...",""
+"s110_102_680","char_ULFORCEVDRAMON","Either way, I am sure you have a lot to do. I shall not
+monopolize your time.",""
+"s110_102_690","char_ULFORCEVDRAMON","I shall be fine. Do not worry and go ahead. See you again!",""

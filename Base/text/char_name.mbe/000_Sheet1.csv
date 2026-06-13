@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "char_EX-TYRANOMON","ExTyrannomon"
 "char_LUNAMON","Lunamon"
 "char_LEKISMON","Lekismon"
@@ -509,12 +509,12 @@ string2 0,string 1
 "char_VULCANUS_LEFTARM","Left Arm"
 "char_CHRONOMONROBO_COMPLETE","Giant Slayer"
 "char_CHRONOMON_BOSS_EVENT","Chronomon"
-"char_CHRONOMON_BOSS","Chronomon"
+"char_CHRONOMON_BOSS","Chronomon DM"
 "char_CHRONOMON_BOSS_WING","Chronomon (Wings)"
 "char_CHRONOMON_BOSS_ADD_RIGHTWING","Chronomon (R. Muzzle)"
 "char_CHRONOMON_BOSS_ADD_LEFTWING","Chronomon (L. Muzzle)"
 "char_CHRONOMON_BOSS_LEFTARM","Chronomon (Left Arm)"
-"char_CHRONOMON_BOSS_CORE","Chronomon (Core)"
+"char_CHRONOMON_BOSS_CORE","Chronomon DM (Core)"
 "char_CHRONOMON_BOSS_RIGHTWING","Chronomon (Right Wing)"
 "char_CHRONOMON_BOSS_LEFTWING","Chronomon (Left Wing)"
 "char_CHRONOMON_BOSS_LEFTARM1","Chronomon (Error A)"

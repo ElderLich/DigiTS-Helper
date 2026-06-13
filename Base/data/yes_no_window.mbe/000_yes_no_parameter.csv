@@ -144,3 +144,5 @@ int32 0,string2 1,string2 2,string2 3
 20149,"yesno_giveup_0010","10000","10001"
 20150,"yesno_language_0030","10000","10001"
 20151,"yesno_taransfer_0010","10000","10001"
+20152,"yesno_language_0040","10000","10001"
+20153,"yesno_language_0050","10000","10001"

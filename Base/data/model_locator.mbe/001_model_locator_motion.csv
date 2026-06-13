@@ -1,4 +1,4 @@
-string3 0,string3 1
+motion_key,motion_name
 "chr001_ba01","ba01"
 "chr001_ba02","ba02"
 "chr002_ba01","ba01"
@@ -1615,3 +1615,16 @@ string3 0,string3 1
 "pc002a_fr01_01b","fr01_01b"
 "pc002a_fw01_01","fw01_01"
 "pc002a_r142_loop01","r142_loop01"
+"chr907_bb02","bb02"
+"chr907_bb03","bb03"
+"chr909_bb02","bb02"
+"chr909_bb03","bb03"
+"chr909_bd01","bd01"
+"chr909_bd01_01","bd01_01"
+"chr909_bd01_02","bd01_02"
+"chr909_bg01","bg01"
+"chr909_bg01_01","bg01_01"
+"chr909_bg01_02","bg01_02"
+"chr950_bb01","bb01"
+"chr950_bb02","bb02"
+"chr950_bb03","bb03"

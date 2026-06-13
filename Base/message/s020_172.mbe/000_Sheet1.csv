@@ -1,0 +1,139 @@
+string2 0,string 1,string 2,string 3
+"s020_172_010","char_HANGYOMON","Oh! It's you! I didn't think I'd be seeing you again!",""
+"s020_172_020","char_PLAYER_M","{next}I came to hear what you had to say.",""
+"s020_172_021","char_PLAYER_M","{next}How've you been?",""
+"s020_172_022","char_PLAYER_M","{next}I hoped I'd never see you again.",""
+"s020_172_030","char_HANGYOMON","You know, I was hoping it'd be you who'd hear me out. I
+couldn't be happier to see you!",""
+"s020_172_040","char_HANGYOMON","Better, thanks. My injuries have mostly healed. All thanks
+to you and Shellmon...",""
+"s020_172_050","char_HANGYOMON","...I guess I can't blame you. I am a Titan, after all.",""
+"s020_172_060","char_HANGYOMON","Anyway, here's the thing. I'm concerned about Sharkmon, my
+old boss who we fought before.",""
+"s020_172_070","char_HANGYOMON","Seizing control of the Current is the Titans' greatest
+desire, and Sharkmon never gives up.",""
+"s020_172_090","char_HANGYOMON","You see, Sharkmon gave up too easily for my liking. He has
+to be plotting something...",""
+"s020_172_100","char_PLAYER_M","{next}I'll look into it.",""
+"s020_172_101","char_PLAYER_M","{next}You sure you're not just imagining things?",""
+"s020_172_102","char_PLAYER_M","{next}I'll beat Sharkmon as many times as it takes!",""
+"s020_172_110","char_HANGYOMON","You mean... you believe me?! Oh, thank you!",""
+"s020_172_120","char_HANGYOMON","I know because I was always with Sharkmon. He isn't one to
+give up easily like that.",""
+"s020_172_130","char_HANGYOMON","I appreciate your courage, but... there's more to this than
+just defeating Sharkmon.",""
+"s020_172_140","char_HANGYOMON","If we're going to investigate the ocean floor, we'll need
+Submarimon's help.",""
+"s020_172_150","char_HANGYOMON","Although, I'm sure Submarimon has concerns of his own... He
+may have headed off somewhere.",""
+"s020_172_160","char_HANGYOMON","Even so, I want to at least try to go see Submarimon. Why
+don't you come along?",""
+"s020_172_162","char_HANGYOMON","...No sign of Submarimon. I was kind of expecting that, but,
+still...",""
+"s020_172_164","char_HANGYOMON","What a waste! And after I dragged you all the way out here
+and everything...",""
+"s020_172_166","char_HANGYOMON","Haha... What a joke I am. Is this really the best I can
+manage?",""
+"s020_172_170","char_???","I heard every word of that, ya salty old dog.",""
+"s020_172_180","char_SABMARIMON","Keep up that sorta weak talk and ye'll soon be in deep water
+with me, matey!",""
+"s020_172_190","char_HANGYOMON","Submarimon...!",""
+"s020_172_200","char_SABMARIMON","I was just going down for a bit of a dive, ya see, and I
+found a rather suspicious place.",""
+"s020_172_210","char_SABMARIMON","Thing is, 'tis more trouble than I reckon I can handle on me
+own. Mind pitching in?",""
+"s020_172_220","char_PLAYER_M","{next}'Twon't be no trouble t'all!",""
+"s020_172_221","char_PLAYER_M","{next}What makes this place so suspicious?",""
+"s020_172_222","char_PLAYER_M","{next}Aren't we already deep in the water with you?",""
+"s020_172_230","char_SABMARIMON","Raring to go, are ya? I like the cut of yer jib!",""
+"s020_172_240","char_SABMARIMON","I been looking into some things, meself, ya see. Me matey's
+not alone in its suspicions.",""
+"s020_172_250","char_SABMARIMON","Don't ya know that expression? Well, I s'pose ya could say
+the deep water's the problem.",""
+"s020_172_260","char_SABMARIMON","There's something fishy about the water deep below near the
+bottom of the sea.",""
+"s020_172_270","char_HANGYOMON","That certainly sounds like it's worth investigating. I'd
+better come along, too.",""
+"s020_172_280","char_SABMARIMON","I knew I could count on ya, matey! Now, what do YOU say?
+Ready to go for a dive with us?",""
+"s020_172_290","char_PLAYER_M","{next}Let's go!",""
+"s020_172_291","char_PLAYER_M","{end}Not just yet.",""
+"s020_172_300","char_SABMARIMON","Then let's be off!",""
+"s020_172_310","char_SABMARIMON","I'll dive down for another look while ya go get prepped. We
+can all leave when ya return.",""
+"s020_172_313","char_HANGYOMON","I'll wait here. Come back as soon as you're ready!",""
+"s020_172_315","char_SABMARIMON","When ya meet back up with me matey, here, I'll swim up in a
+jiffy. See ya soon!",""
+"s020_172_320","char_SABMARIMON","I'll be taking ya full speed ahead on this trip! Next thing
+ya know, we'll be there!",""
+"s020_172_330","char_SABMARIMON","This here be what's suspect, if ya ask me. What do ya make
+of it?",""
+"s020_172_340","char_HANGYOMON","You're right... As soon as we got here, I found it oddly
+hard to breathe...",""
+"s020_172_350","char_HANGYOMON","We'll have a hard time if we stay too long. We'd better look
+around quickly.",""
+"s020_172_360","char_???","...ack... Give it back... Give it back!",""
+"s020_172_370","char_SABMARIMON","Wh-What's this all about?!",""
+"s020_172_380","char_GANIMON","The Current... The Current...!",""
+"s020_172_390","char_HANGYOMON","The Current?! What are you talking about?",""
+"s020_172_400","char_SABMARIMON","Stop! Get back! That little one's lost its head!",""
+"s020_172_410","char_GANIMON","Give back... the Current!",""
+"s020_172_420","char_HANGYOMON","It's going to attack!",""
+"s020_172_430","char_HANGYOMON","Did... Did we win? That sort of felt like a hollow
+victory...",""
+"s020_172_440","char_GANIMON","...Huh? Why am I here? What've I been doing?",""
+"s020_172_450","char_HANGYOMON","You don't remember?",""
+"s020_172_460","char_GANIMON","Last thing I knew, I was thinking that it was getting hard
+to breathe. Then, nothing.",""
+"s020_172_470","char_HANGYOMON","So that means... Aha! I get it now! I was right to think
+Sharkmon wouldn't go quietly.",""
+"s020_172_480","char_PLAYER_M","{next}You think Sharkmon set some sort of trap?",""
+"s020_172_481","char_PLAYER_M","{next}Because this drunk was causing trouble?",""
+"s020_172_482","char_PLAYER_M","{next}You're saying we have to pay some fee?",""
+"s020_172_490","char_HANGYOMON","I see we're on the same wavelength. I knew you were a sharp
+one.",""
+"s020_172_500","char_HANGYOMON","Hey! Crabmon isn't drunk. Besides, I'm talking about
+something else.",""
+"s020_172_510","char_HANGYOMON","Do you ever think of anything besides money? That can't be
+good for you...",""
+"s020_172_520","char_SABMARIMON","Well, don't be keeping us in suspense, matey. If ya know
+something, out with it, already!",""
+"s020_172_530","char_HANGYOMON","Sharkmon seems to have done something to the Current before
+leaving.",""
+"s020_172_540","char_HANGYOMON","You see, I found a small vein of the Current. It's at the
+edge of the sea, but it connects to the rest of the Current.",""
+"s020_172_550","char_HANGYOMON","Even us finding it hard to breathe could be from reduced
+energy flow due to tampering.",""
+"s020_172_560","char_SABMARIMON","Aye, and that'd explain why this little one lost its head!",""
+"s020_172_570","char_HANGYOMON","Right. That's what I think, too.",""
+"s020_172_580","char_GANIMON","Sorry. I didn't mean to cause trouble...",""
+"s020_172_590","char_HANGYOMON","You weren't in control of your actions. Don't worry about
+it.",""
+"s020_172_600","char_SABMARIMON","So... what do ya plan to do now, matey?",""
+"s020_172_610","char_HANGYOMON","My old boss, Sharkmon, is gone, so I need to go find someone
+who's an even bigger boss.",""
+"s020_172_620","char_HANGYOMON","Then I'm going to work hard, until I'm put in charge of the
+squad that patrols this area.",""
+"s020_172_630","char_PLAYER_M","{next}You'll be doing the work of a Titan again?",""
+"s020_172_631","char_PLAYER_M","{next}You'd betray Shellmon like that?!",""
+"s020_172_632","char_PLAYER_M","{next}It'll have to be a big fish who takes you in.",""
+"s020_172_640","char_HANGYOMON","Well, I'll have to if I'm going to get promoted. But this
+time, I have a new goal.",""
+"s020_172_650","char_HANGYOMON","No! That's not it at all! That's the last thing I would do.
+You have to believe me!",""
+"s020_172_660","char_HANGYOMON","That's true. Although, to be honest, I doubt Sharkmon was
+ever given that much authority.",""
+"s020_172_670","char_HANGYOMON","Once I become the leader of this area, I can order the
+others not to cause trouble.",""
+"s020_172_680","char_SABMARIMON","Ya'd fix it so Shellmon could come back safe and sound?
+Shiver me timbers, ya be brave!",""
+"s020_172_690","char_HANGYOMON","It may take some time, but I'll make it happen. I swear.",""
+"s020_172_700","char_SABMARIMON","Well... I'd say we'd best be going now. We'll soon be losing
+our own heads, otherwise.",""
+"s020_172_710","char_HANGYOMON","Yeah, let's get out of here!",""
+"s020_172_720","char_HANGYOMON","I'm in your debt again. Here. Take this as thanks.",""
+"s020_172_730","char_HANGYOMON","And this is goodbye. I need to go back to being a Titan—to
+protect what matters most.",""
+"s020_172_740","char_HANGYOMON","Thanks for everything! And take care!",""
+"s020_172_750","char_HANGYOMON","If you're ready to go investigate that suspicious location,
+talk to Submarimon.",""

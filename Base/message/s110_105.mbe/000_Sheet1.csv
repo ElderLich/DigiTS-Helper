@@ -1,0 +1,100 @@
+string2 0,string 1,string 2,string 3
+"s110_105_010","char_DYNASMON","Ah, good to see you again. Upon my word as a knight,
+I have arrived at the rendezvous point.",""
+"s110_105_020","char_DYNASMON","By the way, I have not seen LordKnightmon yet. He said he
+would be heading here soon...",""
+"s110_105_030","char_PLAYER_M","{next}That is a little worrying.",""
+"s110_105_031","char_PLAYER_M","{next}Where did LordKnightmon go?",""
+"s110_105_032","char_PLAYER_M","{end}Well, see you later.",""
+"s110_105_040","char_DYNASMON","There was mention of an investigation, but I wonder if
+something has gone amiss...",""
+"s110_105_050","char_DYNASMON","I heard something about an investigation in some ""Akihabara""
+place in the human world...",""
+"s110_105_060","char_DYNASMON","Very well. Take care of yourself.",""
+"s110_105_070","char_DYNASMON","If you happen to find yourself in Akihabara, please keep an
+eye out for LordKnightmon.",""
+"s110_105_080","char_DYNASMON","I wonder if the investigation has run into trouble. Please
+look into the matter for me.",""
+"s110_105_090","char_LOADKNIGHTMON","Ungh, what have I done...? I've met with abject failure...",""
+"s110_105_100","char_PLAYER_M","{next}Hey, cheer up.",""
+"s110_105_101","char_PLAYER_M","{next}What happened?",""
+"s110_105_102","char_PLAYER_M","{end}[I should leave it alone.]",""
+"s110_105_110","char_LOADKNIGHTMON","You wish to offer me encouragement? I see that your soul is
+one of uncommon beauty.",""
+"s110_105_120","char_LOADKNIGHTMON","You care about me enough to ask...? Yes, I suppose I can
+share with you my situation.",""
+"s110_105_130","char_LOADKNIGHTMON","Urk... What should I do...?",""
+"s110_105_140","char_LOADKNIGHTMON","Please listen to my tale of woe. I came to Akihabara as part
+of an investigation.",""
+"s110_105_150","char_LOADKNIGHTMON","However, the Knight Corps which accompanied me suddenly
+stopped obeying my orders!",""
+"s110_105_160","char_LOADKNIGHTMON","They were getting out of control, so I locked them up inside
+this space for now.",""
+"s110_105_170","char_PLAYER_M","{next}Why did they stop obeying you?",""
+"s110_105_171","char_PLAYER_M","{next}Why did you bring the Knight Corps along?",""
+"s110_105_172","char_PLAYER_M","{next}Are these knights your subordinates?",""
+"s110_105_180","char_LOADKNIGHTMON","Honestly, I have no idea. It seemed like suddenly they
+didn't recognize me anymore...",""
+"s110_105_190","char_LOADKNIGHTMON","Because all of them are beautiful, myself included. They are
+my proud knights.",""
+"s110_105_200","char_LOADKNIGHTMON","Indeed. They are my loyal subordinates. I trusted them, too,
+so I brought them along.",""
+"s110_105_210","char_LOADKNIGHTMON","I have them locked up for now, but I wonder how long I can
+keep them under control...",""
+"s110_105_220","char_SLEIPMON","I thought I saw a familiar face. It is unlike you to look so
+down.",""
+"s110_105_230","char_LOADKNIGHTMON","Kentaurosmon! Oh... How unfortunate to have shown you this
+not-so-beautiful expression.",""
+"s110_105_240","char_SLEIPMON","...Is that so? I get the picture. But fear not, for I shall
+lend a hand.",""
+"s110_105_250","char_LOADKNIGHTMON","I appreciate it... and I'm sorry for the trouble.",""
+"s110_105_260","char_SLEIPMON","We'll need your help as well. Apparently, there are a good
+number of knights out there.",""
+"s110_105_270","char_SLEIPMON","Let us save them together.",""
+"s110_105_280","char_PLAYER_M","{next}Sure. I'm willing to help.",""
+"s110_105_281","char_PLAYER_M","{next}How are we going to save them?",""
+"s110_105_282","char_PLAYER_M","{next}What were you doing here?",""
+"s110_105_290","char_SLEIPMON","I knew you had a strong heart. It is very impressive of you
+to agree right away.",""
+"s110_105_300","char_SLEIPMON","I did not want to make this decision, but... I am afraid we
+must defeat them.",""
+"s110_105_310","char_SLEIPMON","There was one more restaurant I wanted to try, so I was on
+my way back to Akihabara.",""
+"s110_105_320","char_SLEIPMON","The Knight Corps must have glitched because of the firewall
+of this world.",""
+"s110_105_330","char_SLEIPMON","It is hard to say this, but... we must defeat them and
+return them to their souls.",""
+"s110_105_340","char_LOADKNIGHTMON","I also thought of that particular method, but was hoping it 
+wouldn't come to that.",""
+"s110_105_350","char_SLEIPMON","...It cannot be helped. They are suffering as well. We must
+deal with them quickly.",""
+"s110_105_360","char_SLEIPMON","Digimon can be reborn from their souls. Sooner or later, you
+will see them again.",""
+"s110_105_370","char_LOADKNIGHTMON","...Yes. You're right.",""
+"s110_105_380","char_LOADKNIGHTMON","Very well... My mind is made up. We must save them as soon
+as possible.",""
+"s110_105_390","char_SLEIPMON","They were your precious subordinates. You must take care of
+them yourself.",""
+"s110_105_400","char_SLEIPMON","Naturally, we will help you, too.",""
+"s110_105_410","char_LOADKNIGHTMON","You have my gratitude. Kentaurosmon aside, I never expected to be 
+thanking a human.",""
+"s110_105_420","char_SLEIPMON","All right, then... Here we go!",""
+"s110_105_430","char_SLEIPMON","That one seems to be the last. But he looks different from
+the others.",""
+"s110_105_440","char_LOADKNIGHTMON","Lobomon... He's one of the most noble knights in my corps!",""
+"s110_105_450","char_SLEIPMON","It must be quite formidable, then. We shall fight when you
+are ready.",""
+"s110_105_460","char_LOADKNIGHTMON","Lobomon was the last of all the knights. It looks like
+things are under control now.",""
+"s110_105_470","char_LOADKNIGHTMON","My knights, I am truly sorry... Forgive me...",""
+"s110_105_480","char_SLEIPMON","Now, let us head for the rendezvous point. We have no
+time to waste.",""
+"s110_105_490","char_LOADKNIGHTMON","You're right. It would not be beautiful to wander about any
+longer.",""
+"s110_105_500","char_LOADKNIGHTMON","I'll take the Knight Corps along with me in my heart as we
+head to the rendezvous point.",""
+"s110_105_510","char_SLEIPMON","We were able to save everyone promptly, thanks to you.",""
+"s110_105_520","char_LOADKNIGHTMON","Your strength deserves to be praised. It was absolutely
+beautiful.",""
+"s110_105_530","char_LOADKNIGHTMON","I'll be sure to repay this debt one day. See you around.",""
+"s110_105_540","char_SLEIPMON","Now, let us go defeat the Knight Corps!",""

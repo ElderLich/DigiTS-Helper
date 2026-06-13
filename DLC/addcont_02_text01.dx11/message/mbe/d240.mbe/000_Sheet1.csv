@@ -1,0 +1,165 @@
+string2 0,string 1,string 2,string 3
+"d240_010_010","char_OMEGAMON","This is as far as you go, Parallelmon, ravager of time and space.",""
+"d240_010_020","char_PARALLELMON","...",""
+"d240_010_030","char_HIROKO","They vanished!",""
+"d240_010_040","char_OMEGAMON","What is Parallelmon trying to pull?",""
+"d240_020_010","char_HIROKO","Over there! Parallelmon!",""
+"d240_020_020","char_PARALLELMON","...",""
+"d240_020_030","char_HIROKO","Here we spent all this time running away from Parallelmon,
+and now they're the one fleeing from us!",""
+"d240_020_040","char_BANCHOLEOMON","It looks like it's waiting for us to tire out.",""
+"d240_020_050","char_BANCHOLILIMON","I think they are waiting for us to expend all our energy.",""
+"d240_020_060","char_BANCHOSTINGMON","They're probably trying to stay out of reach in the hope that
+we tire out eventually. Where's its sense of pride?",""
+"d240_020_070","char_BANCHOGOLEMON","Is it waiting for us to exhaust ourselves?",""
+"d240_020_080","char_BANCHOMAMEMON","It looks like it's just runnin' around,
+hoping we wear ourselves out chasin' it.",""
+"d240_020_090","char_OMEGAMON","It is clearly trying to turn this into a test of endurance.
+We must come up with some kind of plan in response.",""
+"d240_020_100","char_HIROKO","If we could just block off its path somehow, 
+we might be able to corner it.",""
+"d240_020_110","char_OMEGAMON","Yes... and I believe I know how we can accomplish that feat...",""
+"d240_020_120","char_OMEGAMON","...but it depends on you.",""
+"d240_020_130","char_HIROKO","M-Me?!",""
+"d240_020_140","char_OMEGAMON","Though it was only for a short time, you managed to seize
+control of the mechanism governing this white world.",""
+"d240_020_150","char_OMEGAMON","I doubt you intended it, but you have gained some influence
+over this world. It should respond to your fervent wish.",""
+"d240_020_160","char_OMEGAMON","You need only keep your wish, the wish that your voice
+might be heard, at the forefront of your mind and your heart.",""
+"d240_020_170","char_OMEGAMON","Now, come. Let us return to the places where you
+found those black crystals that govern this world.",""
+"d240_030_010","char_OMEGAMON","You may be able to make this world respond to your will. 
+Go on. Try making your wish.",""
+"d240_030_020","char_HIROKO","Hnh...!",""
+"d240_031_010","char_HIROKO","""Inori... just look at what's become of the world...""",""
+"d240_031_020","char_HIROKO","""Everyone's... just given up...""",""
+"d240_031_030","char_HIROKO","""I can feel it, too. It's like my heart is breaking...""",""
+"d240_031_040","char_HIROKO","""But... I keep on filming.""",""
+"d240_031_050","char_HIROKO","""I'm not even sure why.
+Somehow... I just can't stop myself.""",""
+"d240_031_060","char_HIROKO","""I think it's because...""​",""
+"d240_031_070","char_HIROKO","""...you've always been such a good friend to me, Inori...""",""
+"d240_031_080","char_HIROKO","""...""​",""
+"d240_031_090","char_HIROKO","""...even though it was all my fault...""​",""
+"d240_032_010","char_OMEGAMON","Yes, very good. 
+This world is responding to your sincere wish.",""
+"d240_032_020","char_BANCHOLEOMON","Hey, not bad. Now, on to the next one!",""
+"d240_032_030","char_BANCHOLILIMON","This is quite promising. 
+Now, let us move on to the next one.",""
+"d240_032_040","char_BANCHOSTINGMON","Well done. Now, let's move on.",""
+"d240_032_050","char_BANCHOGOLEMON","Okay, next!",""
+"d240_032_060","char_BANCHOMAMEMON","We better move on to the next one quick!",""
+"d240_040_010","char_OMEGAMON","Now, make your wish. 
+This world may respond to the voice of your heart.",""
+"d240_040_020","char_HIROKO","...Ngh!",""
+"d240_041_010","char_HIROKO","""Let me help with what public safety's doing!""",""
+"d240_041_020","char_HIROKO","""I can record footage of Digimon and anomalous
+phenomena to provide you with information.""",""
+"d240_041_030","char_TOUDO","""I'll admit, with all that's going on right now, we do need help.
+But I'm not about to put a civilian's life at risk.""",""
+"d240_041_040","char_HIROKO","""My being a civilian isn't going to matter if the world
+comes to an end! I just don't wanna give up, not yet...""",""
+"d240_041_050","char_HIROKO","""...not when it was all my fault.""",""
+"d240_041_060","char_TOUDO","""...?""",""
+"d240_041_070","char_HIROKO","""When Yuu and his mom... went to the movie theater...""",""
+"d240_041_080","char_HIROKO","""...to see the new Agent Alpha movie...
+I was the one who gave them the tickets.""",""
+"d240_041_090","char_HIROKO","""Yuu and his mom never came home that day.
+They got caught up in the anomalous phenomenon...""",""
+"d240_042_005","char_HIROKO","In spite of all that... Inori always stayed by my side
+as a true friend. That's why...!",""
+"d240_042_010","char_OMEGAMON","I see... So it is grief and determination that fill your soul...",""
+"d240_042_020","char_HIROKO","Huh?",""
+"d240_042_030","char_OMEGAMON","And it is that voice of your heart that the crystals are
+responding to. We must keep this up.",""
+"d240_050_010","char_OMEGAMON","Now, exert your influence over that crystal.",""
+"d240_050_020","char_HIROKO","Hnh...!",""
+"d240_051_010","char_HIROKO","""...Parallelmon?""",""
+"d240_051_020","char_TOUDO","""They're a hostile Digimon we haven't been
+able to get much of a handle on so far.""",""
+"d240_051_030","char_TOUDO","""Dr. Simmons has a theory that they can
+travel freely through space-time.""",""
+"d240_051_040","char_HIROKO","""Is that... really possible?""",""
+"d240_051_050","char_HIROKO","""...But never mind. I'm on it!""",""
+"d240_051_060","char_TOUDO","""Not this time, you aren't. Parallelmon isn't like any other
+Digimon you've dealt with so far! Let this one go.""",""
+"d240_051_070","char_HIROKO","""No, I'm gonna do this. I don't care what it takes. 
+I'm getting Parallelmon on camera. Just you wait and see!""",""
+"d240_052_010","char_OMEGAMON","I see... So although you may not have any special power
+yourself, you possess a unique resolve to take action...",""
+"d240_052_020","char_OMEGAMON","That requires a level of determination
+ far beyond that of the powerful.",""
+"d240_052_030","char_OMEGAMON","Perhaps it was more than a mere fluke that you
+managed to resist the control of this mechanism.",""
+"d240_052_040","char_HIROKO","Well... I don't know about any of that.
+I was just desperate.",""
+"d240_052_050","char_OMEGAMON","And that is good enough. Come. Let us move on.
+Soon we will have control of all of the crystals.",""
+"d240_060_010","char_OMEGAMON","Now, let your most fervent wish flow into that crystal.",""
+"d240_060_020","char_HIROKO","Hnh...!",""
+"d240_061_010","char_HIROKO","""Oh, I was so close... So close to
+getting Parallelmon on camera that time!""",""
+"d240_061_020","char_TOUDO","""I thought I warned you to stay away from that thing.""",""
+"d240_061_030","char_TOUDO","""Why are you so obsessed with Parallelmon, anyway?""",""
+"d240_061_040","char_HIROKO","""It can travel freely through space-time, right?""",""
+"d240_061_050","char_HIROKO","""If you could analyze its data for me, then maybe...""",""
+"d240_061_060","char_HIROKO","""...maybe we could get my voice to reach my friends...""",""
+"d240_061_070","char_HIROKO","""I'd be like an interdimensional messenger,
+communicating across time and space... right?""",""
+"d240_062_010","char_OMEGAMON","You wish to send your voice across time and space...
+So, the source of your determination is concern for your friends...",""
+"d240_062_020","char_HIROKO","You make it sound a lot more complicated than it actually is...",""
+"d240_062_030","char_HIROKO","It's just that, when I think of them—Inori and the others,
+I can't help but want to DO something.",""
+"d240_062_040","char_OMEGAMON","I do not know if this is mere coincidence or fate, but
+concern for one who is close to me fills my soul as well.",""
+"d240_062_050","char_OMEGAMON","We must return to our original worlds at all costs.
+Now, let us move on. Your wish will make this world whole.",""
+"d240_070_010","char_OMEGAMON","I am sensing something... 
+Parallelmon is no longer moving around as they were before.",""
+"d240_070_020","char_OMEGAMON","We should return to where the others are resting
+and prepare ourselves for battle.",""
+"d240_071_010","char_OMEGAMON","Your voice, your wish... Though I may not be
+who it was intended for, I heard it all the same.","d240_071_010"
+"d240_071_020","char_HIROKO","If I can bring back info on Parallelmon,
+my dream just might come true.","d240_071_020"
+"d240_071_030","char_HIROKO","To be a messenger across time and space... 
+and for my voice to reach Inori and the others.","d240_071_030"
+"d240_071_040","char_HIROKO","And for that... I need to get back to my world.","d240_071_040"
+"d240_071_050","char_OMEGAMON","Hmm... Perhaps it was no mere coincidence that we met here.","d240_071_050"
+"d240_071_060","char_OMEGAMON","I, too, seek to return to my world for the sake of a friend.","d240_071_060"
+"d240_071_070","char_OMEGAMON","Regrettably, that companion of mine was corrupted when
+Parallelmon stole away something very dear to him.","d240_071_070"
+"d240_071_080","char_OMEGAMON","Now I must put a stop to my friend... In honor of our friendship,
+it must be my hand that deals the final blow.","d240_071_080"
+"d240_071_090","char_OMEGAMON","My resolve, my grief... 
+that is what drives me.","d240_071_090"
+"d240_071_100","char_BANCHOLEOMON","""For our friends...""
+That's something we can get behind, too.","d240_071_100"
+"d240_071_110","char_BANCHOLEOMON","We all have things important to us that we need to protect.
+So let's fight together and go home.","d240_071_110"
+"d240_071_120","char_BANCHOLEOMON","Together, I know we can do it. 
+After all, we are brothers—sworn fist to fist!","d240_071_120"
+"d240_072_010","char_OMEGAMON","The time has come...","d240_072_010"
+"d240_072_020","char_OMEGAMON","YAAAAAAAAAAAGH!","d240_072_020"
+"d240_072_121","char_OMEGAMON","Hah!","d240_072_121"
+"d240_072_122","char_OMEGAMON","Yaaaaaaah!","d240_072_122"
+"d240_072_022","char_BANCHOMAMEMON","Hnh...!","d240_072_022"
+"d240_072_023","char_BANCHOGOLEMON","Hnh...!","d240_072_023"
+"d240_072_025","char_BANCHOLILIMON","Hnh...!","d240_072_025"
+"d240_072_026","char_BANCHOLEOMON","Hnh...!","d240_072_026"
+"d240_072_027","char_HIROKO","Hnh...!","d240_072_027"
+"d240_072_030","char_BANCHOLEOMON","Your... Your form...!","d240_072_030"
+"d240_072_040","char_HIROKO","Whoa...","d240_072_040"
+"d240_072_050","char_OMEGAMON:MERCIFUL MODE","My companions! Thank you for standing behind me.
+Your words have reassured me...","d240_072_050"
+"d240_072_060","char_OMEGAMON:MERCIFUL MODE","...that my resolve was not mistaken. 
+It is only right that we give our all for our friends.","d240_072_060"
+"d240_072_070","char_OMEGAMON:MERCIFUL MODE","The ravager of time and space will soon meet their end. 
+Come, now. Let us do battle with Parallelmon!","d240_072_070"
+"d240_072_072","char_BANCHOMAMEMON","Yeah!","d240_072_072"
+"d240_072_073","char_BANCHOGOLEMON","Guh...!","d240_072_073"
+"d240_072_074","char_BANCHOLEOMON","Hnh...!","d240_072_074"
+"d240_072_075","char_HIROKO","Yeah...!","d240_072_075"
+"d240_072_080","char_BANCHOLILIMON","Hnh...!","d240_072_080"

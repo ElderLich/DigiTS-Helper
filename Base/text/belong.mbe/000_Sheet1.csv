@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "0","None"
 "1","Puppet"
 "2","Mammal"
@@ -39,8 +39,8 @@ string2 0,string 1
 "42","Insectoid"
 "43","Dark Beast"
 "44","Mutant"
-"45","Bird Man"
-"46","Dragon Man"
+"45","Deity"
+"46","Deity"
 "47","Evil Dragon"
 "48","Holy Dragon"
 "49","Beast Man"

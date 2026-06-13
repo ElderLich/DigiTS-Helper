@@ -1,0 +1,47 @@
+string2 0,string 1,string 2,string 3
+"f_d1001_0010_0010","","I can't leave the one I'm supposed to keep safe.",""
+"f_d1001_0030_0010","char_PROTECTED_GIRL","*sigh* It's no use... This door is stuck.","f_d1001_0030_0010"
+"f_d1001_0030_0020","char_PROTECTED_GIRL","But a major conflict is going to break out if we can't get 
+through it soon, right? Isn't there some way to open it?","f_d1001_0030_0020"
+"f_d1001_0030_0030","char_PROTECTED_GIRL","We have to hurry or a major conflict is going to break out! 
+Isn't there some way to open the door?","f_d1001_0030_0030"
+"f_d1001_0030_0040","char_PROTECTED_GIRL","D-Don't scare me like that! At least give me some warning
+next time, okay?","f_d1001_0030_0040"
+"f_d1001_0030_0050","char_PROTECTED_GIRL","We should be getting close to the government building. We
+have to stop the fight that's about to start on its roof!","f_d1001_0030_0050"
+"f_d1001_0020_0010","","I need to find another way.",""
+"f_d1001_0050_0010","","Looks like we got away for now. Let's hurry on ahead.",""
+"f_d1001_0070_0010","char_OPERATOR_M","What are you doing?! Get out of there!",""
+"f_d1001_0080_0010","char_PUBLIC_SECURITY_PERSONNEL","Are you returning to the station?",""
+"f_d1001_0080_0020","char_PLAYER_M","Yes.",""
+"f_d1001_0080_0021","char_PLAYER_M","{end}Not right now.",""
+"f_d1001_0090_0010","char_TOUDO","I'm ashamed to admit it, but I'm afraid we can't do this on
+our own.",""
+"f_d1001_0100_0010","char_SUMERAGI","I hate to have to ask civilians for help, but please!
+You've got to get that switch back!",""
+"f_d1001_0110_0010","char_PUBLIC_SECURITY_PERSONNEL","I heard about everything from Dr. Simmons. This place is
+pretty much under control.",""
+"f_d1001_0110_0020","char_PUBLIC_SECURITY_PERSONNEL","Go and help with the other installation sites.",""
+"f_d1001_0110_0030","char_PUBLIC_SECURITY_PERSONNEL","We'll be fine now. Head to the next installation site.",""
+"f_d1001_0120_0010","char_PUBLIC_SECURITY_PERSONNEL","You need a tool for electromagnetic net generator repairs? 
+For Shiroki? This is what you're looking for right here.",""
+"f_d1001_0120_0020","char_PUBLIC_SECURITY_PERSONNEL","It pains me to have to rely on civilians, but that's the
+situation we're in. I'm counting on you.",""
+"f_d1001_0120_0030","char_OPERATOR_M","The Digimon readings are approaching the electromagnetic
+net generator.",""
+"f_d1001_0120_0040","char_OPERATOR_M","Everyone there is in danger! You have to hurry!",""
+"f_d1001_0130_0010","","You can probably break through with a DigiAttack {r2}.",""
+"f_d1002_0010_0010","char_FALCOMON","Yikes! A human...?! But why...? I mean, where am I? What's
+going on here?",""
+"f_d1002_0020_0010","char_BETAMON","There's something scary over there, and I don't know how to
+get home... What should I do...?",""
+"f_d1002_0030_0010","char_OPERATOR_M","No time to go back. Head for the government building.",""
+"f_d1003_0010_0010","char_OPERATOR_M","What are you doing? The target coordinates aren't that way.",""
+"f_d1003_0010_0020","char_OPERATOR_M","Use your partner Digimon's abilities to remove any obstacles
+in your way.","f_d1003_0010_0020_M f_d1003_0010_0020_F"
+"f_d1003_0020_0005","char_OPERATOR_M","The public often calls them ""ghosts"" or ""monsters,"" but we've
+decided to define phase electron life forms as ""Digimon.""","f_d1003_0020_0005_M f_d1003_0020_0005_F"
+"f_d1003_0020_0010","char_OPERATOR_M","The Digivice enables interaction with such beings.
+A critical function is the {fc9DigiAttack} {r2}.","f_d1003_0020_0010_M f_d1003_0020_0010_F"
+"f_d1003_0020_0020","char_OPERATOR_M","It allows you to command your allies to hit hostile Digimon
+with a preemptive strike. Go on. Give it a try.","f_d1003_0020_0020_M f_d1003_0020_0020_F"

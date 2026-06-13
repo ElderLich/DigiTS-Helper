@@ -1,0 +1,252 @@
+string2 0,string 1,string 2,string 3
+"d220_010_010","char_BANCHOLEOMON","Parallelmon is here already...?!",""
+"d220_010_020","char_HIROKO","Th-They came outta nowhere!
+There's no way I can set up my camera in time...!",""
+"d220_010_030","char_HIROKO","...Shouldn't we be getting out of here?!",""
+"d220_010_040","char_HIROKO","Oh! The door's open!
+Let's hide!",""
+"d220_010_050","char_BANCHOLEOMON","If we use these doors to our advantage, 
+we should be able to safely sneak past Parallelmon.",""
+"d220_030_010","char_MIREI","This is an Akashic Backdoor—a pathway that connects 
+points in time and space together haphazardly.","d220_030_010"
+"d220_030_020","char_MIREI","Beyond such doors, past, present, and future are chaotically
+shuffled... then merged together, with no regard to order.","d220_030_020"
+"d220_030_030","char_MIREI","This isn't necessarily the same Shinjuku you're familiar with.
+You should proceed with caution.","d220_030_030"
+"d220_030_040","char_HIROKO","What does it all mean...?","d220_030_040"
+"d220_030_050","char_HIROKO","What we're looking at is the ""old"" Shinjuku... 
+back before the apocalypse came knocking on our doors!","d220_030_050"
+"d220_030_060","char_BANCHOLEOMON","This... used to be a peaceful place?","d220_030_060"
+"d220_030_070","char_HIROKO","That's right. You don't see this kind of beauty
+anymore in the world I come from.","d220_030_070"
+"d220_030_080","char_BANCHOLEOMON","I see... This must be difficult for you.","d220_030_080"
+"d220_030_090","char_MIREI","I believe this woman comes from a future in which the global
+collapse has already started—a post-Shinjuku Inferno world.","d220_030_090"
+"d220_030_100","char_MIREI","It was this incident you call the Shinjuku Inferno
+that fueled Parallelmon's rise to power.","d220_030_100"
+"d220_030_110","char_MIREI","It led to numerous space-time disturbances which Parallelmon
+used to its advantage in order to grow stronger.","d220_030_110"
+"d220_030_120","char_BANCHOLILIMON","Bring us back to our own world, right now!
+Prepare yourself!","d220_030_120"
+"d220_030_130","char_BANCHOLEOMON","Calm down!","d220_030_130"
+"d220_030_140","char_BANCHOLILIMON","Oh... What am I even doing?!","d220_030_140"
+"d220_030_150","char_BANCHOLEOMON","You didn't come back, so I was starting to worry.","d220_030_150"
+"d220_030_160","char_BANCHOLILIMON","Sorry about that.
+Before I knew it, the way back was blocked off.","d220_030_160"
+"d220_030_170","char_BANCHOLILIMON","But enough about me... Who are those humans?","d220_030_170"
+"d220_030_180","char_HIROKO","It's another Bancho! 
+Wow, this makes for an amazing shot!","d220_030_180"
+"d220_030_190","char_BANCHOLILIMON","Teaming up with others from different worlds 
+and different times...? I love it. I'm in.","d220_030_190"
+"d220_030_200","char_BANCHOLILIMON","That reminds me... There was something weird
+in the room back there. I think we should check it out.","d220_030_200"
+"d220_030_210","char_BANCHOLEOMON","All right. Let's go take a look.","d220_030_210"
+"d220_040_010","char_BANCHOLILIMON","Over there—that thing, you see?",""
+"d220_040_020","char_BANCHOLILIMON","...Hm?",""
+"d220_040_030","char_HIROKO","Is that... me?",""
+"d220_040_040","char_HIROKO","That was the day I saw Inori for the last time...",""
+"d220_040_050","char_HIROKO","I still see it in my dreams.
+If only I hadn't fainted then...",""
+"d220_040_060","char_HIROKO","If I had known it was gonna be the last time,
+I would've said so much more...",""
+"d220_040_070","char_HIROKO","I miss you, Inori.",""
+"d220_040_080","char_HIROKO","Wait... What just happened?",""
+"d220_040_090","char_BANCHOLEOMON","I have no idea. I suppose we should
+keep looking elsewhere.",""
+"d220_040_100","char_BANCHOLEOMON","BanchoLillymon, you should go back to the square 
+where we met the warrior in white and get some rest.",""
+"d220_040_110","char_BANCHOLILIMON","Certainly not! I am going with you!",""
+"d220_040_120","char_BANCHOLEOMON","Aren't you tired after all this exploring?",""
+"d220_040_130","char_BANCHOLILIMON","How could I be tired at a time like this?",""
+"d220_040_140","char_BANCHOLILIMON","I simply... want to be by your side...",""
+"d220_040_150","char_BANCHOLEOMON","Eh? What're you trying to say?
+Spit it out, already.",""
+"d220_040_160","char_BANCHOLILIMON","Urk...! Fine! Just go wherever you want, then!",""
+"d220_050_010","char_BANCHOLEOMON","That's...!","d220_050_010"
+"d220_050_020","char_BANCHOSTINGMON","Are you another one of Parallelmon's goons?!","d220_050_020"
+"d220_050_030","char_HIROKO","Is that another friend of yours?","d220_050_030"
+"d220_050_040","char_BANCHOLEOMON","No, definitely not.","d220_050_040"
+"d220_050_050","char_BANCHOLEOMON","I imagine he's another victim of Parallelmon
+that's been sent here from another world.","d220_050_050"
+"d220_050_060","char_BANCHOLEOMON","However...","d220_050_060"
+"d220_050_070","char_BANCHOSTINGMON","I can tell by your GAKU-RAN... your jacket.
+You're no ordinary Digimon.","d220_050_070"
+"d220_050_080","char_BANCHOLEOMON","When a Bancho's life reaches its end,
+their title is passed down to a worthy successor.","d220_050_080"
+"d220_050_090","char_BANCHOLEOMON","It seems this Digimon was passed the torch.","d220_050_090"
+"d220_050_100","char_BANCHOSTINGMON","Hey. So I'm guessing you got blasted here
+by Parallelmon too, huh?","d220_050_100"
+"d220_050_110","char_BANCHOSTINGMON","As a fellow Bancho, I already know
+what you're gonna say.","d220_050_110"
+"d220_050_120","char_BANCHOLEOMON","Yeah. Let's team up and beat the daylights
+out of Parallelmon, together.","d220_050_120"
+"d220_050_130","char_BANCHOSTINGMON","Not a bad idea. But if we're going to fight together,
+we have to get something out of the way first. Isn't that right?","d220_050_130"
+"d220_050_140","char_BANCHOLEOMON","Yeah. I need to know if I can trust you to have my back.
+And the quickest way to do that... Is with our fists!","d220_050_140"
+"d220_050_150","char_BANCHOSTINGMON","Hell yes! Let's do this, Digimon y Digimon.","d220_050_150"
+"d220_050_160","char_HIROKO","I-I'm not sure I see the logic here!","d220_050_160"
+"d220_050_170","char_HIROKO","""Who is the true Bancho?! It's a one-on-one battle
+between worlds! You won't believe who wins!""","d220_050_170"
+"d220_060_010","char_BANCHOSTINGMON","Ouch...",""
+"d220_060_020","char_BANCHOSTINGMON","Not bad... Not bad at all.",""
+"d220_060_030","char_BANCHOSTINGMON","Yes, you are indeed a true Bancho.",""
+"d220_060_040","char_BANCHOLEOMON","I, too, felt a sense of integrity in your blows. 
+Now, let us fight alongside one another— No, wait...",""
+"d220_060_050","char_BANCHOLEOMON","I believe the word I'm looking for is ""collab.""",""
+"d220_060_060","char_BANCHOSTINGMON","""Collab""...?",""
+"d220_060_070","char_BANCHOLEOMON","It's a bond forged between those who bump fists together.",""
+"d220_060_080","char_BANCHOSTINGMON","...",""
+"d220_060_090","char_BANCHOSTINGMON","Haha... I like that. Okay, let's get out there
+and show 'em what we've got, brother.",""
+"d220_060_100","char_HIROKO","Th-They've managed to reach some kind of understanding!",""
+"d220_060_110","char_BANCHOLEOMON","Although, I imagine you must've taken quite a beating,
+absorbing so many of my blows.",""
+"d220_060_120","char_BANCHOLEOMON","There's a friend of mine resting in the square.
+You should probably recuperate there for a while, too.",""
+"d220_060_130","char_BANCHOSTINGMON","I appreciate your concern. 
+You really do pack quite a punch.",""
+"d220_060_140","char_BANCHOLEOMON","We'll need you when the final battle comes around.
+Go and rest up until then.",""
+"d220_070_010","char_HIROKO","Oh, one of these again...",""
+"d220_070_020","char_HIROKO","After Inori disappeared, I became
+completely obsessed with making videos.",""
+"d220_070_030","char_HIROKO","I was filming like a maniac each and every day.",""
+"d220_070_040","char_HIROKO","My channel continued to gain subscribers,
+and with that, my revenue started to grow, too.",""
+"d220_070_050","char_HIROKO","I worked desperately to earn the money I needed
+in order to reach out to Inori and the others—",""
+"d220_070_060","char_HIROKO","—to ask them ""Where have you gone?"",
+and to tell them ""I'm still right here.""",""
+"d220_070_070","char_HIROKO","There it goes again... What's up with these things?",""
+"d220_070_080","char_BANCHOLEOMON","I'm not sure... Looks like we've got no choice
+but to keep investigating.",""
+"d220_080_010","char_BANCHOLEOMON","A Digimon I've never met before...","d220_080_010"
+"d220_080_020","char_BANCHOLEOMON","Were you hit by Parallelmon's beam of light, too?","d220_080_020"
+"d220_080_030","char_UNKNOWN","...","d220_080_030"
+"d220_080_040","char_BANCHOLEOMON","Why don't you answer me?","d220_080_040"
+"d220_080_050","char_BANCHOLEOMON","I see... So you also have a GAKU-RAN jacket
+over your shoulders...","d220_080_050"
+"d220_080_060","char_UNKNOWN","You know, some say silence is a virtue.","d220_080_060"
+"d220_080_070","char_UNKNOWN","If you are truly worthy of that GAKU-RAN...
+Then let your fists do the talking.","d220_080_070"
+"d220_080_080","char_HIROKO","That doesn't sound ominous at all... Heh.","d220_080_080"
+"d220_080_090","char_BANCHOLEOMON","Yeah, he's definitely a Bancho all right. He's got the strength
+needed to lead, no matter where he might be from.","d220_080_090"
+"d220_080_100","char_BANCHOLEOMON","If you're looking for a fight, you've got one.
+But at least tell me your name.","d220_080_100"
+"d220_080_110","char_BANCHOGOLEMON","I'm BanchoGolemon.
+And you are?","d220_080_110"
+"d220_080_120","char_BANCHOLEOMON","The name's BanchoLeomon.
+I'm sorry, but I'm not going to hold back.","d220_080_120"
+"d220_080_130","char_BANCHOLEOMON","Like you said, it's time to let our fists do the talking.
+But I don't think you're gonna like this conversation.","d220_080_130"
+"d220_080_140","char_BANCHOGOLEMON","Talk all you want—you can't hide your insecurity from me.
+Digimon like you... You're all bark, no bite.
+","d220_080_140"
+"d220_080_150","char_BANCHOGOLEMON","I'll show you the strength I gained, 
+training deep within Mugen Mountain.","d220_080_150"
+"d220_080_160","char_HIROKO","""Bancho-on-Bancho violence?! You need to see this! 
+Find out if these two reach some kind of understanding!""","d220_080_160"
+"d220_090_010","char_BANCHOGOLEMON","...",""
+"d220_090_020","char_BANCHOLEOMON","Well? How did you like the taste of my fists?",""
+"d220_090_030","char_BANCHOGOLEMON","Just telling you with words seems too boorish...
+I'd rather tell you with my actions...",""
+"d220_090_040","char_BANCHOGOLEMON","...brother.",""
+"d220_090_050","char_BANCHOLEOMON","I believe I now understand everything you wanted to say.",""
+"d220_090_060","char_HIROKO","They've reached a mutual understanding...
+I guess their fists really DID do the talking!",""
+"d220_090_070","char_BANCHOLEOMON","Let's work together to take down Parallelmon. 
+What do you say we have ourselves a ""collab""?",""
+"d220_090_080","char_BANCHOGOLEMON","A ""col""-what? What's that? 
+Some kind of super powerful move?",""
+"d220_090_090","char_BANCHOLEOMON","It's a bond forged between those who bump fists.",""
+"d220_090_100","char_BANCHOGOLEMON","I see... I like the sound of that.",""
+"d220_090_110","char_HIROKO","How does this keep on working?!",""
+"d220_090_120","char_BANCHOLEOMON","But you must've suffered no minor
+amount of damage from our fight...",""
+"d220_090_130","char_BANCHOLEOMON","We'll need your help when the final battle comes. 
+Until then, please rest in the square alongside my other friends.",""
+"d220_100_010","char_HIROKO","Oh, another one of those crystal things...",""
+"d220_100_020","char_HIROKO","I remember this...
+This is after I had just bombed a presentation.",""
+"d220_100_030","char_HIROKO","To try to make my dream to produce anime come true,
+I went door-to-door, pitching to several different companies.",""
+"d220_100_040","char_HIROKO","I wanted my work to spread all around the world...
+and to reach Inori and the others.",""
+"d220_100_050","char_HIROKO","That's why, on the cover of my pitch deck, 
+I had a character who looked a lot like you, {player}.",""
+"d220_100_060","char_HIROKO","...",""
+"d220_100_070","char_BANCHOLEOMON","I still have no idea what all of this is supposed to mean.
+Let's continue our investigation.",""
+"d220_110_010","char_BANCHOMAMEMON","Hey, hey, hey!
+You've been sent by Parallelmon to take me out, huh!","d220_110_010"
+"d220_110_020","char_HIROKO","Another one? Do you know this one, too?","d220_110_020"
+"d220_110_030","char_BANCHOLEOMON","No... I've never met this Digimon in my life.","d220_110_030"
+"d220_110_040","char_BANCHOMAMEMON","I was just about to come over to ya and pay my respects, personally!
+You've got guts, to come at me first!","d220_110_040"
+"d220_110_050","char_BANCHOMAMEMON","Wait. You're...","d220_110_050"
+"d220_110_060","char_BANCHOLEOMON","So you've noticed. 
+I, too, have been entrusted with a ""GAKU-RAN.""","d220_110_060"
+"d220_110_070","char_BANCHOMAMEMON","Yeah. That's...","d220_110_070"
+"d220_110_080","char_BANCHOMAMEMON","...a pretty impressive fake.","d220_110_080"
+"d220_110_090","char_BANCHOLEOMON","Huh?!","d220_110_090"
+"d220_110_100","char_BANCHOMAMEMON","I know your type. A poser. A wannabe. 
+Somebody who buys all the best gear but can't back it up.","d220_110_100"
+"d220_110_110","char_BANCHOMAMEMON","Look, I'm flattered you look up to me, 
+but these ""GAKU-RAN"" don't just grow on trees.","d220_110_110"
+"d220_110_120","char_BANCHOMAMEMON","And since my jacket is the real deal, 
+it can only mean that yers is nothin' but a fake.","d220_110_120"
+"d220_110_130","char_BANCHOLEOMON","Wait. This isn't fake... We're from two different—","d220_110_130"
+"d220_110_140","char_BANCHOMAMEMON","Like I'm gonna wait just 'cause YOU say so!
+C'mon. It's time for yer beatdown!","d220_110_140"
+"d220_110_150","char_HIROKO","""CALLED OUT! That's a big accusation from a little Bancho! 
+You don't want to miss this fight!""","d220_110_150"
+"d220_120_010","char_BANCHOMAMEMON","Damn it! How could I lose to a phony like this?!",""
+"d220_120_020","char_BANCHOLEOMON","I've come to a conclusion after our fight. 
+You are indeed a Bancho worthy of my respect.",""
+"d220_120_030","char_BANCHOMAMEMON","Of course I am! You're the one who's a fraud!",""
+"d220_120_040","char_BANCHOLEOMON","I'm no fraud. And I'm not someone 
+who takes my title of Bancho lightly, either.",""
+"d220_120_050","char_BANCHOLEOMON","Now, listen to me, my brother.",""
+"d220_120_060","char_BANCHOMAMEMON","Hehe! Sorry 'bout that! 
+I suppose I got a bit carried away with the name callin' and stuff.",""
+"d220_120_070","char_BANCHOMAMEMON","I get it now... So you're some kinda Bancho
+from another dimension, huh?",""
+"d220_120_080","char_BANCHOLEOMON","I'm asking you to fight by my side, brother,
+so we can all go back to our original world.",""
+"d220_120_090","char_BANCHOLEOMON","Will you join me for a ""collab""?",""
+"d220_120_100","char_BANCHOMAMEMON","A ""collab""...?",""
+"d220_120_110","char_BANCHOLEOMON","It's a bond forged between those who bump fists.",""
+"d220_120_120","char_BANCHOMAMEMON","Yeah! That sounds fire!",""
+"d220_120_130","char_HIROKO","How does BanchoLeomon keep doing this?!",""
+"d220_120_140","char_BANCHOLEOMON","Speaking of fists, I imagine my fists gave you quite the beating...
+You should take some time to recover.",""
+"d220_120_150","char_BANCHOLEOMON","I'll show you where our friends are currently resting. 
+We're going to need your strength for the final battle.",""
+"d220_130_010","char_HIROKO","Another glowing crystal...!",""
+"d220_130_020","char_HIROKO","At last, the day my anime was to be presented
+to the public finally arrived...",""
+"d220_130_030","char_HIROKO","...but it was the beginning of the end of the world.",""
+"d220_130_040","char_HIROKO","Some kind of rift opened up in the sky above the Tokyo
+Metropolitan Government Building, and there was a flash.",""
+"d220_130_050","char_HIROKO","I was lucky enough to escape underground...
+but it was a living hell from that day onward.",""
+"d220_130_060","char_HIROKO","I just focused on capturing it all on camera,
+the world as it ended...",""
+"d220_130_070","char_HIROKO","...",""
+"d220_130_080","char_BANCHOLEOMON","I'm not sure I understand it all, but it sounds like
+your world is facing quite the predicament...",""
+"d220_130_090","char_BANCHOLEOMON","It must have been fate that brought us together here. 
+Please let me know if there is anything I can do to help.",""
+"d220_130_100","char_BANCHOLEOMON","After all, we're in this ""collab"" together, right?",""
+"d220_130_110","char_BANCHOLEOMON","The bond forged between those who bump fists...
+That's not something to be taken lightly.",""
+"d220_130_120","char_HIROKO","Thank you. For now, though, I really, really have to
+get back to my original world.",""
+"d220_130_130","char_HIROKO","There are people waiting to see my videos...",""
+"d220_140_010","char_BANCHOLILIMON","*panting* There you are!",""
+"d220_140_020","char_BANCHOLILIMON","Something happened to the warrior in white! 
+I thought I should let you know immediately!",""
+"d220_140_030","char_BANCHOLEOMON","What?!",""
+"d220_140_040","char_BANCHOLEOMON","Come on. Let's go back!",""

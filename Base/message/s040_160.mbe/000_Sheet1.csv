@@ -1,0 +1,110 @@
+string2 0,string 1,string 2,string 3
+"s040_160_010","char_MARSMON","I've grown stronger... but am I strong enough? Big Bro isn't
+here with me anymore...",""
+"s040_160_020","char_MARSMON","Oh, it's you... *sigh*",""
+"s040_160_030","char_PLAYER_M","{next}You seem kind of down.",""
+"s040_160_031","char_PLAYER_M","{next}Got a case of burnout syndrome?",""
+"s040_160_032","char_PLAYER_M","{end}I'll... come back another time.",""
+"s040_160_040","char_MARSMON","Of course I am. I mean, I did have to take down 
+my big brother...",""
+"s040_160_050","char_MARSMON","Burnout what? Oh, I get it. Maybe I do.
+Now that I'm champion, I've lost my purpose.",""
+"s040_160_060","char_MARSMON","You're going to leave me alone? That's nice of you...
+Let's catch up later...",""
+"s040_160_070","char_MARSMON","I talked all big about protecting the world, but
+who am I kidding? What can I protect?",""
+"s040_160_080","char_MARSMON","...What do humans do at times like this, when they
+need to get out of their own heads?",""
+"s040_160_090","char_PLAYER_M","{next}Well... we might try watching a movie.",""
+"s040_160_091","char_PLAYER_M","{next}Let me look that up for you.",""
+"s040_160_092","char_PLAYER_M","{next}Escape from reality.",""
+"s040_160_100","char_MARSMON","A movie? What's a movie?",""
+"s040_160_110","char_MARSMON","So, I just read from your device? ""10 Ways to Find
+Peace of Mind."" No. 1 is watch a movie.",""
+"s040_160_120","char_MARSMON","Oh, like read a book or something? You know,
+I've heard of things called ""movies,"" too.",""
+"s040_160_130","char_MARSMON","Hey, tell me about these ""movies."" You got any
+friends who know about them?",""
+"s040_160_140","char_HIROKO","I heard someone wants to watch movies! Hee hee.
+Don't worry. Hiroko's gotcha covered!",""
+"s040_160_150","char_MARSMON","Now I'm starting to get self-conscious... But okay.
+Ease me into this, all right?",""
+"s040_160_160","char_HIROKO","We'll start with ""Yesterday's George!"" An action classic
+even a total noob can enjoy!",""
+"s040_160_170","char_MARSMON","A pro boxer who nearly killed his opponent... That's basically me.",""
+"s040_160_180","char_MARSMON","But George bounced back from the incident. Which means...
+maybe I can, too!",""
+"s040_160_190","char_MARSMON","Maybe it's time I got back to the underground arena. I can't
+run from this forever!",""
+"s040_160_195","char_MARSMON","Hell, yeah! Now, here's a place where I can fight my heart
+out! Help me train a bit!",""
+"s040_160_200","char_MARSMON","Hey, nice work back there! You come to check up on me?",""
+"s040_160_210","char_PLAYER_M","{next}You looked good out there!",""
+"s040_160_211","char_PLAYER_M","{next}Think those moves would work in a real fight?",""
+"s040_160_212","char_PLAYER_M","{next}Actually, I just wanted to fight.",""
+"s040_160_220","char_MARSMON","Right? I was thinking the same thing. I was moving pretty
+good out there, but...",""
+"s040_160_230","char_MARSMON","Haha. Ouch... But you're right. In a real fight, the other
+side is out for blood.",""
+"s040_160_240","char_MARSMON","Haha. You're something else. Just the type of person we need
+to save the world.",""
+"s040_160_250","char_MARSMON","*sigh* It's still no good. What happened with my brother has
+me scared of my full strength.",""
+"s040_160_260","char_MARSMON","If I can't even face YOU all out, I'm doomed. And now all
+this worrying's got me hungry!",""
+"s040_160_270","char_PLAYER_M","{next}It's like your body's telling you to live.",""
+"s040_160_271","char_PLAYER_M","{next}I know some places with good food.",""
+"s040_160_272","char_PLAYER_M","{next}No work, no food.",""
+"s040_160_280","char_MARSMON","...Good point. I need to live.",""
+"s040_160_290","char_MARSMON","Really? Talking about it made me extra hungry.",""
+"s040_160_300","char_MARSMON","Urk... But, hey, I did work a little, so that must mean I
+deserve at least a snack, right?",""
+"s040_160_310","char_MARSMON","Yeah, we could eat nearby. Okay, I'll head to Subroad. Show
+me around once you arrive!",""
+"s040_160_320","char_MARSMON","Good. You're here. Everyone's staring at me. I've never been
+around so many humans before!",""
+"s040_160_330","char_MARSMON","And just look at all these shops! They all look so good...
+What should I get first?",""
+"s040_160_340","char_PLAYER_M","{next}Some fluffy omelet rice.",""
+"s040_160_341","char_PLAYER_M","{next}A two-pound steak.",""
+"s040_160_342","char_PLAYER_M","{next}Iced sweet potatoes.",""
+"s040_160_350","char_MARSMON","What's that?! Omelet rice is white? Like meringue? Never
+heard of it, but sounds good!",""
+"s040_160_360","char_MARSMON","Sounds huge! Perfect for a starving Digimon like me! All
+right, I'm gonna stuff myself!",""
+"s040_160_370","char_MARSMON","So they're baked but chilled? In a pot? You humans sure come
+up with some weird stuff...",""
+"s040_160_380","char_MARSMON","Whew, I can't eat another bite! Not after having everything
+you recommended!",""
+"s040_160_390","char_MARSMON","The omelet rice was fluffy, the steak was meaty and the
+potatoes were sticky and sweet!",""
+"s040_160_400","char_PLAYER_M","{next}You really chowed down.",""
+"s040_160_401","char_PLAYER_M","{next}Nothing makes you happy like a full stomach.",""
+"s040_160_402","char_PLAYER_M","{next}Here's the bill.",""
+"s040_160_410","char_MARSMON","Haha. Come to think of it, I've been feeling so down I
+haven't eaten much lately.",""
+"s040_160_420","char_MARSMON","You can say that again. You know, maybe I was feeling out of
+sorts because I was hungry.",""
+"s040_160_430","char_MARSMON","Huh?! You mean I have to pay?!",""
+"s040_160_440","char_MARSMON","...Oh, that was a joke. You almost had me!",""
+"s040_160_450","char_MARSMON","I haven't felt this good in ages! Reminds me of something
+Big Bro said.",""
+"s040_160_460","char_MARSMON","""If ya wanna protect Iliad, you gotta eat a lot of food so
+ya grow up big and strong.""",""
+"s040_160_470","char_MARSMON","Hey, meet me at the Paradise Colosseum. I'll fight you
+all-out as prep for the big battle.",""
+"s040_160_480","char_PLAYER_M","{next}You sound fully recovered.",""
+"s040_160_481","char_PLAYER_M","{next}Go easy on me.",""
+"s040_160_482","char_PLAYER_M","{next}In an eating competition?",""
+"s040_160_490","char_MARSMON","You bet I am! And I'm going to make you regret ever snapping
+me out of my funk!",""
+"s040_160_500","char_MARSMON","Hey, don't play yourself down. You're plenty strong.",""
+"s040_160_510","char_MARSMON","You know, that's not a bad idea. Maybe I'll try streaming it
+after the big fight.",""
+"s040_160_520","char_MARSMON","Here. Take this. My way of returning the favor for getting
+me back on track.",""
+"s040_160_530","char_MARSMON","Time to balance out all that eating with some practice! See
+you at the Paradise Colosseum!",""
+"s040_160_540","char_MARSMON","I'd fight in the Underground Arena, too. And even that
+card game's good training!",""
+"s040_160_550","char_MARSMON","Oh, yeah! I'm back and raring to go!",""

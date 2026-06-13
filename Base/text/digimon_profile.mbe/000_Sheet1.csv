@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "digimon_0001_profile","A Puppet Digimon that has concealed itself inside 
 a stuffed animal shaped like Tyrannomon. Why 
 exactly this mysterious Digimon chose a stuffed
@@ -1927,22 +1927,24 @@ bounty of nature, bring harm to the trees or defile the
 land for sport, Ceresmon Medium's nature shifts and
 it becomes a truly frightful forest demon."
 "digimon_0190_profile","Because of the antiquated interface on its forehead,
-this Beast Digimon is presumed to be an experimental
-""Prototype Digimon"" from the time before Digimon were
-discovered. Ryudamon is covered in Japanese-style
-armor that boasts high defense, yet its movements are
-quite nimble, allowing it to jump in and fight at brazenly
-close range. The more it fights, the more it cultivates
+this Beast Digimon is presumed to be an
+experimental ""Prototype Digimon"" from the time
+before Digimon were discovered. Ryudamon is
+covered in Japanese-style armor that boasts high
+defense, yet its movements are quite nimble,
+allowing it to jump in and fight at brazenly close
+range. The more it fights, the more it cultivates
 combat prowess. Ryudamon possesses gallantry, a
-samurai spirit and a soul that renders it unafraid of
+samurai spirit, and a soul that renders it unafraid of
 powerful enemy Digimon. The data hidden within
-the deepest part of its DigiCore during the experiment
-contains such fierce combat data as warlords and
-dragons from Japanese mythology, and Ryudamon
-is thought to possess the potential to grow into a
-mighty Digimon. Its special move is Iai Blade, with
-which it leaps up to the opponent to fire an iron
-blade from its mouth at point-blank range."
+the deepest part of its DigiCore during the
+experiment contains such fierce combat data as
+warlords and dragons from Japanese mythology,
+and Ryudamon is thought to possess the potential
+to grow into a mighty Digimon. Its special move is
+Iai Blade, with which it leaps up to the opponent to
+fire an iron blade from its mouth at point-blank
+range."
 "digimon_0191_profile","A Beast Dragon Digimon with sturdy Japanese-style
 armor covering its whole body. Ginryumon is lighter
 than it appears, drifting gracefully through the air and
@@ -5409,14 +5411,14 @@ a hit from this attack, rumor has it. Darkdramon also
 has a weapon called the Gigastick Lance built into
 its right arm, said to be equal in power to Gallantmon's 
 holy lance Gram."
-"digimon_0772_profile","Chaosmon is believed to have been born from the 
-DNA Digivolution of BanchoLeomon and Darkdramon, 
-as traces of each can be seen on its arms. Its special 
+"digimon_0772_profile","Chaosmon is believed to have been born from the
+DNA Digivolution of BanchoLeomon and Darkdramon,
+as traces of each can be seen on its arms. Its special
 moves are Bancho Blade, which unleashes an
-unstoppable strike from the sword ""Bancho Blade""
-on its Bancho Arm, and Dark Prominence,
-which fires its own digital cells from the
-Gigastick Cannon on its Darkdra Arm."
+unstoppable strike from the titular sword on its
+Bancho Arm, and Dark Prominence, which fires its
+own digital cells from the Gigastick Cannon on its
+Darkdra Arm."
 "digimon_0773_profile","A Warrior Digimon also appearing in Norse mythology. 
 Valkyrimon travels with the golden bird Freyja, which
 alerts it when danger draws near. According to legend, 

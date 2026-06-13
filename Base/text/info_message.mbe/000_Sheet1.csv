@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "1003","Saving..."
 "1004","Save complete."
 "1005","Not enough free space.
@@ -247,10 +247,10 @@ Cards."
 have not been fulfilled."
 "info_message_playername","Inscribe thy name, and thou shalt be reborn into the world below...
 
-<{fc9{d0} Yuki}>"
+<{fc9 {d0} Yuki}>"
 "info_message_playername_option","Please enter the protagonist's name.
 
-<{fc9{d0} Yuki}>"
+<{fc9 {d0} Yuki}>"
 "info_message_item_skilldisc_0010","This Skill Disc is equipped to all Digimon. Remove it
 from an equipped Digimon with Skill Disc Controls to
 equip it to another Digimon."
@@ -441,7 +441,10 @@ in the In-Between Theater."
 
 To play this new content, access the {is28}{image(ui_icon_minimap_lobby)} Door of Truth
 in the In-Between Theater."
-"info_message_dlc_03",""
+"info_message_dlc_03","{fc9Additional Digimon & Episode Pack 3: Anti-ParadoX} is now available.
+
+To play this new content, access the {is28}{image(ui_icon_minimap_lobby)} Door of Truth
+in the In-Between Theater."
 "info_message_dlc_05","{fc9Digifarm Item ""Golden Moai""} is now available.
 
 You can obtain this item by navigating to

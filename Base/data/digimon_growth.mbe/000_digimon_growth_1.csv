@@ -1,4 +1,4 @@
-int32 0,int32 1,int32 2,int32 3,int32 4,int32 5,int32 6,int32 7
+level,hp_growth,sp_growth,attack_growth,defense_growth,intelligence_growth,spirit_growth,speed_growth
 1,0,0,0,0,0,0,0
 2,25,14,13,9,9,8,9
 3,25,14,13,9,9,8,9

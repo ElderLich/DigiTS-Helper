@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "1","Battle Skills"
 "2","Farm Skills"
 "3","At turn start, activates {d0}"
