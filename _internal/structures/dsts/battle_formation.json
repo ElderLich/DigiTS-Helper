@@ -1,0 +1,8 @@
+{
+  "battle_formation": {
+    "formation_id": "int32",
+    "empty_001": "empty",
+    "formation_type": "string2",
+    "formation_key": "string2"
+  }
+}

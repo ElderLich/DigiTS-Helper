@@ -1,0 +1,28 @@
+{
+  "lod": {
+    "chr_id": "string2",
+    "lod_distance_1": "float",
+    "lod_distance_2": "float",
+    "lod_distance_3": "float",
+    "lod_distance_4": "float",
+    "lod_distance_5": "float",
+    "lod_distance_6": "float",
+    "lod_distance_7": "float",
+    "lod_distance_8": "float",
+    "lod_distance_9": "float",
+    "lod_distance_10": "float"
+  },
+  "lod_model": {
+    "chr_id": "string2",
+    "lod_model_ref_01": "string2",
+    "lod_model_ref_02": "string2",
+    "lod_model_ref_03": "string2",
+    "lod_model_ref_04": "string2",
+    "lod_model_ref_05": "string2",
+    "lod_model_ref_06": "string2",
+    "lod_model_ref_07": "string2",
+    "lod_model_ref_08": "string2",
+    "lod_model_ref_09": "string2",
+    "lod_model_ref_10": "string2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "digimon_growth_\\d+": {
+    "level": "int32",
+    "hp_growth": "int32",
+    "sp_growth": "int32",
+    "attack_growth": "int32",
+    "defense_growth": "int32",
+    "intelligence_growth": "int32",
+    "spirit_growth": "int32",
+    "speed_growth": "int32"
+  }
+}

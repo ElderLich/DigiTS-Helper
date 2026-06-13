@@ -1,0 +1,19 @@
+{
+  "field_move_animation": {
+    "animation_key": "string3",
+    "motion_1": "string3",
+    "motion_2": "string3",
+    "motion_3": "string3",
+    "move_speed_1": "float",
+    "move_param_1": "float",
+    "move_speed_2": "float",
+    "unk_float_007": "float",
+    "unk_float_008": "float",
+    "unknown_int_009": "int32",
+    "unk_float_010": "float",
+    "unk_float_011": "float",
+    "unk_float_012": "float",
+    "unk_float_013": "float",
+    "unknown_int_014": "int32"
+  }
+}

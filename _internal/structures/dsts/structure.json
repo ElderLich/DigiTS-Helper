@@ -1,3 +1,15 @@
 {
-  
+  "digimon_status(_dlc\\d+)?\\.mbe": "digimon_status.json",
+  "battle_skill(_dlc\\d+)?\\.mbe": "battle_skill.json",
+  "evolution(_dlc\\d+)?\\.mbe": "evolution.json",
+  "char_info(_dlc\\d+)?\\.mbe": "char_info.json",
+  "model_setting(_dlc\\d+)?\\.mbe": "model_setting.json",
+  "model_locator(_dlc\\d+)?\\.mbe": "model_locator.json",
+  "lod_chara(_dlc\\d+)?\\.mbe": "lod_chara.json",
+  "field_anime(_dlc\\d+)?\\.mbe": "field_anime.json",
+  "digimon_growth(_dlc\\d+)?\\.mbe": "digimon_growth.json",
+  "battle_enemy(_dlc\\d+)?\\.mbe": "battle_enemy.json",
+  "battle_formation(_dlc\\d+)?\\.mbe": "battle_formation.json",
+  "anim_setting(_dlc\\d+)?\\.mbe": "anim_setting.json",
+  "(belong|buff_name|char_name|digimon_class_name|digimon_profile|digimon_type|digitter_message|element|field_name|generation_name|info_message|item_explanation|item_name|item_ruby|jogress_skill_name|personality_name|quest_outline|quest_step|quest_title|skill_auto_explanation|skill_explanation|skill_name|status_name)(_dlc\\d+)?\\.mbe": "localized_text.json"
 }

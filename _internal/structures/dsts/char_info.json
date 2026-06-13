@@ -1,0 +1,18 @@
+{
+  "char_info": {
+    "char_key": "string2",
+    "empty_001": "empty",
+    "empty_002": "empty",
+    "chr_id": "string2",
+    "numeric_id": "string2",
+    "empty_005": "empty",
+    "gender_flag": "int32",
+    "flag_007": "int32",
+    "motion_ref": "string2",
+    "flag_009": "int32",
+    "model_ref": "string2",
+    "flag_011": "int32",
+    "empty_012": "string2",
+    "flag_013": "int32"
+  }
+}

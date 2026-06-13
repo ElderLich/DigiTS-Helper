@@ -1,0 +1,10 @@
+{
+  "model_locator": {
+    "chr_id": "string3",
+    "locator_ref": "string3"
+  },
+  "model_locator_motion": {
+    "motion_key": "string3",
+    "motion_name": "string3"
+  }
+}
