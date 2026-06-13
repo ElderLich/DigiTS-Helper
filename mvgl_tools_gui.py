@@ -138,8 +138,8 @@ class MVGLToolsGUI:
         ),
         "unpack-mbe-dir": (
             "Converts all .mbe table files found under the source folder into editable CSV folders. "
-            "For Time Stranger, the default filter extracts the editor-ready base data plus addcont_01, "
-            "addcont_02, addcont_03, and English text01 only."
+            "For Time Stranger, the default filter extracts editor-ready base data plus addcont_01, "
+            "addcont_02, addcont_03, addcont_17, and English text01 only."
         ),
         "pack-mbe-dir": (
             "Rebuilds many .mbe table files from extracted CSV folders while preserving folder structure."
@@ -184,7 +184,7 @@ class MVGLToolsGUI:
     DSTS_ADDCONT_ARCHIVE_RE = re.compile(r"^addcont_(\d{2})(?:_text(\d{2}))?\.dx11$", re.IGNORECASE)
     DSTS_BASE_TEXT_ARCHIVE_RE = re.compile(r"^(app|patch)_text(\d{2})\.dx11$", re.IGNORECASE)
     DSTS_ENGLISH_TEXT_CODE = "01"
-    DSTS_EDITOR_DLC_IDS = ("01", "02", "03")
+    DSTS_EDITOR_DLC_IDS = ("01", "02", "03", "17")
     DSTS_BASE_ARCHIVES = ("app_0.dx11", "patch.dx11")
 
     def __init__(self, root):
@@ -325,7 +325,7 @@ class MVGLToolsGUI:
         self.dsts_base_english_only_var = tk.BooleanVar(value=True)
         self.dsts_base_english_only_check = ttk.Checkbutton(
             options_frame,
-            text="Time Stranger: extract editor layout (Base + DLC 01-03 English)",
+            text="Time Stranger: extract editor layout (Base + DLC 01-03/17 English)",
             variable=self.dsts_base_english_only_var,
             command=self.on_mode_change
         )
@@ -734,7 +734,7 @@ class MVGLToolsGUI:
         return ""
 
     def should_include_dsts_archive(self, archive_name):
-        """Include base app/patch archives plus DLC 01-03 English archives."""
+        """Include base app/patch archives plus DLC 01-03/17 English archives."""
         archive_name = archive_name.lower()
         if archive_name in self.DSTS_BASE_ARCHIVES:
             return True
@@ -909,7 +909,7 @@ class MVGLToolsGUI:
 
         self.log_output(f"Scan: found {scan['total_files']} .mbe file(s).\n")
         if scan["filter_enabled"]:
-            self.log_output("Filter: editor layout, base app/patch + addcont_01/02/03 + English text01 only.\n")
+            self.log_output("Filter: editor layout, base app/patch + addcont_01/02/03/17 + English text01 only.\n")
             self.log_output(
                 f"Included: {len(scan['included_archives'])} archive(s), "
                 f"{scan['included_files']} .mbe file(s).\n"

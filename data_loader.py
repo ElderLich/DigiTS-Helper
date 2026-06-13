@@ -99,7 +99,7 @@ class DigimonData:
 
 class MBELoader:
     """Loads and parses .mbe directories containing CSV files"""
-    DSTS_DLC_IDS = ("01", "02", "03")
+    DSTS_DLC_IDS = ("01", "02", "03", "17")
     
     def __init__(self, data_path: str = "data", text_path: str = "text"):
         self.data_path = Path(data_path)
@@ -2503,15 +2503,15 @@ class DLCExporter:
             return base_filename.replace('02_', '002_', 1)
         return base_filename
     
-    def get_dlc_path(self, dlc_name: str = "addcont_03") -> Path:
+    def get_dlc_path(self, dlc_name: str = "addcont_17") -> Path:
         """Get the DLC directory path"""
         return self.workspace_root / "DLC" / f"{dlc_name}.dx11"
     
-    def get_dlc_text_path(self, dlc_name: str = "addcont_03_text01") -> Path:
+    def get_dlc_text_path(self, dlc_name: str = "addcont_17_text01") -> Path:
         """Get the DLC text directory path"""
         return self.workspace_root / "DLC" / f"{dlc_name}.dx11"
     
-    def ensure_dlc_directories(self, dlc_name: str = "addcont_03") -> bool:
+    def ensure_dlc_directories(self, dlc_name: str = "addcont_17") -> bool:
         """Ensure all DLC directories exist"""
         try:
             dlc_data = self.get_dlc_path(dlc_name) / "data" / "mbe"
@@ -2519,20 +2519,20 @@ class DLCExporter:
             
             # Create all required directories
             dirs_to_create = [
-                dlc_data / "char_info_dlc03.mbe",
-                dlc_data / "digimon_status_dlc03.mbe",
-                dlc_data / "evolution_dlc03.mbe",
-                dlc_data / "battle_skill_dlc03.mbe",
-                dlc_data / "lod_chara_dlc03.mbe",
-                dlc_data / "model_setting_dlc03.mbe",
-                dlc_data / "model_outline_dlc03.mbe",
-                dlc_data / "aim_setup_dlc03.mbe",
-                dlc_data / "fix_front_of_joint_dlc03.mbe",
-                dlc_data / "anim_setting_dlc03.mbe",
-                dlc_data / "battle_effect_dlc03.mbe",
-                dlc_text / "char_name_dlc03.mbe",
-                dlc_text / "digimon_profile_dlc03.mbe",
-                dlc_text / "skill_name_dlc03.mbe",
+                dlc_data / "char_info_dlc17.mbe",
+                dlc_data / "digimon_status_dlc17.mbe",
+                dlc_data / "evolution_dlc17.mbe",
+                dlc_data / "battle_skill_dlc17.mbe",
+                dlc_data / "lod_chara_dlc17.mbe",
+                dlc_data / "model_setting_dlc17.mbe",
+                dlc_data / "model_outline_dlc17.mbe",
+                dlc_data / "aim_setup_dlc17.mbe",
+                dlc_data / "fix_front_of_joint_dlc17.mbe",
+                dlc_data / "anim_setting_dlc17.mbe",
+                dlc_data / "battle_effect_dlc17.mbe",
+                dlc_text / "char_name_dlc17.mbe",
+                dlc_text / "digimon_profile_dlc17.mbe",
+                dlc_text / "skill_name_dlc17.mbe",
             ]
             
             for dir_path in dirs_to_create:
@@ -2543,7 +2543,7 @@ class DLCExporter:
             print(f"Error creating DLC directories: {e}")
             return False
     
-    def save_digimon_to_dlc(self, digimon: DigimonData, animation_ref_chr_id: str = None, dlc_name: str = "addcont_03") -> bool:
+    def save_digimon_to_dlc(self, digimon: DigimonData, animation_ref_chr_id: str = None, dlc_name: str = "addcont_17") -> bool:
         """Export a Digimon to DLC files instead of base game
         
         Args:
@@ -2565,58 +2565,58 @@ class DLCExporter:
             print(f"\n=== Exporting {digimon.name} (ID: {digimon.id}) to DLC ===")
             print(f"Chr ID: {digimon.chr_id} | Animation Ref: {animation_ref_chr_id}")
             
-            # 1. Save to char_info_dlc03
+            # 1. Save to char_info_dlc17
             success = self._save_to_dlc_char_info(digimon, dlc_data)
             if not success:
-                print("❌ Failed to save to char_info_dlc03")
+                print("❌ Failed to save to char_info_dlc17")
                 return False
             
-            # 2. Save to digimon_status_dlc03
+            # 2. Save to digimon_status_dlc17
             success = self._save_to_dlc_status(digimon, dlc_data)
             if not success:
-                print("❌ Failed to save to digimon_status_dlc03")
+                print("❌ Failed to save to digimon_status_dlc17")
                 return False
             
-            # 3. Save to evolution_dlc03
+            # 3. Save to evolution_dlc17
             success = self._save_to_dlc_evolution(digimon, dlc_data)
             if not success:
-                print("❌ Failed to save to evolution_dlc03")
+                print("❌ Failed to save to evolution_dlc17")
                 return False
             
-            # 4. Save to char_name_dlc03
+            # 4. Save to char_name_dlc17
             success = self._save_to_dlc_char_name(digimon, dlc_text)
             if not success:
-                print("❌ Failed to save to char_name_dlc03")
+                print("❌ Failed to save to char_name_dlc17")
                 return False
             
-            # 5. Save to digimon_profile_dlc03
+            # 5. Save to digimon_profile_dlc17
             success = self._save_to_dlc_profile(digimon, dlc_text)
             if not success:
-                print("❌ Failed to save to digimon_profile_dlc03")
+                print("❌ Failed to save to digimon_profile_dlc17")
                 return False
             
-            # 6. Save to anim_setting_dlc03 (animation references)
+            # 6. Save to anim_setting_dlc17 (animation references)
             success = self._save_to_dlc_animation(digimon, dlc_data, animation_ref_chr_id)
             if not success:
-                print("❌ Failed to save to anim_setting_dlc03")
+                print("❌ Failed to save to anim_setting_dlc17")
                 return False
             
-            # 7. Save to model_setting_dlc03
+            # 7. Save to model_setting_dlc17
             success = self._save_to_dlc_model_setting(digimon, dlc_data, animation_ref_chr_id)
             if not success:
-                print("❌ Failed to save to model_setting_dlc03")
+                print("❌ Failed to save to model_setting_dlc17")
                 return False
             
-            # 8. Save to model_outline_dlc03
+            # 8. Save to model_outline_dlc17
             success = self._save_to_dlc_model_outline(digimon, dlc_data)
             if not success:
-                print("❌ Failed to save to model_outline_dlc03")
+                print("❌ Failed to save to model_outline_dlc17")
                 return False
             
-            # 9. Save to lod_chara_dlc03 (both files)
+            # 9. Save to lod_chara_dlc17 (both files)
             success = self._save_to_dlc_lod(digimon, dlc_data)
             if not success:
-                print("❌ Failed to save to lod_chara_dlc03")
+                print("❌ Failed to save to lod_chara_dlc17")
                 return False
             
             print(f"✅ Successfully exported {digimon.name} to DLC!")
@@ -2628,14 +2628,14 @@ class DLCExporter:
             traceback.print_exc()
             return False
     
-    def remove_digimon_from_dlc(self, digimon_id: int, chr_id: str = None, char_key: str = None, dlc_name: str = "addcont_03") -> bool:
+    def remove_digimon_from_dlc(self, digimon_id: int, chr_id: str = None, char_key: str = None, dlc_name: str = "addcont_17") -> bool:
         """Remove a Digimon from all DLC files
         
         Args:
             digimon_id: The Digimon ID to remove
             chr_id: Optional chr_id to match (for more accurate removal)
             char_key: Optional char_key to match (for more accurate removal)
-            dlc_name: DLC name (default: "addcont_03")
+            dlc_name: DLC name (default: "addcont_17")
         
         Returns:
             True if successful, False otherwise
@@ -2652,8 +2652,8 @@ class DLCExporter:
             
             removed_count = 0
             
-            # 1. Remove from char_info_dlc03
-            file_path = self.loader._resolve_prefixed_file(dlc_data / "char_info_dlc03.mbe" / "000_char_info.csv")
+            # 1. Remove from char_info_dlc17
+            file_path = self.loader._resolve_prefixed_file(dlc_data / "char_info_dlc17.mbe" / "000_char_info.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2670,10 +2670,10 @@ class DLCExporter:
                         for row in filtered_rows:
                             f.write(','.join(row) + '\n')
                     removed_count += 1
-                    print(f"✅ Removed from char_info_dlc03.mbe")
+                    print(f"✅ Removed from char_info_dlc17.mbe")
             
-            # 2. Remove from digimon_status_dlc03
-            file_path = self.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc03.mbe" / "000_digimon_status_data.csv")
+            # 2. Remove from digimon_status_dlc17
+            file_path = self.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2686,11 +2686,11 @@ class DLCExporter:
                         for row in filtered_rows:
                             f.write(','.join(row) + '\n')
                     removed_count += 1
-                    print(f"✅ Removed from digimon_status_dlc03.mbe")
+                    print(f"✅ Removed from digimon_status_dlc17.mbe")
             
-            # 3. Remove from evolution_dlc03 (both files)
+            # 3. Remove from evolution_dlc17 (both files)
             # Remove from 000_evolution_condition.csv
-            file_path = self.loader._resolve_prefixed_file(dlc_data / "evolution_dlc03.mbe" / "000_evolution_condition.csv")
+            file_path = self.loader._resolve_prefixed_file(dlc_data / "evolution_dlc17.mbe" / "000_evolution_condition.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2706,7 +2706,7 @@ class DLCExporter:
                     print(f"✅ Removed from evolution_condition")
             
             # Remove from 001_evolution_to.csv (remove paths where this Digimon is source or target)
-            file_path = self.loader._resolve_prefixed_file(dlc_data / "evolution_dlc03.mbe" / "001_evolution_to.csv")
+            file_path = self.loader._resolve_prefixed_file(dlc_data / "evolution_dlc17.mbe" / "001_evolution_to.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2723,8 +2723,8 @@ class DLCExporter:
                     removed_count += 1
                     print(f"✅ Removed evolution paths from evolution_to")
             
-            # 4. Remove from char_name_dlc03
-            file_path = self.loader._resolve_prefixed_file(dlc_text / "char_name_dlc03.mbe" / "000_Sheet1.csv")
+            # 4. Remove from char_name_dlc17
+            file_path = self.loader._resolve_prefixed_file(dlc_text / "char_name_dlc17.mbe" / "000_Sheet1.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2739,10 +2739,10 @@ class DLCExporter:
                         for row in filtered_rows:
                             f.write(','.join(row) + '\n')
                     removed_count += 1
-                    print(f"✅ Removed from char_name_dlc03.mbe")
+                    print(f"✅ Removed from char_name_dlc17.mbe")
             
-            # 5. Remove from digimon_profile_dlc03
-            file_path = self.loader._resolve_prefixed_file(dlc_text / "digimon_profile_dlc03.mbe" / "000_Sheet1.csv")
+            # 5. Remove from digimon_profile_dlc17
+            file_path = self.loader._resolve_prefixed_file(dlc_text / "digimon_profile_dlc17.mbe" / "000_Sheet1.csv")
             if file_path.exists():
                 rows = self.loader.load_csv(file_path)
                 original_count = len(rows)
@@ -2758,11 +2758,11 @@ class DLCExporter:
                         for row in filtered_rows:
                             f.write(','.join(row) + '\n')
                     removed_count += 1
-                    print(f"✅ Removed from digimon_profile_dlc03.mbe")
+                    print(f"✅ Removed from digimon_profile_dlc17.mbe")
             
-            # 6. Remove from anim_setting_dlc03 (by chr_id)
+            # 6. Remove from anim_setting_dlc17 (by chr_id)
             if chr_id:
-                file_path = self.loader._resolve_prefixed_file(dlc_data / "anim_setting_dlc03.mbe" / "000_anim_setting.csv")
+                file_path = self.loader._resolve_prefixed_file(dlc_data / "anim_setting_dlc17.mbe" / "000_anim_setting.csv")
                 if file_path.exists():
                     rows = self.loader.load_csv(file_path)
                     original_count = len(rows)
@@ -2778,11 +2778,11 @@ class DLCExporter:
                             for row in filtered_rows:
                                 f.write(','.join(row) + '\n')
                         removed_count += 1
-                        print(f"✅ Removed from anim_setting_dlc03.mbe")
+                        print(f"✅ Removed from anim_setting_dlc17.mbe")
             
-            # 7. Remove from model_setting_dlc03 (by chr_id)
+            # 7. Remove from model_setting_dlc17 (by chr_id)
             if chr_id:
-                file_path = self.loader._resolve_prefixed_file(dlc_data / "model_setting_dlc03.mbe" / "000_model_setting.csv")
+                file_path = self.loader._resolve_prefixed_file(dlc_data / "model_setting_dlc17.mbe" / "000_model_setting.csv")
                 if file_path.exists():
                     rows = self.loader.load_csv(file_path)
                     original_count = len(rows)
@@ -2798,11 +2798,11 @@ class DLCExporter:
                             for row in filtered_rows:
                                 f.write(','.join(row) + '\n')
                         removed_count += 1
-                        print(f"✅ Removed from model_setting_dlc03.mbe")
+                        print(f"✅ Removed from model_setting_dlc17.mbe")
             
-            # 8. Remove from model_outline_dlc03 (by chr_id)
+            # 8. Remove from model_outline_dlc17 (by chr_id)
             if chr_id:
-                file_path = self.loader._resolve_prefixed_file(dlc_data / "model_outline_dlc03.mbe" / "000_model_outline.csv")
+                file_path = self.loader._resolve_prefixed_file(dlc_data / "model_outline_dlc17.mbe" / "000_model_outline.csv")
                 if file_path.exists():
                     rows = self.loader.load_csv(file_path)
                     original_count = len(rows)
@@ -2818,12 +2818,12 @@ class DLCExporter:
                             for row in filtered_rows:
                                 f.write(','.join(row) + '\n')
                         removed_count += 1
-                        print(f"✅ Removed from model_outline_dlc03.mbe")
+                        print(f"✅ Removed from model_outline_dlc17.mbe")
             
-            # 9. Remove from lod_chara_dlc03 (both files)
+            # 9. Remove from lod_chara_dlc17 (both files)
             if chr_id:
                 # 000_lod.csv
-                file_path = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc03.mbe" / "000_lod.csv")
+                file_path = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc17.mbe" / "000_lod.csv")
                 if file_path.exists():
                     rows = self.loader.load_csv(file_path)
                     original_count = len(rows)
@@ -2839,10 +2839,10 @@ class DLCExporter:
                             for row in filtered_rows:
                                 f.write(','.join(row) + '\n')
                         removed_count += 1
-                        print(f"✅ Removed from lod_chara_dlc03.mbe (00_lod.csv)")
+                        print(f"✅ Removed from lod_chara_dlc17.mbe (00_lod.csv)")
                 
                 # 01_lod_model.csv
-                file_path = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc03.mbe" / "001_lod_model.csv")
+                file_path = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc17.mbe" / "001_lod_model.csv")
                 if file_path.exists():
                     rows = self.loader.load_csv(file_path)
                     original_count = len(rows)
@@ -2859,7 +2859,7 @@ class DLCExporter:
                             for row in filtered_rows:
                                 f.write(','.join(row) + '\n')
                         removed_count += 1
-                        print(f"✅ Removed from lod_chara_dlc03.mbe (01_lod_model.csv)")
+                        print(f"✅ Removed from lod_chara_dlc17.mbe (01_lod_model.csv)")
             
             if removed_count > 0:
                 print(f"✅ Successfully removed Digimon ID {digimon_id} from {removed_count} DLC file(s)!")
@@ -2875,9 +2875,9 @@ class DLCExporter:
             return False
     
     def _save_to_dlc_char_info(self, digimon: DigimonData, dlc_data: Path) -> bool:
-        """Save to char_info_dlc03.mbe/000_char_info.csv"""
+        """Save to char_info_dlc17.mbe/000_char_info.csv"""
         try:
-            file_path = dlc_data / "char_info_dlc03.mbe" / "000_char_info.csv"
+            file_path = dlc_data / "char_info_dlc17.mbe" / "000_char_info.csv"
             
             # Load or create file
             if file_path.exists():
@@ -2956,18 +2956,18 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to char_info_dlc03.mbe")
+            print(f"✅ Saved to char_info_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to char_info_dlc03: {e}")
+            print(f"Error saving to char_info_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def _save_to_dlc_status(self, digimon: DigimonData, dlc_data: Path) -> bool:
-        """Save to digimon_status_dlc03.mbe/000_digimon_status_data.csv"""
+        """Save to digimon_status_dlc17.mbe/000_digimon_status_data.csv"""
         try:
-            file_path = dlc_data / "digimon_status_dlc03.mbe" / "000_digimon_status_data.csv"
+            file_path = dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3153,19 +3153,19 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to digimon_status_dlc03.mbe")
+            print(f"✅ Saved to digimon_status_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to digimon_status_dlc03: {e}")
+            print(f"Error saving to digimon_status_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def _save_to_dlc_evolution(self, digimon: DigimonData, dlc_data: Path) -> bool:
-        """Save to evolution_dlc03.mbe/000_evolution_condition.csv and 001_evolution_to.csv"""
+        """Save to evolution_dlc17.mbe/000_evolution_condition.csv and 001_evolution_to.csv"""
         try:
             # 1. Save evolution condition file
-            cond_file_path = dlc_data / "evolution_dlc03.mbe" / "000_evolution_condition.csv"
+            cond_file_path = dlc_data / "evolution_dlc17.mbe" / "000_evolution_condition.csv"
             
             # Load or create condition file
             if cond_file_path.exists():
@@ -3194,7 +3194,7 @@ class DLCExporter:
                     f.write(','.join(write_row) + '\n')
             
             # 2. Save evolution_to file (actual evolution paths)
-            evo_to_file_path = dlc_data / "evolution_dlc03.mbe" / "001_evolution_to.csv"
+            evo_to_file_path = dlc_data / "evolution_dlc17.mbe" / "001_evolution_to.csv"
             
             # Load or create evolution_to file
             if evo_to_file_path.exists():
@@ -3336,18 +3336,18 @@ class DLCExporter:
                 for write_row in transformed_evo_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to evolution_dlc03.mbe (condition + evolution paths)")
+            print(f"✅ Saved to evolution_dlc17.mbe (condition + evolution paths)")
             return True
         except Exception as e:
-            print(f"Error saving to evolution_dlc03: {e}")
+            print(f"Error saving to evolution_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def _save_to_dlc_char_name(self, digimon: DigimonData, dlc_text: Path) -> bool:
-        """Save to char_name_dlc03.mbe/000_Sheet1.csv"""
+        """Save to char_name_dlc17.mbe/000_Sheet1.csv"""
         try:
-            file_path = dlc_text / "char_name_dlc03.mbe" / "000_Sheet1.csv"
+            file_path = dlc_text / "char_name_dlc17.mbe" / "000_Sheet1.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3374,17 +3374,17 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to char_name_dlc03.mbe")
+            print(f"✅ Saved to char_name_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to char_name_dlc03: {e}")
+            print(f"Error saving to char_name_dlc17: {e}")
             return False
     
     def _save_to_dlc_profile(self, digimon: DigimonData, dlc_text: Path) -> bool:
-        """Save to digimon_profile_dlc03.mbe/000_Sheet1.csv"""
+        """Save to digimon_profile_dlc17.mbe/000_Sheet1.csv"""
         import csv
         try:
-            file_path = dlc_text / "digimon_profile_dlc03.mbe" / "000_Sheet1.csv"
+            file_path = dlc_text / "digimon_profile_dlc17.mbe" / "000_Sheet1.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3425,18 +3425,18 @@ class DLCExporter:
                     row_str = ','.join(row)
                     f.write(row_str + '\n')
             
-            print(f"✅ Saved to digimon_profile_dlc03.mbe")
+            print(f"✅ Saved to digimon_profile_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to digimon_profile_dlc03: {e}")
+            print(f"Error saving to digimon_profile_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def _save_to_dlc_animation(self, digimon: DigimonData, dlc_data: Path, animation_ref_chr_id: str) -> bool:
-        """Save to anim_setting_dlc03.mbe/001_same_animation_data.csv"""
+        """Save to anim_setting_dlc17.mbe/001_same_animation_data.csv"""
         try:
-            file_path = dlc_data / "anim_setting_dlc03.mbe" / "001_same_animation_data.csv"
+            file_path = dlc_data / "anim_setting_dlc17.mbe" / "001_same_animation_data.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3469,16 +3469,16 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to anim_setting_dlc03.mbe (animations from {animation_source})")
+            print(f"✅ Saved to anim_setting_dlc17.mbe (animations from {animation_source})")
             return True
         except Exception as e:
-            print(f"Error saving to anim_setting_dlc03: {e}")
+            print(f"Error saving to anim_setting_dlc17: {e}")
             return False
     
     def _save_to_dlc_model_setting(self, digimon: DigimonData, dlc_data: Path, animation_ref_chr_id: str = None) -> bool:
-        """Save to model_setting_dlc03.mbe/000_model_setting.csv"""
+        """Save to model_setting_dlc17.mbe/000_model_setting.csv"""
         try:
-            file_path = dlc_data / "model_setting_dlc03.mbe" / "000_model_setting.csv"
+            file_path = dlc_data / "model_setting_dlc17.mbe" / "000_model_setting.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3540,7 +3540,7 @@ class DLCExporter:
                 
                 # Also check DLC files if not found in base game
                 if not template_row:
-                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "model_setting_dlc03.mbe" / "000_model_setting.csv")
+                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "model_setting_dlc17.mbe" / "000_model_setting.csv")
                     if dlc_file.exists():
                         dlc_rows = self.loader.load_csv(dlc_file)
                         for row in dlc_rows[1:]:
@@ -3582,18 +3582,18 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to model_setting_dlc03.mbe")
+            print(f"✅ Saved to model_setting_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to model_setting_dlc03: {e}")
+            print(f"Error saving to model_setting_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def _save_to_dlc_model_outline(self, digimon: DigimonData, dlc_data: Path) -> bool:
-        """Save to model_outline_dlc03.mbe/000_model_outline_battle.csv"""
+        """Save to model_outline_dlc17.mbe/000_model_outline_battle.csv"""
         try:
-            file_path = dlc_data / "model_outline_dlc03.mbe" / "000_model_outline_battle.csv"
+            file_path = dlc_data / "model_outline_dlc17.mbe" / "000_model_outline_battle.csv"
             
             # Load or create file
             if file_path.exists():
@@ -3636,17 +3636,17 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to model_outline_dlc03.mbe")
+            print(f"✅ Saved to model_outline_dlc17.mbe")
             return True
         except Exception as e:
-            print(f"Error saving to model_outline_dlc03: {e}")
+            print(f"Error saving to model_outline_dlc17: {e}")
             return False
     
     def _save_to_dlc_lod(self, digimon: DigimonData, dlc_data: Path) -> bool:
-        """Save to lod_chara_dlc03.mbe (both 000_lod.csv and 001_lod_model.csv)"""
+        """Save to lod_chara_dlc17.mbe (both 000_lod.csv and 001_lod_model.csv)"""
         try:
             # File 1: 000_lod.csv
-            lod_file = dlc_data / "lod_chara_dlc03.mbe" / "000_lod.csv"
+            lod_file = dlc_data / "lod_chara_dlc17.mbe" / "000_lod.csv"
             
             if lod_file.exists():
                 rows = self.loader.load_csv(lod_file)
@@ -3677,7 +3677,7 @@ class DLCExporter:
                 
                 # Also check DLC files
                 if not template_row:
-                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc03.mbe" / "000_lod.csv")
+                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc17.mbe" / "000_lod.csv")
                     if dlc_file.exists():
                         dlc_rows = self.loader.load_csv(dlc_file)
                         template_chr_id = digimon.chr_id
@@ -3712,7 +3712,7 @@ class DLCExporter:
                     f.write(','.join(write_row) + '\n')
             
             # File 2: 001_lod_model.csv
-            lod_model_file = dlc_data / "lod_chara_dlc03.mbe" / "001_lod_model.csv"
+            lod_model_file = dlc_data / "lod_chara_dlc17.mbe" / "001_lod_model.csv"
             
             if lod_model_file.exists():
                 rows = self.loader.load_csv(lod_model_file)
@@ -3749,7 +3749,7 @@ class DLCExporter:
                 
                 # Also check DLC files
                 if not template_row:
-                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc03.mbe" / "001_lod_model.csv")
+                    dlc_file = self.loader._resolve_prefixed_file(dlc_data / "lod_chara_dlc17.mbe" / "001_lod_model.csv")
                     if dlc_file.exists():
                         dlc_rows = self.loader.load_csv(dlc_file)
                         template_chr_id = digimon.chr_id
@@ -3784,11 +3784,12 @@ class DLCExporter:
                 for write_row in transformed_rows:
                     f.write(','.join(write_row) + '\n')
             
-            print(f"✅ Saved to lod_chara_dlc03.mbe (both files)")
+            print(f"✅ Saved to lod_chara_dlc17.mbe (both files)")
             return True
         except Exception as e:
-            print(f"Error saving to lod_chara_dlc03: {e}")
+            print(f"Error saving to lod_chara_dlc17: {e}")
             import traceback
             traceback.print_exc()
             return False
+
 

@@ -2964,6 +2964,7 @@ class DigimonEditor(QMainWindow):
         self.loader = MBELoader(data_path="Base/data", text_path="Base/text")
         self.exporter = CSVExporter(data_path="Base/data", text_path="Base/text")
         self.current_digimon: Optional[DigimonData] = None
+        self.current_digimon_from_dlc = False
         self.has_unsaved_changes = False
         self.setup_ui()
         self.connect_change_signals()
@@ -3278,9 +3279,10 @@ class DigimonEditor(QMainWindow):
         source_layout.addWidget(source_label)
         
         self.source_combo = QComboBox()
-        self.source_combo.addItem("Base Game", False)
-        self.source_combo.addItem("DLC (addcont_01-03)", True)
-        self.source_combo.setToolTip("Select which Digimon to view:\n• Base Game - Original game Digimon\n• DLC - Custom/modded Digimon\n\nSaving behavior changes based on selection")
+        self.source_combo.addItem("Base + DLC", "all")
+        self.source_combo.addItem("Base Game", "base")
+        self.source_combo.addItem("DLC (addcont_01-03,17)", "dlc")
+        self.source_combo.setToolTip("Select which Digimon to view:\n• Base + DLC - Combined list\n• Base Game - Original game Digimon\n• DLC - addcont_01-03 and addcont_17 Digimon\n\nSaving/removal follows the loaded Digimon source")
         self.source_combo.currentIndexChanged.connect(self.load_digimon_list)
         self.source_combo.currentIndexChanged.connect(self.on_source_changed)
         self.source_combo.setStyleSheet("""
@@ -3317,6 +3319,38 @@ class DigimonEditor(QMainWindow):
         source_view.setPalette(source_palette)
         source_layout.addWidget(self.source_combo)
         layout.addWidget(source_container)
+
+        # Sort selector
+        sort_container = QWidget()
+        sort_container.setStyleSheet("""
+            QWidget {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                border: 2px solid #dee2e6;
+                padding: 8px;
+            }
+        """)
+        sort_layout = QHBoxLayout(sort_container)
+        sort_layout.setContentsMargins(10, 5, 10, 5)
+        
+        sort_label = QLabel("↕ Sort:")
+        sort_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        sort_label.setStyleSheet("border: none; background: transparent; color: #667eea;")
+        sort_layout.addWidget(sort_label)
+        
+        self.sort_combo = QComboBox()
+        self.sort_combo.addItem("Name", "name")
+        self.sort_combo.addItem("Chr ID", "chr_id")
+        self.sort_combo.setToolTip("Sort the Digimon list by display name or chr ID")
+        self.sort_combo.currentIndexChanged.connect(lambda: self.refresh_digimon_list_view())
+        self.sort_combo.setStyleSheet(self.source_combo.styleSheet())
+        sort_view = self.sort_combo.view()
+        sort_palette = sort_view.palette()
+        sort_palette.setColor(QPalette.ColorRole.Text, QColor("#333333"))
+        sort_palette.setColor(QPalette.ColorRole.Base, QColor("white"))
+        sort_view.setPalette(sort_palette)
+        sort_layout.addWidget(self.sort_combo)
+        layout.addWidget(sort_container)
         
         # Search box
         search_container = QWidget()
@@ -6020,76 +6054,156 @@ class DigimonEditor(QMainWindow):
             self.formation_type_edit.clear()
     
     
+    def get_source_mode(self) -> str:
+        """Return the selected source mode as base, dlc, or all."""
+        if not hasattr(self, 'source_combo'):
+            return "all"
+
+        source_mode = self.source_combo.currentData()
+        if source_mode is True:
+            return "dlc"
+        if source_mode is False:
+            return "base"
+        return source_mode or "all"
+
+    def get_sort_mode(self) -> str:
+        """Return the selected Digimon list sort mode."""
+        if not hasattr(self, 'sort_combo'):
+            return "name"
+        return self.sort_combo.currentData() or "name"
+
+    def is_loaded_digimon_from_dlc(self) -> bool:
+        """Return whether the currently loaded Digimon came from DLC data."""
+        return bool(getattr(self, 'current_digimon_from_dlc', False))
+
+    def chr_sort_key(self, chr_id: str):
+        """Sort chr IDs naturally, so chr99 comes before chr100."""
+        clean_chr_id = (chr_id or "").strip('"').lower()
+        split_at = len(clean_chr_id)
+        while split_at > 0 and clean_chr_id[split_at - 1].isdigit():
+            split_at -= 1
+
+        prefix = clean_chr_id[:split_at]
+        number_text = clean_chr_id[split_at:]
+        number = int(number_text) if number_text else -1
+        return (prefix, number, clean_chr_id)
+
+    def make_digimon_display_name(self, entry: dict) -> str:
+        """Create the visible label for a Digimon list entry."""
+        prefix = "📥 " if entry.get("imported") else ""
+        display_name = f"{prefix}{entry['name']} ({entry['chr_id']})"
+
+        if self.get_source_mode() == "all":
+            source_label = {
+                "base": "Base",
+                "dlc": "DLC",
+                "imported": "Imported",
+            }.get(entry.get("source"), entry.get("source", ""))
+            if source_label:
+                display_name = f"{display_name} [{source_label}]"
+
+        return display_name
+
+    def refresh_digimon_list_view(self):
+        """Apply current sort/filter settings to the Digimon combo box."""
+        entries = list(getattr(self, 'digimon_entries', []))
+        sort_mode = self.get_sort_mode()
+        filter_text = self.search_box.text().strip().lower() if hasattr(self, 'search_box') else ""
+        previous_text = self.digimon_list.currentText() if hasattr(self, 'digimon_list') else ""
+
+        if sort_mode == "chr_id":
+            entries.sort(key=lambda entry: (self.chr_sort_key(entry["chr_id"]), entry["name"].casefold()))
+        else:
+            entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"])))
+
+        if filter_text:
+            entries = [
+                entry for entry in entries
+                if filter_text in entry["name"].lower()
+                or filter_text in entry["chr_id"].lower()
+                or filter_text in self.make_digimon_display_name(entry).lower()
+            ]
+
+        self.digimon_data = {}
+        display_names = []
+
+        for entry in entries:
+            display_name = self.make_digimon_display_name(entry)
+            if display_name in self.digimon_data:
+                display_name = f"{display_name} #{len(display_names) + 1}"
+            display_names.append(display_name)
+            self.digimon_data[display_name] = entry
+
+        self.digimon_list.blockSignals(True)
+        self.digimon_list.clear()
+        self.digimon_list.addItems(display_names)
+        if previous_text in display_names:
+            self.digimon_list.setCurrentText(previous_text)
+        self.digimon_list.blockSignals(False)
+        self.on_digimon_selected(self.digimon_list.currentText())
+
+        self.all_digimon_names = display_names.copy()
+
     def load_digimon_list(self):
-        """Load list of available Digimon by name"""
-        # Get source selection (Base Game or DLC)
-        from_dlc = self.source_combo.currentData() if hasattr(self, 'source_combo') else False
-        
-        chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
-        self.digimon_data = {}  # Store mapping of display name to chr_id
-        
-        if not chr_ids:
-            # No Digimon found in selected source
-            self.digimon_list.clear()
-            if from_dlc:
-                self.digimon_list.addItem("(No DLC Digimon found)")
-            self.all_digimon_names = []
-            return
-        
-        digimon_names = []
-        for chr_id in chr_ids:
-            # Get the name for this chr_id (returns None if not found in char_name.mbe)
-            name = self.loader._get_digimon_name_by_chr_id(chr_id)
-            
-            # Skip if no name found (not in char_name.mbe)
-            if not name:
-                continue
-            
-            display_name = f"{name} ({chr_id})"
-            digimon_names.append(display_name)
-            self.digimon_data[display_name] = chr_id
-        
+        """Load list of available Digimon by selected source."""
+        source_mode = self.get_source_mode()
+        source_requests = []
+        if source_mode in ("base", "all"):
+            source_requests.append(("base", False))
+        if source_mode in ("dlc", "all"):
+            source_requests.append(("dlc", True))
+
+        self.digimon_entries = []
+        seen_entries = set()
+
+        for source_name, from_dlc in source_requests:
+            chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
+            for chr_id in chr_ids:
+                entry_key = (source_name, chr_id)
+                if entry_key in seen_entries:
+                    continue
+                seen_entries.add(entry_key)
+
+                # Get the name for this chr_id (returns None if not found in char_name.mbe)
+                name = self.loader._get_digimon_name_by_chr_id(chr_id)
+                if not name:
+                    continue
+
+                self.digimon_entries.append({
+                    "name": name,
+                    "chr_id": chr_id,
+                    "source": source_name,
+                    "imported": False,
+                })
+
         # Add imported Digimon (marked with 📥)
         if hasattr(self.loader, 'imported_digimon'):
             for digimon in self.loader.imported_digimon:
-                display_name = f"📥 {digimon.name} ({digimon.chr_id})"
-                digimon_names.append(display_name)
-                self.digimon_data[display_name] = digimon.chr_id
-        
-        # Sort by name
-        digimon_names.sort()
-        
-        self.digimon_list.clear()
-        self.digimon_list.addItems(digimon_names)
-        
-        # Store all names for filtering
-        self.all_digimon_names = digimon_names.copy()
+                self.digimon_entries.append({
+                    "name": digimon.name,
+                    "chr_id": digimon.chr_id,
+                    "source": "imported",
+                    "imported": True,
+                })
+
+        self.refresh_digimon_list_view()
+
+        if not self.digimon_entries:
+            self.digimon_list.clear()
+            message = "(No DLC Digimon found)" if source_mode == "dlc" else "(No Digimon found)"
+            self.digimon_list.addItem(message)
+            self.all_digimon_names = []
     
     def on_source_changed(self):
         """Handle source combo change - disable remove button if switching away from DLC"""
         if not self.current_digimon:
             self.remove_button.setEnabled(False)
         else:
-            is_from_dlc = self.source_combo.currentData()
-            self.remove_button.setEnabled(is_from_dlc)
+            self.remove_button.setEnabled(self.is_loaded_digimon_from_dlc())
     
     def filter_digimon_list(self, text: str):
         """Filter Digimon list based on search text"""
-        if not hasattr(self, 'all_digimon_names'):
-            # Store all names for filtering
-            self.all_digimon_names = [self.digimon_list.itemText(i) for i in range(self.digimon_list.count())]
-        
-        # Clear and repopulate with filtered results
-        self.digimon_list.clear()
-        
-        if not text.strip():
-            # If no search text, show all
-            self.digimon_list.addItems(self.all_digimon_names)
-        else:
-            # Filter by search text (case insensitive)
-            filtered_names = [name for name in self.all_digimon_names 
-                            if text.lower() in name.lower()]
-            self.digimon_list.addItems(filtered_names)
+        self.refresh_digimon_list_view()
     
     def on_digimon_selected(self, display_name: str):
         """Handle Digimon selection from list"""
@@ -6120,13 +6234,24 @@ class DigimonEditor(QMainWindow):
         
         display_name = self.digimon_list.currentText()
         if display_name and display_name in self.digimon_data:
-            chr_id = self.digimon_data[display_name]
+            entry = self.digimon_data[display_name]
+            if isinstance(entry, dict):
+                chr_id = entry["chr_id"]
+                entry_source = entry.get("source", "base")
+                is_imported_entry = entry.get("imported", False)
+            else:
+                chr_id = entry
+                entry_source = "dlc" if self.get_source_mode() == "dlc" else "base"
+                is_imported_entry = display_name.startswith("📥")
+
+            self.current_digimon_from_dlc = entry_source == "dlc"
             
             # Check if this is an imported Digimon
-            if display_name.startswith("📥"):
+            if is_imported_entry:
                 if hasattr(self.loader, 'imported_digimon'):
                     for digimon in self.loader.imported_digimon:
                         if digimon.chr_id == chr_id:
+                            self.current_digimon_from_dlc = False
                             self.load_digimon_data(digimon)
                             return
             
@@ -6146,8 +6271,7 @@ class DigimonEditor(QMainWindow):
         self.clear_modified_flag()
         
         # Enable/disable remove button based on source
-        is_from_dlc = self.source_combo.currentData()
-        self.remove_button.setEnabled(is_from_dlc)
+        self.remove_button.setEnabled(self.is_loaded_digimon_from_dlc())
         
         # Basic Info
         self.id_spin.setValue(digimon.id)
@@ -7085,7 +7209,7 @@ class DigimonEditor(QMainWindow):
                 return
         
         # Check if this Digimon is from DLC or base game
-        is_from_dlc = self.source_combo.currentData()
+        is_from_dlc = self.is_loaded_digimon_from_dlc()
         
         if is_from_dlc:
             # Save to DLC instead of base game
@@ -7148,7 +7272,7 @@ class DigimonEditor(QMainWindow):
             return
         
         # Check if this Digimon is from DLC
-        is_from_dlc = self.source_combo.currentData()
+        is_from_dlc = self.is_loaded_digimon_from_dlc()
         if not is_from_dlc:
             QMessageBox.warning(
                 self, 
@@ -8736,7 +8860,7 @@ class DigimonEditor(QMainWindow):
             lowered_parts = [part.lower() for part in path.parts]
             if "dsts-loader" in lowered_parts:
                 return True
-            if path.name.lower() in {"addcont_01", "addcont_01_text01", "addcont_02", "addcont_02_text01", "addcont_03", "addcont_03_text01", "data", "text"}:
+            if path.name.lower() in {"addcont_01", "addcont_01_text01", "addcont_02", "addcont_02_text01", "addcont_03", "addcont_03_text01", "addcont_17", "addcont_17_text01", "data", "text"}:
                 parent_parts = [part.lower() for part in path.parent.parts]
                 if "dsts-loader" in parent_parts:
                     return True
@@ -8785,8 +8909,8 @@ class DigimonEditor(QMainWindow):
             "Repack DLC to MBE", 
             "This will repack all DLC CSV folders into .mbe files.\n\n"
             "DLC folders to be repacked:\n"
-            "- DLC/addcont_01-03.dx11/data/mbe/*_dlc01-03.mbe/\n"
-            "- DLC/addcont_01-03_text01.dx11/text/mbe/*_dlc01-03.mbe/\n\n"
+            "- DLC/addcont_01-03,17.dx11/data/mbe/*_dlc01-03,17.mbe/\n"
+            "- DLC/addcont_01-03,17_text01.dx11/text/mbe/*_dlc01-03,17.mbe/\n\n"
             "Requires DSCSToolsCLI.exe in the workspace root.\n\n"
             "Continue?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No

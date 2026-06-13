@@ -636,14 +636,14 @@ class CSVExporter:
             traceback.print_exc()
             return False
 
-    def export_for_dsts_loader(self, dsts_loader_dir: Path, dlc_name: str = "addcont_03") -> bool:
+    def export_for_dsts_loader(self, dsts_loader_dir: Path, dlc_name: str = "addcont_17") -> bool:
         """
         Export DLC CSV files into a dsts-loader friendly structure.
 
         Structure:
             dsts-loader/
-                addcont_03/data/<*.mbe>/<csv without numeric prefix>
-                addcont_03_text01/text/<*.mbe>/<csv without numeric prefix>
+                addcont_17/data/<*.mbe>/<csv without numeric prefix>
+                addcont_17_text01/text/<*.mbe>/<csv without numeric prefix>
         """
         try:
             workspace_root = self.data_path.parent
@@ -819,7 +819,7 @@ class CSVExporter:
         """
         Determine where to place data/text folders based on the selected directory.
 
-        Supports selecting the dsts-loader root, addcont_03 directories, or an empty folder.
+        Supports selecting the dsts-loader root, addcont_17 directories, or an empty folder.
         """
         selected = selected_path.resolve()
         dlc_folder = dlc_name.lower()
@@ -920,7 +920,7 @@ def repack_dlc_mbe_files(dlc_names=None) -> bool:
     Repack DLC CSV folders into .mbe files using DSCSToolsCLI.
     
     Args:
-        dlc_names: Optional DLC name or iterable of DLC names. Defaults to addcont_01-03.
+        dlc_names: Optional DLC name or iterable of DLC names. Defaults to addcont_01-03 and addcont_17.
     
     Returns:
         bool: True if repacking was successful
@@ -966,8 +966,8 @@ def repack_dlc_mbe_files(dlc_names=None) -> bool:
             return False
         
         print(f"\n=== Repacking {len(mbe_folders)} DLC .mbe folders ===")
-        print("Source: DLC/addcont_01-03.dx11/...")
-        print("Target: export/DLC/addcont_01-03.dx11/...")
+        print("Source: DLC/addcont_01-03/17.dx11/...")
+        print("Target: export/DLC/addcont_01-03/17.dx11/...")
         success_count = 0
         
         for mbe_folder, target_dir in mbe_folders:
