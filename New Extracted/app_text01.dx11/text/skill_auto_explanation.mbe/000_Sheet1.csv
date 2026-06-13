@@ -1,4 +1,4 @@
-string2 0,string 1
+key,text
 "1","[Target: 1 enemy]"
 "2","[Target: 1 ally]"
 "3","[Target: 1 ally excluding user]"

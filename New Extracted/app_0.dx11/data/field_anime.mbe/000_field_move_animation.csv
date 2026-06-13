@@ -1,4 +1,4 @@
-string3 0,string3 1,string3 2,string3 3,float 4,float 5,float 6,float 7,float 8,int32 9,float 10,float 11,float 12,float 13,int32 14
+animation_key,motion_1,motion_2,motion_3,move_speed_1,move_param_1,move_speed_2,unk_float_007,unk_float_008,unknown_int_009,unk_float_010,unk_float_011,unk_float_012,unk_float_013,unknown_int_014
 "default_move_animation","bn01","br01","",7.5,0,0,-1,-1,0,-1,-1,-1,-1,-1
 "farm_move_animation","bn01","br01","",5.5,0,0,-1,-1,0,-1,-1,-1,-1,-1
 "pc001a","fn01_01","fw01_01","fr01_01b",1.5,7,1.5,-1,-1,0,10,25,-1,-1,-1

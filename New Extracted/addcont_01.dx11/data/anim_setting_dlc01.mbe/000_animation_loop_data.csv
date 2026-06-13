@@ -1,4 +1,4 @@
-string2 0,empty 1,empty 2,int32 3,int32 4,string2 5
+animation_key,empty_001,empty_002,loop_start_frame,loop_end_frame,motion_set
 "npc002a_fs01_02",,,50,140,"fs01_01"
 "npc004a_e576",,,95,155,""
 "npc005a_e570",,,60,140,""

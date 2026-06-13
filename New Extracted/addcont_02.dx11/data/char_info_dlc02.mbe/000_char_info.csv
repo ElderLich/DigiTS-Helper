@@ -1,4 +1,4 @@
-string2 0,empty 1,empty 2,string2 3,string2 4,empty 5,int32 6,int32 7,string2 8,int32 9,string2 10,int32 11,string2 12,int32 13
+char_key,empty_001,empty_002,chr_id,numeric_id,empty_005,gender_flag,flag_007,motion_ref,flag_009,model_ref,flag_011,empty_012,flag_013
 "char_BANCHOLEOMON_BIG",,,"chr851","1049",,0,0,"yma011",0,"mpc049",0,"",0
 "char_OMEGAMON_BEMERCIFUL",,,"chr847","1088",,0,0,"mmb002",0,"mpc847",0,"",0
 "char_OMEGAMON:MERCIFUL MODE",,,"chr448","1448",,0,0,"mmb002",0,"mpc448",0,"",0
