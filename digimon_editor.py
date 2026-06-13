@@ -1096,11 +1096,9 @@ class BasicInfoPage(QWizardPage):
         existing_ids = wizard.loader.get_all_digimon_ids()
         # Also check DLC IDs
         try:
-            from Data_Loader import DLCExporter
-            dlc_exporter = DLCExporter(wizard.loader)
-            dlc_data = dlc_exporter.get_dlc_path("addcont_17") / "data" / "mbe"
-            dlc_status_file = wizard.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")
-            if dlc_status_file.exists():
+            for _dlc_id, dlc_status_file in wizard.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
                 dlc_rows = wizard.loader.load_csv(dlc_status_file)
                 for row in dlc_rows[1:]:  # Skip header
                     if len(row) > 0 and row[0]:
@@ -2035,8 +2033,9 @@ class EvolutionPage(QWizardPage):
                         count += 1
             
             # Also check DLC files
-            dlc_path = self.wizard.loader._resolve_prefixed_file(self.wizard.loader.data_path.parent / "addcont_17" / "data" / "mbe" / "evolution_dlc17.mbe" / "001_evolution_to.csv")
-            if dlc_path.exists():
+            for _dlc_id, dlc_path in self.wizard.loader.iter_dlc_csv_files(
+                "data", "evolution", "001_evolution_to.csv"
+            ):
                 rows = self.wizard.loader.load_csv(dlc_path)
                 for row in rows[1:]:
                     if len(row) > 1 and row[1] == str(digimon_id):
@@ -2192,10 +2191,9 @@ class EvolutionPage(QWizardPage):
                                     pass
                 
                 # Load DLC IDs
-                dlc_exporter = DLCExporter(self.wizard.loader)
-                dlc_data = dlc_exporter.get_dlc_path("addcont_17") / "data" / "mbe"
-                dlc_status_file = self.wizard.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")
-                if dlc_status_file.exists():
+                for _dlc_id, dlc_status_file in self.wizard.loader.iter_dlc_csv_files(
+                    "data", "digimon_status", "000_digimon_status_data.csv"
+                ):
                     rows = self.wizard.loader.load_csv(dlc_status_file)
                     for row in rows[1:]:
                         if len(row) > 3 and row[3]:
@@ -2281,10 +2279,9 @@ class EvolutionPage(QWizardPage):
                                     pass
                 
                 # Load DLC IDs
-                dlc_exporter = DLCExporter(self.wizard.loader)
-                dlc_data = dlc_exporter.get_dlc_path("addcont_17") / "data" / "mbe"
-                dlc_status_file = self.wizard.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")
-                if dlc_status_file.exists():
+                for _dlc_id, dlc_status_file in self.wizard.loader.iter_dlc_csv_files(
+                    "data", "digimon_status", "000_digimon_status_data.csv"
+                ):
                     rows = self.wizard.loader.load_csv(dlc_status_file)
                     for row in rows[1:]:
                         if len(row) > 3 and row[3]:
@@ -2313,8 +2310,9 @@ class EvolutionPage(QWizardPage):
                                 pass
                 
                 # Also count DLC evolutions
-                dlc_evo_file = self.wizard.loader._resolve_prefixed_file(dlc_data / "evolution_dlc17.mbe" / "001_evolution_to.csv")
-                if dlc_evo_file.exists():
+                for _dlc_id, dlc_evo_file in self.wizard.loader.iter_dlc_csv_files(
+                    "data", "evolution", "001_evolution_to.csv"
+                ):
                     rows = self.wizard.loader.load_csv(dlc_evo_file)
                     for row in rows[1:]:
                         if len(row) > 1 and row[1]:
@@ -3281,7 +3279,7 @@ class DigimonEditor(QMainWindow):
         
         self.source_combo = QComboBox()
         self.source_combo.addItem("Base Game", False)
-        self.source_combo.addItem("DLC (addcont_17)", True)
+        self.source_combo.addItem("DLC (addcont_01-03)", True)
         self.source_combo.setToolTip("Select which Digimon to view:\n• Base Game - Original game Digimon\n• DLC - Custom/modded Digimon\n\nSaving behavior changes based on selection")
         self.source_combo.currentIndexChanged.connect(self.load_digimon_list)
         self.source_combo.currentIndexChanged.connect(self.on_source_changed)
@@ -6989,10 +6987,9 @@ class DigimonEditor(QMainWindow):
         existing_ids = self.loader.get_all_digimon_ids()
         # Also check DLC IDs
         try:
-            dlc_exporter = DLCExporter(self.loader)
-            dlc_data = dlc_exporter.get_dlc_path("addcont_17") / "data" / "mbe"
-            dlc_status_file = self.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")
-            if dlc_status_file.exists():
+            for _dlc_id, dlc_status_file in self.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
                 dlc_rows = self.loader.load_csv(dlc_status_file)
                 for row in dlc_rows[1:]:  # Skip header
                     if len(row) > 0 and row[0]:
@@ -7230,8 +7227,8 @@ class DigimonEditor(QMainWindow):
             "Export to DLC", 
             f"Export {self.current_digimon.name} (ID: {self.current_digimon.id}) to DLC files?\n\n"
             f"This will create/update entries in:\n"
-            f"- DLC/addcont_17.dx11/data/mbe/ (game data)\n"
-            f"- DLC/addcont_17_text01.dx11/text/mbe/ (text data)\n\n"
+            f"- the configured mod DLC data folder\n"
+            f"- the configured mod DLC English text folder\n\n"
             f"Base game files will NOT be modified.",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         )
@@ -8004,8 +8001,7 @@ class DigimonEditor(QMainWindow):
                         count += 1
             
             # Also check DLC files
-            dlc_path = self.loader._resolve_prefixed_file(self.loader.data_path.parent / "addcont_17" / "data" / "mbe" / "evolution_dlc17.mbe" / "001_evolution_to.csv")
-            if dlc_path.exists():
+            for _dlc_id, dlc_path in self.loader.iter_dlc_csv_files("data", "evolution", "001_evolution_to.csv"):
                 rows = self.loader.load_csv(dlc_path)
                 for row in rows[1:]:
                     if len(row) > 1 and row[1] == str(digimon_id):
@@ -8740,11 +8736,15 @@ class DigimonEditor(QMainWindow):
             lowered_parts = [part.lower() for part in path.parts]
             if "dsts-loader" in lowered_parts:
                 return True
-            if path.name.lower() in {"addcont_17", "addcont_17_text01", "data", "text"}:
+            if path.name.lower() in {"addcont_01", "addcont_01_text01", "addcont_02", "addcont_02_text01", "addcont_03", "addcont_03_text01", "data", "text"}:
                 parent_parts = [part.lower() for part in path.parent.parts]
                 if "dsts-loader" in parent_parts:
                     return True
-            return (path / "addcont_17").exists() and (path / "addcont_17_text01").exists()
+            return any(
+                (path / f"addcont_{dlc_id}").exists()
+                and (path / f"addcont_{dlc_id}_text01").exists()
+                for dlc_id in self.loader.get_dlc_ids()
+            )
         except Exception:
             return False
     
@@ -8785,8 +8785,8 @@ class DigimonEditor(QMainWindow):
             "Repack DLC to MBE", 
             "This will repack all DLC CSV folders into .mbe files.\n\n"
             "DLC folders to be repacked:\n"
-            "- DLC/addcont_17.dx11/data/mbe/*_dlc17.mbe/\n"
-            "- DLC/addcont_17_text01.dx11/text/mbe/*_dlc17.mbe/\n\n"
+            "- DLC/addcont_01-03.dx11/data/mbe/*_dlc01-03.mbe/\n"
+            "- DLC/addcont_01-03_text01.dx11/text/mbe/*_dlc01-03.mbe/\n\n"
             "Requires DSCSToolsCLI.exe in the workspace root.\n\n"
             "Continue?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No

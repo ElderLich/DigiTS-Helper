@@ -138,7 +138,8 @@ class MVGLToolsGUI:
         ),
         "unpack-mbe-dir": (
             "Converts all .mbe table files found under the source folder into editable CSV folders. "
-            "For Time Stranger, the default filter extracts base archives plus English text01 only."
+            "For Time Stranger, the default filter extracts the editor-ready base data plus addcont_01, "
+            "addcont_02, addcont_03, and English text01 only."
         ),
         "pack-mbe-dir": (
             "Rebuilds many .mbe table files from extracted CSV folders while preserving folder structure."
@@ -180,7 +181,11 @@ class MVGLToolsGUI:
     ]
     DSTS_DEFAULT_SOURCE_DIR = Path(r"D:\Digimon Modding\Time Stranger Extracted")
     DSTS_TEXT_ARCHIVE_RE = re.compile(r"_text(\d{2})\.dx11$", re.IGNORECASE)
+    DSTS_ADDCONT_ARCHIVE_RE = re.compile(r"^addcont_(\d{2})(?:_text(\d{2}))?\.dx11$", re.IGNORECASE)
+    DSTS_BASE_TEXT_ARCHIVE_RE = re.compile(r"^(app|patch)_text(\d{2})\.dx11$", re.IGNORECASE)
     DSTS_ENGLISH_TEXT_CODE = "01"
+    DSTS_EDITOR_DLC_IDS = ("01", "02", "03")
+    DSTS_BASE_ARCHIVES = ("app_0.dx11", "patch.dx11")
 
     def __init__(self, root):
         self.root = root
@@ -189,7 +194,7 @@ class MVGLToolsGUI:
         self.root.resizable(True, True)
         
         self.app_dir = self.get_app_dir()
-        self.default_mbe_extract_dir = self.app_dir / "New Extracted"
+        self.default_mbe_extract_dir = self.app_dir
         self.default_mbe_source_dir = self.DSTS_DEFAULT_SOURCE_DIR
         self.mode_paths = {}
         self.active_mode = None
@@ -320,7 +325,7 @@ class MVGLToolsGUI:
         self.dsts_base_english_only_var = tk.BooleanVar(value=True)
         self.dsts_base_english_only_check = ttk.Checkbutton(
             options_frame,
-            text="Time Stranger: extract base + English text only",
+            text="Time Stranger: extract editor layout (Base + DLC 01-03 English)",
             variable=self.dsts_base_english_only_var,
             command=self.on_mode_change
         )
@@ -705,7 +710,7 @@ class MVGLToolsGUI:
         return None
 
     def should_filter_dsts_text_archives(self, mode):
-        """Return whether DSTS MBE extraction should skip non-English text archives."""
+        """Return whether DSTS MBE extraction should use the editor-ready archive set."""
         return (
             mode == "unpack-mbe-dir"
             and self.game_var.get() == "dsts"
@@ -729,9 +734,71 @@ class MVGLToolsGUI:
         return ""
 
     def should_include_dsts_archive(self, archive_name):
-        """Include base archives and English text archives."""
-        match = self.DSTS_TEXT_ARCHIVE_RE.search(archive_name)
-        return not match or match.group(1) == self.DSTS_ENGLISH_TEXT_CODE
+        """Include base app/patch archives plus DLC 01-03 English archives."""
+        archive_name = archive_name.lower()
+        if archive_name in self.DSTS_BASE_ARCHIVES:
+            return True
+
+        base_text_match = self.DSTS_BASE_TEXT_ARCHIVE_RE.match(archive_name)
+        if base_text_match:
+            return base_text_match.group(2) == self.DSTS_ENGLISH_TEXT_CODE
+
+        addcont_match = self.DSTS_ADDCONT_ARCHIVE_RE.match(archive_name)
+        if addcont_match:
+            dlc_id = addcont_match.group(1)
+            text_code = addcont_match.group(2)
+            return (
+                dlc_id in self.DSTS_EDITOR_DLC_IDS
+                and (text_code is None or text_code == self.DSTS_ENGLISH_TEXT_CODE)
+            )
+
+        return False
+
+    def get_dsts_archive_context(self, item_path):
+        """Return the containing .dx11 archive and the path inside it."""
+        current_path = item_path if item_path.is_dir() else item_path.parent
+        for candidate in (current_path, *current_path.parents):
+            if candidate.name.lower().endswith(".dx11"):
+                try:
+                    return candidate, candidate.name, current_path.relative_to(candidate)
+                except ValueError:
+                    return candidate, candidate.name, Path()
+
+        return None, "", Path()
+
+    def get_dsts_editor_output_folder(self, folder_path, target_path):
+        """Map an extracted Time Stranger archive folder into the editor Base/DLC layout."""
+        _archive_path, archive_name, relative_inside_archive = self.get_dsts_archive_context(folder_path)
+        if not archive_name:
+            return None
+
+        parts = relative_inside_archive.parts
+        section = parts[0].lower() if parts else ""
+        tail = Path(*parts[1:]) if len(parts) > 1 else Path()
+        archive_lower = archive_name.lower()
+
+        addcont_match = self.DSTS_ADDCONT_ARCHIVE_RE.match(archive_lower)
+        if addcont_match:
+            dlc_id = addcont_match.group(1)
+            text_code = addcont_match.group(2)
+            dlc_folder = f"addcont_{dlc_id}"
+            if text_code:
+                dlc_folder += f"_text{text_code}"
+            dlc_folder += ".dx11"
+
+            if section in ("data", "text", "message"):
+                return target_path / "DLC" / dlc_folder / section / "mbe" / tail
+
+            return target_path / "DLC" / dlc_folder / tail
+
+        if section == "data":
+            return target_path / "Base" / "data" / tail
+        if section == "text":
+            return target_path / "Base" / "text" / tail
+        if section == "message":
+            return target_path / "Base" / "message" / tail
+
+        return target_path / "Base" / tail
 
     def create_mbe_scan_summary(self, filter_enabled):
         """Create mutable scan counters for recursive MBE operations."""
@@ -743,6 +810,7 @@ class MVGLToolsGUI:
             "included_archives": set(),
             "skipped_archives": set(),
             "skipped_text_buckets": Counter(),
+            "skipped_dlc_buckets": Counter(),
             "mixed_folders": 0,
         }
 
@@ -766,6 +834,9 @@ class MVGLToolsGUI:
                         match = self.DSTS_TEXT_ARCHIVE_RE.search(archive_name)
                         if match:
                             scan["skipped_text_buckets"][f"text{match.group(1)}"] += 1
+                        addcont_match = self.DSTS_ADDCONT_ARCHIVE_RE.match(archive_name)
+                        if addcont_match:
+                            scan["skipped_dlc_buckets"][f"addcont_{addcont_match.group(1)}"] += 1
                     continue
 
                 scan["included_files"] += 1
@@ -776,7 +847,12 @@ class MVGLToolsGUI:
             commands = []
             for folder_path, mbe_files in sorted(folder_files.items()):
                 relative_folder = folder_path.relative_to(source_path)
-                output_folder = target_path if relative_folder == Path(".") else target_path / relative_folder
+                output_folder = None
+                if filter_dsts_text:
+                    output_folder = self.get_dsts_editor_output_folder(folder_path, target_path)
+                if output_folder is None:
+                    output_folder = target_path if relative_folder == Path(".") else target_path / relative_folder
+
                 regular_files = [path for path in folder_path.iterdir() if path.is_file()]
                 only_mbe_files = len(regular_files) == len(mbe_files) and all(
                     path.suffix.lower() == ".mbe" for path in regular_files
@@ -833,7 +909,7 @@ class MVGLToolsGUI:
 
         self.log_output(f"Scan: found {scan['total_files']} .mbe file(s).\n")
         if scan["filter_enabled"]:
-            self.log_output("Filter: including base archives and English text01 archives only.\n")
+            self.log_output("Filter: editor layout, base app/patch + addcont_01/02/03 + English text01 only.\n")
             self.log_output(
                 f"Included: {len(scan['included_archives'])} archive(s), "
                 f"{scan['included_files']} .mbe file(s).\n"
@@ -845,7 +921,7 @@ class MVGLToolsGUI:
                     self.log_output(f"  {archive_name}\n")
 
             self.log_output(
-                f"Skipped: {len(scan['skipped_archives'])} non-English text archive(s), "
+                f"Skipped: {len(scan['skipped_archives'])} archive(s), "
                 f"{scan['skipped_files']} .mbe file(s).\n"
             )
             if scan["skipped_text_buckets"]:
@@ -853,6 +929,11 @@ class MVGLToolsGUI:
                     f"{bucket}={count}" for bucket, count in sorted(scan["skipped_text_buckets"].items())
                 )
                 self.log_output(f"Skipped text buckets: {skipped_counts}\n")
+            if scan["skipped_dlc_buckets"]:
+                skipped_dlc_counts = ", ".join(
+                    f"{bucket}={count}" for bucket, count in sorted(scan["skipped_dlc_buckets"].items())
+                )
+                self.log_output(f"Skipped DLC buckets: {skipped_dlc_counts}\n")
 
         if scan["mixed_folders"]:
             self.log_output(

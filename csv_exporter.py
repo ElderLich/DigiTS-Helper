@@ -636,14 +636,14 @@ class CSVExporter:
             traceback.print_exc()
             return False
 
-    def export_for_dsts_loader(self, dsts_loader_dir: Path, dlc_name: str = "addcont_17") -> bool:
+    def export_for_dsts_loader(self, dsts_loader_dir: Path, dlc_name: str = "addcont_03") -> bool:
         """
         Export DLC CSV files into a dsts-loader friendly structure.
 
         Structure:
             dsts-loader/
-                addcont_17/data/<*.mbe>/<csv without numeric prefix>
-                addcont_17_text01/text/<*.mbe>/<csv without numeric prefix>
+                addcont_03/data/<*.mbe>/<csv without numeric prefix>
+                addcont_03_text01/text/<*.mbe>/<csv without numeric prefix>
         """
         try:
             workspace_root = self.data_path.parent
@@ -819,7 +819,7 @@ class CSVExporter:
         """
         Determine where to place data/text folders based on the selected directory.
 
-        Supports selecting the dsts-loader root, addcont_17 directories, or an empty folder.
+        Supports selecting the dsts-loader root, addcont_03 directories, or an empty folder.
         """
         selected = selected_path.resolve()
         dlc_folder = dlc_name.lower()
@@ -915,61 +915,59 @@ def repack_mbe_files(source_dir: Path, target_dir: Path) -> bool:
         return False
 
 
-def repack_dlc_mbe_files(dlc_name: str = "addcont_17") -> bool:
+def repack_dlc_mbe_files(dlc_names=None) -> bool:
     """
-    Repack DLC CSV folders into .mbe files using DSCSToolsCLI
+    Repack DLC CSV folders into .mbe files using DSCSToolsCLI.
     
     Args:
-        dlc_name: Name of the DLC (default: addcont_17)
+        dlc_names: Optional DLC name or iterable of DLC names. Defaults to addcont_01-03.
     
     Returns:
         bool: True if repacking was successful
     """
     try:
-        # Get DLC paths
-        # Source: CSV folders in DLC/addcont_17.dx11/data/mbe/ and DLC/addcont_17_text01.dx11/text/mbe/
-        # Target: .mbe files in export/DLC/addcont_17.dx11/data/ and export/DLC/addcont_17_text01.dx11/text/
-        try:
-            from Data_Loader import MBELoader
-            temp_loader = MBELoader()
-            workspace_root = temp_loader.data_path.parent
-        except:
-            workspace_root = Path.cwd()
-        
-        # Source paths - CSV folders in DLC/
-        dlc_data_source_dir = workspace_root / "DLC" / f"{dlc_name}.dx11" / "data" / "mbe"
-        dlc_text_source_dir = workspace_root / "DLC" / f"{dlc_name}_text01.dx11" / "text" / "mbe"
-        
-        # Target paths - .mbe files in export/DLC/
-        dlc_data_target_dir = workspace_root / "export" / "DLC" / f"{dlc_name}.dx11" / "data"
-        dlc_text_target_dir = workspace_root / "export" / "DLC" / f"{dlc_name}_text01.dx11" / "text"
-        
-        if not dlc_data_source_dir.exists():
-            print(f"DLC data source directory not found: {dlc_data_source_dir}")
-            return False
-        
-        # Find all DLC .mbe folders (folders ending with _dlc17.mbe containing CSV files)
+        workspace_root = Path(__file__).resolve().parent
+
+        if dlc_names is None:
+            dlc_names = [f"addcont_{dlc_id}" for dlc_id in MBELoader.DSTS_DLC_IDS]
+        elif isinstance(dlc_names, str):
+            dlc_names = [dlc_names]
+
         mbe_folders = []
-        
-        # Data folders - from DLC/
-        if dlc_data_source_dir.exists():
-            for folder in dlc_data_source_dir.iterdir():
-                if folder.is_dir() and folder.name.endswith("_dlc17.mbe"):
-                    mbe_folders.append((folder, dlc_data_target_dir))
-        
-        # Text folders - from DLC/
-        if dlc_text_source_dir.exists():
-            for folder in dlc_text_source_dir.iterdir():
-                if folder.is_dir() and folder.name.endswith("_dlc17.mbe"):
-                    mbe_folders.append((folder, dlc_text_target_dir))
+
+        for dlc_name in dlc_names:
+            dlc_id = dlc_name.split("_", 1)[-1]
+            if not dlc_id.isdigit():
+                print(f"Skipping unknown DLC name: {dlc_name}")
+                continue
+
+            dlc_data_source_dir = workspace_root / "DLC" / f"{dlc_name}.dx11" / "data" / "mbe"
+            dlc_text_source_dir = workspace_root / "DLC" / f"{dlc_name}_text01.dx11" / "text" / "mbe"
+            dlc_data_target_dir = workspace_root / "export" / "DLC" / f"{dlc_name}.dx11" / "data"
+            dlc_text_target_dir = workspace_root / "export" / "DLC" / f"{dlc_name}_text01.dx11" / "text"
+            suffix = f"_dlc{int(dlc_id):02d}.mbe"
+
+            if not dlc_data_source_dir.exists() and not dlc_text_source_dir.exists():
+                print(f"DLC source directories not found for {dlc_name}; skipping.")
+                continue
+
+            if dlc_data_source_dir.exists():
+                for folder in dlc_data_source_dir.iterdir():
+                    if folder.is_dir() and folder.name.endswith(suffix):
+                        mbe_folders.append((folder, dlc_data_target_dir))
+
+            if dlc_text_source_dir.exists():
+                for folder in dlc_text_source_dir.iterdir():
+                    if folder.is_dir() and folder.name.endswith(suffix):
+                        mbe_folders.append((folder, dlc_text_target_dir))
         
         if not mbe_folders:
             print("No DLC .mbe folders found to repack")
             return False
         
         print(f"\n=== Repacking {len(mbe_folders)} DLC .mbe folders ===")
-        print(f"Source: DLC/{dlc_name}.dx11/...")
-        print(f"Target: export/DLC/{dlc_name}.dx11/...")
+        print("Source: DLC/addcont_01-03.dx11/...")
+        print("Target: export/DLC/addcont_01-03.dx11/...")
         success_count = 0
         
         for mbe_folder, target_dir in mbe_folders:
@@ -1029,9 +1027,9 @@ def repack_dlc_mbe_files(dlc_name: str = "addcont_17") -> bool:
             print(f"  Target dir exists: {abs_target.parent.exists()}")
             
             # Check if DSCSToolsCLI.exe exists
-            dscstools_path = Path.cwd() / "DSCSToolsCLI.exe"
+            dscstools_path = workspace_root / "DSCSToolsCLI.exe"
             if not dscstools_path.exists():
-                print(f"❌ Error: DSCSToolsCLI.exe not found in {Path.cwd()}")
+                print(f"❌ Error: DSCSToolsCLI.exe not found in {workspace_root}")
                 print(f"   Please ensure DSCSToolsCLI.exe is in the workspace root directory.")
                 return False
             
@@ -1048,7 +1046,7 @@ def repack_dlc_mbe_files(dlc_name: str = "addcont_17") -> bool:
             print(f"  Target file: {abs_target}")
             print(f"  Command: {' '.join(cmd)}")
             
-            result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
+            result = subprocess.run(cmd, capture_output=True, text=True, cwd=workspace_root)
             
             if result.returncode == 0:
                 # Wait a moment for file system to sync
