@@ -38,11 +38,12 @@ def get_default_mod_loader_path() -> Path:
 
 
 class SpinBoxWheelGuard(QObject):
-    """Keep mouse-wheel scrolling from changing numeric fields unless they have focus."""
+    """Keep mouse-wheel scrolling from changing value fields unless they have focus."""
 
     def eventFilter(self, watched, event):
-        if event.type() == QEvent.Type.Wheel and isinstance(watched, QAbstractSpinBox):
-            if watched.hasFocus():
+        guarded_widget = isinstance(watched, (QAbstractSpinBox, QComboBox))
+        if event.type() == QEvent.Type.Wheel and guarded_widget:
+            if watched.hasFocus() or (isinstance(watched, QComboBox) and watched.view().isVisible()):
                 return False
 
             scroll_parent = watched.parent()
@@ -311,6 +312,36 @@ def configure_searchable_combo(combo: QComboBox):
     combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
     combo.setMaxVisibleItems(20)
     combo.setMinimumHeight(40)
+    combo.setMinimumWidth(320)
+    combo.view().setMinimumWidth(520)
+    combo.setStyleSheet("""
+        QComboBox {
+            color: #333333;
+            background-color: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            padding: 7px 34px 7px 8px;
+            font-size: 10pt;
+        }
+        QComboBox:hover {
+            border-color: #667eea;
+        }
+        QComboBox::drop-down {
+            subcontrol-origin: padding;
+            subcontrol-position: top right;
+            width: 30px;
+            border-left: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        QComboBox QAbstractItemView {
+            color: #333333;
+            background-color: white;
+            selection-background-color: #667eea;
+            selection-color: white;
+        }
+    """)
     if combo.lineEdit():
         combo.lineEdit().setClearButtonEnabled(True)
     completer = combo.completer()
@@ -365,6 +396,8 @@ class SkillEditor(QWidget):
         self.skill_type = skill_type
         self.loader = loader
         self.skill_widgets = []
+        self.skill_options = get_skill_options(loader)
+        self._syncing_skill_widgets = False
         self.setup_ui()
 
     def setup_ui(self):
@@ -372,7 +405,7 @@ class SkillEditor(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
 
-        hint = QLabel("Use Add on the slot you want to fill, or type the skill ID directly.")
+        hint = QLabel("Choose a skill from each slot dropdown, or type a skill ID directly.")
         hint.setStyleSheet("color: #666; font-size: 9pt; padding: 4px;")
         layout.addWidget(hint)
 
@@ -431,12 +464,35 @@ class SkillEditor(QWidget):
         skill_id.valueChanged.connect(lambda _value, idx=index: self.on_skill_value_changed(idx))
         layout.addWidget(skill_id)
 
-        # Skill name display
-        skill_name_label = QLabel("Empty")
-        skill_name_label.setObjectName(f"skill_name_{index}")
-        skill_name_label.setMinimumWidth(220)
-        skill_name_label.setStyleSheet("color: #495057; font-style: italic; padding: 6px;")
-        layout.addWidget(skill_name_label, 1)
+        # Skill dropdown
+        skill_combo = QComboBox()
+        skill_combo.setObjectName(f"skill_combo_{index}")
+        configure_searchable_combo(skill_combo)
+        skill_combo.addItem("Select a skill...", 0)
+        for skill_option_id, skill_label in self.skill_options:
+            skill_combo.addItem(skill_label, skill_option_id)
+        skill_combo.activated.connect(lambda _combo_index, idx=index: self.on_skill_combo_selected(idx))
+        layout.addWidget(skill_combo, 1)
+
+        open_dropdown_button = QPushButton("+ Select")
+        open_dropdown_button.setObjectName(f"add_skill_{index}")
+        open_dropdown_button.setMinimumWidth(86)
+        open_dropdown_button.setToolTip("Open the skill dropdown for this slot")
+        open_dropdown_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #667eea;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 10px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #5568d3;
+            }
+        """)
+        open_dropdown_button.clicked.connect(lambda _checked=False, idx=index: self.open_skill_dropdown(idx))
+        layout.addWidget(open_dropdown_button)
 
         # Skill Level/Slot
         slot_label = "Learn Slot:" if self.skill_type == "signature" else "Level:"
@@ -448,17 +504,27 @@ class SkillEditor(QWidget):
         skill_level.valueChanged.connect(self.skillChanged.emit)
         layout.addWidget(skill_level)
 
-        add_button = QPushButton("Add")
-        add_button.setObjectName(f"add_skill_{index}")
-        add_button.setMinimumWidth(86)
-        add_button.setToolTip("Choose a skill for this slot")
-        add_button.clicked.connect(lambda _checked=False, idx=index: self.select_skill_for_slot(idx))
-        layout.addWidget(add_button)
-
-        remove_button = QPushButton("Remove")
+        remove_button = QPushButton("- Remove")
         remove_button.setObjectName(f"remove_skill_{index}")
         remove_button.setMinimumWidth(90)
         remove_button.setToolTip("Clear this skill slot")
+        remove_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #e34556;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 10px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #c92f40;
+            }
+            QPushButton:disabled {
+                color: #9aa1aa;
+                background-color: #edf0f4;
+            }
+        """)
         remove_button.clicked.connect(lambda _checked=False, idx=index: self.clear_skill_slot(idx))
         layout.addWidget(remove_button)
 
@@ -466,6 +532,24 @@ class SkillEditor(QWidget):
         return widget
 
     def on_skill_value_changed(self, index: int):
+        if self._syncing_skill_widgets:
+            return
+        self.update_skill_name(index)
+        self.skillChanged.emit()
+
+    def on_skill_combo_selected(self, index: int):
+        if self._syncing_skill_widgets:
+            return
+
+        skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
+        skill_id_widget = self.skill_widgets[index].findChild(QSpinBox, f"skill_id_{index}")
+        if not skill_combo or not skill_id_widget:
+            return
+
+        skill_id = skill_combo.currentData()
+        self._syncing_skill_widgets = True
+        skill_id_widget.setValue(int(skill_id) if skill_id else 0)
+        self._syncing_skill_widgets = False
         self.update_skill_name(index)
         self.skillChanged.emit()
 
@@ -503,22 +587,30 @@ class SkillEditor(QWidget):
     def update_skill_name(self, index: int):
         """Update skill name display when skill ID changes"""
         skill_id_widget = self.skill_widgets[index].findChild(QSpinBox, f"skill_id_{index}")
-        skill_name_widget = self.skill_widgets[index].findChild(QLabel, f"skill_name_{index}")
+        skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
 
-        if skill_id_widget and skill_name_widget:
+        if skill_id_widget and skill_combo:
             skill_id = skill_id_widget.value()
-            if skill_id > 0:
-                # Get skill name from loader
+            combo_index = skill_combo.findData(skill_id)
+            self._syncing_skill_widgets = True
+            if combo_index >= 0:
+                skill_combo.setCurrentIndex(combo_index)
+            elif skill_id > 0:
                 skill_name = self.loader.get_skill_name(skill_id) if self.loader else f"Skill {skill_id}"
                 clean_name = self.loader.clean_ui_text(skill_name) if self.loader else skill_name
-                skill_name_widget.setText(clean_name)
+                skill_combo.setCurrentIndex(0)
+                skill_combo.setEditText(f"Custom ID {skill_id}: {clean_name}")
             else:
-                skill_name_widget.setText("Empty")
+                skill_combo.setCurrentIndex(0)
+                if skill_combo.lineEdit():
+                    skill_combo.lineEdit().clear()
+                    skill_combo.lineEdit().setPlaceholderText("Select a skill...")
+            self._syncing_skill_widgets = False
 
         add_button = self.skill_widgets[index].findChild(QPushButton, f"add_skill_{index}")
         remove_button = self.skill_widgets[index].findChild(QPushButton, f"remove_skill_{index}")
         if add_button:
-            add_button.setText("Replace" if skill_id_widget and skill_id_widget.value() > 0 else "Add")
+            add_button.setText("+ Change" if skill_id_widget and skill_id_widget.value() > 0 else "+ Select")
         if remove_button:
             remove_button.setEnabled(bool(skill_id_widget and skill_id_widget.value() > 0))
 
@@ -527,27 +619,27 @@ class SkillEditor(QWidget):
         for i in range(len(self.skill_widgets)):
             self.update_skill_name(i)
 
-    def select_skill_for_slot(self, index: int):
-        skill_id_widget = self.skill_widgets[index].findChild(QSpinBox, f"skill_id_{index}")
-        current_skill_id = skill_id_widget.value() if skill_id_widget else 0
-        chosen_id = choose_skill_id(
-            self,
-            self.loader,
-            f"Select {self.skill_type.title()} Skill for Slot {index + 1}",
-            current_skill_id
-        )
-        if chosen_id is not None and skill_id_widget:
-            skill_id_widget.setValue(chosen_id)
-            self.update_skill_name(index)
-            self.skillChanged.emit()
+    def open_skill_dropdown(self, index: int):
+        skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
+        if skill_combo:
+            skill_combo.setFocus(Qt.FocusReason.MouseFocusReason)
+            skill_combo.showPopup()
 
     def clear_skill_slot(self, index: int):
         skill_id_widget = self.skill_widgets[index].findChild(QSpinBox, f"skill_id_{index}")
         skill_level_widget = self.skill_widgets[index].findChild(QSpinBox, f"skill_level_{index}")
+        skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
+        self._syncing_skill_widgets = True
         if skill_id_widget:
             skill_id_widget.setValue(0)
         if skill_level_widget:
             skill_level_widget.setValue(0)
+        if skill_combo:
+            skill_combo.setCurrentIndex(0)
+            if skill_combo.lineEdit():
+                skill_combo.lineEdit().clear()
+                skill_combo.lineEdit().setPlaceholderText("Select a skill...")
+        self._syncing_skill_widgets = False
         self.update_skill_name(index)
         self.skillChanged.emit()
 
@@ -5060,8 +5152,43 @@ class DigimonEditor(QMainWindow):
         self.skill_browser_combo.activated.connect(self.load_skill_from_browser)
         browser_row.addWidget(self.skill_browser_combo, 1)
 
-        load_skill_button = QPushButton("Load Selected Skill")
+        browse_skill_button = QPushButton("+ Browse")
+        browse_skill_button.setMinimumHeight(40)
+        browse_skill_button.setMinimumWidth(110)
+        browse_skill_button.setToolTip("Open the available skills dropdown")
+        browse_skill_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #667eea;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #5568d3;
+            }
+        """)
+        browse_skill_button.clicked.connect(self.open_skill_browser_dropdown)
+        browser_row.addWidget(browse_skill_button)
+
+        load_skill_button = QPushButton("+ Load")
         load_skill_button.setMinimumHeight(40)
+        load_skill_button.setMinimumWidth(96)
+        load_skill_button.setToolTip("Load the selected skill into the editor fields")
+        load_skill_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #10b981;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #059669;
+            }
+        """)
         load_skill_button.clicked.connect(self.load_skill_from_browser)
         browser_row.addWidget(load_skill_button)
         browser_layout.addLayout(browser_row)
@@ -9658,6 +9785,12 @@ class DigimonEditor(QMainWindow):
     def filter_skill_list(self):
         """Kept for compatibility; the skill browser is now a searchable dropdown."""
         return
+
+    def open_skill_browser_dropdown(self):
+        """Open the Advanced Skill Browser dropdown."""
+        if hasattr(self, "skill_browser_combo"):
+            self.skill_browser_combo.setFocus(Qt.FocusReason.MouseFocusReason)
+            self.skill_browser_combo.showPopup()
 
     def load_skill_from_browser(self, item=None):
         """Load a skill from the browser dropdown."""
