@@ -4,8 +4,9 @@ DTS Creator - Digimon Editor GUI using PyQt6
 
 import sys
 import os
+import textwrap
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Dict
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QLineEdit, QSpinBox, QComboBox, QPushButton, QTabWidget,
@@ -19,6 +20,223 @@ from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+
+
+DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
+FIELD_GUIDE_ID_COLUMN = 131
+FIELD_GUIDE_CHR_ID_COLUMN = 3
+FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
+FIELD_GUIDE_CUSTOM_MIN = 500
+FIELD_GUIDE_CUSTOM_MAX = 999
+PROFILE_WRAP_WIDTH = 50
+
+
+def get_default_mod_loader_path() -> Path:
+    """Return the preferred folder shown by dsts-loader/mod loader file dialogs."""
+    return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
+
+
+def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> str:
+    """Normalize profile text into hard-wrapped lines that fit the in-game profile panel."""
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    wrapped_lines: List[str] = []
+    
+    for paragraph in normalized.split("\n"):
+        paragraph = " ".join(paragraph.split())
+        if not paragraph:
+            if wrapped_lines and wrapped_lines[-1]:
+                wrapped_lines.append("")
+            continue
+        
+        wrapped_lines.extend(textwrap.wrap(
+            paragraph,
+            width=width,
+            break_long_words=False,
+            break_on_hyphens=False
+        ))
+    
+    return "\n".join(wrapped_lines).strip()
+
+
+def _parse_optional_int(value: str) -> Optional[int]:
+    try:
+        return int(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _clean_status_cell(value: str) -> str:
+    return str(value).strip().strip('"')
+
+
+def collect_field_guide_usage(loader: Optional[MBELoader], exclude_chr_id: str = "") -> Dict[int, List[str]]:
+    """Collect occupied custom field guide IDs from base, DLC, and imported data."""
+    usage: Dict[int, List[str]] = {}
+    if not loader:
+        return usage
+    
+    exclude_chr_id = exclude_chr_id.strip().casefold()
+    
+    def add_rows(rows: List[List[str]], source_name: str):
+        for row in rows[1:]:
+            if len(row) <= FIELD_GUIDE_ID_COLUMN:
+                continue
+            
+            field_guide_id = _parse_optional_int(row[FIELD_GUIDE_ID_COLUMN])
+            if field_guide_id is None:
+                continue
+            if not FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
+                continue
+            
+            chr_id = _clean_status_cell(row[FIELD_GUIDE_CHR_ID_COLUMN]) if len(row) > FIELD_GUIDE_CHR_ID_COLUMN else ""
+            if exclude_chr_id and chr_id.casefold() == exclude_chr_id:
+                continue
+            
+            digimon_id = _clean_status_cell(row[FIELD_GUIDE_DIGIMON_ID_COLUMN]) if len(row) > FIELD_GUIDE_DIGIMON_ID_COLUMN else "?"
+            label = f"{source_name}: {chr_id or 'unknown chr'} (Digimon ID {digimon_id})"
+            usage.setdefault(field_guide_id, []).append(label)
+    
+    try:
+        base_file = loader._resolve_prefixed_file(loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv")
+        if base_file.exists():
+            add_rows(loader.load_csv(base_file), "Base")
+    except Exception as exc:
+        print(f"Could not scan base field guide IDs: {exc}")
+    
+    try:
+        for dlc_id, status_file in loader.iter_dlc_csv_files("data", "digimon_status", "000_digimon_status_data.csv"):
+            add_rows(loader.load_csv(status_file), f"DLC addcont_{dlc_id}")
+    except Exception as exc:
+        print(f"Could not scan DLC field guide IDs: {exc}")
+    
+    try:
+        if DEFAULT_MOD_LOADER_PATH.exists():
+            for status_file in DEFAULT_MOD_LOADER_PATH.rglob("*.ap.csv"):
+                if status_file.parent.name != "digimon_status.mbe":
+                    continue
+                if not status_file.name.endswith("digimon_status_data.ap.csv"):
+                    continue
+                
+                try:
+                    mod_name = status_file.relative_to(DEFAULT_MOD_LOADER_PATH).parts[0]
+                except ValueError:
+                    mod_name = status_file.parent.name
+                
+                add_rows(loader.load_csv(status_file), f"Mod {mod_name}")
+    except Exception as exc:
+        print(f"Could not scan mod-loader field guide IDs: {exc}")
+    
+    for digimon in getattr(loader, "imported_digimon", []):
+        field_guide_id = getattr(digimon, "field_guide_id", -1)
+        chr_id = getattr(digimon, "chr_id", "")
+        if exclude_chr_id and chr_id.strip().casefold() == exclude_chr_id:
+            continue
+        if FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
+            usage.setdefault(field_guide_id, []).append(
+                f"Imported: {getattr(digimon, 'name', 'Unknown')} ({chr_id})"
+            )
+    
+    return usage
+
+
+def first_free_field_guide_id(loader: Optional[MBELoader], exclude_chr_id: str = "") -> int:
+    occupied = set(collect_field_guide_usage(loader, exclude_chr_id))
+    for field_guide_id in range(FIELD_GUIDE_CUSTOM_MIN, FIELD_GUIDE_CUSTOM_MAX + 1):
+        if field_guide_id not in occupied:
+            return field_guide_id
+    return -1
+
+
+def choose_field_guide_id(parent: QWidget, loader: Optional[MBELoader], current_value: int = -1, exclude_chr_id: str = "") -> Optional[int]:
+    usage = collect_field_guide_usage(loader, exclude_chr_id)
+    first_free = first_free_field_guide_id(loader, exclude_chr_id)
+    
+    dialog = QDialog(parent)
+    dialog.setWindowTitle("Select Field Guide ID")
+    dialog.setMinimumSize(620, 640)
+    
+    layout = QVBoxLayout(dialog)
+    
+    info = QLabel(
+        f"Custom Digimon field guide IDs use {FIELD_GUIDE_CUSTOM_MIN}-{FIELD_GUIDE_CUSTOM_MAX}. "
+        "Light red rows are already occupied in Base, DLC, or imported mod-loader data."
+    )
+    info.setWordWrap(True)
+    layout.addWidget(info)
+    
+    guide_list = QListWidget()
+    guide_list.setAlternatingRowColors(True)
+    
+    selected_item = None
+    first_free_item = None
+    for field_guide_id in range(FIELD_GUIDE_CUSTOM_MIN, FIELD_GUIDE_CUSTOM_MAX + 1):
+        occupied_by = usage.get(field_guide_id, [])
+        if occupied_by:
+            label = f"{field_guide_id}  occupied by {occupied_by[0]}"
+            if len(occupied_by) > 1:
+                label += f" (+{len(occupied_by) - 1} more)"
+        else:
+            label = f"{field_guide_id}  free"
+        
+        item = QListWidgetItem(label)
+        item.setData(Qt.ItemDataRole.UserRole, field_guide_id)
+        if occupied_by:
+            item.setBackground(QColor("#ffd6d6"))
+            item.setForeground(QColor("#7a1f1f"))
+            item.setToolTip("\n".join(occupied_by[:20]))
+            item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+        else:
+            item.setToolTip(f"Field Guide ID {field_guide_id} is free")
+            if first_free_item is None:
+                first_free_item = item
+        
+        guide_list.addItem(item)
+        if field_guide_id == current_value:
+            selected_item = item
+    
+    if selected_item and bool(selected_item.flags() & Qt.ItemFlag.ItemIsEnabled):
+        guide_list.setCurrentItem(selected_item)
+    elif first_free_item:
+        guide_list.setCurrentItem(first_free_item)
+    
+    layout.addWidget(guide_list)
+    
+    button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+    first_free_button = QPushButton("Use First Free")
+    button_box.addButton(first_free_button, QDialogButtonBox.ButtonRole.ActionRole)
+    
+    ok_button = button_box.button(QDialogButtonBox.StandardButton.Ok)
+    ok_button.setEnabled(guide_list.currentItem() is not None)
+    
+    def update_ok_button():
+        item = guide_list.currentItem()
+        ok_button.setEnabled(item is not None and bool(item.flags() & Qt.ItemFlag.ItemIsEnabled))
+    
+    def use_first_free():
+        if first_free == -1:
+            QMessageBox.warning(dialog, "No Free IDs", "Every custom field guide ID from 500-999 is occupied.")
+            return
+        for index in range(guide_list.count()):
+            item = guide_list.item(index)
+            if item.data(Qt.ItemDataRole.UserRole) == first_free:
+                guide_list.setCurrentItem(item)
+                break
+        dialog.accept()
+    
+    def accept_selected_item(item: QListWidgetItem):
+        if item and bool(item.flags() & Qt.ItemFlag.ItemIsEnabled):
+            dialog.accept()
+    
+    guide_list.currentItemChanged.connect(lambda _current, _previous: update_ok_button())
+    guide_list.itemDoubleClicked.connect(accept_selected_item)
+    first_free_button.clicked.connect(use_first_free)
+    button_box.accepted.connect(dialog.accept)
+    button_box.rejected.connect(dialog.reject)
+    layout.addWidget(button_box)
+    
+    if dialog.exec() == QDialog.DialogCode.Accepted and guide_list.currentItem():
+        return int(guide_list.currentItem().data(Qt.ItemDataRole.UserRole))
+    return None
 
 
 class SkillEditor(QWidget):
@@ -234,6 +452,8 @@ class DigimonCreationWizard(QWizard):
             self.new_digimon.char_key = basic_page.char_key_edit.text()
             new_chr_id = basic_page.chr_id_edit.text()
             self.new_digimon.chr_id = new_chr_id
+            self.new_digimon.field_guide_id = basic_page.field_guide_id_spin.value()
+            self.new_digimon.script_id = self.new_digimon.id
         except Exception as e:
             import traceback
             error_trace = traceback.format_exc()
@@ -263,7 +483,7 @@ class DigimonCreationWizard(QWizard):
             self.new_digimon.tribe_name = class_page.tribe_combo.currentText()
             
             # Profile
-            self.new_digimon.profile_text = profile_page.profile_edit.toPlainText()
+            self.new_digimon.profile_text = format_profile_text_for_game(profile_page.profile_edit.toPlainText())
             
             # Stats
             self.new_digimon.base_hp = stats_page.hp_spin.value()
@@ -320,8 +540,7 @@ class DigimonCreationWizard(QWizard):
         animation_ref = model_page.animation_ref_edit.text().strip() if model_page.animation_ref_edit.text().strip() else template_chr_id
         
         # Ask user where to export
-        from pathlib import Path
-        default_path = Path.cwd() / "dsts-loader"
+        default_path = get_default_mod_loader_path()
         
         export_dir = QFileDialog.getExistingDirectory(
             self,
@@ -1127,6 +1346,34 @@ class BasicInfoPage(QWizardPage):
         self.chr_id_edit.setPlaceholderText("e.g., chr1000")
         layout.addRow("🔢 Chr ID:", self.chr_id_edit)
         
+        # Field Guide ID
+        field_guide_widget = QWidget()
+        field_guide_layout = QHBoxLayout(field_guide_widget)
+        field_guide_layout.setContentsMargins(0, 0, 0, 0)
+        field_guide_layout.setSpacing(8)
+        
+        self.field_guide_id_spin = QSpinBox()
+        self.field_guide_id_spin.setRange(FIELD_GUIDE_CUSTOM_MIN, FIELD_GUIDE_CUSTOM_MAX)
+        self.field_guide_id_spin.setToolTip(
+            f"Custom field guide slot. Use {FIELD_GUIDE_CUSTOM_MIN}-{FIELD_GUIDE_CUSTOM_MAX} for new Digimon."
+        )
+        next_field_guide_id = first_free_field_guide_id(wizard.loader)
+        self.field_guide_id_spin.setValue(
+            next_field_guide_id if next_field_guide_id != -1 else FIELD_GUIDE_CUSTOM_MIN
+        )
+        field_guide_layout.addWidget(self.field_guide_id_spin)
+        
+        pick_field_guide_button = QPushButton("Pick Free")
+        pick_field_guide_button.setToolTip("Show every custom field guide slot and mark occupied IDs in light red")
+        pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
+        field_guide_layout.addWidget(pick_field_guide_button)
+        
+        auto_field_guide_button = QPushButton("Auto")
+        auto_field_guide_button.setToolTip("Use the first free custom field guide ID")
+        auto_field_guide_button.clicked.connect(self.auto_assign_field_guide_id)
+        field_guide_layout.addWidget(auto_field_guide_button)
+        layout.addRow("📘 Field Guide ID:", field_guide_widget)
+        
         # Auto-generate based on ID
         self.id_spin.valueChanged.connect(self.auto_generate_ids)
         self.auto_generate_ids()
@@ -1141,6 +1388,25 @@ class BasicInfoPage(QWizardPage):
         if not self.chr_id_edit.text() or self.chr_id_edit.text().startswith("chr"):
             self.chr_id_edit.setText(f"chr{digimon_id}")
     
+    def auto_assign_field_guide_id(self):
+        """Use the first free custom field guide slot."""
+        field_guide_id = first_free_field_guide_id(self.wizard.loader, self.chr_id_edit.text().strip())
+        if field_guide_id == -1:
+            QMessageBox.warning(self, "No Free IDs", "Every custom field guide ID from 500-999 is occupied.")
+            return
+        self.field_guide_id_spin.setValue(field_guide_id)
+    
+    def pick_field_guide_id(self):
+        """Open the occupied/free field guide ID picker."""
+        chosen_id = choose_field_guide_id(
+            self,
+            self.wizard.loader,
+            self.field_guide_id_spin.value(),
+            self.chr_id_edit.text().strip()
+        )
+        if chosen_id is not None:
+            self.field_guide_id_spin.setValue(chosen_id)
+    
     def validatePage(self):
         """Validate basic info"""
         if not self.name_edit.text().strip():
@@ -1151,6 +1417,18 @@ class BasicInfoPage(QWizardPage):
             return False
         if not self.chr_id_edit.text().strip():
             QMessageBox.warning(self, "Error", "Please enter a Chr ID")
+            return False
+        
+        field_guide_id = self.field_guide_id_spin.value()
+        usage = collect_field_guide_usage(self.wizard.loader, self.chr_id_edit.text().strip())
+        if field_guide_id in usage:
+            QMessageBox.warning(
+                self,
+                "Field Guide ID Occupied",
+                f"Field Guide ID {field_guide_id} is already used by:\n\n"
+                + "\n".join(usage[field_guide_id][:12])
+                + "\n\nPick a free ID before continuing."
+            )
             return False
         return True
 
@@ -1309,6 +1587,14 @@ class ProfilePage(QWizardPage):
         self.profile_edit.setMinimumHeight(200)
         layout.addWidget(self.profile_edit)
         
+        profile_button_layout = QHBoxLayout()
+        format_button = QPushButton("Format for Game")
+        format_button.setToolTip("Wrap the description to the same narrow lines used by the in-game profile panel")
+        format_button.clicked.connect(self.apply_game_format)
+        profile_button_layout.addWidget(format_button)
+        profile_button_layout.addStretch()
+        layout.addLayout(profile_button_layout)
+        
         # Character counter
         self.char_count_label = QLabel("Characters: 0")
         self.char_count_label.setStyleSheet("color: #666; font-size: 9pt;")
@@ -1322,12 +1608,29 @@ class ProfilePage(QWizardPage):
         """Update character counter"""
         text = self.profile_edit.toPlainText()
         char_count = len(text)
-        self.char_count_label.setText(f"Characters: {char_count}")
+        lines = text.splitlines() or [""]
+        longest_line = max(len(line) for line in lines)
+        self.char_count_label.setText(
+            f"Characters: {char_count} | Lines: {len(lines)} | Longest line: {longest_line}/{PROFILE_WRAP_WIDTH}"
+        )
+        self.char_count_label.setStyleSheet(
+            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+        )
+    
+    def apply_game_format(self):
+        """Wrap profile text to the in-game profile width."""
+        self.profile_edit.setPlainText(format_profile_text_for_game(self.profile_edit.toPlainText()))
+        self.update_char_count()
     
     def initializePage(self):
         """Initialize with template data"""
         if self.wizard.template_digimon and self.wizard.template_digimon.profile_text:
             self.profile_edit.setPlainText(self.wizard.template_digimon.profile_text)
+    
+    def validatePage(self):
+        """Apply the game format before the review/export pages read this text."""
+        self.apply_game_format()
+        return True
 
 
 class StatsPage(QWizardPage):
@@ -2847,6 +3150,7 @@ class ReviewPage(QWizardPage):
         <tr><td style="padding: 5px;"><b>Name:</b></td><td style="padding: 5px;">{basic_page.name_edit.text()}</td></tr>
         <tr><td style="padding: 5px;"><b>ID:</b></td><td style="padding: 5px;">{basic_page.id_spin.value()}</td></tr>
         <tr><td style="padding: 5px;"><b>Chr ID:</b></td><td style="padding: 5px;">{basic_page.chr_id_edit.text()}</td></tr>
+        <tr><td style="padding: 5px;"><b>Field Guide ID:</b></td><td style="padding: 5px;">{basic_page.field_guide_id_spin.value()}</td></tr>
         <tr><td style="padding: 5px;"><b>Character Key:</b></td><td style="padding: 5px;">{basic_page.char_key_edit.text()}</td></tr>
         <tr><td style="padding: 5px;"><b>Stage:</b></td><td style="padding: 5px;">{class_page.stage_combo.currentText()}</td></tr>
         <tr><td style="padding: 5px;"><b>Type:</b></td><td style="padding: 5px;">{class_page.type_combo.currentText()}</td></tr>
@@ -2882,6 +3186,9 @@ class TraitsEditor(QWidget):
     
     def setup_ui(self):
         layout = QVBoxLayout()
+        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(10)
+        layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         
         # Title
         title = QLabel("Traits")
@@ -2890,8 +3197,15 @@ class TraitsEditor(QWidget):
         
         # Traits container
         scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
         scroll_widget = QWidget()
         scroll_layout = QGridLayout(scroll_widget)
+        scroll_layout.setContentsMargins(8, 8, 8, 8)
+        scroll_layout.setHorizontalSpacing(12)
+        scroll_layout.setVerticalSpacing(6)
+        scroll_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        for column in range(3):
+            scroll_layout.setColumnStretch(column, 1)
         
         # Trait descriptions for tooltips
         trait_descriptions = {
@@ -2936,9 +3250,7 @@ class TraitsEditor(QWidget):
             scroll_layout.addWidget(checkbox, row, col)
         
         scroll.setWidget(scroll_widget)
-        scroll.setWidgetResizable(True)
-        scroll.setMaximumHeight(300)
-        layout.addWidget(scroll)
+        layout.addWidget(scroll, 1)
         
         self.setLayout(layout)
     
@@ -3049,6 +3361,9 @@ class DigimonEditor(QMainWindow):
         self.personality_combo.currentIndexChanged.connect(self.mark_as_modified)
         self.tribe_combo.currentIndexChanged.connect(self.mark_as_modified)
         self.profile_text_edit.textChanged.connect(self.mark_as_modified)
+        self.profile_text_edit.textChanged.connect(self.update_profile_text_stats)
+        self.field_guide_id_spin.valueChanged.connect(self.mark_as_modified)
+        self.script_id_spin.valueChanged.connect(self.mark_as_modified)
         
         # Stats
         for widget in self.stat_widgets.values():
@@ -3063,6 +3378,82 @@ class DigimonEditor(QMainWindow):
         self.model_id_edit.textChanged.connect(self.mark_as_modified)
         self.motion_id_edit.textChanged.connect(self.mark_as_modified)
         self.animation_ref_edit.textChanged.connect(self.mark_as_modified)
+    
+    def auto_assign_field_guide_id(self):
+        """Use the first free custom field guide slot for the current form."""
+        field_guide_id = first_free_field_guide_id(self.loader, self.chr_id_edit.text().strip())
+        if field_guide_id == -1:
+            QMessageBox.warning(self, "No Free IDs", "Every custom field guide ID from 500-999 is occupied.")
+            return
+        self.field_guide_id_spin.setValue(field_guide_id)
+    
+    def pick_field_guide_id(self):
+        """Open the occupied/free field guide ID picker."""
+        chosen_id = choose_field_guide_id(
+            self,
+            self.loader,
+            self.field_guide_id_spin.value(),
+            self.chr_id_edit.text().strip()
+        )
+        if chosen_id is not None:
+            self.field_guide_id_spin.setValue(chosen_id)
+    
+    def validate_field_guide_id(self) -> bool:
+        """Prevent custom field guide ID collisions before saving/exporting."""
+        if not hasattr(self, "field_guide_id_spin"):
+            return True
+        
+        field_guide_id = self.field_guide_id_spin.value()
+        if field_guide_id == -1:
+            return True
+        if 0 <= field_guide_id < FIELD_GUIDE_CUSTOM_MIN:
+            return True
+        
+        if FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
+            usage = collect_field_guide_usage(self.loader, self.chr_id_edit.text().strip())
+            if field_guide_id in usage:
+                QMessageBox.warning(
+                    self,
+                    "Field Guide ID Occupied",
+                    f"Field Guide ID {field_guide_id} is already used by:\n\n"
+                    + "\n".join(usage[field_guide_id][:12])
+                    + "\n\nPick a free ID before saving."
+                )
+                return False
+            return True
+        
+        reply = QMessageBox.question(
+            self,
+            "Field Guide ID Outside Custom Range",
+            f"Field Guide ID {field_guide_id} is outside the custom range "
+            f"{FIELD_GUIDE_CUSTOM_MIN}-{FIELD_GUIDE_CUSTOM_MAX}.\n\n"
+            "Keep this value anyway?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
+        return reply == QMessageBox.StandardButton.Yes
+    
+    def format_current_profile_text(self):
+        """Wrap the current description to the game profile width."""
+        formatted_text = format_profile_text_for_game(self.profile_text_edit.toPlainText())
+        if formatted_text != self.profile_text_edit.toPlainText():
+            self.profile_text_edit.setPlainText(formatted_text)
+            self.mark_as_modified()
+        self.update_profile_text_stats()
+    
+    def update_profile_text_stats(self):
+        """Show whether the current profile has lines that are too wide for the game UI."""
+        if not hasattr(self, "profile_text_stats_label"):
+            return
+        text = self.profile_text_edit.toPlainText()
+        lines = text.splitlines() or [""]
+        longest_line = max(len(line) for line in lines)
+        self.profile_text_stats_label.setText(
+            f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}"
+        )
+        self.profile_text_stats_label.setStyleSheet(
+            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+        )
     
     def setup_ui(self):
         self.setWindowTitle("DTS Creator - Digimon Editor")
@@ -3666,6 +4057,36 @@ class DigimonEditor(QMainWindow):
         self.name_edit = QLineEdit()
         main_info_layout.addWidget(self.name_edit, 3, 1)
         
+        # Field Guide ID
+        field_guide_label = QLabel("📘 Field Guide ID:")
+        field_guide_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        main_info_layout.addWidget(field_guide_label, 4, 0)
+        
+        field_guide_widget = QWidget()
+        field_guide_layout = QHBoxLayout(field_guide_widget)
+        field_guide_layout.setContentsMargins(0, 0, 0, 0)
+        field_guide_layout.setSpacing(8)
+        
+        self.field_guide_id_spin = QSpinBox()
+        self.field_guide_id_spin.setRange(-1, 99999)
+        self.field_guide_id_spin.setValue(-1)
+        self.field_guide_id_spin.setToolTip(
+            f"Column {FIELD_GUIDE_ID_COLUMN} in 000_digimon_status_data.ap.csv. "
+            f"Use {FIELD_GUIDE_CUSTOM_MIN}-{FIELD_GUIDE_CUSTOM_MAX} for custom Digimon."
+        )
+        field_guide_layout.addWidget(self.field_guide_id_spin)
+        
+        pick_field_guide_button = QPushButton("Pick Free")
+        pick_field_guide_button.setToolTip("Show custom field guide slots and mark occupied IDs in light red")
+        pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
+        field_guide_layout.addWidget(pick_field_guide_button)
+        
+        auto_field_guide_button = QPushButton("Auto")
+        auto_field_guide_button.setToolTip("Use the first free custom field guide ID")
+        auto_field_guide_button.clicked.connect(self.auto_assign_field_guide_id)
+        field_guide_layout.addWidget(auto_field_guide_button)
+        main_info_layout.addWidget(field_guide_widget, 4, 1)
+        
         layout.addWidget(main_info_group)
         
         # Classification Group
@@ -3738,6 +4159,18 @@ class DigimonEditor(QMainWindow):
             }
         """)
         profile_layout.addWidget(self.profile_text_edit)
+        
+        profile_tools_layout = QHBoxLayout()
+        format_profile_button = QPushButton("Format for Game")
+        format_profile_button.setToolTip("Wrap the description so it fits the in-game profile panel")
+        format_profile_button.clicked.connect(self.format_current_profile_text)
+        profile_tools_layout.addWidget(format_profile_button)
+        profile_tools_layout.addStretch()
+        
+        self.profile_text_stats_label = QLabel("")
+        self.profile_text_stats_label.setStyleSheet("color: #666; font-size: 9pt;")
+        profile_tools_layout.addWidget(self.profile_text_stats_label)
+        profile_layout.addLayout(profile_tools_layout)
         
         layout.addWidget(profile_group)
         layout.addStretch()
@@ -4172,10 +4605,9 @@ class DigimonEditor(QMainWindow):
         
         # Field Guide ID
         ref_layout.addWidget(QLabel("Field Guide ID:"), 0, 0)
-        self.field_guide_id_spin = QSpinBox()
-        self.field_guide_id_spin.setRange(-1, 99999)
-        self.field_guide_id_spin.setValue(-1)
-        ref_layout.addWidget(self.field_guide_id_spin, 0, 1)
+        field_guide_hint = QLabel("Edit on the Basic Info tab")
+        field_guide_hint.setStyleSheet("color: #666; font-style: italic;")
+        ref_layout.addWidget(field_guide_hint, 0, 1)
         
         # Script ID
         ref_layout.addWidget(QLabel("Script ID:"), 1, 0)
@@ -6406,9 +6838,11 @@ class DigimonEditor(QMainWindow):
         # Update extended tabs
         self.update_evolution_tab(digimon)
         self.update_battle_tab(digimon)
+        self.update_profile_text_stats()
         
         self.save_button.setEnabled(True)
         self.export_dlc_button.setEnabled(True)
+        self.clear_modified_flag()
     
     def launch_creation_wizard(self):
         """Launch the Digimon creation wizard"""
@@ -6495,11 +6929,10 @@ class DigimonEditor(QMainWindow):
     
     def import_from_dsts_loader(self):
         """Import Digimon from dsts-loader format files"""
-        from pathlib import Path
         import csv
         
         # Ask user to select dsts-loader directory
-        default_path = Path.cwd() / "dsts-loader"
+        default_path = get_default_mod_loader_path()
         
         loader_dir = QFileDialog.getExistingDirectory(
             self,
@@ -7133,6 +7566,8 @@ class DigimonEditor(QMainWindow):
         # But store template chr_id for animations (saved in animation_ref_edit)
         new_chr_id = f"chr{next_id}"
         digimon.chr_id = new_chr_id  # NEW unique chr_id
+        digimon.field_guide_id = first_free_field_guide_id(self.loader, new_chr_id)
+        digimon.script_id = next_id
         
         # Store template chr_id separately (will be used in animation reference)
         self.template_chr_id_for_animation = template_chr_id
@@ -7146,6 +7581,7 @@ class DigimonEditor(QMainWindow):
             f"✅ Created new Digimon based on {template_digimon.name}!\n\n"
             f"New ID: {next_id}\n"
             f"New Chr ID: {new_chr_id}\n"
+            f"Field Guide ID: {digimon.field_guide_id}\n"
             f"Animation Reference: {template_chr_id}\n\n"
             f"The new Digimon has a unique chr_id ({new_chr_id})\n"
             f"but uses animations from {template_chr_id}.\n\n"
@@ -7164,6 +7600,9 @@ class DigimonEditor(QMainWindow):
         original_id = self.current_digimon.id
         original_chr_id = self.current_digimon.chr_id
         chr_id_to_reload = self.current_digimon.chr_id
+        
+        if not self.validate_field_guide_id():
+            return
         
         # Update current digimon with form data
         self.update_digimon_from_form()
@@ -7337,6 +7776,8 @@ class DigimonEditor(QMainWindow):
         """Export the current Digimon to DLC files"""
         if not self.current_digimon:
             return
+        if not self.validate_field_guide_id():
+            return
         
         # Update current digimon with form data
         self.update_digimon_from_form()
@@ -7379,10 +7820,11 @@ class DigimonEditor(QMainWindow):
     
     def save_to_dsts_loader(self, digimon: DigimonData):
         """Save Digimon back to dsts-loader format (merges with existing data)"""
-        from pathlib import Path
+        if not self.validate_field_guide_id():
+            return
         
         # Ask user to select dsts-loader directory
-        default_path = Path.cwd() / "dsts-loader"
+        default_path = get_default_mod_loader_path()
         
         loader_dir = QFileDialog.getExistingDirectory(
             self,
@@ -8455,6 +8897,8 @@ class DigimonEditor(QMainWindow):
         """Export all CSV files with any changes made in the editor"""
         # Update current digimon with form data if one is loaded
         if self.current_digimon:
+            if not self.validate_field_guide_id():
+                return
             self.update_digimon_from_form()
             # Save changes to the original files first
             if not self.loader.save_digimon_data(self.current_digimon):
@@ -8462,7 +8906,11 @@ class DigimonEditor(QMainWindow):
                 return
         
         # Get directory to save to
-        directory = QFileDialog.getExistingDirectory(self, "Select Export Directory")
+        directory = QFileDialog.getExistingDirectory(
+            self,
+            "Select Export Directory",
+            str(get_default_mod_loader_path())
+        )
         if directory:
             from pathlib import Path
             output_path = Path(directory)
