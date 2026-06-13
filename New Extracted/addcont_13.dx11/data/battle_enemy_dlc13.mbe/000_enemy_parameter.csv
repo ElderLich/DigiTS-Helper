@@ -1,5 +1,0 @@
-enemy_id,empty_001,base_digimon_id,empty_003,empty_004,enemy_param_id,empty_006,flag_007,flag_008,flag_009,level,unknown_011,unknown_float_012,unknown_float_013,name_key,unknown_015,unknown_016,hp,sp,attack,defense,intelligence,spirit,speed,unk_int32_024,unk_int32_025,unk_int32_026,unk_int32_027,unk_int32_028,unk_int32_029,unk_int32_030,empty_031,unk_int32_032,unk_int32_033,unk_int32_034,unk_int32_035,unk_int32_036,unk_int32_037,empty_038,unk_int32_039,unk_int32_040,empty_041,unk_int32_042,unk_int32_043
-13202,,132,,,13202,,false,false,false,0,20,-1,0.05,"",0,0,2200,780,540,460,1370,620,590,50,80,180,80,180,80,160,,0,264,8,160,16,10132,,5,0,,0,10
-13303,,133,,,13303,,false,false,false,0,20,-1,0.05,"",0,0,2020,700,640,420,1550,490,580,50,80,210,60,210,60,160,,0,264,8,160,16,10133,,5,0,,0,10
-34703,,347,,,34703,,false,false,false,0,20,-1,0.05,"",0,0,1210,520,160,200,580,290,250,40,60,170,40,170,40,130,,0,84,8,80,8,10347,,5,0,,0,15
-43403,,434,,,43403,,false,false,true,0,20,-1,0.05,"",0,0,2630,980,670,620,1470,740,850,80,100,260,120,260,120,200,,0,664,10,320,32,0,,0,0,,0,5

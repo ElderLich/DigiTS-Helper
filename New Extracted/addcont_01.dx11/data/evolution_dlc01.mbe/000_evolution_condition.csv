@@ -1,6 +1,0 @@
-target_digimon_id,empty_001,mode,tamer_level,hp,sp,atk,def,int,spi,spd,unknown_011,unknown_012,skill_count_valor,skill_count_philanthropy,skill_count_amicable,skill_count_wisdom,unk_int32_017,empty_018,unk_int32_019,unk_int32_020,unk_int32_021,needs_item,empty_023,jogress_db_id_a,empty_025,jogress_personality_a,jogress_db_id_b,empty_028,jogress_personality_b
-689,,7,0,0,0,2280,0,1670,0,0,0,0,0,0,0,0,0,,0,0,0,0,,0,,0,0,,0
-690,,7,0,0,1020,0,0,0,1810,1960,0,0,0,0,0,0,0,,0,0,0,0,,0,,0,0,,0
-691,,8,0,2620,0,2620,0,0,0,1650,0,0,0,0,0,0,0,,0,0,0,0,,689,,2,690,,2
-692,,8,0,0,2300,0,0,0,2720,1900,0,0,0,0,0,0,0,,0,0,0,0,,0,,0,0,,0
-693,,8,0,0,0,2280,0,2190,0,1730,0,0,0,0,0,0,0,,0,0,0,0,,0,,0,0,,0

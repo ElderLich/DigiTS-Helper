@@ -1,7 +1,0 @@
-string3 0,string3 1,int32 2,string3 3,string3 4,string3 5,string3 6,empty 7
-"*MalePlayer_23","*MalePlayer",23,"pc001ka010101","pc001la010101","","pc001la010101",
-"*FemalePlayer_23","*FemalePlayer",23,"pc002ka010101","pc002la010101","","pc002la010101",
-"*Heroine_23","*Heroine",23,"npc001ka010101","npc001la010101","","npc001la010101",
-"*Aegiomon_23","*Aegiomon",23,"chr183ka010101","chr183la010101","","chr183la010101",
-"*AegiomonNoCap_23","*AegiomonNoCap",23,"chr183ma010101","","","",
-"*AegiomonHat_23","*AegiomonHat",23,"ATChat00chr183k","","","",
