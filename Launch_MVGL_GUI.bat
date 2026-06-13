@@ -1,14 +1,15 @@
 @echo off
+cd /d "%~dp0"
 title MVGL Tools GUI Launcher
 echo Starting MVGL Tools GUI...
 echo.
 
 REM Try to run with python
-python mvgl_tools_gui.py
+python MVGL_Tools_GUI.py
 
 REM If python command fails, try py
 if errorlevel 1 (
-    py mvgl_tools_gui.py
+    py MVGL_Tools_GUI.py
 )
 
 REM If both fail, show error
@@ -19,4 +20,3 @@ if errorlevel 1 (
     echo.
     pause
 )
-

@@ -17,8 +17,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor
 
-from data_loader import MBELoader, DigimonData, DLCExporter
-from csv_exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+from Data_Loader import MBELoader, DigimonData, DLCExporter
+from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
 
 
 class SkillEditor(QWidget):
@@ -1096,7 +1096,7 @@ class BasicInfoPage(QWizardPage):
         existing_ids = wizard.loader.get_all_digimon_ids()
         # Also check DLC IDs
         try:
-            from data_loader import DLCExporter
+            from Data_Loader import DLCExporter
             dlc_exporter = DLCExporter(wizard.loader)
             dlc_data = dlc_exporter.get_dlc_path("addcont_17") / "data" / "mbe"
             dlc_status_file = wizard.loader._resolve_prefixed_file(dlc_data / "digimon_status_dlc17.mbe" / "000_digimon_status_data.csv")

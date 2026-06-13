@@ -8,7 +8,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
-from data_loader import DigimonData, MBELoader
+from Data_Loader import DigimonData, MBELoader
 
 
 class CSVExporter:
@@ -850,7 +850,7 @@ class CSVExporter:
 
 if __name__ == "__main__":
     # Test the exporter with chr805
-    from data_loader import MBELoader
+    from Data_Loader import MBELoader
     
     loader = MBELoader()
     digimon = loader.get_digimon_by_chr_id("chr805")
@@ -930,7 +930,7 @@ def repack_dlc_mbe_files(dlc_name: str = "addcont_17") -> bool:
         # Source: CSV folders in DLC/addcont_17.dx11/data/mbe/ and DLC/addcont_17_text01.dx11/text/mbe/
         # Target: .mbe files in export/DLC/addcont_17.dx11/data/ and export/DLC/addcont_17_text01.dx11/text/
         try:
-            from data_loader import MBELoader
+            from Data_Loader import MBELoader
             temp_loader = MBELoader()
             workspace_root = temp_loader.data_path.parent
         except:
