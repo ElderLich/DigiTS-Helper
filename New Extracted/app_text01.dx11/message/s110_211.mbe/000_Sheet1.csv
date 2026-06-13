@@ -1,0 +1,155 @@
+string2 0,string 1,string 2,string 3
+"s110_211_010","char_AGUMON","Oh, it's you! I've been waiting for you.",""
+"s110_211_020","char_AGUMON","All of the Royal Knights have gathered. We're all preparing
+for the coming battle.",""
+"s110_211_030","char_AGUMON","This place seems perfect for intense activity.",""
+"s110_211_040","char_PLAYER_M","{next}Perfect timing.",""
+"s110_211_041","char_PLAYER_M","{next}I'm not too sure about this.",""
+"s110_211_042","char_PLAYER_M","If you're bored, you wanna play a card game?",""
+"s110_211_050","char_AGUMON","I know, right?",""
+"s110_211_060","char_AGUMON","I heard a human saying, ""Don't sweat the small stuff."" I
+agree. Details don't matter.",""
+"s110_211_070","char_AGUMON","Ooh. Good idea! Let's play!",""
+"s110_211_080","char_AGUMON","It'd be great if you could take them on.",""
+"s110_211_090","char_AGUMON","Everyone wants to fight you.",""
+"s110_211_095","char_AGUMON","The order is up to you. Talk to whoever you want to fight.",""
+"s110_211_100","char_AGUMON","Card games are so much fun. Thanks for playing with me.",""
+"s110_211_110","char_AGUMON","But... I still want to get ready for the big battle.",""
+"s110_211_120","char_AGUMON","We're all preparing for the coming battle. This place 
+seems perfect for intense activity.",""
+"s110_211_130","char_PLAYER_M","{next}Let's play a card game.",""
+"s110_211_131","char_PLAYER_M","{next}Let's fight!",""
+"s110_211_132","char_PLAYER_M","{end}Never mind.",""
+"s110_211_135","char_PLAYER_M","{next}Sure, let's do it.",""
+"s110_211_136","char_PLAYER_M","{end}Never mind.",""
+"s110_211_140","char_AGUMON","I'm itching to get some exercise!",""
+"s110_211_145","char_AGUMON","I need to work out a little more. Hey, how about we fight
+again?",""
+"s110_211_150","char_AGUMON","All right! I've been waiting. Let's give it our best!",""
+"s110_211_160","char_AGUMON","Phew! It feels so good to move around! Thanks for fighting
+with me.",""
+"s110_211_170","char_ULFORCEVDRAMON","Both my armor and I are in great shape. But I am getting
+somewhat rusty.",""
+"s110_211_175","char_ULFORCEVDRAMON","I get better and better when I fight you. If you have the
+energy, how about another fight?",""
+"s110_211_180","char_ULFORCEVDRAMON","Hello, there. How are you doing?",""
+"s110_211_190","char_ULFORCEVDRAMON","Is that so? Well, then. Do not go easy on me. Let us begin.",""
+"s110_211_200","char_ULFORCEVDRAMON","That was a great fight. Allow me to thank you.",""
+"s110_211_210","char_MAGNAMON","I would like to go buy some sweets to refresh myself.",""
+"s110_211_215","char_MAGNAMON","But fighting with you is more appealing than sweets. Would
+you like to have another round?",""
+"s110_211_220","char_MAGNAMON","Can I help you?",""
+"s110_211_230","char_MAGNAMON","Sure. I am in! How about whoever loses buys us both some
+pancakes?",""
+"s110_211_240","char_MAGNAMON","Haha! Looks like you win! I shall buy you anything you would
+like after the fight.",""
+"s110_211_250","char_LOADKNIGHTMON","I've noticed your outfit is quite beautiful. It must be a
+popular style among humans.",""
+"s110_211_255","char_LOADKNIGHTMON","I cannot forget about the beautiful fight I had with you. I
+would fight again if I could.",""
+"s110_211_260","char_LOADKNIGHTMON","Did you need me for something?",""
+"s110_211_270","char_LOADKNIGHTMON","Hohoho! I've been waiting for this! A battle with you...
+would be truly beautiful indeed!",""
+"s110_211_280","char_LOADKNIGHTMON","It was a beautiful battle. Thank you for such a wonderful
+experience.",""
+"s110_211_290","char_DUKEMON","Hello. Good to see you. Cards are part of a knight's
+etiquette. Would you like to play?",""
+"s110_211_295","char_DUKEMON","Right now, I would rather move my body than rest! Would you
+like to fight again?",""
+"s110_211_300","char_DUKEMON","Do you wish to challenge me?",""
+"s110_211_310","char_DUKEMON","Understood! I, Gallantmon, wonder if you can withstand the
+blow of my holy lance, Gram!",""
+"s110_211_320","char_DUKEMON","Haha. I, Gallantmon, am impressed. Your moves were great.",""
+"s110_211_330","char_DYNASMON","I will eventually be taking on a big battle. But, as a
+knight, I will not be daunted.",""
+"s110_211_335","char_DYNASMON","As a knight, I will accept a challenge at any time. Are you
+challenging me to a rematch?",""
+"s110_211_340","char_DYNASMON","...Hm? Did you need something?",""
+"s110_211_350","char_DYNASMON","Very well. Let us fight fairly, in the spirit of chivalry!",""
+"s110_211_360","char_DYNASMON","I have no doubt. You are the best knight of them all.",""
+"s110_211_370","char_CRANIAMON","Thanks for helping me the other day. Would you like to play
+some cards as a break?",""
+"s110_211_375","char_CRANIAMON","Hmm, I am not satisfied with image training alone. I want to
+fight with YOU more!",""
+"s110_211_380","char_CRANIAMON","It's almost time for the big battle.",""
+"s110_211_390","char_CRANIAMON","But I want to know what I'm capable of right now. Would you
+be my opponent? Let's go!",""
+"s110_211_400","char_CRANIAMON","I think I did pretty well against you. I should be confident
+in my own strength.",""
+"s110_211_410","char_SLEIPMON","Hmm. I should have ended my food tour with a parfait. That
+is all I regret before battle.",""
+"s110_211_415","char_SLEIPMON","In order to forget my hunger, I must fight! How about one
+more battle?",""
+"s110_211_420","char_SLEIPMON","What are you up to? Did you need help finding some good
+restaurants?",""
+"s110_211_430","char_SLEIPMON","Oh, great! I actually ate a little too much. Perfect timing
+for some after-meal exercise!",""
+"s110_211_440","char_SLEIPMON","That was a great battle. After such a good workout, I am
+getting hungry again...",""
+"s110_211_450","char_DUFTMON","I do not mind this place, but there is no music. I wish they
+had a band here.",""
+"s110_211_455","char_DUFTMON","I would like to make a few more adjustments before the final
+battle. Could you fight me?",""
+"s110_211_460","char_DUFTMON","Mm hmm hmm... ♪",""
+"s110_211_470","char_DUFTMON","I was just wishing for a good way to kill time. Yes,
+entertain me, then!",""
+"s110_211_480","char_DUFTMON","Now I know what I must work on for the upcoming battle.
+Thank you for the fight.",""
+"s110_211_490","char_EXAMON","This place feels a bit cramped. But if I must wait here, I
+shall put up with it...",""
+"s110_211_495","char_EXAMON","What? You want to fight again? Haha. You are full of energy!",""
+"s110_211_500","char_EXAMON","Do not wander around my feet. I may accidentally step on
+you.",""
+"s110_211_510","char_EXAMON","You are very brave to challenge this giant. Very well. I
+shall be your opponent!",""
+"s110_211_520","char_EXAMON","You are quite interesting! It has been a long time since I
+last enjoyed fighting so much.",""
+"s110_211_530","char_GANKOOMON","So I just wait here? Hmm. Is there anything I can do to pass
+the time?",""
+"s110_211_535","char_GANKOOMON","Fighting you refines my mind and body. I'll fight ya as many
+times as yer willing!",""
+"s110_211_540","char_GANKOOMON","Hey, there. Working hard?",""
+"s110_211_550","char_GANKOOMON","All right. I've been wanting to move! But if we're doing
+this, ya gotta give me yer best.",""
+"s110_211_560","char_GANKOOMON","You're pretty strong! Thanks to you, now I'm all warmed up.
+That was fun!",""
+"s110_211_570","char_JESMON","As a member of the Royal Knights, I must always be ready.",""
+"s110_211_575","char_JESMON","We are about to face the final battle, but I still want to
+be stronger! Please fight me!",""
+"s110_211_580","char_JESMON","To prepare for the coming battle, I am focusing my mind...",""
+"s110_211_590","char_JESMON","It would be great to fight against you! I must make my
+master proud.",""
+"s110_211_600","char_JESMON","I lost... How mortifying! My master would be so ashamed of
+me.",""
+"s110_211_610","char_JESMON","I do not deserve to be a Royal Knight. After this battle, I
+will start over from an egg.",""
+"s110_211_620","char_AGUMON","Whoa. You're really strong! Fight me again!",""
+"s110_211_630","char_AGUMON","Yay, I won! That was a good fight. Thanks!",""
+"s110_211_640","char_DUKEMON","I, Gallantmon, did not know of such tactics! I have learned
+much from you. Thank you!",""
+"s110_211_650","char_DUKEMON","I have won, but you gave me a hard time. Come back stronger
+and challenge me again.",""
+"s110_211_660","char_CRANIAMON","Hmm. I'm not quite there yet. But I'll get stronger, so
+let's fight again.",""
+"s110_211_670","char_CRANIAMON","Hmph. Now do you see what I'm capable of? 
+But at least that was somewhat enjoyable.",""
+"s110_211_680","char_ENBARRMON","Man, I lost... I was pretty sure I would win.",""
+"s110_211_690","char_ENBARRMON","Well, there is nothing to be discouraged about. It means the
+opponent was too strong!",""
+"s110_211_700","char_GABUMON","Darn it! I lost! You're so strong. Gimme lotsa advice about
+how to win, okay?",""
+"s110_211_710","char_GABUMON","I won! It feels so good! Let's do that again. This is lotsa fun!",""
+"s110_211_720","char_ALPHAMON","I will continue my search for justice. How about you?",""
+"s110_211_730","char_ALPHAMON","There is still much that I do not understand
+about humans. I must keep learning!",""
+"s110_211_740","char_ALPHAMON","You have demonstrated to me your beliefs.
+You have my gratitude.",""
+"s110_211_750","char_ALPHAMON","I am searching for what constitutes justice.
+Allow me to take another look.",""
+"s110_211_760","char_GABUMON","What?! You defeated everyone here?",""
+"s110_211_770","char_AGUMON","A-Amazing! I've never seen anyone so strong...!",""
+"s110_211_780","char_GABUMON","I didn't think you'd beat me so easily. But it was fun!",""
+"s110_211_790","char_AGUMON","Everyone enjoyed their battle against you. I hope you
+enjoyed yourself as well!",""
+"s110_211_800","char_AGUMON","You've defeated all of the Royal Knights!
+Congratulations!",""

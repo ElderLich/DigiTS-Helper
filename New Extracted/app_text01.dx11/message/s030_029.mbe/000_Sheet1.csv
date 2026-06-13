@@ -1,0 +1,102 @@
+string2 0,string 1,string 2,string 3
+"s030_029_010","char_TONOSAMAGEKOMON","I'm honing my mind and spirit, glurp. Please do not speak to
+me, glurp.",""
+"s030_029_013","char_BACCHUSMON","Now that the forest village is safe, I want to liven things
+up with a party for everyone!",""
+"s030_029_016","char_BACCHUSMON","And for that, we need a band! Nothing gets a party going
+like some good music.",""
+"s030_029_020","char_KABUTERIMON","Me already make choir. We have many volunteers. But... no
+lead vocalist.",""
+"s030_029_030","char_BACCHUSMON","I know just the Digimon who would slay with its singing
+skills, though! ShogunGekomon!",""
+"s030_029_040","char_BACCHUSMON","So I'm looking for someone I can send out to scout
+ShogunGekomon for the position.",""
+"s030_029_050","char_PLAYER_M","{next}Which is where I come in?",""
+"s030_029_051","char_PLAYER_M","{next}Someone like who?",""
+"s030_029_052","char_PLAYER_M","{next}But where are you going to find a scout?",""
+"s030_029_060","char_BACCHUSMON","I see you catch on fast. I love people who are quick on the
+uptake.",""
+"s030_029_070","char_BACCHUSMON","Someone like you, obviously! Now get out there and start
+talking to ShogunGekomon!",""
+"s030_029_080","char_BACCHUSMON","You can't fool me. You're the scout I had in mind, and that
+sly look tells me you knew it!",""
+"s030_029_090","char_KABUTERIMON","But, Lord Bacchusmon, where ShogunGekomon?",""
+"s030_029_100","char_BACCHUSMON","ShogunGekomon hones his mind and spirit before a show. He
+will be in the sanctuary.",""
+"s030_029_110","char_PLAYER_M","{next}I'll go take a look.",""
+"s030_029_111","char_PLAYER_M","{next}Are you sure about that?",""
+"s030_029_112","char_PLAYER_M","{end}I'm afraid I can't right now.",""
+"s030_029_120","char_BACCHUSMON","If you find anyone distracting ShogunGekomon, get
+them away from our star!",""
+"s030_029_130","char_BACCHUSMON","If ShogunGekomon isn't there, go find it! I need you to help
+me out with this, okay?",""
+"s030_029_140","char_BACCHUSMON","No? Of all the unreliable... Listen. I'm not asking for
+much, here. Help me out, okay?",""
+"s030_029_150","char_BACCHUSMON","ShogunGekomon should be in the sanctuary honing his mind and
+spirit. Go bring him here!",""
+"s030_029_160","char_PLAYER_M","{next}I'll go take a look.",""
+"s030_029_161","char_PLAYER_M","{end}I'm afraid I can't right now.",""
+"s030_029_170","char_BACCHUSMON","If you find anyone distracting ShogunGekomon, get
+them away from our star!",""
+"s030_029_180","char_BACCHUSMON","So, you still can't commit? Listen. I'm not asking for much,
+here. Help me out, okay?",""
+"s030_029_190","char_DUFTMON","I, too, shall search for ShogunGekomon. His prowess as a
+lead vocalist intrigues me.",""
+"s030_029_200","char_PLAYER_M","{next}I appreciate the help!",""
+"s030_029_201","char_PLAYER_M","{next}You think it's really that good?",""
+"s030_029_202","char_PLAYER_M","{next}No need.",""
+"s030_029_210","char_DUFTMON","My only concern is for ShogunGekomon. I could not care less
+what happens to you humans.",""
+"s030_029_220","char_DUFTMON","No. I share your doubts. I believe we ought to put
+ShogunGekomon's talents to the test.",""
+"s030_029_230","char_DUFTMON","Protest all you will. I must hear it sing. I go now to the
+sanctuary. May we meet again.",""
+"s030_029_240","char_TONOSAMAGEKOMON","Glurp, glurp... Are you certain there are no Titans, glurp?
+Oh, what should I do, glurp?!",""
+"s030_029_250","char_PLAYER_M","{next}Come with us.",""
+"s030_029_251","char_PLAYER_M","{next}What's the problem?",""
+"s030_029_252","char_PLAYER_M","{next}Who cares?",""
+"s030_029_260","char_TONOSAMAGEKOMON","I cannot go if Titans are in the sanctuary, glurp! I am a
+shogun, after all, glurp.",""
+"s030_029_270","char_TONOSAMAGEKOMON","Is it not obvious, glurp?! If Titans are in the sanctuary,
+that is a huge problem, glurp!",""
+"s030_029_280","char_TONOSAMAGEKOMON","Foolish commoner, glurp. A shogun cannot ignore Titans in
+the sanctuary, glurp!",""
+"s030_029_290","char_DUFTMON","Humans, together let us defeat GranKuwagamon and revel in
+ShogunGekomon's dulcet tones!",""
+"s030_029_300","char_PLAYER_M","{next}Right. Let's join forces!",""
+"s030_029_301","char_PLAYER_M","{next}You wanna join forces?!",""
+"s030_029_302","char_PLAYER_M","{end}Let's think of another plan.",""
+"s030_029_310","char_DUFTMON","It is a pleasure to find humans who are so quick to
+understand. Down with GranKuwagamon!",""
+"s030_029_320","char_DUFTMON","If the thought displeases you, then do as you will, but, as
+for me, I shall fight!",""
+"s030_029_330","char_DUFTMON","You lack the will to fight? Very well. Think all you want,
+until that desire burns in you.",""
+"s030_029_340","char_DUFTMON","GranKuwagamon is a mighty foe indeed... Yet I refuse to back
+down!",""
+"s030_029_350","char_DUFTMON","That battle just now... it was magnificent! ShogunGekomon's
+singing gave me strength.",""
+"s030_029_355","char_DUFTMON","Such an amazing voice demands an audience. The enemy is
+gone. Will you join our band?",""
+"s030_029_360","char_TONOSAMAGEKOMON","Having fulfilled my duty as a shogun, I am satisfied, glurp.
+To the village, glurp!",""
+"s030_029_370","char_BACCHUSMON","Now, sing! Sing to your heart's content, ShogunGekomon! The
+chorus will back you up!",""
+"s030_029_380","char_GEKOMON","Gluuuuurp! ♪",""
+"s030_029_390","char_GEKOMON","Gluuuuurp! ♪",""
+"s030_029_400","char_TONOSAMAGEKOMON","Glurp, glurp, glurp, glurp, gluuuuurp! ♪",""
+"s030_029_410","char_BACCHUSMON","Ah! The perfect harmony to bring out the lead vocals! This
+is the best! The ultimate band!",""
+"s030_029_420","char_PLAYER_M","It sounds beautiful!",""
+"s030_029_421","char_PLAYER_M","Does that mean my job is done?",""
+"s030_029_422","char_PLAYER_M","Let's sing along!",""
+"s030_029_430","char_BACCHUSMON","Truly. THIS is singing! THIS is music!",""
+"s030_029_440","char_BACCHUSMON","Yes. Well done! You played an instrumental role in bringing
+this band together!",""
+"s030_029_450","char_BACCHUSMON","Not a chance! Any other voices would only distract from the
+beauty of these vocals!",""
+"s030_029_460","char_BACCHUSMON","Now, then, in celebration of your making this possible, I
+want you to have this. Take it!",""
+"s030_029_470","char_DUFTMON","These voices must be preserved... To save this world, let us
+go to the promised place!",""

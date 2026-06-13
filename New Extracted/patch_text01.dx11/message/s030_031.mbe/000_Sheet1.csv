@@ -1,0 +1,103 @@
+string2 0,string 1,string 2,string 3
+"s030_031_010","char_SPROUT_SIRENMON","The forest village seems such a nice place. I hear the most
+beautiful singing there...",""
+"s030_031_020","char_PLAYER_M","{next}It does sound nice.",""
+"s030_031_021","char_PLAYER_M","{next}Who said that?",""
+"s030_031_022","char_PLAYER_M","{next}Yikes! A talking sprout?!",""
+"s030_031_030","char_SPROUT_SIRENMON","Yes... I wish I could hear it from closer up...",""
+"s030_031_040","char_SPROUT_SIRENMON","Do you see the sprout just ahead of you? That is me!",""
+"s030_031_050","char_SPROUT_SIRENMON","We have spoken to one another before. Could it be that you
+are a forgetful person?",""
+"s030_031_060","char_SPROUT_SIRENMON","I'm Sirenmon. Currently, I'm healing my body in this form.",""
+"s030_031_070","char_SPROUT_SIRENMON","I would love to talk with others more, but, sadly, not many
+Digimon ever come here.",""
+"s030_031_080","char_SPROUT_SIRENMON","So I am often entranced by those voices from afar. What
+about the village has changed?",""
+"s030_031_090","char_PLAYER_M","{next}The band is back together.",""
+"s030_031_091","char_PLAYER_M","{next}Can you describe these voices?",""
+"s030_031_092","char_PLAYER_M","{next}I'm not telling.",""
+"s030_031_100","char_SPROUT_SIRENMON","I thought so! That is wonderful!",""
+"s030_031_110","char_SPROUT_SIRENMON","They sing, ""glurp, glurp,"" so beautifully, I need but close
+my eyes to hear them anew!",""
+"s030_031_120","char_SPROUT_SIRENMON","Oh, how cruel... Could you not show some sympathy for my
+lonely heart?",""
+"s030_031_130","char_SPROUT_SIRENMON","That lovely chorus of Gekomon, with ShogunGekomon on lead
+vocals...",""
+"s030_031_140","char_SPROUT_SIRENMON","I wish I could hear their enrapturing voices from right up
+close...",""
+"s030_031_150","char_PLAYER_M","{next}I'll bring the band here.",""
+"s030_031_151","char_PLAYER_M","{next}Wanna go hear them together?",""
+"s030_031_152","char_PLAYER_M","{next}I'll sing for you instead.",""
+"s030_031_160","char_SPROUT_SIRENMON","You will?! Oh, you have just made me happier than words can
+say... Thank you!",""
+"s030_031_170","char_SPROUT_SIRENMON","As you can see, I am unable to leave the sanctuary. The band
+would have to come to me.",""
+"s030_031_180","char_SPROUT_SIRENMON","I appreciate the offer, but... your kindness alone will
+suffice. Thank you.",""
+"s030_031_190","char_SPROUT_SIRENMON","I am unable to leave the sanctuary. The band would have to
+come to me.",""
+"s030_031_200","char_SPROUT_SIRENMON","I know it may never come to pass, but, even so, I have long
+awaited the band's visit.",""
+"s030_031_210","char_TONOSAMAGEKOMON","Glurp, glurp, glurp, glurp, gluuuuurp! ♪",""
+"s030_031_220","char_TONOSAMAGEKOMON","...Huh, glurp? Can I help you with something, glurp?",""
+"s030_031_230","char_PLAYER_M","{next}Sirenmon wants to hear you sing!",""
+"s030_031_231","char_PLAYER_M","We need to talk.",""
+"s030_031_232","char_PLAYER_M","Let me sing with you.",""
+"s030_031_240","char_TONOSAMAGEKOMON","L-Lady Sirenmon, glurp?! S-Seriously, glurp?",""
+"s030_031_250","char_TONOSAMAGEKOMON","I have nothing to say, glurp. Now, begone, glurp. Don't
+interrupt my practice, glurp.",""
+"s030_031_260","char_TONOSAMAGEKOMON","This is no place for amateurs, glurp. Only select voices may
+sing here, glurp.",""
+"s030_031_270","char_TONOSAMAGEKOMON","Did you need something else, glurp?",""
+"s030_031_280","char_TONOSAMAGEKOMON","Although I'm of lordly station, can I truly sing
+before one such as Lady Sirenmon, glurp?",""
+"s030_031_290","char_TONOSAMAGEKOMON","...Perhaps I could make a passable showing, but are my
+bandmates spirited enough, glurp?",""
+"s030_031_300","char_TONOSAMAGEKOMON","If I could, I'd give each member Spirit Seeds, so nothing
+went to chance, glurp!",""
+"s030_031_310","char_PLAYER_M","{next}Understood.",""
+"s030_031_311","char_PLAYER_M","{next}Spirit Seeds?",""
+"s030_031_312","char_PLAYER_M","{next}They don't have enough spirit.",""
+"s030_031_320","char_TONOSAMAGEKOMON","This is the show of a lifetime, glurp. They need Spirit
+Seeds to be in top form, glurp!",""
+"s030_031_330","char_TONOSAMAGEKOMON","As the name implies, they very helpfully bolster one's
+spirit when chewed, glurp.",""
+"s030_031_340","char_TONOSAMAGEKOMON","That's why I said we need Spirit Seeds, glurp! For glurp's
+sake, listen!",""
+"s030_031_350","char_TONOSAMAGEKOMON","In any event, we can't sing before Lady Sirenmon without
+those seeds, glurp.",""
+"s030_031_360","char_PLAYER_M","{next}Understood.",""
+"s030_031_361","char_PLAYER_M","{next}Where can I find Spirit Seeds?",""
+"s030_031_362","char_PLAYER_M","{next}How about getting them yourself?",""
+"s030_031_370","char_TONOSAMAGEKOMON","Think of it as gathering the seeds not for me or the band,
+but for Lady Sirenmon, glurp.",""
+"s030_031_380","char_TONOSAMAGEKOMON","Let me see, glurp... I seem to recall it was somewhere
+around here, glurp...",""
+"s030_031_390","char_TONOSAMAGEKOMON","There are still Titans at large, glurp. A lord like myself
+must avoid danger, glurp.",""
+"s030_031_400","char_TONOSAMAGEKOMON","Anyway, the seeds are likely in this area, glurp! I'll send
+you the coordinates, glurp.",""
+"s030_031_410","char_TONOSAMAGEKOMON","Now then, I'll be rehearsing diligently until you return
+with our precious bounty, glurp.",""
+"s030_031_420","char_TONOSAMAGEKOMON","How about those Spirit Seeds, glurp? We can't sing for Lady
+Sirenmon without them, glurp.",""
+"s030_031_430","char_TONOSAMAGEKOMON","Yes, these are the ones, glurp! Thank you, glurp. Now, my
+bandmates, chew away, glurp!",""
+"s030_031_440","char_GEKOMON","*munch, munch*",""
+"s030_031_450","char_GEKOMON","*munch, munch*",""
+"s030_031_460","char_GEKOMON","Glurp, yeah!",""
+"s030_031_470","char_GEKOMON","Glurp, yeah!",""
+"s030_031_480","char_TONOSAMAGEKOMON","Sufficiently spirited, everyone, glurp? Now, to the
+sanctuary, and please join us, glurp!",""
+"s030_031_490","char_GEKOMON","Gluuuuurp! ♪",""
+"s030_031_500","char_GEKOMON","Gluuuuurp! ♪",""
+"s030_031_510","char_TONOSAMAGEKOMON","Glurp, glurp, glurp, glurp, gluuuuurp! ♪",""
+"s030_031_520","char_SPROUT_SIRENMON","Ah, what wonderful voices! My parched heart is as dewy with
+emotion as a spring morning.",""
+"s030_031_530","char_SPROUT_SIRENMON","Oh, my... Look! The nourishment of song has blossomed new
+growth within me!",""
+"s030_031_540","char_SPROUT_SIRENMON","I cannot give much by way of thanks... but please have this
+ripe fruit of Karpos Hulē.",""
+"s030_031_550","char_SPROUT_SIRENMON","Thank you for the delightful music, everyone!",""
+"s030_031_560","char_SPROUT_SIRENMON","Should you have further need of the fruit of Karpos Hulē,
+come pick more at your leisure.",""

@@ -1,0 +1,164 @@
+string2 0,string 1,string 2,string 3
+"m350_010_010","char_YATAGARAMON","We have to find better fighters!",""
+"m350_010_020","","The Titans are strong... We need to be thoroughly prepared!",""
+"m350_010_030","char_OPERATOR_M","It looks like you've traveled through time again... but
+something's off this time... Aegiomon isn't with you.",""
+"m350_010_040","char_OPERATOR_M","No sign of Inori, either. No doubt she was swallowed up by
+the space-time disturbance, and Aegiomon went in after her.",""
+"m350_010_050","char_OPERATOR_M","It's likely she was swallowed up by the space-time
+disturbance. Aegiomon seems to have gone in after her.",""
+"m350_010_060","char_OPERATOR_M","While their safety is a concern... the bigger issue is that
+you traveled through time without Aegiomon present.",""
+"m350_010_070","char_OPERATOR_M","Namely, the fact that you traveled through time without
+Aegiomon present.",""
+"m350_010_080","char_OPERATOR_M","......",""
+"m350_010_090","char_OPERATOR_M","Now that I think back on it, you were alone during your
+first time travel as well.",""
+"m350_010_100","char_OPERATOR_M","It just may be that... we've made a big error in judgment.",""
+"m350_010_105","char_YATAGARAMON","Lord Merukimon is preparing to take the field, too.
+Do you think he can even fight in that state...?",""
+"m350_010_110","char_OPERATOR_M","Merukimon's upcoming defeat is what leads to the Titans
+invading the human world.",""
+"m350_010_120","char_OPERATOR_M","If only Merukimon were healthy, it just might be enough
+to change the outcome of the battle.",""
+"m350_010_130","char_OPERATOR_M","What about Venusmon, the Digimon working to remedy 
+the poison? Any word on his progress?",""
+"m350_020_010","char_OPERATOR_M","Merukimon being alive is solid proof that you've traveled
+through time.",""
+"m350_020_020","char_OPERATOR_M","We need to try again—to keep the Shinjuku Inferno from happening.",""
+"m350_020_030","char_OPERATOR_M","I'd like for you to try again—to keep the Shinjuku Inferno from happening.",""
+"m350_020_040","char_PLAYER_M","This time, I WILL get to the truth.{next}",""
+"m350_020_041","char_PLAYER_M","In the name of ADAMAS, I'll see it gets done.{next}",""
+"m350_020_042","char_PLAYER_M","I'm worried about my missing friends, too!{next}",""
+"m350_020_050","char_OPERATOR_M","Seeing the same anomaly repeatedly has enabled us to
+glean new information on its origin.",""
+"m350_020_060","char_OPERATOR_M","The Titans appear in the sky above the government building.
+Then Merukimon's remaining forces engage them.",""
+"m350_020_070","char_OPERATOR_M","Once public safety and their weapon gets involved, we have a
+three-way fight. If only we knew what that giant arm was...",""
+"m350_020_080","char_OPERATOR_M","If only we knew what that giant arm was...",""
+"m350_020_085","char_OPERATOR_M","Perhaps the gate's opening and the shockwaves of the battle 
+cause some kind of effect... and then a massive disturbance.",""
+"m350_020_090","char_OPERATOR_M","And that's how the Shinjuku Inferno unfolds... So if we stop 
+the Titan invasion of our world, we stop the worst of it.",""
+"m350_020_100","char_OPERATOR_M","In which case... logic dictates that preventing the Titan 
+invasion of our world would also prevent disaster.",""
+"m350_020_110","char_OPERATOR_M","In other words, if Merukimon can defeat the Titans and
+survive, the outcome may change.",""
+"m350_020_120","char_OPERATOR_M","The outcome may change.",""
+"m350_020_130","char_OPERATOR_M","No worrying about the consequences of rewriting history this
+time. We may have been wrong about everything, after all.",""
+"m350_020_140","char_OPERATOR_M","The reason being that, in the first place, these jumps
+through time are—",""
+"m350_020_150","char_MERCURYMON","I see you are alone... Is something wrong? Are you here
+to speak with me?",""
+"m350_020_160","char_MERCURYMON","The enemy is concentrating their forces on Central Town...
+Our own units have already engaged them.",""
+"m350_020_170","char_MERCURYMON","I have a different favor to ask of you... We find ourselves
+beset by another crisis.",""
+"m350_020_180","char_PLAYER_M","The operation will fail!{next}",""
+"m350_020_181","char_PLAYER_M","You can't defeat the Titans...!{next}",""
+"m350_020_182","char_PLAYER_M","You're going to die out there!{next}",""
+"m350_020_190","char_MERCURYMON","...Wh-What? How do you know this?",""
+"m350_020_200","char_MERCURYMON","The operation... will fail? How do you know this?",""
+"m350_020_210","char_MERCURYMON","...Time travel? The world... will end?",""
+"m350_020_220","char_MERCURYMON","This is hardly the time for insipid jokes—",""
+"m350_020_230","char_MERCURYMON","......",""
+"m350_020_240","char_MERCURYMON","That look on your face... You are not joking, are you...?",""
+"m350_020_250","char_MERCURYMON","Or, rather, what would you have me do? My comrades
+are already fighting in Central Town!",""
+"m350_020_260","char_MERCURYMON","If only there were some way to alleviate the poison eating
+away at my body... Please give me some time to think.",""
+"m350_020_270","char_MERCURYMON","I must inform my comrades who are preparing... that we are
+going to delay our departure.",""
+"m350_050_010","char_VENUSMON","Thank goodness we made it in time!","m350_050_010"
+"m350_050_020","char_VENUSMON","Within the Gear Forest, I found this growing from the
+sapling under which Sirenmon slumbers!","m350_050_020"
+"m350_050_030","char_VENUSMON","The fruit of Karpos Hulē! With this, we can cleanse the
+poison from Merukimon's body!","m350_050_030"
+"m350_050_050","char_VENUSMON","As long as I have the ingredients, compounding it will not
+take long. I can only hope it will be ready in time...!","m350_050_050"
+"m350_090_010","char_MERCURYMON","What...?",""
+"m350_090_020","char_MERCURYMON","My body feels so light...! The antidote may be working!","m350_090_020"
+"m350_090_030","char_MERCURYMON","And to think I nearly had given up hope...! You have my
+heartfelt gratitude, O time-traversing hero.","m350_090_030"
+"m350_090_040","char_MERCURYMON","A ray of hope after days of quiet suffering... If we fail to
+grasp this chance, this time our future is truly lost.","m350_090_040"
+"m350_090_050","char_MERCURYMON","We go forth to reclaim our pride, our soul! Now, to our
+home! Onward!","m350_090_050"
+"m350_100_010","char_MERCURYMON","We will check the Titan incursion and turn them back. We
+will not let them take a single step into the human world.","m350_100_010"
+"m350_100_020","char_MERCURYMON","If this prevents world destruction, then all the more reason
+to stake my all in holding the front. I owe you that much.","m350_100_020"
+"m350_100_030","char_MERCURYMON","You had better not blink from now on. It could all be over
+in a flash the moment you close your eyes.","m350_100_030"
+"m350_100_040","char_MERCURYMON","The enemy shall learn what it truly means to face down
+the God of Speed!","m350_100_040"
+"m350_110_001","char_MERCURYMON","Who is that?","m350_110_001"
+"m350_110_010","char_MYSTERIOUS_DIGIMON","It is still too early...","m350_110_010"
+"m350_110_020","char_MERCURYMON","...What?","m350_110_020"
+"m350_110_030","char_MYSTERIOUS_DIGIMON","In order to replace a gear... one must first open the cover
+of the clock.","m350_110_030"
+"m350_110_040","char_MYSTERIOUS_DIGIMON","Even a child knows this truth.","m350_110_040"
+"m350_110_050","char_MYSTERIOUS_DIGIMON","And so I say it is still too early.","m350_110_050"
+"m350_110_060","char_PLAYER_M","What are you getting at?{next}",""
+"m350_110_061","char_PLAYER_M","Are you another kind of anomaly?{next}",""
+"m350_110_062","char_PLAYER_M","Are you on our side... or the enemy's?{next}",""
+"m350_110_070","char_MYSTERIOUS_DIGIMON","Everything is going as planned... No deviations from the schedule.","m350_110_070"
+"m350_110_080","char_MYSTERIOUS_DIGIMON","Allow me to test this for myself.","m350_110_080"
+"m350_120_010","char_MYSTERIOUS_DIGIMON","Ah... I see you have gotten stronger. Joyous news, indeed.","m350_120_010"
+"m350_120_020","char_MYSTERIOUS_DIGIMON","I will be waiting for you...","m350_120_020"
+"m350_120_030","char_MYSTERIOUS_DIGIMON","...in the place where the laws of time are engraved...","m350_120_030"
+"m350_120_040","char_PLAYER_M","What was that all about?{next}",""
+"m350_120_041","char_PLAYER_M","What a creepy opponent...{next}",""
+"m350_120_042","char_PLAYER_M","I think it was holding back.{next}",""
+"m350_120_050","char_MERCURYMON","I admit, I'm intrigued as well... However, for the time
+being, allow me to simply make this declaration.","m350_120_050"
+"m350_120_060","char_MERCURYMON","This was my... no, our dearest wish.","m350_120_060"
+"m350_120_065","char_MERCURYMON","We have reclaimed more than mere land! We have restored
+our pride, our very soul.","m350_120_065"
+"m350_120_070","char_MERCURYMON","Central Town belongs to us once again!","m350_120_070"
+"m350_130_010","char_NARRATION","The mystical medicine wiped the poison from Merukimon's
+body, and strength returned to the fleet-footed warrior.","m350_130_010"
+"m350_130_012","char_NARRATION","Together, with his trusted allies, Merukimon rose up. It
+was time to take back their city from the invading force.","m350_130_012"
+"m350_130_020","char_NARRATION","The renewed Merukimon put his vaunted speed on full display.","m350_130_020"
+"m350_130_030","char_NARRATION","Together with his comrades, Merukimon scattered the
+Titan army and reclaimed their city.","m350_130_030"
+"m350_130_040","char_NARRATION","Finally back where they belong, Merukimon's people worked
+tirelessly to restore their broken home...","m350_130_040"
+"m350_130_041","char_NARRATION","...and soon the city was back to its vibrant self, a haven for
+all Digimon of Iliad.","m350_130_041"
+"m350_140_010","char_MIREI","The Akashic Vision activates, even without Aegiomon present.","m350_140_010"
+"m350_140_020","char_MIREI","What could this mean...? When all the clock's lamps are
+lit, the truth shall be revealed.","m350_140_020"
+"m350_140_040","char_MIREI","Seven remain...May the higher being watch over you,
+chosen ones.","m350_140_040"
+"m350_140_050","","You've received a message. It looks like there is a video
+attached to it.",""
+"m350_140_060","char_OPERATOR_M","I'm sorry... It looks like this is as far as I can accompany you.","m350_140_060_M m350_140_060_F"
+"m350_140_070","char_OPERATOR_M","ADAMAS HQ will be swallowed up by a massive space-time
+disturbance any moment now.","m350_140_070_M m350_140_070_F"
+"m350_140_080","char_OPERATOR_M","Once that happens, my very existence will be erased...
+So all I ask is... remember me.","m350_140_080_M m350_140_080_F"
+"m350_140_090","char_OPERATOR_M","Remember that I existed...","m350_140_090_M m350_140_090_F"
+"m350_140_100","char_OPERATOR_M","If I see Dr. Yuki on the road ahead, I'll tell him...","m350_140_100_M m350_140_100_F"
+"m350_140_110","char_OPERATOR_M","Tell him his kid is trying to save the world.","m350_140_110_M m350_140_110_F"
+"m350_140_120","char_OPERATOR_M","......","m350_140_120_M m350_140_120_F"
+"m350_140_130","char_OPERATOR_M","...I'm glad you and I got to work together. Thank you
+for everything you've done.","m350_140_130_M m350_140_130_F"
+"m350_140_140","char_OPERATOR_M","I guess that's it. The rest is up to you, Agent {player}.","m350_140_140_M m350_140_140_F"
+"m350_150_010","char_MERCURYMON","If what you say about seeing the future is true... then it
+is too early to celebrate.","m350_150_010"
+"m350_150_020","char_MERCURYMON","I have word that the humans' weapon has not been deployed
+yet. Most likely due to our success in stopping the Titans.","m350_150_020"
+"m350_150_030","char_MERCURYMON","But if what you say is true... this is not a cause for
+celebration yet.","m350_150_030"
+"m350_150_040","char_MERCURYMON","If the Titans intend to invade the human world, it is only a matter 
+of time before they clash with the humans themselves.","m350_150_040"
+"m350_150_050","char_MERCURYMON","Plutomon, the leader of the Titans, resides in a location 
+known as ""the Dark Field.""","m350_150_050"
+"m350_150_060","char_MERCURYMON","With the bulk of the Titans' forces in Central Town, the 
+Dark Field is apparently only lightly guarded.","m350_150_060"
+"m350_150_070","char_MERCURYMON","Now may be our chance to broker peace! But we need
+to find out what it is the Titans seek.","m350_150_070"

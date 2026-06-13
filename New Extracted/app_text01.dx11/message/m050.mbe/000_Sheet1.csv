@@ -1,0 +1,167 @@
+string2 0,string 1,string 2,string 3
+"m050_010_010","char_DESCRIPTIVE_PART","......",""
+"m050_010_020","char_DESCRIPTIVE_PART","*knocking*",""
+"m050_010_030","char_DESCRIPTIVE_PART","Someone is knocking at the door.",""
+"m050_010_040","char_PLAYER_M","Open your eyes.{next}",""
+"m050_010_041","char_PLAYER_M","Just lemme sleep a little longer...",""
+"m050_010_042","char_PLAYER_M","It's too early... The ADAMAS office isn't even open yet...",""
+"m050_010_050","char_PROTECTED_GIRL","Are you awake?","m050_010_050"
+"m050_010_060","char_PROTECTED_GIRL","...Sorry we didn't have a proper place for you to sleep.","m050_010_060"
+"m050_010_070","char_PLAYER_M","It was comfortable.{next}",""
+"m050_010_071","char_PLAYER_M","Yesterday was pretty rough, huh?{next}",""
+"m050_010_072","char_PLAYER_M","I'm lucky I saved on accomodations!{next}",""
+"m050_010_080","char_PROTECTED_GIRL","Oh, well... glad to hear it.","m050_010_080"
+"m050_010_090","char_PROTECTED_GIRL","So much happened, I can't wrap my head around any of it...!","m050_010_090"
+"m050_010_100","char_PROTECTED_GIRL","Dad said to let you use this space for now.","m050_010_100"
+"m050_010_110","char_PROTECTED_GIRL","Now, let me introduce myself... I'm Inori Misono!","m050_010_110"
+"m050_010_120","char_INORI","You said some things that made it sound like we've met before.
+I'm sorry I don't remember.","m050_010_120"
+"m050_010_130","char_INORI","Well, let's start with a tour of the house. Come downstairs
+when you're ready, okay?","m050_010_130"
+"m050_010_140","char_OPERATOR_M","...Finally, connected at last! Hello there, Agent {player}!","m050_010_140_M m050_010_140_F"
+"m050_010_150","char_OPERATOR_M","I managed to catch fragments of the audio from your side.
+I'm not even sure where to begin.","m050_010_150_M m050_010_150_F"
+"m050_010_160","char_OPERATOR_M","...So you can see the Tokyo Metropolitan Government
+Building, fully intact, from where you are?","m050_010_160_M m050_010_160_F"
+"m050_010_170","char_OPERATOR_M","The visuals of Shinjuku that I'm seeing... are a hellscape
+I can't quite put into words.","m050_010_170_M m050_010_170_F"
+"m050_010_180","char_OPERATOR_M","I've also confirmed that you're not present at your 
+supposed ""current"" coordinates.","m050_010_180_M m050_010_180_F"
+"m050_010_190","char_OPERATOR_M","Based on all this information, the analysis department has
+reached the conclusion that...","m050_010_190_M m050_010_190_F"
+"m050_010_200","char_OPERATOR_M","...you've traveled through time into the past.","m050_010_200_M m050_010_200_F"
+"m050_010_210","char_OPERATOR_M","This is an unprecedented anomaly. How is it we're even able
+to speak to each other?!","m050_010_210_M m050_010_210_F"
+"m050_010_220","char_OPERATOR_M","We just have to pray that this connection doesn't get
+severed.","m050_010_220_M m050_010_220_F"
+"m050_010_230","char_PLAYER_M","I have no idea what's happening!{next}",""
+"m050_010_231","char_PLAYER_M","Will I be able to get home...?{next}",""
+"m050_010_232","char_PLAYER_M","This is just like a sci-fi anime...{next}",""
+"m050_010_250","char_OPERATOR_M","I'm sure you're tired of bad news by now... but the situation 
+here is critical.","m050_010_250_M m050_010_250_F"
+"m050_010_260","char_OPERATOR_M","A global collapse is underway, and Shinjuku was the starting
+point of it all.","m050_010_260_M m050_010_260_F"
+"m050_010_270","char_OPERATOR_M","I'll relay more details over time. We're still scrambling to
+collect data on our end.","m050_010_270_M m050_010_270_F"
+"m050_010_280","char_OPERATOR_M","Send me whatever you learn as well. I'm counting on you,
+Agent {player}.","m050_010_280_M m050_010_280_F"
+"m050_020_010","char_INORI","I'll give you a proper tour of the house now. This is the 
+living room.","m050_020_010"
+"m050_020_020","char_INORI","Over there is the bathroom. And that's my room. Don't go
+in without asking!","m050_020_020"
+"m050_020_030","char_INORI","Here, we have the kitchen. Feel free to use it whenever you 
+want. Do you cook?","m050_020_030"
+"m050_020_050","char_INORI","...Wait. Is this too much all at once?","m050_020_050"
+"m050_020_060","char_INORI","Oh yeah, my dad wants to talk to you. He's a detective, by the
+way. He said for you to come see him.","m050_020_060"
+"m050_020_070","char_INORI","To get to his office, go out the front door and down one floor.","m050_020_070"
+"m050_020_080","char_INORI","...Anyway, it's about time I left for school.","m050_020_080"
+"m050_020_090","char_INORI","Just in case anything happens while I'm gone... can you
+give me your Digiline ID?","m050_020_090"
+"m050_020_100","char_INORI","...Okay, got it. I'll message you later! Right now, you
+need to go talk to my dad.","m050_020_100"
+"m050_030_010","char_GLASSES_WEARING_MAN","...Did you sleep well?","m050_030_010"
+"m050_030_020","char_PLAYER_M","Yes, I was very comfortable.{next}",""
+"m050_030_021","char_PLAYER_M","Thanks for all your help.{next}",""
+"m050_030_022","char_PLAYER_M","Do you always work this early...?{next}",""
+"m050_030_030","char_GLASSES_WEARING_MAN","Glad to hear it.","m050_030_030"
+"m050_030_040","char_GLASSES_WEARING_MAN","We had quite the scrape yesterday. Those phase electron 
+lifeforms... ""Digimon,"" you called them?","m050_030_040"
+"m050_030_050","char_GLASSES_WEARING_MAN","Hey, that's my line. I don't know what would've happened if 
+it weren't for you.","m050_030_050"
+"m050_030_060","char_GLASSES_WEARING_MAN","That was quite the day yesterday. Those phase electron 
+lifeforms... ""Digimon,"" you called them?","m050_030_060"
+"m050_030_070","char_GLASSES_WEARING_MAN","Yeah, well, I can work anytime. The freelance PI life is 
+pretty flexible that way.","m050_030_070"
+"m050_030_080","char_GLASSES_WEARING_MAN","That was quite the day yesterday. Those phase electron 
+lifeforms... ""Digimon,"" you called them?","m050_030_080"
+"m050_030_090","char_GLASSES_WEARING_MAN","So, here's the deal. For various reasons, I know some
+things most civilians don't.","m050_030_090"
+"m050_030_100","char_GLASSES_WEARING_MAN","I'm familiar with the term ""phase electron lifeforms,"" but
+you seem to know a lot more about them than I do.","m050_030_100"
+"m050_030_110","char_GLASSES_WEARING_MAN","So... who exactly are you working for?","m050_030_110"
+"m050_030_120","char_PLAYER_M","I can't answer that.{next}",""
+"m050_030_121","char_PLAYER_M","That's top secret.{next}",""
+"m050_030_122","char_PLAYER_M","I'm just a regular person who's into cosplay.{next}",""
+"m050_030_130","char_GLASSES_WEARING_MAN","Yeah, I figured you'd say that. I know how it is, after all.","m050_030_130"
+"m050_030_140","char_GLASSES_WEARING_MAN","I've got some ""experience"" in your line of work. I know that 
+you can't speak freely about these things.","m050_030_140"
+"m050_030_150","char_GLASSES_WEARING_MAN","Just, I really need to know more about those creatures you
+call ""Digimon.""","m050_030_150"
+"m050_030_170","char_GLASSES_WEARING_MAN","My guess is, you were sent here to investigate what 
+happened yesterday.","m050_030_170"
+"m050_030_190","char_GLASSES_WEARING_MAN","Wouldn't it be best to have a ""home base"" nearby? You're 
+welcome to use my house, if you'd like.","m050_030_190"
+"m050_030_195","char_PLAYER_M","""Experience""... in my line of work? What are you getting at?{next}",""
+"m050_030_196","char_PLAYER_M","Wait. You and I are in the same business?{next}",""
+"m050_030_197","char_PLAYER_M","You're being suspiciously nice to me...{next}",""
+"m050_030_200","char_GLASSES_WEARING_MAN","No need to get your guard up. I just want to know what you
+know.","m050_030_200"
+"m050_030_210","char_GLASSES_WEARING_MAN","But that can wait until after I've earned your trust. Just don't
+go disappearing on me in the meantime, okay?","m050_030_210"
+"m050_030_220","char_GLASSES_WEARING_MAN","If you do, I just might end up spilling the beans about you—
+to the police, public safety, maybe even Hiroko...","m050_030_220"
+"m050_030_230","char_GLASSES_WEARING_MAN","I'm sure getting internet famous through her videos wouldn't
+be ideal, now, would it?","m050_030_230"
+"m050_030_240","char_GLASSES_WEARING_MAN","...hah. I'm joking. For now, at least.","m050_030_240"
+"m050_030_245","char_TAKEMIYA","Now that that's out of the way, let me finally introduce
+myself. I'm Kosuke Misono. Nice to meet you.","m050_030_245"
+"m050_030_250","char_TAKEMIYA","Well, I've got to go out for some work, but you can have
+free run of the house.","m050_030_250"
+"m050_030_260","char_OPERATOR_M","It seems that girl doesn't remember meeting you at the Tokyo
+Metropolitan Government Building.","m050_030_260_M m050_030_260_F"
+"m050_030_270","char_OPERATOR_M","But I suppose that's to be expected. Our analysis indicates 
+that you've somehow been sent back in time eight years.","m050_030_270_M m050_030_270_F"
+"m050_030_280","char_OPERATOR_M","I combined the info I've been receiving from your Digivice 
+with positional data from eight years ago...","m050_030_280_M m050_030_280_F"
+"m050_030_290","char_OPERATOR_M","...and fashioned an improvised location data system. I'd say
+it's fairly accurate.","m050_030_290_M m050_030_290_F"
+"m050_030_300","char_OPERATOR_M","In fact, I'm detecting multiple Digimon right now. They'll
+likely be good sources of intel for you.","m050_030_300_M m050_030_300_F"
+"m050_030_310","char_OPERATOR_M","Try accessing the location data system while viewing the map
+on your Digivice. I'll contact you again as needed.","m050_030_310_M m050_030_310_F"
+"m050_030_315","char_PLAYER_M","Copy that. Starting investigation.{next}",""
+"m050_030_320","char_OPERATOR_M","Alright, I'm counting on you!","m050_030_320_M m050_030_320_F"
+"m050_040_010","char_OPERATOR_M","By the way, make sure you keep your identity concealed
+from that freelance detective.","m050_040_010_M m050_040_010_F"
+"m050_040_020","char_OPERATOR_M","And the possibility that you've traveled through time as 
+well, of course.","m050_040_020_M m050_040_020_F"
+"m050_040_030","char_OPERATOR_M","We don't want to influence the past. There's no 
+telling what would happen.","m050_040_030_M m050_040_030_F"
+"m050_040_050","char_OPERATOR_M","ADAMAS's own research into time travel was suspended
+after a series of accidents in the early stages...","m050_040_050_M m050_040_050_F"
+"m050_040_060","char_OPERATOR_M","Your adoptive father, Dr. Yuki, was caught up in one
+such incident, and—","m050_040_060_M m050_040_060_F"
+"m050_040_070","char_OPERATOR_M","No, I'm sorry. I shouldn't have mentioned that. Just
+focus on the mission for now. I'm counting on you.","m050_040_070_M m050_040_070_F"
+"m050_055_010","char_MIREI","Welcome to the In-Between Theater. This is a special space,
+located between two different space-time dimensions.","m050_055_010"
+"m050_055_020","char_MIREI","Humans find their way in from time to time. 
+Some people refer to it as being ""spirited away.""","m050_055_020"
+"m050_055_030","char_MIREI","As for why this place exists... that will be clear enough
+when the time comes.","m050_055_030"
+"m050_055_040","char_MIREI","The natural laws of the world have already begun to break
+down. You will not be able to stay uninvolved.","m050_055_040"
+"m050_055_050","char_MIREI","It's possible I may be able to help you. Tell me. What is
+it you desire?","m050_055_050"
+"m050_060_010","char_OPERATOR_M","Are you all right? Where have you been? I lost contact with
+you for a bit, there.","m050_060_010_M m050_060_010_F"
+"m050_060_020","char_OPERATOR_M","I'm analyzing data as it comes in from your Digivice. It seems
+returning to your original timeline won't be easy.","m050_060_020_M m050_060_020_F"
+"m050_060_040","char_OPERATOR_M","Even if you did make it back... the situation here is nigh
+hopeless. It all started with a conflict between Digimon...","m050_060_040_M m050_060_040_F"
+"m050_060_050","char_OPERATOR_M","...but now humans and their mechanized weapon have entered
+the fray, making it an apocalyptic three-sided conflict.","m050_060_050_M m050_060_050_F"
+"m050_060_060","char_PLAYER_M","War...?{next}",""
+"m050_060_061","char_PLAYER_M","Weapons...?{next}",""
+"m050_060_062","char_PLAYER_M","A three-sided conflict...?{next}",""
+"m050_060_070","char_OPERATOR_M","The battle over Shinjuku triggered all manner of anomalies,
+laying waste to major cities worldwide, one after another.","m050_060_070_M m050_060_070_F"
+"m050_060_080","char_OPERATOR_M","The disaster that sparked this global calamity has been
+dubbed ""the Shinjuku Inferno.""","m050_060_080_M m050_060_080_F"
+"m050_060_110","char_OPERATOR_M","Our sole hope may lie with you, now that you've been flung
+into the past. You may be able to avert our impending doom.","m050_060_110_M m050_060_110_F"
+"m050_060_130","char_OPERATOR_M","I have no proof of this, of course. No one's ever tried to rewrite
+the past before. All we can do is have faith in you.","m050_060_130_M m050_060_130_F"
+"m050_060_140","char_OPERATOR_M","I need you to find information about this Shinjuku Inferno,
+so keep up your investigation. I'm counting on you.","m050_060_140_M m050_060_140_F"

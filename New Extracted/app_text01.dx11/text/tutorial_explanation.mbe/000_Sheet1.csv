@@ -1,0 +1,1073 @@
+string2 0,string 1
+"tutorial_exp_debug",""
+"tutorial_exp_notext_01_001",""
+"tutorial_exp_BattleBasic_01_001","Digimon battles feature up to three battle members on each
+side. The Digimon with the highest SPD value moves first. The
+battles are entirely turn-based, once each member has moved,
+the turn order is recalculated based on each member's SPD."
+"tutorial_exp_AdditionalAttack_01_001","{fc9A special ability that allows Digimon to perform follow-up attacks.
+Triggers when hitting an enemy with an attack or skill.}
+
+The chance of Extra Strikes occurring depends on the stats of your
+ally Digimon and enemy.
+
+There are also ""Strike Effects"" which may trigger additional effects."
+"tutorial_exp_AdditionalAttack_01_002","When Extra Strike triggers, a circle will appear on the HUD.
+
+{fc9Press {decision} when the circle reaches the center to cause a Strike Effect.}
+
+This will activate various additional effects such as healing allies,
+or applying status abnormalities on enemies.
+
+{fc9Effects change depending on a Digimon's Attribute and Personality.}
+Try out different combinations to use in battle."
+"tutorial_exp_Compatibility_01_001","Damage is calculated based on Attribute compatibility {fc9(the
+compatibility matrix of {is28}{image(ui_icon_type_000)} Vaccine > {is28}{image(ui_icon_type_040)} Virus > {is28}{image(ui_icon_type_020)} Data)}
+as well as Elemental Resistances and Traits."
+"tutorial_exp_Compatibility_01_002","Attack compatibility can be confirmed during target selection,
+where {fc9damage output in %} will be displayed along with
+{fc9corresponding arrow icons} to indicate effects based on Attributes,
+Element, and Traits."
+"tutorial_exp_Compatibility_01_003","You can also view an enemy's compatibility details via {fc9{l2} Analyze}.
+
+When facing enemies with unfavorable compatibility, consider
+switching to Digimon with favorable compatibility."
+"tutorial_exp_Compatibility_01_004","Detailed information on Attributes, Elements, and Traits can be
+found via Digivice > System > Tutorials > Battle, under:
+{fc9 - Attribute Compatibility
+ - Elements
+ - Traits}"
+"tutorial_exp_BattleCrossarts_01_001","A battle action which can be employed by Agents.
+
+By consuming a massive amount of energy, the Agent can unleash
+powerful Cross Arts capable of changing the course of battle.
+
+{fc9When your CP (Critical Points) reaches full charge during battle, you
+will enter a ""Cross Art Ready"" state. Press {r2} to pull the trigger
+and fire off your Cross Art.}"
+"tutorial_exp_BattleCrossarts_01_002","Reference Video: Cross Art Is Ready to Launch
+The CP Gauge is full. Press {r2} at this time to
+activate the Cross Art."
+"tutorial_exp_Escape_01_001","{fc9Press {r1} in battle to flee from hostile Digimon.}
+There is no shame for an agent to exercise discretion in the course
+of a mission.
+
+However, fleeing constantly will gain you nothing. And there may be
+enemies that you can't escape from. That's why it's also important
+to gain experience for such occasions.
+
+Balance your decisions carefully."
+"tutorial_exp_Guard_01_001","{fc9Guarding greatly reduces damage until the Digimon's next turn.}
+
+This battle command is useful when you can't avoid attacks from
+an enemy with unfavorable compatibility or powerful Special Skills."
+"tutorial_exp_Analysis_01_001","An in-battle action command that allows you to view a Digimon's status.
+
+{fc9Information such as Attribute, Element and Traits should provide
+hints for determining favorable or unfavorable compatibility.}
+
+Put Analyze to good use when planning your battle strategies."
+"tutorial_exp_OutoBattle_01_001","This mode lets your Digimon fight battles automatically.
+The actions performed depend on the Digimon's personality.
+Use {rs} to switch Auto Mode on and off."
+"tutorial_exp_HighSpeedMode_01_001","This mode accelerates time and speeds up combat.
+There are four levels in total: 1x, 2x, 3x and 5x.
+Select your favorite speed and fight each battle at your pace."
+"tutorial_exp_Boss_01_001","Some powerful foes have ""Critical Points (CP).""
+
+{fc9As these foes gain more CP, their abilities may change.}
+- Additional actions (added at the end of the turn order).
+- Stat buffs.
+And more."
+"tutorial_exp_Boss_01_002","The enemy can gain Critical Points through a variety of actions.
+
+{fc9In particular, if the enemy attacks an ally Digimon's weak point,
+that enemy's CP will greatly increase.}
+
+You can reduce the enemy's CP by performing actions that increase
+your own.
+
+{fc9For both you and the enemy, actions that increase one's CP will
+reduce the other's.}"
+"tutorial_exp_Boss_01_003","Reference Image: Boosting Stats A Digimon's
+stats may be enhanced according to its CP value.
+The enhancements can be seen under the HP Gauge."
+"tutorial_exp_Boss_02_001","A status change that occurs when an enemy is charging up to use a
+powerful Special Skill. Once charged, the enemy will unleash the
+Special Skill.
+
+{fc9Once in a charging state, the enemy will not act as it gathers power,
+but it will continue to accumulate CP and build up its strength.}
+
+Charging puts you in a desperate situation, but it also provides a
+chance for counterattack."
+"tutorial_exp_Boss_02_002","When an enemy is charging, a Breaking Point Gauge is added to the
+enemy in the attack target selection menu.
+
+{fc9With concentrated attacks, it is possible to deplete the Breaking
+Point Gauge and interrupt the enemy's charge. This is called a
+Charge Break.}
+
+The amount remaining until Charge Break is achieved is indicated
+by a white bar below the HP Gauge."
+"tutorial_exp_Boss_02_003","A successful Charge Break will:
+{fc9 - Reset enemy CP (and reset enhancements from CP gain).
+ - Cancel Strong state (resetting buff effects that cannot otherwise
+be canceled).
+ - Cancel release of the Special Skill after charging.}
+
+There is always a chance for counterattack."
+"tutorial_exp_CpAdd_01_001","{fc9To use Cross Arts, you must fully charge your Critical Points.}
+
+CP increases based on the actions taken in battle.
+Once at full charge, you will enter a ""Cross Art Ready"" state.
+
+Once your thoughts have aligned with your allies, you, the Agent,
+pull the {r2} trigger."
+"tutorial_exp_CpFluctuation_01_001","Critical Points are  gained upon performing actions in battle, such
+as attacking or healing.
+
+{fc9The most effective way of earning CP is to strike an enemy's weak
+point. Conversely, you will lose a large amount of CP if an enemy
+strikes an ally Digimon's weak point.}
+
+Selecting Digimon and skills with favorable Attribute and Element
+compatibility in mind will make it easier to charge CP.
+
+{fc9CP charge carries over between battles.}"
+"tutorial_exp_Danger_01_001",""
+"tutorial_exp_Dead_01_001","This occurs when HP reaches zero. Digimon that have been
+KO'd are incapable of combat, so you must attend to them as
+soon as possible.
+
+- Use a revival item/skill to revive the ally.
+- Replace the KO'd ally with a reserved member.
+
+KO'd Digimon are revived after the battle with only 1 HP, so
+remember to heal them before proceeding."
+"tutorial_exp_Zombi_01_001","An anomaly has occurred due to ZombiePlutomon's rampaging
+power. This terrifying effect is called ""Reaper's Mist.""
+
+{fc9- Recovering HP instead reduces Max HP. (HP recovery is not
+possible.)
+- Max HP cannot be increased once reduced. (This returns to
+normal after battle.)
+- This effect cannot be removed during battle.}
+
+This makes it easy to get KO'd, but with clever application of your
+wits and strengths as an agent, you should be able to overcome
+the odds."
+"tutorial_exp_AttackCategory_01_001","There are two types of attacks: ""physical"" and ""magic"".
+
+{fc9Physical attacks are effective against foes with low DEF.
+For enemies with low SPI, you'll want to use magic attacks.}
+
+Some Digimon are resistant to both physical and magic attacks.
+Be sure to check your foes' characteristics as you fight.
+
+{is28}{image(ui_icon_btlStatus_044)}: Reduces physical damage.
+{is28}{image(ui_icon_btlStatus_045)}: Reduces magic damage."
+"tutorial_exp_DigimonBasic_01_001",""
+"tutorial_exp_Status_01_001","Make sure to carefully review the data of your ally Digimon.
+
+Not only will you be better able to understand their hidden powers,
+but you're bound to find hints on how to better train them as well.
+
+You might even find inspiration for some new strategies.
+
+{fc9Digimon can also be enhanced by changing their Attachment Skills
+or equipment. If you obtain any Skill Discs or equipment, be sure to
+equip them.}"
+"tutorial_exp_Status_02_001","ATK: Affects how much {fc9{is28}{image(ui_icon_tab_0001)} physical damage} is dealt to enemies.
+DEF: Affects how much {fc9{is28}{image(ui_icon_tab_0001)} damage from enemy physical attacks} is
+reduced.
+INT: Affects how much {fc9{is28}{image(ui_icon_tab_0002)} magic damage} is dealt to enemies.
+SPI: Affects how much {fc9{is28}{image(ui_icon_tab_0002)} damage from enemy magic attacks} is
+reduced and how much {fc9{is28}{image(ui_icon_tab_0003)} HP recovery skills heal}.
+SPD: Affects {fc9turn order} in battle.
+CRT Rate: Affects the rate at which {fc9critical hits (1.3x damage)} occur."
+"tutorial_exp_Status_03_001","{fc9{is28}{image(ui_icon_type_000)} Vaccine}
+{fc9{is28}{image(ui_icon_type_020)} Data}
+{fc9{is28}{image(ui_icon_type_040)} Virus}
+{fc9{is28}{image(ui_icon_type_060)} Free}
+{fc9{is28}{image(ui_icon_type_080)} Variable}
+{fc9{is28}{image(ui_icon_type_100)} Unknown}
+In-Training I and II Digimon are {fc9{is28}{image(ui_icon_type_120)} No Data}.
+
+You can confirm a Digimon's Attribute via their stats screen."
+"tutorial_exp_Status_04_001"," - Favorable compatibility:{fc9 2x damage}
+ - Unfavorable compatibility:{fc9 0.5x damage}
+ - {is28}{image(ui_icon_type_120)} {fc9No Data}, {is28}{image(ui_icon_type_060)} {fc9Free}, {is28}{image(ui_icon_type_080)} {fc9Variable}, and {is28}{image(ui_icon_type_100)} {fc9Unknown} have no
+favorability toward other Attributes."
+"tutorial_exp_Convert_01_001","This feature allows you to create new partner Digimon based on
+accumulated battle data. {fc9Digimon can be converted upon
+reaching a Scan Rate of 100%, up to a maximum of 200%.} The
+Scan Rate of a Digimon increases after defeating them in battle.
+If you find a Digimon you want, fight it over and over to build up
+its Scan Rate."
+"tutorial_exp_Convert_01_002","You can view the Scan Rate for each Digimon by navigating to
+Digimon > Convert on your Digivice.
+
+{fc9The closer the Scan Rate is to 200%, the greater the converted
+Digimon's Max HP and Talent will be.}
+
+We recommend reaching a Scan Rate of 200% before converting
+Digimon."
+"tutorial_exp_Change_01_001","Digimon that participate in battle are split into three categories:
+
+{fc9Battle Members}: Digimon which enter combat at the start of battle
+{fc9Reserve Members}: Digimon which you can substitue Battle Members
+for during battle
+{fc9Guest Members}: Digimon which have temporarily joined your party
+and conduct battle independently
+
+{fc9Strategize and change between Battle and Reserve members in order
+to make effective use of enemy weaknesses.}"
+"tutorial_exp_Evolution_01_001","As Digimon gain experience, they can undergo significant changes
+to their appearance and nature that make them even stronger. These
+sudden transformations are referred to as ""Digivolution."" 
+
+{fc9There are certain conditions for Digivolution:
+- Meet the required stats (excluding increases from equipment).
+- Meet the required agent rank.}
+
+Collect data on as many Digimon as possible and use it to uncover
+new Digivolution results."
+"tutorial_exp_Evolution_01_002","Conversely, the process of compressing a Digimon's data is referred
+to as ""De-Digivolution.""
+
+{fc9One of the following conditions must be met:
+- The resulting De-Digivolution Digimon is registered in your Field
+Guide, or
+- The resulting De-Digivolution Digimon is of the same personality.}
+
+This is an effective means of Digivolving a particular Digimon into a
+different specimen."
+"tutorial_exp_Evolution_01_003","There are secret techniques for Digivolution
+and De-Digivolution. Navigate to System >
+Tutorial > Training on your Digivice to view:
+{fc9""Digivolution Technique 1: Talent,""
+""Digivolution Technique 2: Cumulative Value,""
+and ""Digivolution Technique 3: Bond Points.""}"
+"tutorial_exp_SkillChange_01_001","Your ally Digimon are capable of equipping ""Attachment Skills,""
+allowing you to change their abilities at will.
+
+{fc9Up to 4 skills can be equipped using ""Skill Discs.""}
+
+Skill Discs can be obtained in a variety of ways, such as purchasing
+them in shops, finding them in treasure chests, or gaining them
+when your Digimon level up."
+"tutorial_exp_SkillChange_01_002","Set your Digimon's Attachment Skills by navigating your Digivice
+to Digimon > Setup > {sub2} Show Stats/Skills, then selecting a slot
+under Attachment Skills.
+
+{fc9Attachment Skills (Skills Discs) can be removed and re-equipped
+to other Digimon.}
+
+Use Attachment Skills to compensate for weaknesses, to further
+enhance strengths, or to counter compatibility issues."
+"tutorial_exp_EquipmentChange_01_001","""Equipment"" consist of upgrade patches which enhance your
+Digimon's capabilities.
+
+Set your Digimon's Equipment by navigating your Digivice to
+Digimon > Setup > {sub2} Show Stats/Skills, then selecting a slot
+under Equipment.
+
+{fc9Equipment can be removed and re-equipped to other Digimon.}
+
+Equipment can be obtained in a variety of ways, such as purchasing
+them in shops or finding them in treasure chests. There are also
+rumors of equipment that can only be obtained from particular
+Digimon."
+"tutorial_exp_Personality_01_001","This is an important factor that determines a Digimon's development.
+Personality type determines which stats are more likely to receive
+an increase.
+
+Valor: {fc9ATK} increases easily, physical attacker type.
+Amicability: {fc9DEF} increases easily, supporter type.
+Philanthropy: {fc9SPI} increases easily, healer type.
+Wisdom: {fc9INT} increases easily, magic attacker type.
+
+{fc9To check personality, display ""Digimon Personality Type"" using
+{sub2} Toggle Info while the Digimon's status is open.}"
+"tutorial_exp_Personality_01_002","Personality type influences a Digimon in several ways.
+
+{fc9- It makes certain stats grow more.
+- It changes the types of Personality Skills.
+- It changes the impact of Strike Effect.}
+
+Decide your Digimon's personality type according to the direction
+you wish to develop it in."
+"tutorial_exp_Personality_01_003","A Digimon's initial personality type is determined when it's converted.
+
+Which personality type a Digimon will be born with is unknown, but
+there seems to be a certain trend for each Digimon type.
+
+{fc9Personality types can also be changed afterward.}
+Every Digimon has a unique personality."
+"tutorial_exp_PersonalityChange_01_001","{fc9The personality type of partner Digimon can be changed.}
+
+Personality will change bit by bit via training on the Digifarm, or
+depending on the content of your conversations or Digiline
+interactions with the partner Digimon.
+
+Though this takes time, your active communication is essential when
+aiming to change personalities."
+"tutorial_exp_PersonalitySkill_01_001","""Personality Skills"" are passive skills tied to the partner Digimon's
+Personality type.
+
+Some Personality skills bring about various effects depending on
+Personality type.
+
+{fc9You can check a partner Digimon's Personality skill in its stats.}"
+"tutorial_exp_PersonalitySkillChange_01_001","Partner Digimon are capable of changing their Personality Skill.
+
+In this situation, the partner Digimon will get an idea for a Personality
+Skill and ask if it should make a change.
+
+{fc9You should decide whether the Digimon keeps its current Personality
+Skill or changes to the new one that it has suggested.}"
+"tutorial_exp_DataReturn_01_001","Unfortunately, there will be times when you must say farewell
+to your partner Digimon.
+
+In order to do so, select ""Return to Data"" to return the Digimon
+to its underlying data and convert it into funds.
+
+{fc9Note that you'll permanently lose any Digimon that you
+return to data.} Make sure to be careful when using this feature."
+"tutorial_exp_Synthetic_01_001","This feature allows you to transfer one Digimon's data to another
+through synthesis.
+
+{fc9The resource data (material) Digimon will beconverted into EXP to
+be absorbed by the base data Digimon. A portion of its Talent and
+cumulative stats will also be inherited.}
+
+The source Digimon will be converted into data that is passed on to
+the next Digimon."
+"tutorial_exp_PartyAegiomon_01_001","Aegiomon has joined you as an ally in battle.
+
+Aegiomon is a guest member of a somewhat special nature.
+
+{fc9Although Aegiomon can't replace other
+Digimon, you are able to give him orders.
+He can also equip Attachment Skills and
+equipment.}"
+"tutorial_exp_PartyAegiomon_02_001","{fc9""Digivolution"" has been added to Aegiomon's battle commands.}
+
+He can now undergo a special Digivolution only when in battle.
+
+{fc9Aegiomon is able to equip the Crimson Dragon Data Fragment to
+start the battle in a special Digivolved state.}
+
+The power of Iliad's treasure has unlocked Aegiomon's potential,
+meaning his true development starts now."
+"tutorial_exp_Friendship_01_001","Bond Points are a numerical representation of your relationship with
+your partner Digimon.
+
+Bond Points increase slightly over the course of your adventures
+with the Digimon.
+
+{fc9The more Bond Points a Digimon has, the more times it is able to
+inherit a cumulative value when Digivolving and De-Digivolving,
+thereby boosting its stats (up to 100 times max). Additionally,
+Bond Points do not decrease with De-Digivolution.}"
+"tutorial_exp_Friendship_01_002","How to Increase Bond Points
+
+- Participate in battles.
+- Talk to partner Digimon.
+- Feed the Digimon at the farm."
+"tutorial_exp_Talent_01_001","Talent is a numerical representation of a
+Digimon's level limit. {fc9A Digimon's Talent
+increases upon Digivolving, and increases even
+further when frequently participating in battle.
+Furthermore, Talent does not decrease when
+Digivolving or De-Digivolving.} Therefore, it
+is possible to develop even more powerful
+Digimon through repeated Digivolution and
+De-Digivolution."
+"tutorial_exp_Talent_01_002","How to Increase the Number of Talent Points Earned
+
+- Participate in battles.
+- Finish off an enemy.
+- Strike an enemy's weak point.
+- Win a battle without taking damage.
+- Train at the farm."
+"tutorial_exp_BondsPoint_01_001","ADAMAS assigns a numerical value known as Anomaly Points to
+help visualize the EXP that agents earn when completing missions. 
+
+{fc9These points are needed to learn Agent Skills.}
+
+Therefore, gain as much experience as possible with your Digimon
+in order to develop your abilities even further."
+"tutorial_exp_BondsSkill_01_001","This system lets agents use Anomaly Points to expand their abilities
+and enhance their partner Digimon.
+
+{fc9Bonds of Loyalty}: Expands an agent's abilities and enhances all
+Digimon.
+{fc9Bonds of Valor}: Enhances Digimon with Valor-type personalities.
+{fc9Bonds of Philanthropy}: Enhances Digimon with Philanthropy-type
+personalities.
+{fc9Bonds of Amicability}: Enhances Digimon with Amicability-type
+personalities.
+{fc9Bonds of Wisdom}: Enhances Digimon with Wisdom-type
+personalities.
+
+Learn Agent Skills in order to boost your capabilities."
+"tutorial_exp_AgentLevel_01_001","This is a numerical representation of an agent's career and skill level.
+
+{fc9Your Agent Rank increases the more you use Anomaly Points
+to learn Agent Skills.} 
+
+Your Agent Rank is linked to a number of different features, such as:
+- Agent Skill effect amplification.
+- Partner Digimon Digivolution conditions.
+
+Keep working to constantly boost your rank."
+"tutorial_exp_CrossArtsChange_01_001","{fc9You can learn new Cross Arts via ""Bond of Loyalty"" Agent Skills.}
+
+Change between Cross Arts you have learned by navigating to
+Agent > Cross Arts on your Digivice.
+
+Select a Cross Art with effects suitable to your battle strategy."
+"tutorial_exp_Encounter_01_001","Make contact with a Digimon, and you will enter battle.
+
+While it can be harsh and unforgiving, the experience obtained
+in battle is essential. From helping develop your Digimon, to
+increasing Scan Rates for Digimon Conversion, battle is key
+to overcoming the challenges that await you on your mission.
+
+Actively engage in combat and grow srong, Agent."
+"tutorial_exp_FieldAttack_01_001","This field action enables your partner Digimon to utilize a skill attack.
+
+{fc9It can be used as a preemptive strike against a hostile Digimon, or to
+destroy or activate objects.}
+
+Use {r2} DigiAttack to give orders to your partner Digimon."
+"tutorial_exp_FieldAttack_01_002","{fc9Skill attacks used by a partner Digimon during DigiAttacks reflect the
+skill's damage and element effects.}
+
+The most effective partner Digimon attack is automatically selected.
+
+{fc9Digiattack skill attacks do not consume SP,} so use them
+aggressively in order to start the battle with an advantage."
+"tutorial_exp_FieldAttack_02_001","{fc9Some objects must be hit with DigiAttacks featuring skill attacks
+of certain elements.}
+
+If your attacks are failing, try making a change to your partner
+Digimon's Attachment Skills."
+"tutorial_exp_BackAttack_01_001",""
+"tutorial_exp_Convert_02_001","Increasing the Analysis Rate of enemy Digimon through battle
+will eventually allow you to Convert those Digimon. Conversion
+allows you to welcome these Digimon as new allies."
+"tutorial_exp_Treasurechest_01_001","You can obtain items that are useful for completing your mission.
+
+Treasure Chests
+These contain Support Items that can be used only by agents.
+
+Materials
+Specific locations let you procure materials and other items.
+
+{fc9Use Analyze Mode to help detect and locate these.} If you find
+one, make sure to collect its contents."
+"tutorial_exp_Theater_01_001","This special theater exists between time and space and is managed
+by the mysterious individual known as ""Mirei."" 
+
+It includes various features that are useful for agents and also allow
+partner Digimon to recover their health.
+
+Entrances to this space can be found in various locations.
+{fc9These entrances will be registered on the navigation map once you
+discover them.}"
+"tutorial_exp_Dungeon_01_001","This term is given to areas within phase electron space that are
+scattered across the world. Among them, the Outer Dungeons from
+Ages Past are said to contain some of the most difficult trials ever.
+Although not required, it's recommended that you clear them and
+obtain the many rewards within.
+
+{fc9The Outer Dungeons are entered in the registry once discovered.
+Speak to Mirei in the In-Between Theater to take them on.}"
+"tutorial_exp_DigivaiceConstraints_01_001","The mission section of the Outer Dungeons
+prevents most features of your Digivice from
+working, although its full functionality will be
+restored once you complete a mission."
+"tutorial_exp_PecmonRace_01_001","This competition has you ride atop a Peckmon to complete the race
+before your rivals.
+
+Please heed the following:
+- Eating Digimeat boosts your speed and gives you temporary
+invincibility.
+- Hitting an opponent or obstacle slows you down.
+- Although all Peckmon are well-trained and in good health, the
+administrators accept no responsibility for any possible accidents."
+"tutorial_exp_PopPoints_01_001","These areas provide the agent with useful items. Be sure to
+examine them whenever you find one of these locations."
+"tutorial_exp_DigimonRide_01_001","Press or hold ""{r1} DigiRide"" to ride atop a partner Digimon.
+
+{fc9You can DigiAttack and Analyze while DigiRiding.} {fc9You can also
+DigiAttack by colliding with hostile Digimon or objects.}
+
+DigiRides may be used with various Digimon, so give it a try
+whenever you get a new Digimon."
+"tutorial_exp_GimmickRide_01_001","This field action enlists the aid of nearby Digimon to help traverse
+terrain that you would normally be unable to cross, making it vital
+to completing your mission. {fc9DigiCo-Op ride locations are marked
+with a special icon on the Map.}
+
+If you ever find yourself at a loss as to how to proceed, try
+searching for a Digimon in the vicinity that can offer assistance."
+"tutorial_exp_OutoRecovery_01_001","This is an auto-recovery program for your partner Digimon.
+
+{fc9The program boots up when you're standing still and restores your
+Digimon's HP and SP.}
+
+Whenever you find a safe location, be sure to use this program to
+recuperate before returning to your mission."
+"tutorial_exp_FieldAnalysis_01_001","This mode lets your Digivice display various kinds of information 
+that cannot be seen with the naked eye alone.
+
+{fc9- See which objects can be targeted with a DigiAttack.
+- View details regarding a hostile Digimon (use {sub2}).
+- Search for treasure chests and materials.}
+
+While in Analyze Mode, you can perform 
+DigiAttacks on hostile Digimon and objects."
+"tutorial_exp_FieldAnalysis_01_002","Reference Video: Analyze Mode
+Controls Hostile Digimon and breakable objects will be
+highlighted. Use {rs} to adjust your field of vision
+and to also switch between targets."
+"tutorial_exp_FieldAnalysis_01_003","Reference Video: Detailed Digimon Information
+Align the cursor with a Digimon and press {decision} to
+view detailed information about it."
+"tutorial_exp_HowToMove_01_001",""
+"tutorial_exp_Destination_01_001","Your current objective will be displayed as a guide marker on the map.
+
+{fc9Use the {menu} Navigation feature to keep the enlarged Map and mission 
+objective displayed on-screen as you move around.}"
+"tutorial_exp_MiniMap_01_001",""
+"tutorial_exp_DigimonHighlighting_01_001","Your Digivice has been updated.
+
+The navigation map has been upgraded, and the positions of hostile
+Digimon are now indicated with red markers."
+"tutorial_exp_WorldMapRialWorld_01_001","You have the ability to move between selected locations
+on the World Map.
+
+New locations will be added as you complete missions."
+"tutorial_exp_WorldMapRokomon_01_001",""
+"tutorial_exp_WorldMapBlimpmon_01_001",""
+"tutorial_exp_WorldMapTimeChange_01_001","You can now jump between different timelines.
+
+{fc9Access the In-Between Theater exit and select a location to time
+jump to. You can also return to your previous timeline.}
+
+Use this feature to help complete side missions that you have not
+finished yet."
+"tutorial_exp_Digivaice_01_001","This handheld terminal represents the pinnacle of ADAMAS
+technology and includes numerous functions that are helpful
+for completing missions. Any information you come across
+during a mission is stored in your Digivice, making it a useful
+tool when carrying out your duties."
+"tutorial_exp_ChangeClothes_01_001",""
+"tutorial_exp_PictureBook_01_001","This database features info on Digimon that you have come into
+contact with and is found under Agent > Field Guide on your Digivice.
+
+{fc9Digimon Discovered}
+Digimon that you have defeated in battle or with DigiAttacks. Most
+of the details remain unidentified.
+
+{fc9Registered Digimon}
+Digimon that you have partnered with. You can also view detailed
+info such as their profiles."
+"tutorial_exp_MeinQuest_01_001","Your primary mission, deemed critical priority under orders from
+ADAMAS. Failure to complete the mission may result in the end
+of the world as we know it.
+
+Agent, be sure to conduct your mission with utmost care."
+"tutorial_exp_SubQuest_01_001","This is the term given to requests made by local residents
+in real time. Once a side mission is detected, you will be notified
+via Digiline.
+
+{fc9You can prioritize missions by going to Missions > Side Missions on
+your Digivice and then using ""{decision} Mark Objective"" to make
+your choice.}
+
+Make sure that these requests do not interfere with your main duties."
+"tutorial_exp_SubQuest_01_002","""All Things in Good Time"" This is an important concept for
+side missions.
+
+Difficult missions may be easier after gaining some experience.
+
+{fc9Also, there is no need to stress about side missions that have to be
+put off to fulfill the main mission. There will always be an opportunity
+to complete them later.}"
+"tutorial_exp_MiniQuest_01_001",""
+"tutorial_exp_ChangeQuest_01_001",""
+"tutorial_exp_Digitter_01_001","This messaging function is built into your Digivice.
+
+Your Digivice can send you important information regarding
+tutorials, missions and more.
+
+{fc9You can view previously received messages via
+Digiline on your Digivice.}
+
+Make use of this feature whenever you're having trouble."
+"tutorial_exp_Shop_01_001",""
+"tutorial_exp_FarmGoodsShop_01_001",""
+"tutorial_exp_TutorialDescription_01_001",""
+"tutorial_exp_Player_01_001",""
+"tutorial_exp_SystemDescription_01_001",""
+"tutorial_exp_DigisterDescripution_01_001","You can enhance a partner Digimon's stats or change its personality
+by placing them in this facility.
+{fc9They will receive the same EXP as Digimon in the box.}
+
+Migrate Digimon
+First, let's move the Digimon to the Digifarm.
+{fc9No matter which panel you position the Digimon in, their training will
+not be affected, so feel free to place the Digimon wherever you like.}"
+"tutorial_exp_DigisterDescripution_01_002","Interacting with Digimon
+Training: You can use training items to strengthen stats that  can't be
+increased via ordinary level-ups and also change their personality.
+{fc9You can use the same training items an unlimited number of times.}
+{fc9Note that simply placing a Digimon at the farm will not train it.}
+
+Feeding: Giving food to Digimon will increase its Bond Points.
+giving a Digimon their favorite food, will further increase Bond Points.
+Note that favorite foods may differ even amongst same type Digimon."
+"tutorial_exp_DigisterDescripution_01_003","Finding Materials
+Your Digimon may find materials while at the farm. It takes some
+time to find materials, so it's recommended that you visit the farm
+in between your adventures.
+
+Positioning Farm Items
+You can freely customize your farm.
+{fc9This doesn't affect Digimon training.}"
+"tutorial_exp_AddFarmIslandPanel_01_001",""
+"tutorial_exp_AddFarmDigimon_01_001",""
+"tutorial_exp_AddFarmGoods_01_001",""
+"tutorial_exp_FarmSpecialTraining_01_001",""
+"tutorial_exp_FarmDigicare_01_001",""
+"tutorial_exp_FarmDevelopment_01_001",""
+"tutorial_exp_CardsDescription_01_001","The Jogmon Ultimate Card Game (JUCG) is a popular card game
+in which players fight each other in Jogmon battles using cards.
+
+Opponents are displayed as icons on the navigation map.
+{fc9For detailed rules, please refer to ""JUCG Card Game Rules.""}"
+"tutorial_exp_CardsDescription_01_002","You can collect cards by competing in battles or purchasing them in
+the Card Shop. You can also acquire new cards by defeating hostile
+Digimon.
+
+{fc9You can see the cards you have collected under Agent > Cards
+on your Digivice.}
+
+Collecting all the cards is not an easy task, but the game's collectible
+nature keeps many players hooked. Will you be able to complete your
+card collection?"
+"tutorial_exp_CardsRule_01_001","[Game Rules]
+Players take turns to play a card each, and the selected Jogmon will
+be generated to do battle against each other.
+
+Defeat your Rival's Jogmon to win a round.
+{fc9Each card battle lasts five rounds, and the player with the most
+rounds won is the victor.}"
+"tutorial_exp_CardsRule_01_002","[Factors for Winning a Jogmon Battle]
+""Attribute Compatibility""
+A card's chances of winning depend on its Attribute compatibility.
+{fc9The more favorable the compatibility, the greater the chances.}"
+"tutorial_exp_CardsRule_01_003","[Factors for Winning a Jogmon Battle]
+""Level""
+Cards are labeled with a number from 1 to 7, indicating the Level
+(or strength) of the card.
+
+Cards with a higher Level have a greater chance of winning.
+{fc9However, there is a bug causing Level 1 cards to have a greater
+chance of winning against Level 7 cards.}"
+"tutorial_exp_CardsRule_01_004","[Mysterious Duplication after JUCG Battles]
+{fc9After a card battle, used cards which you have yet to obtain are
+duplicated for you to choose from.}
+
+The more rounds you win, the more cards you can receive.
+5 wins = 3 cards
+3–4 wins = 2 cards
+1–2 wins = 1 card
+0 wins = 0 cards"
+"tutorial_exp_CardsRule_01_005","[Infinite Generation via Extra Card Summon]
+{fc9During a card battle, when certain combinations of cards are present
+in your hand, a new card will be generated.}
+
+Examples of combinations:
+2 cards of the same Attribute
+2 cards of the same Generation (from In-Training I to Champion)
+
+There are powerful cards available only by summoning via secret
+combinations not mentioned here."
+"tutorial_exp_CardsOpponent_01_001",""
+"tutorial_exp_TriviaMisonoInori_01_001",""
+"tutorial_exp_TriviaMisonoKousuke_01_001",""
+"tutorial_exp_TriviaMisonoKousuke_02_001",""
+"tutorial_exp_TriviaSagisakaHiroko_01_001",""
+"tutorial_exp_TriviaSagisakaHiroko_02_001",""
+"tutorial_exp_TriviaKuremiKoudai_01_001",""
+"tutorial_exp_TriviaShirokiAsuna_01_001",""
+"tutorial_exp_TriviaShirokiAsuna_02_001",""
+"tutorial_exp_TriviaKuroiSyouta_01_001",""
+"tutorial_exp_TriviaKuroiSyouta_02_001",""
+"tutorial_exp_TriviaMonicaSimmons_01_001",""
+"tutorial_exp_TriviaMonicaSimmons_02_001",""
+"tutorial_exp_TriviakugaToya_01_001",""
+"tutorial_exp_TriviakugaToya_02_001",""
+"tutorial_exp_TriviaDrYuki_01_001",""
+"tutorial_exp_TriviaDigimon_01_001",""
+"tutorial_exp_TriviaAegiomon_01_001",""
+"tutorial_exp_TriviaAegiochusmon_01_001",""
+"tutorial_exp_TriviaJupitermon_01_001",""
+"tutorial_exp_TriviaMinervamon_01_001",""
+"tutorial_exp_TriviaCoronamon_01_001",""
+"tutorial_exp_TriviaApollomon_01_001",""
+"tutorial_exp_TriviaLunamon_01_001",""
+"tutorial_exp_TriviaDianamon_01_001",""
+"tutorial_exp_TriviaMerukimon_01_001",""
+"tutorial_exp_TriviaVulcanusmon_01_001",""
+"tutorial_exp_TriviaJunomon_01_001",""
+"tutorial_exp_TriviaBacchusmon_01_001",""
+"tutorial_exp_TriviaVenusmon_01_001",""
+"tutorial_exp_TriviaNeptunemon_01_001",""
+"tutorial_exp_TriviaCeresmon_01_001",""
+"tutorial_exp_TriviaTitan_01_001",""
+"tutorial_exp_TriviatTtamon_01_001",""
+"tutorial_exp_TriviaPlutomon_01_001",""
+"tutorial_exp_TriviaCentralTown_01_001",""
+"tutorial_exp_TriviaCentralTown_02_001",""
+"tutorial_exp_TriviaCentralTown_03_001",""
+"tutorial_exp_TriviaFactoryalTown_01_001",""
+"tutorial_exp_TriviaGuardianPalace_01_001",""
+"tutorial_exp_TriviaGuardianPalace_02_001",""
+"tutorial_exp_TriviaAbyssBeach_01_001",""
+"tutorial_exp_TriviaGearForest_01_001",""
+"tutorial_exp_TriviaDarkField_01_001",""
+"tutorial_exp_TriviaHeatCosmic_01_001",""
+"tutorial_exp_TriviCchillCosmic_01_001",""
+"tutorial_exp_TriviaAkashicRagnarok_01_001",""
+"tutorial_exp_TriviaCherrymon_01_001",""
+"tutorial_exp_Trivia2020_01_001",""
+"tutorial_exp_Trivia2028_01_001",""
+"tutorial_exp_Trivia2028_02_001",""
+"tutorial_exp_Trivia2028_03_001",""
+"tutorial_exp_WorldView_001_001","These are mysterious phenomena with no scientific explanation.
+Minor explosions and shockwaves of unknown origin have been
+reported, as well as strange lifeforms, regional earthquakes and
+other unusual weather patterns. Research conducted by
+ADAMAS has shown that the frequency of these anomalous
+phenomena coincides with an increase in social unrest. Over the
+past few years, the phenomena have been increasing at a rapid
+rate, which has happened a handful of times throughout history.
+Each time, the events caused society to fall into chaos and
+eventually led to an epidemic, disaster or all-out war."
+"tutorial_exp_WorldView_002_001","This organization works behind the scenes to
+deal with the strange phenomena known as
+""anomalies."" It sends agents around the globe
+to carry out missions designed to collect and
+analyze information for its massive database.
+The organization's goal is to protect citizens
+from the anomalies when their leaders are unable
+to do so. In addition to its main headquarters,
+the organization is said to have various branches
+scattered around different regions. However,
+the organization's founder insisted that details
+regarding their activities be kept secret, meaning
+that its true purpose remains hidden from the masses."
+"tutorial_exp_WorldView_003_001","Digimon are mysterious beings with a strong correlation to areas
+where anomalous phenomena have been sighted. Although
+ADAMAS has been investigating these beings for many years,
+we still know very little. Until recently, we could only describe
+them as what people call ""phantoms."" Lately, however, the
+organization has bolstered its research efforts in response to a
+sudden increase in Digimon sightings over the years. Digimon
+were found to be ""electronic lifeforms,"" with characteristics of
+both organic matter and electric signals. It's believed that they're
+the source of the anomalous phenomena."
+"tutorial_exp_WorldView_004_001","This special device was developed by ADAMAS and contains a
+unique ""summoning program"" that utilizes a Digimon's electronic
+data. These devices are given to agents and allow them to
+convert the aspect of Digimon that corresponds to genes into
+electronic data made up of ones and zeros. And even though
+Digimon are organic lifeforms as well, they can also be ""copied""
+because of this data if certain conditions are met."
+"tutorial_exp_WorldView_004_002","This general theory was the work of Dr. Yuki, who was the
+original founder of ADAMAS. He apparently referred to these
+phase electronic lifeforms as ""semi-electron bodies."" Although
+his theories were largely ignored in academic circles, the
+members of the organization continued his research, thus
+leading to the creation of the Digivice."
+"tutorial_exp_WorldView_005_001","As one of the organization's founders, Dr. Yuki
+developed numerous inventions that were useful
+to society. And yet, few people know about him,
+due in large part to his personality. He rarely
+showed himself in public, and he transferred all
+rights to his work to the government and large
+corporations, using the proceeds to establish
+ADAMAS. Today, his original mission of defending
+society from the threat of the anomalies lives
+on through the organization's current members."
+"tutorial_exp_WorldView_005_002","It's believed that the organization's secrecy is due to its desire
+to prevent its analysis of the anomalies from falling into the
+wrong hands. As a result, the organization keeps its activities
+shrouded in secrecy, so as to protect its research from being
+misused by entities such as the military industrial complex."
+"tutorial_exp_Attribute_01_001","Each Digimon possesses an affinity with each of the elements:
+
+{is28}{image(ui_icon_skill_001)} Fire, {is28}{image(ui_icon_skill_002)} Ice, {is28}{image(ui_icon_skill_003)} Plant, {is28}{image(ui_icon_skill_004)} Water, {is28}{image(ui_icon_skill_005)} Electricity,
+{is28}{image(ui_icon_skill_006)} Steel, {is28}{image(ui_icon_skill_007)} Wind, {Is28}{image(ui_icon_skill_008)} Earth. {is28}{image(ui_icon_skill_009)} Light, {is28}{image(ui_icon_skill_010)} Dark, and
+{is28}{image(ui_icon_skill_000)} Null.
+
+These affinities affect their elemental resistances, as per below.
+{fc11◎}:{fc9 2x damage}
+{fc11○}:{fc9 1.5x damage}
+－: No effect
+{fc2△}:{fc9 0.5x damage}
+{fc2×}:{fc9 No damage}"
+"tutorial_exp_Attribute_01_002","Your offensive options may also possess an elemental affinity.
+
+ - Attack: a normal attack without elemental affinity.
+ - Skill: an ability which may have an elemental affinity.
+
+{fc9Damage is increased when the attack is of a target's elemental
+weakness, and damage is reduced when against a target's
+elemental resistance.}
+
+Simply look at the damage output display when selecting a
+target to view an attack's compatibility."
+"tutorial_exp_Factor_01_001","Each Digimon possesses Traits which are based on their type and
+characteristics. Certain special skills are effective against specific
+Traits, resulting in{fc9 1.5x damage dealt}.
+
+{fc9You can view the Traits of enemy Digimon via {l2} Analyze during
+battle.}"
+"tutorial_exp_EvolutionTechnique_01_001","{fc9The Talent Points used to denote a
+Digimon's level limit are maintained even after
+a De-Digivolution.} Repeating the process of
+Digivolution and De-Digivolution is the key to
+creating even stronger Digimon."
+"tutorial_exp_EvolutionTechnique_02_001","The cumulative value passed on when a Digimon Digivolves or
+De-Digivolves adds 1% of the previous Digimon's stats.
+{fc9The more Bond Points a Digimon has, the more times the
+cumulative value can be carried over.}
+
+Boost your Digimon's Bond Points and use Digivolution and
+De-Digivolution in order to create even more powerful Digimon."
+"tutorial_exp_ActionOrder_01_001","Turn Order during battle is determined by each Digimon's SPD stat.
+Turn Order is recalculated when SPD changes for any Digimon.
+
+{fc9Using skills and items to alter the SPD of your allies and enemies in
+order to manipulate the Turn Order is a key battle strategy.}"
+"tutorial_exp_WeakPointAttack_01_001","{fc9When an attack has favorable compatibility, it will strike the
+enemy's ""weak point."" Compatibility is determined via Attributes,
+Elements, and Traits.}
+
+Additionally, other effects such as from a Digimon's Personality
+Skill can also have a large influence on attack compatibility.
+
+There are hints in a Digimon's stats and other details for finding
+compatibilities and weak points, so be sure to use Analyze Mode
+to find them."
+"tutorial_exp_SpecialSkills_01_001","These are a Digimon's unique set of skills, capable of dealing large
+amounts of damage or triggering certain effects.
+
+Some Digimon even have a Special Skill that lets them initiate a
+Mode Change.
+
+Getting a grasp on these Special Skills is key to unlocking each
+Digimon's potential in battle."
+"tutorial_exp_FusionSkills_01_001","These are powerful skills used between specific Digimon.
+{fc9DNA Digivolution Skills appear in eligible Digimon's skill selection
+menus in battle.}
+
+These skills will only become available once you have met all of the
+necessary conditions:
+ - Both DNA Digivolution-capable Digimon are battle members; and
+ - Both DNA Digivolution-capable Digimon can act on their turn.
+
+It is an Agent's duty to find Digimon that can combine for DNA
+Digivolution Skills."
+"tutorial_exp_SurpriseAttack_01_001","{fc9When an enemy spots and triggers an encounter, a battle will begin
+with a preemptive strike from the enemy.}
+
+If you can't avoid an encounter, it's recommended that you attack first
+with a {r2} DigiAttack."
+"tutorial_exp_BattleCommand_01_001","This command is used during battle to make a non-elemental attack.
+
+{fc9You can also switch targets with {sub1} and attack allies as well.}
+Although somewhat unusual, this tactic can be used to remove
+status abnormalities, making it useful in some situations."
+"tutorial_exp_BattleCommand_02_001","This command is used during battle and lets you perform Special
+Skills and Attachment Skills.
+Using a skill consumes SP (Skill Points).
+
+Don't forget to consider the associated element as well as your
+timing when using skills."
+"tutorial_exp_BattleCommand_03_001","This command is used during battle and lets you use items to
+support your Digimon on its turn.
+
+{fc9Digimon do not lose their turn, when you use an item.
+The Digimon will still be able to carry out a command.}
+
+Keep items ready at all times so that your Allied Digimon can
+fight at full strength whenever necessary."
+"tutorial_exp_BattleCommand_04_001","This command is used during battle and lets you change between
+battle members and reserved members.
+{fc9You can swap members as many times as you like during a turn.}
+
+There are some Digimon who transform due to a special ""Change""
+command. Using this command effectively can have a large impact
+on the battle, making it an important part of any strategy."
+"tutorial_exp_BattleCommand_05_001","This command is used during battle.
+{fc9It lets you view a partner Digimon's information
+when pressing {sub2} while selecting the command.}
+
+It's a good idea to understand your Digimon's info so that you
+can know its compatibilities with the enemy."
+"tutorial_exp_SkillDisc_01_001","These items let you change your ally Digimon's Attachment Skills.
+
+{fc9Go to Digimon > Setup on your Digivice to change Attachment Skills.}
+Note: For more details, see Tutorial > Battles > Attachment Skills.
+
+Skill Discs can be obtained in various ways, such as by finding
+them in Treasure Chests, or by purchasing them in a shop."
+"tutorial_exp_Items_01_001","The items used by an agent are categorized below.
+
+Recovery: Recovers your partner Digimon.
+Enhancement: Strengthens your partner Digimon.
+Special: Sells at a high price or is used under certain conditions.
+Equipment: Equips onto your partner Digimon.
+Materials: Used in the Crafting Shop.
+Farm: Used on the Digifarm.
+Valuables: Important for conducting your missions."
+"tutorial_exp_BuffDebuff_01_001","These are stat changes that affect Digimon during battles.
+
+Buffs indicate positive changes, and debuffs indicate negative ones.
+{fc9Multiple effects can occur at the same time.}
+
+Icons will be displayed next to stats affected by a buff or debuff."
+"tutorial_exp_AbnormalStatus_01_001","These conditions affect Digimon during battles.
+
+{fc9Digimon can only be affected by one at a time, although existing
+status abnormalities may be overwritten by more powerful ones.}
+Icons will be displayed next to stats affected by a status abnormality.
+
+{fc9Please refer to ""Status Abnormality Types & Effects"" for more details.}"
+"tutorial_exp_AbnormalStatus_02_001","This is a special status change during battle.
+
+{fc9This reverses the affected Digimon's attribute and element
+favorabilities. The effect persists for the remainder of the battle.}
+
+Applying ""Reverse"" again will return its favorabilities to normal."
+"tutorial_exp_AbnormalStatus_03_001","This is a special status change during battle.
+
+{fc9It prevents a Digimon from recovering HP.
+The effect ends after a specified number of turns has elapsed.} 
+
+You can also use items or skills to heal a Digimon from injuries."
+"tutorial_exp_AbnormalStatus_04_001","This is a special status change during battle.
+
+{fc9It prevents a Digimon from recovering SP.
+The effect ends after a specified number of turns has elapsed.}
+
+You can also help a diseased Digimon by using items or skills."
+"tutorial_exp_AbnormalStatus_05_001","{fc9This status change occurs once a Digimon's HP falls below 30%.
+The Digimon will ""muster its strength"" and enter Brave status.}
+
+This status boosts ATK/INT/CRT Rate by 50% until the end of its
+following turn."
+"tutorial_exp_AbnormalStatus_06_001","This is an extremely powerful buff certain hostile Digimon possess.
+
+{fc9Stats buffed by an enemy's Strong state will be indicated by special
+colored icons. The Strong state's effects do not end based on
+the passage of turns. Only a Charge Break can reset its effects.}"
+"tutorial_exp_AbnormalStatus_07_001","This is a special status change during battle.
+
+{fc9Digimon affected keep 1 HP even if they take damage that would
+normally reduce their HP to zero. (This means they can't be KO'd.)}
+
+The Guts status can be obtained as a skill effect or other means, and
+it  will be marked with an icon."
+"tutorial_exp_RushOut_01_001","It seems you've just experienced a ""surprise encounter."" It's rumored
+that when you have one of these encounters, a certain Digimon will
+unexpectedly appear and join the battle.
+
+{fc9Defeating this Digimon can cause rare items to drop, but it's
+apparently pretty quick to retreat.} I'm sure it's only a matter of time
+before an agent uncovers the truth."
+"tutorial_exp_RushOut_01_002","Digimon Who Have Appeared during Surprise Encounters #1"
+"tutorial_exp_RushOut_01_003","Digimon Who Have Appeared during Surprise Encounters #2"
+"tutorial_exp_RushOut_01_004","Digimon Who Have Appeared during Surprise Encounters #3"
+"tutorial_exp_RushOut_01_005","Digimon Who Have Appeared during Surprise Encounters #4"
+"tutorial_exp_Accumulation_01_001","When a Digimon Digivolves or De-Digivolves, the cumulative value
+is the value of the stat passed on to the next Digimon.
+
+{fc9It's indicated by a blue number in parentheses in the Digimon's
+stats.}
+
+The cumulative value doesn't decrease even if the Digimon
+Digivolves or De-Digivolves. However, there is a limit to how many
+times the cumulative value can be carried over.
+See ""Digivolution Technique 3: Bond Points"" for more information."
+"tutorial_exp_Accumulation_01_002","Increasing a Cumulative Value
+
+{fc9- Using Enhancement Items
+Depending on the enhancement item used, the value added to the
+stat will also be added to the cumulative value.
+
+- Performing Digivolution/De-Digivolution
+When undergoing Digivolution or De-Digivolution, 1% of the previous
+Digimon's stat value increased through leveling up or by training on
+the farm will be added to the cumulative value.}"
+"tutorial_exp_EvolutionTechnique_03_001","The value of stats boosted with enhancement items is also added to
+the cumulative value.
+
+Digivolving or De-Digivolving adds 1% of the previous Digimon's stat
+value to the total.
+
+{fc9Bond Points indicate the number of times that the cumulative value
+can be carried over after Digivolving or De-Digivolving. Increase the
+cumulative value as much as possible beforehand in order to maximize
+your Bond Points.}"
+"tutorial_exp_AbnormalStatus_08_001","{fc9Poison}
+The Digimon incurs poison damage at the end of its turn. It can
+be cured immediately using items or skills.
+
+{fc9Deadly Poison}
+The Digimon incurs significant poison damage at the end of its
+turn. It can be cured immediately using items or skills."
+"tutorial_exp_AbnormalStatus_08_002","{fc9Confusion}
+The Digimon may not be able to perform any actions during its turn.
+It can recover immediately using items or skills.
+
+{fc9Chaos}
+The Digimon is unable to perform any actions during its turn. It can
+recover when attacked, or by using items or skills."
+"tutorial_exp_AbnormalStatus_08_003","{fc9Paralysis}
+The Digimon may not be able to move during its turn. It will
+automatically recover after several turns, or it can recover
+immediately by using items or skills.
+
+{fc9Immobilization}
+The Digimon will be unable to move during its turn. It will
+automatically recover after several turns, or it can recover
+immediately by using items or skills."
+"tutorial_exp_AbnormalStatus_08_004","{fc9Sleep}
+The Digimon is unable to move and the damage it receives is
+doubled. It will automatically wake up after several turns or if
+attacked. Items or skills can be used to wake up immediately.
+
+{fc9Deep Slumber}
+The Digimon is unable to move and the damage it receives is
+doubled. It must be attacked or use items or skills to wake up."
+"tutorial_exp_AbnormalStatus_08_005","{fc9Crystallization}
+The Digimon will crystallize and will be unable to use skills. It
+will heal automatically after several turns. It can heal immediately
+by using items or skills."
+"tutorial_exp_AbnormalStatus_09_001","This is a special status change during battle.
+
+{fc9Only the Digimon with the Taunting status will be targeted for attack.
+(Other Digimon cannot be targeted.)} 
+
+The Taunting status lasts for one round.
+(The status will end on the next turn of the Digimon who activated it)"

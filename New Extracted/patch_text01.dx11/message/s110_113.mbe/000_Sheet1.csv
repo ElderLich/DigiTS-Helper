@@ -1,0 +1,141 @@
+string2 0,string 1,string 2,string 3
+"s110_113_010","char_GANKOOMON","Ah, there ya are. I've been waiting.",""
+"s110_113_020","char_JESMON","Master, what is this place...?",""
+"s110_113_030","char_GANKOOMON","A friend of mine is inside. I'm thinking about going in to
+check on how he's doing.",""
+"s110_113_040","char_PLAYER_M","{next}Are you sure this is okay?",""
+"s110_113_041","char_PLAYER_M","{next}Who's the friend?",""
+"s110_113_042","char_PLAYER_M","{next}Here? Not a great place...",""
+"s110_113_050","char_GANKOOMON","Okay for me to have a human friend? Actually, I have a lot
+of human friends. No problemo.",""
+"s110_113_060","char_GANKOOMON","He's a human, but his actual name isn't really clear. He
+uses all kind of fake names.",""
+"s110_113_070","char_GANKOOMON","Not for an ordinary human, but my friend is one of the
+tougher ones. I'm sure he's fine.",""
+"s110_113_080","char_GANKOOMON","We met by chance and somehow hit it off in a strange way.",""
+"s110_113_090","char_GANKOOMON","He ended up becoming the human I know best, so I wanna see
+how he's been faring.",""
+"s110_113_100","char_GANKOOMON","I'll choose who to side with depending on the outcome—with Alphamon,
+who is assessing the humans, or King Drasil, who wants to protect them.",""
+"s110_113_110","char_GANKOOMON","{next}I get it.",""
+"s110_113_111","char_GANKOOMON","{next}That person has a big responsibility.",""
+"s110_113_112","char_GANKOOMON","{next}That's a wild way of deciding.",""
+"s110_113_140","char_GANKOOMON","You and Jesmon are gonna be witnesses representing the human
+and Digimon sides!",""
+"s110_113_150","char_GANKOOMON","Oh. By the way, don't tell my friend about this. I wanna see
+his true reactions.",""
+"s110_113_160","char_GANKOOMON","I like to be bold. That's probably why I get along so well
+with that human.",""
+"s110_113_170","char_GANKOOMON","Ya understand what's going on now? Let's go, then.",""
+"s110_113_180","","Leave?",""
+"s110_113_190","char_PLAYER_M","[Don't leave.]",""
+"s110_113_191","char_PLAYER_M","{end}[Leave.]",""
+"s110_113_200","char_GANKOOMON","Are ya ready now? Let's go, then.",""
+"s110_113_210","char_ARCHNEMON","Welcome back! This bar is 4,000 digi per hour! Would you
+like to come in?",""
+"s110_113_220","char_PLAYER_M","{next}4,000 ""digi""?",""
+"s110_113_221","char_PLAYER_M","{next}I see. So that's the theme of this bar, huh?",""
+"s110_113_222","char_PLAYER_M","{next}I think I'd rather leave.",""
+"s110_113_230","char_ARCHNEMON","Also known as ""YEN""! But we have to keep the dream
+alive, no? So we call it ""digi"" here!",""
+"s110_113_240","char_ARCHNEMON","Aww, don't spell it all out like that! That's boring! ♪",""
+"s110_113_250","char_ARCHNEMON","Aww, too bad! I'm afraid you can't leave without ordering
+something! ♪",""
+"s110_113_260","char_GANKOOMON","Sorry to interrupt you. We just need to take a look around
+the bar.",""
+"s110_113_270","char_ARCHNEMON","Wait. What is this, some kind of raid...?",""
+"s110_113_280","char_GANKOOMON","Nah, it's nothing like that. I just wanna see something...
+Hey, that's the guy!",""
+"s110_113_290","char_MISTER","Whoo! Which one do ya wanna drink, pink or gold? I'll pop
+open whichever one ya want!",""
+"s110_113_300","char_JESMON","I am not familiar with these kinds of places, but... I smell
+danger!",""
+"s110_113_310","char_LADYDEVIMON","Aww, that's so sweet of you! But why don't we have more
+after you get the bill paid first?",""
+"s110_113_320","char_MISTER","Okie-dokie! No problem! I'm the richest guy in town!
+*hiccup*",""
+"s110_113_330","char_LADYDEVIMON","All right! Your bill so far comes to 48,000 digi! ♪",""
+"s110_113_340","char_MISTER","Sure, 48,000 digi. That's nothin—",""
+"s110_113_350","char_MISTER","Wait. What?!",""
+"s110_113_360","char_PLAYER_M","{next}He looks surprised...",""
+"s110_113_361","char_PLAYER_M","{next}He probably can't pay.",""
+"s110_113_362","char_PLAYER_M","{next}Humanity will perish...",""
+"s110_113_370","char_GANKOOMON","He sure doesn't disappoint. Lemme go talk to him a bit.",""
+"s110_113_380","char_GANKOOMON","That seems weird... I'll go ask him about it.",""
+"s110_113_390","char_GANKOOMON","Now, you have to stay out of this. My decision has to be
+impartial.",""
+"s110_113_400","char_GANKOOMON","Hey there. How've ya been?",""
+"s110_113_410","char_MISTER","Pretty good... Wait! You're the guy from the other night!
+...Um, can I borrow some money?",""
+"s110_113_420","char_GANKOOMON","Well, it depends on the reason. What do ya need it for?",""
+"s110_113_430","char_MISTER","It's so much fun being with these barmaids... I wanna stay
+here longer!",""
+"s110_113_440","char_GANKOOMON","Is that so? Well, how much do ya have right now?",""
+"s110_113_450","char_MISTER","2,000 YEN!",""
+"s110_113_460","char_GANKOOMON","That's weird. Is that really all ya have?",""
+"s110_113_470","char_GANKOOMON","Ya won big time in the arena the other day because of me.
+What happened to that money?",""
+"s110_113_480","char_MISTER","Well, I was spending it here, but before I knew it, things
+ended up like this...",""
+"s110_113_490","char_MISTER","This money was supposed to be for my kid's tuition... My
+wife will kill me!",""
+"s110_113_500","char_MISTER","Hey, you should fight a fixed match at the arena! We can
+split the profit. Not bad, eh?",""
+"s110_113_510","char_GANKOOMON","Hmm... This is quite...",""
+"s110_113_520","char_PLAYER_M","{next}A perfect example of a horrible person.",""
+"s110_113_521","char_PLAYER_M","{next}Looks like there's no excuse for him.",""
+"s110_113_522","char_PLAYER_M","{next}Humanity is foolish, after all...",""
+"s110_113_530","char_JESMON","Following the path of pleasure while ya have a family at
+home... This is quite serious...",""
+"s110_113_540","char_JESMON","Master, it seems you have chosen quite an extraordinary
+person for the final judgment.",""
+"s110_113_550","char_JESMON","Why do you look so happy?! You and the rest of humanity are
+in big trouble right now!",""
+"s110_113_560","char_GANKOOMON","Well, I've decided. I've learned all I need to know about
+humans.",""
+"s110_113_570","char_JESMON","W-Wait, Master! Please reconsider! There are all kinds of
+humans, you know!",""
+"s110_113_580","char_JESMON","This person was kind enough to tell me how to order ramen,
+for example!",""
+"s110_113_590","char_GANKOOMON","I know that, idiot. I'm saying I can't leave such weak
+creatures to their own devices!",""
+"s110_113_600","char_JESMON","...What?",""
+"s110_113_610","char_GANKOOMON","It's easy to destroy humanity, but it's more fun to train
+guys like this into real men!",""
+"s110_113_620","char_JESMON","Whaaat?!",""
+"s110_113_630","char_PLAYER_M","{next}Has humanity just been saved?",""
+"s110_113_631","char_PLAYER_M","{next}Your master is amusing.",""
+"s110_113_632","char_PLAYER_M","{next}A surprise ""not guilty"" verdict, huh?",""
+"s110_113_640","char_JESMON","Apparently, he was so awful that it flipped a switch inside
+my master's head.",""
+"s110_113_650","char_JESMON","Well, my master IS the type that can be friends with that
+weird guy, after all...",""
+"s110_113_660","char_JESMON","I honestly think he HAS been found guilty. Is my master
+doing the right thing, here...?",""
+"s110_113_670","char_GANKOOMON","Humans are such fun creatures. I can't let Digimon destroy
+them.",""
+"s110_113_680","char_GANKOOMON","I'll help ya, buddy. Let's bring this place down!",""
+"s110_113_690","char_MISTER","Woo hoo! Let's do it! No need to pay my bill if this place
+is shut down!",""
+"s110_113_700","char_LADYDEVIMON","No way! These guys are crazy! Help me, Kuzuhamon!",""
+"s110_113_710","char_KUZUHAMON","Gentlemen. You're acting a bit too naughty. Bad boys need to
+be punished, right?",""
+"s110_113_720","char_KUZUHAMON","I'll instill so much fear into you that you'll never
+misbehave again!",""
+"s110_113_730","char_MISTER","Th-Thanks for helping me out... Hehe...",""
+"s110_113_740","char_GANKOOMON","If ya learned a lesson today, let it be to not ever use yer
+kid's money again.",""
+"s110_113_750","char_MISTER","I promise. Sorry to ask, but can I borrow money for the
+train? I'll pay ya back soon...",""
+"s110_113_760","char_GANKOOMON","Sure. But ya better pay it back or I'll go to yer house to
+collect when yer wife is home.",""
+"s110_113_770","char_GANKOOMON","Whew. I don't ever expect to see that money again, but I'm
+not telling him that.",""
+"s110_113_780","char_GANKOOMON","Anyway, I've decided to support humanity. Which means I'm
+gonna support YOU, too!",""
+"s110_113_790","char_GANKOOMON","Well, Jesmon, let's get to the rendezvous point. I noticed in
+that fight you've grown a lot.",""
+"s110_113_800","char_JESMON","Th-Thank you, Master! Perhaps the ramen I ate in Akihabara
+helped!",""
+"s110_113_810","char_GANKOOMON","I didn't know ramen had such an effect. Human food has
+unpredictable power, I guess.",""

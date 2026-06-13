@@ -1,0 +1,108 @@
+string2 0,string 1,string 2,string 3
+"s010_001_010","char_HIROKO","Hmm... I thought maybe I'd find something to go on, but I
+guess the guy's not so careless.",""
+"s010_001_020","char_PLAYER_M","{next}What are you looking for?",""
+"s010_001_021","char_PLAYER_M","{next}I saw your Digiline message.",""
+"s010_001_022","char_PLAYER_M","{next}Stop! Thief!",""
+"s010_001_030","char_HIROKO","Some sort of lead on Digimon! That's why I was looking
+through Inori's pop's desk.",""
+"s010_001_040","char_HIROKO","Oh, great! Thanks! I was just searching Inori's pop's desk.",""
+"s010_001_050","char_HIROKO","I-I'm no thief! How dare you slander me like that! I was
+just checking Inori's pop's desk!",""
+"s010_001_060","char_HIROKO","He's investigating anomalous phenomena, so I thought I'd
+find some leads for my streams.",""
+"s010_001_070","char_HIROKO","But no such luck! I'm just going to have to do this the hard
+way.",""
+"s010_001_080","char_HIROKO","So, what do you say? Can you lend me a hand?",""
+"s010_001_090","char_PLAYER_M","{next}Lend you a hand with what?",""
+"s010_001_091","char_PLAYER_M","{next}That depends. Can you pay me?",""
+"s010_001_092","char_PLAYER_M","{next}I want to hear about the job first.",""
+"s010_001_100","char_HIROKO","With investigating an anomalous phenomenon! What else?",""
+"s010_001_110","char_HIROKO","Well, aren't you shrewd? Don't worry. You'll be properly
+compensated for your work.",""
+"s010_001_120","char_HIROKO","Ooh, talk about cagey! But that's okay. I don't mind filling
+you in.",""
+"s010_001_130","char_HIROKO","I'm looking into something for my next stream that ought to
+be of interest to you, too.",""
+"s010_001_140","char_HIROKO","There's a store in the shopping district with T-shirts on
+display that keep getting stolen.",""
+"s010_001_150","char_HIROKO","It's happened so many times now, it got me thinking... What
+if a ghost is behind it?",""
+"s010_001_160","char_PLAYER_M","{next}You think a ghost is stealing T-shirts?",""
+"s010_001_161","char_PLAYER_M","{next}Are there any witnesses?",""
+"s010_001_162","char_PLAYER_M","{next}Hmm... Is that a new T-shirt you're wearing?",""
+"s010_001_170","char_HIROKO","Okay, there's no proof, but the area's always busy. A human
+would've been caught by now.",""
+"s010_001_180","char_HIROKO","Not a single one! And in a crowded shopping district, too.
+Pretty fishy, right?",""
+"s010_001_190","char_HIROKO","I'm no thief! Besides, the T-shirts that place sells aren't
+even my style!",""
+"s010_001_200","char_HIROKO","Look. I know there's no solid lead, but it's clear these are
+no ordinary thefts.",""
+"s010_001_210","char_HIROKO","So, you'll help me investigate, right?",""
+"s010_001_220","char_PLAYER_M","{next}For you, Hiroko? I'm happy to help out.",""
+"s010_001_221","char_PLAYER_M","{next}Anything to make people's lives easier.",""
+"s010_001_222","char_PLAYER_M","{end}Sorry. I'm a little busy right now.",""
+"s010_001_230","char_HIROKO","That's the spirit! Think of the good you'll do me, the
+people at the shop... everyone!",""
+"s010_001_240","char_HIROKO","Are you? Well, let me know if you're ever free to lend a
+hand.",""
+"s010_001_250","char_HIROKO","Ready to help me uncover the mystery of the stolen T-shirts?",""
+"s010_001_260","char_PLAYER_M","{next}Yeah.",""
+"s010_001_261","char_PLAYER_M","{end}Sorry. I'm a little busy right now.",""
+"s010_001_270","char_HIROKO","Great! That's just what I've been waiting to hear!",""
+"s010_001_280","char_HIROKO","Let's not waste any time. We should head straight for the
+clothing store now!",""
+"s010_001_290","char_HIROKO","Are you? Well, let me know if you're ever free to lend a
+hand.",""
+"s010_001_300","char_MANAGER","Oh, Hiroko! It's you. How do you like these jeans? Stylish,
+right?",""
+"s010_001_310","char_HIROKO","Sorry, but I'm not here to shop today. Can you tell me more
+about the T-shirt thefts?",""
+"s010_001_320","char_MANAGER","Ah, right... Well, it's like the shirts move on their own.
+They fly right out of the shop!",""
+"s010_001_330","char_HIROKO","You're sure they move on their own? That'd be absolutely
+HUGE for fans of the paranormal.",""
+"s010_001_340","char_MANAGER","They do! I swear! It happened just now, so I started yelling
+that the thief was back.",""
+"s010_001_350","char_MANAGER","Then this young man said he'd catch them, and went running
+out that way after the shirt.",""
+"s010_001_360","char_HIROKO","He sounds like he's on to something. That way leads to an
+alley... Come on. Let's go!",""
+"s010_001_370","char_MAN","*panting*... S-Some weird monster just went down that
+manhole, along with a T-shirt...!",""
+"s010_001_380","char_HIROKO","Over there, right? Let's go check it out!",""
+"s010_001_390","char_ZUBAEAGERMON","Hehehe... Now, how do I make this just scream ""the
+Twentiest""?",""
+"s010_001_400","char_HIROKO","Yes! Caught you red-handed! This image is sure to make for a
+great scoop!",""
+"s010_001_410","char_ZUBAEAGERMON","Huh?! Are you two the Twentiest?!",""
+"s010_001_420","char_HIROKO","The Twentiest? What's that supposed to mean?",""
+"s010_001_430","char_ZUBAEAGERMON","It's mostly a vibe, so it's hard to explain. How would you
+make this shirt the Twentiest?",""
+"s010_001_440","char_PLAYER_M","{next}Tear it up.",""
+"s010_001_441","char_PLAYER_M","{next}Soak it in sewage.",""
+"s010_001_442","char_PLAYER_M","{next}Twentiest it.",""
+"s010_001_450","char_ZUBAEAGERMON","So, that's what the Twentiest is to you? In that case, I'll
+tear YOU up!",""
+"s010_001_460","char_ZUBAEAGERMON","So, that's what the Twentiest is to you? In that case, I'll
+soak YOU in sewage!",""
+"s010_001_470","char_ZUBAEAGERMON","Why, you...! Think you're funny, huh? Well, the Twentiest is
+not to be taken so lightly!",""
+"s010_001_480","char_ZUBAEAGERMON","My Twentiest...",""
+"s010_001_490","char_HIROKO","That solves the case of the stolen T-shirts, but also raises
+the mystery of the Twentiest.",""
+"s010_001_500","char_HIROKO","First things first, though. Let's get out of these sewers.
+They REEK...",""
+"s010_001_510","char_MANAGER","I'm... not sure I understand, but you're saying the T-shirt
+thefts are over?",""
+"s010_001_520","char_MANAGER","What a relief! I've been so worried. Come back any time and
+I'll give you a discount!",""
+"s010_001_530","char_HIROKO","Case closed! You know, it feels good to have done something
+to keep this district running.",""
+"s010_001_540","char_HIROKO","That ""Twentiest"" thing is still a mystery to me, but at
+least I got to see something cool!",""
+"s010_001_550","char_HIROKO","But here. This is for you. My way of saying thanks for your
+help.",""
+"s010_001_560","char_HIROKO","Oh, no! The picture's so blurry, you can't see anything!
+Ugh. I gotta up my camera game.",""

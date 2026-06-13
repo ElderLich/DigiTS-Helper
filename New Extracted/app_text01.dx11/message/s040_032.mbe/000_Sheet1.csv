@@ -1,0 +1,100 @@
+string2 0,string 1,string 2,string 3
+"s040_032_010","char_BEARMON_OB","Come out, Titans! Where are ya hidin'?! We Bearmon Brothers
+are gonna take ya out!",""
+"s040_032_020","char_BEARMON_YB","Y-Yeah!",""
+"s040_032_030","char_PLAYER_M","{next}We already beat the Titans.",""
+"s040_032_031","char_PLAYER_M","{next}You're too late.",""
+"s040_032_032","char_PLAYER_M","{next}Rawr! I'm a Titan!",""
+"s040_032_040","char_BEARMON_OB","What? Ya gotta be kiddin' me...",""
+"s040_032_050","char_BEARMON_YB","Whoa...",""
+"s040_032_060","char_BEARMON_OB","What?! It's all because YOU were so slow!",""
+"s040_032_070","char_BEARMON_YB","Aww, don't be mean, Big Bro...",""
+"s040_032_080","char_BEARMON_OB","Aha! There's one! ...Huh. It's a lot more wimpy-lookin' than
+I expected!",""
+"s040_032_090","char_BEARMON_YB","Um, Big Bro? I don't think that's a Titan.",""
+"s040_032_100","char_BEARMON_OB","So, the Titans are gone, huh? Then what'd we even come here
+for?",""
+"s040_032_110","char_BEARMON_YB","Yeah! Why'd they tell us in Central Town there were still
+Titans scattered around?",""
+"s040_032_120","char_BEARMON_OB","Hey, I know! I bet the ones ya took out were just little
+small fry.",""
+"s040_032_130","char_BEARMON_OB","We gotta take all the Titan remnants down, and their bosses,
+too!",""
+"s040_032_140","char_BEARMON_YB","B-But ain't it a little dangerous to go straight for the
+bosses...?",""
+"s040_032_150","char_BEARMON_OB","Danger makes ya stronger! Anyway, I'm goin'! You go bash
+some Titans, too! Catch ya later!",""
+"s040_032_160","char_BEARMON_YB","B-but, Big Bro!",""
+"s040_032_170","char_BEARMON_YB","H-Hey, you guys beat Titans before, right? Can ya help me
+and my brother?",""
+"s040_032_190","char_PLAYER_M","{next}Sure, we'll help.",""
+"s040_032_191","char_PLAYER_M","{end}We're busy.",""
+"s040_032_200","char_BEARMON_YB","Really?! Thanks!",""
+"s040_032_210","char_BEARMON_YB","Aww. But I can't do this alone, and I'm worried about my Big
+Bro, too...",""
+"s040_032_220","char_BEARMON_YB","Pretty please! Help me and my Big Bro take down the Titan
+leader!",""
+"s040_032_230","char_BEARMON_YB","From what I heard in the tavern, there are two Titans left
+here! Will ya help us?",""
+"s040_032_240","char_PLAYER_M","{next}Sure, we'll help.",""
+"s040_032_241","char_PLAYER_M","{end}We're busy.",""
+"s040_032_250","char_BEARMON_YB","Really?! Thanks!",""
+"s040_032_260","char_BEARMON_YB","Aww. But I can't do this alone, and I'm worried about my Big
+Bro, too...",""
+"s040_032_270","char_BEARMON_YB","I'll feel a lot better havin' ya there! Okay, then! I'll run
+on ahead!",""
+"s040_032_280","char_BEARMON_YB","Where, ya ask? Oh, right. ...Okay. I just sent ya the info.
+See ya later!",""
+"s040_032_285","","You head to the location Little Bearmon told
+you of.",""
+"s040_032_290","char_BEARMON_YB","Ah, there ya are! This way!",""
+"s040_032_300","char_BEARMON_YB","This guy used to be a Titan leader! Let's take it down
+together!",""
+"s040_032_310","char_BEARMON_YB","Not so tough now, eh?! ...Although, I mostly just watched...",""
+"s040_032_320","char_BEARMON_YB","We managed all right, but Big Bro is probably fightin' the
+other leader alone.",""
+"s040_032_330","char_BEARMON_YB","I hope Big Bro is okay... Hey, I'm goin' on ahead! I sent ya
+the details. Come meet me!",""
+"s040_032_340","char_BEARMON_YB","Big Bro!",""
+"s040_032_350","char_BEARMON_OB","Oh, it's you... Did ya take out that other Titan leader?!",""
+"s040_032_360","char_BEARMON_YB","Yeah! And I had some help!",""
+"s040_032_370","char_BEARMON_OB","Oh, yeah...? Tch! Ya ain't supposed to rely on others.",""
+"s040_032_380","char_BEARMON_YB","Worry about that later! Right now, we need to fight!",""
+"s040_032_390","char_BEARMON_YB","We did it, Big Bro!",""
+"s040_032_400","char_BEARMON_OB","...Meh. I coulda handled that on my own.",""
+"s040_032_410","char_BEARMON_OB","...Well, there ain't any more strong opponents to fight
+around here.",""
+"s040_032_420","char_BEARMON_OB","I need to find a bigger challenge. Guess I'll move on to the
+next spot...",""
+"s040_032_430","char_BEARMON_YB","Well, wherever ya go, I'll be right there with ya!",""
+"s040_032_440","char_BEARMON_OB","Hey, I been thinkin'... Are we really good enough the way we
+are now?",""
+"s040_032_450","char_BEARMON_YB","What're ya sayin'...? You don't wanna fight with me no more?",""
+"s040_032_460","char_BEARMON_OB","Nah, it ain't like that. Only, if ya stick with me, yer
+never gonna stop bein' soft.",""
+"s040_032_465","char_BEARMON_OB","I mean, even I stop pushin' myself to get stronger when I
+know I got ya there with me.",""
+"s040_032_470","char_BEARMON_YB","D-Don't say that! Please! I'll work harder, I swear! Just
+let me stay with ya!",""
+"s040_032_480","char_BEARMON_OB","Look. The world's a cruel place. We may end up gettin' split
+up no matter what we want.",""
+"s040_032_485","char_BEARMON_OB","So I say we make a promise, right here and now.",""
+"s040_032_490","char_BEARMON_YB","A promise?",""
+"s040_032_500","char_BEARMON_OB","The base of that big tree oughta do fine. C'mon. Get
+diggin'!",""
+"s040_032_510","char_BEARMON_OB","There! I buried our resolution as brothers.",""
+"s040_032_515","char_BEARMON_OB","Even if we end up goin' down different paths, we're gonna
+meet up back here again someday.",""
+"s040_032_520","char_BEARMON_YB","Yeah... It's a promise...",""
+"s040_032_530","char_BEARMON_OB","...Yeah.",""
+"s040_032_540","char_BEARMON_OB","Ya helped my little bro out. I want ya to take this by way
+of payment.",""
+"s040_032_550","char_BEARMON_OB","Anyway, see ya later. Take care of yerself, okay?",""
+"s040_032_555","char_BEARMON_YB","Thanks for everythin'! And take care!",""
+"s040_032_560","char_BEARMON_YB","I'm not sad, I'm not sad... I'll be fine on my own, just
+like Big Bro... *sniffle*",""
+"s040_032_570","char_PLAYER_M","You dig up a box from the base of the tree. Inside is a note
+with forceful handwriting.",""
+"s040_032_580","char_PLAYER_M","The note reads, ""Let's bring peace to Iliad together, the
+two of us!""",""
+"s040_032_590","char_PLAYER_M","You return the note to the box and quietly rebury it...",""

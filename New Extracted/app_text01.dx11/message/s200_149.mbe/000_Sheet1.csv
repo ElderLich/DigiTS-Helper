@@ -1,0 +1,217 @@
+string2 0,string 1,string 2,string 3
+"s200_149_010","char_HIROKO","Whew, am I glad to see you! Here's the deal. I got this
+weird—more like creepy—Digiline.",""
+"s200_149_020","char_HIROKO","It was enough to freak even me out. There was no way
+I could tackle this one on my own.",""
+"s200_149_030","char_PLAYER_M","{next}What's strange about it?",""
+"s200_149_031","char_PLAYER_M","{next}Is it a tip for your channel??",""
+"s200_149_032","char_PLAYER_M","{next}Just ignore it.",""
+"s200_149_040","char_HIROKO","Well... it's asking me to do something. Like, something
+I'm pretty sure is illegal.",""
+"s200_149_050","char_HIROKO","Seems like one, at least. After all, it's thanks to these
+tips that I'm at 2 million subs...",""
+"s200_149_060","char_HIROKO","No way! I could be missing out on the story of the century!",""
+"s200_149_070","char_HIROKO","I don't know the sender, but here's what it says:",""
+"s200_149_080","char_HIROKO","""Sneak into a D-SAT vehicle tonight. I'll give you the
+exact location later.""",""
+"s200_149_090","char_HIROKO","...That's all.",""
+"s200_149_100","char_PLAYER_M","{next}Isn't that a crime?",""
+"s200_149_101","char_PLAYER_M","{next}Is it some kind of prank?",""
+"s200_149_102","char_PLAYER_M","{next}This is so exciting!",""
+"s200_149_110","char_HIROKO","I think so too, but this doesn't feel like a simple ploy to
+make me break the law...",""
+"s200_149_120","char_HIROKO","That's what I thought at first, but then he started giving
+more instructions and, I felt like I was being watched.",""
+"s200_149_130","char_HIROKO","Oh, right. I almost forgot. You're the biggest weirdo out
+there.",""
+"s200_149_140","char_HIROKO","...Huh? OMG, I just got another message from the same
+sender!",""
+"s200_149_150","char_HIROKO","Lessee... ""The person next to you does not dress very well.
+They should put on something more cyber.""",""
+"s200_149_160","char_HIROKO","D-Does that mean we're being watched right now?! And based
+on what the message said...",""
+"s200_149_170","char_PLAYER_M","{next}My outfit stinks?",""
+"s200_149_171","char_PLAYER_M","{next}Is it a threat, letting us know they're watching?",""
+"s200_149_172","char_PLAYER_M","{next}That was a huge compliment.",""
+"s200_149_180","char_HIROKO","I didn't wanna say it, but you do kinda stand out. Or, at
+least, you don't look ""cyber.""",""
+"s200_149_190","char_HIROKO","Maybe, but we can't ignore what the message said. Seems they
+want you to change clothes.",""
+"s200_149_200","char_HIROKO","Hate to break it to you, but that wasn't a compliment. They
+said you need to go change!",""
+"s200_149_210","char_HIROKO","It gives me shivers not knowing where we're being watched
+from, but let's play along.",""
+"s200_149_220","char_HIROKO","Do you have any cyber clothes? I know it's a bother, but I
+was hoping you could change.",""
+"s200_149_230","char_HIROKO","Hit me up once you do. We might just get another message
+from our stalker.",""
+"s200_149_240","char_HIROKO","Let's humor them for now. Go put on a more cyber outfit,
+okay?",""
+"s200_149_250","char_HIROKO","Wow! Somebody sure knows how to glow up! Yeah, I think that
+ought to do the trick.",""
+"s200_149_260","char_HIROKO","...Aha! I knew it! Another message!
+The timing really makes me feel like we're being watched.",""
+"s200_149_270","char_PLAYER_M","{next}What's it say?",""
+"s200_149_271","char_PLAYER_M","{next}Wanna check the area?",""
+"s200_149_272","char_PLAYER_M","{next}Maybe they're watching even now?",""
+"s200_149_280","char_HIROKO","Gimme a sec... Ew. This... definitely implies this creep is
+stalking us in real time.",""
+"s200_149_290","char_HIROKO","I get the feeling we won't find them. They'd only take this
+approach if they were sure.",""
+"s200_149_300","char_HIROKO","Yeesh, don't say that... Hey, a message! ""I'm watching."" Aw,
+c'mon. This is legit creepy!",""
+"s200_149_310","char_HIROKO","Here's the rest of the message. ""It appears you know how to
+do as you're told.""",""
+"s200_149_320","char_HIROKO","""You are a most spirited streamer. And that yellow T-shirt
+is suitably cyber.""",""
+"s200_149_330","char_HIROKO","""I deem you worthy. On a nearby bench, you'll find an ID
+card and USB drive. Go get them.""",""
+"s200_149_340","char_PLAYER_M","{next}Let's go look.",""
+"s200_149_341","char_PLAYER_M","{next}Someone else might grab the stuff.",""
+"s200_149_342","char_PLAYER_M","{next}I was hoping for a better reward.",""
+"s200_149_350","char_HIROKO","That's the plan. Don't you worry. We've come too far to end
+the game now.",""
+"s200_149_360","char_HIROKO","I can't imagine they'd overlook that. I bet they'd make sure
+only we get the goods.",""
+"s200_149_370","char_HIROKO","What? Hey, this stuff could be really valuable! You were
+hoping for a snack, maybe?",""
+"s200_149_380","char_HIROKO","Anyway, let's go check the benches around here. I'll be
+right there beside you!",""
+"s200_149_390","char_HIROKO","Oh! Hey, this must be it. There's an ID card and USB drive!",""
+"s200_149_400","char_HIROKO","They're kinda warm, like someone was holding them and left
+them here just a second ago.",""
+"s200_149_410","char_HIROKO","We're gonna take 'em... right?",""
+"s200_149_420","char_HIROKO","Agh! A-Another message! Were they waiting for us to get
+here...?",""
+"s200_149_430","char_HIROKO","Let's see... ""Now go to Shinjuku Park and get in the
+D-SAT vehicle there""?!",""
+"s200_149_440","char_HIROKO","I-It's here! The dreaded order! This is it... the beginning
+of my life of crime...",""
+"s200_149_450","char_PLAYER_M","{next}Let's at least go scope it out.",""
+"s200_149_451","char_PLAYER_M","{next}Maybe we should stop here.",""
+"s200_149_452","char_PLAYER_M","{next}Yeah! Let's do this!",""
+"s200_149_460","char_HIROKO","Y-Yeah. We can always bounce if it feels too sketch.",""
+"s200_149_470","char_HIROKO","I like that idea— Uh-oh, another message! ""No turning back
+now."" Guess there's no escape!",""
+"s200_149_480","char_HIROKO","You're really something! I could learn a thing or two
+from you about being a streamer... Actually, scratch that.",""
+"s200_149_490","char_HIROKO","Anyway, let's head to Shinjuku Park. Maybe the vehicle
+isn't even there...",""
+"s200_149_500","char_HIROKO","But given how things have gone so far, I'm pretty sure it
+will be...",""
+"s200_149_510","char_HIROKO","Yep, there's our vehicle, as expected!
+That's definitely a D-SAT vehicle.",""
+"s200_149_520","char_HIROKO","But there's an officer right by it. No way we're getting
+anywhere near—",""
+"s200_149_550","char_???","W-We've got trouble! Digimon have escaped from the 
+Digimon District!",""
+"s200_149_560","char_PUBLIC_SECURITY_PERSONNEL","Wh-What was that? We're on our way!",""
+"s200_149_570","char_HIROKO","......",""
+"s200_149_580","char_HIROKO","Well, that solves that. But the timing was a little too
+perfect...",""
+"s200_149_590","char_HIROKO","There might be someone inside, though. Let's get closer and
+check!",""
+"s200_149_600","char_HIROKO","Oh. Looks like you need to scan an ID to get inside!",""
+"s200_149_610","char_HIROKO","W-Wait... No way. It couldn't be that ID we got just a
+little while ago, could it?",""
+"s200_149_620","char_HIROKO","But if it doesn't work, we can always run for it. Okay, I'm
+gonna try the card.",""
+"s200_149_630","","ID check in progress... Kodai Kuremi... Confirmed.
+Unlocking...",""
+"s200_149_640","char_HIROKO","It's unlocked! But who's this ""Kodai Kuremi""...?",""
+"s200_149_650","char_HIROKO","Could he be the one who's been ordering us around? Maybe
+he's a public safety insider?",""
+"s200_149_660","char_PLAYER_M","{next}Let's just get in.",""
+"s200_149_661","char_PLAYER_M","{next}You wanna run for it?",""
+"s200_149_662","char_PLAYER_M","{next}I've heard that name before.",""
+"s200_149_670","char_HIROKO","Really? But, we HAVE come this far, so... we may as well.",""
+"s200_149_680","char_HIROKO","I don't think it'd work. This person's kept tabs on us every
+step of the way...",""
+"s200_149_690","char_HIROKO","Don't get any bad ideas! You'd get us busted for real!",""
+"s200_149_700","char_HIROKO","Anyway, standing out here in the open isn't going to do us
+any favors.",""
+"s200_149_710","char_HIROKO","Phew, deep breaths... Time to show some streamer steel.
+Okay, let's get in!",""
+"s200_149_720","char_HIROKO","Uh-oh. Looks like a bunch of stuff we should definitely not
+mess with. Now, let's see...",""
+"s200_149_730","char_HIROKO","There's another message. ""Insert the drive into the USB port
+in front of you.""",""
+"s200_149_750","char_HIROKO","Ugh! But now that we're in, best to go big or go home,
+right? Here goes... nothing!",""
+"s200_149_760","char_HIROKO","Hey, looks like the computer is automatically loading data
+from the USB drive.",""
+"s200_149_770","char_HIROKO","Project EDEN...? What's that? ""Eden"" is...",""
+"s200_149_780","char_PLAYER_M","{next}Paradise.",""
+"s200_149_781","char_PLAYER_M","{next}An electronics store.",""
+"s200_149_782","char_PLAYER_M","{next}A stew with fish cakes and daikon.",""
+"s200_149_790","char_HIROKO","Oh, right! Like ""Garden of Eden."" Wonder what kinda project
+would borrow that for its name.",""
+"s200_149_800","char_HIROKO","So handy how it also sells food and office supplies. But we
+aren't talking about Edion!",""
+"s200_149_810","char_HIROKO","I hope you just misheard me, because I can't believe you'd
+make such an awful ""oden"" pun.",""
+"s200_149_820","char_HIROKO","The client is Jindai Technology? ""We'll use any means necessary 
+to achieve our goal."" Hmm. That's somewhat disturbing.",""
+"s200_149_830","char_HIROKO","And this image with some creature inside a capsule... The
+apex of genome technology? That's a big ""nope"" for me!",""
+"s200_149_840","char_HIROKO","Hey, it's loading the next file. Hmm. Looks like some kind
+of personal diary.",""
+"s200_149_850","char_PLAYER_M","{next}Whose could it be?",""
+"s200_149_851","char_PLAYER_M","{next}How much could a personal diary be worth?",""
+"s200_149_852","char_PLAYER_M","{next}Feels kinda wrong to read someone's diary.",""
+"s200_149_860","char_HIROKO","Sounds like some kind of scientist, maybe some big
+shot, given the arrogant tone.",""
+"s200_149_870","char_HIROKO","A whole lot, I'd imagine. It probably contains info only
+they know, details on connections, feelings, plans.",""
+"s200_149_880","char_HIROKO","Look... We're WAY past the point of cold feet. Think of all
+we did to get here.",""
+"s200_149_890","char_HIROKO","""Despite my results on the IQ test, I can't accept
+the thought of Yuya as the successor.""",""
+"s200_149_900","char_HIROKO","""I despise them, both Yuya and Simmons."" ""But Simmons' lab
+is mine now! All that remains is to execute the plan.""",""
+"s200_149_910","char_HIROKO","This all sounds like a bunch of whining. I doubt I'd get
+along with the author...",""
+"s200_149_920","","Upload complete.",""
+"s200_149_930","char_HIROKO","Oh, looks like it's done. Let's take the USB drive with us,
+just in case.",""
+"s200_149_940","char_HIROKO","Probably not a great idea to stick around here any longer
+than we have to. Let's go!",""
+"s200_149_950","char_HIROKO","Whew... That officer hasn't come back yet. Lucky us!",""
+"s200_149_960","char_HIROKO","Another message. ""Leave the ID and drive on the bench.
+You'll find your reward there.""",""
+"s200_149_970","char_HIROKO","Not gonna lie. I can't wait to get rid of this drive. Let's
+find that bench, like, now!",""
+"s200_149_980","char_HIROKO","We've still gotta return the ID and drive! Let's find that
+bench and get this over with!",""
+"s200_149_990","char_HIROKO","This must be the bench. I'll leave the ID and drive here.",""
+"s200_149_1000","char_HIROKO","There's an envelope. Maybe that's our reward? What do you
+think? Should we take it?",""
+"s200_149_1010","char_PLAYER_M","{next}Yeah.",""
+"s200_149_1011","char_PLAYER_M","{next}You can have it.",""
+"s200_149_1012","char_PLAYER_M","{next}Let's leave it here.",""
+"s200_149_1020","char_HIROKO","I figured you'd say that. But I was thinking the same thing,
+actually.",""
+"s200_149_1030","char_HIROKO","B-But you're the one who had to change clothes and so on.
+You can have it.",""
+"s200_149_1040","char_HIROKO","Sure, it's super sus, but ""It's safe"" is written neatly on
+it in red ink...",""
+"s200_149_1050","char_HIROKO","Let's have a look inside... Hmm, what is this?
+Maybe you can use it? Here, all yours.",""
+"s200_149_1060","char_HIROKO","No telling if anyone saw us slipping into that vehicle, so
+we'd better scram.",""
+"s200_149_1070","char_HIROKO","Let's go to Vision Square! We can talk more there!",""
+"s200_149_1080","","...And off they go. So kind of them to be so helpful.",""
+"s200_149_1090","","Hopefully, this'll clear things up a bit. Like what 
+""you-know-who"" has been up to...",""
+"s200_149_1100","","Now, then. No point in lingering here any longer, so I'll be
+on my way. Thanks, guys...",""
+"s200_149_1110","char_HIROKO","What was all that? It feels like someone had us dancing in
+the palm of their hand.",""
+"s200_149_1120","char_HIROKO","Anyway, sorry for dragging you into this. But I think that's
+the last of it. Thanks again!",""
+"s200_149_1130","char_HIROKO","Messing with a D-SAT vehicle is enough trouble for
+me for one day.",""
+"s200_149_1140","char_HIROKO","You be careful, too. All right, I'll see ya later!",""
+"s200_149_1150","char_PLAYER_M","Call Hiroko to start her investigation?",""
+"s200_149_1160","char_PLAYER_M","{next}[Call her.]",""
+"s200_149_1161","char_PLAYER_M","{end}I'm too busy right now.",""

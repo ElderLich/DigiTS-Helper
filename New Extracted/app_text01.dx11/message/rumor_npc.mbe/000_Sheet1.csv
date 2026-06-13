@@ -1,0 +1,1264 @@
+string2 0,string 1,string 2,string 3
+"r_t0101_0010_0010","char_PASSERBY_MAN","Just a little longer until
+the meeting...",""
+"r_t0101_0010_0020","char_PASSERBY_WOMAN","Hmm... Which one should I get?♪",""
+"r_t0101_0010_0030","char_PASSERBY_MAN","Maybe I'll buy some new
+clothes.",""
+"r_t0101_0010_0040","char_PASSERBY_MAN","Still have plenty of time...",""
+"r_t0101_0010_0050","char_PASSERBY_MAN","Maybe I'll catch a cab home.",""
+"r_t0101_0010_0060","char_PASSERBY_MAN","Ugh, it's so hot...",""
+"r_t0101_0010_0070","char_PASSERBY_MAN","Off-limits? Seriously...?",""
+"r_t0101_0010_0080","char_PASSERBY_MAN","What, we can't go through...?",""
+"r_t0101_0010_0090","char_PASSERBY_MAN","This way's blocked off, too...",""
+"r_t0101_0010_0100","char_PASSERBY_MAN","I'm starting to get really
+worried...",""
+"r_t0101_0010_0110","char_PASSERBY_MAN","What in the world is
+happening?",""
+"r_t0101_0010_0120","char_PASSERBY_MAN","I just wanna go home...",""
+"r_t0101_0010_0130","char_PASSERBY_MAN","Is that a Digimon?!",""
+"r_t0101_0010_0140","char_PASSERBY_MAN","No way, a Digimon?!",""
+"r_t0101_0010_0150","char_PASSERBY_WOMAN","Isn't it dangerous...?",""
+"r_t0101_0010_0160","char_PASSERBY_MAN","What the hell is that thing?!",""
+"r_t0101_0010_0170","char_PASSERBY_MAN","Cosplaying in Shinjuku?
+Really?",""
+"r_t0101_0010_0180","char_PASSERBY_MAN","Don't they look kinda alike?",""
+"r_t0101_0010_0190","char_PASSERBY_MAN","Hi, there, gorgeous. Wanna go
+hang out somewhere?",""
+"r_t0102_0010_0010","char_OPERATOR_M","Still got time before work,
+so I might as well have some fun!",""
+"r_t0102_0010_0020","char_OPERATOR_M","Where was the station again?",""
+"r_t0102_0010_0030","char_OPERATOR_M","I think I'll pop in for a
+break at a cafe! ♪",""
+"r_t0102_0010_0040","char_OPERATOR_M","Getting all this stuff
+stocked is a real pain...",""
+"r_t0102_0010_0050","char_OPERATOR_M","What should I do today...",""
+"r_t0102_0010_0060","char_OPERATOR_M","Hey, they've got that new
+dessert! Think I'll try it!",""
+"r_t0102_0010_0070","char_OPERATOR_M","Hey, there, pretty lady...
+You free tonight?",""
+"r_t0102_0010_0080","char_OPERATOR_M","What? Oh, I don't know...",""
+"r_t0102_0010_0090","char_OPERATOR_M","Now, where did he wander off
+to...?",""
+"r_t0102_0010_0100","char_OPERATOR_M","I-I just wanna go home...",""
+"r_t0102_0010_0110","char_OPERATOR_M","I gotta catch up with the
+rest of the gang...",""
+"r_t0102_0010_0120","char_OPERATOR_M","This ramen place is always
+packed.",""
+"r_t0102_0010_0130","char_OPERATOR_M","What's taking him so long...?",""
+"r_t0102_0010_0140","char_OPERATOR_M","Which one should I play
+today...?",""
+"r_t0102_0010_0150","char_OPERATOR_M","What a crazy protest...",""
+"r_t0102_0010_0160","char_OPERATOR_M","Here too?",""
+"r_t0102_0010_0170","char_OPERATOR_M","Did something happen over
+there?",""
+"r_t0102_0010_0180","char_OPERATOR_M","This is sketching me out.
+Maybe it's time to go...",""
+"r_t0102_0010_0190","char_OPERATOR_M","People seem crazier than
+usual around the theater today...",""
+"r_t0102_0010_0200","char_OPERATOR_M","Gimme a break...",""
+"r_t0102_0010_0210","char_OPERATOR_M","Guess I'd better find
+somewhere to kill time...",""
+"r_t0102_0010_0220","char_OPERATOR_M","Is the way still closed?",""
+"r_t0102_0010_0230","char_OPERATOR_M","What should I do...",""
+"r_t0102_0010_0240","char_OPERATOR_M","What the hell is going on?",""
+"r_t0102_0010_0250","char_OPERATOR_M","I just wanna go home...",""
+"r_t0102_0010_0260","char_OPERATOR_M","What's going on?",""
+"r_t0102_0010_0270","char_PASSERBY_WOMAN","What's with that kid?",""
+"r_t0102_0010_0280","char_PASSERBY_WOMAN","He's so fluffy!",""
+"r_t0102_0010_0290","char_PASSERBY_MAN","Look at those horns...",""
+"r_t0102_0010_0300","char_PASSERBY_MAN","Wait, is it Halloween already?",""
+"r_t0102_0010_0310","char_PASSERBY_MAN","What's with the cosplay?",""
+"r_t0102_0010_0320","char_CHILD","Mom, what's that?",""
+"r_t0102_0010_0330","char_PASSERBY_WOMAN","Don't stare...!",""
+"r_t0102_0010_0340","char_PASSERBY_MAN","Is that... a Digimon?",""
+"r_t0102_0010_0350","char_PASSERBY_MAN","Get a photo! Get a photo!",""
+"r_t0102_0010_0360","char_PASSERBY_WOMAN","Hey, isn't that the one from
+the Internet?",""
+"r_t0103_0010_0010","char_PASSERBY_MAN","Where should I go...?",""
+"r_t0103_0010_0020","char_PASSERBY_MAN","What's keeping her...",""
+"r_t0103_0010_0030","char_PASSERBY_MAN","Time to grab a bite.",""
+"r_t0103_0010_0040","char_PASSERBY_MAN","Shinjuku is way too big...",""
+"r_t0103_0010_0050","char_PASSERBY_MAN","Aw, man! I can't see anything
+from here...",""
+"r_t0103_0010_0051","char_PASSERBY_MAN","What's with the line?",""
+"r_t0103_0010_0052","char_PASSERBY_MAN","There's too many people!",""
+"r_t0103_0010_0053","char_PASSERBY_MAN","I've got a bad feeling about
+this...",""
+"r_t0103_0010_0054","char_PASSERBY_MAN","Might be best to steer clear
+of all this...",""
+"r_t0103_0010_0055","char_PASSERBY_MAN","Is something starting?",""
+"r_t0103_0010_0056","char_PASSERBY_MAN","Maybe I'll snap a pic, just
+'cuz.",""
+"r_t0103_0010_0057","char_PASSERBY_MAN","What's going on?",""
+"r_t0103_0010_0058","char_PASSERBY_MAN","This is kinda creepy...",""
+"r_t0103_0010_0059","char_PASSERBY_MAN","I can't see anything!",""
+"r_t0103_0010_0060","char_PASSERBY_WOMAN","Did something happen?",""
+"r_t0103_0010_0061","char_PASSERBY_MAN","Are they filming a movie?",""
+"r_t0103_0010_0062","char_PASSERBY_MAN","I'm posting this online!",""
+"r_t0103_0010_0063","char_PASSERBY_MAN","How does it work?",""
+"r_t0103_0010_0064","char_PASSERBY_MAN","What's that?! What's that?",""
+"r_t0103_0010_0065","char_PASSERBY_MAN","It just moved a little!",""
+"r_t0103_0010_0066","char_PASSERBY_WOMAN","Shouldn't we be keeping our
+distance?",""
+"r_t0103_0010_0067","char_PASSERBY_MAN","This thing's huge!",""
+"r_t0103_0010_0068","char_PASSERBY_MAN","This is crazy!",""
+"r_t0103_0010_0069","char_PASSERBY_WOMAN","Awesome!",""
+"r_t0103_0010_0070","char_PASSERBY_MAN","Stop shoving!",""
+"r_t0103_0010_0080","char_PASSERBY_WOMAN","I wanna get closer!",""
+"r_t0103_0010_0090","char_PASSERBY_MAN","I think I caught a peek...",""
+"r_t0103_0010_0100","char_PASSERBY_WOMAN","Is something floating
+there...?",""
+"r_t0103_0010_0110","char_PASSERBY_WOMAN","Something weird is there...",""
+"r_t0103_0010_0120","char_PASSERBY_MAN","Digi... mon?",""
+"r_t0103_0010_0130","char_PASSERBY_MAN","Surprised it can walk around
+like that...",""
+"r_t0103_0010_0140","char_PASSERBY_MAN","Is that a Digimon...?",""
+"r_t0103_0010_0150","char_PASSERBY_MAN","Hey! It's a Digimon!",""
+"r_t0103_0010_0160","char_PASSERBY_MAN","Hmm? Is that what I think it
+is...?",""
+"r_t0103_0010_0170","char_PASSERBY_MAN","Hey, you over there! Got a
+moment?",""
+"r_t0103_0010_0175","char_PASSERBY_MAN","You ignoring me?",""
+"r_t0103_0010_0180","char_PASSERBY_MAN","I want to ask you about
+Digimon!",""
+"r_t0103_0010_0185","char_PASSERBY_MAN","Hey, come on! It'll just take
+a second!",""
+"r_t0103_0010_0190","char_PASSERBY_MAN","Just hear me out!",""
+"r_t0103_0010_0195","char_PASSERBY_MAN","Hey, don't ignore me! That
+hurts!",""
+"r_t0103_0010_0200","char_PASSERBY_MAN","It's only a quick interview!
+Come on!",""
+"r_t0103_0010_0210","char_PASSERBY_MAN","Did you just say ""Digimon""?",""
+"r_t0103_0010_0220","char_PASSERBY_MAN","What's going on here?",""
+"r_t0103_0010_0230","char_PASSERBY_MAN","Digimon...?",""
+"r_t0103_0010_0240","char_PASSERBY_MAN","Is this some kind of event?",""
+"r_t0103_0010_0250","char_PASSERBY_MAN","I've seen that person before!",""
+"r_t0104_0010_0010","char_PASSERBY_MAN","The ticket gates are down
+these stairs, right?",""
+"r_t0104_0010_0020","char_PASSERBY_WOMAN","Welcome!",""
+"r_t0104_0010_0030","char_PASSERBY_MAN","Wonder if I got paid yet...",""
+"r_t0104_0010_0040","char_PASSERBY_WOMAN","Is it my turn yet? I'm
+starving...",""
+"r_t0104_0010_0050","char_PASSERBY_MAN","Hey, they've got that new
+book in stock!",""
+"r_t0104_0010_0060","char_PASSERBY_WOMAN","What should I get today? ♪",""
+"r_t0104_0010_0070","char_PASSERBY_MAN","Now, where did I leave my
+stuff...?",""
+"r_t0104_0010_0080","char_PASSERBY_MAN","This station is way too
+complicated...!",""
+"r_t0104_0010_0090","char_PASSERBY_MAN","There's videos of some
+strange phenomena...",""
+"r_t0104_0010_0095","char_PASSERBY_MAN","Not this again...",""
+"r_t0104_0010_0100","char_PASSERBY_WOMAN","Oh, come on...",""
+"r_t0104_0010_0110","char_SPECIAL_FORCES","Evacuate this way!",""
+"r_t0104_0010_0120","char_PASSERBY_WOMAN","What the heck is going on?",""
+"r_t0104_0010_0130","char_PASSERBY_MAN","What's that machine?!",""
+"r_t0104_0010_0140","char_PASSERBY_MAN","I want to know exactly what's
+going on!",""
+"r_t0104_0010_0150","char_PASSERBY_WOMAN","What do they mean,
+""evacuate""...?",""
+"r_t0104_0010_0160","char_PASSERBY_MAN","Huh? What's this about bugs?",""
+"r_t0105_0010_0010","char_SPECIAL_FORCES","This way!",""
+"r_t0105_0010_0020","char_PASSERBY_MAN","Wh-What is this?!",""
+"r_t0105_0010_0030","char_PASSERBY_MAN","Where are we going?",""
+"r_t0105_0010_0040","char_PASSERBY_MAN","What is that?",""
+"r_t0107_0010_0010","char_PASSERBY_MAN","Tell us the truth!",""
+"r_t0107_0010_0020","char_PASSERBY_MAN","What's behind the Wall?!",""
+"r_t0107_0010_0030","char_PASSERBY_MAN","What's the government trying
+to pull?!",""
+"r_t0107_0010_0040","char_PASSERBY_MAN","Is there... an entrance over
+that way?",""
+"r_t0107_0010_0050","char_PASSERBY_MAN","Wh-What was that?!",""
+"r_t0107_0010_0060","char_PASSERBY_MAN","A rumble! What happened?!",""
+"r_t0107_0010_0070","char_PASSERBY_MAN","What?! An earthquake?!",""
+"r_t0107_0010_0080","char_PASSERBY_MAN","You can't fool us!",""
+"r_t0107_0010_0090","char_PASSERBY_MAN","Give us some answers!",""
+"r_t0107_0010_0100","char_PASSERBY_MAN","We know you're hiding
+something!",""
+"r_t0107_0010_0110","char_PASSERBY_MAN","The truth has to come out!",""
+"r_t0107_0010_0120","char_PASSERBY_MAN","If nothing's wrong, then why
+hide it?!",""
+"r_t0107_0010_0130","char_PASSERBY_MAN","Listen to the people!",""
+"r_t0107_0010_0140","char_PASSERBY_MAN","This is what caused the
+recession!",""
+"r_t0107_0010_0150","char_PASSERBY_MAN","Just come clean, already!",""
+"r_t0107_0010_0160","char_PASSERBY_MAN","You can't hide the truth
+forever!",""
+"r_t0107_0010_0170","char_PASSERBY_MAN","The government can't get away
+with this!",""
+"r_t0107_0010_0180","char_PASSERBY_MAN","Explain yourselves!",""
+"r_t0107_0010_0190","char_PASSERBY_MAN","We aren't gonna take this
+lying down!",""
+"r_t0107_0020_0010","char_PASSERBY_WOMAN","Why aren't you saying
+anything?!",""
+"r_t0107_0020_0020","char_PASSERBY_MAN","I've had just about enough of
+this!",""
+"r_t0107_0020_0030","char_PASSERBY_MAN","End the blockade now!",""
+"r_t0107_0020_0040","char_PASSERBY_MAN","Respect our rights as
+citizens!",""
+"r_t0107_0020_0050","char_PASSERBY_MAN","Don't ignore us!",""
+"r_t0107_0020_0060","char_PASSERBY_MAN","Don't ignore the will of the
+people!",""
+"r_t0107_0020_0070","char_PASSERBY_MAN","What happened to democracy?!",""
+"r_t0107_0020_0080","char_PASSERBY_MAN","Liars!",""
+"r_t0107_0020_0090","char_PASSERBY_WOMAN","Give us back our city!",""
+"r_t0107_0020_0100","char_PASSERBY_MAN","Politics and the city belong
+to the people!",""
+"r_t0107_0020_0110","char_PASSERBY_MAN","We'll force the government to
+act!",""
+"r_t0107_0020_0120","char_PASSERBY_MAN","Make yourselves heard,
+everyone!",""
+"r_t0107_0020_0130","char_PASSERBY_MAN","We'll fight as long as it
+takes!",""
+"r_t0107_0020_0140","char_PASSERBY_WOMAN","For our future!",""
+"r_t0107_0020_0150","char_PASSERBY_MAN","We can bring about change!",""
+"r_t0107_0020_0160","char_PASSERBY_MAN","Don't think we'll take it
+quietly!",""
+"r_t0107_0020_0170","char_PASSERBY_MAN","We want the truth!",""
+"r_t0107_0020_0180","char_PASSERBY_MAN","How long are you gonna lie to
+the people?!",""
+"r_t0107_0020_0190","char_PASSERBY_MAN","You owe us an explanation!",""
+"r_t0107_0020_0200","char_PASSERBY_MAN","They're abusing state
+power...",""
+"r_t0107_0020_0210","char_PASSERBY_MAN","All we want is to hear the
+truth!",""
+"r_t0107_0020_0220","char_PASSERBY_MAN","A blockade with no
+explanation is violence!",""
+"r_t0107_0020_0230","char_PASSERBY_MAN","Aren't you supposed to
+protect the people?",""
+"r_t0107_0020_0240","char_PASSERBY_MAN","Let's make them hear us!",""
+"r_t0107_0020_0250","char_PASSERBY_MAN","We won't give up!",""
+"r_t0107_0020_0260","char_PASSERBY_MAN","Show them how angry we are!",""
+"r_t0107_0020_0270","char_PASSERBY_MAN","This is a fight for justice!",""
+"r_t0107_0020_0280","char_PASSERBY_WOMAN","You can't just decide
+whatever you want!",""
+"r_t0107_0020_0290","char_PASSERBY_WOMAN","Are you trying to rob us of
+our freedom?!",""
+"r_t0107_0020_0300","char_PASSERBY_MAN","We won't let you get away
+with this!",""
+"r_t0107_0020_0310","char_PASSERBY_MAN","Don't let the government
+weasel out of this!",""
+"r_t0107_0020_0320","char_PASSERBY_MAN","We demand transparency!",""
+"r_t0107_0020_0330","char_PASSERBY_MAN","Send out whoever's in charge!",""
+"r_t0107_0020_0340","char_PASSERBY_MAN","It's the government's fault I
+got dumped!",""
+"r_t0107_0020_0350","char_PASSERBY_MAN","What are you so afraid of?!",""
+"r_t0107_0020_0360","char_PASSERBY_MAN","Who's behind this
+conspiracy?!",""
+"r_t0107_0020_0370","char_PASSERBY_MAN","You're cowards for not
+telling us anything!",""
+"r_t0107_0020_0380","char_PASSERBY_MAN","What are you doing to our
+town?!",""
+"r_t0107_0020_0390","char_PASSERBY_MAN","Give us answers, not excuses!",""
+"r_t0107_0020_0400","char_PASSERBY_MAN","We know you're hiding
+something!",""
+"r_t0107_0020_0410","char_PASSERBY_MAN","Don't turn a blind eye to
+government oppression!",""
+"r_t0107_0020_0420","char_PASSERBY_MAN","Why can't you say anything?!",""
+"r_t0107_0020_0430","char_PASSERBY_MAN","Don't shirk your
+responsibilities!",""
+"r_t0107_0020_0440","char_PASSERBY_WOMAN","What the hell?! My date is
+ruined!",""
+"r_t0107_0020_0450","char_PASSERBY_MAN","Are you trying to make fools
+of us?!",""
+"r_t0107_0020_0460","char_PASSERBY_MAN","They aren't listening to the
+people!",""
+"r_t0107_0020_0470","char_PASSERBY_MAN","I saw this on OcculTokyo TV!",""
+"r_t0107_0020_0480","char_PASSERBY_MAN","OcculTokyo TV tells the
+truth, right?",""
+"r_t0107_0020_0490","char_PASSERBY_MAN","Was that video footage from
+behind the wall?!",""
+"r_t0107_0020_0500","char_PASSERBY_MAN","OcculTokyo TV has the
+message!",""
+"r_t0107_0020_0510","char_PASSERBY_MAN","Does OcculTokyo TV have
+footage from behind the wall?",""
+"r_t0107_0020_0520","char_PASSERBY_MAN","Is OcculTokyo TV a glimpse of
+what's really going on?!",""
+"r_t0107_0020_0530","char_PASSERBY_MAN","Everyone needs to watch
+OcculTokyo TV!",""
+"r_t0107_0020_0540","char_PASSERBY_MAN","I hear there's leaked footage
+from behind the wall!",""
+"r_t0107_0020_0550","char_PASSERBY_MAN","We can't let them get away
+with this!",""
+"r_t0107_0020_0560","char_PASSERBY_MAN","Make our town the way it used
+to be!",""
+"r_t0107_0020_0570","char_PASSERBY_MAN","All we want is our lives
+back!",""
+"r_t0107_0020_0580","char_PASSERBY_MAN","They're trying to take the
+city for themselves!",""
+"r_t0107_0020_0590","char_PASSERBY_MAN","It's like our lives mean
+nothing to them!",""
+"r_t0107_0020_0600","char_PASSERBY_MAN","We aren't obedient little
+sheep anymore!",""
+"r_t0107_0020_0610","char_PASSERBY_MAN","Can't you hear us?!",""
+"r_t0108_0010_0010","char_PASSERBY_MAN","Where's the protest meeting
+point...?",""
+"r_t0108_0010_0020","char_PASSERBY_MAN","Where would be a good place
+to kill time...?",""
+"r_t0108_0010_0030","char_PASSERBY_MAN","What's going on at the
+Wall...?",""
+"r_t0108_0010_0040","char_PASSERBY_MAN","No dice this way, either.",""
+"r_t0108_0010_0050","char_PASSERBY_WOMAN","What? Really?!",""
+"r_t0108_0010_0060","char_SPECIAL_FORCES","Is all of this really
+necessary?",""
+"r_t0108_0010_0070","char_SPECIAL_FORCES","Well, maybe if you'd been
+paying attention...",""
+"r_t0108_0010_0080","char_HIGH_SCHOOL_GIRL_2","By the way, if we're talking
+weird goings-on...",""
+"r_t0108_0010_0090","char_HIGH_SCHOOL_GIRL_2","All these strange
+phenomena...",""
+"r_t0108_0010_0100","char_HIGH_SCHOOL_GIRL_2","There are way too many of
+them these days.",""
+"r_t0109_0010_0100","char_PASSERBY_MAN","A m-monster...!",""
+"r_t0109_0010_0020","char_HIGH_SCHOOL_GIRL_2","Aw, man. My favorite shortcut
+is blocked by construction...",""
+"r_t0302_0010_0010","char_OPERATOR_M","Hold up. What's that?",""
+"r_t0302_0010_0020","char_OPERATOR_M","What is that?",""
+"r_t0302_0010_0030","char_OPERATOR_M","What's with that vehicle...?",""
+"r_t0302_0010_0040","char_OPERATOR_M","Please evacuate as directed.",""
+"r_t0302_0010_0050","char_OPERATOR_M","Stay calm and move along this
+way.",""
+"r_t0302_0010_0060","char_TAKEMIYA","My daughter might be inside!",""
+"r_t0303_0010_0010","char_OPERATOR_M","*panting* Whoa!",""
+"r_t0304_0010_0010","char_TYUMON","Hey, over here! This way!",""
+"r_t0401_0010_0010","char_NANIMON","Get away!",""
+"r_t0401_0010_0020","char_NANIMON","What do ya want?!",""
+"r_t0403_0010_0020","char_OPERATOR_M","I'll get you this time!",""
+"r_t0403_0010_0030","char_OPERATOR_M","I said no!",""
+"r_t0403_0010_0040","char_OPERATOR_M","Let's go to the park!",""
+"r_t0403_0010_0050","char_OPERATOR_M","I don't remember...",""
+"r_t0403_0010_0060","char_OPERATOR_M","Really...?",""
+"r_t0403_0010_0070","char_MINERVAMON","I've never heard that...",""
+"r_t0403_0010_0080","char_AEGIOMON","But... why...?",""
+"r_t0403_0010_0090","char_INORI","...Coo.",""
+"r_d0403_0020_0010","char_NANIMON","Here AGAIN?!",""
+"r_d0403_0020_0020","char_NANIMON","Whose house is this, anyway?!",""
+"r_d1101_0010_0010","char_INORI","Are you okay?! Be careful!",""
+"r_d1102_0010_0010","char_INORI","Don't be scared...",""
+"r_d0106_0010_0010","","Urgh...",""
+"r_d0106_0010_0020","char_YUKIDARUMON","Agh...",""
+"r_d0107_0010_0010","char_MOJYAMON","Ow...",""
+"r_d0107_0010_0020","char_YUKIDARUMON","But why...?",""
+"r_d0107_0010_0030","char_IKKAKUMON","Ugh... What happened...?",""
+"r_d0107_0010_0040","char_ICEMON","Yowch...",""
+"r_d0107_0010_0050","char_ZUDOMON","D-Damn that Apollomon...",""
+"r_d0107_0010_0060","char_BLUEMERAMON","Gurgh... That jerk...",""
+"r_d0201_0010_0010","char_TOYAGUMON","Hmm. What to buy...?",""
+"r_d0201_0010_0020","char_MUSYAMON","Right. Don't neglect your
+training!",""
+"r_d0201_0010_0030","char_GAOMON","It's finally here!",""
+"r_d0201_0010_0040","char_V-MON","It's Locomon!",""
+"r_d0201_0010_0050","char_MONOCHROMON","Have fun...!",""
+"r_d0201_0010_0060","char_MOCHIMON","What're they making?",""
+"r_d0201_0010_0070","char_MOCHIMON","Wow! What's that big thing?",""
+"r_d0201_0010_0080","char_REVOLMON","Boy, howdy! There it is!",""
+"r_d0201_0010_0090","char_TOYAGUMON","Blimpmon is here!",""
+"r_d0201_0010_0100","char_MUCHOMON","So cool!",""
+"r_d0201_0010_0110","char_CHOROMON","I'm getting sleepy...",""
+"r_d0201_0010_0120","char_SUPERSTARMON","*whistles* Now, that's slick!",""
+"r_d0201_0010_0130","char_TOGEMON","Zzzzz...",""
+"r_d0201_0010_0140","char_MAMEMON","Hey, go sleep somewhere else!
+You're in my way!",""
+"r_d0201_0020_0010","char_BAKEMON","Come one! Come all!",""
+"r_d0201_0020_0020","char_BAKEMON","Boo! Come buy something!",""
+"r_d0201_0020_0030","char_GANIMON","Are you serious?!",""
+"r_d0201_0020_0040","char_MUCHOMON","Come on in!",""
+"r_d0201_0020_0050","char_FALCOMON","That's way too expensive!",""
+"r_d0201_0020_0060","char_GOBURIMON","Yeah, let's do this!",""
+"r_d0201_0020_0070","char_FANTOMON","Bust out the credits if ya
+wanna see more!",""
+"r_d0201_0020_0080","char_GOBURIMON","Don't be so greedy!",""
+"r_d0201_0020_0090","char_DRACUMON","Ridiculous...",""
+"r_d0201_0020_0100","char_MINOTAURMON","How ya doin'?",""
+"r_d0201_0020_0110","char_GOLEMON","Good...!",""
+"r_d0201_0020_0120","char_TYUMON","Hey, there!",""
+"r_d0201_0020_0130","char_KARATUKINUMEMON","Gimme somethin'!",""
+"r_d0201_0020_0140","char_GAZIMON","Got any change...?",""
+"r_d0201_0020_0150","char_GAZIMON","Ugh, that was one too many...
+*hic*",""
+"r_d0201_0020_0160","char_GOBURIMON","Hey, where's my meat?!",""
+"r_d0201_0020_0170","char_PICODEVIMON","I stole it! Gyahaha!",""
+"r_d0201_0020_0180","char_TURUIEMON","I-I can't take any more...",""
+"r_d0201_0030_0010","char_DIGITAMAMON","Prepare to die...!",""
+"r_d0201_0030_0020","char_BLACKKINGNUMEMON","Help me! I shall give you
+YEN!",""
+"r_d0201_0030_0030","char_VOLCAMON","Is that all you've got?!",""
+"r_d0201_0030_0040","char_SHOUTMON","Don't give up!",""
+"r_d0201_0030_0050","char_PICKLEMON","Are you okay?!",""
+"r_d0201_0030_0060","char_BAKUMON","Are you here to help?!",""
+"r_d0201_0030_0070","char_KOTEMON","Help me...!",""
+"r_d0201_0030_0080","char_CATCHMAMEMON","Urgh...",""
+"r_d0201_0030_0090","char_GOTTSUMON","What's happenin'?!",""
+"r_d0201_0030_0100","char_TYUMON","Hey! What's happening?!",""
+"r_d0201_0030_0110","char_KARATUKINUMEMON","This is bad news...!",""
+"r_d0201_0030_0120","char_GAZIMON","Can't anybody destroy this
+thing?!",""
+"r_d0201_0030_0130","char_PUMPMON","Whoa! Who's that cutie?",""
+"r_d0201_0030_0140","char_IMPMON","Grr! You scoundrels!",""
+"r_d0201_0030_0150","char_CATCHMAMEMON","Help is here!",""
+"r_d0201_0030_0160","char_REPPAMON","I'm going to slice you up!",""
+"r_d0201_0030_0170","char_MACHGAOGAMON","Bring it!",""
+"r_d0201_0030_0180","char_TANEMON","Everyone's fighting their
+hardest up ahead!",""
+"r_d0201_0030_0190","char_PUNIMON","Clear the way forward!",""
+"r_d0201_0040_0010","char_PICKLEMON","We gotta go for it!",""
+"r_d0201_0040_0020","char_TOYAGUMON","Shoulder that load!",""
+"r_d0201_0040_0030","char_ARMADILLOMON","Wow! Awesome!",""
+"r_d0201_0040_0040","char_HAWKMON","SO much cooler!",""
+"r_d0201_0040_0050","char_WORMMON","It's huge!",""
+"r_d0201_0040_0060","char_FUNBEEMON","We're free!",""
+"r_d0201_0040_0070","char_PENMON","We're doing it!",""
+"r_d0201_0040_0080","char_TUNOMON","This is the best!",""
+"r_d0201_0050_0010","char_NANIMON","Now where am I?!",""
+"r_d0201_0050_0020","char_NANIMON","Wait... I'm still in the same
+place as before!",""
+"r_d0202_0010_0010","char_LOPMON","Please proceed this way if you
+need to see Lord {fc2Merukimon}.",""
+"r_d0202_0010_0020","char_LUNAMON","Here! Over here!",""
+"r_d0202_0010_0030","char_LUNAMON","Hey! Over here!",""
+"r_d0202_0010_0040","char_MAMEMON","Another big day of cleaning!",""
+"r_d0202_0010_0050","char_KOTEMON","Titans?! We have to evacuate!",""
+"r_d0202_0010_0060","char_DORIMON","Evacuate! Evacuate!",""
+"r_d0202_0020_0010","char_PICODEVIMON","You're the best, boss!",""
+"r_d0202_0020_0020","char_CLOCKMON","What're you looking at?!",""
+"r_d0202_0020_0030","char_TYUMON","Nothing cooler than
+glittering gold!",""
+"r_d0202_0020_0040","char_OTAMAMON","I want to work!",""
+"r_d0202_0020_0050","char_PICODEVIMON","Come this way if ya wanna get
+strong!",""
+"r_d0202_0020_0060","char_GERBEMON","My trash! My treasure!",""
+"r_d0202_0020_0070","char_OTAMAMON","Trash is... yummy...",""
+"r_d0202_0020_0080","char_BAKEMON","I got my overtime pay, so
+drinks are on me!",""
+"r_d0202_0020_0090","char_SHAMAMON","Hell, yeah! Let's go!",""
+"r_d0202_0020_0100","char_SHAMAMON","I need some easy money...",""
+"r_d0202_0020_0110","char_SHAMAMON","I wanna ride a cool
+Digimon...",""
+"r_d0202_0020_0120","char_SHAMAMON","I don't wanna work...",""
+"r_d0202_0020_0130","char_GEREMON","Who're you?",""
+"r_d0202_0020_0140","char_SUKAMON","Hey, listen.",""
+"r_d0202_0020_0150","char_GEREMON","You can hear me, right?",""
+"r_d0202_0020_0160","char_NUMEMON","Hey, don't ignore me.",""
+"r_d0202_0020_0170","char_SHAMAMON","I need another drink.",""
+"r_d0202_0020_0180","char_GAZIMON","Someone's coming...",""
+"r_d0202_0030_0010","char_MUCHOMON","Awesome! Go get 'em!",""
+"r_d0202_0030_0020","char_ARCHNEMON","What is that thing?!",""
+"r_d0202_0030_0030","char_RAVEMON","Gngh... A most worthy
+opponent...",""
+"r_d0202_0030_0040","char_REVOLMON","Hey! Hang in there, partner!",""
+"r_d0202_0030_0050","char_OCTMON","I'll give first aid, posthaste!",""
+"r_d0202_0030_0060","char_SILPHYMON","L-Lord... Merukimon...",""
+"r_d0202_0030_0070","char_YUKIDARUMON","What is all this...?",""
+"r_d0202_0030_0080","char_PRINCEMAMEMON","Help me!",""
+"r_d0202_0030_0090","char_PAILDRAMON","This thing is tough!",""
+"r_d0202_0030_0100","char_SKULLSATAMON","Pathetic!",""
+"r_d0202_0030_0110","char_WEREGARURUMON","Hah!",""
+"r_d0202_0030_0120","char_OURYUMON","Prepare yourself!",""
+"r_d0202_0030_0130","char_RUSTTYRANOMON","Begone!",""
+"r_d0202_0030_0140","char_ASTAMON","I-I'm alive...",""
+"r_d0202_0030_0150","char_GOLDNUMEMON","I paid you, didn't I?! Get up!",""
+"r_d0202_0030_0160","char_PLATINUMNUMEMON","Please help me!",""
+"r_d0202_0030_0170","char_KOKUWAMON_A","It's too dangerous!",""
+"r_d0202_0030_0180","char_KOKUWAMON_UN","Stay back!",""
+"r_d0202_0030_0190","char_KNIGHTMON","I must drive them off!",""
+"r_d0202_0040_0010","char_GERBEMON","The Great Guardian is here!",""
+"r_d0202_0040_0020","char_PAGUMON","It's true!",""
+"r_d0202_0040_0030","char_MONODRAMON","So cool!",""
+"r_d0202_0040_0040","char_GINRYUMON","Lord Merukimon awaits you!",""
+"r_d0202_0050_0010","char_BETAMON","Someone stole my heater...",""
+"r_d0202_0050_0020","char_GOBURIMON","Ugh! How annoyin'...",""
+"r_d0202_0050_0030","char_GOBURIMON","Look what I found! Gyahaha!",""
+"r_d0202_0050_0040","char_GOBURIMON","Can I go now...?",""
+"r_d0203_0010_0010","char_GINRYUMON","Eek?! A h-human...?!",""
+"r_d0203_0010_0020","char_GINRYUMON","I am afraid of humans...",""
+"r_d0204_0010_0010","char_PICODEVIMON","Oh, is that how it is?",""
+"r_d0204_0010_0020","char_PICODEVIMON","Uh, I don't think so!",""
+"r_d0204_0010_0030","char_KERAMON","Now you've done it!",""
+"r_d0204_0010_0040","char_HANGYOMON","Good...",""
+"r_d0204_0010_0050","char_DRACUMON","Incredible!",""
+"r_d0204_0020_0010","char_NANIMON","Stay back! Stay back, I tell
+ya!",""
+"r_d0204_0020_0020","char_NANIMON","I thought I told ya to stay
+back!",""
+"r_d0204_0020_0030","char_NANIMON","Like, seriously! STAY! AWAY!",""
+"r_d0206_0010_0010","char_BIGMAMEMON","Hope everyone's ready to work
+loud and proud today!",""
+"r_d0206_0010_0020","char_MAMEMON","(...I just want to go home.)",""
+"r_d0206_0010_0030","char_MAMEMON","Seems like something fell from Central Tower.",""
+"r_d0206_0010_0040","char_TOYAGUMON","Talk about dangerous!",""
+"r_d0206_0010_0050","char_MAMEMON","Please come back down! It's
+dangerous up there!",""
+"r_d0206_0010_0060","char_TOYAGUMON","Seems like only the top is
+cloudy...",""
+"r_d0206_0010_0070","char_MAMEMON","Heave-ho! Heave-ho!",""
+"r_d0206_0010_0080","char_TOYAGUMON","...Heave-ho.",""
+"r_d0206_0010_0090","char_TOYAGUMON","Nice weather today.",""
+"r_d0206_0010_0100","char_BIGMAMEMON","Watch your step, everyone!",""
+"r_d0207_0010_0010","char_HAGURUMON","Ouch...",""
+"r_d0207_0010_0020","char_HAGURUMON","Hey, come here for a second!",""
+"r_d0209_0010_0010","char_HAGURUMON","I need help!",""
+"r_d0209_0010_0020","char_HAGURUMON","Wait!",""
+"r_d0210_0010_0010","char_HAGURUMON","Vrrrm...",""
+"r_d0217_0010_0010","char_BEARMON","Uh-oh...",""
+"r_d0217_0010_0020","char_BEARMON","Ow... Dang it...",""
+"r_d0301_0010_0010","char_PENMON","Where was the village again?",""
+"r_d0301_0010_0020","char_PENMON","What's this? Such a weird
+shape...",""
+"r_d0301_0010_0030","char_MUCHOMON","What a relaxing place!",""
+"r_d0301_0010_0040","char_OCTMON","Arrr... The village...",""
+"r_d0301_0010_0050","char_BETAMON","Stay back... Stay back...!",""
+"r_d0301_0010_0060","char_GEKOMON","That was close, glurp...",""
+"r_d0301_0010_0070","char_DAGOMON","Search the area...!",""
+"r_d0301_0010_0080","char_HANGYOMON","It's time to hunt!",""
+"r_d0301_0010_0090","char_HANGYOMON","Where's Whamon?!",""
+"r_d0302_0010_0010","char_GEKOMON","We will defeat those Titans,
+glurp!",""
+"r_d0302_0010_0020","char_OCTMON","Keep ye guard up!",""
+"r_d0302_0010_0030","char_SHAKOMON","Is Locomon up and running...?",""
+"r_d0302_0010_0040","char_SHAKOMON","Something's coming!",""
+"r_d0302_0010_0050","char_GEKOMON","What should we do, glurp?!",""
+"r_d0302_0010_0060","char_OCTMON","That one be a black'eart,
+through and through! Arrr!",""
+"r_d0302_0010_0070","char_OCTMON","MarineAngemon!",""
+"r_d0302_0010_0080","char_GIZAMON","Whoa!",""
+"r_d0302_0010_0090","char_SHAKOMON","Look over here!",""
+"r_d0302_0010_0100","char_MARINEANGEMON","Thanks, everyone!",""
+"r_d0302_0010_0110","char_OCTMON","Arrr...",""
+"r_d0302_0010_0130","char_OCTMON","Blimey...",""
+"r_d0302_0010_0140","char_NANIMON","Zzz...",""
+"r_d0302_0010_0150","char_PENMON","Is everything going to be
+okay?",""
+"r_d0302_0010_0160","char_OCTMON","It be the Titans' fault!",""
+"r_d0302_0010_0170","char_GEKOMON","What do we do about the
+pollution of the sea, glurp?",""
+"r_d0302_0010_0180","char_SHAKOMON","No one's coming...",""
+"r_d0302_0010_0190","char_GANIMON","Let me come with you!",""
+"r_d0302_0010_0200","char_GANIMON","Where's WaruSeadramon?!",""
+"r_d0302_0010_0210","char_SHAKOMON","Who're you?",""
+"r_d0302_0010_0220","char_GEKOMON","Okay, just wait your turn,
+glurp.",""
+"r_d0302_0010_0230","char_MARINEANGEMON","Thanks again!",""
+"r_d0302_0010_0240","char_OCTMON","Well, blow me down! It shook
+me hand!",""
+"r_d0304_0010_0010","char_HANGYOMON","This way is off-limits!",""
+"r_d0304_0010_0020","char_COELAMON","Hey! Are you all right?!",""
+"r_d0304_0010_0030","char_COELAMON","Be careful, everyone!",""
+"r_d0304_0010_0040","char_HANGYOMON","What is this?!",""
+"r_d0304_0010_0050","char_ANOMALOCARIMON","Be careful!",""
+"r_d0401_0010_0010","char_HAWKMON","It is them!",""
+"r_d0401_0010_0020","char_FLORAMON","Not bad!",""
+"r_d0402_0010_0010","char_MUCHOMON","Y-You're gonna have to go
+through me!",""
+"r_d0402_0020_0010","char_GEKOMON","St-Stop it, glurp!",""
+"r_d0403_0010_0010","char_HAWKMON","This is the spot!",""
+"r_d0403_0010_0020","char_FLORAMON","It's a tough one...",""
+"r_d0403_0010_0030","char_DUFTMON","Everyone is acting so
+selfishly!",""
+"r_d0404_0010_0010","char_FUNBEEMON","I see!",""
+"r_d0404_0010_0020","char_TENTOMON","I could learn a lot from ya!",""
+"r_d0404_0010_0030","char_LALAMON","This is fun! La la laaa! ♪",""
+"r_d0404_0010_0040","char_FUNBEEMON","Let's hang out again today!",""
+"r_d0404_0010_0050","char_WOODMON","Urp... I drank too much...",""
+"r_d0404_0010_0060","char_TOGEMON","Woo hoo! Isn't this a blast?!",""
+"r_d0404_0010_0070","char_DELUMON","Partying again, are you...?",""
+"r_d0404_0010_0080","char_VEGIMON","Yay!!!",""
+"r_d0404_0010_0090","char_MERAMON","That was... exhausting...",""
+"r_d0404_0020_0010","char_WOODMON","I-I had way too much to
+drink...",""
+"r_d0404_0020_0020","char_TOGEMON","You having fun?!",""
+"r_d0404_0020_0030","char_TOGEMON","Woo hoo!",""
+"r_d0404_0020_0040","char_VEGIMON","Encore!",""
+"r_d0404_0020_0050","char_MUCHOMON","What a voice!",""
+"r_d0404_0020_0060","char_KIWIMON","So hot!",""
+"r_d0404_0020_0070","char_OTAMAMON","You're on fire!",""
+"r_d0404_0020_0080","char_MUCHOMON","It's Lotosmon!",""
+"r_d0404_0020_0090","char_FLORAMON","And Rosemon, too!",""
+"r_d0404_0030_0010","char_MUCHOMON","Good night...",""
+"r_d0404_0030_0020","char_PIYOMON","*mumbling* Zzz...",""
+"r_d0404_0030_0030","char_SUNFLOWMON","I can't eat another bite...",""
+"r_d0404_0030_0040","char_GEKOMON","The top won't stop spinning,
+glurp...",""
+"r_d0404_0030_0050","char_FLORAMON","We're still getting ready...",""
+"r_d0404_0030_0060","char_LALAMON","Let's go again! Zzz...",""
+"r_d0404_0030_0070","char_TANEMON","I love music...",""
+"r_d0404_0030_0080","char_FUNBEEMON","I love festivals...!",""
+"r_d0404_0030_0090","char_PINOCHIMON","Just you try and... say that
+again...",""
+"r_d0404_0030_0100","char_CENTALMON","The forest... needs
+salvation...",""
+"r_d0404_0030_0110","char_HIPPOGRIFFOMON","Master... Garudamon...",""
+"r_d0404_0030_0120","char_BACCHUSMON","*snore*",""
+"r_d0405_0010_0010","char_FUNBEEMON","Get to it!",""
+"r_d0405_0010_0020","char_FUNBEEMON","You...! My longtime enemy...!",""
+"r_d0405_0010_0030","char_FUNBEEMON","Time to take revenge!",""
+"r_d0407_0010_0010","char_???","It's all over...",""
+"r_d0407_0010_0020","char_???","Just give up, already...",""
+"r_d0407_0010_0030","char_???","*whispering*",""
+"r_d0407_0010_0040","char_???","There's no hope here...",""
+"r_d0407_0010_0050","char_???","One more time around and...",""
+"r_d0407_0010_0060","char_???","It's impossible...",""
+"r_d0407_0010_0070","char_???","*murmuring*",""
+"r_d0407_0010_0080","char_???","Around and around...",""
+"r_d0407_0010_0090","char_???","There's nothing here...",""
+"r_d0407_0010_0100","char_???","This is where it ends...",""
+"r_d0407_0020_0010","char_???","What are you trying to do?",""
+"r_d0407_0020_0020","char_???","Did you figure it out...?",""
+"r_d0407_0020_0030","char_???","*whispering*",""
+"r_d0407_0020_0040","char_???","Did you notice...?",""
+"r_d0407_0020_0050","char_???","Well, well..",""
+"r_d0407_0020_0060","char_???","Could it be...?",""
+"r_d0407_0020_0070","char_???","*murmuring*",""
+"r_d0407_0020_0080","char_???","So, what're you going to
+do...?",""
+"r_d0407_0020_0090","char_???","There's nothing here...",""
+"r_d0407_0020_0100","char_???","What do you think you're
+doing...?",""
+"r_d0407_0030_0010","char_???","Nicely done...",""
+"r_d0407_0030_0020","char_???","Good work.",""
+"r_d0407_0030_0030","char_???","*whispering*",""
+"r_d0407_0030_0040","char_???","I think they just might be
+able to do it...",""
+"r_d0407_0030_0050","char_???","Wonderful...",""
+"r_d0407_0030_0060","char_???","They pulled it off.",""
+"r_d0407_0030_0070","char_???","*murmuring*",""
+"r_d0407_0030_0080","char_???","The rest is up to you.",""
+"r_d0407_0030_0090","char_???","Incredible.",""
+"r_d0407_0030_0100","char_???","The village is this way.",""
+"r_d0407_0040_0010","char_NANIMON","Who goes there?!",""
+"r_d0407_0050_0010","char_NANIMON","Thought I was a goner...",""
+"r_d0407_0060_0010","char_???","It's all over...",""
+"r_d0407_0060_0020","char_???","*rustling*",""
+"r_d0407_0060_0030","char_???","Hesitate and you're
+finished...",""
+"r_d0407_0060_0040","char_???","*murmuring*",""
+"r_d0407_0060_0050","char_???","You'll never get away...",""
+"r_d0407_0060_0060","char_???","There's something weird down
+there...",""
+"r_d0407_0060_0070","char_???","Leave...",""
+"r_d0407_0060_0080","char_???","Begone...",""
+"r_d0407_0060_0090","char_???","Lose your way...",""
+"r_d0407_0060_0100","char_???","You're done for...",""
+"r_d0407_0060_0110","char_???","Get out of here...",""
+"r_d0407_0060_0120","char_???","You can't escape...",""
+"r_d0407_0060_0130","char_???","*whispering*",""
+"r_d0407_0060_0140","char_???","It's okay to give up...",""
+"r_d0407_0060_0150","char_???","Just stay here in the
+quiet...",""
+"r_d0407_0060_0160","char_???","*murmuring*",""
+"r_d0407_0060_0170","char_???","*whispering*",""
+"r_d0407_0060_0180","char_???","Okay, it's over...",""
+"r_d0407_0060_0190","char_???","Give it up, already...",""
+"r_d0407_0060_0200","char_???","Around in circles...",""
+"r_d0407_0060_0210","char_???","Keep running around...",""
+"r_d0407_0060_0220","char_???","All for naught...",""
+"r_d0407_0060_0230","char_???","Again...?",""
+"r_d0407_0060_0240","char_???","How pitiful...",""
+"r_d0407_0070_0010","char_???","Going to try something...?",""
+"r_d0407_0070_0020","char_???","*rustling*",""
+"r_d0407_0070_0030","char_???","This is your last chance...",""
+"r_d0407_0070_0040","char_???","*murmuring*",""
+"r_d0407_0070_0050","char_???","You won't get away...",""
+"r_d0407_0070_0060","char_???","There's something strange
+down there...",""
+"r_d0407_0070_0070","char_???","Hurry up and go...",""
+"r_d0407_0070_0080","char_???","Cower...",""
+"r_d0407_0070_0090","char_???","You are lost...",""
+"r_d0407_0070_0100","char_???","Still trying...?",""
+"r_d0407_0070_0110","char_???","Get out of here...",""
+"r_d0407_0070_0120","char_???","What...?",""
+"r_d0407_0070_0130","char_???","*whispering*",""
+"r_d0407_0070_0140","char_???","What will you do...?",""
+"r_d0407_0070_0150","char_???","Something's moving down
+there...",""
+"r_d0407_0070_0160","char_???","*murmuring*",""
+"r_d0407_0070_0170","char_???","*whispering*",""
+"r_d0407_0070_0180","char_???","You're not done...?",""
+"r_d0407_0070_0190","char_???","Still trying...?",""
+"r_d0407_0070_0200","char_???","Did you figure it out...?",""
+"r_d0407_0070_0210","char_???","Not going to run...?",""
+"r_d0407_0070_0220","char_???","There's nothing here for
+you...",""
+"r_d0407_0070_0230","char_???","Hey...",""
+"r_d0407_0070_0240","char_???","Huh...?",""
+"r_d0407_0080_0010","char_???","Hey, wake up...",""
+"r_d0407_0080_0020","char_???","There's someone here...",""
+"r_d0407_0080_0030","char_???","I've seen these kids
+before...",""
+"r_d0407_0080_0040","char_???","This is no time to be sleeping,
+you old fuddy-duddy.",""
+"r_d0407_0080_0050","char_???","Didn't you just eat a
+mountain of apples...?",""
+"r_d0407_0080_0060","char_???","You sure you're okay, old
+fogey...?",""
+"r_d0407_0080_0070","char_???","Please get to work...",""
+"r_d0407_0080_0080","char_???","Even I'm starting to get
+sleepy...",""
+"r_d0407_0080_0090","char_???","I want some apples, too...",""
+"r_d0407_0080_0100","char_???","Huh...? Those kids...?",""
+"r_d0407_0080_0110","char_???","Time for the new generation
+to step up...",""
+"r_d0407_0080_0120","char_???","Listen, old-timer...",""
+"r_d0407_0080_0130","char_???","What about our share...?",""
+"r_d0407_0080_0140","char_???","Hey, there's someone
+here...",""
+"r_d0407_0080_0150","char_???","Lord Bacchusmon...",""
+"r_d0407_0080_0160","char_???","Is the sanctuary okay...?",""
+"r_d0407_0080_0170","char_???","Just give it up, old
+geezer...",""
+"r_d0407_0080_0180","char_???","Wake up, already...",""
+"r_d0407_0080_0190","char_???","I remember you kids from
+before...",""
+"r_d0407_0080_0200","char_???","He's not even functional anymore...",""
+"r_d0407_0080_0210","char_???","Time to retire, you old
+fud...",""
+"r_d0407_0080_0220","char_???","It's no use...",""
+"r_d0407_0080_0230","char_???","He won't even respond...",""
+"r_d0407_0080_0240","char_???","Still eating, even in your
+dreams...?",""
+"r_d0407_0080_0250","char_???","Zzz...",""
+"r_d0407_0080_0260","char_???","Okay, it's over, you old
+fossil...",""
+"r_d0407_0080_0270","char_???","You're fired...",""
+"r_d0407_0080_0280","char_???","I wanted some apples...",""
+"r_d0407_0080_0290","char_???","Wake up... Wake up...",""
+"r_d0407_0080_0300","char_???","*whispering*",""
+"r_d0407_0080_0310","char_???","*murmuring*",""
+"r_d0407_0080_0320","char_???","What will you do...?",""
+"r_d0407_0080_0330","char_???","Going back to sleep? Really?",""
+"r_d0407_0080_0340","char_???","Apples...",""
+"r_d0407_0090_0010","char_???","Oh, no! What should we do?",""
+"r_d0407_0090_0020","char_???","You okay, old-timer...?",""
+"r_d0407_0090_0030","char_???","Uh-oh... This is bad...",""
+"r_d0407_0090_0040","char_???","Hurry, hurry...",""
+"r_d0407_0090_0050","char_???","Someone! Anyone!",""
+"r_d0407_0090_0060","char_???","Sirenmon...",""
+"r_d0407_0090_0070","char_???","I'm scared... So scared...",""
+"r_d0407_0090_0080","char_???","The sanctuary... It's...",""
+"r_d0407_0090_0090","char_???","Don't overdo it, you old
+fossil...",""
+"r_d0407_0090_0100","char_???","It's Lord Bacchusmon...",""
+"r_d0407_0090_0110","char_???","Help me... Help me...",""
+"r_d0407_0090_0120","char_???","Intruders... The sanctuary...",""
+"r_d0407_0090_0130","char_???","I know you...",""
+"r_d0407_0090_0140","char_???","Be careful... Be very
+careful...",""
+"r_d0407_0090_0150","char_???","The Titans...",""
+"r_d0407_0090_0160","char_???","They're in a frenzy...",""
+"r_d0407_0090_0170","char_???","Danger... Danger...!",""
+"r_d0407_0090_0180","char_???","Oh, no...",""
+"r_d0407_0090_0190","char_???","Don't go alone...",""
+"r_d0407_0090_0200","char_???","What should we do...?",""
+"r_d0407_0090_0210","char_???","Is the old fogey okay...?",""
+"r_d0407_0090_0220","char_???","This one helped us before...",""
+"r_d0407_0090_0230","char_???","You just might be able to do
+it...",""
+"r_d0407_0090_0240","char_???","We're in trouble...",""
+"r_d0407_0090_0250","char_???","Have to tell someone...",""
+"r_d0407_0090_0260","char_???","What do we do...?",""
+"r_d0407_0090_0270","char_???","I'm scared... It hurts...",""
+"r_d0407_0090_0280","char_???","Apples...",""
+"r_d0407_0090_0290","char_???","We're done for...",""
+"r_d0407_0090_0300","char_???","What can we do...?",""
+"r_d0407_0090_0310","char_???","Lord Bacchusmon...",""
+"r_d0407_0090_0320","char_???","The sanctuary is in danger...",""
+"r_d0407_0090_0330","char_???","Just rest, old one...",""
+"r_d0407_0090_0340","char_???","Titans... The Titans...",""
+"r_d0407_0100_0010","char_JYUREIMON","*mumbling* Is it time for
+breakfast yet?",""
+"r_d0501_0010_0010","char_GOTTSUMON","All the Guardromon below...",""
+"r_d0501_0010_0020","char_GOTTSUMON","Just gonna rest... a little
+longer...",""
+"r_d0501_0010_0030","char_CAPROMON","You okay?",""
+"r_d0501_0010_0040","char_CAPROMON","Yay! We did it!",""
+"r_d0501_0010_0050","char_VOLCAMON","Our gun battery...",""
+"r_d0501_0010_0060","char_VOLCAMON","Yeah! Let 'er rip!",""
+"r_d0501_0010_0070","char_METALMAMEMON","Hey! Hang in there!",""
+"r_d0501_0010_0080","char_METALMAMEMON","Is it fixed?",""
+"r_d0501_0010_0090","char_ARMADILLOMON","So hot... Hurry up and
+get it running already...",""
+"r_d0501_0010_0100","char_CAPROMON","What's wrong?",""
+"r_d0501_0010_0110","char_CAPROMON","It worked! It worked!",""
+"r_d0501_0010_0120","char_CHOROMON","What do we do...?",""
+"r_d0501_0010_0130","char_CHOROMON","Feeling good! Feeling great!",""
+"r_d0501_0010_0140","char_CLOCKMON","That was awful...",""
+"r_d0501_0010_0150","","Now what?!",""
+"r_d0501_0020_0010","char_MUCHOMON","It's huge!",""
+"r_d0501_0020_0020","char_DRACOMON","Glorious!",""
+"r_d0501_0020_0030","char_GANIMON","Something's flying up there!",""
+"r_d0501_0020_0040","char_PIEDMON","What's next in the show?!",""
+"r_d0501_0020_0050","char_MOJYAMON","I'm all tuckered out...",""
+"r_d0501_0020_0060","char_NYAROMON","Yay! Yippee!",""
+"r_d0501_0020_0070","char_SHAMAMON","It's really zoomin' around!",""
+"r_d0501_0020_0080","char_BETAMON","I can't wait!",""
+"r_d0501_0020_0090","char_PAGUMON","Let's glide around!",""
+"r_d0501_0020_0100","char_BIGMAMEMON","Wow! What's that big thing?!",""
+"r_d0501_0020_0110","char_GANIMON","Hm? What's all the commotion?",""
+"r_d0501_0020_0120","char_DRACOMON","I smell trouble...",""
+"r_d0501_0020_0130","char_VADEMON","Tickets! Get yer tickets
+here!",""
+"r_d0502_0010_0010","char_KOKUWAMON_UN","Gah! Don't get in the way!",""
+"r_d0502_0010_0020","char_TANKMON","DESTROY ALL ENEMIES!",""
+"r_d0502_0010_0030","char_GOTTSUMON","We... We're done for!",""
+"r_d0502_0010_0040","char_KAMEMON","Calm down, will you?",""
+"r_d0502_0010_0050","char_SOLARMON","Oh, no! What are we gonna
+do?!",""
+"r_d0502_0010_0060","char_CAPROMON","It hurts...",""
+"r_d0502_0010_0070","char_KAMEMON","Ngh...",""
+"r_d0502_0010_0080","char_GOTTSUMON","Stop!",""
+"r_d0502_0010_0090","char_SOLARMON","Friend?! Or foe?!",""
+"r_d0502_0010_0100","char_ARMADILLOMON","Who're you?!",""
+"r_d0502_0010_0110","char_GUARDROMON","Ugh! So busy.",""
+"r_d0502_0010_0120","char_KAMEMON","This goes like this, and...",""
+"r_d0502_0010_0130","char_TUCHIDARUMON","Seems like everyone has
+calmed down...",""
+"r_d0502_0010_0140","char_HAGURUMON","Everything's a-okay!",""
+"r_d0502_0010_0160","char_ARMADILLOMON","I saw someone fishy!",""
+"r_d0502_0010_0170","char_HAGURUMON","That was scary!",""
+"r_d0502_0010_0180","char_CLOCKMON","Back to work!",""
+"r_d0502_0020_0010","char_KIWIMON","There's something inside!",""
+"r_d0502_0020_0020","char_MUCHOMON","Kokuwamon is humongous!",""
+"r_d0502_0020_0030","char_GOBURIMON","Whew... Time for a break.",""
+"r_d0502_0020_0040","char_KOTEMON","Kokuwamon is amazing!",""
+"r_d0502_0020_0050","char_GANIMON","Whoa! It's fixed!",""
+"r_d0502_0020_0060","char_MINOTAURMON","This place is huge... Really
+wears me out...",""
+"r_d0502_0020_0070","char_TUCHIDARUMON","Tired already?",""
+"r_d0502_0020_0080","char_TYUMON","Where should I go?",""
+"r_d0502_0020_0090","char_SUNFLOWMON","It's down there!",""
+"r_d0502_0020_0100","char_PENMON","How cool is that?!",""
+"r_d0502_0020_0110","char_GOBURIMON","Couldn't be any cooler!",""
+"r_d0502_0020_0120","char_GOMAMON","So rad!",""
+"r_d0502_0020_0130","char_TANEMON","What's that?",""
+"r_d0505_0010_0010","char_SHAMAMON","Is that Vulcanusmon?",""
+"r_d0505_0010_0020","char_TANEMON","A huge hand!",""
+"r_d0505_0010_0030","char_HANGYOMON","What is that hand?!",""
+"r_d0505_0010_0040","char_DRACOMON","Huh... I see...",""
+"r_d0505_0010_0050","char_DODOMON","That was so much fun!",""
+"r_d0505_0010_0060","char_MOCHIMON","Another Vulcanusmon!",""
+"r_d0603_0010_0010","char_ORGEMON","Hey, we can get out!",""
+"r_d0603_0010_0020","char_FUGAMON","Lord Titamon! You're the
+best!",""
+"r_d0603_0010_0030","char_HYOUGAMON","We're saved!",""
+"r_d0603_0010_0040","char_CLAVISANGEMON","Now, surrender quietly if you
+know what is good for you!",""
+"r_d0604_0010_0010","char_ORGEMON","What's the matter?",""
+"r_d0604_0010_0020","char_FUGAMON","That ain't gonna work...",""
+"r_d0604_0010_0030","char_HYOUGAMON","Spit it out!",""
+"r_d0604_0010_0040","char_TUNOMON","Damn you all!",""
+"r_d0606_0010_0010","char_KUDAMON","Locomon's doing just fine!",""
+"r_d0606_0020_0010","char_NYAROMON","Locomon is the coolest!",""
+"r_d0606_0030_0010","char_POYOMON","Me, scared...",""
+"r_d0701_0010_0010","char_GEKOMON","*sigh* Lord Plutomon...",""
+"r_d0900_0010_0010","char_PIYOMON","Where am I?! And what's
+this?!",""
+"r_d0903_0010_0010","char_INORI","Whoa, what huge fruit!",""
+"r_d0903_0010_0020","char_INORI","I just know I can do it
+again!",""
+"r_d0903_0010_0030","char_INORI","I take care of business!",""
+"r_d0903_0010_0040","char_INORI","Don't do anything crazy!",""
+"r_d0903_0010_0050","char_INORI","I can... do it!",""
+"r_d0903_0010_0060","char_INORI","Leave the catching to me.",""
+"r_d0903_0010_0070","char_INORI","Ready when you are!",""
+"r_d0903_0020_0010","char_PALMON","Hey, over here!",""
+"r_d0903_0020_0020","char_PALMON","You can jump here!",""
+"r_d0903_0020_0030","char_PALMON","This way!",""
+"r_d0903_0020_0040","char_PALMON","Just a little more!",""
+"r_d0903_0020_0050","char_PALMON","This is the top.",""
+"r_d0903_0020_0060","char_PALMON","There's more over here!",""
+"r_d0903_0020_0070","char_PALMON","You can do it, folks!",""
+"r_d0906_0010_0010","char_APOLLOMON","That was nothing! I am fine!",""
+"r_d0906_0010_0020","char_APOLLOMON","I can keep going! It takes
+more than that to break me!",""
+"r_d0906_0010_0030","char_APOLLOMON","Ow... No, I was only kidding.
+It does not hurt at all!",""
+"r_d0906_0010_0040","char_APOLLOMON","Such pitiful attacks! Nervy's
+slaps are more painful!",""
+"r_d0906_0010_0050","char_APOLLOMON","It will take more than that!
+That felt like a light breeze!",""
+"r_d0906_0020_0010","char_DIANAMON","Just stay focused! It takes
+more than that to harm me!",""
+"r_d0906_0020_0020","char_DIANAMON","...Ngh! I-I am fine. I can
+keep going!",""
+"r_d0906_0020_0030","char_DIANAMON","Oh, was that the wind? I
+barely even felt that!",""
+"r_d0906_0020_0040","char_DIANAMON","Keep your eyes on the battle!
+Do not fret over me!",""
+"r_d0906_0020_0050","char_DIANAMON","I am fine! In fact, my
+strength is growing!",""
+"r_d0906_0030_0010","char_INORI","Are you okay?! Here it comes
+again from the front!",""
+"r_d0906_0030_0020","char_INORI","This is so frustrating... If
+only I could fight, too!",""
+"r_d0906_0030_0030","char_INORI","Oh! That's not good! Be
+careful!",""
+"r_d0906_0030_0040","char_INORI","H-Hang in there! Don't get
+reckless!",""
+"r_d0906_0030_0050","char_INORI","Please stay strong! And
+safe...",""
+"r_d0906_0040_0010","char_AEGIOMON","Glad you're on my side! I'll
+try to keep up!",""
+"r_d0906_0040_0020","char_AEGIOMON","Wow, that was fast!",""
+"r_d0906_0040_0030","char_AEGIOMON","That last attack was amazing!",""
+"r_d0906_0040_0040","char_AEGIOMON","Nice work! You're so good at
+this!",""
+"r_d0906_0040_0050","char_AEGIOMON","Together, there's no way we
+can lose!",""
+"r_d0906_0050_0010","char_MINERVAMON","Too easy! Come on. Let's
+rough them up some more!",""
+"r_d0906_0050_0020","char_MINERVAMON","How're you holding up? Not
+that I'm worried!",""
+"r_d0906_0050_0030","char_MINERVAMON","You still good to go? Stay
+sharp!",""
+"r_d0906_0050_0040","char_MINERVAMON","As long as we stay alert,
+victory is ours!",""
+"r_d0906_0050_0050","char_MINERVAMON","No problems on my end. Just
+stay focused!",""
+"r_d0907_0010_0010","char_NANIMON","The final battle, huh...? I'm
+ready to kick some butt!",""
+"r_d1103_0010_0010","char_SPECIAL_FORCES","Form up, soldiers!",""
+"r_d1103_0010_0020","char_PASSERBY_MAN","Never knew there was a place
+like this in Shinjuku!",""
+"r_d1103_0010_0030","char_PASSERBY_MAN","Whoa...!",""
+"r_d1103_0010_0040","char_PASSERBY_MAN","This place is huge...!",""
+"r_d1103_0010_0050","char_PASSERBY_WOMAN","I don't like all this
+commotion...",""
+"r_d1103_0010_0060","char_PASSERBY_MAN","What're they setting up?",""
+"r_d1104_0010_0010","char_SPECIAL_FORCES","What's this shell...?!",""
+"r_d1204_0010_0010","char_PICKLEMON","Are we ready?!",""
+"r_d1204_0010_0020","char_PICKLEMON","Yeah!",""
+"r_d1204_0010_0030","char_CATCHMAMEMON","Hope you're ready to fight!",""
+"r_d1204_0010_0040","char_SUPERSTARMON","Sorry to keep you waiting!",""
+"r_d1204_0010_0050","char_MACHGAOGAMON","Let's do this!",""
+"r_d1204_0010_0060","char_YATAGARAMON","Yeah!",""
+"r_d1204_0010_0070","char_CYBERDRAMON","For my master!",""
+"r_d1204_0010_0080","char_MEGAGROWLMON","Tch... Very well.",""
+"r_d1204_0010_0090","char_PANDAMON","We have to find more
+fighters!",""
+"r_d1204_0010_0100","char_GAOGAMON","Gather everyone you can!",""
+"r_d1204_0010_0110","char_TOYAGUMON","Are you in pain?",""
+"r_d1204_0010_0120","char_LALAMON","I'll get you healed up!",""
+"r_d1204_0010_0130","char_TAILMON","You, there! You ready for
+this?!",""
+"r_d1204_0010_0140","char_GOMAMON","Time to Digivolve!",""
+"r_d1204_0010_0150","char_PAILDRAMON","I've got your back!",""
+"r_d1204_0010_0160","char_ANDROMON","THE TIME HAS COME...",""
+"r_d1204_0010_0170","char_LILAMON","Eek! So cool!",""
+"r_d1204_0010_0180","char_OCTMON","No choice but to fight now,
+me 'earties!",""
+"r_d1301_0010_0010","char_OPERATOR_M","The progress of the analysis
+is...",""
+"r_d1301_0010_0020","char_OPERATOR_M","Almost there...",""
+"r_d1301_0010_0030","char_OPERATOR_M","Just one final push.",""
+"r_t0403_0010_0010","char_AEGIOMON","Ngh...",""
+"r_d1403_0010_0010","char_PIYOMON","What is even happening
+right now?!",""
+"r_d1001_0010_0010","char_PUBLICSAFETY_MOB_C","Ugh... It got away...",""
+"r_d1001_0010_0020","char_PUBLICSAFETY_MOB_B","Damn...!",""
+"r_h0220_0010_0010","char_CATCHMAMEMON","Come this way if you're a
+beginner at leveling up!",""
+"r_h0220_0020_0010","char_CATCHMAMEMON","Come this way if you're
+familiar with leveling up!",""
+"r_h0220_0030_0010","char_CATCHMAMEMON","Come this way if you're an
+expert at leveling up!",""
+"r_h0320_0010_0010","char_CATCHMAMEMON","Over here if you're
+interested in earning some extra cash!",""
+"r_h0320_0020_0010","char_CATCHMAMEMON","Over here if you want to earn
+money a bit more aggressively.",""
+"r_h0320_0030_0010","char_CATCHMAMEMON","Over here if you want to get
+rich quick.",""
+"r_h0310_0010_0_1","char_MAMEMON","You can do it!",""
+"r_h0310_0010_1_1","char_MAMEMON","You got this!",""
+"r_h0310_0010_2_1","char_MAMEMON","Good luck!",""
+"r_h0310_0010_0_2","char_MAMEMON","Go, go, go!",""
+"r_h0310_0010_1_2","char_MAMEMON","Go for it!",""
+"r_h0310_0010_2_2","char_MAMEMON","Keep it up!",""
+"r_h0310_0010_0_3","char_MAMEMON","Give it your best!",""
+"r_h0310_0010_1_3","char_MAMEMON","Let 'em have it!",""
+"r_h0310_0010_2_3","char_MAMEMON","Best of luck!",""
+"r_h0310_0010_0_4","char_MAMEMON","Don't give up!",""
+"r_h0310_0010_1_4","char_MAMEMON","You can't lose!",""
+"r_h0310_0010_2_4","char_MAMEMON","Keep your chin up!",""
+"r_h0310_0010_0_5","char_MAMEMON","Time to win this thing!",""
+"r_h0310_0010_1_5","char_MAMEMON","Win big!",""
+"r_h0310_0010_2_5","char_MAMEMON","Go for the win!",""
+"r_h0310_0010_0_6","char_MAMEMON","Go, go! Get 'em!",""
+"r_h0310_0010_1_6","char_MAMEMON","Go for it! You got this!",""
+"r_h0310_0010_2_6","char_MAMEMON","Go, team, go!",""
+"r_h0310_0010_2_1_w","char_MAMEMON","Congrats!",""
+"r_h0310_0010_2_1_l","char_MAMEMON","So close...",""
+"r_h0310_0010_2_2_w","char_MAMEMON","You did it!",""
+"r_h0310_0010_2_2_l","char_MAMEMON","Aw, too bad...",""
+"r_h0310_0010_2_3_w","char_MAMEMON","You were amazing!",""
+"r_h0310_0010_2_3_l","char_MAMEMON","Try again next time!",""
+"r_h0310_0010_2_4_w","char_MAMEMON","Well done!",""
+"r_h0310_0010_2_4_l","char_MAMEMON","You did your best!",""
+"r_h0310_0010_2_5_w","char_MAMEMON","Congratulations!",""
+"r_h0310_0010_2_5_l","char_MAMEMON","I'm sure you'll win next
+time!",""
+"r_h0310_0010_2_6_w","char_MAMEMON","That was a perfect run!",""
+"r_h0310_0010_2_6_l","char_MAMEMON","So close!",""
+"r_h0311_0010_0_1","char_MAMEMON","Nice run!",""
+"r_h0311_0010_1_1","char_MAMEMON","That was a great run!",""
+"r_h0311_0010_2_1","char_MAMEMON","That was awesome!",""
+"r_h0311_0010_3_1","char_MAMEMON","You were great!",""
+"r_h0311_0010_0_2","char_MAMEMON","Focus!",""
+"r_h0311_0010_1_2","char_MAMEMON","Stay focused!",""
+"r_h0311_0010_2_2","char_MAMEMON","Concentrate!",""
+"r_h0311_0010_3_2","char_MAMEMON","Focusing is key!",""
+"r_h0311_0010_0_3","char_MAMEMON","You can do it!",""
+"r_h0311_0010_1_3","char_MAMEMON","Go for it!",""
+"r_h0311_0010_2_3","char_MAMEMON","You got this!",""
+"r_h0311_0010_3_3","char_MAMEMON","Do your best!",""
+"r_h0311_0010_0_4","char_MAMEMON","Doing great!",""
+"r_h0311_0010_1_4","char_MAMEMON","That's how it's done!",""
+"r_h0311_0010_2_4","char_MAMEMON","Great!",""
+"r_h0311_0010_3_4","char_MAMEMON","Awesome!",""
+"r_h0311_0010_0_5","char_MAMEMON","Great run!",""
+"r_h0311_0010_1_5","char_MAMEMON","Quick as the wind!",""
+"r_h0311_0010_2_5","char_MAMEMON","Amazing run!",""
+"r_h0311_0010_3_5","char_MAMEMON","Keep it up!",""
+"r_h0311_0010_0_6","char_MAMEMON","Go for it!",""
+"r_h0311_0010_1_6","char_MAMEMON","You can do it!",""
+"r_h0311_0010_2_6","char_MAMEMON","Go get 'em!",""
+"r_h0311_0010_3_6","char_MAMEMON","Do your best!",""
+"r_h0311_0010_3_1_w","char_MAMEMON","Well done!",""
+"r_h0311_0010_3_1_l","char_MAMEMON","Can't wait for your next
+match!",""
+"r_h0311_0010_3_2_w","char_MAMEMON","Amazing!",""
+"r_h0311_0010_3_2_l","char_MAMEMON","You were almost there!",""
+"r_h0311_0010_3_3_w","char_MAMEMON","That was an amazing race!",""
+"r_h0311_0010_3_3_l","char_MAMEMON","You were so close!",""
+"r_h0311_0010_3_4_w","char_MAMEMON","You did it!",""
+"r_h0311_0010_3_4_l","char_MAMEMON","You gave it your all!",""
+"r_h0311_0010_3_5_w","char_MAMEMON","You were great!",""
+"r_h0311_0010_3_5_l","char_MAMEMON","Great effort!",""
+"r_h0311_0010_3_6_w","char_MAMEMON","Way to go!",""
+"r_h0311_0010_3_6_l","char_MAMEMON","You were almost there!",""
+"r_h0312_0010_0_1","char_MAMEMON","Go! Go!",""
+"r_h0312_0010_1_1","char_MAMEMON","Do your thing!",""
+"r_h0312_0010_2_1","char_MAMEMON","You got this!",""
+"r_h0312_0010_3_1","char_MAMEMON","You can do it!",""
+"r_h0312_0010_0_2","char_MAMEMON","Hang in there!",""
+"r_h0312_0010_1_2","char_MAMEMON","Don't give up!",""
+"r_h0312_0010_2_2","char_MAMEMON","Keep it up!",""
+"r_h0312_0010_3_2","char_MAMEMON","Stick to it!",""
+"r_h0312_0010_0_3","char_MAMEMON","Do your best!",""
+"r_h0312_0010_1_3","char_MAMEMON","Let 'em have it!",""
+"r_h0312_0010_2_3","char_MAMEMON","You got this!",""
+"r_h0312_0010_3_3","char_MAMEMON","Go for it!",""
+"r_h0312_0010_0_4","char_MAMEMON","Keep it up!",""
+"r_h0312_0010_1_4","char_MAMEMON","Doing great!",""
+"r_h0312_0010_2_4","char_MAMEMON","Keep it coming!",""
+"r_h0312_0010_3_4","char_MAMEMON","Stick it out!",""
+"r_h0312_0010_0_5","char_MAMEMON","You're doing great!",""
+"r_h0312_0010_1_5","char_MAMEMON","That's it! Keep it up!",""
+"r_h0312_0010_2_5","char_MAMEMON","Just like that!",""
+"r_h0312_0010_3_5","char_MAMEMON","Keep that up!",""
+"r_h0312_0010_0_6","char_MAMEMON","Don't let up yet!",""
+"r_h0312_0010_1_6","char_MAMEMON","Stay focused!",""
+"r_h0312_0010_2_6","char_MAMEMON","Hang in there!",""
+"r_h0312_0010_3_6","char_MAMEMON","Focus!",""
+"r_h0312_0010_3_1_w","char_MAMEMON","That was really moving!",""
+"r_h0312_0010_3_1_l","char_MAMEMON","Nice try!",""
+"r_h0312_0010_3_2_w","char_MAMEMON","You were so cool!",""
+"r_h0312_0010_3_2_l","char_MAMEMON","Aww. Too bad.",""
+"r_h0312_0010_3_3_w","char_MAMEMON","Incredible!",""
+"r_h0312_0010_3_3_l","char_MAMEMON","You were so close!",""
+"r_h0312_0010_3_4_w","char_MAMEMON","Congratulations!",""
+"r_h0312_0010_3_4_l","char_MAMEMON","You almost had it!",""
+"r_h0312_0010_3_5_w","char_MAMEMON","You were awesome!",""
+"r_h0312_0010_3_5_l","char_MAMEMON","Maybe next time!",""
+"r_h0312_0010_3_6_w","char_MAMEMON","Quite impressive!",""
+"r_h0312_0010_3_6_l","char_MAMEMON","I really thought you'd win!",""
+"r_h0313_0010_0_1","char_MAMEMON","Make it your best run!",""
+"r_h0313_0010_1_1","char_MAMEMON","Run like the wind!",""
+"r_h0313_0010_2_1","char_MAMEMON","I know you can go faster!",""
+"r_h0313_0010_3_1","char_MAMEMON","As fast as you can!",""
+"r_h0313_0010_0_2","char_MAMEMON","Do your best!",""
+"r_h0313_0010_1_2","char_MAMEMON","Give it your all!",""
+"r_h0313_0010_2_2","char_MAMEMON","Show us what you've got!",""
+"r_h0313_0010_3_2","char_MAMEMON","You can do better!",""
+"r_h0313_0010_0_3","char_MAMEMON","You can do it!",""
+"r_h0313_0010_1_3","char_MAMEMON","Do your thing!",""
+"r_h0313_0010_2_3","char_MAMEMON","Come on!",""
+"r_h0313_0010_3_3","char_MAMEMON","Almost there!",""
+"r_h0313_0010_0_4","char_MAMEMON","Go! Go!",""
+"r_h0313_0010_1_4","char_MAMEMON","Go for it!",""
+"r_h0313_0010_2_4","char_MAMEMON","Whooooo!",""
+"r_h0313_0010_3_4","char_MAMEMON","Yeah!",""
+"r_h0313_0010_0_5","char_MAMEMON","You got this!",""
+"r_h0313_0010_1_5","char_MAMEMON","You're so close to winning!",""
+"r_h0313_0010_2_5","char_MAMEMON","Almost there!",""
+"r_h0313_0010_3_5","char_MAMEMON","You can do it!",""
+"r_h0313_0010_0_6","char_MAMEMON","Run like the wind!",""
+"r_h0313_0010_1_6","char_MAMEMON","You can go faster!",""
+"r_h0313_0010_2_6","char_MAMEMON","Run, run, run!",""
+"r_h0313_0010_3_6","char_MAMEMON","Give us your best run!",""
+"r_h0313_0010_3_1_w","char_MAMEMON","This is hard to believe!",""
+"r_h0313_0010_3_1_l","char_MAMEMON","Nice race!",""
+"r_h0313_0010_3_2_w","char_MAMEMON","A stunning finish!",""
+"r_h0313_0010_3_2_l","char_MAMEMON","You'll surely win next time!",""
+"r_h0313_0010_3_3_w","char_MAMEMON","Congratulations on finishing
+the race!",""
+"r_h0313_0010_3_3_l","char_MAMEMON","That was a great run.",""
+"r_h0313_0010_3_4_w","char_MAMEMON","You're the best!",""
+"r_h0313_0010_3_4_l","char_MAMEMON","You'll win next time!",""
+"r_h0313_0010_3_5_w","char_MAMEMON","You did it!",""
+"r_h0313_0010_3_5_l","char_MAMEMON","You should get some rest.",""
+"r_h0313_0010_3_6_w","char_MAMEMON","Thanks for such a moving
+race!",""
+"r_h0313_0010_3_6_l","char_MAMEMON","So close...",""
+"r_h0310_0020_0010","char_VADEMON","All challengers, this way,
+please!",""
+"r_h0310_0030_0010","char_VADEMON","Ready...?",""
+"r_h0310_0030_0020","char_VADEMON","GO!",""
+"r_h0310_0040_0010","char_LILAMON","Ready...?",""
+"r_h0310_0040_0020","char_LILAMON","GO!",""
+"r_h0601_0010_0010","char_BACCHUSMON","Where am I?",""
+"r_h0810_0010_0010","char_FALCOMON","Fight me!",""
+"r_h0810_0010_0020","char_ARMADILLOMON","I'll hit you with everythin'
+I got!",""
+"r_h0810_0010_0030","char_ICEDEVIMON","Hehehe... Despair, for now
+you face me!",""
+"r_h0810_0010_0040","char_REVOLMON","I'm the fastest gun there is!",""
+"r_h0810_0010_0050","char_DRIMOGEMON","Drill, drill...!",""
+"r_h0810_0010_0060","char_TUSKMON","Charge in, with nothing held
+back!",""
+"r_h0810_0010_0070","char_BUBBMON","Googoo?",""
+"r_h0810_0010_0080","char_NANOMON","Construct! Reconstruct!",""
+"r_h0810_0010_0090","char_METALTYRANNOMON","Grrr...",""
+"r_h0810_0010_0100","char_MAMEMON","Kabooooom!",""
+"r_h0810_0010_0110","char_BIGMAMEMON","Hehehe...",""
+"r_h0810_0010_0120","char_RAPIDMON","Target acquired.",""
+"r_h0810_0010_0130","char_SLASHANGEMON","I shall stain my blade with
+your blood.",""
+"r_h0810_0010_0140","char_MATADRMON","Shall we have a bit of fun?",""
+"r_h0811_0010_0010","char_LALAMON","La la laaa! ♪",""
+"r_h0811_0010_0020","char_SHAKOMON","Um, I don't like doing stuff
+that hurts...",""
+"r_h0811_0010_0030","","Defense protocols, engaged!",""
+"r_h0811_0010_0040","char_RAPTORDRAMON","Hmph. Show me what you can
+do!",""
+"r_h0811_0010_0050","char_BAKEMON","Come near me and I'll curse
+you...",""
+"r_h0811_0010_0060","char_TAILMON","Want to play with me?",""
+"r_h0811_0010_0070","char_PANDAMON","Good! You have the eyes of a
+warrior!",""
+"r_h0811_0010_0080","char_EX-TYRANOMON","Don't be fooled by my cute
+looks!",""
+"r_h0811_0010_0090","char_DAGOMON","I will drag you into the
+abyss...",""
+"r_h0811_0010_0100","char_ANDROMON","WARNING LEVEL, RISING...
+RISING!",""
+"r_h0811_0010_0110","char_ZUDOMON","One good hit is all I'll need
+to finish you!",""
+"r_h0811_0010_0120","char_VADEMON","Gehehe! A fresh subject to
+probe!",""
+"r_h0811_0010_0130","char_SHAKKOUMON","Prepare to face my test!",""
+"r_h0811_0010_0140","char_PIEDMON","It's showtime!",""
+"r_h0812_0010_0010","char_TYUMON","Ya better steer clear of me,
+nitwit!",""
+"r_h0812_0010_0020","char_PLOTMON","Let's play! C'mon!",""
+"r_h0812_0010_0030","char_CENTALMON","It would seem I have my next
+target.",""
+"r_h0812_0010_0040","char_DELTAMON","Graaaaaaargh!",""
+"r_h0812_0010_0050","char_GINRYUMON","My armor is impervious to all
+attacks!",""
+"r_h0812_0010_0060","char_TANKMON","I'm going to blast you good!",""
+"r_h0812_0010_0070","char_ANGEWOMON","Mercy upon you...",""
+"r_h0812_0010_0080","char_ARCHNEMON","Ee hee hee! You smell
+delicious!",""
+"r_h0812_0010_0090","char_WINGDRAMON","Surely you do not think you
+can keep up with me?",""
+"r_h0812_0010_0100","char_ROSEMON","Take a good look... Aren't I
+pretty?",""
+"r_h0812_0010_0110","char_HISYARYUMON","Now we will see the true
+measure of your strength...",""
+"r_h0812_0010_0120","char_GROUNDRAMON","Get outta my sight!",""
+"r_h0812_0010_0130","char_CATCHMAMEMON","I just might catch your
+heart, too!",""
+"r_h0812_0010_0140","char_MUMMYMON","I'll teach you what real pain
+is... Hehe!",""
+"r_h0813_0010_0010","char_DORUGREYMON","I need to defeat you in order
+to live!",""
+"r_h0813_0010_0020","char_RIZEGREYMON","You offering yourself up for
+target practice?",""
+"r_h0813_0010_0030","char_ASTAMON","What? Ya want to fight me or
+something?",""
+"r_h0813_0010_0040","char_TAOMON","Hm? I sense wickedness in
+you...",""
+"r_h0813_0010_0050","char_GREATGRYZMON","I bet you'll put up a good
+fight!",""
+"r_h0813_0010_0060","char_MISTYMON","Dare you stand in the way of
+my chivalrous path...?",""
+"r_h0813_0010_0070","char_SUSANOOMON","Allow my divine might to burn
+into your eyes!",""
+"r_h0813_0010_0080","char_BEELZEBUMON","Is it really worth it for you
+to fight me?",""
+"r_h0813_0010_0090","char_ARMAGEMON","Gwoooooooaaargh!",""
+"r_h0813_0010_0100","char_SLAYERDRAMON","I am the test, and you shall
+be the tested!",""
+"r_h0813_0010_0110","char_METALSEADRAMON","One such as you who can't ride
+the waves will never beat me!",""
+"r_h0813_0010_0120","char_BEELSTARMON","Well, well... Aren't you the
+attractive one?",""
+"r_h0813_0010_0130","char_VALKYRIMON","Is this my foe, Freyja?",""
+"r_h0813_0010_0140","char_MIRAGEGAOGAMON_BM","Break your limits! Come at me
+with everything you have!",""
+"r_t0121_0010_0010","char_MAN","I've got everything I own
+riding on this fight!",""
+"r_t0121_0010_0020","char_MAN","Keep it up, just like
+that...!",""
+"r_t0121_0010_0030","char_MAN","Time to bet all my winnings!",""
+"r_t0121_0010_0040","char_MAN","Please! Please! I'm beggin'
+you...!",""
+"r_t0121_0010_0050","char_MAN","Aw, man...",""
+"r_t0121_0020_0010","char_WOMAN","Slow and steady is the way!",""
+"r_t0121_0020_0020","char_WOMAN","Good luck! I'm rooting for
+you!",""
+"r_t0121_0020_0030","char_WOMAN","Wow! Keep it up!",""
+"r_t0121_0020_0040","char_WOMAN","You might even beat the
+champ!",""
+"r_t0121_0020_0050","char_WOMAN","Congratulations!",""
+"r_t0121_0030_0010","char_STANDING_MAN","Hm, yes... A fine
+performance, indeed.",""
+"r_t0121_0030_0020","char_STANDING_MAN","Ah, I see.",""
+"r_t0121_0030_0030","char_STANDING_MAN","The future is uncertain...",""
+"r_t0121_0030_0040","char_STANDING_MAN","Sheesh! Come on! Do me
+proud...",""
+"r_t0121_0030_0050","char_STANDING_MAN","Well, I suppose that's to be
+expected.",""
+"r_t0121_0040_0010","char_WOMAN","When are you going to give it
+your best shot?!",""
+"r_t0121_0050_0020","char_STANDING_MAN","I'm not sure how I'll ever
+face my wife now...",""
+"r_t0121_0060_0010","char_WOMAN","Hey, champ! Look over here!",""
+"r_t0121_0060_0020","char_OLDMAN","There! It's the new champion!",""
+"r_t0121_0060_0030","char_MAMEMON","Can I have your autograph?!
+On my face is fine!",""
+"r_t0121_0060_0040","char_MAN","Show us your SDGP belt!",""
+"r_t0121_0060_0050","char_PUKUMON","Congrats!",""
+"r_t0121_0060_0060","char_LALAMON","Amazing work! ♪",""
+"r_t0121_0060_0070","char_TAILMON","Great fighting out there!",""
+"r_d0506_0010_0010","char_GAOMON","Isn't that the Shinjuku
+Dungeon Grand Prix Champion?!",""
+"r_d0506_0010_0020","char_METALMAMEMON","Wonder if it's okay to ask
+for an autograph...",""
+"r_d0506_0010_0030","char_GAOMON","Whoa! The SDGP Champ sure
+doesn't disappoint!",""
+"r_d0506_0010_0040","char_METALMAMEMON","Can't wait to see your next
+match!",""
+"r_d0506_0010_0050","char_FALCOMON","That was an amazing win!",""
+"r_d0506_0010_0060","char_FUNBEEMON","Nice job!",""
+"r_d0506_0020_0010","char_GAOMON","Now, that was a match worth
+watching!",""
+"r_d0506_0020_0020","char_METALMAMEMON","You both fought so hard! I
+was on the edge of my seat!",""
+"r_d0506_0020_0030","char_FALCOMON","Another big win!",""
+"r_d0506_0020_0040","char_FUNBEEMON","That was thrilling!",""
+"r_d0506_0030_0010","char_GAOMON","You're on a roll!",""
+"r_d0506_0030_0020","char_METALMAMEMON","Please just keep winning!",""
+"r_d0506_0030_0030","char_FALCOMON","I can't imagine you ever
+losing!",""
+"r_d0506_0030_0040","char_FUNBEEMON","Am I getting premonitions of
+a double champion...?",""

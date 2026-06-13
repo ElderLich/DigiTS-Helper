@@ -1,0 +1,82 @@
+string2 0,string 1,string 2,string 3
+"d130_010_010","char_CRESGARURUMON","Hey... Look!","d130_010_010"
+"d130_010_020","char_BLITZGREYMON","We finally found one!
+That Digimon is one of our friends!","d130_010_020"
+"d130_010_030","char_BLITZGREYMON","Omnimon Zwart!","d130_010_030"
+"d130_010_040","char_OMEGAMONZWART_D","Ungh...","d130_010_040"
+"d130_010_050","char_KUREMI","Ngh...!","d130_010_050"
+"d130_010_060","char_KUREMI","Tch...!","d130_010_060"
+"d130_010_070","char_OMEGAMONZWART_D","Gaaagh!","d130_010_070"
+"d130_010_080","char_OMEGAMONZWART_D","Graaaaagh!","d130_010_080"
+"d130_010_090","char_KUREMI","Kyoko!","d130_010_090"
+"d130_010_100","char_KUREMI","What are you doing here?!","d130_010_100"
+"d130_010_110","char_KUREMIKYOKO","I'm free to go wherever I please!","d130_010_110"
+"d130_010_120","char_KUREMIKYOKO","We're not father and daughter anymore.
+I don't need to explain myself to you!","d130_010_120"
+"d130_010_130","char_KUREMI","Urk!","d130_010_130"
+"d130_010_140","char_KUREMI","Hrnh!","d130_010_140"
+"d130_011_010","char_CRESGARURUMON","Omnimon Zwart! What's wrong with you?!
+Don't you know who we are?!","d130_011_010"
+"d130_011_020","char_BLITZGREYMON","Something is different about him...
+What could have happened?!","d130_011_020"
+"d130_011_030","char_KUREMI","I'm not letting you get away!","d130_011_030"
+"d130_011_040","char_KUREMI","You're not to leave this spot under any circumstances.
+That's an order, you hear?!","d130_011_040"
+"d130_011_050","char_KUREMIKYOKO","An order? Since when do we take orders from him?!","d130_011_050"
+"d130_030_010","char_KUREMI","""What's this...?""",""
+"d130_030_020","char_SIMMONS","""I suppose you could call it an 
+'anti-phase electron lifeform weapon.'""",""
+"d130_030_030","char_SIMMONS","""We've successfully managed to miniaturize it.""",""
+"d130_030_040","char_KUREMI","""Impressive.""",""
+"d130_030_050","char_SIMMONS","""You know, it was more than eight years ago now...""",""
+"d130_030_060","char_SIMMONS","""...when I held in my hands a gadget invented by
+a genius far greater than myself.""",""
+"d130_030_070","char_SIMMONS","""It was shaped like a gun, and its owner was
+an agent from some unknown country...""",""
+"d130_030_080","char_SIMMONS","""It was almost entirely incomprehensible at the time, but I
+continued to analyze its data, which I had secretly copied.""",""
+"d130_030_090","char_SIMMONS","""I ought to thank that agent.
+Or at least I would, if I knew where to find them...""",""
+"d130_040_010","char_AEGIOMON","That black Digimon from earlier is one of your friends, right?",""
+"d130_040_020","char_CRESGARURUMON","Yes, but something is off... His appearance is slightly
+different from the Digimon we know, too.",""
+"d130_040_030","char_CRESGARURUMON","It's possible that seeing his partner in danger
+has caused him to go berserk!",""
+"d130_040_040","char_BLITZGREYMON","His partner is likely also trapped in one of those bubbles.",""
+"d130_040_050","char_BLITZGREYMON","Omnimon Zwart always cared about his partner more than
+anyone, after all... He is probably beside himself with rage!",""
+"d130_040_060","char_CRESGARURUMON","The situation is grim. Way too much time has passed.
+I only hope that our partners are okay...",""
+"d130_040_070","char_AEGIOMON","We should hurry!",""
+"d130_050_010","char_KUREMI","""...Parallelmon?""","d130_050_010"
+"d130_050_020","char_TOUDO","""That's right, sir. They're a hostile Digimon we haven't
+been able to get much of a handle on so far.""","d130_050_020"
+"d130_050_030","char_TOUDO","""Dr. Simmons has a theory that they can
+travel freely through space-time.""","d130_050_030"
+"d130_050_040","char_KUREMI","""I see... Then we'll need to take action
+as soon as possible.""","d130_050_040"
+"d130_060_010","char_SIMMONS","""'Operation Eliminate Parallelmon,' huh.
+It sounds less like a plan and more like a suicide mission.""","d130_060_010"
+"d130_060_020","char_KUREMI","""I have the weapon you made.
+It should at least give me a fighting chance.""","d130_060_020"
+"d130_060_030","char_SIMMONS","""Have you told your family about this plan?""","d130_060_030"
+"d130_060_040","char_KUREMI","""No... not yet.""","d130_060_040"
+"d130_060_050","char_KUREMI","""If I don't make it back alive, I want you to
+tell them exactly what happened.""","d130_060_050"
+"d130_060_060","char_SIMMONS","""...""","d130_060_060"
+"d130_060_070","char_SIMMONS","""I'm done with the maintenance.""","d130_060_070"
+"d130_060_080","char_SIMMONS","""I've created a new feature for it, too.""","d130_060_080"
+"d130_060_090","char_SIMMONS","""These 'tranquilizer bullets' aren't for dealing damage to Digimon,
+but instead cause them to temporarily cool down.""","d130_060_090"
+"d130_060_100","char_KUREMI","""What good will that do us...?""","d130_060_100"
+"d130_060_110","char_SIMMONS","""I'm... an idealist.""","d130_060_110"
+"d130_060_120","char_SIMMONS","""Although the world turned out like this, I believe it's
+still possible for humans and Digimon to coexist.""","d130_060_120"
+"d130_060_130","char_SIMMONS","""Digimon show care and consideration for their allies, too.
+They see each other as family and love one another.""","d130_060_130"
+"d130_060_140","char_SIMMONS","""How is that any different from us?""","d130_060_140"
+"d130_070_010","char_AEGIOMON","Are they sleeping...?",""
+"d130_070_020","char_KUREMIKYOKO","Wait—don't tell me HE did this...?
+Just what on earth is he trying to do...?",""
+"d130_070_030","char_KUREMIKYOKO","Man, it's always like this! He never tells us anything, 
+so we just end up waiting anxiously...!",""

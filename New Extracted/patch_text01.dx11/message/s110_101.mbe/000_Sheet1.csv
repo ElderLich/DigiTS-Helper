@@ -1,0 +1,152 @@
+string2 0,string 1,string 2,string 3
+"s110_101_010","char_MAGNAMON","I became addicted to delicious food and found myself
+visiting sweets shops.",""
+"s110_101_020","char_MAGNAMON","When my mouth is full of sweetness, things melt away and I
+forget what needs to be done.",""
+"s110_101_030","char_MAGNAMON","And now I finally remember what I was supposed to do.",""
+"s110_101_040","char_PLAYER_M","{next}Sweets make people happy.",""
+"s110_101_041","char_PLAYER_M","{next}What were you supposed to do?",""
+"s110_101_042","char_PLAYER_M","{next}What sweets do you recommend?",""
+"s110_101_050","char_MAGNAMON","I never knew that food could make one happy until I came
+across sweets.",""
+"s110_101_060","char_MAGNAMON","And sometimes salty snacks in between. Back and forth
+between sweet and salty is great!",""
+"s110_101_070","char_MAGNAMON","Repairing my armor. I cannot give it my all if my equipment
+is damaged.",""
+"s110_101_080","char_MAGNAMON","I cannot believe I forgot something so important. Sweets can
+be dangerous things...",""
+"s110_101_090","char_MAGNAMON","Check out the food section of department stores. You will
+find the best shops there.",""
+"s110_101_100","char_MAGNAMON","Of particular note are the limited-time shops. Check
+department store schedules!",""
+"s110_101_110","char_MAGNAMON","Now, about the armor... I will need Chrondigizoit Metal to
+repair it.",""
+"s110_101_120","char_MAGNAMON","I thought I could find some in the Factorial Area, but...",""
+"s110_101_130","char_MAGNAMON","",""
+"s110_101_140","char_PLAYER_M","",""
+"s110_101_141","char_PLAYER_M","",""
+"s110_101_142","char_PLAYER_M","",""
+"s110_101_150","char_MAGNAMON","",""
+"s110_101_160","char_MAGNAMON","",""
+"s110_101_170","char_MAGNAMON","",""
+"s110_101_180","char_MAGNAMON","",""
+"s110_101_190","char_MAGNAMON","",""
+"s110_101_200","char_PLAYER_M","",""
+"s110_101_201","char_PLAYER_M","",""
+"s110_101_202","char_PLAYER_M","",""
+"s110_101_210","char_MAGNAMON","",""
+"s110_101_220","char_MAGNAMON","",""
+"s110_101_230","char_MAGNAMON","",""
+"s110_101_240","char_MAGNAMON","",""
+"s110_101_250","char_MAGNAMON","",""
+"s110_101_260","char_MAGNAMON","",""
+"s110_101_270","char_MAGNAMON","",""
+"s110_101_280","char_HOMEROS","",""
+"s110_101_290","","",""
+"s110_101_300","","",""
+"s110_101_310","char_HOMEROS","",""
+"s110_101_320","","",""
+"s110_101_325","","",""
+"s110_101_330","","",""
+"s110_101_340","","",""
+"s110_101_350","","",""
+"s110_101_355","","",""
+"s110_101_360","","",""
+"s110_101_370","","",""
+"s110_101_380","","",""
+"s110_101_390","char_MAGNAMON","",""
+"s110_101_400","char_MAGNAMON","",""
+"s110_101_410","char_MAGNAMON","",""
+"s110_101_420","char_GUARDROMON","",""
+"s110_101_430","char_PLAYER_M","",""
+"s110_101_431","char_PLAYER_M","",""
+"s110_101_432","char_PLAYER_M","",""
+"s110_101_440","char_MAGNAMON","",""
+"s110_101_450","char_MAGNAMON","",""
+"s110_101_460","char_GUARDROMON","I heard the details from Magnamon.",""
+"s110_101_470","char_GUARDROMON","Chrondigizoit Metal can indeed be smelted here. There's another
+problem, though.",""
+"s110_101_480","char_GUARDROMON","There's a shortage of Chrondigizoit ore, which is used to
+make Chrondigizoit Metal.",""
+"s110_101_490","char_MAGNAMON","As such, we have to get the necessary materials if we're
+going to proceed.",""
+"s110_101_500","char_GUARDROMON","The LoaderLeomon site you visited before hasn't secured
+sufficient quantities yet.",""
+"s110_101_510","char_GUARDROMON","I can show you another mine, so please bring us some 
+Chrondigizoit ore from there.",""
+"s110_101_520","char_MAGNAMON","I would like to deal with this problem by myself, but I need
+to ensure I am successful.",""
+"s110_101_530","char_MAGNAMON","I must ask you to accompany me to the site. What do you say?
+Will you help me?",""
+"s110_101_540","char_PLAYER_M","{next}Sure. Let's go.",""
+"s110_101_541","char_PLAYER_M","{next}You really can't go on your own?",""
+"s110_101_542","char_PLAYER_M","{next}I'll go when I can.",""
+"s110_101_550","char_MAGNAMON","Thank you. I am sure that, together, we will be successful.",""
+"s110_101_560","char_MAGNAMON","Chrondigizoit ore is extremely valuable. I feel like we
+must be prepared for anything.",""
+"s110_101_570","char_MAGNAMON","Will you really? I am counting on you! Do you hear me? I
+will hold you to your word!",""
+"s110_101_580","char_MAGNAMON","I shall go check out the site and meet you there once you
+are ready.",""
+"s110_101_590","char_MAGNAMON","See you there!",""
+"s110_101_600","char_GUARDROMON","The mining site I mentioned is a dangerous place, subject to
+many recent thefts.",""
+"s110_101_610","char_GUARDROMON","Make sure you prepare accordingly before you leave. Good
+luck to you.",""
+"s110_101_620","char_MAGNAMON","Ah, there you are! I have been waiting for
+you.",""
+"s110_101_630","char_MAGNAMON","Look at this! It is some actual Chrondigizoit ore!",""
+"s110_101_640","char_MAGNAMON","Yes, you do not have to remind me. I shall only take the
+amount that is necessary.",""
+"s110_101_650","char_MAGNAMON","This should be sufficient. Let us return to Guardromon and
+begin the smelting process.",""
+"s110_101_660","char_MAGNAMON","Hm...? Can you feel that? I am sensing an ominous presence
+nearby.",""
+"s110_101_670","char_MAGNAMON","Look out! Something is coming!",""
+"s110_101_680","char_BREAKDRAMON","Hey! You stole that Chrondigizoit ore!",""
+"s110_101_690","char_MAGNAMON","But I received permission! Besides, I only took the absolute
+minimum amount necessary!",""
+"s110_101_700","char_BREAKDRAMON","I don't care about any of that. All of this Chrondigizoit
+ore belongs to me!",""
+"s110_101_710","char_BREAKDRAMON","You're not allowed to take a single piece!",""
+"s110_101_720","char_MAGNAMON","Wait a minute! Ugh... It is not listening to
+me.",""
+"s110_101_730","char_PLAYER_M","{next}Leave this to me.",""
+"s110_101_731","char_PLAYER_M","{next}You can't fight with your armor like that.",""
+"s110_101_732","char_PLAYER_M","{next}You head on back. I'll be right behind you.",""
+"s110_101_740","char_MAGNAMON","You know I cannot do that! I shall not leave you here to
+face this foe alone!",""
+"s110_101_750","char_MAGNAMON","Perhaps not, but it does not appear that we can avoid this
+battle in any case!",""
+"s110_101_760","char_MAGNAMON","No, I refuse to let you do that! I get the feeling it shall
+not end well for you!",""
+"s110_101_770","char_MAGNAMON","...You want me to take the Chrondigizoit ore and go repair
+my armor?",""
+"s110_101_780","char_MAGNAMON","I suppose you are right... I am not at full strength yet. I
+might only slow you down.",""
+"s110_101_790","char_MAGNAMON","Very well. I leave it to you, then! I shall return as soon
+as possible, so hang in there!",""
+"s110_101_800","char_BREAKDRAMON","Ya wanna face me alone? You'll pay for your foolishness.",""
+"s110_101_810","char_PLAYER_M","{next}Can't we talk for a minute?",""
+"s110_101_811","char_PLAYER_M","{next}Why do you want the Chrondigizoit ore?",""
+"s110_101_812","char_PLAYER_M","{next}I'm a big fan of yours!",""
+"s110_101_820","char_BREAKDRAMON","You're blatantly stalling for time. Hmph. I'll entertain
+your desperate plea, but...",""
+"s110_101_830","char_BREAKDRAMON","It's not a matter of wanting it, you see. It's already mine
+to begin with!",""
+"s110_101_840","char_BREAKDRAMON","Oh? Did you attend my last meet-and-greet? I like to take
+care of my fans, but...",""
+"s110_101_850","char_BREAKDRAMON","That's enough of your stalling! Get ready to fight!",""
+"s110_101_860","char_MAGNAMON","I am sorry for the delay!",""
+"s110_101_870","char_MAGNAMON","My armor has been repaired perfectly! Let us now fight
+together!",""
+"s110_101_880","char_BREAKDRAMON","Urk... This can't be the end... Not yet...",""
+"s110_101_890","char_MAGNAMON","It looks like we drove it off. You are quite formidable. I
+am amazed you held out!",""
+"s110_101_900","char_MAGNAMON","I asked the Factorial Area to hurry, but I feel you could
+have won this battle alone.",""
+"s110_101_910","char_MAGNAMON","This is for all of your help. Please take it, along with my
+sincere gratitude.",""
+"s110_101_920","char_MAGNAMON","My armor is now repaired, so I can finally head to the
+rendezvous point.",""
+"s110_101_930","char_MAGNAMON","I hope to see you again soon!",""

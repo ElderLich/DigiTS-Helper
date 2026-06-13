@@ -1,0 +1,321 @@
+string2 0,string 1,string 2,string 3
+"s910_170_010","char_HIROKO","Hey, thanks for coming. And here comes the person I wanted
+you to meet...",""
+"s910_170_020","char_NORIO","Um, is this Hiroko's office? I'm, uh, Norio. I'm a high
+school student, or, I should be...",""
+"s910_170_030","char_HIROKO","Norio says he's here from the past. If that's true, I can't
+really offer him any help.",""
+"s910_170_040","char_NORIO","Judging by the calendar... I believe I come from a time
+period nearly eight years ago.",""
+"s910_170_050","char_NORIO","I was visiting Nishi-Shinjuku one day, and suddenly I was
+caught up in a huge explosion.",""
+"s910_170_060","char_HIROKO","When I finally came to, it was eight years later... or so it
+seemed.",""
+"s910_170_070","char_HIROKO","That sounds a lot like what happened to you.
+I think we can probably trust what he's saying.",""
+"s910_170_080","char_PLAYER_M","{next}Do you have any proof?",""
+"s910_170_081","char_PLAYER_M","{next}Maybe it was just a dream?",""
+"s910_170_082","char_PLAYER_M","{end}I need to think this through for a while.",""
+"s910_170_090","char_HIROKO","He showed me his school handbook. It was, in fact, issued
+eight years ago.",""
+"s910_170_100","char_NORIO","I wish... I also thought it was a dream at first, and kept
+trying to wake myself up.",""
+"s910_170_110","char_HIROKO","Okay, I'll wait here. Come on back after you've had time to
+think.",""
+"s910_170_120","char_HIROKO","So, is everything all clear now? Can we continue where we
+left off?",""
+"s910_170_130","char_PLAYER_M","{next}Sure.",""
+"s910_170_131","char_PLAYER_M","{end}Not yet.",""
+"s910_170_140","char_HIROKO","Excellent. Now, let's get back to Norio's story.",""
+"s910_170_150","char_HIROKO","Well, feel free to take a rest then. Just give me a holler
+when you're ready.",""
+"s910_170_160","char_NORIO","It seems I can't get home on my own, so I've been looking
+for someone to help me.",""
+"s910_170_170","char_NORIO","I was able to use the cash I had on hand at an Internet
+cafe. That's how I found Hiroko.",""
+"s910_170_180","char_HIROKO","It must be hard living in a time different from your own.
+We've got to get you home.",""
+"s910_170_190","char_HIROKO","I believe you're the only one capable of helping him, so see
+what you can do, okay?",""
+"s910_170_200","char_HIROKO","Is there anyone who might know of a way to get him back to
+his own time?",""
+"s910_170_205","char_PLAYER_M","{next}Maybe I should talk to Mirei about it...",""
+"s910_170_210","char_NORIO","I'll be tagging along with you, so thanks in advance!",""
+"s910_170_220","char_MIREI","I'll grant an exception. Luckily, I was able to connect to
+his old time. There's the exit.",""
+"s910_170_230","char_NORIO","Wh-Wh-What is this place?! Are you sure about this?!",""
+"s910_170_240","char_NORIO","Hm? This doesn't look right. Please... I need this to work!",""
+"s910_170_250","char_MILLENNIUMON","Wait! You can't go! I refuse to let you go!",""
+"s910_170_260","char_NORIO","Yikes! Look at the size of that thing! It's refusing to let
+me go back to my own time!",""
+"s910_170_270","char_MILLENNIUMON","I will NOT let you go home. You can't be allowed to return
+to your time!",""
+"s910_170_280","char_MILLENNIUMON","You're quite impressive. I suppose I'll leave you be for the
+moment.",""
+"s910_170_290","char_MILLENNIUMON","However, I refuse to give up. I plan to enjoy this moment a
+little longer.",""
+"s910_170_300","char_NORIO","I had no idea that traveling through time was so dangerous.",""
+"s910_170_310","char_NORIO","Let's get out of here... and fast!",""
+"s910_170_320","char_NORIO","Is this the time period I originally came from?",""
+"s910_170_330","char_NORIO","Actually, now that I think about it, I do feel a sense of
+calm here.",""
+"s910_170_340","char_NORIO","Okay, I'll try going back to my house right away! Thanks
+again for all of your help!",""
+"s910_170_350","char_NONAME","You have accomplished your mission, so it's time for you to
+return to your time as well.",""
+"s910_170_360","char_HIROKO","Well, well, got some time on your hands today? You don't
+drop by that often.",""
+"s910_170_370","char_HIROKO","This is perfect timing. There's something I wanna talk to
+you about...",""
+"s910_170_380","char_???","Hello? Is anyone home?",""
+"s910_170_390","char_NORIO","I'm glad I found you. My name's Norio.",""
+"s910_170_400","char_HIROKO","Norio? You mean the same Norio that sent me an email saying
+he's from the past?",""
+"s910_170_410","char_NORIO","That was the me from the past. I'm the me from the present.",""
+"s910_170_420","char_NORIO","You helped me eight years ago. Although, I guess that was
+just a short time ago for you.",""
+"s910_170_430","char_HIROKO","Hm, I'm not sure I understand. Take it from the top and give
+us all the deets.",""
+"s910_170_440","char_HIROKO","I see... So we talked to the Norio from the past and sent
+him—err, you—back to your time.",""
+"s910_170_450","char_HIROKO","And now you're telling us that you're that version of Norio
+that time traveled before.",""
+"s910_170_460","char_NORIO","Naturally, I knew that the two of you would encounter my
+younger self today.",""
+"s910_170_470","char_NORIO","You both know my situation, so there's something I could use
+your help with.",""
+"s910_170_480","char_PLAYER_M","{next}You were supposed to go back to normal life.",""
+"s910_170_481","char_PLAYER_M","{next}You want to time travel again?",""
+"s910_170_482","char_PLAYER_M","{next}Maybe it was just a dream?",""
+"s910_170_490","char_NORIO","Yes, that was the plan. My life was going to return to
+normal... or so I thought.",""
+"s910_170_500","char_NORIO","No, I'm through with all that. But I think my younger self
+is going to show up here again.",""
+"s910_170_510","char_NORIO","I wish it was a dream. Actually, just saying that gives me a
+strong sense of déjà vu...",""
+"s910_170_520","char_NORIO","You see, when I went to the future back in high school, past
+me met up with future me.",""
+"s910_170_530","char_HIROKO","What?! Isn't that dangerous?! Based on what I've seen in
+movies...",""
+"s910_170_540","char_HIROKO","...it totally screws up the future. I think it's called a
+time paradox or something.",""
+"s910_170_550","char_NORIO","That's right. You told me the same thing eight years ago and
+convinced me not to.",""
+"s910_170_560","char_NORIO","However, I couldn't overcome my curiosity to see what it'd
+be like to meet myself...",""
+"s910_170_570","char_HIROKO","So you went ahead and did it.",""
+"s910_170_580","char_NORIO","Yep. Future me was mega successful. I lived in a fancy condo
+and ran an IT company.",""
+"s910_170_590","char_NORIO","I even had a wife, too. I married a girl named Hanae that I
+liked back in high school.",""
+"s910_170_600","char_HIROKO","It was probably a bad idea to do that, but you're still here
+now, so it's okay, right?",""
+"s910_170_610","char_NORIO","Actually, no... Now I'm super poor and can barely even make
+ends meet.",""
+"s910_170_620","char_NORIO","I felt my success was guaranteed, so I partied too much and
+failed my entrance exam.",""
+"s910_170_630","char_NORIO","Still, I felt my life was destined to turn around, so I
+didn't even try to do better.",""
+"s910_170_640","char_HIROKO","It sounds like you only have yourself to blame. So, what do
+you wanna talk about?",""
+"s910_170_650","char_NORIO","Well, the younger me is about to give in to his curiosity
+and meet his future self.",""
+"s910_170_660","char_NORIO","When he does, he needs to see that I'm successful so that
+history can right itself.",""
+"s910_170_670","char_HIROKO","I get it. You seeing your future self succeed is the way the
+timeline was meant to be.",""
+"s910_170_680","char_NORIO","I'm worried that if something is different, I might
+disappear like in that old movie.",""
+"s910_170_690","char_NORIO","So I have to recreate the situation so I can avoid a time
+paradox. Please help me!",""
+"s910_170_700","char_HIROKO","Well, what should we do?",""
+"s910_170_710","char_PLAYER_M","{next}Okay, we'll help you.",""
+"s910_170_711","char_PLAYER_M","{next}You reap what you sow, pal.",""
+"s910_170_712","char_PLAYER_M","{next}I need to think about it.",""
+"s910_170_720","char_NORIO","Thank you so much! I knew you'd agree to help me.",""
+"s910_170_730","char_NORIO","I know that as well as anybody. I'm truly sorry for my
+actions, so please help me!",""
+"s910_170_740","char_NORIO","That's just a polite way of brushing me off, right? Please!
+You're my last hope, here!",""
+"s910_170_750","char_NORIO","High-school me already reached out. He said he wanted to
+talk.",""
+"s910_170_760","char_NORIO","I know I didn't get permission, but I said to meet here at
+your office in about two hours.",""
+"s910_170_770","char_HIROKO","So, in two hours, you want our help with the meeting between
+your past and present selves?",""
+"s910_170_780","char_NORIO","That's right. At the time, I wore a nice suit. Oh, and my
+wife, Hanae, was there, too.",""
+"s910_170_790","char_HIROKO","We can easily rent a suit for you to wear, but Hanae is
+gonna be a problem...",""
+"s910_170_800","char_HIROKO","We don't have much time, either. I guess we'll just have to
+call her here.",""
+"s910_170_810","char_NORIO","I've got her number. I asked her for it at our recent class
+reunion.",""
+"s910_170_820","char_HIROKO","Perfect. Okay, Norio. You give Hanae a call.",""
+"s910_170_830","char_HIROKO","Meanwhile, we'll go get that suit for you. We don't have
+much time, so move quickly!",""
+"s910_170_840","char_HIROKO","So that's the situation... Would you mind giving us a hand?",""
+"s910_170_850","char_NORIO","My past self will be here soon, so I just need you to
+pretend that we're married.",""
+"s910_170_860","char_HANAE","I don't know about time travel, but I've seen TV shows where
+people pretend to be married.",""
+"s910_170_870","char_HANAE","It'll be like I'm a private investigator or something. It
+sounds fun. Count me in!",""
+"s910_170_880","char_NORIO","Th-Thank you!",""
+"s910_170_890","char_HIROKO","Oh, perfect timing! Here comes the high school version of
+Norio now!",""
+"s910_170_900","char_NORIO_HIGHSCHOOL","Hey there, future me! Wow, I'm, like, really talking to
+myself, here!",""
+"s910_170_910","char_NORIO","Hey there, high school me. I know you want to know all about
+our life, so here goes...",""
+"s910_170_920","char_NORIO_HIGHSCHOOL","Wow! I'm the CEO of an IT company AND live in a high-rise
+condo?! And I marry Hanae, too?!",""
+"s910_170_930","char_HANAE","......",""
+"s910_170_940","char_NORIO","That's right. A famous business magazine even named me the
+""Savior of the Tech Industry""!",""
+"s910_170_950","char_NORIO_HIGHSCHOOL","This is unbelievable! It's like I'm guaranteed to be
+successful in the future!",""
+"s910_170_960","char_HANAE","Um, can I say something? I don't think I can keep up this
+lie any longer!",""
+"s910_170_970","char_NORIO","H-Hanae!",""
+"s910_170_980","char_HANAE","Norio! No, not you... The younger you. I'm not married to
+this person. It's all a lie.",""
+"s910_170_990","char_NORIO_HIGHSCHOOL","...Wait. What?",""
+"s910_170_1000","char_HANAE","He's no CEO, either. I actually had to loan him money for
+our recent class reunion.",""
+"s910_170_1010","char_NORIO_HIGHSCHOOL","Are you... being serious right now?",""
+"s910_170_1020","char_HANAE","Everything has been one big lie in order to help Hiroko and
+her friend.",""
+"s910_170_1030","char_HIROKO","I'm worried about the potential time paradox here, but I
+must admit, I agree with Hanae.",""
+"s910_170_1040","char_NORIO_HIGHSCHOOL","Hiroko and {player}, right? Is she telling the truth?",""
+"s910_170_1050","char_PLAYER_M","{next}Yes, it's true.",""
+"s910_170_1051","char_PLAYER_M","{next}What do you think?",""
+"s910_170_1052","char_PLAYER_M","{next}Haha. We got you!",""
+"s910_170_1060","char_NORIO_HIGHSCHOOL","I should've known that I'd never be successful...",""
+"s910_170_1070","char_NORIO_HIGHSCHOOL","I know this is weird for me to say, but I trust Hanae more
+than my future self.",""
+"s910_170_1080","char_HIROKO","Hey, this is serious! Let's try not to make this any more
+complicated than it already is.",""
+"s910_170_1090","char_HIROKO","At any rate, I need to be honest with you, high school
+Norio.",""
+"s910_170_1100","char_HIROKO","You saw your future success and stopped trying, so that's
+why you end up like this.",""
+"s910_170_1110","char_NORIO","U-Um...",""
+"s910_170_1120","char_HANAE","It's over, Norio. I can't be a part of this charade anymore.",""
+"s910_170_1130","char_HANAE","Back in high school, I was attracted to your honesty, but
+when did you lose that quality?",""
+"s910_170_1140","char_NORIO","......",""
+"s910_170_1150","char_NORIO_HIGHSCHOOL","I understand. Thank you. Now, then, is it possible for me to
+return to my own time?",""
+"s910_170_1160","char_HIROKO","We can send you back... right? Go ahead and send Norio here
+back to his own time.",""
+"s910_170_1170","char_HIROKO","...Sorry. I guess we need a little more time!",""
+"s910_170_1180","char_HIROKO","Something's been bothering me for a while. Don't you find
+this kinda strange?",""
+"s910_170_1190","char_PLAYER_M","{next}You mean time travel?",""
+"s910_170_1191","char_PLAYER_M","{next}Are you talking about Norio himself?",""
+"s910_170_1192","char_PLAYER_M","{next}Norio's suit?",""
+"s910_170_1200","char_HIROKO","Yeah, time travel is definitely weird, but I'm talking about
+something else.",""
+"s910_170_1210","char_HIROKO","You noticed it, too? There's something off about all this.",""
+"s910_170_1220","char_HIROKO","Well, it DOES look a bit cheap for a ""CEO,"" but I'm talking
+about something else!",""
+"s910_170_1230","char_HIROKO","You and Inori were both caught up in the chaos and turned up
+missing.",""
+"s910_170_1240","char_HIROKO","It was because you traveled eight years into the future.
+Norio should've been the same...",""
+"s910_170_1250","char_HIROKO","So why did Norio grow up and not go missing? Does it mean
+that one of them is a fake?",""
+"s910_170_1260","char_NONAME","This woman actually has a brain on her shoulders.",""
+"s910_170_1270","char_MILLENNIUMON","I took an interest in the boy when I saw him wandering
+between time and space.",""
+"s910_170_1280","char_MILLENNIUMON","I was curious what would happen if he met himself, so I
+played with space-time a bit.",""
+"s910_170_1290","char_MILLENNIUMON","This is a rare opportunity. Therefore, I cannot let you go
+home before I have my fun!",""
+"s910_170_1300","char_NORIO_HIGHSCHOOL","Stay back, Hanae! Get over here, quickly!",""
+"s910_170_1310","char_HANAE","Agh! My legs refuse to move... Help!",""
+"s910_170_1320","char_NORIO_HIGHSCHOOL","Look out!",""
+"s910_170_1330","char_HANAE","Young Norio! You saved my life... Are you all right?!",""
+"s910_170_1340","char_NORIO_HIGHSCHOOL","O-Ow... I'll be okay. Come this way, Hanae!",""
+"s910_170_1350","char_NORIO_HIGHSCHOOL","We'd just slow them down. We should probably leave this to
+our friends here!",""
+"s910_170_1360","char_MILLENNIUMON","Urk... Impossible... How could this be?!",""
+"s910_170_1370","char_MILLENNIUMON","I lost... Go ahead and finish me off now. Erase me from
+existence!",""
+"s910_170_1380","char_NORIO","There's no need for that. It's not like curiosity is a bad
+thing, right?",""
+"s910_170_1390","char_NORIO_HIGHSCHOOL","Besides, it was your mischief that allowed me the positive
+experience of meeting future me.",""
+"s910_170_1400","char_MILLENNIUMON","...Well, I apologize. I'll refrain from ever engaging in
+such behavior in the future.",""
+"s910_170_1410","char_MILLENNIUMON","You should go and live a happy life.",""
+"s910_170_1420","char_HIROKO","So this warping of time and space caused two versions of
+Norio to come into existence.",""
+"s910_170_1430","char_HIROKO","And it goes without saying that the high school version of
+Norio doesn't belong here.",""
+"s910_170_1440","char_NORIO","Okay, this is goodbye for real, then. I'm sorry for all the
+trouble.",""
+"s910_170_1450","char_NORIO_HIGHSCHOOL","It's all good. It was amazing having the chance to meet
+you... or should I say myself?",""
+"s910_170_1460","char_NORIO_HIGHSCHOOL","Okay, {player}. Please send me back to my own time.",""
+"s910_170_1470","char_MIREI","What can I do for you? Oh, it's you again.",""
+"s910_170_1480","char_NORIO_HIGHSCHOOL","Again? What do you mean?",""
+"s910_170_1490","char_MIREI","I just sent you back... Wait. This is a slightly different
+time from last time, huh?",""
+"s910_170_1500","char_MIREI","Okay, I'll send the kid home, but this is the last time I'll
+let a normal person through.",""
+"s910_170_1510","char_NORIO_HIGHSCHOOL","Is this the time period I originally came from? I do feel a
+sense of calm here.",""
+"s910_170_1520","char_NORIO_HIGHSCHOOL","Am I really going to be such a loser in the future? Is my
+fate predetermined? No...",""
+"s910_170_1530","char_NORIO_HIGHSCHOOL","Anyway, I'll try going back to my house now. Thanks again
+for all of your help!",""
+"s910_170_1540","char_NONAME","You have accomplished your mission, so it's time for you to
+return to your time as well.",""
+"s910_170_1550","char_HIROKO","Ah, you're back. It looks like young Norio made it home
+safely?",""
+"s910_170_1560","char_NORIO","Hey there, {player}. I'm sorry for any trouble my past and
+present selves caused.",""
+"s910_170_1570","char_NORIO","Okay, we should be heading home, too. Are you ready, Hanae?",""
+"s910_170_1580","char_HANAE","Yes.",""
+"s910_170_1590","char_HIROKO","Hm? It's been a while since you two last met, right?",""
+"s910_170_1600","char_NORIO","Huh? No. What are you talking about? We're married.",""
+"s910_170_1610","char_NORIO","We're going home. We live in that high-rise on the other
+side of the park.",""
+"s910_170_1620","char_HANAE","You two should come visit us sometime!",""
+"s910_170_1630","char_HIROKO","It turns out you ended up becoming successful after all?",""
+"s910_170_1640","char_NORIO","I wrote about my experience, and it became a bestselling
+book, anime, movie and musical.",""
+"s910_170_1650","char_NORIO","When I saved future Hanae that time, I felt I could change
+things if I tried hard enough.",""
+"s910_170_1660","char_HANAE","When he came back from the future, he told me his feelings
+for me. He seemed so different.",""
+"s910_170_1670","char_HIROKO","Yeah, quite a difference from the Norio who couldn't even
+pay at his own reunion...",""
+"s910_170_1680","char_NORIO","Everything's great now. I have a home and a job, as well as
+a beautiful wife.",""
+"s910_170_1690","char_NORIO","Of course, this is all thanks to the two of you sending me
+back to my own time.",""
+"s910_170_1700","char_HANAE","We should get going, Norio. You'll be late for your magazine
+interview.",""
+"s910_170_1710","char_NORIO","Oh, that's right. Well, I hope to see both of you again
+someday!",""
+"s910_170_1720","char_HIROKO","I guess the younger Norio was worried about his future and
+actually got serious.",""
+"s910_170_1730","char_HIROKO","Or maybe this was Norio's plan all along...",""
+"s910_170_1740","char_PLAYER_M","{next}He must've inspired his younger self.",""
+"s910_170_1741","char_PLAYER_M","{next}What do you mean?",""
+"s910_170_1742","char_PLAYER_M","{next}Was it all a dream?",""
+"s910_170_1750","char_HIROKO","Yeah, that must be what happened.",""
+"s910_170_1760","char_HIROKO","In other words, I think he might've used us to get what he
+wanted.",""
+"s910_170_1770","char_HIROKO","I kinda wish it was a dream. It's all so confusing I don't
+know what to think.",""
+"s910_170_1780","char_HIROKO","Maybe he knew that by showing his past self what he'd
+become, he'd end up successful.",""
+"s910_170_1790","char_HIROKO","So perhaps there was no historical anomaly, and history
+played out exactly as intended.",""
+"s910_170_1800","char_HIROKO","Oh, that reminds me. Norio gave us something to thank us.
+Here you go! Nice work!",""

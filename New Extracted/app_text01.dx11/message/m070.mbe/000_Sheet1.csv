@@ -1,0 +1,164 @@
+string2 0,string 1,string 2,string 3
+"m070_010_010","char_DESCRIPTIVE_PART","*knocking*",""
+"m070_010_020","char_PLAYER_M","Yes?{next}",""
+"m070_010_021","char_PLAYER_M","*mumbling* Zzz...{next}",""
+"m070_010_022","char_PLAYER_M","Don't bother me outside of working hours...{next}",""
+"m070_010_023","char_PLAYER_M","Don't answer.{next}",""
+"m070_010_030","char_TAKEMIYA","I'm coming in.","m070_010_030"
+"m070_010_040","char_TAKEMIYA","Do you have a minute? I need to ask you something.","m070_010_040"
+"m070_010_050","char_PLAYER_M","...All right. Sure.{next}",""
+"m070_010_051","char_PLAYER_M","If it's not part of my mission, I'm not interested.",""
+"m070_010_052","char_PLAYER_M","While we're here doing this, the world is coming apart.",""
+"m070_010_060","char_TAKEMIYA","I appreciate it. Come down to the living room when you're ready.","m070_010_060"
+"m070_010_070","char_TAKEMIYA","Oh, and don't tell Inori. She's not ready to know about all this yet.","m070_010_070"
+"m070_010_080","char_TAKEMIYA","...We should hurry—they're probably already waiting for us. 
+I'll see you in the living room.","m070_010_080"
+"m070_010_090","char_TAKEMIYA","Hey, don't be like that. There may be something in this for
+you, too. Can't you just hear me out?","m070_010_090"
+"m070_010_100","char_TAKEMIYA","Spare me the poor attempt at humor. I just want to talk for a bit.","m070_010_100"
+"m070_020_010","char_AEGIOMON","Hey... Do I really hafta wear this all the time?","m070_020_010"
+"m070_020_020","char_TAKEMIYA","Yes, deal with it. People aren't exactly used to seeing kids with horns.","m070_020_020"
+"m070_020_030","char_TAKEMIYA","You don't want to go causing a panic, right? You're gonna have to wear
+that when we go out.","m070_020_030"
+"m070_020_035","char_TAKEMIYA","I have to say... it fits perfectly. Never thought anyone
+would wear that stuff again...","m070_020_035"
+"m070_020_040","char_TAKEMIYA","Now then, it's about time to head out.","m070_020_040"
+"m070_020_050","char_PLAYER_M","Head out? Head out where?{next}",""
+"m070_020_051","char_PLAYER_M","How come you have clothes in that size...?",""
+"m070_020_052","char_PLAYER_M","Will I get paid for working on my day off?",""
+"m070_020_060","char_TAKEMIYA","There's someone I'd like for you to meet—especially
+the little half-pint, there.","m070_020_060"
+"m070_020_070","char_TAKEMIYA","She's not a bad person, I can promise you that much.
+She's just a little... eccentric, that's all.","m070_020_070"
+"m070_020_080","char_TAKEMIYA","...I'd like it if you would just read the room on that one.","m070_020_080"
+"m070_020_090","char_TAKEMIYA","Anyway, I want us to make a little outing together today.","m070_020_090"
+"m070_020_100","char_TAKEMIYA","Wh, what? I can't do anything about that, save that for your bosses.","m070_020_100"
+"m070_020_110","char_TAKEMIYA","Anyway... will you come along?","m070_020_110"
+"m070_020_120","char_TAKEMIYA","I'll be honest, half-pint. I'd like a sample of your data.","m070_020_120"
+"m070_020_160","char_TAKEMIYA","Inori isn't coming, by the way. One look at the half-pint dressed
+like that and I bet she'd—","m070_020_160"
+"m070_020_170","char_TAKEMIYA","...Never mind. She'd lose her mind if she heard me saying
+that.","m070_020_170"
+"m070_020_180","char_TAKEMIYA","We're supposed to meet up at Shinjuku Park. Come on. Let's 
+head on over.","m070_020_180"
+"m070_030_010","char_KUREMI","...Hey, Misono.","m070_030_010"
+"m070_030_020","char_TAKEMIYA","I hear you've been pretty busy lately, Kuremi.","m070_030_020"
+"m070_030_025","char_TAKEMIYA","Anyway, I brought the ""sample"" I promised.","m070_030_025"
+"m070_030_030","char_KUREMI","Hmm. This little boy, then?","m070_030_030"
+"m070_030_040","char_TAKEMIYA","I also brought a helpful friend who knows how to handle
+phase electron lifeforms. Should net you some better data.","m070_030_040"
+"m070_030_050","char_TAKEMIYA","I've known this captain here for ages. Only guy in public safety
+with a collaborative bone in his body.","m070_030_050"
+"m070_030_060","char_TAKEMIYA","Public safety is secretly gathering intel on phase electron
+lifeforms, too, by the way.","m070_030_060"
+"m070_030_070","char_TAKEMIYA","When I worked there, they refused to give us the budget to look into
+them no matter how much I bugged them.","m070_030_070"
+"m070_030_090","char_KUREMI","...You're just terrible at office politics.","m070_030_090"
+"m070_030_100","char_KUREMI","You can't even collect data properly without our organization's help.","m070_030_100"
+"m070_030_110","char_TAKEMIYA","Hey, I'm willing to share my precious sample data with you, aren't I?","m070_030_110"
+"m070_030_120","char_TAKEMIYA","If anyone should be grateful, it's you guys, don't you think?","m070_030_120"
+"m070_030_130","char_TAKEMIYA","Okay, half-pint... I need you to come with us now.","m070_030_130"
+"m070_030_140","char_TAKEMIYA","Don't worry. I won't let them lock you up and throw away
+the key or anything. I'll hold them to their word.","m070_030_140"
+"m070_030_150","char_TAKEMIYA","But to keep a long story short, just know that this is all 
+for Inori's sake.","m070_030_150"
+"m070_030_160","char_AEGIOMON","Well, I don't really get what's going on here,","m070_030_160"
+"m070_030_170","char_AEGIOMON","but if it's for Inori, I'll do whatever I can.","m070_030_170"
+"m070_030_180","char_TAKEMIYA","Ready when you are.","m070_030_180"
+"m070_030_190","char_KUREMI","Fair enough. I'll leave the rest to the boss lady, then.","m070_030_190"
+"m070_030_200","char_KUREMI","If you would...","m070_030_200"
+"m070_030_210","char_SUMERAGI","Dr. Simmons! We're all set!","m070_030_210"
+"m070_030_220","char_SIMMONS","Okay, okay.","m070_030_220"
+"m070_040_010","char_SIMMONS","Well! How entirely wonderful!","m070_040_010"
+"m070_040_020","char_SIMMONS","I can't believe this is actually happening! You're really 
+here, in the flesh! A real phase electron lifeform!","m070_040_020"
+"m070_040_030","char_AEGIOMON","Is that... what you call us Digimon?","m070_040_030"
+"m070_040_040","char_SIMMONS","""Digimon,"" you say? How fascinating!","m070_040_040"
+"m070_040_050","char_SIMMONS","Truly remarkable! Well, no time to waste. Let's begin the
+experiment at once!","m070_040_050"
+"m070_040_060","char_SIMMONS","Is everyone ready?","m070_040_060"
+"m070_040_070","char_TAKEMIYA","Sheesh. At least introduce yourself first!","m070_040_070"
+"m070_040_080","char_SIMMONS","Oops! Of course. How rude of me. I'm Dr. Simmons. Monica Simmons.","m070_040_080"
+"m070_040_090","char_PLAYER_M","What are you planning to do?{next}",""
+"m070_040_091","char_PLAYER_M","You're pretty forward, aren't you? I mean, we just met.",""
+"m070_040_092","char_PLAYER_M","Okay, okay... Aren't you just the life of the party?",""
+"m070_040_100","char_SIMMONS","What? No one told you? I'm a research scientist with a particular
+interest in Digimon.","m070_040_100"
+"m070_040_110","char_SIMMONS","I want to learn everything I can about their capabilities as living organisms.
+Toward that end, I have various hypotheses I wish to test.","m070_040_110"
+"m070_040_120","char_SIMMONS","Only through the most humane of methods, naturally.","m070_040_120"
+"m070_040_130","char_SIMMONS","My apologies. I thought I knew my manners, but my intellectual
+curiosity got the better of me.","m070_040_130"
+"m070_040_140","char_SIMMONS","Sometimes I get so caught up, my sense of etiquette seems to fly
+right out the window.","m070_040_140"
+"m070_040_150","char_SIMMONS","I'll do my best to be more polite in the future.","m070_040_150"
+"m070_040_160","char_SIMMONS","Well, I've never been described like that before. Truly fascinating.","m070_040_160"
+"m070_040_170","char_SIMMONS","But right now, I'm afraid my focus needs to be on the Digimon.
+I do apologize.","m070_040_170"
+"m070_040_180","char_SIMMONS","At any rate, we'll draw too much attention here. Let's move
+to a larger space, and I'll explain everything there.","m070_040_180"
+"m070_040_190","char_OPERATOR_M","A scientist working for public safety, huh. If she's
+accomplished, there must be some public info on her. ","m070_040_190_M m070_040_190_F"
+"m070_040_200","char_OPERATOR_M","I'll see what I can find out about her. You'll hear from me 
+as soon as I learn anything, so sit tight.","m070_040_200_M m070_040_200_F"
+"m070_060_010","char_SIMMONS","Okay, okay. Let us begin. Just take a deep breath and relax.
+You've got nothing to worry about... It's a simple experiment.","m070_060_010"
+"m070_060_020","char_SIMMONS","All you have to do is attack these officers with the full 
+extent of the capabilities you possess.","m070_060_020"
+"m070_060_030","char_SIMMONS","...And you're the one who gives the commands, are you? I ask
+for your cooperation as well, then.","m070_060_030"
+"m070_060_040","char_SIMMONS","I can't guarantee it for sure, but with our prototype device
+here, you shouldn't be able to deal any real damage to them.","m070_060_040"
+"m070_060_050","char_SIMMONS","So don't worry and definitely don't hold back! Let's get started!!","m070_060_050"
+"m070_070_010","char_SIMMONS","Good! Yes, that's it! Go on! They can take it! Show me more.
+MORE, I tell you!","m070_070_010"
+"m070_070_020","char_KUREMI","That's enough for today, Simmons. Our equipment's reaching 
+its limits, and that prototype isn't cheap to run, either.","m070_070_020"
+"m070_070_030","char_TAKEMIYA","Worried about the budget, Captain? A bureaucrat through and 
+through, aren't you.","m070_070_030"
+"m070_070_040","char_KUREMI","I'm just trying to keep all parties happy. Come on, Simmons.
+We're calling this thing off.","m070_070_040"
+"m070_070_050","char_SIMMONS","Very well...","m070_070_050"
+"m070_080_010","char_TAKEMIYA","I need to have a little talk with these people. You head on
+home first, okay?","m070_080_010"
+"m070_080_020","char_AEGIOMON","Oof!","m070_080_020"
+"m070_080_030","char_BOY","Oops! I'm sorry!","m070_080_030"
+"m070_080_040","char_BOY","...Huh?","m070_080_040"
+"m070_080_050","char_BOY","Oh, you're a kid, too! In that case, tag! You're it!","m070_080_050"
+"m070_080_060","char_AEGIOMON","I'm... ""it""?","m070_080_060"
+"m070_080_070","char_PLAYER_M","Looks like they're having a game of tag.{next}",""
+"m070_080_071","char_PLAYER_M","Do you wanna play with your fellow kids?{next}",""
+"m070_080_072","char_PLAYER_M","Go catch those kids!{next}",""
+"m070_080_080","char_TAKEMIYA","If you're curious, go ahead, go play with them.","m070_080_080"
+"m070_080_090","char_AEGIOMON","...Play?","m070_080_090"
+"m070_080_100","char_BOY","Hey, what're you waiting for?! You're it, you know!","m070_080_100"
+"m070_080_110","char_TAKEMIYA","Chase after them, and tag one with your hand.","m070_080_110"
+"m070_080_120","char_AEGIOMON","O-Okay, got it!","m070_080_120"
+"m070_080_130","char_AEGIOMON","H-Here I come!","m070_080_130"
+"m070_080_140","char_TAKEMIYA","Well, I'll leave the rest to you.","m070_080_140"
+"m070_090_010","char_AEGIOMON","*panting* Did I do it? Did I tag you right?","m070_090_010"
+"m070_090_020","char_BOY","Wow, dude... you're fast! You're amazing!","m070_090_020"
+"m070_090_030","char_AEGIOMON","Tag sure is... fun, but I'm... all worn out!","m070_090_030"
+"m070_090_040","char_BOY","Hey, no fair! You can't quit while you're ahead!","m070_090_040"
+"m070_090_050","char_GIRL","You'd better come back tomorrow! We'll see who's the fastest then!","m070_090_050"
+"m070_090_060","char_BOY","Tomorrow, then! You hear?! You'd better promise!","m070_090_060"
+"m070_090_070","char_AEGIOMON","...Okay! I promise!","m070_090_070"
+"m070_090_080","char_AEGIOMON","Hey! Let's go home!","m070_090_080"
+"m070_090_090","char_AEGIOMON","I've gotta tell Inori all about this!","m070_090_090"
+"m070_090_100","char_AEGIOMON","Let's come back tomorrow! And let's bring Inori!","m070_090_100"
+"m070_090_110","char_BOY","You'd better! We'll see you here tomorrow!","m070_090_110"
+"m070_100_010","char_OPERATOR_M","Agent {player}, I've made an attempt at reassessing the
+current situation.","m070_100_010_M m070_100_010_F"
+"m070_100_020","char_OPERATOR_M","Pay close attention to this Inori Misono and Aegiomon...
+Aegiomon's evolution was seemingly triggered by Inori.","m070_100_020_M m070_100_020_F"
+"m070_100_025","char_OPERATOR_M","There's no record of humans ever affecting Digimon like 
+that before. That alone makes those two an anomaly.","m070_100_025_M m070_100_025_F"
+"m070_100_050","char_OPERATOR_M","And Shinjuku is where the worldwide calamity began. It's hard
+to believe these two facts could be completely unrelated.","m070_100_050_M m070_100_050_F"
+"m070_100_060","char_OPERATOR_M","Just think! Ever since you met this girl, the very principles of
+time itself have been turned on their head.","m070_100_060_M m070_100_060_F"
+"m070_100_070","char_OPERATOR_M","Inori Misono... and Aegiomon. From this moment forward, 
+they're to be recognized as class-A anomalies.","m070_100_070_M m070_100_070_F"
+"m070_100_090","char_OPERATOR_M","In other words, a subject of our investigation.","m070_100_090_M m070_100_090_F"
+"m070_100_100","char_OPERATOR_M","I expect you to make every effort to find out all you can about them.
+Don't miss a single detail. I'm counting on you.","m070_100_100_M m070_100_100_F"

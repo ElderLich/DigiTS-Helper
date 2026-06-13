@@ -1,0 +1,135 @@
+string2 0,string 1,string 2,string 3
+"s110_093_010","char_CRANIAMON","I'm finally ready for my showdown with the immortal steed!",""
+"s110_093_020","char_PLUTOMON","The immortal steed gallops freely across the sky, so beware
+of attacks from all angles.",""
+"s110_093_030","char_CRANIAMON","Okay, I'm ready, but... I can't fly, though...",""
+"s110_093_040","char_PLAYER_M","{next}Okay, wait here.",""
+"s110_093_041","char_PLAYER_M","{next}Can you fly, Plutomon?",""
+"s110_093_042","char_PLAYER_M","{next}You just need to believe in yourself.",""
+"s110_093_050","char_CRANIAMON","The whole reason I came to the underworld was to try and
+gain confidence...",""
+"s110_093_060","char_CRANIAMON","This place is essentially my backyard. Although I cannot
+fly, I can float.",""
+"s110_093_070","char_CRANIAMON","What good will that do me?! It's not like it'll help me grow
+wings or anything!",""
+"s110_093_080","char_PLUTOMON","I suppose I am strong enough to help one of you float in the
+air. What do you say?",""
+"s110_093_090","char_CRANIAMON","Um, I-I'm scared of flying... I think I'll leave it to you,
+then.",""
+"s110_093_100","char_PLUTOMON","In that case, I suppose it is up to us...",""
+"s110_093_110","char_CRANIAMON","I'll be fighting that horse with you in spirit, so good luck
+to you out there!",""
+"s110_093_120","char_ENBARRMON","Ah, Plutomon and... Wait. I have not seen you around here
+before.",""
+"s110_093_130","char_PLUTOMON","This one has come here to defeat you in order to test his
+strength.",""
+"s110_093_140","char_ENBARRMON","Eh?! Why would I even entertain such a pointless waste of my
+time?!",""
+"s110_093_150","char_PLAYER_M","{next}We request the honor of dueling you.",""
+"s110_093_151","char_PLAYER_M","{next}How can we get you to fight?",""
+"s110_093_152","char_PLAYER_M","{next}I just got caught up in all of this...",""
+"s110_093_160","char_ENBARRMON","Well, if you put it that way... You can still forget it!
+What is in it for me?!",""
+"s110_093_170","char_ENBARRMON","There is nothing to be gained from fighting you. What would
+you offer me if I won?",""
+"s110_093_180","char_ENBARRMON","Is that supposed to change my mind?! I hate spineless
+weaklings!",""
+"s110_093_190","char_PLUTOMON","How about this? If you defeat us, I shall bequeath you a
+portion of the underworld.",""
+"s110_093_200","char_ENBARRMON","You will what?! Hmm... Yes, I suppose that is a suitable
+prize for my precious time.",""
+"s110_093_210","char_ENBARRMON","I never liked you, so I will savor this victory and becoming
+ruler of the underworld!",""
+"s110_093_220","char_ENBARRMON","Tch! I will take a short rest before resuming our challenge!
+Farewell!",""
+"s110_093_230","char_PLUTOMON","They fled to the castle, as planned. Craniamon should be
+able to join the fight now.",""
+"s110_093_240","char_PLUTOMON","I shall meet up with Craniamon and head to the castle. You
+may join us there.",""
+"s110_093_250","char_ENBARRMON","Damn it! You called in reinforcements! Curse you cowards!",""
+"s110_093_260","char_CRANIAMON","This horse seems to be quite wild... I think I'm in for a
+real fight here.",""
+"s110_093_270","char_ENBARRMON","That is rather big armor for such a little runt. I loathe
+puny pretenders such as you!",""
+"s110_093_280","char_PLAYER_M","{next}You've got this, Craniamon!",""
+"s110_093_281","char_PLAYER_M","{next}Remember, Enbarrmon is at home in the sky.",""
+"s110_093_282","char_PLAYER_M","{next}There's no shame in trying, at least!",""
+"s110_093_290","char_CRANIAMON","You're right! I was seeking a worthy challenge, and I've
+definitely found one!",""
+"s110_093_300","char_CRANIAMON","Worried I'm at a disadvantage? Don't be. This is a good test
+of my strength!",""
+"s110_093_310","char_CRANIAMON","Hey, whose side are you on, anyway? You make it sound like
+I've already lost.",""
+"s110_093_320","char_CRANIAMON","Okay, I'm ready! This immortal steed is about to know the
+taste of steel!",""
+"s110_093_330","char_ENBARRMON","Ah, it is nice to see you have some fight in you. Very well.
+Show me what you can do!",""
+"s110_093_340","char_CRANIAMON","D-Did I win...? Did I defeat the immortal steed?",""
+"s110_093_350","char_ENBARRMON","Well, you definitely had some help... Still, it was an
+enjoyable battle nonetheless.",""
+"s110_093_360","char_PLUTOMON","Ah, I see that Enbarrmon has accepted you as worthy. That
+should restore your confidence.",""
+"s110_093_370","char_PLAYER_M","{next}Good for you.",""
+"s110_093_371","char_PLAYER_M","{next}I think I see a budding friendship here.",""
+"s110_093_372","char_PLAYER_M","{next}Hopefully, you're done horsing around.",""
+"s110_093_380","char_CRANIAMON","Yes, I'm somewhat more confident now. It's all thanks to
+Enbarrmon here.",""
+"s110_093_390","char_ENBARRMON","Hey! What do you mean by that?! I would never be friends
+with one such as you!",""
+"s110_093_400","char_CRANIAMON","That wasn't meant to be a lame horse pun, was it? I hope
+you're better than that...",""
+"s110_093_410","char_ENBARRMON","Here. You may ride upon my back.",""
+"s110_093_412","char_PLUTOMON","You should be proud. Enbarrmon only bestows such an honor
+upon those they deem worthy.",""
+"s110_093_414","char_PLUTOMON","It is proof of your strength. Go ahead and mount the steed.",""
+"s110_093_416","char_CRANIAMON","Thank you, Enbarrmon. I vow to fight in a way that won't
+bring shame on us.",""
+"s110_093_418","char_ENBARRMON","Shall we have ourselves a test ride, then? Brace yourself...
+Here we gooooo!",""
+"s110_093_420","char_CRANIAMON","Yes, please!",""
+"s110_093_430","char_CRANIAMON","Oh, such speed! It's like we're one with the wind itself!",""
+"s110_093_440","char_ENBARRMON","Whew... You need to go on a diet. Or maybe I just need to
+get stronger.",""
+"s110_093_450","char_CRANIAMON","With Enbarrmon, now I can fly through the sky. I feel more
+powerful than ever!",""
+"s110_093_460","char_CRANIAMON","Thanks for all of your help! With this trusty steed here,
+I'm ready for action!",""
+"s110_093_470","char_PLAYER_M","{next}You're welcome.",""
+"s110_093_471","char_PLAYER_M","{next}I wish you and the Royal Knights luck.",""
+"s110_093_472","char_PLAYER_M","{next}Someday, you'll be able to fight on your own.",""
+"s110_093_480","char_CRANIAMON","That was quite the journey. I suppose I'd better return to
+the rendezvous point now.",""
+"s110_093_490","char_CRANIAMON","Oh, right! I forgot about my primary mission! I need to get
+back to the rendezvous point!",""
+"s110_093_500","char_CRANIAMON","True. I can't rely on Enbarrmon forever. Okay, let's get
+back to the rendezvous pointt!",""
+"s110_093_510","char_PLUTOMON","I planned to rebuke Enbarrmon for their recent rampage, but
+this was a pleasant surprise.",""
+"s110_093_520","char_PLUTOMON","I suppose I shall reward you for your efforts. Do you have
+any requests?",""
+"s110_093_600","char_PLAYER_M","{next}I could use a horse.",""
+"s110_093_601","char_PLAYER_M","{next}Do you want to be friends?",""
+"s110_093_602","char_PLAYER_M","{next}Can I have your autograph?",""
+"s110_093_610","char_PLUTOMON","You also want a horse? Sorry, but the only one I can
+introduce you to is Enbarrmon.",""
+"s110_093_620","char_PLUTOMON","You must be joking. We live in different worlds. Some things
+are not meant to be.",""
+"s110_093_630","char_PLUTOMON","What do you mean? You wish for me to write my name? What is
+the value in that?",""
+"s110_093_640","char_PLUTOMON","As I am unable to grant your request, I instead
+present you the following...",""
+"s110_093_650","char_PLUTOMON","Here. This is now yours.",""
+"s110_093_660","char_CRANIAMON","Well, I suppose we should head to the rendezvous point.",""
+"s110_093_670","char_ENBARRMON","Do not bring shame upon yourself in battle, or else you will
+have to answer to me.",""
+"s110_093_540","char_CRANIAMON","Thanks for helping me the other day. Would you like to play
+some cards as a break?",""
+"s110_093_550","char_PLAYER_M","Sure.",""
+"s110_093_551","char_PLAYER_M","{end}No, thanks.",""
+"s110_093_560","char_CRANIAMON","I'll show you how the Royal Knights approach a battle!",""
+"s110_093_570","char_ENBARRMON","I find card games can be... How can I put this? Come! You
+must serve as my opponent!",""
+"s110_093_580","char_PLAYER_M","Sure.",""
+"s110_093_581","char_PLAYER_M","{end}No, thanks.",""
+"s110_093_590","char_ENBARRMON","Let us begin! I absolutely hate to lose, even if it is just
+a game!",""

@@ -1,0 +1,90 @@
+string2 0,string 1,string 2,string 3
+"dlc003_0000_0010","char_MIREI","...Wake up.",""
+"dlc003_0000_0020","char_MIREI","Once you're ready, begin your investigation anew.
+I have faith in you.",""
+"dlc003_0000_0030","char_MIREI","",""
+"dlc003_0000_0040","char_MIREI","",""
+"dlc003_0010_0010","char_OMEGAMON-X","Will you press onward?",""
+"dlc003_0010_0020","char_NONAME","{next}Yes.",""
+"dlc003_0010_0021","char_NONAME","{end}I'm not ready yet.",""
+"dlc003_0010_0030","char_OMEGAMON-X","Then venture through the door.",""
+"dlc003_0010_0040","char_OMEGAMON-X","...Prepare well, then.",""
+"dlc003_0020_0010","char_OMEGAMON-X","There is nobody here... Not a single soul in sight.",""
+"dlc003_0020_0020","char_OMEGAMON-X","They must be someplace else. 
+Let us investigate the door up ahead.",""
+"dlc003_0030_0010","char_OMEGAMON-X","Will you press onward?",""
+"dlc003_0030_0020","char_NONAME","{next}Yes.",""
+"dlc003_0030_0021","char_NONAME","{end}I'm not ready yet.",""
+"dlc003_0030_0030","char_OMEGAMON-X","Then venture through the door.",""
+"dlc003_0030_0040","char_OMEGAMON-X","...Prepare well, then.",""
+"dlc003_0040_0010","char_OMEGAMON-X","Those two do not seem of a mind to listen. 
+Let us search for the others.",""
+"dlc003_0040_0020","char_OMEGAMON-X","They must be someplace else. 
+Let us investigate the door up ahead.",""
+"dlc003_0050_0010","char_OMEGAMON-X","Will you press onward?",""
+"dlc003_0050_0020","char_NONAME","{next}Yes.",""
+"dlc003_0050_0021","char_NONAME","{end}I'm not ready yet.",""
+"dlc003_0050_0030","char_OMEGAMON-X","Then venture through the door.",""
+"dlc003_0050_0040","char_OMEGAMON-X","...Prepare well, then.",""
+"dlc003_0060_0010","char_OMEGAMON-X","I do not think it likely we will find anything else.",""
+"dlc003_0060_0020","char_OMEGAMON-X","We should return to the previous room with the two doors.",""
+"dlc003_0070_0010","char_OMEGAMON-X","Are you ready to confront Parallelmon?",""
+"dlc003_0070_0020","char_OMEGAMON-X","We cannot all go, or coordination will prove too difficult.
+Choose a fighter to participate in the battle alongside us.",""
+"dlc003_0070_0030","char_OMEGAMON-X","Choose a fighter.",""
+"dlc003_0080_0010","char_ALPHAMON","...Now that we stand together, we have nothing to fear.",""
+"dlc003_0080_0020","char_ALPHAMON","{next}Make Alphamon (Vaccine) your ally.",""
+"dlc003_0080_0021","char_ALPHAMON","{end}I'm done.",""
+"dlc003_0080_0030","char_ALPHAMON","Let us go defeat Parallelmon,
+and return to our original worlds!",""
+"dlc003_0080_0040","char_ALPHAMON","Let us go defeat Parallelmon,
+and return to our original worlds!",""
+"dlc003_0090_0010","char_JESMON_X","I wish to make up for the trouble I caused...!
+Won't you please take me with you?",""
+"dlc003_0090_0020","char_JESMON_X","{next}[Make Jesmon (X Antibody) (Data) your ally.]",""
+"dlc003_0090_0021","char_JESMON_X","{end}[Don't recruit.]",""
+"dlc003_0090_0030","char_JESMON_X","Something even greater than the X Program—
+that is what I fight for now.",""
+"dlc003_0090_0040","char_JESMON_X","Something even greater than the X Program—
+that is what I fight for now.",""
+"dlc003_0100_0010","char_DUKEMON_X","It seems it was we who were being self-centered.
+We are most grateful.",""
+"dlc003_0100_0020","char_DUKEMON_X","{next}[Make Gallantmon (X Antibody) (Virus) your ally.]",""
+"dlc003_0100_0021","char_DUKEMON_X","{end}[Don't recruit.]",""
+"dlc003_0100_0030","char_DUKEMON_X","We were able to remember something very important
+thanks to all of you. We shall add our strength to yours.",""
+"dlc003_0100_0040","char_DUKEMON_X","It seems it was we who were being self-centered.
+We are most grateful.",""
+"dlc003_0110_0010","char_ULFORCEVDRAMON_X","There are things far more important than my own
+sense of justice... and it is for that which I wish to fight.",""
+"dlc003_0110_0020","char_ULFORCEVDRAMON_X","{next}[Make UlforceVeedramon (X Antibody) (Vaccine) your ally.]",""
+"dlc003_0110_0021","char_ULFORCEVDRAMON_X","{end}[Don't recruit.]",""
+"dlc003_0110_0030","char_ULFORCEVDRAMON_X","With our combined might, all will be made right—I am
+certain of it. And so I shall remain steadfast to the bitter end.",""
+"dlc003_0110_0040","char_ULFORCEVDRAMON_X","There are things far more important than my own sense of justice...
+With our combined might, all will be made right.",""
+"dlc003_0120_0010","char_MAGNAMON_X","I have come to see the light, thanks to Alphamon and you all.
+I am certain I can be of assistance...!",""
+"dlc003_0120_0020","char_MAGNAMON_X","{next}[Make Magnamon (X Antibody) (Vaccine) your ally.]",""
+"dlc003_0120_0021","char_MAGNAMON_X","{end}[Don't recruit.]",""
+"dlc003_0120_0030","char_MAGNAMON_X","It was arrogant of me to believe we were the chosen ones.
+Now I wish to fight for my new comrades.",""
+"dlc003_0120_0040","char_MAGNAMON_X","It was arrogant of me to believe we were the chosen ones...
+I have come to see the light, thanks to Alphamon and you all.",""
+"dlc003_0130_0010","char_OMEGAMON-X","Your scattered hearts have come together as one...! 
+We shall defeat Parallelmon!",""
+"dlc003_0140_0010","char_NONAME","You can use this to return to the In-Between Theater.
+However, all of your progress up to this point will be lost.",""
+"dlc003_0140_0020","char_NONAME","{end}[Continue investigating.]",""
+"dlc003_0140_0021","char_NONAME","[Quit.]",""
+"dlc003_0150_0010","char_SIMMONS","I find your existence to be most fascinating.",""
+"dlc003_0150_0020","char_SIMMONS","You give me hope, even though as a scientist
+I have no scientific basis for the feeling.",""
+"dlc003_0150_0030","char_SIMMONS","And that hope is that you'll be able to
+get us through this somehow.",""
+"dlc003_0160_0010","char_SIMMONS","As such, I have something for you. I don't want to have 
+any regrets should this be our final conversation.",""
+"dlc003_0160_0020","char_SIMMONS","Do you remember my research on phase electron interference?
+This program is a prototype packed with the most recent research data.",""
+"dlc003_0160_0030","char_SIMMONS","Even after you disappeared, I continued my research diligently
+in preparation for the day you might return.",""

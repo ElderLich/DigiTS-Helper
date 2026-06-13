@@ -1,0 +1,110 @@
+string2 0,string 1,string 2,string 3
+"s900_217_010","char_MINERVAMON","Ah, welcome. You...",""
+"s900_217_020","char_PLAYER_M","{next}...Are who exactly?",""
+"s900_217_021","char_PLAYER_M","{next}What are you doing here?",""
+"s900_217_022","char_PLAYER_M","{next}Are you suffering from amnesia?",""
+"s900_217_030","char_MINERVAMON","Interesting. You're a sharp one. It's a pleasure to meet you.",""
+"s900_217_040","char_MINERVAMON","I see. Judging by your surprise, the version of me in this
+world must be rather busy.",""
+"s900_217_050","char_MINERVAMON","No, you mistake me. This is the first time we've met.",""
+"s900_217_060","char_MINERVAMON","I'm Minervamon, but not the one you might know.
+I come from another world.",""
+"s900_217_070","char_MINERVAMON","The reason I've come is to test my strength. I'm here with
+the rest of the Olympos XII.",""
+"s900_217_080","char_MINERVAMON","I'll be waiting beyond this space with the others. Join us
+when you're ready for battle!",""
+"s900_217_090","char_PLAYER_M","{next}Let's fight!",""
+"s900_217_091","char_PLAYER_M","{end}Not now.",""
+"s900_217_100","char_MARSMON","Hello! I sense great fighting spirit in this world! What do
+you say we get right to it?",""
+"s900_217_105","char_MARSMON","Oh, you ready to go another round? I'll take you on as
+many times as you want!",""
+"s900_217_110","char_MARSMON","Just the words I've been waiting for! Time to have some fun!",""
+"s900_217_120","char_MARSMON","How exhilarating! Battling strong opponents is the best!",""
+"s900_217_130","char_NEPTUNEMON","I have been waiting. Shall we fight?",""
+"s900_217_135","char_NEPTUNEMON","It would be a shame to have such fun only once. How about we
+fight again?",""
+"s900_217_140","char_NEPTUNEMON","I have been hoping to fight you! Do not hold back, now!",""
+"s900_217_150","char_NEPTUNEMON","Fighting you has made me realize that if you are this
+strong, this world is in good hands!",""
+"s900_217_160","char_MERCURYMON","A wandering journey across time and space... all for this
+battle.",""
+"s900_217_165","char_MERCURYMON","You seem like you still have energy to spare. Should you
+desire a rematch, I will accept!",""
+"s900_217_170","char_MERCURYMON","I have been eagerly awaiting this fight with you. Now... let
+us begin!",""
+"s900_217_180","char_MERCURYMON","With someone like you in this world, it must be brimming
+with excitement!",""
+"s900_217_190","char_MINERVAMON","Don't keep me waiting too long. Come on. Let's get this
+fight started, already!",""
+"s900_217_195","char_MINERVAMON","Aww, we're having too much fun to quit now! C'mon. Let's go
+again!",""
+"s900_217_200","char_MINERVAMON","I might not be the same me you're familiar with, so brace
+yourself!",""
+"s900_217_210","char_MINERVAMON","Hahaha! That was so much fun! The journey was worth it for a
+battle like this!",""
+"s900_217_220","char_JUNOMON","I cannot help but be intrigued by you. Would you grant me
+the honor of a battle?",""
+"s900_217_225","char_JUNOMON","I will gladly test your ability as many times as you wish.
+Would you like to fight again?",""
+"s900_217_230","char_JUNOMON","Very well, let us begin. Do not let your guard down!",""
+"s900_217_240","char_JUNOMON","That was an excellent battle... truly. And I am relieved to
+see that you are very strong.",""
+"s900_217_250","char_CERESMON","Care to battle me? I promise it will be fun.",""
+"s900_217_255","char_CERESMON","I am not weary yet. And neither are you, I assume. What say
+we fight another round?",""
+"s900_217_260","char_CERESMON","That is the spirit! I shall make sure this is not boring for
+you!",""
+"s900_217_270","char_CERESMON","The clash of strength against strength is the best kind of
+music! That was wonderful!",""
+"s900_217_280","char_APOLLOMON","You want to fight me, too, yes? Do not think you can hide
+it. I can tell!",""
+"s900_217_285","char_APOLLOMON","I want to fight you more! Say, square off with me again!",""
+"s900_217_290","char_APOLLOMON","All right, I will take you on! Come at me however you like!",""
+"s900_217_300","char_APOLLOMON","Whoa... No way. You are incredibly strong! It looks like I
+will need to train harder.",""
+"s900_217_310","char_DIANAMON","I did not come here just to tag along with Apollomon. I came
+to fight you.",""
+"s900_217_315","char_DIANAMON","Hohoho, having too much fun to quit? I feel the same way.
+Let us have another match!",""
+"s900_217_320","char_DIANAMON","Very well. Let us battle right now! I cannot wait any
+longer!",""
+"s900_217_330","char_DIANAMON","Wow, you are amazingly strong. But I was a pretty tough
+opponent, too, was I not?",""
+"s900_217_340","char_VENUSMON","I have been looking forward to meeting you. Would you honor
+me with a battle?",""
+"s900_217_345","char_VENUSMON","Repeated battle will polish you like a gemstone. I would be
+honored to assist you.",""
+"s900_217_350","char_VENUSMON","There is no need for many words. Let us speak through the
+clash of battle!",""
+"s900_217_360","char_VENUSMON","Your strength is not meant to destroy, but to save. Never
+forget that.",""
+"s900_217_370","char_VULCANUSMON","Akihabara in this world is the best! And, on top of that, I
+get to enjoy a fight with you!",""
+"s900_217_375","char_VULCANUSMON","Hm? Could it be you're looking for a rematch? Hahaha! I'll
+gladly take you on anytime!",""
+"s900_217_380","char_VULCANUSMON","Oh, you'll take me on? I'm glad I made the journey. All
+right. Here I come!",""
+"s900_217_390","char_VULCANUSMON","You struck a great pose. Can you do it again? I want to turn
+it into an action figure.",""
+"s900_217_400","char_BACCHUSMON","Battling a worthy rival is the best kind of celebration! So,
+are you ready?",""
+"s900_217_405","char_BACCHUSMON","Fighting you never gets old! I could do it over and over
+again!",""
+"s900_217_410","char_BACCHUSMON","All right, let's do this! And let's make sure we both enjoy
+ourselves. Have you got that?!",""
+"s900_217_420","char_BACCHUSMON","Phew! That was as satisfying as the way my stomach feels
+after a feast!",""
+"s900_217_430","char_JUPITERMON","Talking to you feels kind of strange, you know. But let us
+have a battle.",""
+"s900_217_435","char_JUPITERMON","To fight a person is to understand them. Shall we cross
+swords once more?",""
+"s900_217_440","char_JUPITERMON","Do not hold back. I shall be coming at you with everything I
+have, of course!",""
+"s900_217_450","char_JUPITERMON","Your power does not belong to you alone. Please... use it
+wisely.",""
+"s900_217_460","char_MINERVAMON","Wait. Are you serious? You've beaten all of us!",""
+"s900_217_470","char_MINERVAMON","I never thought it'd get this far... It's not like I didn't give it 
+my full effort, either.",""
+"s900_217_480","char_MINERVAMON","I offer you my praise. Congratulations on
+defeating all of the Olympos XII!",""

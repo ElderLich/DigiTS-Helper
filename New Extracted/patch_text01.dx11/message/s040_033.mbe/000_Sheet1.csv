@@ -1,0 +1,151 @@
+string2 0,string 1,string 2,string 3
+"s040_033_010","char_DRIMOGEMON_YB","Forest patrol time, Big Bro!",""
+"s040_033_020","char_DRIMOGEMON_OB","Forest patrol time, Little Bro!",""
+"s040_033_030","char_DRIMOGEMON_YB","We're so cool, huh! Like, really working hard!",""
+"s040_033_040","char_DRIMOGEMON_YB","Yeah! We're gonna keep this place safe, just like the
+legendary heroes!",""
+"s040_033_050","char_DRIMOGEMON_OB","Yeah! We're gonna keep this place safe, just like the
+legendary heroes!",""
+"s040_033_060","char_PLAYER_M","{next}Titans are really strong.",""
+"s040_033_061","char_PLAYER_M","{next}What's this about legendary heroes?",""
+"s040_033_062","char_PLAYER_M","{end}Well, good luck! See you!",""
+"s040_033_070","char_DRIMOGEMON_OB","But we're strong, too! We've got a brotherly bond just like
+the legendary heroes!",""
+"s040_033_080","char_DRIMOGEMON_OB","A pair of heroes who once fought for peace here! We wanna be
+just like 'em!",""
+"s040_033_090","char_DRIMOGEMON_YB","Hey, somebody passing by just cheered us on! C'mon! Let's
+show 'em what we got! Dig, dig!",""
+"s040_033_100","char_DRIMOGEMON_YB","Word has it the legendary heroes were brothers. Just like
+us!",""
+"s040_033_110","char_DRIMOGEMON_OB","And they fought the good fight, just the two of 'em. That's
+what makes 'em the coolest!",""
+"s040_033_120","char_DRIMOGEMON_OB","Okay, time to go take out those leftover Titans! Let's head
+that way and—",""
+"s040_033_130","char_DRIMOGEMON_YB","Hold up, Big Bro! We should go take down the one over this
+way first!",""
+"s040_033_140","char_DRIMOGEMON_OB","Nuh-uh. This way first! It's already decided! Now, just shut
+up and follow me!",""
+"s040_033_150","char_DRIMOGEMON_YB","No way! Why do you always get to decide?! I wanna go the
+other way! And I'm gonna!",""
+"s040_033_160","char_DRIMOGEMON_OB","Grrr... So you'd go against your own older brother, huh? I
+see how it is!",""
+"s040_033_170","char_DRIMOGEMON_OB","This brotherly team is officially disbanded! I don't care
+what you do from now on.",""
+"s040_033_180","char_DRIMOGEMON_YB","Fine by me! Because I'm gonna do whatever I want.",""
+"s040_033_190","char_DRIMOGEMON_YB","That'll restore peace way faster! You're always so pushy,
+and it's been bugging me!",""
+"s040_033_200","char_DRIMOGEMON_OB","You're really bringing that up now? Ugh, I can't stand you!
+Now we're REALLY through!",""
+"s040_033_210","char_DRIMOGEMON_OB","I'm leaving! And just you watch! I'm gonna take out those
+Titans in a flash. Not us, ME!",""
+"s040_033_220","char_DRIMOGEMON_YB","As if I care! I'm leaving, too. I'll beat the Titans all by
+myself!",""
+"s040_033_230","char_DRIMOGEMON_YB","Uh-oh. Going it alone isn't so easy... Hmm? Hey, I remember
+you! You look pretty strong!",""
+"s040_033_240","char_DRIMOGEMON_YB","I know! Let's join forces. There's a Titan holdout over
+there!",""
+"s040_033_250","char_PLAYER_M","{next}Okay.",""
+"s040_033_251","char_PLAYER_M","{end}Hold on.",""
+"s040_033_260","char_DRIMOGEMON_YB","Yay! Thanks a lot. This'll be a huge help!",""
+"s040_033_270","char_DRIMOGEMON_YB","Guess you need to prep, huh? I'll wait here, so let me know
+when you're ready.",""
+"s040_033_280","char_DRIMOGEMON_YB","Are you ready? Let's go take out that Titan!",""
+"s040_033_290","char_PLAYER_M","{next}Okay.",""
+"s040_033_291","char_PLAYER_M","{end}Hold on.",""
+"s040_033_300","char_DRIMOGEMON_YB","Yay! Thanks a lot. This'll be a huge help!",""
+"s040_033_310","char_DRIMOGEMON_YB","All right. Come back when you're ready!",""
+"s040_033_320","char_DRIMOGEMON_YB","All right, then. Let's go. But stay on your toes. That Titan
+looks pretty strong!",""
+"s040_033_330","char_DRIMOGEMON_YB","*panting* W-We did it. We won!",""
+"s040_033_340","char_DRIMOGEMON_YB","Wonder how Big Bro is doing... We were always together. I
+can't believe it came to this...",""
+"s040_033_350","char_DRIMOGEMON_YB","I'm gonna head to the sanctuary of the legendary heroes to
+think. Thanks again!",""
+"s040_033_360","char_DRIMOGEMON_OB","Aw, man! I said some awful things back there. Hm? You're the
+tough-looking one from before!",""
+"s040_033_370","char_DRIMOGEMON_OB","You got some time, right? Let's team up! I'm on my way to
+take out a leftover Titan.",""
+"s040_033_380","char_PLAYER_M","{next}Okay.",""
+"s040_033_381","char_PLAYER_M","{end}Hold on.",""
+"s040_033_390","char_DRIMOGEMON_OB","Seriously? Thanks! This is a huge help! I really need you in
+my corner.",""
+"s040_033_400","char_DRIMOGEMON_OB","Need to get ready? Okay, I'll be waiting here, so hurry back
+soon!",""
+"s040_033_410","char_DRIMOGEMON_OB","Hey, you ready? Let's do this!",""
+"s040_033_420","char_PLAYER_M","{next}Okay.",""
+"s040_033_421","char_PLAYER_M","{end}Hold on.",""
+"s040_033_430","char_DRIMOGEMON_OB","Seriously? Thanks! This is a huge help! I really need you in
+my corner.",""
+"s040_033_440","char_DRIMOGEMON_OB","All right. Come back when you're ready!",""
+"s040_033_450","char_DRIMOGEMON_OB","Keep your guard up, you hear? Now, let's move out!",""
+"s040_033_460","char_DRIMOGEMON_OB","...W-We won. Wahoo! We won!",""
+"s040_033_470","char_DRIMOGEMON_OB","We did it, Little Br— Oh, right. I forgot...",""
+"s040_033_480","char_DRIMOGEMON_OB","Thank for your help. I'm gonna head to the sanctuary of the
+legendary heroes and think.",""
+"s040_033_490","char_DRIMOGEMON_YB","*sigh* I didn't need to say all that. Now what should I do?
+Oh, hey. It's you.",""
+"s040_033_500","char_DRIMOGEMON_YB","The sanctuary of the legendary heroes, where they swore an
+oath as brothers...",""
+"s040_033_510","char_DRIMOGEMON_YB","...I bet they wouldn't want someone like me here, a guy who
+just argued with his brother.",""
+"s040_033_520","char_DRIMOGEMON_OB","Little Bro!",""
+"s040_033_530","char_DRIMOGEMON_YB","Big Bro!",""
+"s040_033_540","char_DRIMOGEMON_OB","Whew... Glad to see you're still in one piece.",""
+"s040_033_550","char_DRIMOGEMON_YB","Um... Big Bro...? I-I...",""
+"s040_033_560","char_DRIMOGEMON_OB","...Huh? What's this? There's something buried here.",""
+"s040_033_570","char_DRIMOGEMON_YB","Oh, yeah. I can see it, just barely sticking out. Now I'm
+curious. Let's dig it up!",""
+"s040_033_580","char_DRIMOGEMON_OB","It's a little box. Pretty light, though, so it can't be
+anything too valuable.",""
+"s040_033_590","char_DRIMOGEMON_OB","Let's take a peek inside anyway.",""
+"s040_033_600","char_DRIMOGEMON_YB","Careful, Big Bro!",""
+"s040_033_610","char_DRIMOGEMON_OB","I know, I know. Well, here goes nothing!",""
+"s040_033_620","char_DRIMOGEMON_OB","Hey, it opened... Now, what's inside...?",""
+"s040_033_630","char_DRIMOGEMON_OB","What the heck? All that's in here is a wrinkly old scrap of
+paper!",""
+"s040_033_640","char_DRIMOGEMON_YB","Is that it? No little figurines in capsules? No sparkly or
+not-so-sparkly cards?",""
+"s040_033_650","char_DRIMOGEMON_OB","Not a single exciting collector's item to be found! Just
+this scrap of paper.",""
+"s040_033_660","char_DRIMOGEMON_OB","What gives...? Did somebody accidentally bury their trash by
+mistake?",""
+"s040_033_670","char_DRIMOGEMON_YB","...Oh. Hey, get a look at this. There's something written on
+the paper!",""
+"s040_033_680","char_DRIMOGEMON_OB","Whoa, you're right! Let's see... ""Let's bring peace to Iliad
+together, the two of us!""",""
+"s040_033_690","char_DRIMOGEMON_YB","There's more. Hmm...",""
+"s040_033_700","char_DRIMOGEMON_YB","""Side by side as brothers forever!"" and ""We're stronger when
+it's the both of us!""",""
+"s040_033_710","char_DRIMOGEMON_OB","H-Hey, could this be...",""
+"s040_033_720","char_DRIMOGEMON_OB","...something written by the legendary heroes?!",""
+"s040_033_730","char_DRIMOGEMON_YB","Y-You think so, too? That's what I thought! I mean, it's
+gotta be!",""
+"s040_033_740","char_DRIMOGEMON_OB","Awesome! This is a historic discovery!",""
+"s040_033_750","char_DRIMOGEMON_OB","But why would we find it now of all times, when it's been
+buried like that for so long?",""
+"s040_033_760","char_DRIMOGEMON_YB","What if the legendary heroes were trying to tell us that
+brothers need to stick together?",""
+"s040_033_770","char_DRIMOGEMON_OB","...Yeah.",""
+"s040_033_780","char_DRIMOGEMON_OB","Little Bro, I'm sorry. I should've considered your feelings
+more.",""
+"s040_033_790","char_DRIMOGEMON_YB","I'm sorry, too, Big Bro. I didn't mean what I said about you
+bugging me.",""
+"s040_033_800","char_DRIMOGEMON_OB","The brotherly breakup is called off! We're better off
+working as a team.",""
+"s040_033_810","char_DRIMOGEMON_YB","You know it, Big Bro! The legendary heroes combined their
+strength as brothers.",""
+"s040_033_820","char_DRIMOGEMON_YB","So let's do the same. That way, we can fight for peace
+together!",""
+"s040_033_830","char_DRIMOGEMON_OB","This note will be our treasure, a symbol of the lesson we
+learned from the heroes.",""
+"s040_033_840","char_DRIMOGEMON_OB","...Oh, right. And we owe you, big time.",""
+"s040_033_850","char_DRIMOGEMON_YB","If it weren't for you, I might've lost to that Titan and
+never seen my brother again.",""
+"s040_033_860","char_DRIMOGEMON_OB","You bailed out my little bro, too? Now even more thanks is
+in order. Here. Take this!",""
+"s040_033_870","char_DRIMOGEMON_OB","We'll be fine now. We're in this fight together, just like
+the legendary heroes!",""
+"s040_033_880","char_DRIMOGEMON_OB","Sorry for keeping you like this. You must have your own
+stuff to take care of, right?",""
+"s040_033_890","char_DRIMOGEMON_YB","And we'll take care of things here! We all have to do our
+part to bring peace to Iliad!",""

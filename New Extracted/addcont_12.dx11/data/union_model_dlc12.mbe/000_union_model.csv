@@ -1,0 +1,10 @@
+string2 0,string2 1,empty 2,string2 3,empty 4,string2 5,string2 6,string2 7,float 8,string2 9,string2 10,string2 11,bool 12,bool 13,bool 14,bool 15
+"chr183ka010101","chr183k",,"chrh183a",,"01","01","01",1,"","","",true,true,true,false
+"chr183la010101","chr183l",,"chrh183a",,"01","01","01",1,"","","",true,true,true,false
+"chr183ma010101","chr183m",,"chrh183a",,"01","01","01",1,"","","",true,true,true,false
+"pc001ka010101","pc001k",,"pch001a",,"01","01","01",1,"","","",false,true,true,false
+"pc001la010101","pc001l",,"pch001a",,"01","01","01",1,"","","",false,true,true,false
+"pc002ka010101","pc002k",,"pch002a",,"01","01","01",1,"","","",false,true,true,false
+"pc002la010101","pc002l",,"pch002a",,"01","01","01",1,"","","",false,true,true,false
+"npc001ka010101","npc001k",,"npch001a",,"01","01","01",1,"","","",false,true,true,false
+"npc001la010101","npc001l",,"npch001a",,"01","01","01",1,"","","",false,true,true,false

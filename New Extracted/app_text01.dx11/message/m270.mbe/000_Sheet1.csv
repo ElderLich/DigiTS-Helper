@@ -1,0 +1,49 @@
+string2 0,string 1,string 2,string 3
+"m270_010_010","char_INORI","*gasp*","m270_010_010"
+"m270_010_020","char_AEGIOMON","This place...","m270_010_020"
+"m270_010_030","char_MIREI","You were supposed to meet an untimely demise, from the
+toxic fumes emitted by the poisonous sea.","m270_010_030"
+"m270_010_040","char_MIREI","That dark shadow is an omen of coming despair... A cry from
+the future, saying ""Go no further"",  has distorted time.","m270_010_040"
+"m270_010_050","char_MIREI","Normally that's a power bordering on taboo, but this time seems to be
+an exception. Head to the VIP room, the answers you seek await you.","m270_010_050"
+"m270_020_010","char_HOMEROS","......","m270_020_010"
+"m270_020_020","char_YGGDRASILL","Unfortunately, Homeros is still asleep. But should wake up
+again when the Current is back to normal.","m270_020_020"
+"m270_020_030","char_TOUHO","We made a promise, you see. We can't go meddling with that
+world without good cause.","m270_020_030"
+"m270_020_040","char_YGGDRASILL","Still, it's not like we can just leave things as they are, either...","m270_020_040"
+"m270_020_050","char_YGGDRASILL","I mean, if even one of us three were to disappear, the
+entire balance would be thrown out of whack, right?","m270_020_050"
+"m270_020_060","char_TOUHO","Homeros has been preparing something for some time, but is now
+unfortunately asleep. You can ask Mirei about it, though.","m270_020_060"
+"m270_020_070","char_YGGDRASILL","If Homeros were awake, I bet they'd say something like this:","m270_020_070"
+"m270_020_080","char_YGGDRASILL","""Use the power that dwells within you and save the world!""","m270_020_080"
+"m270_040_010","char_NARRATION","Once upon a time, a Shellmon who lived on the outskirts of a seaside
+village saved an injured Divermon.","m270_040_010"
+"m270_040_011","char_NARRATION","Divermon was a Titan, an enemy, but Shellmon's
+kindness caused Divermon to open up his heart.","m270_040_011"
+"m270_040_012","char_NARRATION","The pair grew closer and formed a deep friendship.","m270_040_012"
+"m270_040_020","char_NARRATION","However, the other Titan forces attacked the seaside village without mercy. The
+residents were forced to flee their homes, and Shellmon was no exception.","m270_040_020"
+"m270_040_030","char_NARRATION","Seeing Shellmon's tears of misery, Divermon had had enough.
+He wasn't going to watch his friend suffer anymore.","m270_040_030"
+"m270_040_040","char_NARRATION","He stood up to his fellow Titans, and drove their forces out 
+of the village.","m270_040_040"
+"m270_050_010","char_NARRATION","The Divermon that Shellmon once rescued blossomed into a great
+warrior, and took a new appearance.","m270_050_010"
+"m270_050_011","char_NARRATION","He is now Neptunemon, and referred to as the ruler of the seas.","m270_050_011"
+"m270_050_012","char_NARRATION","Around that time, a certain Digimon appeared in the ocean village.","m270_050_012"
+"m270_050_020","char_NARRATION","And Neptunemon did not realize...","m270_050_020"
+"m270_050_021","char_NARRATION","This new arrival, Venusmon, was in fact the mature form of
+the digimon Neptunemon owed his life to, Shellmon.","m270_050_021"
+"m270_050_030","char_NARRATION","Venusmon sent a poison-laced wine to Neptunemon, believing he
+was the loathsome titan who stole the oceans from her people.","m270_050_030"
+"m270_050_040","char_NARRATION","Neptunemon drank the poison unknowingly.. And perished.","m270_050_040"
+"m270_050_041","char_NARRATION","Having learned the truth, Venusmon fell into the depths of
+despair, her mind shattered by the weight of her guilt.","m270_050_041"
+"m270_050_050","char_NARRATION","At that moment, poison spread throughout the once beautiful ocean...","m270_050_050"
+"m270_050_051","char_NARRATION","...transforming its former splendor into a sea of death that
+none could approach. ","m270_050_051"
+"m270_050_060","char_NARRATION","One can only wonder... Was this series of tragic events, 
+truly unavoidable...?","m270_050_060"

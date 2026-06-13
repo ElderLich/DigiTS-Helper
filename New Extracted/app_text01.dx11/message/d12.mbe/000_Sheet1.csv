@@ -1,0 +1,465 @@
+string2 0,string 1,string 2,string 3
+"f_d1202_0010_0010","char_AEGIOMON","We need to hurry to see Dr. Simmons.",""
+"f_d1202_0020_0010","char_AEGIOMON","I see lights!",""
+"f_d1202_0020_0020","char_TOUDO","If we just keep going forward, Rebellion Village will be up
+ahead. Let's hurry on.",""
+"f_d1204_0010_0010","char_GUARDROMON","The gate to Central Town is just ahead. Sorry, but I can't
+let you through without permission.",""
+"f_d1204_0020_0010","char_GUARDROMON","The gate to Central Town is just ahead. Sorry, but I can't
+let you through without permission.",""
+"f_d1204_0030_0010","","There's nothing to do here right now. Let's prioritize the
+mission.",""
+"f_d1204_0040_0010","char_PEGASMON","Going to the theater?",""
+"f_d1204_0040_0020","char_PLAYER_M","Yes, let's head to the theater.",""
+"f_d1204_0040_0021","char_PLAYER_M","{end}Not right now.",""
+"f_d1204_0050_0010","char_SIMMONS","Ready to go to the lab?",""
+"f_d1204_0050_0020","char_PLAYER_M","{next}Yes, let's head to the lab.",""
+"f_d1204_0050_0021","char_PLAYER_M","{end}Not yet.",""
+"f_d1204_0050_0030","char_SIMMONS","We're counting on you. Please... stop my former colleagues
+from making a terrible mistake.",""
+"f_d1204_0060_0010","char_JUNOMON","Do you wish to visit Chronomon?",""
+"f_d1204_0080_0010","char_GUARDROMON","It's been years since the town got taken over. Will we ever
+be able to go back?",""
+"f_d1204_0090_0010","char_ASTAMON","You're the one who made all that fuss about seeing Lord
+Merukimon before, right?",""
+"f_d1204_0090_0020","char_ASTAMON","Well, now's your chance. Lord Merukimon is inside.",""
+"f_d1204_0100_0010","char_CATCHMAMEMON","Hey! It's our hero from the Central Tower the other day!
+Thanks again for your help!",""
+"f_d1204_0100_0020","char_CATCHMAMEMON","But thinking about that Central Tower... Man, it gets me even
+now!",""
+"f_d1204_0120_0010","char_VENUSMON","We have received word from Merukimon's subordinate. It
+arrived only moments ago.",""
+"f_d1204_0120_0020","char_VENUSMON","Merukimon's body can hold out no longer. That fact has put
+urgency behind his decision.",""
+"f_d1204_0120_0030","char_VENUSMON","I tried my best to talk Merukimon out of it, but to no
+avail...",""
+"f_d1204_0120_0040","char_VENUSMON","If I had received word even one day earlier, there might
+have been some way to prolong things—",""
+"f_d1204_0120_0050","char_VENUSMON","...What? You received a half-day grace period...?",""
+"f_d1204_0120_0060","char_VENUSMON","How did you accomplish that? Merukimon would not listen to
+a word of my pleas to stop.",""
+"f_d1204_0120_0070","char_VENUSMON","With an extra half a day... we just might be able to try a
+new medicine...",""
+"f_d1204_0120_0080","char_VENUSMON","If we can only remedy the poison, it will remove
+Merukimon's reason for rashly hurrying into a decision.",""
+"f_d1204_0120_0090","char_VENUSMON","In order to make this antidote... we will need the fruit of
+Karpos Hulē.",""
+"f_d1204_0120_0100","char_VENUSMON","I heard you were unable to obtain any previously, but I ask
+that you go and try again.",""
+"f_d1204_0120_0110","char_VENUSMON","Half a day is not much time... so please hurry.",""
+"f_d1204_0130_0010","char_BIGMAMEMON","I wonder what's become of the Central Tower. I guess there's
+no way to know, what with the town having become occupied...",""
+"f_d1204_0150_0010","char_TYUMON","Oh! Hey! You, there! Aren't ya that big rookie from way
+back when?!",""
+"f_d1204_0150_0020","char_TYUMON","I can't believe I'd run into ya like this! What luck! Hey,
+what've ya been up to all this time?!",""
+"f_d1204_0150_0030","char_TYUMON","Wait! Don't bother telling me. I bet I already know!",""
+"f_d1204_0150_0040","char_TYUMON","Well, things here are terrible! It's been bad ever since
+the town was taken over by the Titans.",""
+"f_d1204_0150_0050","char_TYUMON","But never mind that. You're looking to meet with Lord
+Merukimon, right? Well, you're in luck! He's inside.",""
+"f_d1204_0160_0010","char_HAGURUMON","I fled here for my life, but now the town's been occupied.
+Will I ever see the Central Tower again?",""
+"f_d1204_0170_0010","char_KOKUWAMON_A","What?! It... It's you! So, you made it!",""
+"f_d1204_0170_0020","char_KOKUWAMON_A","Thanks so much for your help back in the Factorial Area!",""
+"f_d1204_0170_0030","char_KOKUWAMON_A","But... these days, that area isn't the way it used to be.",""
+"f_d1204_0170_0040","char_KOKUWAMON_A","I don't really know how to put it, but... right now, the
+two of us can hardly stand the place.",""
+"f_d1204_0170_0050","char_KOKUWAMON_A","It's not as dangerous as the other areas, so it's maybe not
+such a bad place to live, but, still...",""
+"f_d1204_0180_0010","char_KOKUWAMON_UN","Huh?! I remember you! You helped us out that one time,
+right?",""
+"f_d1204_0180_0020","char_KOKUWAMON_UN","What? The Factorial Area? Ugh...! I'm so ashamed of what
+it's like now, I can't stand to go there anymore!",""
+"f_d1204_0180_0030","char_KOKUWAMON_UN","But... if you're going, you'd better bring a ton of YEN.",""
+"f_d1204_0180_0040","char_KOKUWAMON_UN","As for the two of us, we'll probably never go back.",""
+"f_d1204_0190_0010","char_KNIGHTMON","It is you! That human from before! Have you been keeping
+safe?",""
+"f_d1204_0190_0020","char_KNIGHTMON","I am sure things have been rough for you, too, but, here,
+Central Town has fallen to the Titans!",""
+"f_d1204_0190_0030","char_KNIGHTMON","There were countless injured, and some were left behind in
+the town...",""
+"f_d1204_0190_0040","char_KNIGHTMON","I worry for their safety, but it is all we can do right now
+to keep our own heads above water.",""
+"f_d1204_0200_0010","char_REVOLMON","Curse those yellow Titan varmints...! My partner deserved
+better! By gum, one of these days, I'll pay 'em back good!",""
+"f_d1204_0210_0010","char_MUSYAMON","Those Titans... So much stronger than we expected... Oh, it
+fills my heart with such regret!",""
+"f_d1204_0220_0010","char_SHOUTMON","Man... I wanna put on a show like I used to back in town.",""
+"f_d1204_0230_0010","char_TOGEMON","Ooh, that hurts... Are you... refugees, too? Where did you
+come from?",""
+"f_d1204_0230_0020","char_TOGEMON","I'm from the Gear Forest, but... things got so bad there I
+had to flee.",""
+"f_d1204_0230_0030","char_TOGEMON","The Digimon here are taking care of me. I couldn't be more
+grateful to meet such a hospitable bunch.",""
+"f_d1204_0240_0010","char_OCTMON","*sigh* I ran and ran out o' sheer desperation until I found
+myself 'ere.",""
+"f_d1204_0240_0020","char_OCTMON","Blimey, 'ow I long for the ole waters o' Abyss Beach. But
+now... *sigh*",""
+"f_d1204_0250_0010","char_GERBEMON","I only came to escape misfortune, but... it ain't half bad
+here, ya know? Maybe I'll settle down.",""
+"f_d1204_0260_0010","char_GUARDROMON","Not all the residents of Central Town made it out. I hope
+the ones who got left behind are okay...",""
+"f_d1204_0270_0010","char_SHOUTMON","Hey, listen up! There's nothing to be afraid of! Let's gooooo!",""
+"f_d1204_0280_0010","char_MUSYAMON","I'm focusing my mind in preparation for combat. Please
+don't talk to me.",""
+"f_d1204_0290_0010","char_CATCHMAMEMON","All right! That's what I'm talking about! Those overgrown
+punks better watch themselves!",""
+"f_d1204_0300_0010","char_BIGMAMEMON","We're going to crush them! We're going to take them down!
+We'll reclaim the town and the Central Tower both!",""
+"f_d1204_0310_0010","char_VRITRAMON","Yaaaaah! Watch out, Titans! This time, you're going down!",""
+"f_d1204_0320_0010","char_GARUMMON","Grr... Those wretched Titans! Last time, they caught us off
+guard, but that will not happen again.",""
+"f_d1204_0330_0010","char_KNIGHTMON","Those who traveled to different places to train have been
+coming back one after another.",""
+"f_d1204_0330_0020","char_KNIGHTMON","The time has come for Lord Merukimon to make a decision.",""
+"f_d1204_0340_0010","char_ASTAMON","So, it's that time at last... Good thing, too. I've got to
+reopen that tavern soon, or I could lose my touch.",""
+"f_d1204_0350_0010","char_REVOLMON","Yeehaw! Our forces have all banded together! Those
+yellow-bellied Titans better watch out!",""
+"f_d1204_0360_0010","char_TOGEMON","Yaaah! Thanks, everyone! I'm going, too! Let's give those
+Titans some payback!",""
+"f_d1204_0370_0010","char_HAGURUMON","Yes! I just know you can do it! Get out there and take down
+those Titans! I'll be cheering you on the whole time!",""
+"f_d1204_0380_0010","char_GARGOMON","I may still be hurting, but with everyone coming together
+like this, I'm ready to get out there myself!",""
+"f_d1204_0470_0010","char_OURYUMON","Hmph. These fools from town have always been lackadaisical,
+but it looks like they finally got their acts together.",""
+"f_d1204_0470_0020","char_OURYUMON","Still, they lack the real strength to succeed. I suppose
+I'll just have to join them myself and give them a hand...",""
+"f_d1204_0480_0010","char_SIMMONS","That weapon's been activated, and it looks like it's
+heading straight for the Tokyo Metropolitan Government Building.",""
+"f_d1204_0480_0020","char_SIMMONS","There's not a shred of beauty in that thing. I refuse to
+accept that such a monstrosity should have ever been made.",""
+"f_d1204_0480_0030","char_SIMMONS","It's the very reason I left the organization, because it
+agreed to make such a thing.",""
+"f_d1204_0480_0040","char_SIMMONS","We have to stop it. There's not a moment to lose.",""
+"f_d1204_0490_0010","char_TOUDO","So, the weapon's been activated...",""
+"f_d1204_0490_0020","char_TOUDO","Then, there's no time to spare. We need to get there as
+soon as we can.",""
+"f_d1204_0500_0010","char_SIMMONS","This gate that connects our world to that of the Digimon...","f_d1204_0500_0010"
+"f_d1204_0500_0020","char_SIMMONS","...is most intriguing.","f_d1204_0500_0020"
+"f_d1204_0500_0030","char_SIMMONS","Fundamentally, it seems like it would best be left closed.
+That's how the worlds have stayed in balance all this time.","f_d1204_0500_0030"
+"f_d1204_0500_0040","char_SIMMONS","But at some point, it seems to have been jammed open. At
+the very least, I'm confident this gate was never here before.","f_d1204_0500_0040"
+"f_d1204_0500_0050","char_SIMMONS","Perhaps something happened to the being who was meant to
+watch over the gate.","f_d1204_0500_0050"
+"f_d1204_0500_0060","char_AEGIOMON","Wait. Isn't that Junomon's job?","f_d1204_0500_0060"
+"f_d1204_0500_0070","char_INORI","I wonder how all the other Digimon are doing...","f_d1204_0500_0070"
+"f_d1204_0500_0080","char_AEGIOMON","We should go check up on them!","f_d1204_0500_0080"
+"f_d1204_0500_0090","char_SIMMONS","I'll contact you by Digiline if I need to get in touch.
+Let's exchange IDs.","f_d1204_0500_0090"
+"f_d1204_0510_0010","char_TOUDO","The gate to the world of the Digimon... Ever since that
+thing showed up, it's been one crazy incident after another.",""
+"f_d1204_0510_0020","char_TOUDO","Something might have happened to the Digimon who was meant
+to watch over it.",""
+"f_d1204_0520_0010","char_INORI","Is it just me, or does something seem really off?","f_d1204_0520_0010"
+"f_d1204_0520_0020","char_INORI","Everyone seems on edge... They're all worked up.","f_d1204_0520_0020"
+"f_d1204_0520_0030","char_AEGIOMON","It sounds like they're gonna go fight the Titans...","f_d1204_0520_0030"
+"f_d1204_0530_0010","char_TYUMON","Little Bearmon...? Oh, I know who ya mean.",""
+"f_d1204_0530_0020","char_TYUMON","Head to the Shinjuku Underground Arena and I'm sure
+you'll find who you're looking for.",""
+"f_d1204_0530_0030","char_TYUMON","But if ya do plan on going there, ya better watch yerselves. 
+It's like a haven for anti-Merukimon types.",""
+"f_d1204_0530_0040","char_TYUMON","But even so, Merukimon still isn't looking for all-out war.
+As such, some of the more hawkish ones have already left.",""
+"f_d1204_0530_0050","char_TYUMON","They're the ones who run the Shinjuku Underground Arena.",""
+"f_d1204_0530_0060","char_TYUMON","They say they're toughening themselves up for war with the
+Titans, but I think they're just venting their pent-up frustration.",""
+"f_d1204_0530_0070","char_TYUMON","Recently, it seems some humans are teaming up with
+certain underworld types and are letting in spectators.",""
+"f_d1204_0530_0080","char_TYUMON","Maybe it's an attempt to gain money and influence. They're 
+teaming up with humanity's villains to defeat the Titans.",""
+"f_d1204_0530_0090","char_TYUMON","Little Bearmon is one of the founding members of the
+Shinjuku Underground Arena...",""
+"f_d1204_0530_0100","char_TYUMON","If ya go there, maybe ya can meet up.",""
+"f_d1204_0530_0110","char_LALAMON","If you plan on going to Shinjuku, you should be careful. 
+There's been a bit of a commotion there recently.",""
+"f_d1204_0530_0120","char_LALAMON","I think you should talk to Pegasusmon over there. I hear it flies 
+over Shinjuku sometimes.",""
+"f_d1204_0530_0130","char_TOGEMON","If you plan on going to Shinjuku, you should be careful. There's 
+been a bit of a commotion there recently.",""
+"f_d1204_0530_0140","char_TOGEMON","I think you should talk to Pegasusmon over there. I heard he 
+has recently seen the disturbance in Shinjuku for itself.",""
+"f_d1204_0540_0010","char_REPPAMON","Our forces may have come together, but... I'm still nervous...",""
+"f_d1204_0540_0020","char_KOTEMON","Hey! We don't need that kind of negative talk! This is do
+or die! You got that?!",""
+"f_d1204_0540_0030","char_REPPAMON","All right, all right! I get it! Just calm down!",""
+"f_d1204_0550_0010","char_PANDAMON","We have to find better fighters!",""
+"f_d1204_0550_0020","char_STARMON","The Titans are strong... We need to be thoroughly prepared!",""
+"f_d1204_0560_0010","char_DIGITAMAMON","Powerful warriors... Guidance... Now is the time to awaken...",""
+"f_d1204_0570_0010","char_KOKUWAMON_A","Maybe this is our chance to repay you for all you've done
+for us.",""
+"f_d1204_0570_0020","char_KOKUWAMON_UN","Yes, I was thinking that as well. When people do nice
+things for you, it's important to help them out, too!",""
+"f_d1204_0580_0010","char_PRINCEMAMEMON","Hehe... It seems the time has come to put my glorious
+skills on full display!",""
+"f_d1204_0580_0020","char_PRINCEMAMEMON","Hehehehe! Prepare to be dazzled!",""
+"f_d1204_0590_0010","char_GUARDROMON","Oh, it's you! Almost everyone has moved.",""
+"f_d1204_0590_0020","char_GUARDROMON","That's thanks to you, too. I can't thank you enough!",""
+"f_d1204_0600_0010","char_SIMMONS","This leads to the lab. There's no telling what could be
+waiting up ahead, so be ready for anything.",""
+"f_d1204_0600_0020","char_SIMMONS","What do you think? Are you prepared?",""
+"f_d1204_0600_0030","","{next}[Head to the lab.]",""
+"f_d1204_0600_0031","","{end}[Hold off.]",""
+"f_d1204_0600_0040","char_SIMMONS","Asuna probably knows more about the way from here.
+Let's leave it to her to guide us.",""
+"f_d1204_0610_0010","char_TYUMON","Hey, there! Got some real good info for ya! I'll even let
+ya have it for free!",""
+"f_d1204_0610_0020","char_TYUMON","The town may have been taken over, but did ya know that my
+buddy's been working on resistance in secret?",""
+"f_d1204_0610_0030","char_TYUMON","The little scamp's been quietly gathering information on
+the enemy behind the scenes.",""
+"f_d1204_0610_0040","char_TYUMON","So if there's anything ya want to know about the Titans'
+oppression, just ask my buddy!",""
+"f_d1204_0610_0050","char_TYUMON","See? Wasn't that some good info?! So now... I'm counting on
+ya...!",""
+"f_d1204_0620_0010","char_TYUMON","Yo, yo! The time is now! The final battle's about to start!",""
+"f_d1204_0620_0020","char_TYUMON","Everyone who left is back, so...",""
+"f_d1204_0620_0030","char_TYUMON","See? I knew I was right to put my faith in you!",""
+"f_d1204_0620_0040","char_TYUMON","Prove me right! I'm counting on ya!",""
+"f_d1204_0620_0050","char_TYUMON","Ah! But don't get ahead of yerself! You've got to put in
+the work!",""
+"f_d1204_0630_0010","char_GERBEMON","Would they all just shut up? What's with the racket? How
+am I supposed to get any sleep?!",""
+"f_d1204_0640_0010","char_TYUMON","Oh, there ya are! Dr. Simmons was looking for ya!",""
+"f_d1204_0640_0020","char_TYUMON","She's in the room Lord Merukimon was using.
+Why don't ya go say hi?",""
+"f_d1204_0650_0010","","You should head to the lab now.",""
+"f_d1204_0660_0010","char_VENUSMON","I have bad news about Merukimon and the poison... Without
+treatment, I am afraid Merukimon is not long for this world!","f_d1204_0660_0010"
+"f_d1204_0660_0020","char_VENUSMON","We will need the fruit of Karpos Hulē... although I heard
+it was unobtainable previously...","f_d1204_0660_0020"
+"f_d1204_0660_0030","char_VENUSMON","I will go and look for it myself. Merukimon is in critical
+condition, every second counts. ","f_d1204_0660_0030"
+"f_d1204_0670_0010","char_TYUMON","...I have a message for ya from GrapLeomon.",""
+"f_d1204_0670_0020","char_TYUMON","It says, ""This problem is just between us brothers. Sorry.""",""
+"f_d1204_0670_0030","char_AEGIOMON","Wait. Does that mean... GrapLeomon went on ahead without
+us?!",""
+"f_d1204_0670_0040","char_INORI","The brothers are going to fight each other...? No! We can't
+let that happen!",""
+"f_d1204_0670_0050","char_PLAYER_M","Let's go after GrapLeomon!",""
+"f_d1204_0670_0051","char_PLAYER_M","I guess GrapLeomon wants to do this alone...?",""
+"f_d1204_0670_0052","char_PLAYER_M","Youngest siblings are always trouble...",""
+"f_d1204_0670_0060","char_AEGIOMON","I just hope GrapLeomon doesn't do anything reckless.",""
+"f_d1204_0680_0010","char_TYUMON","Head to the Shinjuku Underground Arena and you'll find
+Little Bearmon.",""
+"f_d1204_0680_0020","char_TYUMON","I can't guarantee it'll be easy, but good luck!",""
+"f_d1204_0690_0010","char_TYUMON","GrapLeomon looked really worried.",""
+"f_d1204_0690_0020","char_TYUMON","I'm not sure what's going on, but I'd say if you're going
+after GrapLeomon, you'd better move fast.",""
+"f_d1204_0700_0010","char_INORI","Where could Little Bearmon be? The rumors said that
+he should be here somewhere...",""
+"f_d1204_0700_0020","char_AEGIOMON","Little Bearmon used to live in Central Town. Why not ask
+a Digimon who might have known him from back then?",""
+"f_d1204_0700_0030","char_AEGIOMON","Let's see... What about that Chuumon over there?",""
+"f_d1204_0710_0010","char_PEGASMON","Shinjuku Underground Arena? I can take you there,
+but... Shinjuku is looking different from usual right now.",""
+"f_d1204_0710_0020","char_PEGASMON","I heard someone attacked the Digimon District and ran to
+the city. There's probably a lot of commotion. Still want to go?",""
+"f_d1204_0710_0040","char_PEGASMON","Shall we head over to the Shinjuku Underground Arena?",""
+"f_d1204_0710_0050","char_PLAYER_M","{next}[Go to the Arena.]",""
+"f_d1204_0710_0051","char_PLAYER_M","{end}[Stay here.]",""
+"f_d1204_0720_0010","char_TOUDO","First, let's find Dr. Simmons. She should be in the hut next door.",""
+"f_d1204_0730_0010","char_BEELSTARMON","Oh, hello...",""
+"f_d1204_0730_0020","char_BEELSTARMON","Let's talk again later. You should go see Dr. Simmons for now.",""
+"f_d1204_0740_0010","char_BEELSTARMON","Wait. Did you forget who I am?",""
+"f_d1204_0740_0020","char_BEELSTARMON","I used to be BlackGatomon. We activated the electromagnetic
+net generators together, remember?",""
+"f_d1204_0740_0030","char_BEELSTARMON","From that day since, I've been working with this woman...
+Asuna Shiroki. I guess you could call me her partner.",""
+"f_d1204_0750_0010","char_BEELSTARMON","Wait. Did you forget who I am?",""
+"f_d1204_0750_0020","char_BEELSTARMON","I used to be BlackGatomon. We activated the electromagnetic
+net generators together, remember?",""
+"f_d1204_0750_0030","char_BEELSTARMON","From that day since, I've been working with this woman...
+Asuna Shiroki. I guess you could call me her partner.",""
+"f_d1204_0760_0010","char_BEELSTARMON","I don't really get the complicated stuff but... no matter
+what crisis unfolds, I will protect Asuna.",""
+"f_d1204_0760_0020","char_BEELSTARMON","If she's protecting Dr. Simmons, then I'll protect them both.
+I'll be right by her side until the very end.",""
+"f_d1204_0760_0030","char_BEELSTARMON","So... don't worry about me, is all I can say.",""
+"f_d1204_9000_0010","char_SUPERSTARMON","Hey, you've got cards too, don't you? How about a game?",""
+"f_d1204_9000_0020","","[Challenge to a card battle.]",""
+"f_d1204_9000_0021","","{end}Now is not the time.",""
+"f_d1204_9000_0030","char_SUPERSTARMON","Not the time, huh? Well, come back when it IS the time,
+and I'll be waiting for you.",""
+"f_d1204_9000_0040","char_SUPERSTARMON","That was a great match! You got me good, but I still had a
+blast!",""
+"f_d1204_9000_0050","char_SUPERSTARMON","Things turned out well for me this time, but you're good at
+this, a real force to be reckoned with.",""
+"f_d1205_0010_0010","char_SIMMONS","Ready to head to the lab?",""
+"f_d1205_0010_0020","char_PLAYER_M","Yes.",""
+"f_d1205_0010_0021","char_PLAYER_M","{end}No.",""
+"f_d1205_0020_0010","char_WEREGARURUMON","......",""
+"f_d1205_0020_0020","char_WEREGARURUMON","Oh, it's you! I'm glad you're all okay!",""
+"f_d1205_0020_0030","char_WEREGARURUMON","Sorry, but there's something on my mind right now. Could
+you give me some time?",""
+"f_d1205_0020_0040","char_WEREGARURUMON","You're the only ones I can count on, so while I hate to
+make trouble for you, I really hope you can help.",""
+"f_d1205_0030_0010","char_SILPHYMON","All those mighty warriors... This is awful! To have
+misjudged those Titans so terribly...",""
+"f_d1205_0040_0010","char_STRIKEDRAMON","Master Monochromon! Are you okay?! I do not believe this!
+After I Digivolved and everything!",""
+"f_d1205_0040_0020","char_STRIKEDRAMON","Those blasted Titans! They'll pay for this! I will take
+them down if it is the last thing I do! Just wait!",""
+"f_d1205_0050_0010","char_NANIMON","Ugh, my head... I had too much to drink...",""
+"f_d1205_0060_0010","char_MUMMYMON","Oh, Locomon, where did you go? I hope you're all right...",""
+"f_d1205_0070_0010","char_RENAMON","Hm? You're that human from way back when. You seem like
+you're doing well.",""
+"f_d1205_0070_0020","char_RENAMON","You know, losing the tavern was a terrible blow... Isn't
+there anything we can do?",""
+"f_d1205_0080_0010","char_WOLFMON","Urgh... It... It hurts...",""
+"f_d1205_0090_0010","char_SUPERSTARMON","How could I have failed so terribly? I'll repay this
+debt... I swear!",""
+"f_d1205_0100_0010","char_MONOCHROMON","So... my apprentices arrived... while I was incapacitated?",""
+"f_d1205_0100_0020","char_MONOCHROMON","Well... they've all... got so much promise. I'm sure...
+they'll be fine...",""
+"f_d1205_0100_0030","char_MONOCHROMON","Monodramon is short-tempered... and Guilmon is too proud...",""
+"f_d1205_0100_0040","char_MONOCHROMON","If only they could overcome those faults...",""
+"f_d1205_0100_0050","char_MONOCHROMON","But... they're still better than I am right now. Haha...
+Urgh...",""
+"f_d1205_0110_0010","char_PANJYAMON","I miss the simple days of competing with my friends... It's
+not fair! The Titans ruined everything! I'll make them pay!",""
+"f_d1205_0120_0010","char_MARSMON","Getting revenge on the Titans, are they...?",""
+"f_d1205_0120_0020","char_MARSMON","Having just lost a family member to those brutes, I can
+understand where they're coming from...",""
+"f_d1205_0120_0030","char_MARSMON","...but I'll try to help talk the ones who aren't going back
+to town out of it, too.",""
+"f_d1205_0120_0040","char_MARSMON","I'll leave the temple business to you.",""
+"f_d1205_0130_0010","char_SILPHYMON","Oh, it's you. The warriors have all gone off to prepare for
+battle.",""
+"f_d1205_0130_0020","char_SILPHYMON","They each displayed a commendable resolve. It's made me
+determined to outdo even their example!",""
+"f_d1205_0140_0010","char_WEREGARURUMON","Between you and me, Lord Merukimon's condition is
+worsening.",""
+"f_d1205_0140_0020","char_WEREGARURUMON","I hate to keep asking for more from you, but could you
+please hurry? You're our only hope!",""
+"f_d1205_0150_0010","char_SILPHYMON","The time has come at last! We will wipe away the shame
+of our defeat!",""
+"f_d1205_0160_0010","char_PANJYAMON","It's time we faced those Titans in battle! I won't let a single
+one of them escape!",""
+"f_d1205_0170_0010","char_TOUDO","There's been some disturbing activity at the lab.
+Even I'm not sure what might happen there.",""
+"f_d1205_0170_0020","char_TOUDO","We'd better make sure we're ready for anything before we
+head out.",""
+"f_d1205_0180_0010","char_MUMMYMON","So, the battle's going to start soon? I pray that it goes well!",""
+"f_d1205_0190_0010","char_RENAMON","Everyone's gotten so serious. It really feels like a battle's
+about to break out.",""
+"f_d1205_0200_0010","char_MONOCHROMON","I thought I heard some familiar voices... Have my
+apprentices returned?",""
+"f_d1205_0210_0010","char_SIMMONS","Start by going after Dianamon. Then maybe we can
+learn the truth.",""
+"f_d1205_0220_0010","char_TOUDO","According to Dr. Kuga, Dianamon provided public safety
+with Digimon to use in their experiments.",""
+"f_d1205_0220_0020","char_TOUDO","I'm not clear on the exact details. It sounds like you'll need
+to head to the Cosmic Area where they say Dianamon is.",""
+"f_d1205_0230_0010","char_WEREGARURUMON","I hear Lady Dianamon is in the Cosmic Area.
+Blimpmon can take you there.",""
+"f_d1205_0230_0020","char_WEREGARURUMON","But why would Lady Dianamon stoop to selling her own kind?
+What in the world could have caused this?",""
+"f_d1205_0230_0030","char_WEREGARURUMON","If only Minervamon were here, the situation would be different...",""
+"f_d1205_0240_0010","char_VULCANUSMON","The Cosmic Area is ruled over by Apollomon and Dianamon.",""
+"f_d1205_0240_0020","char_VULCANUSMON","Each has their own realm within the Cosmic Area, with one
+side that's hot and the other side that's cold.",""
+"f_d1205_0240_0030","char_VULCANUSMON","But lately I hear they've been at each other's throats,
+and neglecting their duties as rulers because of it.",""
+"f_d1205_0240_0040","char_VULCANUSMON","So sometimes it gets way too hot or way too cold, and even
+the local residents are on edge. You'd better take care.",""
+"f_d1205_0250_0010","char_VENUSMON","Merukimon still needs to rest and recuperate, but his life
+is no longer in danger. That is truly a relief.",""
+"f_d1205_0260_0010","char_MERCURYMON","We will prepare for war. I will see you in Central Town.",""
+"f_d1205_0270_0010","char_MERCURYMON","You need not fear for me. Please, go and see what state my
+town is in.",""
+"f_d1205_0280_0010","char_WEREGARURUMON","Oh! Lord Merukimon! You've recovered! This is great news!",""
+"f_d1205_0290_0020","char_WEREGARURUMON","This is all thanks to you people, isn't it? You've saved us!",""
+"f_d1205_0290_0030","char_WEREGARURUMON","We'll be right behind you! Good luck out there!",""
+"f_d1205_0300_0010","char_WEREGARURUMON","The Gear Forest... That's over toward the sanctuary, right?
+I'm concerned about what things may be like over there.",""
+"f_d1205_0300_0020","char_WEREGARURUMON","But I'd like you to search for this fruit of Karpos Hulē!",""
+"f_d1205_0300_0030","char_WEREGARURUMON","Please! All our hopes rest with you.",""
+"f_d1205_0310_0010","char_WEREGARURUMON","Ngh...! I see... So you were unable to find the fruit of
+Karpos Hulē...",""
+"f_d1205_0310_0020","char_WEREGARURUMON","And yet the time for battle draws ever nearer!",""
+"f_d1205_0320_0010","char_WEREGARURUMON","Oh, Lord Merukimon! This is terrible! What am I supposed
+to do?!",""
+"f_d1205_0330_0010","char_MERCURYMON","I am sorry to have worried you... I heard everything...",""
+"f_d1205_0330_0020","char_MERCURYMON","Oh, you need not worry... This is hardly enough to do me in.",""
+"f_d1205_0330_0030","char_MERCURYMON","I am more concerned that the Gear Forest may also be
+suffering a Titan attack...",""
+"f_d1205_0330_0040","char_MERCURYMON","And so... I would ask... that you care for the Digimon
+there as well...",""
+"f_d1205_0340_0010","char_MERCURYMON","I can see that you are concerned... but I am fine for now.",""
+"f_d1205_0340_0020","char_MERCURYMON","Thanks to your efforts, the village is now free from the
+Titans.",""
+"f_d1205_0340_0030","char_MERCURYMON","All may not be as it was, but I am certain more of our
+allies will be amenable now.",""
+"f_d1205_0340_0040","char_MERCURYMON","I pray that this will lead to a ceasefire.",""
+"f_d1205_0350_0010","char_MERCURYMON","I wish for you all to keep an eye on what the humans are
+up to...",""
+"f_d1205_0350_0020","char_MERCURYMON","I have heard that D-SAT has begun to make a move.
+Speak to Dr. Simmons for more details.",""
+"f_d1206_0010_0010","char_SIMMONS","I've heard from the local residents about your activities
+in the Digital World.",""
+"f_d1206_0010_0020","char_SIMMONS","It seems you've done more than I could've imagined. I wish
+it was all detailed in a report for me to read through.",""
+"f_d1206_0010_0030","char_SIMMONS","But, setting that aside, it's time we got moving. The village 
+chief wants to speak with all of you.",""
+"f_d1206_0020_0010","char_TOUDO","I spoke to Dr. Simmons when I heard public safety was
+starting to make a move.",""
+"f_d1206_0020_0020","char_TOUDO","I'll be honest... The news isn't very good.",""
+"f_d1206_0020_0030","char_TOUDO","It'll take them some time to activate the weapon. If we act
+now, we'll still have a chance to intervene.",""
+"f_d1206_0020_0040","char_TOUDO","Let's head out as soon as we're ready.",""
+"f_d1206_0030_0010","char_BEELSTARMON","...",""
+"f_d1206_0040_0010","char_SIMMONS","Well, well... It's been eight years. That's quite a long
+time. I assume you got the details from Asuna?","f_d1206_0040_0010"
+"f_d1206_0040_0020","char_SIMMONS","Public safety changed after Captain Kuremi retired due to
+injury. Seeing how low they've stooped makes me sick.","f_d1206_0040_0020"
+"f_d1206_0040_0030","char_SIMMONS","I... wanted to find a way to coexist with Digimon. And as I
+got to know them, I learned of all you did eight years ago.","f_d1206_0040_0030"
+"f_d1206_0040_0040","char_SIMMONS","But then you suddenly disappeared. Many of the Digimon
+were worried about what became of you, you know.","f_d1206_0040_0040"
+"f_d1206_0040_0050","char_SIMMONS","So, tell me. What have you been doing for the past eight years?","f_d1206_0040_0050"
+"f_d1206_0040_0060","char_SIMMONS","I see... You're telling me you traveled through time?
+It sounds like something out of Agent Alpha...","f_d1206_0040_0060"
+"f_d1206_0040_0070","char_INORI","Oh, yeah, you're right! There was a whole thing about the
+mystery of time travel in the second half of the series!","f_d1206_0040_0070"
+"f_d1206_0040_0080","char_INORI","But wait a sec...","f_d1206_0040_0080"
+"f_d1206_0040_0090","char_PLAYER_M","{next}You know Agent Alpha?",""
+"f_d1206_0040_0091","char_PLAYER_M","{next}Do you watch a lot of anime?",""
+"f_d1206_0040_0092","char_PLAYER_M","{next}Was it on TV in your home country, too?",""
+"f_d1206_0040_0100","char_SIMMONS","Of course. It's the single greatest piece of fiction ever!
+All those gadgets in the show were works of pure art!","f_d1206_0040_0100"
+"f_d1206_0040_0110","char_SIMMONS","It was so popular in my home country they did a live-action
+remake. Actually, I'll let you in on a little secret...","f_d1206_0040_0110"
+"f_d1206_0040_0120","char_SIMMONS","That suit Asuna is wearing is based on the outfit of a new
+character they introduced for the remake!","f_d1206_0040_0120"
+"f_d1206_0040_0130","char_TOUDO","D-Don't stare at me like that. It's embarrassing...","f_d1206_0040_0130"
+"f_d1206_0040_0140","char_INORI","Huh. I used to watch Agent Alpha all the time, but I don't
+remember there being any character who looked like that...","f_d1206_0040_0140"
+"f_d1206_0040_0150","char_SIMMONS","Well, the live-action remake wasn't very well received,
+even though I love it to bits. But...","f_d1206_0040_0150"
+"f_d1206_0040_0160","char_SIMMONS","This couldn't be more perfect. The two of you look like
+you're straight out of a scene from the original.","f_d1206_0040_0160"
+"f_d1206_0040_0170","char_INORI","That's true... Your outfit does look a lot like the main
+character's, {player}.","f_d1206_0040_0170"
+"f_d1206_0040_0180","char_SIMMONS","Agent Alpha was a hero. Sadly, with the way my old colleagues
+have been acting, they can be called the exact opposite.","f_d1206_0040_0180"
+"f_d1206_0040_0190","char_SIMMONS","Apologies for the tangent, but allow me to give you my interpretation
+of what happened to you over the past eight years.","f_d1206_0040_0190"
+"f_d1206_0040_0200","char_SIMMONS","I believe that the future actually splits into different paths.
+Alternatively, you could say there are multiple worlds.","f_d1206_0040_0200"
+"f_d1206_0040_0210","char_SIMMONS","Take your traveling through time, for example. That act
+alone may have created a new split, a new path for the world.","f_d1206_0040_0210"
+"f_d1206_0040_0220","char_SIMMONS","While we may be in a different world, the trajectory of
+both worlds remains largely the same. As proof...","f_d1206_0040_0220"
+"f_d1206_0040_0230","char_SIMMONS","You said a war between Digimon brought about global
+collapse, right? Well, that's happening right now, as we speak.","f_d1206_0040_0230"
+"f_d1206_0040_0240","char_SIMMONS","Ask the Digimon for more details. The village chief wanted
+to meet with you anyway.","f_d1206_0040_0240"
+"f_d1206_0050_0010","char_BEELSTARMON","If Asuna says she will protect Dr. Simmons, then I will
+do the same.",""
+"f_d1206_0050_0020","char_BEELSTARMON","I want to help her fulfill her wishes as much as possible.",""
+"f_d1206_0050_0030","char_BEELSTARMON","Because she is my partner... no, she is the first human
+friend that I had ever made.",""

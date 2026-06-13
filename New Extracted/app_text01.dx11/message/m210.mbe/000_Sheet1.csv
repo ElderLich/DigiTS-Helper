@@ -1,0 +1,267 @@
+string2 0,string 1,string 2,string 3
+"m210_010_010","char_SIMMONS","...Kuga! Calm yourself. The settings are incorrect!","m210_010_010"
+"m210_010_020","char_KUGA","I-I'm sorry, Dr. Simmons!","m210_010_020"
+"m210_010_030","char_SIMMONS","Hmm? It's you! And what are you doing here?","m210_010_030"
+"m210_010_040","char_INORI","I'm afraid I don't have time to explain, but... we need to
+get to the Tokyo Metropolitan Government Building!","m210_010_040"
+"m210_010_060","char_SIMMONS","Well, it seems you're acting under some extraordinary
+circumstances. But, as you can see, that's true of us, too.","m210_010_060"
+"m210_010_070","char_SIMMONS","You saw that horde of Digimon, right? Common sense should
+tell us it would be outrageous to go to that building now.","m210_010_070"
+"m210_010_080","char_SIMMONS","But of course... common sense isn't everything. I, for one,
+exist far outside the bounds of mere common sense!","m210_010_080"
+"m210_010_090","char_SIMMONS","If we can activate this device, it may become possible to
+reach the government building.","m210_010_090"
+"m210_010_100","char_PLAYER_M","{next}What is this thing...?",""
+"m210_010_110","char_SIMMONS","Curious, are you? Want to know more about this beautiful
+machine? Go on. Admit it. I know it's true.","m210_010_110"
+"m210_010_120","char_SIMMONS","This device will create a powerful barrier field of
+electromagnetic waves that will immobilize Digimon.","m210_010_120"
+"m210_010_130","char_SIMMONS","We'll seal off Shinjuku with this Electromagnetic Net Generator.
+Hah! I didn't think I'd be able to put my research to use so soon!","m210_010_130"
+"m210_010_150","char_INORI","Once it's activated, it'll stop the Digimon's movements and
+allow us to get to the government building... right?","m210_010_150"
+"m210_010_160","char_SIMMONS","Right. You should be able to go through the park... if
+we get all the generators to work, that is...","m210_010_160"
+"m210_010_170","char_SIMMONS","We're having issues because we had to rush preparations.
+Public safety is doing their best but it's not looking good.","m210_010_170"
+"m210_010_180","char_SIMMONS","Since I can't leave, I'll need you to take care of it. There are 
+three more generators that haven't been activated yet.","m210_010_180"
+"m210_010_190","char_SIMMONS","The cause of the trouble appears to be a lack of power.
+Here, these batteries should solve the problem.","m210_010_190"
+"m210_010_210","char_SIMMONS","I wish a public safety officer could accompany you, but they have
+their hands full. So at least take this Digimon along.","m210_010_210"
+"m210_010_230","char_SIMMONS","Don't be alarmed. This one's friendly. You guys have
+met before, right?","m210_010_230"
+"m210_010_240","char_SIMMONS","After many attempts to communicate, we've finally grown close
+and they assist me in my research. They'll help you too.","m210_010_240"
+"m210_010_250","char_SIMMONS","Okay, you caught me. I guess I can't conceal anything from
+the eyes of a well-trained agent.","m210_010_250"
+"m210_010_260","char_SIMMONS","As you can see, I can't stop shaking. I won't deny that
+half of me is terrified of this situation...","m210_010_260"
+"m210_010_270","char_SIMMONS","...but the other half is super excited. I can't wait to
+test these generators... the fruits of my research!","m210_010_270"
+"m210_010_290","char_SIMMONS","Anyway, we have to get all the generators activated. First off, 
+head for the back alleys beyond the theater square.","m210_010_290"
+"m210_020_010","char_KUREMI","What's the status on that generator?!",""
+"m210_020_020","char_PUBLIC_SECURITY_PERSONNEL","It won't start, sir. Regular batteries don't seem to be
+sufficient to power it.",""
+"m210_020_030","char_SUMERAGI","So much for the blockade... We can't just let those
+monsters out into the world!",""
+"m210_020_040","char_INORI","Is everything all right?!",""
+"m210_020_050","char_KUREMI","Wh-What the...? You kids need to leave this area
+immediately!",""
+"m210_020_060","char_INORI","We were told to come here by Dr. Simmons. We're helping her
+activate the device.",""
+"m210_020_070","char_KUREMI","But you're civilians! Has she lost her mind?!",""
+"m210_020_071","char_PUBLIC_SECURITY_PERSONNEL","Incoming message from Dr. Simmons! She says she gave the
+batteries to these kids here, so get one from them.",""
+"m210_020_072","char_PUBLIC_SECURITY_PERSONNEL","She says... That she gave the battery to those three, and to take it off
+their hands.",""
+"m210_020_073","char_PUBLIC_SECURITY_PERSONNEL","She also says that they'll take care of activating the remaining
+generators, so point them in the right direction.",""
+"m210_020_077","char_PLAYER_M","I want you to take this battery.{next}",""
+"m210_020_075","char_INORI","Where should we go next?",""
+"m210_020_076","char_KUREMI","Orders from the doctor or no, I can't send you children
+into danger.",""
+"m210_020_080","char_KUREMI","If anything ever happened to you... I'd never be able to
+look your father in the eye again.",""
+"m210_020_090","char_KUREMI","Thinking about what he was going through when he turned in his badge...",""
+"m210_020_100","char_KUREMI","Your old man was a colleague of mine, you see.",""
+"m210_020_110","char_INORI","You worked with my dad...?",""
+"m210_020_120","char_KUREMI","That's right. The name's Kuremi.",""
+"m210_020_130","char_KUREMI","I have a daughter around your age, myself.",""
+"m210_020_140","char_KUREMI","Pretty much every father in the world would say that their
+children matter more to them than their own life.",""
+"m210_020_150","char_KUREMI","Hey, I've got tons of stories about your dad... but this is
+no time for reminiscing. Your safety takes priority.",""
+"m210_020_160","char_KUREMI","Right now, you folks need to clear out of here, and fast!",""
+"m210_020_240","char_INORI","My mother and brother died because of a Digimon conflict.
+I can't just sit back while the same thing is happening again!",""
+"m210_020_245","char_KUREMI","......",""
+"m210_020_246","char_KUREMI","Your father had that same expression when he left public
+safety. I begged him to reconsider, but he was determined.",""
+"m210_020_250","char_KUREMI","Whew... Well, I guess it's safer to work together than to
+have you guys wander around on your own.",""
+"m210_020_260","char_KUREMI","Give them directions.",""
+"m210_020_270","char_SUMERAGI","Asking civilians for aid yet again...",""
+"m210_020_280","char_SUMERAGI","Guess I have no choice... Listen up. There are two more inert devices.",""
+"m210_020_290","char_SUMERAGI","The voltage won't stabilize unless we activate all of the devices at the
+same time, which means no working electromagnetic net.",""
+"m210_020_310","char_SUMERAGI","I'm sending you the coordinates now. Head to the Shinjuku
+underground first.",""
+"m210_020_320","char_SUMERAGI","To tell the truth, some of our people went down there a little while ago,
+but we've since lost contact with them.",""
+"m210_020_330","char_SUMERAGI","But we haven't heard back in a while.",""
+"m210_020_340","char_INORI","Wow, I hope they're all right... Okay, we'll head to the
+underground right away.",""
+"m210_030_010","char_INORI","Hey, look at that!","m210_030_010"
+"m210_030_020","char_AEGIOCHUSMON","The treasure!","m210_030_020"
+"m210_030_030","char_TITAMON","This belongs to us! The likes of you shall never lay a
+finger on— Urgh?!","m210_030_030"
+"m210_030_040","char_TITAMON","What?!","m210_030_040"
+"m210_030_050","char_TITAMON","Why... will it not... do as we will it to?!","m210_030_050"
+"m210_030_060","char_AEGIOCHUSMON","Stay back, Inori! Something's wrong!","m210_030_060"
+"m210_030_070","char_OPERATOR_M","That's odd...","m210_030_070_M m210_030_070_F"
+"m210_030_080","char_OPERATOR_M","This level of disturbance should've been more widely
+reported around the world.","m210_030_080_M m210_030_080_F"
+"m210_030_090","char_OPERATOR_M","At this rate... Shinjuku's destruction could happen even
+sooner than eight years from now.","m210_030_090_M m210_030_090_F"
+"m210_030_100","char_OPERATOR_M","Could it be... that our actions have rewritten history...?","m210_030_100_M m210_030_100_F"
+"m210_030_110","char_OPERATOR_M","That we've somehow made our fate even worse...?","m210_030_110_M m210_030_110_F"
+"m210_030_120","char_INORI","Wh-What's wrong? You look like you're in pain... Are you
+hurt or something?","m210_030_120"
+"m210_030_130","char_PLAYER_M","I couldn't change the future for the better...",""
+"m210_030_131","char_PLAYER_M","Global collapse is inevitable now...",""
+"m210_030_132","char_PLAYER_M","What did I even travel through time for...?",""
+"m210_030_140","char_INORI","What in the world are you talking about?","m210_030_140"
+"m210_030_150","char_PLAYER_M","You see, the future is...",""
+"m210_030_151","char_PLAYER_M","You see, the world is...",""
+"m210_030_152","char_PLAYER_M","You see, humanity is...",""
+"m210_030_160","char_INORI","......","m210_030_160"
+"m210_030_170","char_AEGIOCHUSMON","......","m210_030_170"
+"m210_030_180","char_INORI","The ""Shinjuku Inferno""...?","m210_030_180"
+"m210_030_190","char_AEGIOCHUSMON","So, you're telling us that... infighting between Digimon...","m210_030_190"
+"m210_030_200","char_INORI","...Is going to destroy the world...?","m210_030_200"
+"m210_030_210","char_AEGIOCHUSMON","Wait...","m210_030_210"
+"m210_030_220","char_AEGIOCHUSMON","So are you saying that...?","m210_030_220"
+"m210_030_230","char_INORI","...You're from the future...?!","m210_030_230"
+"m210_030_240","char_INORI","Whew...","m210_030_240"
+"m210_030_250","char_INORI","Digimon, the Digital World, and someone from the future...
+Nothing can surprise me anymore.","m210_030_250"
+"m210_030_260","char_INORI","I mean... just think of the journey the three of us have
+been on.","m210_030_260"
+"m210_030_270","char_AEGIOCHUSMON","You're right.","m210_030_270"
+"m210_030_280","char_AEGIOCHUSMON","And maybe this makes our goal a little clearer, too.","m210_030_280"
+"m210_030_290","char_AEGIOCHUSMON","To change the future... That's the reason I gotta become a
+hero!","m210_030_290"
+"m210_030_300","char_INORI","That's right. So {player}... there's no need to shoulder
+this alone, you know.","m210_030_300"
+"m210_030_310","char_INORI","I have to say... it makes me a little sad that you were
+hiding something so important from us.","m210_030_310"
+"m210_030_320","char_INORI","I mean, come on... We aren't just a group of strangers here, right?","m210_030_320"
+"m210_030_330","char_INORI","If you're dealing with something... we'll face it with you!","m210_030_330"
+"m210_030_340","char_INORI","So no more secrets, okay? We want to be right by your
+side to help.","m210_030_340"
+"m210_030_350","char_INORI","After all, that's what you've been doing for us this whole
+time... Right, Aegiomon?","m210_030_350"
+"m210_030_360","char_AEGIOCHUSMON","That's right! You can count on us!","m210_030_360"
+"m210_030_370","char_PLAYER_M","... Thank you, really.",""
+"m210_031_010","char_AEGIOCHUSMON","So Titamon absorbed the power of the treasure, huh?
+That thing contained Chronomon's abilities...","m210_031_010"
+"m210_031_020","char_AEGIOCHUSMON","So the only way to stop Titamon now would be to...","m210_031_020"
+"m210_032_010","char_OPERATOR_M","That's odd...",""
+"m210_032_020","char_OPERATOR_M","This level of disturbance should've been more widely reported
+around the world.",""
+"m210_032_030","char_OPERATOR_M","At this rate... Shinjuku's destruction could happen even
+sooner than eight years from now.",""
+"m210_032_040","char_OPERATOR_M","Could it be... that our actions have rewritten history...?",""
+"m210_032_050","char_OPERATOR_M","That we've somehow made our fate even worse...?",""
+"m210_033_010","char_INORI","Wh-What's wrong?",""
+"m210_033_020","char_INORI","You look like you're in pain... Are you hurt or something?",""
+"m210_033_030","char_PLAYER_M","Has history changed for the worse...?{next}",""
+"m210_033_031","char_PLAYER_M","Did we speed up global collapse by intervening in the past?{next}",""
+"m210_033_032","char_PLAYER_M","Time travel can't save the world...?{next}",""
+"m210_033_040","char_INORI","What in the world are you talking about?",""
+"m210_033_050","char_PLAYER_M","You see, the future is...{next}",""
+"m210_033_051","char_PLAYER_M","You see, the world is...{next}",""
+"m210_033_052","char_PLAYER_M","You see, humanity is...{next}",""
+"m210_033_060","char_INORI","......",""
+"m210_033_070","char_AEGIOCHUSMON","......",""
+"m210_033_080","char_INORI","The ""Shinjuku Inferno,"" you say...?",""
+"m210_033_090","char_AEGIOCHUSMON","So, you're telling us that... infighting among Digimon...",""
+"m210_033_100","char_INORI","...Is going to destroy the world...?",""
+"m210_033_110","char_AEGIOCHUSMON","Wait...",""
+"m210_033_120","char_AEGIOCHUSMON","{player}...",""
+"m210_033_130","char_INORI","...You're from the future...?!",""
+"m210_034_010","char_INORI","Whew...",""
+"m210_034_020","char_INORI","Digimon, the Digital World and someone from the future...
+Nothing can surprise me anymore.",""
+"m210_034_030","char_INORI","I mean... just think of the journey the three of us have
+been on!",""
+"m210_034_040","char_AEGIOCHUSMON","...I know, right?",""
+"m210_034_050","char_AEGIOCHUSMON","And maybe this makes our goal a little clearer, too.",""
+"m210_034_060","char_AEGIOCHUSMON","To change the future... That's the reason I gotta become a
+hero!",""
+"m210_034_070","char_INORI","That's right. So, {player}... there's no need to shoulder this alone,
+you know.",""
+"m210_034_080","char_INORI","I have to say... it makes me a little sad that you were
+hiding something so important from us.",""
+"m210_034_090","char_INORI","I mean, come on... We aren't just a group of strangers
+here, right?",""
+"m210_034_110","char_INORI","So no more secrets, you hear? We want to be right by your
+side to help.",""
+"m210_034_120","char_INORI","After all, that's what you've been doing for us this whole
+time... Right, Aegiomon?",""
+"m210_034_130","char_AEGIOCHUSMON","That's right! You can count on us!",""
+"m210_040_010","char_TITAMON","Ungh...!","m210_040_010"
+"m210_040_020","char_AEGIOCHUSMON","Gimme back that treasure!","m210_040_020"
+"m210_040_030","char_TITAMON","I will not let you have it!","m210_040_030"
+"m210_040_040","char_TITAMON","All is clear now... It is just as the great one, Plutomon,
+said.","m210_040_040"
+"m210_040_050","char_TITAMON","Its identity stands revealed... right before my eyes...","m210_040_050"
+"m210_040_060","char_TITAMON","Chronomon... the hero...","m210_040_060"
+"m210_040_070","char_TITAMON","...and the bane of all Titans!","m210_040_070"
+"m210_040_080","char_TITAMON","Its power is flowing into me...!","m210_040_080"
+"m210_040_090","char_TITAMON","Long years of injustice shall now be made right! All by
+absorbing this power from its very source!","m210_040_090"
+"m210_040_100","char_TITAMON","Graaaaaaaaagh!","m210_040_100"
+"m210_040_110","char_AEGIOCHUSMON","Whoa!","m210_040_110"
+"m210_040_120","char_TITAMON","Now, let us try this once more!","m210_040_120"
+"m210_040_130","char_TITAMON","Experience the power of the ""hero"" that struck down the
+Titans—and the suffering that our ancestors endured!","m210_040_130"
+"m210_045_010","char_TITAMON","AAAAAGH! What have you done?!","m210_045_010"
+"m210_045_020","char_TITAMON","My control over time...?!","m210_045_020"
+"m210_045_030","char_TITAMON","Very well... No more cheap tricks! Now we shall see what you are
+really made of!","m210_045_030"
+"m210_050_010","char_OPERATOR_M","Stay sharp.","m210_050_010_M m210_050_010_F"
+"m210_050_020","char_OPERATOR_M","Based on the readings from your Digivice, it's probable that an 
+extremely minor space-time disturbance is underway.","m210_050_020_M m210_050_020_F"
+"m210_050_030","char_OPERATOR_M","The very space-time disturbance that sparked the anomaly
+that erased Dr. Yuki, your adoptive father, from existence.","m210_050_030_M m210_050_030_F"
+"m210_050_040","char_OPERATOR_M","As for the cause... I'd say it's likely the raging conflict
+between the phase electron lifeforms—the Digimon.","m210_050_040_M m210_050_040_F"
+"m210_050_050","char_OPERATOR_M","Little is known about such phenomena. We can only guess they 
+are literally disruptions in the laws of time and space.","m210_050_050_M m210_050_050_F"
+"m210_050_060","char_OPERATOR_M","There's no predicting what will happen if we ignore it!","m210_050_060_M m210_050_060_F"
+"m210_050_070","char_INORI","If we don't do something, Shinjuku is in real trouble.","m210_050_070"
+"m210_050_080","char_AEGIOCHUSMON","Inori...","m210_050_080"
+"m210_050_090","char_INORI","I have so many memories in this city...","m210_050_090"
+"m210_050_100","char_INORI","The life and energy here even helped cheer me up after
+losing my mom and brother.","m210_050_100"
+"m210_050_110","char_AEGIOCHUSMON","Inori... I'm so sorry. All of this happened because of
+Titamon... no, because of us Digimon...","m210_050_110"
+"m210_050_120","char_AEGIOCHUSMON","It was our fault that you lost your family members, too...","m210_050_120"
+"m210_050_130","char_INORI","You don't need to apologize. After all...","m210_050_130"
+"m210_050_140","char_INORI","I... don't hold any grudge against Digimon.","m210_050_140"
+"m210_050_150","char_INORI","I'm truly happy to have met you, Aegiomon.","m210_050_150"
+"m210_050_160","char_INORI","If I hadn't... I'd probably still be in a very sad place.","m210_050_160"
+"m210_050_170","char_INORI","I've spent so long hating the past deep in my heart that
+I... I don't want to hate anything ever again.","m210_050_170"
+"m210_050_180","char_INORI","I want to hold on to how I feel now. These emotions, the
+part of me that cares for you...","m210_050_180"
+"m210_050_190","char_INORI","...I never want them to be drowned out by dark thoughts.","m210_050_190"
+"m210_050_200","char_AEGIOCHUSMON","Inori...","m210_050_200"
+"m210_050_210","char_INORI","If I have to hate anything... I think it should be ""conflict.""","m210_050_210"
+"m210_050_220","char_INORI","Conflict... robs people of those they care about.","m210_050_220"
+"m210_050_230","char_AEGIOCHUSMON","... I think I get it.","m210_050_230"
+"m210_050_240","char_AEGIOCHUSMON","In that case, let's put a stop to it ourselves.","m210_050_240"
+"m210_050_250","char_AEGIOCHUSMON","Let's end this conflict!","m210_050_250"
+"m210_060_001","char_TITAMON","Grrrgh!","m210_060_001"
+"m210_060_010","char_TITAMON","You impudent... little brat...!","m210_060_010"
+"m210_060_011","char_TITAMON","Hnnnnngh!","m210_060_011"
+"m210_060_015","char_AEGIOCHUSMON","Hnh!","m210_060_015"
+"m210_060_020","char_TITAMON","Hrrrrrrrgh...!","m210_060_020"
+"m210_060_021","char_TITAMON","Hngh! Hrrrrrrrgh...! Aaaaaaagh!","m210_060_021"
+"m210_060_025","char_AEGIOCHUSMON","Oh...","m210_060_025"
+"m210_060_030","char_OPERATOR_M","The space-time disturbance is growing rapidly! It's too dangerous
+to remain in your current location! Get out of there!","m210_060_030_M m210_060_030_F"
+"m210_060_031","char_TITAMON","Hrrrrrrraaaaaaagh...!","m210_060_031"
+"m210_060_032","char_TITAMON","Raaaaaaaaaaaaaaagh!","m210_060_032"
+"m210_070_010","char_AEGIOCHUSMON","The power of the treasure is... Out of control...?","m210_070_010"
+"m210_070_020","char_INORI","No!","m210_070_020"
+"m210_070_030","char_INORI","Aegiomon! What are you...?!","m210_070_030"
+"m210_070_040","char_AEGIOCHUSMON","The power of the treasure is the power of the hero, Chronomon!","m210_070_040"
+"m210_070_050","char_AEGIOCHUSMON","If I really am Chronomon reborn, like everyone says...","m210_070_050"
+"m210_070_060","char_AEGIOCHUSMON","...then I should be able to handle the power, even if it's out of control!","m210_070_060"
+"m210_070_070","char_AEGIOCHUSMON","Chro...no...mon...?","m210_070_070"

@@ -1,0 +1,202 @@
+string2 0,string 1,string 2,string 3
+"s910_169_010","char_HIROKO","The client is a grade-schooler named Kurumi. She contacted
+me via e-mail.",""
+"s910_169_020","char_HIROKO","I've only read the subject. You're here just in time to look
+at the rest with me.",""
+"s910_169_030","char_HIROKO","So the subject is... ""Instructor Miura at school has
+disappeared.""",""
+"s910_169_040","char_PLAYER_M","{next}So her teacher went missing.",""
+"s910_169_041","char_PLAYER_M","{next}You mean THAT Mr. Miura?!",""
+"s910_169_042","char_PLAYER_M","{end}I need to take care of something else first.",""
+"s910_169_050","char_HIROKO","Judging from that opening, yeah, I'd assume so. But it
+sounds like there's more to it.",""
+"s910_169_060","char_HIROKO","Oh, shut up. Like you even know! This is serious, so no more
+jokes.",""
+"s910_169_070","char_HIROKO","This case sounds like a long one, so if you've got something
+to do, do it now.",""
+"s910_169_080","char_HIROKO","Finished your business? Can we read that e-mail from Kurumi
+now?",""
+"s910_169_085","char_PLAYER_M","{next}Okay.",""
+"s910_169_086","char_PLAYER_M","{end}Not yet.",""
+"s910_169_088","char_HIROKO","Well, come back when you've got time. I'd like to help out
+Kurumi sooner than later.",""
+"s910_169_100","char_HIROKO","Okay, I'll read the e-mail then. There's some important
+stuff in here, so pay attention.",""
+"s910_169_110","char_HIROKO","Let's see... ""Hello. I go to an elementary school in the
+city.""",""
+"s910_169_120","char_HIROKO","""At my school, there's a famous ghost story that everyone
+knows.""",""
+"s910_169_130","char_HIROKO","""The story is called 'The Scariest Face in the World.'""",""
+"s910_169_150","char_HIROKO","""There's a book in the library that we're not supposed to read.""
+""The book is all red, so it's creepy and hard to miss.""",""
+"s910_169_160","char_HIROKO","""They say if you read even one page... you won't be able to
+stop reading the book.""",""
+"s910_169_170","char_HIROKO","""As soon as you read to the end... you feel something tap
+your back from behind...""",""
+"s910_169_180","char_HIROKO","""And then when you turn around, you see the scariest face in
+the world.""",""
+"s910_169_190","char_PLAYER_M","{next}Someone was just trying to get their attention.",""
+"s910_169_191","char_PLAYER_M","{next}So it's a monster?",""
+"s910_169_192","char_PLAYER_M","{next}Probably just library closing time.",""
+"s910_169_200","char_HIROKO","So you'd think... but there's more.",""
+"s910_169_210","char_HIROKO","Can't say for sure just yet. Let's read a bit more.",""
+"s910_169_220","char_HIROKO","The librarian?! Yeah, right! Stop interrupting and just
+listen to the rest!",""
+"s910_169_230","char_HIROKO","""This story made lots of kids too scared to go near the
+library. I was scared, too.""",""
+"s910_169_240","char_HIROKO","""One day, our teacher Saburo Miura heard the story and got mad.""
+""He said, 'Don't stop reading because of a stupid rumor!'""",""
+"s910_169_250","char_HIROKO","""He said he'd prove it was just talk and started
+reading the book in front of us.""",""
+"s910_169_260","char_PLAYER_M","{next}I'm with the teacher.",""
+"s910_169_261","char_PLAYER_M","{next}Did he read the book out loud?",""
+"s910_169_262","char_PLAYER_M","{next}There's something suspicious going on...",""
+"s910_169_270","char_HIROKO","Yeah, kids should use the library... Anyway, it seems the
+teacher read the book aloud.",""
+"s910_169_280","char_HIROKO","Seems that way. He started reading it in a big, loud voice.",""
+"s910_169_290","char_HIROKO","...Yeah, I kinda thought that, too. But I also get how the
+teacher felt.",""
+"s910_169_300","char_HIROKO","""...So Mr. Miura started to read the book."" ""'My name is
+Saburo. I'm an only child, but Saburo means third-born.'""",""
+"s910_169_310","char_HIROKO","""As soon as he read that line, Mr. Miura's face changed."" ""But 
+he quickly got it under control and started reading again.""",""
+"s910_169_320","char_HIROKO","""'I was sent to live with my grandmother, and I couldn't
+really make any friends...'""",""
+"s910_169_330","char_HIROKO","""'Wh-When I was seven, my grandmother bought me a soccer
+ball. It b-became my friend.'""",""
+"s910_169_340","char_HIROKO","""Mr. Miura went quiet after reading up to that point. Then
+he left the room.""",""
+"s910_169_350","char_HIROKO","""He didn't come back, so as class rep I went to find him in
+the faculty room.""",""
+"s910_169_360","char_HIROKO","""Mr. Miura was reading the red book intently."" ""When another
+teacher tried to talk to him, this is what he said:""",""
+"s910_169_370","char_HIROKO","""'Class doesn't matter. I h-have to read this book. I
+must!'""",""
+"s910_169_380","char_HIROKO","""'The main character Saburo went to live with his grandmother 
+and didn't have friends...'"" ""'...so he played soccer alone.'""",""
+"s910_169_390","char_HIROKO","""'He played soccer like it was all that mattered.'"" ""'But at his final
+high school tournament, his missed a penalty kick and quit.'""",""
+"s910_169_400","char_HIROKO","""'Then I focused on my studies. I got my teaching certification...'""
+""'...and I, no, Saburo, became a teacher.'""",""
+"s910_169_410","char_HIROKO","""It all matches, you see. This is about me! And if I don't
+read to the end, I... I...!""",""
+"s910_169_420","char_HIROKO","""Mr. Miura then ran out of the school with the book. He
+never came back after that.""",""
+"s910_169_430","char_HIROKO","Kurumi says there have been sightings of Mr. Miura at
+Shinjuku Park.",""
+"s910_169_440","char_HIROKO","The witnesses say he was reading a book on a bench like a
+man possessed. That's the last anybody's seen of him.",""
+"s910_169_450","char_PLAYER_M","{next}Let's go check Shinjuku Park.",""
+"s910_169_451","char_PLAYER_M","{next}Wanna ask around?",""
+"s910_169_452","char_PLAYER_M","{next}It's a made-up story, isn't it?",""
+"s910_169_460","char_HIROKO","Hmm... Can we hold off on that for a bit? I have an idea.",""
+"s910_169_470","char_HIROKO","No need. Kurumi already poked around a bunch and put
+everything she found in the e-mail.",""
+"s910_169_480","char_HIROKO","...The Twilight Zo— Hey, now isn't the time! I believe
+Kurumi, and I'm gonna investigate!",""
+"s910_169_490","char_HIROKO","There's something I wanna look into, so you just hang tight
+here for a bit.",""
+"s910_169_500","char_HIROKO","I'll be back in touch if I find out anything. Take a load
+off while you wait.",""
+"s910_169_510","char_HIROKO","Okay, I'm stepping out for a while. See ya later!",""
+"s910_169_520","char_HIROKO","Looks like this is the bench from the report. There's a red
+book on it...",""
+"s910_169_530","char_HIROKO","I think... I have to read it. If my hunch is correct, I
+should be fine...",""
+"s910_169_540","char_HIROKO","""My name is Hiroko Sagisaka. I'm trying to become a
+top-level streamer.""",""
+"s910_169_550","char_HIROKO","This... isn't about Mr. Miura. Am I the main character...?",""
+"s910_169_560","char_HIROKO","...Whoa! How many hours have passed? I have to get back... I
+must get back, but...",""
+"s910_169_570","char_HIROKO","I can't tear my eyes away from this book... I have to read
+more... to the very end...",""
+"s910_169_580","char_HIROKO","J-Just one more page... ""I headed to Shinjuku Park for a
+case...""",""
+"s910_169_590","char_HIROKO","""...then started reading a red book I found on a bench...""",""
+"s910_169_600","char_HIROKO","...!",""
+"s910_169_610","char_OPERATOR_M","Seems break time is over. I tracked Hiroko's movements just
+in case, but something's off.",""
+"s910_169_620","char_OPERATOR_M","She spent some time in Shinjuku Park, then went into the sewers 
+and vanished. I recommend going to help her immediately.",""
+"s910_169_630","char_OPERATOR_M","This is around the spot where Hiroko's signal vanished.",""
+"s910_169_640","char_OPERATOR_M","I imagine Hiroko entered the In-Between here. You should
+investigate when you're ready.",""
+"s910_169_650","char_OPERATOR_M","As suspected, I'm picking Hiroko's signal up further in.
+Continue on this course.",""
+"s910_169_660","char_WENDIMON","Kehehe... Be afraid! Be more afraid. More, more!",""
+"s910_169_670","char_PLAYER_M","{next}So you're the one behind all of this.",""
+"s910_169_671","char_PLAYER_M","{next}Why a red book?",""
+"s910_169_672","char_PLAYER_M","{next}Your face is scary.",""
+"s910_169_680","char_WENDIMON","I made the red book. If that's what you mean, then, yeah,
+I'm behind it all.",""
+"s910_169_690","char_WENDIMON","Kehehe... Seems you've figured out that I'm the one who made
+the book.",""
+"s910_169_700","char_WENDIMON","As if that would bother me. In fact, I take it as a
+compliment.",""
+"s910_169_710","char_WENDIMON","All the humans who read the red book got scared, just as I
+planned.",""
+"s910_169_720","char_WENDIMON","Seeing their faces twist in terror when they read about
+themselves was most excellent.",""
+"s910_169_730","char_WENDIMON","And... once their fear was at its peak, I showed them the
+scariest face ever.",""
+"s910_169_740","char_PLAYER_M","{next}Yes, that might be scary.",""
+"s910_169_741","char_PLAYER_M","{next}Why are you doing this?",""
+"s910_169_742","char_PLAYER_M","{next}I-I'm not afraid...",""
+"s910_169_750","char_WENDIMON","Of course it is. You seem to be worth scaring, too.",""
+"s910_169_760","char_WENDIMON","To scare people. Why else?",""
+"s910_169_770","char_WENDIMON","Kehehe. Your voice is trembling. I know you're actually
+afraid.",""
+"s910_169_780","char_WENDIMON","I can harvest superior energy from humans who are at the
+utmost limits of terror.",""
+"s910_169_790","char_WENDIMON","All my victims have offered up their fear readily. Things
+couldn't be going smoother.",""
+"s910_169_800","char_WENDIMON","So... don't get in my way. Begone, pest!",""
+"s910_169_810","char_HIROKO","Ngh... Ouch. Probably hit my head when I fell...",""
+"s910_169_820","char_HIROKO","Oh, you must've saved me! But you could've gotten here a
+little sooner, you know.",""
+"s910_169_830","char_PLAYER_M","{next}Sorry to have kept you waiting.",""
+"s910_169_831","char_PLAYER_M","{next}Did you let yourself get caught?",""
+"s910_169_832","char_PLAYER_M","{next}I've got a scary face to show you.",""
+"s910_169_840","char_HIROKO","Hehe. Well, awesome work. You must've picked up on my idea.",""
+"s910_169_850","char_HIROKO","Hehe. Bingo. I figured that would be the quickest solution.",""
+"s910_169_860","char_HIROKO","What's with the weird face? You look ridiculous.",""
+"s910_169_870","char_HIROKO","I realized that simply finding the missing teacher wouldn't
+get to the bottom of things.",""
+"s910_169_880","char_HIROKO","We were going to need another viewpoint to learn the truth.",""
+"s910_169_890","char_HIROKO","That's why I decided to read the book myself. Because I was
+sure you'd come looking for me.",""
+"s910_169_900","char_PLAYER_M","{next}Wish you would've told me first.",""
+"s910_169_901","char_PLAYER_M","{next}But you were curious, too, right?",""
+"s910_169_902","char_PLAYER_M","{next}I had no idea...",""
+"s910_169_910","char_HIROKO","Yeah, I know. Sorry 'bout that. I didn't expect to find the
+book just laying there.",""
+"s910_169_920","char_HIROKO","Well, yeah. I mean, if the mysterious book is right there,
+you're gonna read it, right?",""
+"s910_169_930","char_HIROKO","What? You didn't catch on? You came here purely by
+coincidence? Guess I lucked out...",""
+"s910_169_940","char_HIROKO","Oh, there are several unconscious people trapped here, the
+others who read the book.",""
+"s910_169_950","char_HIROKO","I'm sure Kurumi's teacher, Mr. Miura, must be one of them.",""
+"s910_169_960","char_HIROKO","We don't want them waking up here, so let's get them
+outside.",""
+"s910_169_970","char_KURUMI","Are you okay, Mr. Miura?",""
+"s910_169_980","char_MIURA_T","Yes. Sorry for worrying you. I'm still a little dizzy, but
+I'll be fine.",""
+"s910_169_990","char_MIURA_T","I didn't think I was so unwell that I'd pass out. Thank you
+for your assistance.",""
+"s910_169_1000","char_HIROKO","We just happened to be passing by and heard this little girl
+calling for help.",""
+"s910_169_1010","char_HIROKO","We didn't really do anything, so don't worry. More
+importantly, you should go get rest.",""
+"s910_169_1020","char_MIURA_T","I suppose I'll be on my way. For some reason, it feels like
+I haven't been home in a while.",""
+"s910_169_1030","char_KURUMI","Thank you so much for saving Mr. Miura!",""
+"s910_169_1040","char_HIROKO","No problem. Actually, thank YOU for the amazing material.",""
+"s910_169_1050","char_HIROKO","Be careful on your way home. Don't go reading any strange
+books!",""
+"s910_169_1060","char_KURUMI","Okay! Bye-bye!",""
+"s910_169_1070","char_HIROKO","Looks like Mr. Miura and all the other victims have headed
+home safely.",""
+"s910_169_1080","char_HIROKO","Whew, I'm kinda beat... Think I'll call it a day.",""
+"s910_169_1090","char_HIROKO","Oh, here. I found this when I was trapped. I'm sure you'll
+be able to put it to use.",""

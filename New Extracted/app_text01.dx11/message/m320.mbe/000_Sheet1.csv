@@ -1,0 +1,196 @@
+string2 0,string 1,string 2,string 3
+"m320_011_010","char_INORI","Oh... It's this place...","m320_011_010"
+"m320_011_020","char_AEGIOMON","GrapLeomon... is still here!","m320_011_020"
+"m320_011_030","char_GRAPLEOMON","Hmm? What're you talking about? Where else would I be?","m320_011_030"
+"m320_011_040","char_INORI","And that must be Hiroko...!","m320_011_040"
+"m320_011_050","char_AEGIOMON","What should we do?","m320_011_050"
+"m320_011_060","char_PLAYER_M","We need to stay with GrapLeomon.{next}",""
+"m320_011_061","char_PLAYER_M","This will be a turning point in history!{next}",""
+"m320_011_062","char_PLAYER_M","Sorry, Hiroko... but we've gotta do this!{next}",""
+"m320_011_070","char_AEGIOMON","We can't let you do this alone.","m320_011_070"
+"m320_011_080","char_GRAPLEOMON","Wh-What?","m320_011_080"
+"m320_011_090","char_AEGIOMON","We know what you're thinking. But if you go on to fight Callismon,
+you're gonna die...!","m320_011_090"
+"m320_011_100","char_GRAPLEOMON","You don't know that! Not before I've even given it a try!","m320_011_100"
+"m320_011_110","char_GRAPLEOMON","Ever since I was little... all anyone could ever talk about was 
+how great my Big Bro is.","m320_011_110"
+"m320_011_120","char_INORI","It's not right for siblings to hate each other. Family
+isn't something you should take for granted. Don't you see that?","m320_011_120"
+"m320_011_130","char_INORI","Do you have any idea what I'd give to see my brother again...?","m320_011_130"
+"m320_011_140","char_GRAPLEOMON","What...?","m320_011_140"
+"m320_011_150","char_INORI","If you only realize that after they're gone, then it's too late!","m320_011_150"
+"m320_011_160","char_INORI","So let's go—not to fight... but to help your brother. Please...","m320_011_160"
+"m320_011_170","char_GRAPLEOMON","......","m320_011_170"
+"m320_011_180","char_GRAPLEOMON","All right. I get it... I'll stop trying to do this on my own.","m320_011_180"
+"m320_011_190","char_GRAPLEOMON","No need to worry. Now, let's get over to the Paradise
+Colosseum.","m320_011_190"
+"m320_023_010","char_DIGIMON_RING ANNOUNCER","Starting in the east corner! Can the champion defend his crown?!","m320_023_010"
+"m320_023_020","char_DIGIMON_RING ANNOUNCER","And now, in the west corner! The chosen one of Iliad!","m320_023_020"
+"m320_024_010","char_DIGIMON_RING ANNOUNCER","Back in the east corner of the arena! Will the king remain
+on the throne?!","m320_024_010"
+"m320_024_020","char_DIGIMON_RING ANNOUNCER","And then we have the west corner! The highest level of
+security from another world!","m320_024_020"
+"m320_024_030","char_DIGIMON_RING ANNOUNCER","The Royal Knights join the fray!","m320_024_030"
+"m320_025_010","char_DIGIMON_RING ANNOUNCER","From the east corner! Will we see the true might of the
+champion?","m320_025_010"
+"m320_025_020","char_DIGIMON_RING ANNOUNCER","And from the west corner! Can the challenger show us an upset?","m320_025_020"
+"m320_025_030","char_DIGIMON_RING ANNOUNCER","In the east corner! The champion makes a grand entrance!","m320_025_030"
+"m320_025_040","char_DIGIMON_RING ANNOUNCER","And in the west corner! The challenger makes a dashing
+appearance!","m320_025_040"
+"m320_025_050","char_DIGIMON_RING ANNOUNCER","From the east corner! The indomitable champion has arrived!","m320_025_050"
+"m320_025_060","char_DIGIMON_RING ANNOUNCER","And from the west corner! We have a contender with their
+eyes on the prize!","m320_025_060"
+"m320_025_070","char_DIGIMON_RING ANNOUNCER","In the east corner! Such a commanding presence! The very
+embodiment of a champion!","m320_025_070"
+"m320_025_080","char_DIGIMON_RING ANNOUNCER","And in the west corner! Our challenger is brimming with a
+confidence more befitting of the champ!","m320_025_080"
+"m320_025_090","char_DIGIMON_RING ANNOUNCER","From the east corner! Can the champion's title be defended
+with another electrifying triumph?!","m320_025_090"
+"m320_025_100","char_DIGIMON_RING ANNOUNCER","And from the west corner! The challenger enters the ring
+with dauntless courage!","m320_025_100"
+"m320_025_110","char_DIGIMON_RING ANNOUNCER","In the east corner! Are we seeing the start of a brand-new legend?!","m320_025_110"
+"m320_025_120","char_DIGIMON_RING ANNOUNCER","And in the west corner! Looks like our challenger is ready
+and raring to go!","m320_025_120"
+"m320_025_130","char_DIGIMON_RING ANNOUNCER","From the east corner! The champion enters with a splendid swagger!","m320_025_130"
+"m320_025_140","char_DIGIMON_RING ANNOUNCER","And from the west corner! Looks like someone's engine is
+already at full throttle!","m320_025_140"
+"m320_025_150","char_DIGIMON_RING ANNOUNCER","In the east corner! Can we see another masterful title
+defense here?!","m320_025_150"
+"m320_025_160","char_DIGIMON_RING ANNOUNCER","And from the west corner! Will we see an outrageous upset?!","m320_025_160"
+"m320_031_010","char_GRAPLEOMON","*panting*","m320_031_010"
+"m320_031_020","char_AEGIOMON","You okay?","m320_031_020"
+"m320_031_030","char_GRAPLEOMON","This is your fault, you know. If I hadn't wasted all that energy 
+fighting you in the underground, I'd be fine right now!","m320_031_030"
+"m320_031_040","char_AEGIOMON","Sorry about that...!","m320_031_040"
+"m320_031_050","char_GRAPLEOMON","Heh. I'm kidding. If anything, I'm grateful. Never thought you'd
+go so far to help me and my bro!","m320_031_050"
+"m320_040_010","char_GRAPLEOMON","Damn it...!","m320_040_010"
+"m320_040_020","char_AEGIOMON","Just leave Callismon to us.","m320_040_020"
+"m320_040_030","char_INORI","Listen to Aegiomon. I can't stand to see family fight.","m320_040_030"
+"m320_040_040","char_GRAPLEOMON","No...!","m320_040_040"
+"m320_040_050","char_GRAPLEOMON","I'm going to stop Big Bro myself!","m320_040_050"
+"m320_040_060","char_GRAPLEOMON","Big Bro... I know you're watching!","m320_040_060"
+"m320_040_070","char_GRAPLEOMON","Come on out, you traitor! You fool who sold your soul to the
+Titans!","m320_040_070"
+"m320_040_080","char_GRAPLEOMON","I'll give you a beating you'll never forget!","m320_040_080"
+"m320_040_090","char_CHARISMON","Graaaaagh!","m320_040_090"
+"m320_040_100","char_CHARISMON","Ngh...","m320_040_100"
+"m320_040_110","char_INORI","Is that... Callismon?!","m320_040_110"
+"m320_040_120","char_GRAPLEOMON","Yeah... No doubt about it.","m320_040_120"
+"m320_040_130","char_GRAPLEOMON","It might not look like him anymore, but I can tell...","m320_040_130"
+"m320_040_140","char_GRAPLEOMON","Big Bro...!","m320_040_140"
+"m320_040_150","char_CHARISMON","Big... Bro...?","m320_040_150"
+"m320_040_160","char_GRAPLEOMON","That's it... Try to remember.","m320_040_160"
+"m320_040_170","char_GRAPLEOMON","I... tried my hardest.","m320_040_170"
+"m320_040_180","char_GRAPLEOMON","I wanted to be strong like you...","m320_040_180"
+"m320_040_190","char_GRAPLEOMON","...so I wouldn't embarrass you as your little brother!","m320_040_190"
+"m320_040_200","char_GRAPLEOMON","But... look what you've become now!","m320_040_200"
+"m320_040_210","char_GRAPLEOMON","What happened to you?","m320_040_210"
+"m320_040_220","char_GRAPLEOMON","Where's the Big Bro I admired so much?!","m320_040_220"
+"m320_040_230","char_CHARISMON","Urgh... I-I...","m320_040_230"
+"m320_040_240","char_CHARISMON","I...!","m320_040_240"
+"m320_040_250","char_CHARISMON","AAAAAAAAAGH!","m320_040_250"
+"m320_040_260","char_ETEMON","Wh-What's this?! What's going on? The Undisputed Champion
+has totally lost it!","m320_040_260"
+"m320_040_270","char_ETEMON","There's no stopping the champion! We have to start the
+match... like, right now!","m320_040_270"
+"m320_040_280","char_ETEMON","Let the final match... BEGIN!","m320_040_280"
+"m320_050_010","char_CHARISMON","Aaaaargh...!","m320_050_010"
+"m320_050_020","char_GRAPLEOMON","Tell me, Big Bro...! How did it come to this?","m320_050_020"
+"m320_050_030","char_GRAPLEOMON","Why do us brothers have to fight?!","m320_050_030"
+"m320_050_040","char_CHARISMON","Aaaaagh... AAAAAAAAAAAGH!","m320_050_040"
+"m320_050_050","char_CHARISMON","I-I...","m320_050_050"
+"m320_050_060","char_GRAPLEOMON","Big Bro!","m320_050_060"
+"m320_050_070","char_CHARISMON","I was... approached with a deal...","m320_050_070"
+"m320_050_080","char_CHARISMON","If I let myself... be modified...","m320_050_080"
+"m320_050_090","char_CHARISMON","...from then on... come what may... my little bro... would
+be kept safe, they said...","m320_050_090"
+"m320_050_100","char_GRAPLEOMON","...What?","m320_050_100"
+"m320_050_110","char_INORI","That's why you joined the Titans...?","m320_050_110"
+"m320_050_120","char_GRAPLEOMON","Are you serious...?","m320_050_120"
+"m320_050_130","char_CHARISMON","AAAAAAAAAGH!","m320_050_130"
+"m320_050_140","char_GRAPLEOMON","No... Why...?","m320_050_140"
+"m320_050_150","char_AEGIOMON","We can't fix this now...! Run!","m320_050_150"
+"m320_050_160","char_GRAPLEOMON","So this was all... because of me? It's all my fault...?","m320_050_160"
+"m320_050_170","char_INORI","No, it's not your fault at all!","m320_050_170"
+"m320_050_180","char_INORI","That's just how much Callismon cares about you. It's a 
+feeling I... understand very well!","m320_050_180"
+"m320_050_190","char_INORI","If anything happened to you now... its your Big Bro who
+would feel the most pain of all!","m320_050_190"
+"m320_050_200","char_PLAYER_M","...Get on your feet!{next}",""
+"m320_050_210","char_INORI","Yeah, do it for your Big Bro!","m320_050_210"
+"m320_050_220","char_GRAPLEOMON","For... Big Bro...?","m320_050_220"
+"m320_050_230","char_GRAPLEOMON","Grrr... Graaaaaaaaagh!","m320_050_230"
+"m320_050_240","char_MARSMON","I'm sorry for being such a failure of a little bro.","m320_050_240"
+"m320_050_250","char_MARSMON","I'm sorry big bro... you were always pushing me to toughen up
+and stop being such a crybaby...","m320_050_250"
+"m320_050_260","char_MARSMON","But at least here... I can finally make you proud!","m320_050_260"
+"m320_050_270","char_MARSMON","Now, come at me! My fists will wake you up!","m320_050_270"
+"m320_060_010","char_MARSMON","...Big Bro!","m320_060_010"
+"m320_060_020","char_CHARISMON","You've gotten... so strong...","m320_060_020"
+"m320_060_030","char_CHARISMON","Your big brother... is proud... of you...","m320_060_030"
+"m320_060_040","char_MARSMON","I know! I know, so don't talk anymore! We'll get you fixed up...!","m320_060_040"
+"m320_060_050","char_CHARISMON","There are others... others who've been modified, too... just
+like me...","m320_060_050"
+"m320_060_060","char_CHARISMON","Please... make sure no one else... ends up like this...","m320_060_060"
+"m320_060_070","char_CHARISMON","I'm... counting on you...","m320_060_070"
+"m320_060_080","char_CHARISMON","*cough* Little bro...","m320_060_080"
+"m320_070_010","char_NARRATION","GrapLeomon found his brother at long last. Now a slave of
+the Titans, Callismon had been forced to fight in the arena.","m320_070_010"
+"m320_070_020","char_NARRATION","GrapLeomon set foot into the arena to save his older brother.","m320_070_020"
+"m320_070_021","char_NARRATION","Yet abhorrent augmentations at the hands of the Titans had transformed
+the once-kind Callismon into a vicious monster.","m320_070_021"
+"m320_070_030","char_NARRATION","A brutal battle began between the long-lost siblings.","m320_070_030"
+"m320_070_031","char_NARRATION","When the fighting had reached a climax, GrapLeomon Digivolved into
+Marsmon, and dealt the final blow.","m320_070_031"
+"m320_070_040","char_NARRATION","Callismon's mind and heart were restored, but the modifications
+to his body could not be undone.","m320_070_040"
+"m320_070_050","char_NARRATION","""I'm counting on you... Don't let any more Digimon turn out like me...""","m320_070_050"
+"m320_070_051","char_NARRATION","Marsmon took Callismon's plea to heart—it was the first time
+his older brother ever depended on him for anything.","m320_070_051"
+"m320_070_060","char_NARRATION","Carrying on his brother's wishes, Marsmon swore to protect the
+world alongside his new friends.","m320_070_060"
+"m320_080_010","char_MIREI","When all the apostles have gathered and this clock is fully lit,
+the Sacred Current's power will be freed in its entirety.","m320_080_010"
+"m320_080_030","char_MIREI","Thus will the collapse of the natural order be halted.","m320_080_030"
+"m320_080_040","char_MIREI","Eight apostles of Iliad remain. May the higher being
+watch over you, chosen ones.","m320_080_040"
+"m320_080_050","char_AEGIOMON","Callismon's body... they couldn't undo the changes...","m320_080_050"
+"m320_080_060","char_INORI","True. But I think we avoided the worst outcome.
+As long you're alive, you can always try again...","m320_080_060"
+"m320_080_070","char_INORI","And, by the way... that was amazing, Aegiomon!","m320_080_070"
+"m320_080_080","char_AEGIOMON","What was?","m320_080_080"
+"m320_080_090","char_INORI","This time, it was like you made the time travel happen
+totally at will!","m320_080_090"
+"m320_080_100","char_AEGIOMON","...Well, I don't have complete control over it yet, of course...","m320_080_100"
+"m320_080_105","char_AEGIOMON","...and I still don't know what that dark shadow is...","m320_080_105"
+"m320_080_110","char_AEGIOMON","...but if I keep at it, I think maybe I will at some point.","m320_080_110"
+"m320_080_120","char_AEGIOMON","And, when I do... maybe I could even save your little
+brother...!","m320_080_120"
+"m320_080_130","char_INORI","......","m320_080_130"
+"m320_080_140","char_INORI","You know what?","m320_080_140"
+"m320_080_150","char_INORI","If he were alive, I bet the two of you would really get
+along great.","m320_080_150"
+"m320_080_160","char_AEGIOMON","Yeah... That anime he loved... I wish I could watch it with
+him...","m320_080_160"
+"m320_080_170","char_INORI","""Agent Alpha."" He was a huge fan.","m320_080_170"
+"m320_080_180","char_INORI","If we could all watch it together... I can't imagine
+anything that would make me happier.","m320_080_180"
+"m320_080_190","char_AEGIOMON","I mean it, Inori. I swear, someday—","m320_080_190"
+"m320_080_210","char_INORI","...Thanks, Aegiomon.","m320_080_210"
+"m320_080_220","char_AEGIOMON","Of course that goes for you, too, Agent!","m320_080_220"
+"m320_080_230","char_PLAYER_M","You'd want me there...?{next}",""
+"m320_080_231","char_PLAYER_M","But I'm part of a secret organization... Are you sure?{next}",""
+"m320_080_232","char_PLAYER_M","Even dressed like this?{next}",""
+"m320_080_240","char_INORI","Of course! Come on. You're breaking our hearts! Why would you
+imagine you wouldn't be there?","m320_080_240"
+"m320_080_250","char_AEGIOMON","Hey, how about we make a stop back at Rebellion Village?","m320_080_250"
+"m320_080_260","char_AEGIOMON","Let's check in with Merukimon and Dr. Simmons to see how
+things are going.","m320_080_260"
+"m320_080_270","char_OPERATOR_M","Having ""complete control"" over manipulating time... Aegiomon
+makes it sound so simple...","m320_080_270_M m320_080_270_F"
+"m320_080_280","char_OPERATOR_M","...all without knowing just how terrifying a power that would be.","m320_080_280_M m320_080_280_F"
+"m320_080_290","char_OPERATOR_M","We can't be certain they don't cause the collapse. Too much
+that defies logic has happened since meeting those two.","m320_080_290_M m320_080_290_F"
+"m320_080_300","char_OPERATOR_M","Maybe it's too dangerous to ignore this any longer...
+We'll have to make a call soon!","m320_080_300_M m320_080_300_F"

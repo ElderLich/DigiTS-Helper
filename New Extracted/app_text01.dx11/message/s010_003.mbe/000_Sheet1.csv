@@ -1,0 +1,107 @@
+string2 0,string 1,string 2,string 3
+"s010_003_010","char_HIROKO","There you are! I've been waiting for you. I got some more
+info from social media.",""
+"s010_003_020","char_HIROKO","Apparently, there've been a few ghost sightings around here.
+Promising, right?",""
+"s010_003_030","char_HIROKO","Surely this calls for the two of us to investigate!",""
+"s010_003_040","char_PLAYER_M","{next}That's why I'm here.",""
+"s010_003_041","char_PLAYER_M","{next}Surely you know what I'm gonna ask for.",""
+"s010_003_042","char_PLAYER_M","{end}Sorry! I just remembered something important!",""
+"s010_003_050","char_HIROKO","I knew I could count on you! Nice to hear you're so
+motivated!",""
+"s010_003_060","char_HIROKO","Just what I thought you'd say. Don't worry. I got you
+covered. Let's get investigating!",""
+"s010_003_070","char_HIROKO","Oh. You can't investigate right now? Well, then, let me know
+when that changes!",""
+"s010_003_080","char_HIROKO","Finish your important business yet? Ready to start
+investigating with me?",""
+"s010_003_090","char_PLAYER_M","{next}Yeah. Sorry for the wait.",""
+"s010_003_091","char_PLAYER_M","{end}Not yet.",""
+"s010_003_100","char_HIROKO","Good. I've been waiting for this!",""
+"s010_003_110","char_HIROKO","Okay. Just let me know when you're free!",""
+"s010_003_120","char_HIROKO","Now, let's head over to the Community Forest. That's where
+all the sightings took place.",""
+"s010_003_130","char_TOUDO","Hey! You two! Stop right there!",""
+"s010_003_140","char_TOUDO","I'm with public safety. If you're headed into the Community
+Forest, I'd advise caution.",""
+"s010_003_150","char_HIROKO","Ugh... Ever since that one time, the sight of a public
+safety officer makes me wanna run.",""
+"s010_003_160","char_TOUDO","You have nothing to fear from me. Not as long as you let me
+do my job.",""
+"s010_003_170","char_HIROKO","Th-That's not very reassuring... Um, why do you say you'd
+advise caution?",""
+"s010_003_180","char_TOUDO","I heard an odd cry while investigating the park the other
+day, and wanted to check back.",""
+"s010_003_190","char_HIROKO","Can you describe what it sounded like?",""
+"s010_003_200","char_TOUDO","It wasn't a dog or a cat. If it were an ordinary animal
+noise, I wouldn't be here.",""
+"s010_003_210","char_HIROKO","So, you think it could have been...",""
+"s010_003_220","char_TOUDO","Yes. It could've come from a type of creature we're after.
+Tell me if you see anything odd.",""
+"s010_003_230","char_HIROKO","In that case, I don't mind lending a hand, but you have to
+let me use my camera, okay?",""
+"s010_003_240","char_TOUDO","Well... I suppose I can allow that. Your footage could end
+up being vital evidence.",""
+"s010_003_250","char_TOUDO","I'll confiscate it if need be. Now, let me take you to where
+I heard that cry.",""
+"s010_003_260","char_TOUDO","This is where I heard that odd noise.",""
+"s010_003_270","char_HIROKO","I don't hear anything out of the ordinary right now...",""
+"s010_003_280","char_TOUDO","...!",""
+"s010_003_290","char_TOUDO","Shh!",""
+"s010_003_300","char_HIROKO","Huh? What's wrong?!",""
+"s010_003_310","char_TOUDO","Shh. Listen closely.",""
+"s010_003_320","char_HIROKO","......",""
+"s010_003_330","char_TOUDO","You hear that? Sounds like someone's saying ""gill, gill...""",""
+"s010_003_340","char_HIROKO","Oh, yeah... Now that you mention it, you're right. It's
+faint, but I hear it, too!",""
+"s010_003_350","char_TOUDO","Let's head toward that sound!",""
+"s010_003_360","char_GUILMON","...Guil!",""
+"s010_003_370","char_HIROKO","It... It's a monster! I don't believe it! I have to get this
+on camera!",""
+"s010_003_380","char_GUILMON","...Guil?",""
+"s010_003_390","char_PLAYER_M","{next}Gil?",""
+"s010_003_391","char_PLAYER_M","{next}Gil, gil.",""
+"s010_003_392","char_PLAYER_M","{next}Giiil!",""
+"s010_003_400","char_GUILMON","Guil? Guil!",""
+"s010_003_410","char_GUILMON","Guil, guil! Guil, guil! Guil, guil, guil!",""
+"s010_003_420","char_GUILMON","Guil! ♪",""
+"s010_003_430","char_GUILMON","Guil! Guil, guil!",""
+"s010_003_440","char_HIROKO","Uh... What do you think those ""gil, gil"" sounds mean?",""
+"s010_003_450","char_GUILMON","Guil!",""
+"s010_003_460","char_TOUDO","It's headed for the entrance to the sewers. We'd better go
+after it.",""
+"s010_003_470","char_GUILMON","Guiiiiil!",""
+"s010_003_480","char_TOUDO","Look out! It's on the attack!",""
+"s010_003_490","char_GUILMON","Guil...",""
+"s010_003_500","char_TOUDO","Hm... Somehow, I get the impression that thing wasn't
+actually up to no good...",""
+"s010_003_510","char_HIROKO","Yeah. More like... it was bored and wanted to play. Even
+now, it was just roughhousing.",""
+"s010_003_520","char_TOUDO","Yes. That's how it seemed to me, too.",""
+"s010_003_530","char_GUILMON","Guil...",""
+"s010_003_540","char_HIROKO","Look! It's headed off somewhere again.
+Should we follow it?",""
+"s010_003_550","char_TOUDO","I think this time we can leave it be. It went deeper into
+the sewers, not out of them.",""
+"s010_003_560","char_TOUDO","Seems like it's trying to avoid the surface, so there's no
+need for us to chase it down.",""
+"s010_003_570","char_TOUDO","We should give it the space it needs and head back,
+ourselves.",""
+"s010_003_580","char_TOUDO","Well, that solves the mystery of that strange noise. Thank
+you for your help.",""
+"s010_003_590","char_TOUDO","I doubt that little guy will be causing any more trouble.
+I'm glad this ended so well.",""
+"s010_003_610","char_HIROKO","You're... not as scary as I thought you'd be. Maybe I was
+wrong about public safety.",""
+"s010_003_620","char_TOUDO","......",""
+"s010_003_630","char_TOUDO","I think it's time we got out of here. Thank you both for
+your help.",""
+"s010_003_640","char_TOUDO","I'll escort you to the park entrance. Thanks again for
+lending a hand.",""
+"s010_003_650","char_HIROKO","There she goes... Funny. She was nothing like I thought. I
+wish I asked more questions.",""
+"s010_003_660","char_HIROKO","Although... Don't ask me why, but I have a funny feeling
+we'll be seeing her again.",""
+"s010_003_670","char_HIROKO","Anyway, I'd better be getting back. Oh, and don't worry.
+I've got your reward right here.",""
+"s010_003_680","char_HIROKO","See you again soon!",""

@@ -1,0 +1,103 @@
+string2 0,string 1,string 2,string 3
+"s200_146_010","char_TOUDO","This is my fifth energy drink. So many people are on leave,
+I can't afford to collapse!",""
+"s200_146_020","char_PLAYER_M","{next}Are you all right?",""
+"s200_146_021","char_PLAYER_M","{next}Is it that busy?",""
+"s200_146_022","char_PLAYER_M","{next}Just don't die on us!",""
+"s200_146_030","char_TOUDO","I feel like I could collapse any minute. I know I shouldn't
+try to tough it out...",""
+"s200_146_040","char_TOUDO","The Anomalous Affairs Division is always understaffed. And I
+have a bad habit of not asking for help...",""
+"s200_146_050","char_TOUDO","Actually, I've had a fever the past few days. I know it's
+bad to try to hide my weaknesses.",""
+"s200_146_060","char_TOUDO","Captain Kuremi said that, too. Actually... would you mind
+listening to my complaints?",""
+"s200_146_070","char_TOUDO","You don't know how happy I'd be if you were
+extra personnel in a public safety uniform...",""
+"s200_146_080","char_TOUDO","Am I seeing things...? Are you really here to help?",""
+"s200_146_090","char_PLAYER_M","{next}I'm not a hallucination.",""
+"s200_146_091","char_PLAYER_M","{next}So you have something I can help with?",""
+"s200_146_092","char_PLAYER_M","{next}I felt like cosplaying.",""
+"s200_146_100","char_TOUDO","So I'm not imagining things from lack of sleep...?",""
+"s200_146_110","char_TOUDO","Of course. You seem to know more about phase electron
+lifeforms than we do.",""
+"s200_146_120","char_TOUDO","Did you get that uniform from an illegal auction? Diversion
+of government-issued equipment is a serious offense...",""
+"s200_146_130","char_TOUDO","Does this mean you're responding to my complaints?",""
+"s200_146_140","char_TOUDO","It's important to ask for help sometimes, right? In that
+case, I'll accept your help.",""
+"s200_146_150","char_PLAYER_M","{next}Sure thing.",""
+"s200_146_151","char_PLAYER_M","{end}Don't take too much advantage of me...",""
+"s200_146_160","char_TOUDO","You seem to know more about phase electron lifeforms
+than we do, so it's really helpful.",""
+"s200_146_170","char_TOUDO","O-Of course not! If you change your mind, just let me know.",""
+"s200_146_180","char_TOUDO","I'd like you to help us investigate the underground here.
+There are still some areas that could be fluctuating.",""
+"s200_146_190","char_SUMERAGI","You're finally here. I bet you haven't rested at all... Hey,
+what's with the uniform?",""
+"s200_146_200","char_PLAYER_M","{next}I came here to help.",""
+"s200_146_201","char_PLAYER_M","{next}I'm responding to Asuna's complaints.",""
+"s200_146_202","char_PLAYER_M","{next}Nice to see you, boss.",""
+"s200_146_210","char_SUMERAGI","It's true we're seriously understaffed, but we can't let
+just anyone help us.",""
+"s200_146_220","char_SUMERAGI","Wow, that's rare. I've never heard her complain about
+anything.",""
+"s200_146_230","char_SUMERAGI","I don't remember having a subordinate like you...",""
+"s200_146_240","char_SUMERAGI","How are you going to report to the higher-ups that you let a
+civilian help us?",""
+"s200_146_250","char_TOUDO","No need. This was an on-site decision due to lack of
+manpower. That should be enough.",""
+"s200_146_260","char_SUMERAGI","I get how you feel, but...",""
+"s200_146_270","char_TOUDO","Well, anomalous phenomena won't let up just because we're
+short-staffed. Let's go.",""
+"s200_146_280","char_SUMERAGI","Oh, boy... Has the lack of sleep gotten to her?",""
+"s200_146_290","char_TOUDO","Should we come back again later? I'd hate to lose this
+opportunity, though...",""
+"s200_146_300","char_SUMERAGI","Hate to admit it, but we need your help with this space. No reinforcements
+are expected... Okay. We'll stay here and wait for your return.",""
+"s200_146_310","char_TOUDO","Welcome back! Thanks to you, I was able to get some rest
+while waiting!",""
+"s200_146_320","char_SUMERAGI","Don't forget that people may be in danger at this very
+moment.",""
+"s200_146_330","char_TOUDO","Here comes a tough one. Let's go.",""
+"s200_146_340","char_SUMERAGI","You sure about this? You'll be responsible if anything
+happens to a civilian...",""
+"s200_146_350","char_TOUDO","This person knows more about phase electron lifeforms
+than we do. I trust my gut on this.",""
+"s200_146_360","char_TOUDO","Are you all right? Are you hurt anywhere?",""
+"s200_146_370","char_PLAYER_M","{next}I'm fine.",""
+"s200_146_371","char_PLAYER_M","{next}What about you?",""
+"s200_146_372","char_PLAYER_M","{next}Piece of cake.",""
+"s200_146_380","char_TOUDO","I'm so glad you came to help.",""
+"s200_146_390","char_TOUDO","Both Shota and I are fine.",""
+"s200_146_400","char_TOUDO","I feel bad asking for your help.",""
+"s200_146_410","char_SUMERAGI","I'll let it go this time, but if you pretend to be one of us
+again, I'm taking you in.",""
+"s200_146_420","char_TOUDO","I'm the one who asked for help. You don't have to say it
+like that...",""
+"s200_146_430","char_PLAYER_M","{next}I sense hostility.",""
+"s200_146_431","char_PLAYER_M","{next}I sense your pride as a public safety officer.",""
+"s200_146_432","char_PLAYER_M","{next}I'll just do it without asking.",""
+"s200_146_440","char_SUMERAGI","I won't deny that.",""
+"s200_146_450","char_SUMERAGI","It's called ""professionalism.""",""
+"s200_146_460","char_SUMERAGI","Just be careful you don't run into us, then.",""
+"s200_146_470","char_SUMERAGI","More about phase electron lifeforms than we do?
+Think about what that means.",""
+"s200_146_480","char_TOUDO","......",""
+"s200_146_490","char_SUMERAGI","I heard governments are sending agents to dig up info on
+phase electron lifeforms.",""
+"s200_146_500","char_TOUDO","Are you saying this person is one of them?",""
+"s200_146_510","char_SUMERAGI","Hey, think of this as a parting gift. Don't stick your nose
+in our business anymore.",""
+"s200_146_520","char_PLAYER_M","{next}I'm sure we'll meet again.",""
+"s200_146_521","char_PLAYER_M","{next}You know who to call if you need anything.",""
+"s200_146_522","char_PLAYER_M","{next}You should be grateful.",""
+"s200_146_530","char_SUMERAGI","Don't make me laugh... Next time we see you, we're
+strangers.",""
+"s200_146_540","char_SUMERAGI","Were you even listening? Cheeky little...",""
+"s200_146_550","char_SUMERAGI","Well, aren't you the patronizing one? But I suppose you did
+actually do us a favor...",""
+"s200_146_560","char_TOUDO","I know how Shota comes across... but I'm sure he really is
+grateful.",""
+"s200_146_570","char_TOUDO","He's just bad at showing it... Not that I can talk in that regard.",""
+"s200_146_580","char_TOUDO","...Anyway, I'll be seeing you.",""

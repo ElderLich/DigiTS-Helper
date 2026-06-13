@@ -1,0 +1,232 @@
+string2 0,string 1,string 2,string 3
+"f_t0401_0010_0010","char_MANAGER","Welcome! If you're looking for clothing, you picked the
+right place!",""
+"f_t0401_0020_0010","char_MANAGER","Chasing down thieves is fine and all, just don't put yourself
+in harm's way, you hear?",""
+"f_t0401_0030_0010","char_MANAGER","Oh, hey. It's you! Welcome, welcome.",""
+"f_t0401_0030_0020","char_MANAGER","If you're looking for clothing, you picked the right place!",""
+"f_t0401_0040_0010","","Let's go see Inori's dad.",""
+"f_t0401_0050_0010","","There is no need to go this way right now.",""
+"f_t0401_0060_0010","","It looks like this used to serve as the theater's ticket booth.",""
+"f_t0401_0070_0010","","What is it about a limited-time special that makes you wanna
+gobble it right up?",""
+"f_t0401_0080_0010","","It smells like freshly fried croquettes here.",""
+"f_t0401_0090_0010","","What's the market price for rooms around here?",""
+"f_t0401_0100_0010","","The shutters have been down for a while now. No sign of
+them coming up any time soon.",""
+"f_t0401_0110_0010","char_VADEMON","Wow, who knew there'd be such a variety of items? The human
+world sure is somethin'.",""
+"f_t0401_0120_0010","char_MUSHMON","Welcome! We've got plenty of fresh food, so come and get it
+before it's gone!",""
+"f_t0401_0130_0010","char_TYUMON","Now listen up, you guys! This world we live in...",""
+"f_t0401_0130_0020","char_TYUMON","It's packed with loads of giant dinosaurs, robots and stuff
+like that!",""
+"f_t0401_0130_0030","char_TYUMON","You guys are into that stuff, aren't ya? You'd be blown
+away if ya saw it!",""
+"f_t0401_0130_0040","char_TYUMON","But it's a dangerous place! If ya don't toughen up like us,
+there's no way I can take ya there!",""
+"f_t0401_0140_0010","char_MONZAEMON","Well, I was supposed to head to the colosseum, but a bunch
+of little humans took a liking to me along the way...",""
+"f_t0401_0140_0020","char_MONZAEMON","It sure does make me happy to see them all having fun!",""
+"f_t0401_0140_0030","char_MONZAEMON","Maybe instead of being a warrior, my true calling is
+bringing joy to people like this!",""
+"f_t0401_0150_0010","char_MAMEMON","Hey, what's that?! It smells amazing!",""
+"f_t0401_0150_0020","char_HIGH_SCHOOL_BOY","Hm? You mean this croquette? You wanna try it?",""
+"f_t0401_0150_0030","char_MAMEMON","Oh, yeah! Gimme, gimme! Let me have a bite!",""
+"f_t0401_0160_0010","char_KOTEMON","There are so many tempting things here that it's hard to
+focus on my training.",""
+"f_t0401_0160_0020","char_KOTEMON","This is quite the dilemma...",""
+"f_t0401_0170_0010","char_SOLARMON","What's this? It kinda looks like Hagurumon. Is it a part
+for a generator or something?",""
+"f_t0401_9000_0010","char_ABDUCTED_BOY","Hey! Have a card battle with me!
+Nobody around here is enough of a challenge!",""
+"f_t0401_9000_0020","","[Challenge to a card battle.]",""
+"f_t0401_9000_0021","","What's a card battle?",""
+"f_t0401_9000_0022","","{end}Now is not the time.",""
+"f_t0401_9000_0030","char_ABDUCTED_BOY","Tch, you're boring! Fine, then. I'll just have to find
+someone else.",""
+"f_t0401_9000_0040","char_ABDUCTED_BOY","Gah! I lost! I'll definitely win next time, though!",""
+"f_t0401_9000_0050","char_ABDUCTED_BOY","Guess you're not much of a challenge, either. Maybe it's
+time I entered a tournament.",""
+"f_t0401_9000_0060","char_ABDUCTED_BOY","Wh-What do you want?! I've got nothing left to say to you!
+Or are you here to have a card battle?",""
+"f_t0401_9000_0070","char_ABDUCTED_BOY","And here I was, all ready to face you, too! Could you be
+any more boring?!",""
+"f_t0401_9000_0080","char_ABDUCTED_BOY","Whoa! You beat me! You're pretty good for a total noob!",""
+"f_t0401_9000_0090","char_ABDUCTED_BOY","Yeah! I won! I'd never lose to a total noob like you!",""
+"f_t0401_9000_0100","","[Challenge to a card battle.]",""
+"f_t0401_9000_0101","","{end}Now is not the time.",""
+"f_t0402_0010_0010","","This whiteboard has a bunch of documents posted to it.",""
+"f_t0402_0020_0010","char_HIROKO","Haven't gotten any new inspiration for a while. I wonder if
+I'll be getting any good footage this time around...",""
+"f_t0402_0030_0010","char_TAKEMIYA","Oh, you're back.",""
+"f_t0402_0030_0020","char_TAKEMIYA","I suppose it would be a bit foolish to ask you how the
+investigation went...",""
+"f_t0402_0030_0030","char_TAKEMIYA","In any case, you're welcome to use this place as your base
+for the time being.",""
+"f_t0402_0030_0040","char_TAKEMIYA","Just don't go disappearing on me without saying anything
+first.",""
+"f_t0402_0040_0010","char_TAKEMIYA","You don't suppose... Hm?",""
+"f_t0402_0040_0020","char_TAKEMIYA","Oh, it's you. Sorry. I was lost in thought for a minute, there.",""
+"f_t0402_0040_0030","char_TAKEMIYA","You seem pretty busy yourself.",""
+"f_t0402_0040_0040","char_TAKEMIYA","After all that commotion, I guess that makes sense.",""
+"f_t0402_0040_0050","char_TAKEMIYA","I noticed Inori's been heading out with you a lot.",""
+"f_t0402_0040_0060","char_TAKEMIYA","Just be careful not to go putting her in harm's way.",""
+"f_t0402_0040_0070","char_TAKEMIYA","You seem capable enough, but still... I can't help but worry.
+Please take care of her.",""
+"f_t0402_0900_0001","char_HIROKO","I've gotten a few requests. What do you wanna investigate?",""
+"f_t0402_0900_0010","char_HIROKO","Investigate the missing person case.",""
+"f_t0402_0900_0011","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0020","char_HIROKO","Meet the person Hiroko wants to introduce you to.",""
+"f_t0402_0900_0021","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0030","char_HIROKO","View the picture of Hiroko in high school.",""
+"f_t0402_0900_0031","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0100","char_HIROKO","Investigate the sightings of phase electron lifeforms.",""
+"f_t0402_0900_0101","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0200","char_HIROKO","Investigate the strange letter that arrived at the office.",""
+"f_t0402_0900_0201","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0110","char_HIROKO","Investigate the missing person case.",""
+"f_t0402_0900_0111","char_HIROKO","Investigate the sightings of phase electron lifeforms.",""
+"f_t0402_0900_0112","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0120","char_HIROKO","Meet the person Hiroko wants to introduce you to.",""
+"f_t0402_0900_0121","char_HIROKO","Investigate the sightings of phase electron lifeforms.",""
+"f_t0402_0900_0122","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0130","char_HIROKO","View the picture of Hiroko in high school.",""
+"f_t0402_0900_0131","char_HIROKO","Investigate the sightings of phase electron lifeforms.",""
+"f_t0402_0900_0132","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0210","char_HIROKO","Investigate the missing person case.",""
+"f_t0402_0900_0211","char_HIROKO","Investigate the strange letter that arrived at the office.",""
+"f_t0402_0900_0212","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0220","char_HIROKO","Meet the person Hiroko wants to introduce you to.",""
+"f_t0402_0900_0221","char_HIROKO","Investigate the strange letter that arrived at the office.",""
+"f_t0402_0900_0222","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0230","char_HIROKO","View the picture of Hiroko in high school.",""
+"f_t0402_0900_0231","char_HIROKO","Investigate the strange letter that arrived at the office.",""
+"f_t0402_0900_0232","char_HIROKO","{end}Not right now.",""
+"f_t0402_0900_0000","char_HIROKO","Not now.",""
+"f_t0402_0900_0300","char_HIROKO","*sigh* I'm so bored. I wonder if we'll get any juicy tips
+today.",""
+"f_t0403_0010_0010","","I'm curious about what's on TV. Turning it on counts as
+investigating, right?",""
+"f_t0403_0011_0010","","The news is on. There's no particular information of
+interest.",""
+"f_t0403_0020_0010","","I admit I'm curious, but I'd better not open it willy-nilly.",""
+"f_t0403_0030_0010","","I tried knocking, but there was no response.",""
+"f_t0403_0040_0010","","A fax machine. No signs of use.",""
+"f_t0403_0050_0010","","I shouldn't peek in someone's refrigerator without asking.",""
+"f_t0403_0060_0010","","It's a pendulum clock. I heard a bird or something pops out
+at the top of the hour.",""
+"f_t0403_0070_0010","","It looks like an anime poster. Must be pretty popular if
+they're hanging it in the living room.",""
+"f_t0403_0080_0010","","It's covered with a comfortable knob cover.",""
+"f_t0403_0090_0010","","The shelves contain enough dishes for two people.",""
+"f_t0403_0100_0010","","Breakfast is ready and waiting.",""
+"f_t0403_0110_0010","char_INORI","I'm heading off to school soon. Still, give me a shout if
+you run into any trouble, okay? I mean it!",""
+"f_t0403_0120_0010","char_INORI","Aegiomon... said he wanted to be alone and headed up to the roof.","f_t0403_0120_0010"
+"f_t0403_0130_0010","char_PLAYER_M","{next}He's still in shock.",""
+"f_t0403_0130_0011","char_PLAYER_M","{next}He'll probably forget about it by tomorrow...",""
+"f_t0403_0130_0012","char_PLAYER_M","{next}I bet he's in dreamland right now.",""
+"f_t0403_0140_0010","char_INORI","Yeah... I assumed as much.","f_t0403_0140_0010"
+"f_t0403_0140_0020","char_INORI","You think so? I'm... not so sure about that...","f_t0403_0140_0020"
+"f_t0403_0140_0030","char_INORI","I'll go talk to him!","f_t0403_0140_0030"
+"f_t0403_0150_0010","char_OPERATOR_M","Before we get down to business, why don't you take a look
+at the living room?",""
+"f_t0403_0160_0010","char_MINERVAMON","...I'd say it's about time, wouldn't you?","f_t0403_0160_0010"
+"f_t0403_0160_0020","char_PLAYER_M","{next}Let's head out.",""
+"f_t0403_0160_0021","char_PLAYER_M","{next}Hold on a little longer.",""
+"f_t0403_0160_0022","char_PLAYER_M","{next}I can't move a muscle until I eat.",""
+"f_t0403_0160_0030","char_MINERVAMON","All right, then. Off we go!","f_t0403_0160_0030"
+"f_t0403_0160_0040","char_MINERVAMON","We'd better hurry. Time is of the essence here.","f_t0403_0160_0040"
+"f_t0403_0160_0050","char_MINERVAMON","Well, aren't you relaxed about time! By all means, stuff
+your face... and then let's get going, already!",""
+"f_t0403_0170_0010","char_HIROKO","Extra, extra! Read all about it!","f_t0403_0170_0010"
+"f_t0403_0170_0015","char_PLAYER_M","(You hear a high-pitched female voice coming from downstairs.)",""
+"f_t0403_0170_0020","char_HIROKO","A mysterious dark shadow has been spotted around Shinjuku
+Station! We'd better go investigate this, don't you think?!","f_t0403_0170_0020"
+"f_t0403_0170_0030","char_MINERVAMON","A dark shadow...?! Oh!","f_t0403_0170_0030"
+"f_t0403_0170_0040","char_MINERVAMON","That sounds just like what we saw before... back during
+that whole egg-thief business!","f_t0403_0170_0040"
+"f_t0403_0170_0050","char_HIROKO","Oh, you have a guest...? Wait. You seem familiar...","f_t0403_0170_0050"
+"f_t0403_0170_0060","char_HIROKO","Oh, my gosh! You're the one... who was on TV yesterday!","f_t0403_0170_0060"
+"f_t0403_0170_0070","char_INORI","Th-This person... is just cosplaying!","f_t0403_0170_0070"
+"f_t0403_0170_0080","char_HIROKO","Oh, a cosplayer? Are you a friend of {player}? Wait! This is
+no time for chit-chat!","f_t0403_0170_0080"
+"f_t0403_0170_0090","char_HIROKO","Freshness is key when it comes to information! We're heading
+to Shinjuku Station right now.","f_t0403_0170_0090"
+"f_t0403_0170_0100","char_HIROKO","Hey, Ms. cosplayer! Come join us! Getting you in some of
+the shots might get more people to comment!","f_t0403_0170_0100"
+"f_t0403_0170_0110","char_MINERVAMON","Huh? I don't really get what you're saying, but... if you're
+going to show me where the dark shadow is, sure, I'll go.","f_t0403_0170_0110"
+"f_t0403_0170_0120","char_HIROKO","All right, then. Let's hurry and head out! Time to find
+some content worth streaming in Shinjuku Station!","f_t0403_0170_0120"
+"f_t0403_0180_0010","char_MINERVAMON","It's a relief not having to find a place to stay. And, this
+way, I can avoid causing a commotion, too.","f_t0403_0180_0010"
+"f_t0403_0180_0020","char_MINERVAMON","I still have plenty of questions, but let's talk tomorrow.","f_t0403_0180_0020"
+"f_t0403_0180_0030","char_MINERVAMON","By the way, this drink... What did you call it? Tea? It's
+pretty good.","f_t0403_0180_0030"
+"f_t0403_0190_0010","char_INORI","Today was a busy day, so let's turn in for the night. We
+have plenty to discuss in the morning!","f_t0403_0190_0010"
+"f_t0403_0200_0010","char_AEGIOMON","Titans in the Digital World...",""
+"f_t0403_0200_0020","char_AEGIOMON","Even though I'm a Digimon, there's just so much I don't
+know...",""
+"f_t0403_0200_0030","char_AEGIOMON","Like Inori, I want to ask Minervamon so many things.",""
+"f_t0403_0200_0040","char_AEGIOMON","Come to think of it, what was that business about an egg thief?",""
+"f_t0403_0210_0010","","Ready to call it a day?",""
+"f_t0403_0210_0020","","{next}[Take a rest.]",""
+"f_t0403_0210_0021","","I wanna talk to everyone a little more.{end}",""
+"f_t0403_0220_0010","char_MINERVAMON","You should get some rest before it gets too late.",""
+"f_t0403_0230_0010","char_INORI","Anyway, let's go. Hiroko told me the place was a ""back alley 
+of Shinjuku.""",""
+"f_t0403_0240_0010","char_INORI","I guess you really had a blast, huh, Aegiomon?",""
+"f_t0403_0250_0010","char_AEGIOMON","Come on! Hurry! Let's go!",""
+"f_t0403_0260_0010","char_TAKEMIYA","Grin and bear it. To people who don't know your kind, you
+stand out like a sore thumb.",""
+"f_t0403_0270_0010","char_AEGIOMON","Hey... Do I really hafta wear this all the time?",""
+"f_t0404_030_010","char_AEGIOMON","Zzzzz...","f_t0404_030_010"
+"f_t0404_030_020","","[Wake Aegiomon up.]",""
+"f_t0404_030_021","","[Stare at Aegiomon.]",""
+"f_t0404_030_030","char_AEGIOMON","I'm... not... a monster...","f_t0404_030_030"
+"f_t0404_030_040","","Traces of tears seep out from Aegiomon's closed eyes.",""
+"f_t0404_030_050","","(Maybe I ought to leave him alone for now...)",""
+"f_t0404_050_010","","Aegiomon's not here. Did he go downstairs already?",""
+"f_t0404_060_010","char_INORI","I'll try talking to Aegiomon a little more when he wakes up.",""
+"f_t0404_0230_0010","char_OPERATOR_M","Apparently, Inori provided these clothes for you. So
+attentive. I'd say ""caring"" is the perfect word for her.",""
+"f_t0404_0230_0020","char_OPERATOR_M","I'm sure she'll be helpful to you in many ways. You should
+accept her kindness and change into these clothes.",""
+"f_t0404_0240_0010","char_OPERATOR_M","I've added a feature to boost the synergy effects with your 
+partner Digimon, strengthening the benefits of your bonds.","f_t0404_0240_0010_M f_t0404_0240_0010_F"
+"f_t0404_0240_0020","char_OPERATOR_M","This feature is called {fc9Agent Skills}.","f_t0404_0240_0020_M f_t0404_0240_0020_F"
+"f_t0404_0240_0030","char_OPERATOR_M","Agent Skills improve as you progress, allowing for accelerated
+Digivolution and enhanced Cross Art abilities.","f_t0404_0240_0030_M f_t0404_0240_0030_F"
+"f_t0404_0240_0040","char_OPERATOR_M","Master this function and use it to carry out your missions.","f_t0404_0240_0040_M f_t0404_0240_0040_F"
+"f_t0404_0250_0010","","Voices, coming from downstairs... Let's go see what all the
+fuss is about.",""
+"f_t0408_0010_0010","char_AEGIOMON","......",""
+"f_t0408_0020_0010","char_PEGASMON","Do you want to go back to Rebellion Village?",""
+"f_t0408_0020_0020","char_PLAYER_M","Yes, let's return to Rebellion Village.",""
+"f_t0408_0020_0021","char_PLAYER_M","{end}Not now.",""
+"f_t0408_0030_0010","char_PANDAMON","It looks like there's an arena somewhere in this city
+where we can fight.",""
+"f_t0408_0030_0020","char_PANDAMON","Some have gone to prepare for battle with the Titans.
+I wonder if they made it there.",""
+"f_t0408_0040_0010","char_STARMON","There's an arena in this city, but apparently there are
+some strange folks there as well.",""
+"f_t0408_0040_0020","char_STARMON","They're supposedly not warriors. I wonder why they're
+participating.",""
+"f_t0408_0050_0010","char_TOYAGUMON","Wow! There are so many buildings here that are bigger
+than the Central Tower! I wanna climb one!",""
+"f_t0408_0060_0010","char_HAGURUMON","Everyone's just wandering around like it's normal,
+but are we really supposed to be here?",""
+"f_t0408_0070_0010","char_PEGASMON","You seem to be in quite a panic. What's the matter?",""
+"f_t0408_0070_0020","char_PEGASMON","A giant weapon?! That's serious!",""
+"f_t0408_0070_0030","char_PEGASMON","If that's the case, allow me to lend a hoof!
+You need me to fly you there, right?!",""
+"f_t0408_0070_0040","char_PEGASMON","Shall we get going?",""
+"f_t0408_0070_0050","","[Head to the government building.]{next}",""
+"f_t0408_0070_0051","","{end}[Finish preparing.]",""
+"f_t0408_0070_0060","char_PEGASMON","All right, let's get going!",""
+"f_t0408_0070_0070","char_PEGASMON","It's dangerous to go directly to the building, so I'll drop
+you off nearby.",""
+"f_t0408_0070_0080","char_PEGASMON","When you're ready to go, just let me know. I'll be waiting here!",""

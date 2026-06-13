@@ -1,0 +1,49 @@
+string2 0,string 1,string 2,string 3
+"s050_038_0010","char_ZUDOMON","Oh, you! I hear you drove out the Titans.",""
+"s050_038_0020","char_PLAYER_M","{next}How did you know that?",""
+"s050_038_0021","char_PLAYER_M","{next}That's right!",""
+"s050_038_0022","char_PLAYER_M","{next}Uh... I'll just be going now.",""
+"s050_038_0030","char_ZUDOMON","Please. You should know how famous you are. You're the talk
+of the town!",""
+"s050_038_0040","char_ZUDOMON","Ooh! Only someone who's real strong talks like that.",""
+"s050_038_0050","char_ZUDOMON","No, wait! I promise this won't be a hassle. Please, hear me
+out.",""
+"s050_038_0060","char_ZUDOMON","It seems the rumors are true. That means Central Tower's
+free of those louts.",""
+"s050_038_0070","char_ZUDOMON","And with all the data that goes through that place, there's
+loads of useful stuff there.",""
+"s050_038_0080","char_ZUDOMON","If it were in my hands, I feel like my creations would get
+even better. *wink*",""
+"s050_038_0090","char_PLAYER_M","{next}So you want me to get materials for you?",""
+"s050_038_0091","char_PLAYER_M","{next}Well, good luck with that!",""
+"s050_038_0092","char_PLAYER_M","{end}I'm busy right now. Maybe some other time.",""
+"s050_038_0100","char_ZUDOMON","Heh. You're quick on the uptake! I like that.",""
+"s050_038_0110","char_ZUDOMON","H-Hold on! Don't be like that! Come on... You know what I'm
+asking for.",""
+"s050_038_0120","char_ZUDOMON","Oh, I didn't realize you were busy. Come back when you have
+time!",""
+"s050_038_0130","char_ZUDOMON","So, you'll do the job? Thanks!",""
+"s050_038_0140","char_ZUDOMON","I'll send the info on the materials I need to your Digivice,
+so check that out later.",""
+"s050_038_0150","char_ZUDOMON","They should be right by the Central Tower entrance. I'll be
+counting on you!",""
+"s050_038_0160","char_ZUDOMON","Oh! You free now? Then I hope you can get those materials
+from Central Tower for me.",""
+"s050_038_0170","char_PLAYER_M","{next}Sure thing.",""
+"s050_038_0171","char_PLAYER_M","{end}Maybe some other time.",""
+"s050_038_0180","char_ZUDOMON","Really? That'd be a huge help! Let me give you the details.",""
+"s050_038_0190","char_ZUDOMON","Huh... Being so popular must keep you really busy.
+Come back when you're free!",""
+"s050_038_0200","char_ZUDOMON","Ah, you're back, and I see you got all the materials!",""
+"s050_038_0210","char_ZUDOMON","Quick, hand them over! ...Perfect. Thank you.",""
+"s050_038_0220","char_ZUDOMON","Now, just wait there a minute.",""
+"s050_038_0230","char_ZUDOMON","All right. I'm ready to get to work!",""
+"s050_038_0240","char_ZUDOMON","I'll make you something using those materials you got. Just
+a minute!",""
+"s050_038_0250","char_ZUDOMON","I'd be happy to make you more any time you bring me the
+materials.",""
+"s050_038_0260","char_ZUDOMON","Now, time to get back to work. My creative drive knows no
+end!",""
+"s050_038_0270","char_ZUDOMON","I appreciate you helping me out. Here. Take this for your
+trouble.",""
+"s050_038_0280","char_ZUDOMON","All right. See you later!",""

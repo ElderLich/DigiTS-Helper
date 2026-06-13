@@ -1,0 +1,188 @@
+string2 0,string 1,string 2,string 3
+"d120_010_010","char_BLITZGREYMON","Damn! I'm so useless like this...",""
+"d120_010_020","char_AEGIOMON","Um, what do you mean?
+We defeated the enemy, didn't we?",""
+"d120_010_030","char_CRESGARURUMON","We're normally much more powerful than this!",""
+"d120_010_040","char_CRESGARURUMON","It must be because our partners aren't by our side...",""
+"d120_010_050","char_AEGIOMON","I understand being worried about your partners. I doubt I'd
+be very strong, either, if Inori weren't right here with me.",""
+"d120_010_060","char_BLITZGREYMON","Our partners hold a special destiny. They work together 
+with us, their partner Digimon, to protect the world.",""
+"d120_010_070","char_BLITZGREYMON","We have faced many crises before, but I never expected
+anything like this to ever happen!",""
+"d120_020_010","char_KUREMIKYOKO","This must be... Shinjuku, when it was peaceful.","d120_020_010"
+"d120_020_020","char_MIREI","Akashic Backdoors use space-time disturbances to
+pry open pathways to different points in time and space.","d120_020_020"
+"d120_020_030","char_MIREI","This creates isolated fragments of space-time called
+""Akashic debris,"" which is what you're looking at right now.","d120_020_030"
+"d120_020_040","char_INORI","This place...","d120_020_040"
+"d120_020_050","char_INORI","Dad...","d120_020_050"
+"d120_020_060","char_AEGIOMON","Seems like he can't hear us.","d120_020_060"
+"d120_020_070","char_KUREMIKYOKO","Did you just say, ""Dad""?","d120_020_070"
+"d120_020_080","char_INORI","Yes, the one wearing glasses...
+That's my dad.","d120_020_080"
+"d120_020_090","char_KUREMIKYOKO","I see...","d120_020_090"
+"d120_020_100","char_KUREMIKYOKO","So, your last name is ""Misono""?","d120_020_100"
+"d120_020_110","char_INORI","What?!","d120_020_110"
+"d120_020_120","char_KUREMIKYOKO","My name is... Kyoko Kuremi.","d120_020_120"
+"d120_020_130","char_KUREMIKYOKO","My father worked for the public safety office.
+He used to tell me about your father from time to time.","d120_020_130"
+"d120_020_140","char_KUREMIKYOKO","That's my father right there.","d120_020_140"
+"d120_020_150","char_INORI","Y-You don't say...
+That's some coincidence.","d120_020_150"
+"d120_020_160","char_KUREMIKYOKO","There's nothing more for us here. 
+Let's go.","d120_020_160"
+"d120_020_170","char_KUREMIKYOKO","...Looking at his face really pisses me off.","d120_020_170"
+"d120_020_180","char_INORI","Huh?","d120_020_180"
+"d120_020_190","char_KUREMIKYOKO","To me, he's just someone who used to be my father.","d120_020_190"
+"d120_020_200","char_KUREMIKYOKO","Anyway, let's keep moving.
+We need to find Parallelmon before it's too late.","d120_020_200"
+"d120_030_010","char_KUREMI","""The higher-ups are the same as when you were there.
+Meetings after meetings, but no real conclusions or results.""","d120_030_010"
+"d120_030_020","char_KUREMI","""It's always the people on the ground who suffer
+from their ambiguous orders.""","d120_030_020"
+"d120_030_030","char_TAKEMIYA","""Heh.""","d120_030_030"
+"d120_030_040","char_KUREMI","""What's so funny?""","d120_030_040"
+"d120_030_050","char_TAKEMIYA","""I guess we haven't changed much, either. We've been
+complaining about the brass for as long as I can remember.""","d120_030_050"
+"d120_030_060","char_TAKEMIYA","""But now you've gotten promoted. If word gets out that you're
+discussing internal matters with civvies, you'll be fired.""","d120_030_060"
+"d120_030_070","char_KUREMI","""Well, in that case, you can just hire me here. I'd be a
+better private eye than you could ever hope to be.""","d120_030_070"
+"d120_030_080","char_INORI","Those two seem really close.","d120_030_080"
+"d120_030_090","char_KUREMIKYOKO","That look... I don't think I've ever seen him
+make that face in front of family.","d120_030_090"
+"d120_030_100","char_INORI","Kyoko...?","d120_030_100"
+"d120_030_110","char_KUREMIKYOKO","It doesn't look like there's anything else
+to investigate here. Let's move on.","d120_030_110"
+"d120_030_120","char_MIREI","Countless fragments of space-time lie buried
+beyond an Akashic Backdoor.","d120_030_120"
+"d120_030_130","char_MIREI","Apparently, some of that debris was taken
+from times and places related to you.","d120_030_130"
+"d120_030_140","char_MIREI","While not very strong, there's a force that draws beings back
+to the parts of space-time that they were cut off from.","d120_030_140"
+"d120_030_150","char_MIREI","As a side effect of that, you're all basically acting like
+magnets, drawing specific bits of debris toward you.","d120_030_150"
+"d120_030_160","char_MIREI","I suppose you could say that's the mechanism at work
+behind the phenomena you're seeing now.","d120_030_160"
+"d120_050_010","char_RANAMON","""I really... don't want to fight...""",""
+"d120_050_020","char_RANAMON","""Just because I was born a Titan, I've been
+forced into a battle I have no desire to fight.""",""
+"d120_050_030","char_RANAMON","""I just want to live a normal life.
+Please, you have to believe me...""",""
+"d120_050_040","char_RANAMON","""...""",""
+"d120_050_050","char_RANAMON","""Thank you.""",""
+"d120_050_060","char_RANAMON","""You foolish human.
+You'll serve as my stepping stone to greatness!""",""
+"d120_050_070","char_RANAMON","""Hahahahaha!""",""
+"d120_050_080","char_MIREI","More than likely, one of you has drawn in this scene.
+Any guess as to who?",""
+"d120_050_090","char_INORI","That Digimon... A Titan...
+Wait. It can't be...",""
+"d120_050_100","char_INORI","That attack on Captain Kuremi they mentioned... 
+Could this be THAT incident...?",""
+"d120_060_010","char_SUMERAGI","""Really? Who the hell is bothering me now...?!""","d120_060_010"
+"d120_060_020","char_SUMERAGI","""Hey! I don't have time for—""","d120_060_020"
+"d120_060_030","char_SUMERAGI","""Wh-What did you say?
+The captain's been seriously injured?!""","d120_060_030"
+"d120_060_040","char_KUREMIKYOKO","...","d120_060_040"
+"d120_060_050","char_BLITZGREYMON","Did... Digimon attack humans in your world?","d120_060_050"
+"d120_060_060","char_KUREMIKYOKO","Yeah... My father was hurt pretty badly by them.","d120_060_060"
+"d120_060_070","char_KUREMIKYOKO","I was young at the time, but I still remember it clearly.","d120_060_070"
+"d120_060_080","char_KUREMIKYOKO","I couldn't stop crying. They took him to the hospital,
+and we didn't know if he was going to pull through.","d120_060_080"
+"d120_060_090","char_BLITZGREYMON","...","d120_060_090"
+"d120_070_010","char_HIANDROMON","The Backdoor Key has been verified.",""
+"d120_070_020","char_KUREMI","""It seems I'll need physical therapy. Even with it, though,
+there's no guarantee I'll ever regain full mobility.""",""
+"d120_070_030","char_KUREMI","""The doctor has already recommended that I retire.""",""
+"d120_070_040","char_TAKEMIYA","""Well, if that's the extent of it, you're lucky. There was a moment
+when it didn't seem like you were going to make it.""",""
+"d120_070_050","char_TAKEMIYA","""...So, what're you planning on doing next?""",""
+"d120_070_060","char_KUREMI","""Nothing in particular, really... All I want is to
+continue to provide for my wife and daughter.""",""
+"d120_070_070","char_TAKEMIYA","""How about becoming a private investigator?
+I can introduce you to some clients.""",""
+"d120_070_080","char_TAKEMIYA","""I'm just about to close down my business.
+Feel free to take whatever you need.""",""
+"d120_070_090","char_KUREMI","""You mean you're getting out of the PI racket?""",""
+"d120_070_100","char_TAKEMIYA","""Yep. I figure it's time I go put an end to
+the cause of all my loss and misery.""",""
+"d120_070_110","char_CRESGARURUMON","Your father was seriously hurt by a Digimon—so much so
+that there were severe after-effects from his injuries.",""
+"d120_070_120","char_CRESGARURUMON","As such, I imagine you must detest Digimon
+with all of your being...",""
+"d120_070_130","char_KUREMIKYOKO","Yes, there's no point in trying to hide it.",""
+"d120_070_140","char_KUREMIKYOKO","To be honest, I'm really not fond of them,
+to say the least. I'm sorry.",""
+"d120_070_150","char_INORI","Kyoko... I...",""
+"d120_070_160","char_CRESGARURUMON","...",""
+"d120_080_010","char_BLITZGREYMON","Although there are Digimon who attack humans
+like the ones just now... we are certainly not like that.",""
+"d120_080_020","char_CRESGARURUMON","Together with our partners, we've saved the world multiple times.
+Even now, the powerful bond this has formed between us holds true.",""
+"d120_080_030","char_INORI","That's right. And there are lots of Digimon who
+get along well with humans.",""
+"d120_080_040","char_KUREMIKYOKO","Yes, I suppose so... although that definitely
+hasn't been my experience of them.",""
+"d120_080_050","char_AEGIOMON","...",""
+"d120_090_010","char_KUREMI","""Are you sure about this? Should you be sharing
+such confidential information with an outsider?""","d120_090_010"
+"d120_090_020","char_SUMERAGI","""I want you to come back, Captain.""","d120_090_020"
+"d120_090_030","char_KUREMI","""...That's 'former captain,' and I'm sorry.""","d120_090_030"
+"d120_090_040","char_SUMERAGI","""Your rehab is going well, right? 
+You seem to be moving around pretty good...""","d120_090_040"
+"d120_090_050","char_KUREMI","""I made a decision eight years ago to
+protect the things that are important to me.""","d120_090_050"
+"d120_090_060","char_KUREMI","""You'll understand when you have
+a family of your own someday.""","d120_090_060"
+"d120_100_010","char_HIANDROMON","The Backdoor Key has been verified.",""
+"d120_100_020","char_KUREMI","""So, they haven't found Kuroi, either...""",""
+"d120_100_030","char_TOUDO","""That's right, sir... I'm afraid we've lost
+many of our old comrades.""",""
+"d120_100_040","char_TOUDO","""Some were caught up in the explosion over the government building.
+Others died because of anomalous phenomena...""",""
+"d120_100_050","char_TOUDO","""There are also lots of people who are still unaccounted for,
+but there's one thing we can say for certain.""",""
+"d120_100_060","char_TOUDO","""Every one of them was doing all they could
+to accomplish their mission.""",""
+"d120_100_070","char_TOUDO","""So I can't just sit around doing nothing.
+Dr. Simmons and I are returning to Anomalous Affairs.""",""
+"d120_100_080","char_TOUDO","""The public safety office is barely even functional anymore,
+but somebody has to do something...""",""
+"d120_100_090","char_TOUDO","""Mr. Kuremi... No, Captain Kuremi...""",""
+"d120_100_100","char_TOUDO","""...what are you going to do?""",""
+"d120_100_110","char_KUREMI","""...""",""
+"d120_100_120","char_AEGIOMON","So this is the world you live in...
+I can see why you hate Digimon so much.",""
+"d120_100_130","char_AEGIOMON","But there's something I don't understand...",""
+"d120_100_140","char_AEGIOMON","Your eyes, when you're looking at your father...
+they're so scary.",""
+"d120_100_150","char_AEGIOMON","In fact, they're even scarier than when you're
+looking at the Digimon you hate so much.",""
+"d120_100_160","char_KUREMIKYOKO","...",""
+"d120_110_010","char_KUREMIKYOKO","""So... you're really going?""","d120_110_010"
+"d120_110_020","char_KUREMI","""...""","d120_110_020"
+"d120_110_030","char_KUREMIKYOKO","""Mom was crying, you know. I can't believe you're
+going back to such a dangerous place at a time like this.""","d120_110_030"
+"d120_110_040","char_KUREMIKYOKO","""People have given up already.
+It's only a matter of time now before the world ends.""","d120_110_040"
+"d120_110_050","char_KUREMIKYOKO","""That's why she wants to spend her final days
+with her family... and so do I.""","d120_110_050"
+"d120_110_060","char_KUREMI","""...""","d120_110_060"
+"d120_110_070","char_KUREMIKYOKO","""But why...? Why...?""","d120_110_070"
+"d120_110_080","char_INORI","Kyoko...","d120_110_080"
+"d120_110_090","char_KUREMIKYOKO","Like I said, he ""used to be my father.""","d120_110_090"
+"d120_110_100","char_KUREMIKYOKO","I imagine he's been sent to this place, too.","d120_110_100"
+"d120_110_110","char_KUREMIKYOKO","I heard he went to face Parallelmon
+during their rampage in Shinjuku.","d120_110_110"
+"d120_110_120","char_KUREMIKYOKO","Then, after that, he disappeared.","d120_110_120"
+"d120_110_130","char_CRESGARURUMON","He went to face Parallelmon?
+He sure is a brave man.","d120_110_130"
+"d120_110_140","char_KUREMIKYOKO","You mean ""stupid."" Humans don't stand a chance
+against something like that.","d120_110_140"
+"d120_110_150","char_KUREMIKYOKO","He probably forgot just how badly he was injured
+by a Digimon...","d120_110_150"
+"d120_110_160","char_KUREMIKYOKO","Forgot how his daughter was crying by his side
+in the hospital...","d120_110_160"
+"d120_110_170","char_KUREMIKYOKO","It makes me angry just thinking about it.","d120_110_170"

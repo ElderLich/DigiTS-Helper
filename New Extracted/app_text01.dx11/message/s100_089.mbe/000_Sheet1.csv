@@ -1,0 +1,121 @@
+string2 0,string 1,string 2,string 3
+"s100_089_010","char_KOTEMON","Hm? You here for us?",""
+"s100_089_020","char_PLAYER_M","{next}I bear word from Kunlun.",""
+"s100_089_021","char_PLAYER_M","{next}What're you doing?",""
+"s100_089_022","char_PLAYER_M","{next}This place sure is fun, right?",""
+"s100_089_030","char_KOTEMON","Huh?! Oh, I guess it's been a while since we last checked
+in.",""
+"s100_089_040","char_KOTEMON","My masters said we'd be training at the arena.",""
+"s100_089_050","char_KOTEMON","It sure is! It's an exciting place where you can test both
+your strength and tactics!",""
+"s100_089_060","char_MUSYAMON","Ah, you know Kunlun. You must be a worthy warrior of this
+world.",""
+"s100_089_070","char_KOTEMON","We came here to train, but we're not used to this world, so
+it's difficult to fight.",""
+"s100_089_080","char_KOTEMON","Yeah, we really did come here to train. It's the truth. I
+guess we lost track of time.",""
+"s100_089_090","char_PLAYER_M","{next}Did you forget your original purpose?",""
+"s100_089_091","char_PLAYER_M","{next}You should probably wrap things up here.",""
+"s100_089_092","char_PLAYER_M","{next}Time to accept your punishment!",""
+"s100_089_100","char_KOTEMON","Yes, I suppose we did... It's just that we were having so
+much fun!",""
+"s100_089_110","char_KOTEMON","The masters refuse to listen to anyone weaker than they are.",""
+"s100_089_120","char_KOTEMON","You probably shouldn't say things like that lightly. The
+masters are pretty strong.",""
+"s100_089_130","char_MUSYAMON","I understand that the host has ordered us to return, but we
+must refuse.",""
+"s100_089_140","char_MUSYAMON","Fighting in this arena fills us, body and soul, with joy. We
+can't leave now.",""
+"s100_089_150","char_ZANBAMON","Yes, but this person came all this way on orders from Kunlun to find us.",""
+"s100_089_160","char_ZANBAMON","Perhaps we should respect those orders. It is true that we
+have neglected our mission.",""
+"s100_089_170","char_KOTEMON","But, Master, we...",""
+"s100_089_180","char_MUSYAMON","Yes, Master Zanbamon... Shall we...?",""
+"s100_089_190","char_ZANBAMON","Very well. Let us give this one a proper opportunity to
+bring us in.",""
+"s100_089_200","char_KOTEMON","...You heard Master Zanbamon! You're to face us in battle
+here in the Paradise Colosseum!",""
+"s100_089_210","char_PLAYER_M","{next}Sure. No problem.",""
+"s100_089_211","char_PLAYER_M","{next}Does it have to be this way?",""
+"s100_089_212","char_PLAYER_M","{next}I'll warn you. I'm rather formidable.",""
+"s100_089_220","char_KOTEMON","Oh, you're quite enthusiastic, aren't you? Do you even care
+about the reason for all this?",""
+"s100_089_230","char_KOTEMON","This is just how we are. Everything comes down to proving
+oneself in battle.",""
+"s100_089_240","char_KOTEMON","Is that supposed to be an impression of the masters? Well,
+you're not very good at it.",""
+"s100_089_250","char_KOTEMON","We only listen to those who are strong. That's just the way
+we are.",""
+"s100_089_260","char_MUSYAMON","That's right. We'll see if you have what it takes to
+convince us to return to duty.",""
+"s100_089_270","char_MUSYAMON","Fortunately, we're here in the arena. It'll serve as the
+perfect backdrop for our duel.",""
+"s100_089_280","char_ZANBAMON","I imagine you must also prepare yourself for battle. Let us
+know when you are ready.",""
+"s100_089_290","char_KOTEMON","You can find us entered into the bouts at the Paradise
+Colosseum. Come take us on once you're ready!",""
+"s100_089_300","char_MUSYAMON","Impossible... How could you defeat all of us...? Just who
+are you, really?",""
+"s100_089_310","char_PLAYER_M","{next}Kunlun's envoy.",""
+"s100_089_311","char_PLAYER_M","{next}I have to keep my identity secret.",""
+"s100_089_312","char_PLAYER_M","{next}Just a lost soul passing through.",""
+"s100_089_320","char_MUSYAMON","Hm... So that's all you're willing to share? Your wariness
+is a sign of inner darkness.",""
+"s100_089_330","char_MUSYAMON","I had a feeling you'd say that. Indeed, there's nothing
+ordinary about you.",""
+"s100_089_340","char_MUSYAMON","I find that rather hard to believe!",""
+"s100_089_350","char_KOTEMON","Wow, you were really strong out there! You took down the
+masters like they were nothing!",""
+"s100_089_360","char_ZANBAMON","You have bested us. Which means...",""
+"s100_089_370","char_PLAYER_M","{next}Don't keep Kunlun waiting.",""
+"s100_089_371","char_PLAYER_M","{next}You'll listen to what I have to say?",""
+"s100_089_372","char_PLAYER_M","{next}Okay, on to the next match.",""
+"s100_089_380","char_ZANBAMON","Yes, I know. However, we are not ready just yet.",""
+"s100_089_390","char_MUSYAMON","Now, now. Don't be in such a hurry. As they say, ""Haste
+makes waste,"" right?",""
+"s100_089_400","char_KOTEMON","It seems you enjoy the arena as much as we do. I doubt we
+can keep up with you, though.",""
+"s100_089_410","char_ZANBAMON","You have bested us. I hereby grant you the right to face
+Susanomon, the ultimate hero!",""
+"s100_089_420","char_KOTEMON","Wow! You're so lucky!",""
+"s100_089_430","char_MUSYAMON","What's the matter? You look dissatisfied, somehow.",""
+"s100_089_440","char_ZANBAMON","Did you think we would simply agree to your request because
+of this victory?",""
+"s100_089_450","char_ZANBAMON","You have not beaten all of us yet. Susanomon is also among
+our ranks.",""
+"s100_089_460","char_KOTEMON","Susanomon's currently out taking in the sights, but should
+be back soon.",""
+"s100_089_470","char_MUSYAMON","You've bested us, so I'll summon Susanomon now. I suggest
+you get ready.",""
+"s100_089_480","char_ZANBAMON","I have thoroughly enjoyed our encounter here. Take this as a
+token of our gratitude.",""
+"s100_089_490","char_SUSANOOMON","Ah, so these are the Royal Knights. They look strong enough
+to be a worthy challenge...",""
+"s100_089_500","char_SUSANOOMON","I am only joking. Let us work together! Thank you for your
+help. Here. This is for you.",""
+"s100_089_510","char_KOTEMON","That card game the Royal Knights play sure looks fun. We can
+play for a bit, right?",""
+"s100_089_520","char_MUSYAMON","This is an ideal place to train. It's important to prepare
+for whatever may come!",""
+"s100_089_530","char_ZANBAMON","Our warrior's code and the Royal Knights' chivalry are an
+unbeatable combination!",""
+"s100_089_540","char_SUSANOOMON","We shared some of our energy with the Royal Knights in order
+to aid in the final battle.",""
+"s100_089_550","char_PLAYER_M","Thank you.",""
+"s100_089_551","char_PLAYER_M","You're not personally joining the battle?",""
+"s100_089_552","char_PLAYER_M","Okay, see you later!",""
+"s100_089_560","char_SUSANOOMON","You are most welcome, but it is not just for your benefit
+alone.",""
+"s100_089_570","char_SUSANOOMON","We have done what we can for this world. Take that for what
+you will.",""
+"s100_089_580","char_SUSANOOMON","How can I explain...? You see, we are not very adept at
+aerial combat in this world.",""
+"s100_089_590","char_SUSANOOMON","We do not wish to be a hindrance, so we felt that sharing
+our data was the better option.",""
+"s100_089_600","char_SUSANOOMON","Indeed! We wish you all the best of luck!",""
+"s100_089_610","char_KOTEMON","You're pretty amazing if you're capable of challenging
+Susanomon!",""
+"s100_089_620","char_MUSYAMON","Susanomon is the hero of Shambala. You have to be prepared,
+both in mind and body.",""
+"s100_089_630","char_ZANBAMON","If you can defeat Susanomon, we will listen to what you have
+to say.",""

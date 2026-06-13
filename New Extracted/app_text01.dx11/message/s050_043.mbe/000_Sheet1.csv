@@ -1,0 +1,164 @@
+string2 0,string 1,string 2,string 3
+"s050_043_010","char_BEARMON_OB","Oh, look who it is. Well, guess what? I found somebody way
+better than the likes of you!",""
+"s050_043_020","char_SOLARMON","Hehehe...! Master, please! You're embarrassing me!",""
+"s050_043_030","char_BEARMON_OB","This is the one who brought me a Parrotmon feather. Pretty
+impressive, right?",""
+"s050_043_040","char_PLAYER_M","{next}Way to go, Solarmon.",""
+"s050_043_041","char_PLAYER_M","{next}Long time no see, Hagurumon.",""
+"s050_043_042","char_PLAYER_M","{end}Okay. So long!",""
+"s050_043_050","char_SOLARMON","Y-Yeah... Easy peasy for someone of my skill. ...Don't you
+say anything funny, okay?",""
+"s050_043_060","char_SOLARMON","I keep telling you, I'm not Hagurumon! I'm Solarmon! And
+don't you forget it!",""
+"s050_043_070","char_SOLARMON","Hey. My master's not done talking to you. If you're busy,
+free yourself up and come back!",""
+"s050_043_080","char_BEARMON_OB","Oh, it's you again. Lemme guess. Ya wanna hear what we have
+to say?",""
+"s050_043_090","char_PLAYER_M","{next}Yes, tell me more.",""
+"s050_043_091","char_PLAYER_M","{end}I'm busy right now. Maybe some other time.",""
+"s050_043_100","char_BEARMON_OB","I suppose yer feelin' pretty worthless at the moment, eh?
+Okay, I'll fill ya in.",""
+"s050_043_110","char_BEARMON_OB","Aww, and here I was gonna give ya a break. Well, hurry back
+when yer done!",""
+"s050_043_120","char_BEARMON_OB","I'm gonna give ya a chance to redeem yerself. Ya know, 'cuz
+I'm a nice guy.",""
+"s050_043_130","char_BEARMON_OB","We're about to go get the jewelry in the underground. You
+can come if ya wanna help.",""
+"s050_043_140","char_BEARMON_OB","But if ya wait too long, we'll make off with it all. Best
+join us while ya still can!",""
+"s050_043_150","char_BEARMON_OB","H-Hey! Get a move on! We're talkin' about PlatinumNumemon!
+This is our big break!",""
+"s050_043_160","char_BEARMON_YB","Uh... I'll leave this one to you, Big Bro! Show us yer
+stuff!",""
+"s050_043_170","char_BEARMON_OB","Solarmon, you handle this!",""
+"s050_043_180","char_SOLARMON","N-No way! You see how strong that thing looks? It's way
+outta my league!",""
+"s050_043_190","char_PLAYER_M","{next}Let's try attacking.",""
+"s050_043_191","char_PLAYER_M","{next}Maybe one of us can act as bait?",""
+"s050_043_192","char_PLAYER_M","{next}Let's try poking it.",""
+"s050_043_200","char_SOLARMON","What?! L-Listen. You're the one who said it, so you better
+be the one to do the attacking.",""
+"s050_043_210","char_SOLARMON","Hey, that's a good idea! And since it was your suggestion,
+you can be the bait!",""
+"s050_043_220","char_SOLARMON","What's wrong with you?! You delirious or something? Calm
+down and think that through.",""
+"s050_043_230","char_BEARMON_OB","Well, we gotta do somethin'... Okay. Tell ya what. I'll let
+ya take the lead on this one.",""
+"s050_043_240","char_BEARMON_OB","Go take down that PlatinumNumemon! I wanna see ya make the
+most of this opportunity.",""
+"s050_043_250","char_BEARMON_YB","Y-Yer actually gonna do it? G-Good luck!",""
+"s050_043_260","char_SOLARMON","Whoa... You actually beat PlatinumNumemon! You're something
+else!",""
+"s050_043_270","char_BEARMON_OB","Now, where's that jewelry? I want everybody lookin' high and
+low!",""
+"s050_043_280","char_BEARMON_YB","I... I found it! The jewelry was hidden under its butt!",""
+"s050_043_290","char_BEARMON_OB","Well done, Little Bro! With this jewelry, we'll be—",""
+"s050_043_300","char_BEARMON_OB","Wait. Hang on. It's not real jewelry... It's just cut glass.",""
+"s050_043_310","char_SOLARMON","G-Glass? Master, are you sure?",""
+"s050_043_320","char_BEARMON_OB","Ya think I don't know glass when I see it? Ain't no mistake.",""
+"s050_043_330","char_BEARMON_OB","Damn it! Where's that jewelry? If we don't find it, our
+whole plan's down the drain!",""
+"s050_043_340","char_PLAYER_M","{next}That's disappointing.",""
+"s050_043_341","char_PLAYER_M","{next}What plan?",""
+"s050_043_342","char_PLAYER_M","{next}I'll take the glass.",""
+"s050_043_350","char_BEARMON_OB","And after all that hard work! I'm so frustrated, all I wanna
+do is eat!",""
+"s050_043_360","char_BEARMON_OB","What? Ya wanna hear our plan? Well, it don't concern you,
+but we got our reasons, okay?",""
+"s050_043_370","char_BEARMON_OB","Ya want these shards of glass? Not a chance. Who knows?
+Maybe they're worth somethin'!",""
+"s050_043_380","char_BEARMON_OB","*sigh* Well, no amount of whinin' is gonna turn this glass
+into jewelry.",""
+"s050_043_390","char_BEARMON_YB","Big Bro... Yer givin' up?",""
+"s050_043_400","char_BEARMON_OB","I ain't givin' up nothin'! This particular PlatinumNumemon
+just turned out to be a bust.",""
+"s050_043_410","char_BEARMON_OB","But I'm tired. I say we head back and rest up.",""
+"s050_043_420","char_BEARMON_OB","We'll try again some other day. Ya got that, Little Bro?
+Solarmon?",""
+"s050_043_430","char_SOLARMON","Yes, Master!",""
+"s050_043_440","char_BEARMON_OB","Where is PlatinumNumemon's jewelry, anyway?
+We should try gathering info at the tavern.",""
+"s050_043_450","char_REVOLMON","Hey, there. Got any leads on some sweet treasure ya wanna
+share?",""
+"s050_043_460","char_PLAYER_M","{next}I was hoping you'd share some with me.",""
+"s050_043_461","char_PLAYER_M","{next}I'm looking for PlatinumNumemon's jewelry.",""
+"s050_043_462","char_PLAYER_M","{end}Not a one. So long.",""
+"s050_043_470","char_REVOLMON","I'm not one to give out leads for free, but I can tell ya
+about some jewelry I ain't after.",""
+"s050_043_480","char_REVOLMON","Even after beatin' PlatinumNumemon? Now, that don't seem
+right. Tell me the tale.",""
+"s050_043_490","char_REVOLMON","Okay. So long!",""
+"s050_043_500","char_REVOLMON","Ah... I see what happened. That weren't PlatinumNumemon ya
+defeated.",""
+"s050_043_510","char_REVOLMON","PlatinumNumemon's platinum-colored. I hear it stays deep in
+the sewers, too, so look hard.",""
+"s050_043_520","char_REVOLMON","It's no easy foe, either. If ya mean to go after it, you'd
+best watch yourself.",""
+"s050_043_530","char_BEARMON_YB","Another day of workin' hard, keepin' guard!",""
+"s050_043_540","char_SOLARMON","Master trusted us to keep watch! It's a big job, but I'm
+gonna do it right!",""
+"s050_043_550","char_BEARMON_OB","Keepin' guard, keepin' guard... Aha! Intruder! Stop right
+there!",""
+"s050_043_560","char_BEARMON_OB","...Oh, it's just you. We're busy keepin' watch over the
+town. Leave us alone!",""
+"s050_043_570","char_PLAYER_M","{next}I brought some jewelry.",""
+"s050_043_571","char_PLAYER_M","{next}What sort of jewelry were you looking for?",""
+"s050_043_572","char_PLAYER_M","{next}Okay. I'll take this jewelry and leave, then.",""
+"s050_043_580","char_BEARMON_OB","What? Ya really gonna lie to me like that? There's no
+jewelry around... here...",""
+"s050_043_590","char_BEARMON_OB","It's real sparkly and beautiful. About the same size as what
+you've... got there...",""
+"s050_043_600","char_BEARMON_OB","Yeah, get out of here with yer jewelry! Wait... Jewelry?
+H-Hold on! Let me see that!",""
+"s050_043_610","char_BEARMON_OB","......",""
+"s050_043_620","char_SOLARMON","*gulp*",""
+"s050_043_630","char_BEARMON_YB","*gulp*",""
+"s050_043_640","char_BEARMON_OB","...That's the real deal! I don't believe it! Where'd ya find
+that?",""
+"s050_043_650","char_PLAYER_M","{next}Around.",""
+"s050_043_651","char_PLAYER_M","{next}You know, over there.",""
+"s050_043_652","char_PLAYER_M","{next}Not far.",""
+"s050_043_660","char_BEARMON_OB","Around where?! Oh, forget it. I don't care anymore!",""
+"s050_043_670","char_BEARMON_OB","Oh, right, over there. Wait. That don't mean nothin'! Oh,
+forget it. I don't care anymore!",""
+"s050_043_680","char_BEARMON_OB","What's that mean?! Would ya stop clownin' around? Oh, forget
+it. I don't care anymore!",""
+"s050_043_690","char_BEARMON_OB","So... about that jewelry, yer givin' it to us, right?",""
+"s050_043_700","char_BEARMON_OB","What? Ya had to work hard for it?! Gaaah! Fine. I'll trade
+ya for it!",""
+"s050_043_710","char_BEARMON_OB","I'll trade with ya if ya insist. I'll even let ya have what
+we got stashed away special.",""
+"s050_043_720","char_BEARMON_YB","But, Big Bro! We're gonna need that to go—!",""
+"s050_043_730","char_BEARMON_OB","Pipe down, Little Bro. Now, what do ya say?",""
+"s050_043_740","char_PLAYER_M","{next}Okay. I'll trade it.",""
+"s050_043_741","char_PLAYER_M","{next}I'll let you have it for free.",""
+"s050_043_750","char_BEARMON_OB","All right. Ya got yerself a deal. I'll trade ya fer that
+jewelry.",""
+"s050_043_760","char_BEARMON_OB","Wait... What'd ya just say? Yer givin' it to us... fer free?",""
+"s050_043_770","char_BEARMON_OB","Th-This ain't some sorta trick, is it? Free means free?
+Gratis?",""
+"s050_043_780","char_BEARMON_OB","Ya just may be the best person ever! Ya got my respect.
+Thanks so much!",""
+"s050_043_790","char_BEARMON_OB","Okay. We did all we needed to here. Little Bro, let's head
+over to Blimpmon.",""
+"s050_043_800","char_BEARMON_YB","We can finally go on our trip, Big Bro!",""
+"s050_043_810","char_BEARMON_OB","That's right... We're headin' out right away! Let's go,
+Little Bro!",""
+"s050_043_820","char_BEARMON_YB","You got it, Big Bro!",""
+"s050_043_830","char_BEARMON_YB","Oh... and lemme thank ya for all yer help, too. Here. Take
+this!",""
+"s050_043_840","char_CLOCKMON","Hello, there. Long time, no see. Remember me? I used to be
+Solarmon under Master Bearmon.",""
+"s050_043_850","char_CLOCKMON","*sniff, sniff* Oh, my. You smell of several different time
+periods.",""
+"s050_043_860","char_CLOCKMON","Did you journey across time? Hehe. I feel it might be
+possible for someone like you.",""
+"s050_043_870","char_BEARMON_OB","Oh, it's you again. Lemme guess. Ya wanna hear what we have
+to say?",""
+"s050_043_880","char_PLAYER_M","{next}Yes, please tell me more.",""
+"s050_043_881","char_PLAYER_M","{end}Sorry. I'm busy right now. Maybe some other time.",""
+"s050_043_900","char_BEARMON_OB","I suppose yer feelin' pretty worthless at the moment, eh?
+Okay, I'll fill ya in.",""
+"s050_043_910","char_BEARMON_OB","Aww, and here I was gonna give ya a break. Well, hurry back
+when yer done!",""

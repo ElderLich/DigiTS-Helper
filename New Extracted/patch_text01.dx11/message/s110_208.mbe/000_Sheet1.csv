@@ -1,0 +1,80 @@
+string2 0,string 1,string 2,string 3
+"s110_208_010","char_SUSANOOMON","Hm. So it was you who defeated my loyal subordinates...",""
+"s110_208_020","char_SUSANOOMON","I shall ask frankly. Who are you?",""
+"s110_208_030","char_PLAYER_M","{next}Kunlun's envoy.",""
+"s110_208_031","char_PLAYER_M","{next}I'm a human.",""
+"s110_208_032","char_PLAYER_M","{next}I'm a Digimon.",""
+"s110_208_040","char_SUSANOOMON","I see. You are connected to the host? Then, all the more,
+you are no ordinary human.",""
+"s110_208_050","char_SUSANOOMON","I hear humans that enter the Digimon world are special. You
+must have special powers.",""
+"s110_208_060","char_SUSANOOMON","Is that some kind of human joke? Hmm. I do not find it to be
+very elegant.",""
+"s110_208_070","char_ZANBAMON","This is my master, Susanomon. You better not underestimate
+his strength.",""
+"s110_208_080","char_SUSANOOMON","They were all defeated by this human. But no surprise there.
+The opponent was too strong.",""
+"s110_208_090","char_SUSANOOMON","Well, let us proceed in our own way.",""
+"s110_208_100","char_KOTEMON","Seriously, you're so lucky. Susanomon's strength is... I
+can't describe it in words.",""
+"s110_208_110","char_MUSYAMON","The great hero of Shambala, Susanomon. You should feel
+honored to fight him.",""
+"s110_208_120","char_SUSANOOMON","Let us cross swords, human child! I am Susanomon, the
+warrior of Shambala.",""
+"s110_208_130","char_SUSANOOMON","We shall do battle in keeping with this arena's rules. I
+shall be standing by, so challenge me when ready.",""
+"s110_208_140","char_SUSANOOMON","Hahaha! Very amusing, indeed! I never expected to meet such
+a powerful human!",""
+"s110_208_150","char_KOTEMON","Th-This is unbelievable...! Susanomon has been... defeated!",""
+"s110_208_160","char_MUSYAMON","Is this... a dream?",""
+"s110_208_170","char_ZANBAMON","Great fight, Susanomon. You did well while adjusting to this
+unfamiliar world.",""
+"s110_208_180","char_SUSANOOMON","It is certainly an unfamiliar world, but I shall not say
+that is the reason for my loss.",""
+"s110_208_190","char_SUSANOOMON","This human is strong. It is as simple as that.",""
+"s110_208_200","char_SUSANOOMON","We are willing to listen to those who are strong. What is it
+that you wish to tell us?",""
+"s110_208_210","char_PLAYER_M","{next}Don't keep Kunlun waiting.",""
+"s110_208_211","char_PLAYER_M","{next}Remember what your mission is.",""
+"s110_208_212","char_PLAYER_M","{next}How many masters are gonna show up?",""
+"s110_208_220","char_SUSANOOMON","I have kept the host waiting too long. It is hard to leave
+this place, but I must move on.",""
+"s110_208_230","char_SUSANOOMON","Our mission is to enjoy this world. Haha. Do not look so
+worried. I was just teasing you.",""
+"s110_208_240","char_SUSANOOMON","Haha. Kotemon's master, Musyamon. Musyamon's master,
+Zanbamon. And I, Zanbamon's master.",""
+"s110_208_250","char_SUSANOOMON","It must have surprised you to have so many masters
+appearing, but I am the last.",""
+"s110_208_260","char_ZANBAMON","We, too, came to this world to help, though we had forgotten
+it until you reminded us.",""
+"s110_208_270","char_SUSANOOMON","We started training here to get adjusted, but ended up
+enjoying the battles themselves.",""
+"s110_208_280","char_SUSANOOMON","This world is truly delightful. I would like to protect it
+by all means.",""
+"s110_208_290","char_KOTEMON","I guess it's time, then!",""
+"s110_208_300","char_SUSANOOMON","Yes. We must fulfill our original mission. Contact Kunlun 
+right away.",""
+"s110_208_310","char_MUSYAMON","Certainly. Right away.",""
+"s110_208_320","char_SUSANOOMON","Human child. Your task is complete. We promise to return to
+our mission.",""
+"s110_208_330","char_SUSANOOMON","We shall head to the meeting spot... though it pains me to
+leave the Colosseum...",""
+"s110_208_340","char_PLAYER_M","{next}Don't tell me you're thinking of staying?",""
+"s110_208_341","char_PLAYER_M","{next}Is it that addictive?",""
+"s110_208_342","char_PLAYER_M","{next}How about another battle, then?",""
+"s110_208_350","char_SUSANOOMON","I could use more training to adjust to this world... But,
+no, that is just an excuse.",""
+"s110_208_360","char_SUSANOOMON","The Paradise Colosseum is a wonderful facility... But such 
+is the nature of warriors. Forgive me.",""
+"s110_208_370","char_SUSANOOMON","You like this as much as I do, do you not? Yes. Why not
+enjoy it for a little longer!",""
+"s110_208_380","char_MUSYAMON","I have contacted Kunlun. As expected, they told us to head for
+the meeting spot.",""
+"s110_208_390","char_SUSANOOMON","We must obey if that is an order. Time to leave and head for
+our next destination.",""
+"s110_208_400","char_KOTEMON","You're going back to report to Kunlun, right? Be sure to say
+hello for us!",""
+"s110_208_410","char_SUSANOOMON","Please take this with you. We cannot let the winner go home
+empty-handed.",""
+"s110_208_420","char_SUSANOOMON","Farewell, fierce human child. I am sure we shall see each
+other again.",""

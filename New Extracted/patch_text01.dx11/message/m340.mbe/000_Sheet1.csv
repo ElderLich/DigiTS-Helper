@@ -1,0 +1,183 @@
+string2 0,string 1,string 2,string 3
+"m340_010_010","char_INORI","Dad!","m340_010_010"
+"m340_010_020","char_TAKEMIYA","...!","m340_010_020"
+"m340_010_030","char_TAKEMIYA","...!","m340_010_030"
+"m340_010_040","char_TAKEMIYA","Inori, is that you?!","m340_010_040"
+"m340_010_050","char_INORI","Why would you make something like this?!","m340_010_050"
+"m340_010_060","char_TAKEMIYA","Am I dreaming...? I can't believe my eyes...","m340_010_060"
+"m340_010_070","char_INORI","There's so much I want to tell you, but... I need you to
+explain first!","m340_010_070"
+"m340_010_080","char_INORI","Dad... what in the world are you trying to do?","m340_010_080"
+"m340_010_090","char_TAKEMIYA","...","m340_010_090"
+"m340_010_100","char_TAKEMIYA","Inori... come here.","m340_010_100"
+"m340_010_110","char_INORI","You always hated your public safety work...","m340_010_110"
+"m340_010_120","char_INORI","...so this doesn't make sense! Tell me why!","m340_010_120"
+"m340_010_130","char_TAKEMIYA","I... thought you...","m340_010_130"
+"m340_010_140","char_TAKEMIYA","...","m340_010_140"
+"m340_010_143","char_TAKEMIYA","Ngh...",""
+"m340_010_145","char_TAKEMIYA","...",""
+"m340_010_150","char_TAKEMIYA","...Apprehend the intruders.","m340_010_150"
+"m340_010_160","char_INORI","What?! Dad!","m340_010_160"
+"m340_010_170","char_TAKEMIYA","...Suspend the experiment. Time for a change of plans.","m340_010_170"
+"m340_010_180","char_SUMERAGI","Our schedule can't handle delays like that. The operation to
+eliminate all the Digimon around Shinjuku is tomorrow, yes?","m340_010_180"
+"m340_010_190","char_TAKEMIYA","Quite the opposite. We're going to push forward to the execution
+phase. There doesn't seem to be time to spare anymore.","m340_010_190"
+"m340_010_200","char_TAKEMIYA","Some odd readings were confirmed above the Tokyo
+Metropolitan Government Building just now.","m340_010_200"
+"m340_010_210","char_TAKEMIYA","They're identical to those from eight years ago... when the
+Digimon hordes appeared.","m340_010_210"
+"m340_010_220","char_TAKEMIYA","If that thing opens, then we'll be swarmed by Digimon.","m340_010_220"
+"m340_010_230","char_AEGIOMON","Oh, no... Do they mean a gate?","m340_010_230"
+"m340_010_240","char_AEGIOMON","That reminds me... The Titans said they were launching an 
+all-out attack!","m340_010_240"
+"m340_010_250","char_INORI","If things keep going this way...","m340_010_250"
+"m340_010_260","char_PLAYER_M","We'll have a true war on our hands.{next}",""
+"m340_010_261","char_PLAYER_M","The Shinjuku Inferno will take place.{next}",""
+"m340_010_262","char_PLAYER_M","It'll be the end of the world.{next}",""
+"m340_010_270","char_TAKEMIYA","Head to the skies above the government building and engage
+the enemy.","m340_010_270"
+"m340_010_280","char_TAKEMIYA","Don't let the tragedy of eight years ago happen again. Make
+sure they can't take anything more that's dear to us.","m340_010_280"
+"m340_010_290","char_TAKEMIYA","That's what we've given everything to achieve.","m340_010_290"
+"m340_010_300","char_SUMERAGI","Roger! Over and out!","m340_010_300"
+"m340_010_310","char_SUMERAGI","Captain Kuremi, this is for you...!","m340_010_310"
+"m340_010_320","char_TAKEMIYA","I realized something when you vanished. I realized that life
+has done nothing but take, take, take...","m340_010_320"
+"m340_010_330","char_TAKEMIYA","And you know who's behind all of it? Digimon.","m340_010_330"
+"m340_010_340","char_TAKEMIYA","When protecting what matters... sometimes you have to
+get your hands dirty.","m340_010_340"
+"m340_010_350","char_INORI","Dad!","m340_010_350"
+"m340_010_360","char_TAKEMIYA","...Attack! Eliminate any potential hostiles that appear on
+the roof!","m340_010_360"
+"m340_010_370","char_INORI","You heard him! Go on ahead!","m340_010_370"
+"m340_010_380","char_INORI","I'll be fine! I'll get through to my dad and be right behind
+you! I promise!","m340_010_380"
+"m150_130_120","char_AEGIOMON","Inori!","m150_130_120"
+"m340_010_390","char_SPECIAL_FORCES","Wait!",""
+"m340_020_010","char_AEGIOMON","There...!","m340_020_010"
+"m340_020_020","char_AEGIOMON","Is that Digimon headed for the same place?","m340_020_020"
+"m340_020_030","char_AEGIOMON","We'd better take a little detour so they don't spot us!","m340_020_030"
+"m340_020_040","char_AEGIOMON","But if we do, we might not make it in time...!","m340_020_040"
+"m340_020_050","char_PLAYER_M","Sounds like we should split up.{next}",""
+"m340_020_060","char_AEGIOMON","Huh? You mean I take the detour, and you go the same
+way as that Digimon?","m340_020_060"
+"m340_020_070","char_AEGIOMON","...Yeah, that just might be our best option.","m340_020_070"
+"m340_020_080","char_AEGIOMON","That way, at least one of us might make it, instead of
+neither of us if we go together!","m340_020_080"
+"m340_020_090","char_AEGIOMON","...Okay, but we have to meet up again later. Promise me!","m340_020_090"
+"m340_020_095","char_OPERATOR_M","While evading public safety forces, you become separated from
+Aegiomon. Somehow, you manage to escape to the surface...",""
+"m340_020_096","char_OPERATOR_M","Be careful. Your current coordinates are near ground level 
+and inside the Wall. It might be the Digimon District.",""
+"m340_020_100","char_OPERATOR_M","Don't you recognize that Digimon just now?
+It's like we're reliving the events of that day.","m340_020_100_M m340_020_100_F"
+"m340_020_110","char_OPERATOR_M","That public safety weapon is also what caused the Shinjuku
+Inferno. It seems this timeline is also on the path to ruin.","m340_020_110_M m340_020_110_F"
+"m340_020_120","char_OPERATOR_M","We're out of time. We have no choice but to go with what
+we feel to be the best option at our disposal.","m340_020_120_M m340_020_120_F"
+"m340_020_130","char_OPERATOR_M","...even if sacrifices have to be made!","m340_020_130_M m340_020_130_F"
+"m340_020_140","char_OPERATOR_M","That means erasing the most plausible source of the anomaly.
+Go at once and eliminate Aegiomon, along with Inori Misono.","m340_020_140_M m340_020_140_F"
+"m340_020_150","char_PLAYER_M","Please, just give us a little more time!{next}",""
+"m340_020_151","char_PLAYER_M","There's no way I could do that!{next}",""
+"m340_020_152","char_PLAYER_M","Those two... are my family now.{next}",""
+"m340_020_160","char_OPERATOR_M","Do you have any idea what you're saying? Have you
+forgotten the very fate of the world is at stake?","m340_020_160_M m340_020_160_F"
+"m340_020_170","char_OPERATOR_M","...","m340_020_170_M m340_020_170_F"
+"m340_020_180","char_OPERATOR_M","...Oh, boy.","m340_020_180_M m340_020_180_F"
+"m340_020_190","char_OPERATOR_M","Well, if my ground operative refuses to take action,
+there's not much I can do on my end.","m340_020_190_M m340_020_190_F"
+"m340_020_200","char_OPERATOR_M","I predicted you wouldn't comply with this order. After all...","m340_020_200_M m340_020_200_F"
+"m340_020_210","char_OPERATOR_M","...I've known you for quite some time now.","m340_020_210_M m340_020_210_F"
+"m340_020_220","char_OPERATOR_M","Fine, then... We're in this through thick and thin, aren't we.","m340_020_220_M m340_020_220_F"
+"m340_020_230","char_OPERATOR_M","Of course, we won't go unpunished for disobeying orders
+from above... Still, I'm with you to the end.","m340_020_230_M m340_020_230_F"
+"m340_020_240","char_OPERATOR_M","I'll buy us as much time as I can. Just remember there's a
+limit to how much I can do.","m340_020_240_M m340_020_240_F"
+"m340_020_250","char_OPERATOR_M","For now... do whatever it takes to prevent the Shinjuku Inferno!","m340_020_250_M m340_020_250_F"
+"m340_020_260","char_OPERATOR_M","We can worry about what comes after when the time comes.","m340_020_260_M m340_020_260_F"
+"m340_021_010","char_TYUMON","There ya are! I have an urgent message! Just promise ya'll
+stay calm while ya listen...","m340_021_010"
+"m340_021_020","char_TYUMON","We got a report that, after venturing into the Digital
+World... Merukimon died after a fierce battle.","m340_021_020"
+"m340_021_030","char_TYUMON","With death by poison looming and our forces in Central Town
+dwindling, he sacrificed himself so his allies could escape.","m340_021_030"
+"m340_021_040","char_TYUMON","This allowed us to seal the Rebellion Village gate, but I
+doubt the enemy will give up on invading the human world.","m340_021_040"
+"m340_021_050","char_TYUMON","They'll likely seek another gate, but we'll fight to the bitter
+end with everyone who's left. This is about revenge!","m340_021_050"
+"m340_021_060","char_OPERATOR_M","Inori Misono's father just said a gate is opening above the
+Tokyo Metropolitan Government Building...","m340_021_060_M m340_021_060_F"
+"m340_021_070","char_OPERATOR_M","That may be the Titans' point of entry... The forces that
+defeated Merukimon are on the warpath!","m340_021_070_M m340_021_070_F"
+"m340_021_080","char_OPERATOR_M","We're also detecting indicators of a space-time disturbance.
+At this rate... it's going to trigger the Inferno!","m340_021_080_M m340_021_080_F"
+"m340_030_010","char_OPERATOR_M","I understand why you'd feel shaken, but you need to stay calm.","m340_030_010_M m340_030_010_F"
+"m340_030_020","char_OPERATOR_M","What we need to look out for above all else... is a
+space-time disturbance—","m340_030_020_M m340_030_020_F"
+"m340_030_030","char_OPERATOR_M","—the anomaly that erased your adoptive father, ""Dr. Yuki"",
+from existence.","m340_030_030_M m340_030_030_F"
+"m340_030_040","char_OPERATOR_M","The Inferno triggers a rash of such disturbances across
+the planet, and they lead directly to the end of the world.","m340_030_040_M m340_030_040_F"
+"m340_030_050","char_OPERATOR_M","Space-time disturbances are a constant threat here in my
+timeline. Get caught in one and you'll never make it home.","m340_030_050_M m340_030_050_F"
+"m340_030_060","char_UNKNOWN","Hello down there!","m340_030_060"
+"m340_030_070","char_BIRDRA_TRANSPORT_OWNER","...Are you all right?! You'll be squashed flat if you get
+stepped on!","m340_030_070"
+"m340_030_090","char_BIRDRA_TRANSPORT_OWNER","We'll give you a lift!","m340_030_090"
+"m340_030_100","char_BIRDRA_TRANSPORT_OWNER","Hang on tight! Here we go!","m340_030_100"
+"m340_030_110","char_OPERATOR_M","This is bad...! I'm already detecting a space-time disturbance!","m340_030_110_M m340_030_110_F"
+"m340_040_010","char_INORI","A-Aaaaagh...!","m340_040_010"
+"m340_040_020","char_AEGIOMON","Inoriiiii!","m340_040_020"
+"m340_041_001","char_AEGIOMON","What's going on?!","m340_041_001"
+"m340_041_002","char_INORI","Ngh!","m340_041_002"
+"m340_041_003","char_AEGIOMON","Ngrrrrrrrgh...!","m340_041_003"
+"m340_041_004","char_AEGIOMON","...Oh!","m340_041_004"
+"m340_041_005","char_AEGIOMON","This place...!","m340_041_005"
+"m340_041_006","char_INORI","No!","m340_041_006"
+"m340_041_007","char_INORI","I'm being sucked in...!","m340_041_007"
+"m340_041_010","char_AEGIOMON","Inori!","m340_041_010"
+"m340_041_011","char_INORI","Hnnnh...!","m340_041_011"
+"m340_041_015","char_INORI","Eeeeeeek!","m340_041_015"
+"m340_041_020","char_AEGIOMON","Inoriiiiiii!","m340_041_020"
+"m340_041_021","char_AEGIOMON","Ngh...","m340_041_021"
+"m340_041_025","char_AEGIOMON","U-Unnnnngh...!","m340_041_025"
+"m340_041_030","char_AEGIOMON","Aaaaaaaaagh!","m340_041_030"
+"m340_041_035","char_AEGIOCHUSMON","Hrrrrrnh...!","m340_041_035"
+"m340_050_010","char_MIREI","First time here alone, isn't it?","m340_050_010"
+"m340_050_020","char_MIREI","As for your two friends... It seems they fell into a crack
+in time and space.","m340_050_020"
+"m340_050_030","char_MIREI","You folks call them ""space-time disturbances.""
+I don't know anyone who's ever escaped from one.","m340_050_030"
+"m340_050_050","char_MIREI","Do you know what the cause of today's tragedy is?
+There's a point in time where you made the wrong choice.","m340_050_050"
+"m340_050_060","char_MIREI","The Akashic Vision will play even if there's only one
+audience member. Go see, with your own two eyes.","m340_050_060"
+"m350_070_010","char_NARRATION","Merukimon, a warrior with unparalleled swiftness and strength.","m350_070_010"
+"m350_070_011","char_NARRATION","Merukimon's valor drew Digimon to him, and they eventually
+formed a small village over time.","m350_070_011"
+"m350_070_012","char_NARRATION","Before long, this village evolved into a large city with vibrant,
+bustling streets.","m350_070_012"
+"m350_070_020","char_NARRATION","But even this lively and peaceful city was not safe from the
+conflict with the Titans.","m350_070_020"
+"m350_070_021","char_NARRATION","Merukimon rallied the village Digimon and fought valiantly, but
+was struck by a poisoned arrow while protecting a resident.","m350_070_021"
+"m350_070_030","char_NARRATION","The wounded Merukimon put up a desperate resistance...","m350_070_030"
+"m350_070_031","char_NARRATION","...but his strength finally failed in the face of the advancing
+enemy horde, and the Titans conquered the city.","m350_070_031"
+"m350_070_032","char_NARRATION","Its citizens, burned out of house and home, were scattered
+aimlessly to the winds.","m350_070_032"
+"m350_080_010","char_NARRATION","Merukimon and his allies took flight, eventually finding their
+way to the human world.","m350_080_010"
+"m350_080_011","char_NARRATION","There they established a new base, where they awaited the
+opportunity to retake their former home.","m350_080_011"
+"m350_080_012","char_NARRATION","However, the toxins from the poisoned arrow continued to eat away 
+at Merukimon's body, weakening him before the upcoming battle.","m350_080_012"
+"m350_080_020","char_NARRATION","Mustering his last bit of strength, Merukimon and his allies
+attempted to storm their lost home...","m350_080_020"
+"m350_080_021","char_NARRATION","...only to be defeated at the hands of the enemy's formidable forces.","m350_080_021"
+"m350_080_030","char_NARRATION","As the poison sapped away his strength, Merukimon, resigned
+to his death, sacrificed himself so his allies could flee.","m350_080_030"
+"m350_080_031","char_NARRATION","There he fell, the dream of reclaiming the city lost along with
+their leader's life.","m350_080_031"

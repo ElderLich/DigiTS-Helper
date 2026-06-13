@@ -1,0 +1,452 @@
+string2 0,string 1,string 2,string 3
+"f_t0101_0010_0010","char_YOUNG_MAN","""I saw a weird dinosaur in Shinjuku,"" huh? Sounds a bit
+outlandish...",""
+"f_t0101_0010_0020","char_YOUNG_WOMAN","That outfit... Are you coming from some kind of event?",""
+"f_t0101_0010_0030","char_YOUNG_WOMAN","What a hassle. For some reason, the trains are all stopped
+and there are no taxis.",""
+"f_t0101_0010_0040","char_YOUNG_WOMAN","We're trying to find another way to get home, but...",""
+"f_t0101_0010_0050","char_YOUNG_WOMAN","What does that matter? Just hurry up and find us
+a way home already!",""
+"f_t0101_0020_0010","char_YOUNG_WOMAN","What's going on? These clouds came out of nowhere, and my
+cell reception is awful.",""
+"f_t0101_0020_0020","char_YOUNG_WOMAN","All the cars have disappeared, too. Did something serious
+happen?",""
+"f_t0101_0030_0010","char_MAN","Guess there's a protest going on at the Wall of Hope. And
+the transit systems are all down, too... What's going on?",""
+"f_t0101_0040_0010","char_YOUNG_MAN","You gotta be kiddin' me! The trains aren't runnin'? And,
+seriously, what's with all these blockades?",""
+"f_t0101_0080_0010","char_POLICEMAN","No one's allowed through right now! We're inquiring about
+the reason, ourselves...",""
+"f_t0101_0090_0010","char_POLICEMAN","I'm sorry, but you can't go this way right now... because...
+Well, we're getting a mixed bag of information...",""
+"f_t0101_0100_0010","char_POLICEMAN","Sorry, but the station's currently off-limits. We've been
+told that public safety is in the middle of an operation.",""
+"f_t0101_0110_0010","char_POLICEMAN","The station is closed right now. All subway lines in Tokyo
+have been stopped due to an expected large tremor.",""
+"f_t0101_0120_0010","char_POLICEMAN","You can't go past this point... Ugh! Why do we have to do
+this for a so-called ""operation"" of another organization?",""
+"f_t0101_0130_0010","char_POLICEMAN","This street is closed, so please go some other way. We don't
+know the details, either. It's a request from public safety.",""
+"f_t0101_0140_0010","","Going after that light that fell on the government building
+takes priority right now.",""
+"f_t0101_0150_0010","","Let's avoid drawing attention and hurry to the Misono household.",""
+"f_t0101_0160_0010","char_MAN","Dang it! I've got something important to take care of!
+They're still not moving yet?!",""
+"f_t0101_0170_0010","char_YOUNG_MAN","That anime reminds me of one I used to love back in the
+day. What was it called again...?",""
+"f_t0101_0180_0010","char_HIROKO","That's why I need you to see what I've done. I've worked
+really hard these past eight years.",""
+"f_t0101_0180_0020","char_HIROKO","It's supposed to air tomorrow. So... I don't want you
+disappearing again until it does.",""
+"f_t0101_0180_0030","char_HIROKO","No matter what happens or where you go... just make sure
+you come back here tomorrow. Okay?",""
+"f_t0101_9000_0010","char_YOUNG_WOMAN","Oh, you play cards, too? How about a match?",""
+"f_t0101_9000_0020","","[Challenge to a card battle.]",""
+"f_t0101_9000_0021","","{end}Now is not the time.",""
+"f_t0101_9000_0030","char_YOUNG_WOMAN","Care for a card game? I'm pretty good, you know. You think
+you can handle me?",""
+"f_t0101_9000_0040","","[Challenge to a card battle.]",""
+"f_t0101_9000_0041","","{end}Now is not the time.",""
+"f_t0101_9000_0050","char_YOUNG_WOMAN","I see. Maybe another time, then.",""
+"f_t0101_9000_0060","char_YOUNG_WOMAN","A total defeat... You're amazing! I'll have to rethink my
+deck from scratch!",""
+"f_t0101_9000_0070","char_YOUNG_WOMAN","Hehe. Too bad! Feel free to challenge me again any time.",""
+"f_t0101_9000_0080","char_YOUNG_WOMAN","Looks like it's my loss. Well played!",""
+"f_t0101_9000_0090","char_YOUNG_WOMAN","I win! I was feeling pretty confident in my deck today!",""
+"f_t0101_9000_0100","char_YOUNG_WOMAN","Oh, well. Let me know if you ever change your mind.",""
+"f_t0101_0190_0010","char_YOUNG_MAN","Agent Alpha is a good anime. Did you know it's a remake?",""
+"f_t0101_0190_0020","char_YOUNG_MAN","The older version has a lot of core fans in the animation
+industry, too.",""
+"f_t0101_0190_0030","char_YOUNG_MAN","And so they finally remade it! The staff that was involved
+in it must've been so happy.",""
+"f_t0101_0200_0010","char_YOUNG_MAN","There used to be a movie theater in the Nishi-Shinjuku area, 
+but it was destroyed in the commotion eleven years ago.",""
+"f_t0101_0200_0020","char_YOUNG_MAN","The animation director who was speaking at the preview that
+day passed away there.",""
+"f_t0101_0200_0030","char_YOUNG_MAN","I heard he became an animation director because he saw
+Agent Alpha.",""
+"f_t0101_0200_0040","char_YOUNG_MAN","If it weren't for that incident, he might've been the one
+remaking Agent Alpha.",""
+"f_t0102_0010_0010","char_OFFICE_WORKER","Localized tremors, outbursts of fickle weather, and now strange
+creatures... What the hell is happening in Shinjuku?",""
+"f_t0102_0020_0010","char_MAN","The trains aren't running? There aren't any taxis, either,
+so I guess I'm stuck...",""
+"f_t0102_0030_0010","char_YOUNG_MAN","There's gotta be some conspiracy behind the Wall of Hope!
+Let's go join the protest and find out what's up!",""
+"f_t0102_0030_0020","char_YOUNG_MAN","*sigh* On second thought... Things seem like they're gonna
+get bad here, so I'd rather just get home fast.",""
+"f_t0102_0040_0010","char_YOUNG_WOMAN","No way... This road's closed, too? How am I supposed to get
+to the movie theater now...?",""
+"f_t0102_0050_0010","char_POLICEMAN","This road is currently off-limits to all foot traffic!",""
+"f_t0102_0060_0010","char_POLICEMAN","Yeah, that's right. You can't use the station right now. We are
+expecting a big tremor in a moment, so please take caution.",""
+"f_t0102_0070_0010","char_POLICEMAN","Going to Kabukicho? Well, I can't let you through right now
+because... it's part of an operation. That's all I can say.",""
+"f_t0102_0080_0010","","Let's focus on the investigation for now.",""
+"f_t0102_0090_0010","char_POLICEMAN","The blockade is because of that incident before... Sorry
+for the trouble.",""
+"f_t0102_0100_0010","char_SUMERAGI","We're temporarily closing off Shinjuku with an electromagnetic
+net. You folks need to evacuate at once!",""
+"f_t0102_0110_0010","char_TOUDO","This area will soon be off-limits! Please follow orders and
+evacuate!",""
+"f_t0102_0110_0020","char_TOUDO","I'm not sure what you mean by, ""I can't evacuate right 
+now,"" but...",""
+"f_t0102_0120_0010","char_YOUNG_WOMAN","These stupid blockades are ruining all my plans! I hate my life!",""
+"f_t0102_0130_0010","char_OFFICE_WORKER","Probably safe to assume work is canceled in a situation as
+strange as this. I'm grateful for the time off, but...",""
+"f_t0102_0130_0020","char_OFFICE_WORKER","...it doesn't look like I have a way to get home. What am I
+supposed to do now?",""
+"f_t0102_0140_0010","char_PASSERBY_WOMAN","It looks like we can go this way, but what's the point if
+the trains aren't running?",""
+"f_t0102_0150_0010","","Going after that light that fell on the government building
+takes priority right now.",""
+"f_t0102_0160_0010","char_SPECIAL_FORCES","The area up ahead has been overrun by Digimon. Stay on your toes!",""
+"f_t0102_0160_0020","char_SPECIAL_FORCES","There are dangerous Digimon beyond this point. Please stay back!",""
+"f_t0102_0170_0010","char_SPECIAL_FORCES","Digimon haven't gotten into the underground yet, so please
+use that for evacuation and transportation.",""
+"f_t0102_0170_0020","char_SPECIAL_FORCES","There are so many Digimon... Where did they all come from?",""
+"f_t0102_0180_0010","char_SPECIAL_FORCES","It's too dangerous outside, so you need to evacuate
+underground!",""
+"f_t0102_0190_0010","char_SPECIAL_FORCES","Civilians?! Didn't you hear the evacuation order?! And is
+that thing behind you a Digimon?!",""
+"f_t0102_0190_0020","char_SPECIAL_FORCES","Dr. Simmons instructed me to report back to her when an
+agent with a Digimon showed up.",""
+"f_t0102_0190_0030","char_SPECIAL_FORCES","The doctor isn't here right now... but it's not safe outside
+the barrier. You should come inside for now.",""
+"f_t0102_0200_0010","char_SPECIAL_FORCES","This area is currently off-limits. Civilians are to
+evacuate underground.",""
+"f_t0102_0210_0010","char_SPECIAL_FORCES","The time has come to put our training to the test! This is
+the crucial moment, so stay focused!",""
+"f_t0102_0210_0020","char_EVERYONE","Yes, sir!",""
+"f_t0102_0210_0030","char_SPECIAL_FORCES","You're the kids from a while ago! Kuroi and Shiroki have
+been worried about you, you know.",""
+"f_t0102_0210_0040","char_SPECIAL_FORCES","We've been briefed. It's the back alley up ahead! Good
+luck!",""
+"f_t0102_0220_0010","char_POLICEMAN","The way ahead is blocked, so please turn back. Please be
+aware that a huge tremor is expected.",""
+"f_t0102_0230_0010","char_POLICEMAN","No one's allowed this way. Turn around.",""
+"f_t0102_0240_0010","char_POLICEMAN","You can't go this way... It's almost time for that thing to
+start moving...",""
+"f_t0103_0010_0010","char_YOUNG_MAN","Is something happenin' up front? I can't see a thing.",""
+"f_t0103_0010_0020","char_YOUNG_MAN","Go up there and check for me!",""
+"f_t0103_0020_0010","char_FEMALE_STUDENT","Welp, I guess there's no seein' anything with this crowd. I
+just really wanna know what's goin' on!",""
+"f_t0103_0030_0010","char_MISTER","What is that? It looks like a rip in the sky...!",""
+"f_t0103_0040_0010","char_PLAYER_M","This way seems to lead to some back streets... I'd better
+focus on the investigation for now.",""
+"f_t0103_0050_0010","char_NUISANCE_DOUGER","Hey, are you one of them? A Digimon?",""
+"f_t0103_0050_0020","char_NUISANCE_DOUGER","Are you really a Digimon? Hey!",""
+"f_t0103_0050_0030","char_NUISANCE_DOUGER","Huh? What gives? Are you ignoring me?",""
+"f_t0103_0050_0040","char_NUISANCE_DOUGER","Hey! Look at me! H-E-L-L-O!",""
+"f_t0103_0050_0050","char_INORI","Let's go, Aegiomon!",""
+"f_t0103_0050_0060","char_NUISANCE_DOUGER","Now my channel will have an explosion of subscribers...!
+I'm going to surpass OcculTokyo TV's two million subscribers!",""
+"f_t0103_0060_0010","char_REVOLMON","I ain't some suspicious person! I had business here, that's all!",""
+"f_t0103_0060_0020","char_POLICEMAN","Look. Dressed like that... You're going to have to come
+with me to the station.",""
+"f_t0103_0060_0030","char_REVOLMON","But I ain't done nothin' wrong! Leave me alone!",""
+"f_t0103_0070_0010","char_DIGITAMAMON","You... I know you. You've done well to come.",""
+"f_t0103_0070_0020","char_DIGITAMAMON","The arena is down below. Go and train yourself, warrior...",""
+"f_t0103_0080_0010","char_ANDROMON","THIS IS THE THEATER WHERE A MIGHTY DIGIMON ONCE BATTLED A
+COURAGEOUS WARRIOR.",""
+"f_t0103_0080_0020","char_ANDROMON","THERE WAS SIGNIFICANT DAMAGE, BUT AFTER AN INTENSE
+STRUGGLE, THE WARRIOR EMERGED VICTORIOUS.",""
+"f_t0103_0080_0030","char_ANDROMON","THE EVENT WAS A SHOCKING MOMENT OF CONTACT BETWEEN HUMANS
+AND DIGIMON.",""
+"f_t0103_0080_0040","char_ANDROMON","YET IT ALSO BECAME ONE OF THE STEPPING STONES TOWARD
+COEXISTENCE.",""
+"f_t0103_0080_0050","char_ANDROMON","WE WISH TO CHERISH AND PRESERVE THE RELATIONSHIP THAT THE
+WARRIOR ESTABLISHED.",""
+"f_t0103_0090_0010","char_YOUNG_MAN","A live commentary from Andromon right here at the famous
+theater square?! This is amazing! I've gotta take a picture!",""
+"f_t0103_0100_0010","char_LOCOMON","Hm? Oh, my! Oh, my! It's you! You're safe!",""
+"f_t0103_0100_0020","char_LOCOMON","I ran desperately away from the Titans and somehow ended up here.",""
+"f_t0103_0100_0030","char_LOCOMON","Everyone seemed so frightened, so I decided to stay put.
+Now I've turned into a bit of a tourist attraction.",""
+"f_t0103_0100_0040","char_LOCOMON","Sorry, but I can't leave now. Please let everyone know I'm
+all right.",""
+"f_t0103_0100_0050","char_LOCOMON","Still, this town is quite fascinating. So many different
+humans to see every day.",""
+"f_t0103_0100_0060","char_LOCOMON","Although... sometimes they take their frustrations out on
+me. It can be a bit tough... Haha...",""
+"f_t0103_0110_0010","char_PEGASMON","This is the Shinjuku Underground Arena!",""
+"f_t0103_0110_0020","char_PEGASMON","If you need to return to Rebellion Village, just let me
+know! I'll be on the rooftop back at the house.",""
+"f_t0103_9000_0010","char_YOUNG_WOMAN","What? You want to have a card battle with me? Well, my
+boyfriend isn't here yet, so I guess I can play with you!",""
+"f_t0103_9000_0020","","[Challenge to a card battle.]",""
+"f_t0103_9000_0021","","{end}Now is not the time.",""
+"f_t0103_9000_0030","char_YOUNG_WOMAN","No? Hmph! ...Well, it's fine, I guess. But, seriously, how
+long is he going to keep me waiting?!",""
+"f_t0103_9000_0040","char_YOUNG_WOMAN","All right! I win! I bet you thought I'd be bad at this
+game, huh?! Well, too bad for you!",""
+"f_t0103_9000_0050","char_YOUNG_WOMAN","Aw, I lost. I'll have to ask my boyfriend for some pointers
+when he gets here!",""
+"f_t0103_0120_0010","char_PUBLIC_SECURITY_PERSONNEL","Damn it. Some of the Digimon we forced into the district
+have escaped.",""
+"f_t0103_0120_0020","char_PUBLIC_SECURITY_PERSONNEL","It's rumored that a certain Digimon group has been raiding
+to rescue their locked-up allies.",""
+"f_t0103_0120_0030","char_PUBLIC_SECURITY_PERSONNEL","Luckily, it was the area that kept the milder Digimon. No
+significant damage has been done yet.",""
+"f_t0103_0120_0040","char_PUBLIC_SECURITY_PERSONNEL","Digimon are rapidly beginning to invade the city. This is an 
+emergency. We at D-SAT need to hurry and recapture them!",""
+"f_t0103_0130_0010","char_PUBLIC_SECURITY_PERSONNEL","Phew. Thank goodness the Digimon that escaped from the
+district were relatively milder than the others.",""
+"f_t0103_0130_0020","char_PUBLIC_SECURITY_PERSONNEL","Just the thought of a herd of huge and violent Digimon
+being unleashed onto the city is horrifying.",""
+"f_t0103_0130_0030","char_PUBLIC_SECURITY_PERSONNEL","Shinjuku could've been a pile of rubble by now.",""
+"f_t0103_0140_0010","char_PUBLIC_SECURITY_PERSONNEL","We're telling people to stay away from Digimon, but they
+won't listen!",""
+"f_t0103_0140_0020","char_PUBLIC_SECURITY_PERSONNEL","This must be because of all those Digimon videos on the
+net. There are so many, probably because they get the views.",""
+"f_t0103_0140_0030","char_PUBLIC_SECURITY_PERSONNEL","So people have become used to seeing them. They don't get 
+that it's just a fluke that they're not attacking.",""
+"f_t0103_0150_0010","char_PUBLIC_SECURITY_PERSONNEL","Keep your distance from the Digimon!",""
+"f_t0103_0150_0020","char_PUBLIC_SECURITY_PERSONNEL","You never know what these things are going to do.",""
+"f_t0103_0150_0030","char_PUBLIC_SECURITY_PERSONNEL","Stay back if you don't want to get hurt!",""
+"f_t0104_0010_0010","char_SPECIAL_FORCES","It's dangerous past this point. Please stay back.",""
+"f_t0104_9000_0010","char_YOUNG_MAN","Hey! You, there! I see you've got some cards! How about a
+match? I'll make it worth your while!",""
+"f_t0104_9000_0020","","[Challenge to a card battle.]",""
+"f_t0104_9000_0021","","{end}Now is not the time.",""
+"f_t0104_9000_0030","char_YOUNG_MAN","Tch, you're no fun. Guess I'm just wastin' my breath on you.",""
+"f_t0104_9000_0040","char_YOUNG_MAN","No way... I wasn't expectin' to lose. I was hoping for a
+win to make myself feel better.",""
+"f_t0104_9000_0050","char_YOUNG_MAN","Yes! I win! Looks like you need to rethink your strategy!",""
+"f_t0105_0010_0010","char_PUBLIC_SECURITY_PERSONNEL","Shall I lead you to the site?",""
+"f_t0105_0020_0010","char_PLAYER_M","Yes, please.",""
+"f_t0105_0020_0011","char_PLAYER_M","{end}Not right now.",""
+"f_t0105_0020_0020","char_PUBLIC_SECURITY_PERSONNEL","What's that? A request from Dr. Simmons?",""
+"f_t0105_0020_0030","char_PUBLIC_SECURITY_PERSONNEL","Very well. Come in.",""
+"f_t0105_0030_0010","char_HIROKO","Eyewitness reports mentioned a sighting at the end of
+the platform!",""
+"f_t0105_0040_0010","char_HIROKO","This must be the spot. Let's get to investigating!",""
+"f_t0105_0040_0020","char_HIROKO","Hello, there! It's 〇〇〇!",""
+"f_t0105_0040_0030","char_HIROKO","EEEEEEEK! A monster! *faints*",""
+"f_t0105_0040_0040","char_INORI","Uh, Hiroko?! Jeez, she's always like this...",""
+"f_t0105_0050_0010","char_PUBLIC_SECURITY_PERSONNEL","I've had word from Dr. Simmons. You can go on through.",""
+"f_t0105_0060_0010","char_SUMERAGI","This is Kuroi...","f_t0105_0060_0010"
+"f_t0105_0060_0020","char_SUMERAGI","Hey, did you hear? They're considering sealing off that
+underground space.","f_t0105_0060_0020"
+"f_t0105_0060_0030","char_SUMERAGI","The higher-ups are getting cold feet. They've told us not
+to do anything rash for the moment.","f_t0105_0060_0030"
+"f_t0105_0060_0040","char_SUMERAGI","All they do is hold meeting after meeting, never really
+deciding on anything.","f_t0105_0060_0040"
+"f_t0105_0060_0050","char_SUMERAGI","We're on patrol duty until further notice.","f_t0105_0060_0050"
+"f_t0105_0060_0060","char_SUMERAGI","Keep a close watch around Shinjuku Park, all right?","f_t0105_0060_0060"
+"f_t0106_0010_0010","char_PROPRIETOR","We're closed today since we didn't get our food delivery.
+Seems there was some accident...",""
+"f_t0106_0020_0010","char_PROPRIETOR","Welcome! Make yourself at home.",""
+"f_t0107_0010_0010","char_YOUNG_MAN","Yeesh, there are way more people here than I expected.
+Doesn't look like we'll be gettin' any further, huh?",""
+"f_t0107_0020_0010","char_DEMO","You're obviously hiding something! Stop making excuses and
+just tell us!",""
+"f_t0107_0030_0010","char_DEMO","We know this place is the cause of all the paranormal
+phenomena! Just admit it and start doing something!",""
+"f_t0107_0040_0010","char_DEMO","Calm down, folks! This, too, is caused by whatever's behind
+the Wall! We have to do something before it gets worse!",""
+"f_t0107_0050_0010","char_DEMO","Wh-Whoa! What was that tremor just now?! Is there something
+here?! What's happening?!",""
+"f_t0107_0060_0010","char_SPECIAL_FORCES","This area is off-limits. Please turn back.",""
+"f_t0107_0070_0010","char_SPECIAL_FORCES","Is everything all right?! This is BAD... Don't tell me
+they're getting even more active now?!",""
+"f_t0107_0080_0010","char_DEMO","Hm? Are you part of the protest, too? Don't hold back! Get
+up there and make yourself heard!",""
+"f_t0108_0010_0010","char_YOUNG_MAN","There are tons of videos of weird occurrences in Nishi-Shinjuku 
+posted on the Net these days...",""
+"f_t0108_0010_0020","char_YOUNG_MAN","And I don't mean your ordinary scary stories, here... I'm
+talkin', actual explosions and bursts of flame...",""
+"f_t0108_0010_0030","char_YOUNG_MAN","Or huge shadows walkin' the streets at night! The videos always
+get taken down fast, so that means they must be real!",""
+"f_t0108_0010_0040","char_YOUNG_MAN","Not gonna lie. I seriously believe all of it! Especially
+since there's a cover-up goin' on...",""
+"f_t0108_0010_0050","char_YOUNG_MAN","It all means something fishy is goin' on in Nishi-Shinjuku!
+There has to be! I just know it!",""
+"f_t0108_0010_0060","char_OPERATOR_M","Your coordinates have been received without any problem.
+Please proceed to the next point.",""
+"f_t0108_0020_0010","char_FEMALE_STUDENT","Strange phenomena? Hmm, yeah. I do hear that phrase a
+lot lately...",""
+"f_t0108_0020_0020","char_FEMALE_STUDENT","But there's always been stuff like this happening, right?
+Even if it does seem a little too frequent lately!",""
+"f_t0108_0020_0030","char_FEMALE_STUDENT","If we're talking weird goings-on, have you heard about the
+strange door in a back alley of Kabukicho?",""
+"f_t0108_0020_0040","char_FEMALE_STUDENT","They say it suddenly appears where there was no door
+before and sucks people in!",""
+"f_t0108_0020_0050","char_FEMALE_STUDENT","Freaky, huh? Except... I also kind of want to see it, you know?
+I don't know the exact location, but I'm sooo curious!",""
+"f_t0108_0020_0060","char_OPERATOR_M","Calibration is progressing nicely. Please proceed to the
+final point.",""
+"f_t0108_0030_0010","char_YOUNG_MAN","What's the point of protesting in front of that wall...?
+Nothing in the world ever changes anyway, right?",""
+"f_t0108_0040_0010","char_YOUNG_MAN","I wanna get on the train, but everything's shut down. And what
+the heck do the police mean by ""prepare for a big tremor""?",""
+"f_t0108_0050_0010","char_YOUNG_MAN","That unmanned crane keeps shaking from time to time.
+Something must be goin' on over there, right?",""
+"f_t0108_0060_0010","char_YOUNG_MAN","I wanna join the protest, but goin' by myself's a little
+awkward... There's gotta be a way around that...",""
+"f_t0108_0070_0010","char_POLICEMAN","All right, people, the road is closed off up ahead. Be sure
+not to touch any of the emergency vehicles.",""
+"f_t0108_0080_0010","char_POLICEMAN","Man, I've been standing here all day... I wonder when that 
+thing is gonna start moving. Hey, this place is off-limits.",""
+"f_t0108_0090_0010","char_POLICEMAN","You can't enter the station right now. Sorry about that.",""
+"f_t0108_0110_0010","char_SIMMONS","This device creates powerful electromagnetic waves that
+interfere with phase electrons, immobilizing the Digimon.",""
+"f_t0108_0110_0020","char_SIMMONS","Hee hee! But, I must say, I never thought to see the fruits
+of my research put to the test so soon!",""
+"f_t0108_0110_0030","char_SIMMONS","The only issue is... electric power. We're having some
+issues in that area, due to overly rushed preparations.",""
+"f_t0108_0110_0040","char_SIMMONS","The public safety people appear to be rather frazzled...",""
+"f_t0108_0120_0010","char_KUGA","M-My sincerest apologies! I'm afraid I don't have time to
+talk right now!",""
+"f_t0108_0150_0010","char_MAN","The cause of the roadblock is unknown. Internet rumors say 
+it's the effect of a public safety operation, but who knows?",""
+"f_t0108_0160_0010","char_YOUNG_MAN","The protest site's just up ahead! Time to go expose them
+for the con artists they are!",""
+"f_t0108_0170_0010","char_YOUNG_MAN","The Wall of Hope is the only place we can get to?! What's
+goin' on?!",""
+"f_t0108_0170_0020","char_YOUNG_MAN","Why are the police and public safety being so secretive?!
+That kind of attitude is what's causing this protest!",""
+"f_t0108_0170_0030","char_MAN","It's no use getting upset. I spoke to the security guy and he
+said to watch out for a big tremor. What does that mean?",""
+"f_t0108_0170_0040","char_MAN","I'm kind of at a loss, though... How are we supposed to get
+home?",""
+"f_t0108_0180_0010","char_FEMALE_STUDENT","I don't have a clue what's going on, but at least classes
+are canceled! Talk about lucky!",""
+"f_t0108_0180_0020","char_FEMALE_STUDENT","Still, what's the point if we can't actually go anywhere?",""
+"f_t0108_0180_0030","char_FEMALE_STUDENT","Totally... With no trains running, what are we even
+supposed to do?",""
+"f_t0108_0180_0040","char_FEMALE_STUDENT","Hey, how about checking out that new sweets shop that
+opened nearby?",""
+"f_t0108_0180_0050","char_FEMALE_STUDENT","Wait. Are they really open at a time like this?!",""
+"f_t0108_0180_0060","char_FEMALE_STUDENT","I can't believe you actually wanna go with all this sketchy
+stuff going on...",""
+"f_t0109_0010_0010","char_MAN","What's that? A weird light, you say? What are you talking
+about? The only thing weird is that getup of yours...",""
+"f_t0109_0020_0010","char_MAN","*panting*... S-Some weird monster and a kid in a T-shirt came
+up out of a manhole...!",""
+"f_t0109_0020_0020","char_HIROKO","Over there, right? Let's go check it out!",""
+"f_t0109_0030_0010","char_KUREMI","I swear! You're just as stubborn as he is. I see that
+trying to stop you isn't going to work.",""
+"f_t0109_0030_0020","char_KUREMI","Just promise that you'll get yourselves out of there if
+things get too dangerous.",""
+"f_t0109_0030_0030","char_KUREMI","If anything ever happened to you... I'd never be able to
+look your father in the eye again!",""
+"f_t0109_0040_0010","char_INORI","Whew... Things have finally settled down...",""
+"f_t0109_0040_0020","char_INORI","I say we head right home.",""
+"f_t0109_0050_0010","char_SUMERAGI","We've lost contact with the public safety officers who went
+to the underground device.",""
+"f_t0109_0050_0020","char_SUMERAGI","Please start with checking on that device.",""
+"f_t0109_0050_0030","char_SUMERAGI","Still, I hate having to rely on the help of civilians again...",""
+"f_t0109_0210_0010","char_KUREMI","What's the status on that generator?!",""
+"f_t0109_0210_0020","char_PUBLIC_SECURITY_PERSONNEL","It won't start, sir. Regular batteries don't seem to be
+sufficient to power it.",""
+"f_t0109_0210_0030","char_SUMERAGI","So much for the blockade... Gah! We can't just let those
+monsters out into the world!",""
+"f_t0109_0210_0040","char_INORI","Is everything all right?!",""
+"f_t0109_0210_0050","char_KUREMI","Wh-What the...? You folks need to leave this area
+immediately!",""
+"f_t0109_0210_0060","char_INORI","Dr. Simmons sent us. We're here to help activate the
+generators.",""
+"f_t0109_0210_0070","char_KUREMI","But you're civilians! Has she lost her mind?!",""
+"f_t0109_0210_0080","char_PUBLIC_SECURITY_PERSONNEL","Incoming message from Dr. Simmons!",""
+"f_t0109_0210_0090","char_PUBLIC_SECURITY_PERSONNEL","She says she gave the batteries to these kids here, so get
+one from them.",""
+"f_t0109_0210_0100","char_PUBLIC_SECURITY_PERSONNEL","She also says that they'll take care of activating the
+remaining generators, so point them in the right direction.",""
+"f_t0109_0210_0110","char_AEGIOMON","Here's the battery.",""
+"f_t0109_0210_0120","char_INORI","Where should we head next?",""
+"f_t0109_0210_0130","char_KUREMI","Orders from the doctor or no, I can't send you children
+into danger.",""
+"f_t0109_0210_0140","char_KUREMI","If anything ever happened to you... I'd never be able to
+look your father in the eye again!",""
+"f_t0109_0210_0150","char_KUREMI","I was there when he gave up his public safety badge, you
+know. I saw firsthand what he was going through...",""
+"f_t0109_0210_0160","char_KUREMI","Your old man was a colleague of mine, you see.",""
+"f_t0109_0210_0170","char_INORI","You worked with my dad...?",""
+"f_t0109_0210_0180","char_KUREMI","That's right. The name's Kuremi.",""
+"f_t0109_0210_0190","char_KUREMI","I have a daughter around your age, myself.",""
+"f_t0109_0210_0200","char_KUREMI","Pretty much every father in the world would say their
+children matter more to them than their own life.",""
+"f_t0109_0210_0210","char_KUREMI","Hey, I've got tons of stories about your dad... but this is
+no time for reminiscing. Your safety takes priority.",""
+"f_t0109_0210_0220","char_KUREMI","Right now, you folks need to clear out of here, and fast!",""
+"f_t0109_0210_0230","char_INORI","Making my father sad is the last thing I want to do. But if
+you won't tell us, we'll have to go search on our own!",""
+"f_t0109_0210_0240","char_KUREMI","I swear! You're just as stubborn as he is. Fine...
+Extenuating circumstances, and all that.",""
+"f_t0109_0210_0250","char_KUREMI","Give them the locations.",""
+"f_t0109_0210_0260","char_SUMERAGI","Guess I have no choice... Okay, listen up.",""
+"f_t0109_0210_0270","char_SUMERAGI","There are two more electromagnetic net generators
+that aren't working.",""
+"f_t0109_0210_0280","char_SUMERAGI","The power won't be stable and the generators just won't work 
+properly unless they're all up and running at the same time.",""
+"f_t0109_0210_0290","char_AEGIOMON","Which one should we start with?",""
+"f_t0109_0210_0300","char_SUMERAGI","I'm sending you the coordinates now. Head to the Shinjuku
+underground first.",""
+"f_t0109_0210_0310","char_SUMERAGI","To tell the truth, some of our people went down there a
+little while ago...",""
+"f_t0109_0210_0320","char_SUMERAGI","...but we haven't been able to get in contact with them since.",""
+"f_t0109_0210_0330","char_INORI","Wow, I hope they're all right... Okay, we'll head to the
+underground right away.",""
+"f_t0109_0220_0010","char_AEGIOMON","(Temporary) I think time rewound!",""
+"f_t0109_9000_0010","char_ABDUCTED_BOY","Hey, you've got some cards! How about a match?!",""
+"f_t0109_9000_0020","","[Challenge to a card battle.]",""
+"f_t0109_9000_0021","","{end}Now is not the time.",""
+"f_t0109_9000_0030","char_ABDUCTED_BOY","I guess you do seem kinda busy. Maybe next time, then.",""
+"f_t0109_9000_0040","char_ABDUCTED_BOY","All right! I win! I knew that combo would do the trick!",""
+"f_t0109_9000_0050","char_ABDUCTED_BOY","Darn... I was sure this deck would be a good one...",""
+"f_t0110_0010_0010","char_INORI","Let's head to Akihabara, then!",""
+"f_t0121_0010_0010","char_PILEVOLCAMON","Do you want to enter the bouts?",""
+"f_t0121_0010_0020","char_PLAYER_M","{next}[Enter.]",""
+"f_t0121_0010_0021","char_PLAYER_M","{end}[Don't enter.]",""
+"f_t0121_0010_0030","char_PILEVOLCAMON","Sorry, but there aren't any available bouts right now. Come
+back another time.",""
+"f_t0121_0010_0040","char_PILEVOLCAMON","Got cold feet, huh? Don't worry. There's no shame in that.",""
+"f_t0121_0010_0050","char_PILEVOLCAMON","You've been entered as a competitor. Head to the waiting room!",""
+"f_t0121_020_0010","char_MAMEMON","Looks like we're in for another exciting battle! I've got
+to hurry so I can grab a good seat!",""
+"f_t0121_030_0010","char_SUPERSTARMON","Whew...! I was feeling down and out, but I'm finally
+getting my edge back!",""
+"f_t0121_030_0020","char_SUPERSTARMON","Those Titans! They're going to pay for what they've done!",""
+"f_t0121_040_0010","char_GERBEMON","Hey! How's it goin'? Everythin' good?!",""
+"f_t0121_040_0020","char_MAN","Yeah, it's pretty lively so sales are solid. Though, I'll
+need to start scouting for the next contenders soon.",""
+"f_t0121_040_0030","char_GERBEMON","Excellent! Datamon's colosseum is a hit! We're rollin' in
+profits! Hohoho!",""
+"f_t0121_050_0010","char_PILEVOLCAMON","We welcome anyone who wishes to fight in the Shinjuku
+Underground Arena.","f_t0121_050_0010"
+"f_t0121_050_0020","char_PILEVOLCAMON","It's a way for us to find strong Digimon to prepare for the
+fight against the Titans.","f_t0121_050_0020"
+"f_t0121_050_0030","char_PILEVOLCAMON","Hmm? Little Bearmon?","f_t0121_050_0030"
+"f_t0121_050_0040","char_PILEVOLCAMON","Oh, you must mean GrapLeomon, a top ranker at this coliseum.","f_t0121_050_0040"
+"f_t0121_050_0050","char_PILEVOLCAMON","If you've got something to say to GrapLeomon, you should
+talk with your fists. Prove you're worth his time.","f_t0121_050_0050"
+"f_t0121_050_0060","char_PILEVOLCAMON","That's the rule in these here parts. No complaining if you
+participate. There's no guarantee you'll make it out alive.","f_t0121_050_0060"
+"f_t0121_050_0070","char_PILEVOLCAMON","Do you want to enter the bouts?","f_t0121_050_0070"
+"f_t0121_060_0010","char_PILEVOLCAMON","All right! We've got you entered. Now, go to the waiting room.","f_t0121_060_0010"
+"f_t0121_060_0020","char_PILEVOLCAMON","The second bout will begin shortly. Head to the waiting room.",""
+"f_t0121_060_0030","char_PILEVOLCAMON","Great match! Once you're ready for the third bout, head to
+the waiting room!",""
+"f_t0121_060_0040","char_PILEVOLCAMON","I knew you'd make it this far!",""
+"f_t0121_060_0050","char_PILEVOLCAMON","Now it's time to challenge the champion! Get out there and
+give us the best match ever!",""
+"f_t0121_060_0060","char_PILEVOLCAMON","That was an intense match! You're the ultimate champion!",""
+"f_t0121_070_0010","char_INROOMBROADCAST","The second bout will begin shortly! Competitors, please
+proceed to the waiting room!",""
+"f_t0121_070_0020","char_INROOMBROADCAST","The third bout will begin shortly! Competitors, please
+proceed to the waiting room!",""
+"f_t0121_070_0030","char_INROOMBROADCAST","The fourth bout will begin shortly! Competitors, please
+proceed to the waiting room!",""
+"f_t0121_070_0040","char_INROOMBROADCAST","The title match for the SDGP championship will begin shortly! 
+Competitors, please proceed to the waiting room!",""
+"f_t0121_080_0010","char_ASTAMON","The competitors' waiting room is up ahead. Come back after
+you've registered.",""
+"f_t0121_080_0020","char_ASTAMON","Are you prepared for the match? Enter once you're ready.",""
+"f_t0121_080_0030","char_ASTAMON","Ah, our new champion. We're looking forward to more
+exciting matches from you.",""
+"f_t0121_090_0010","char_DIGIBATO_MAGAZINE_REPORTER","I'm Okamoto from Weekly Digimon Battle Magazine! Your match
+was truly spectacular!",""
+"f_t0121_090_0020","char_DIGIBATO_MAGAZINE_REPORTER","As the new champion, will you be aiming for the Paradise
+Colosseum Great Titan Cup next?!",""
+"f_t0121_090_0030","char_DIGIBATO_MAGAZINE_REPORTER","What's that? You're tired and want to talk later?",""

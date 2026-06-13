@@ -1,0 +1,69 @@
+string2 0,string 1,string 2,string 3
+"bango_001_0_char_BANCHOGOLEMON","char_BANCHOGOLEMON","I have awakened. And you better have an iron will!",""
+"bango_001_1_replay","char_PLAYER_M","I've got an iron will.",""
+"bango_001_1_reaction_char_BANCHOGOLEMON","char_BANCHOGOLEMON","Then take action. Push your body, your mind,
+and your soul to the limit to get stronger!",""
+"bango_001_2_replay","char_PLAYER_M","What do you mean by ""will""?",""
+"bango_001_2_reaction_char_BANCHOGOLEMON","char_BANCHOGOLEMON","Stepping up and fighting for your beliefs,
+not waiting for the fight to come to you.",""
+"bango_001_3_replay","char_PLAYER_M","I think my will's kinda weak.",""
+"bango_001_3_reaction_char_BANCHOGOLEMON","char_BANCHOGOLEMON","Good on you for knowing that. No shame there.
+But, now you gotta work to get stronger!",""
+"bango_001_4_replay","char_PLAYER_M","I wanna have an iron will.",""
+"bango_001_4_reaction_char_BANCHOGOLEMON","char_BANCHOGOLEMON","Well said. Even I've got work to do.
+Let's both get stronger together!",""
+"banst_001_0_char_BANCHOSTINGMON","char_BANCHOSTINGMON","I've poured a lot of effort into growing strong.
+Compromise is not an option.",""
+"banst_001_1_replay","char_PLAYER_M","Hey, everyone's working hard, too.",""
+"banst_001_1_reaction_char_BANCHOSTINGMON","char_BANCHOSTINGMON","Don't compare my efforts with those of others.
+No one can ever be like me.",""
+"banst_001_2_replay","char_PLAYER_M","There are lots of strong Digimon out there.",""
+"banst_001_2_reaction_char_BANCHOSTINGMON","char_BANCHOSTINGMON","But for most, that's merely innate strength.
+My title of ""Bancho"" was hard-earned.",""
+"banst_001_3_replay","char_PLAYER_M","Good for you.",""
+"banst_001_3_reaction_char_BANCHOSTINGMON","char_BANCHOSTINGMON","Is that supposed to be flattery?
+It'd take days to list all my great deeds, you know.",""
+"banst_001_4_replay","char_PLAYER_M","I wanna be like you.",""
+"banst_001_4_reaction_char_BANCHOSTINGMON","char_BANCHOSTINGMON","If you truly mean that, then put your actions into words.
+Don't expect to reach my level with a bit of effort alone.",""
+"banlili_001_0_char_BANCHOLILIMON","char_BANCHOLILIMON","It is a grave mistake to think that being strong
+means you can get away with anything!",""
+"banlili_001_1_replay","char_PLAYER_M","But the strong usually do get away with it.",""
+"banlili_001_1_reaction_char_BANCHOLILIMON","char_BANCHOLILIMON","I will teach any who make that mistake
+the error of their ways! Even you.",""
+"banlili_001_2_replay","char_PLAYER_M","I wanna be both strong and just.",""
+"banlili_001_2_reaction_char_BANCHOLILIMON","char_BANCHOLILIMON","If only all Digimon thought as you do.
+There are many of us in need of saving.",""
+"banlili_001_3_replay","char_PLAYER_M","It's wrong, but people still do it.",""
+"banlili_001_3_reaction_char_BANCHOLILIMON","char_BANCHOLILIMON","Exactly. That is why I must always defend the meek,
+even if I have to do it alone.",""
+"banlili_001_4_replay","char_PLAYER_M","We won't stand for it!",""
+"banlili_001_4_reaction_char_BANCHOLILIMON","char_BANCHOLILIMON","Embrace that conviction.
+And know that I will always fight to protect the weak!",""
+"omem_001_0_char_OMEGAMON:MERCIFUL MODE","","There are some for whom the only form of salvation
+is swift and merciful defeat.",""
+"omem_001_1_replay","char_PLAYER_M","I understand.",""
+"omem_001_1_reaction_char_OMEGAMON:MERCIFUL MODE","","It is my form of mercy. I am grateful for your
+understanding without interference.",""
+"omem_001_2_replay","char_PLAYER_M","Pretty ruthless, don't you think?",""
+"omem_001_2_reaction_char_OMEGAMON:MERCIFUL MODE","","Defeat is salvation for such beings.
+I would hardly call it ruthlessness.",""
+"omem_001_3_replay","char_PLAYER_M","Isn't there any other way?",""
+"omem_001_3_reaction_char_OMEGAMON:MERCIFUL MODE","","There is not, thus do I judge.
+If you have some other way, I will leave judgment to you.",""
+"omem_001_4_replay","char_PLAYER_M","I'd like to help.",""
+"omem_001_4_reaction_char_OMEGAMON:MERCIFUL MODE","","Impossible, I fear.
+All you have to do is watch my work.",""
+"banma_001_0_char_BANCHOMAMEMON","char_BANCHOMAMEMON","Come see me if ya ever got a problem.",""
+"banma_001_1_replay","char_PLAYER_M","I need your help right now.",""
+"banma_001_1_reaction_char_BANCHOMAMEMON","char_BANCHOMAMEMON","Okay, any trouble ya got, me and the whole
+Mamemon Alliance will squash it!",""
+"banma_001_2_replay","char_PLAYER_M","A problem? Like what?",""
+"banma_001_2_reaction_char_BANCHOMAMEMON","char_BANCHOMAMEMON","Like... anythin'! Whatever!
+Just say the word and I'm on it.",""
+"banma_001_3_replay","char_PLAYER_M","You're doing more than enough already.",""
+"banma_001_3_reaction_char_BANCHOMAMEMON","char_BANCHOMAMEMON","Glad to hear it. The Digital World's a crazy place,
+but I got yer back.",""
+"banma_001_4_replay","char_PLAYER_M","I wouldn't wanna bother you.",""
+"banma_001_4_reaction_char_BANCHOMAMEMON","char_BANCHOMAMEMON","Hey, no need to be so formal.
+Lookin' out for each other is all part of bein' friends.",""

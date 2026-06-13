@@ -1,0 +1,199 @@
+string2 0,string 1,string 2,string 3
+"m260_020_010","char_RANAMON","Prepare for takeoff!","m260_020_010"
+"m260_030_010","char_INORI","The sea... I wonder how Shellmon is doing.",""
+"m260_030_020","char_RANAMON","Oh? You know Shellmon, do you?",""
+"m260_030_030","char_AEGIOMON","Yeah. We've been to the Abyss Area before. Is Shellmon
+a friend of yours, too?",""
+"m260_030_040","char_RANAMON","You could say that... because the business I mentioned
+earlier is with none other than Shellmon!",""
+"m260_030_050","char_PLAYER_M","Is Shellmon doing well these days?{next}",""
+"m260_030_051","char_PLAYER_M","I wonder if we mean the same Shellmon.",""
+"m260_030_052","char_PLAYER_M","So, our friends turned out to be friends with each other...",""
+"m260_030_060","char_RANAMON","I should say so!",""
+"m260_030_070","char_RANAMON","After all, Shellmon was able to, by herself, rebuild that village
+that was once uninhabitable because of the Titans.",""
+"m260_030_080","char_RANAMON","I would think so. There weren't any other Shellmon in that
+village, after all.",""
+"m260_030_090","char_RANAMON","Hee hee. Pretty soon, every Digimon in the Digital World
+will be friends!",""
+"m260_030_100","char_INORI","I'd love it if that could happen...",""
+"m260_030_110","char_RANAMON","And thanks to her persistent peace negotiations with the sea
+Titans, that village is allowed more autonomy than most!",""
+"m260_030_120","char_RANAMON","Shellmon's ""talking things out,"" just like you were hoping,
+and it seems to have made the Titans there more peaceful.",""
+"m260_030_130","char_AEGIOMON","Shellmon's trying to protect that village.",""
+"m260_030_140","char_RANAMON","As a moderate Titan, I've been meeting with Shellmon in
+secret. We get along, as our vision for the future aligns.",""
+"m260_030_150","char_RANAMON","The Titans are only interested in the Current. Our talks focus 
+on whether the village will relinquish control of it.",""
+"m260_030_160","char_RANAMON","As long as the Titans can get their hands on the energy of the 
+Current there, the rest must seem like small potatoes.",""
+"m260_030_170","char_RANAMON","See? Take a look for yourself.",""
+"m260_030_180","char_AEGIOMON","The ocean... It turned red?",""
+"m260_030_190","char_INORI","No way! It was blue just eight years ago...",""
+"m260_030_200","char_RANAMON","I'd wager the stymied flow of the Current has something to do 
+with that... Anyway, we've almost reached the village.",""
+"m260_040_010","char_RANAMON","And here we are!","m260_040_010"
+"m260_040_020","char_OPERATOR_M","This ""Current"" Lanamon mentioned... That's a resource of the 
+Digital World, if I recall correctly.","m260_040_020_M m260_040_020_F"
+"m260_040_030","char_OPERATOR_M","And if the conflict started over control of this resource, it 
+might be a difficult problem to solve, indeed.","m260_040_030_M m260_040_030_F"
+"m260_040_040","char_OPERATOR_M","Lots of the conflicts in our world happened over resources.
+Any history book will tell you how awful that can get...","m260_040_040_M m260_040_040_F"
+"m260_050_010","char_RANAMON","I'm heading over to see Shellmon right away. Want to come with?",""
+"m260_050_020","char_PLAYER_M","I say we go with Lanamon.{next}",""
+"m260_050_021","char_PLAYER_M","We ought to gather info on our own.",""
+"m260_050_022","char_PLAYER_M","Let's go swimming in the ocean!",""
+"m260_050_030","char_AEGIOMON","Shellmon left this area once, but I guess she must've come
+back, huh?",""
+"m260_050_050","char_INORI","And she's been negotiating with the Titans all this time...
+That's pretty awesome.",""
+"m260_050_060","char_INORI","That means she gets that fighting only robs people of what
+they love. I think Shellmon might be our best hope.",""
+"m260_050_070","char_AEGIOMON","Not a bad idea, sure... Still, I think we should go talk to
+Shellmon directly.",""
+"m260_050_080","char_INORI","I was looking forward to seeing the Digital World's ocean
+again after all this time, but...",""
+"m260_050_090","char_INORI","...a red ocean? That's just plain weird.",""
+"m260_050_100","char_INORI","We ought to talk to a Digimon who can tell us what
+happened to it.",""
+"m260_050_110","char_RANAMON","Yes. Call it a hunch, but I'd say that'll help you cut to the heart 
+of the matter quickly.",""
+"m260_050_120","char_RANAMON","All right, then. Let's head on over!",""
+"m260_060_010","char_AEGIOMON","It doesn't look like there are any Titans to be found. I bet
+it's all thanks to Shellmon's hard work.","m260_060_010"
+"m260_060_020","char_INORI","Still, everyone looks so depressed...","m260_060_020"
+"m260_060_030","char_AEGIOMON","We'd better ask Shellmon what's going on around here.","m260_060_030"
+"m260_060_040","char_INORI","Yeah. Let's hurry.","m260_060_040"
+"m260_070_010","char_RANAMON","What's the matter? Is something wrong?",""
+"m260_070_020","char_AEGIOMON","It's just that... it feels so strange to see Shellmon again...",""
+"m260_070_030","char_INORI","For Shellmon, it's been eight years since we last saw each
+other, right? I wonder if she recognizes us...",""
+"m260_070_040","char_INORI","It was a sad goodbye back then, so I hope we can have a
+good time chatting now.",""
+"m260_080_010","char_RANAMON","Hey, Shellmon, you've got visitors!","m260_080_010"
+"m260_080_020","char_VENUSMON","You're the only one who still calls me that, you know.","m260_080_020"
+"m260_080_030","char_VENUSMON","Now, as for my guests...","m260_080_030"
+"m260_080_040","char_AEGIOMON","W-Wait. Whaaat?","m260_080_040"
+"m260_080_050","char_AEGIOMON","Hold on... You mean, you're Shellmon? Same as
+the one from back then?","m260_080_050"
+"m260_080_060","char_VENUSMON","I can hardly believe this... Yes, I remember all of you!","m260_080_060"
+"m260_080_070","char_VENUSMON","...It seems you've all been through some things as well.","m260_080_070"
+"m260_080_080","char_VENUSMON","I go by ""Venusmon"" now.","m260_080_080"
+"m260_080_090","char_VENUSMON","This Digimon you seek, well-versed in the healing
+arts... I think they're referring to me.","m260_080_090"
+"m260_080_100","char_RANAMON","Didn't I predict you could cut to the heart of the matter quickly? 
+I had a feeling this was the one you were seeking!","m260_080_100"
+"m260_080_110","char_RANAMON","Digimon come from all around for her healing touch.","m260_080_110"
+"m260_080_120","char_RANAMON","Even Titans come here for help... Titans like me, for instance.","m260_080_120"
+"m260_080_130","char_RANAMON","I can act this way despite being a Titan...","m260_080_130"
+"m260_080_140","char_RANAMON","...because you nursed me back to health. And you
+didn't care who I was, or where I came from.","m260_080_140"
+"m260_080_150","char_VENUSMON","That takes me back... You're the only one who
+still calls me that, you know.","m260_080_150"
+"m260_080_160","char_AEGIOMON","Venusmon, we need your help. Merukimon is in the human
+world, and is hurt—pretty badly, from the sound of it.","m260_080_160"
+"m260_080_170","char_VENUSMON","That is... quite concerning, indeed...","m260_080_170"
+"m260_080_180","char_VENUSMON","Still, the very idea of leaving here is simply
+unfathomable... not with things as they stand now.","m260_080_180"
+"m260_080_190","char_VENUSMON","Though we have a temporary ceasefire, the period
+we agreed on will soon come to an end.","m260_080_190"
+"m260_080_200","char_RANAMON","In that case, this might solve the problem.","m260_080_200"
+"m260_080_210","char_RANAMON","Here it is! Remember this little beauty you asked me for? 
+A present as a token of peace, I believe you were thinking?","m260_080_210"
+"m260_080_220","char_VENUSMON","...","m260_080_220"
+"m260_080_230","char_RANAMON","All that remains is to give it to the Titans.","m260_080_230"
+"m260_080_240","char_RANAMON","And I've got an idea! Why not ask these folks to deliver it?","m260_080_240"
+"m260_080_250","char_RANAMON","The other Titans and I don't exactly see eye to eye, after all...","m260_080_250"
+"m260_080_260","char_RANAMON","...but you folks are good at talking to anyone—friend or foe!","m260_080_260"
+"m260_080_270","char_RANAMON","Besides, I imagine you could handle anything
+that might pop up along the way as well!","m260_080_270"
+"m260_080_280","char_AEGIOMON","So, what should we do?","m260_080_280"
+"m260_080_290","char_PLAYER_M","Okay, let's take the request.{next}",""
+"m260_080_291","char_PLAYER_M","That's not something to be taken on lightly.",""
+"m260_080_292","char_PLAYER_M","What if Venusmon came with us?",""
+"m260_080_300","char_AEGIOMON","Okay, let's go!","m260_080_300"
+"m260_080_310","char_AEGIOMON","Are you sure that's a good idea? If we don't go,
+then Venusmon will probably have to go instead.","m260_080_310"
+"m260_080_320","char_AEGIOMON","And if Venusmon gets hurt, who's gonna heal Merukimon?","m260_080_320"
+"m260_080_330","char_INORI","Good point. Best to avoid that situation, if at all possible.","m260_080_330"
+"m260_080_340","char_INORI","But... what if something happens to Venusmon?","m260_080_340"
+"m260_080_350","char_INORI","Who'd heal Merukimon then?
+I don't think that's such a good idea...","m260_080_350"
+"m260_080_360","char_RANAMON","The Titans around here won't be a problem. Or shouldn't be,
+anyway. The temporary ceasefire's still in place, after all.","m260_080_360"
+"m260_080_370","char_AEGIOMON","All right, then. We're off, Venusmon.","m260_080_370"
+"m260_090_010","char_AEGIOMON","Wait, Inori!","m260_090_010"
+"m260_090_020","char_INORI","What is it, Aegiomon?",""
+"m260_090_030","char_SKULLSEADRAMON","Gwaaaaaaargh!","m260_090_030"
+"m260_090_040","char_AEGIOMON","Why, you—!","m260_090_040"
+"m260_090_050","char_SKULLSEADRAMON","Gwaaargh...!","m260_090_050"
+"m260_090_060","char_INORI","A Titan?! But what about the ceasefire?!","m260_090_060"
+"m260_090_070","char_AEGIOMON","Doesn't look like it from where I'm standing... I don't
+think we have much choice!","m260_090_070"
+"m260_100_010","char_SKULLSEADRAMON","GWAAAAARGH...!","m260_100_010"
+"m260_100_020","char_AEGIOMON","*panting* C'mon guys... We'd better hurry. I bet there are more
+of 'em around here.","m260_100_020"
+"m260_100_030","char_INORI","Looks like talking alone won't be enough, will it...","m260_100_030"
+"m260_110_010","char_NEPTUNEMON","Who are you? You do not appear to be Titans...","m260_110_010"
+"m260_110_020","char_AEGIOMON","The village sent us. We came to deliver this present, as a
+token of peace.","m260_110_020"
+"m260_110_030","char_NEPTUNEMON","Wait. I remember you! It's me, Divermon! The one you met
+eight years ago!","m260_110_030"
+"m260_110_040","char_INORI","Divermon?!","m260_110_040"
+"m260_110_050","char_INORI","Don't tell me you're the leader of the Titans here?","m260_110_050"
+"m260_110_060","char_NEPTUNEMON","Yep, I am, under the name of ""Neptunemon."" To think we
+would meet again, after all this time...!","m260_110_060"
+"m260_110_070","char_NEPTUNEMON","This token of peace... Rest assured that I have received it gladly.","m260_110_070"
+"m260_110_080","char_NEPTUNEMON","I don't want to fight with the village at all. I sent a few
+envoys to negotiate but...","m260_110_080"
+"m260_110_090","char_NEPTUNEMON","...they just left me hanging, even as the deadline was
+approaching. I was wondering what was going on...","m260_110_090"
+"m260_110_100","char_INORI","Uh-oh... You don't suppose...?","m260_110_100"
+"m260_110_110","char_AEGIOMON","Yeah... That that thing that attacked us had something to do
+with that...?","m260_110_110"
+"m260_110_120","char_NEPTUNEMON","What do you intend to do now? If you are heading back to the
+village, I would like to ask a favor of you.","m260_110_120"
+"m260_110_130","char_INORI","Is that the scarf Shellmon wrapped your wound with?! I can't
+believe you still have it after all this time!","m260_110_130"
+"m260_110_140","char_NEPTUNEMON","I want you to return this scarf to Shellmon. And to deliver this message:","m260_110_140"
+"m260_110_150","char_NEPTUNEMON","""I owe you my life. I'll do everything in my power to
+repay your kindness.""","m260_110_150"
+"m260_110_160","char_AEGIOMON","Got it! We'll give Shellmon the message for sure.","m260_110_160"
+"m260_110_170","char_NEPTUNEMON","Thanks, I'm counting on you.","m260_110_170"
+"m260_120_010","char_INORI","Hey, Venusmon! We delivered the token of peace. And we
+brought you back an amazing souvenir!","m260_120_010"
+"m260_120_020","char_VENUSMON","You brought something back for me, you say?","m260_120_020"
+"m260_120_030","char_VENUSMON","Oh! Th-That scarf...!","m260_120_030"
+"m260_120_040","char_AEGIOMON","We handed the bottle of wine over to the Titan leader, and
+that leader turned out to be the Divermon you saved!","m260_120_040"
+"m260_120_050","char_INORI","Divermon was thrilled with the token of peace, and has been
+wanting to renew the reconciliation with your village!","m260_120_050"
+"m260_120_060","char_INORI","I bet this will change everything! Don't you think?","m260_120_060"
+"m260_120_070","char_VENUSMON","...!","m260_120_070"
+"m260_120_080","char_AEGIOMON","Oh, that's right! Divermon—he's ""Neptunemon"" now—had a
+message for you, too!","m260_120_080"
+"m260_120_090","char_AEGIOMON","""I owe you my life. I shall do everything in my power to
+repay your kindness,"" he says!","m260_120_090"
+"m260_120_110","char_VENUSMON","...","m260_120_110"
+"m260_120_120","char_INORI","And this is for you, from Neptunemon!","m260_120_120"
+"m260_120_130","char_INORI","Are you all right...? Maybe we should give Venusmon a
+little privacy, guys.","m260_120_130"
+"m260_120_140","char_INORI","We'll be right outside. Give us a shout if you need
+anything, okay?","m260_120_140"
+"m260_120_150","char_VENUSMON","What... have I done...?!","m260_120_150"
+"m260_130_010","char_NEPTUNEMON","...","m260_130_010"
+"m260_130_020","char_NEPTUNEMON","A token of peace...","m260_130_020"
+"m260_130_030","char_NEPTUNEMON","Shellmon...","m260_130_030"
+"m260_130_040","char_NEPTUNEMON","*gulping*","m260_130_040"
+"m260_130_050","char_NEPTUNEMON","Wh-What is this...?","m260_130_050"
+"m260_130_060","char_NEPTUNEMON","In the end... I never got to tell you...","m260_130_060"
+"m260_130_070","char_NEPTUNEMON","...how grateful I am...","m260_130_070"
+"m260_130_080","char_NEPTUNEMON","...for what you did back then...","m260_130_080"
+"m260_130_090","char_NEPTUNEMON","Shellmon...","m260_130_090"
+"m260_140_010","char_VENUSMON","Th-The ocean is growing even redder than before...","m260_140_010"
+"m260_140_020","char_VENUSMON","But how could that be? Neptunemon should have finished
+drinking the poisoned wine by now...!","m260_140_020"
+"m260_140_030","char_VENUSMON","No...! Could this sullying of the ocean water... have been
+the work of someone other than the Titans all along...?","m260_140_030"
+"m260_140_040","char_VENUSMON","How... could I have been so wrong...?!","m260_140_040"

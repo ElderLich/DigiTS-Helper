@@ -1,0 +1,223 @@
+string2 0,string 1,string 2,string 3
+"m060_010_010","char_DESCRIPTIVE_PART","You hear voices coming from downstairs. Time to go see what all the 
+fuss is about.",""
+"m060_020_010","char_HIROKO","It'll be fiiine this time, I swear! No one's even been to 
+this spot before!","m060_020_010"
+"m060_020_020","char_INORI","Y-You said the same thing last time, and look what happened!","m060_020_020"
+"m060_020_030","char_HIROKO","...Oh, hey! I remember you! Heard you're crashing at Inori's place now.","m060_020_030"
+"m060_020_040","char_HIROKO","Say, I've got an idea, Inori. Why not bring your buddy in the weird—
+sorry, interesting—outfit along for the ride?","m060_020_040"
+"m060_020_050","char_HIROKO","With one more subject to film, I bet we'll get a ton of great 
+clippable moments!","m060_020_050"
+"m060_020_060","char_PLAYER_M","What are you talking about?{next}",""
+"m060_020_061","char_PLAYER_M","I remember you too...{next}",""
+"m060_020_062","char_PLAYER_M","You'll have to talk to my boss for my hourly rate.{next}",""
+"m060_020_070","char_HIROKO","Caught your interest, have I? Oh—I'm getting ahead of myself.","m060_020_070"
+"m060_020_080","char_HIROKO","Thanks for all your help back there! Allow me to introduce 
+myself.","m060_020_080"
+"m060_020_090","char_HIROKO","Oooh, that's the spirit! Let's cut to the chase, then.","m060_020_090"
+"m060_020_100","char_HIROKO","In case you forgot, the name's Hiroko Sagisaka. I go to
+school with Inori. Same class, even!","m060_020_100"
+"m060_020_110","char_HIROKO","And like I might have mentioned, I've got my own occult streaming channel.
+It's called ""OcculTokyo TV""!","m060_020_110"
+"m060_020_120","char_HIROKO","I caught wind of a new paranormal phenomenon and went to 
+all the trouble of putting together an entire shoot schedule.","m060_020_120"
+"m060_020_130","char_HIROKO","...But, my girl here doesn't seem very sold on the idea. Could you maybe
+hype it up for me?","m060_020_130"
+"m060_020_140","char_PLAYER_M","I can't afford to ignore any paranormal phenomenon.{next}",""
+"m060_020_141","char_PLAYER_M","Diving right back into danger, huh?{next}",""
+"m060_020_142","char_PLAYER_M","Haven't learned a thing, have you?{next}",""
+"m060_020_150","char_HIROKO","I know, right?! I knew you'd think so, too!","m060_020_150"
+"m060_020_160","char_HIROKO","Hey! Things all kinda worked out in the end last time, right?
+No reason to expect anything different this time!","m060_020_160"
+"m060_020_170","char_HIROKO","What?! Of course I did! I got yelled at for HOURS after that whole mess
+last time!","m060_020_170"
+"m060_020_180","char_HIROKO","But I'll never get those sub numbers up if I let myself get 
+discouraged now!","m060_020_180"
+"m060_020_190","char_HIROKO","I say we head on back. C'mon! The world of the underground 
+is calling our names!","m060_020_190"
+"m060_020_200","char_INORI","Knock it off, Hiroko! You're being a giant pain!","m060_020_200"
+"m060_020_210","char_HIROKO","I'm not giving up! I'll be passing ten thousand subscribers
+any day now!","m060_020_210"
+"m060_020_220","char_HIROKO","I'll see you guys later, then. I know you won't leave me hanging!","m060_020_220"
+"m060_020_230","char_OPERATOR_M","A streaming channel that deals in paranormal phenomena...","m060_020_230_M m060_020_230_F"
+"m060_020_240","char_OPERATOR_M","Do you remember what I said to you, Agent {player}?","m060_020_240_M m060_020_240_F"
+"m060_020_250","char_OPERATOR_M","That time I narrowed down the target coordinates for you, 
+right before the Shinjuku Inferno happened?","m060_020_250_M m060_020_250_F"
+"m060_020_260","char_OPERATOR_M","The reason I was able to do that was thanks to some videos that 
+were uploaded by members of the public eight years ago.","m060_020_260_M m060_020_260_F"
+"m060_020_270","char_OPERATOR_M","Now I'm wondering... Could those two girls have uploaded that video?","m060_020_270_M m060_020_270_F"
+"m060_020_280","char_OPERATOR_M","We need every bit of information we can get. I say going with
+them would hardly be the worst idea in the world...","m060_020_280_M m060_020_280_F"
+"m060_030_010","char_INORI","There's no stopping Hiroko when she gets like this. Sorry
+about that...","m060_030_010"
+"m060_030_020","char_INORI","...""Agent.""","m060_030_020"
+"m060_030_030","char_PLAYER_M","""Agent""? Who, me...?{next}",""
+"m060_030_035","char_INORI","...Hee hee.","m060_030_035"
+"m060_030_040","char_INORI","Yeah, you. I heard from my dad that you're in the same line 
+of work he used to be in.","m060_030_040"
+"m060_030_060","char_INORI","That's so cool... You're, like, out there, in the real
+world...","m060_030_060"
+"m060_030_062","char_INORI","One more thing... Your outfit looks like something from this anime
+I used to watch called ""Agent Alpha."" Do you know it?","m060_030_062"
+"m060_030_066","char_INORI","It's about a hero who would solve mysterious cases in secret, 
+working together with the members of his secret organization.","m060_030_066"
+"m060_030_068","char_INORI","It's an old show, but it fits you to a ""T""! I'm a huge fan, so I
+pretty much have to call you ""Agent,"" don't you think?","m060_030_068"
+"m060_030_070","char_INORI","I apologize for Hiroko being so pushy... but I hate to leave her
+on her own. Would you be willing to tag along, Agent?","m060_030_070"
+"m060_030_080","char_PLAYER_M","If there's an anomaly out there, it's my job to handle it.{next}",""
+"m060_030_081","char_PLAYER_M","We could learn something that'd help us change the future.{next}",""
+"m060_030_082","char_PLAYER_M","Hopefully it's a small step toward stopping global collapse.{next}",""
+"m060_030_090","char_INORI","Really? You mean it? I thought for sure you'd say no...","m060_030_090"
+"m060_030_100","char_INORI","You know... despite your outfit...","m060_030_100"
+"m060_030_110","char_INORI","...you're actually really nice, aren't you?","m060_030_110"
+"m060_030_120","char_INORI","...Well, I guess I could've skipped the part about your
+outfit. Hee hee! It's got to be a uniform, right? I like it!","m060_030_120"
+"m060_030_130","char_INORI","Anyway, let's go. Hiroko told me the place was a ""back alley 
+of Shinjuku.""","m060_030_130"
+"m060_040_010","char_HIROKO","About time! Consistency is the difference between a successful
+creator and a ten-viewer Andy, so get moving!","m060_040_010"
+"m060_040_020","char_HIROKO","Our objectives are the mysterious creatures skulking around 
+the underground! Let's head on down!","m060_040_020"
+"m060_040_030","char_HIROKO","Okay, we're rolling here, people.","m060_040_030"
+"m060_040_040","char_HIROKO","""What's up everyone, this is OcculTokyo TV here with another video!""","m060_040_040"
+"m060_040_050","char_HIROKO","""Today, we'll be acting on a tip from a viewer! It's time to uncover the truth
+behind the Shinjuku Underground Cavern!""","m060_040_050"
+"m060_040_060","char_HIROKO","We're starting this investigation off with a bang! 
+Here! We! Goooooo!","m060_040_060"
+"m060_040_070","char_INORI","Sorry about this {player}...","m060_040_070"
+"m060_040_080","char_PLAYER_M","...All part of the job.{next}",""
+"m060_040_081","char_PLAYER_M","I can't let an anomaly go un-investigated.{next}",""
+"m060_040_082","char_PLAYER_M","Let's go for a million views!{next}",""
+"m060_040_090","char_INORI","...Really? Good, then.","m060_040_090"
+"m060_040_100","char_INORI","So it's true, huh? You really are doing the same kind of
+work my dad used to do.","m060_040_100"
+"m060_040_110","char_INORI","And... Yup, definitely a good person. Hehe.","m060_040_110"
+"m060_050_010","char_HIROKO","I can feel it... the paranormal is calling our names!
+And I'm gonna farm them for views!","m060_050_010"
+"m060_050_020","char_HIROKO","Let's stay on our toes, people!","m060_050_020"
+"m060_050_030","char_INORI","Huh? Look! Over there...","m060_050_030"
+"m060_050_040","char_PLAYER_M","Wait. Could that be...?{next}",""
+"m060_050_041","char_PLAYER_M","The one from before...{next}",""
+"m060_050_042","char_PLAYER_M","That Digimon...?{next}",""
+"m060_050_050","char_HIROKO","What's up? You spot something?","m060_050_050"
+"m060_050_060","char_INORI","I think that was Coo.","m060_050_060"
+"m060_050_070","char_HIROKO","Hey, is that... that monster from before?","m060_050_070"
+"m060_050_080","char_INORI","Coo isn't a monster.","m060_050_080"
+"m060_050_090","char_INORI","The way those others were bullying the poor thing... He was
+hurt, too, so I'm worried...","m060_050_090"
+"m060_050_100","char_HIROKO","Ho, boy. Here we go again.","m060_050_100"
+"m060_050_110","char_HIROKO","You're almost, like, pathologically maternal.","m060_050_110"
+"m060_050_120","char_HIROKO","Always bringing home any little injured kitty or birdie you 
+come across...","m060_050_120"
+"m060_050_130","char_HIROKO","And then, because of your pop's allergies, you always end up 
+having to find somebody else to foster them.","m060_050_130"
+"m060_050_140","char_HIROKO","Nobody is gonna want to take in a monster as a pet.","m060_050_140"
+"m060_050_150","char_INORI","Sorry. It's just that... I want to at least treat his
+injuries...","m060_050_150"
+"m060_050_160","char_HIROKO","Hehe. Yeah, yeah. I get it. I'm just giving you a hard time.","m060_050_160"
+"m060_050_170","char_HIROKO","I get why you're like this, Inori.","m060_050_170"
+"m060_050_180","char_HIROKO","I'm happy to indulge you this time, too. As long as I get 
+some good content.","m060_050_180"
+"m060_050_190","char_HIROKO","All right, then. Let's go track down that little critter!
+Time to search this place from end to end!","m060_050_190"
+"m060_070_010","char_INORI","Who would've thought there'd be a place like this underground?","m060_070_010"
+"m060_070_020","char_HIROKO","""Just what awaits us up ahead?","m060_070_020"
+"m060_070_030","char_HIROKO","""If you wanna see what happens, you'd better like this video,
+smash that subscribe button, and turn on notifications!""","m060_070_030"
+"m060_080_010","char_INORI","I knew it! Is that you, Coo?","m060_080_010"
+"m060_080_020","char_HIROKO","I-Is it really safe to get so close to that thing?","m060_080_020"
+"m060_080_030","char_INORI","Oh, hey! Wait up, Coo!","m060_080_030"
+"m060_080_040","char_INORI","Jeez, Hiroko! You're so nervous that you got Coo all spooked too.","m060_080_040"
+"m060_080_050","char_HIROKO","H-How can you be so calm around that thing?! No telling what kind
+of monster it is!","m060_080_050"
+"m060_080_060","char_INORI","I told you, Coo's not a monster! The poor little thing is probably...","m060_080_060"
+"m060_080_070","char_INORI","......","m060_080_070"
+"m060_080_080","char_INORI","It's probably... a ""phase electron lifeform""...","m060_080_080"
+"m060_080_090","char_HIROKO","Uh, come again?","m060_080_090"
+"m060_080_100","char_INORI","I saw it in my dad's notes... The term came up over and over again.","m060_080_100"
+"m060_080_110","char_INORI","He even quit his old job so he could spend all his time 
+trying to find them...","m060_080_110"
+"m060_080_120","char_HIROKO","Whoa! In that case, we've definitely gotta go grab that 
+little sucker! After it! Chop, chop!","m060_080_120"
+"m060_090_010","char_INORI","Wait, don't go!","m060_090_010"
+"m060_090_040","char_HIROKO","Inori, I know I say this every time you help out one of your
+beloved little critters, but...","m060_090_040"
+"m060_090_050","char_HIROKO","...rescuing random animals isn't ever gonna bring what
+you lost ba—","m060_090_050"
+"m060_090_060","char_INORI","Yeah, I know. Really, I do! ...I'm sorry.","m060_090_060"
+"m060_090_070","char_HIROKO","...I'll sneak up from this side. A-and you guys circle around
+from the other side, okay?","m060_090_070"
+"m060_100_005","char_INORI","It's okay, Coo!","m060_100_005"
+"m060_100_010","char_INORI","Hey... Were you okay after we left? No one's trying to bully
+you anymore, are they?","m060_100_010"
+"m060_100_020","char_HIROKO","Ahhhh!","m060_100_020"
+"m060_100_030","char_HIROKO","G-Get out of there, Inori!","m060_100_030"
+"m060_100_040","char_INORI","...No way.","m060_100_040"
+"m060_100_050","char_INORI","Just look at its eyes... It's obviously trying to bully Coo!","m060_100_050"
+"m060_100_060","char_HIROKO","I knew it, Inori... You can't let go of the past, can you?!","m060_100_060"
+"m060_100_070","char_INORI","Sorry to ask this of you, {player}, but please! I need your help!","m060_100_070"
+"m060_110_010","char_INORI","I can't let this happen. ","m060_110_010"
+"m060_110_020","char_INORI","It's just that... Yuu used to get picked on a lot too...!","m060_110_020"
+"m060_110_030","char_INORI","Wait, are you thinking of fighting that thing?","m060_110_030"
+"m060_110_040","char_INORI","All right, then...! Just... Be careful! ","m060_110_040"
+"m060_120_001","char_ELECMON","Coo!","m060_120_001"
+"m060_120_002","char_ELECMON","Coo-aaagh!","m060_120_002"
+"m060_120_003","char_INORI","*panting*","m060_120_003"
+"m060_120_010","char_INORI","Why can't I... do anything right...?","m060_120_010"
+"m060_120_020","char_INORI","I can't... protect anyone...?","m060_120_020"
+"m060_120_030","char_INORI","If only I was stronger...!","m060_120_030"
+"m060_120_040","char_INORI","I could... I could have saved Mom, I could have saved Yuu! ","m060_120_040"
+"m060_120_041","char_CYCLONEMON","GRAAAAARGH!","m060_120_041"
+"m060_120_042","char_INORI","No!","m060_120_042"
+"m060_120_043","char_CYCLONEMON","GRAAAAAAARGH!","m060_120_043"
+"m060_120_050","char_INORI","NO! I WON'T LET YOU!","m060_120_050"
+"m060_120_051","char_INORI","Urgh!","m060_120_051"
+"m060_120_052","char_ELECMON","Coo-ack!","m060_120_052"
+"m060_120_060","char_INORI","I want to protect Coo...! I want the strength to protect him!","m060_120_060"
+"m060_120_070","char_CYCLONEMON","Ngah...?!","m060_120_070"
+"m060_120_080","char_INORI","Huh...?","m060_120_080"
+"m060_120_081","char_INORI","Whoa... What...?!","m060_120_081"
+"m060_120_090","char_ELECMON","COOooooo!","m060_120_090"
+"m060_120_100","char_AEGIOMON","Yaaaaaaah!","m060_120_100"
+"m060_140_010","char_UNKNOWN","I'm... Aegiomon.","m060_140_010"
+"m060_140_020","char_AEGIOMON","Thank you... for saving me.","m060_140_020"
+"m060_140_030","char_AEGIOMON","This time... I'll protect you, with MY strength!","m060_140_030"
+"m060_150_010","char_INORI","You said... your name is Aegiomon?","m060_150_010"
+"m060_150_020","char_AEGIOMON","What's... your name?","m060_150_020"
+"m060_150_030","char_INORI","I'm Inori. Inori Misono.","m060_150_030"
+"m060_150_040","char_AEGIOMON","Thank you for saving me... Inori.","m060_150_040"
+"m060_150_060","char_AEGIOMON","You're not hurt, are you...?","m060_150_060"
+"m060_150_070","char_AEGIOMON","Oh... Thank good...ne...","m060_150_070"
+"m060_150_080","char_INORI","A-Aegiomon...! A-Are you all right?","m060_150_080"
+"m060_150_090","char_OPERATOR_M","Agent {player}... I see the situation has changed once again.","m060_150_090_M m060_150_090_F"
+"m060_150_100","char_PLAYER_M","...I just witnessed an anomalous phenomenon.{next}",""
+"m060_150_101","char_PLAYER_M","We're all safe, for now.",""
+"m060_150_102","char_PLAYER_M","Coo has evolved into the form of a young boy.",""
+"m060_150_110","char_OPERATOR_M","...Yes, we've ascertained as much. We're definitely dealing 
+with an anomaly.","m060_150_110_M m060_150_110_F"
+"m060_150_120","char_OPERATOR_M","We'll proceed with our analysis, and I'll contact you again 
+once we know more.","m060_150_120_M m060_150_120_F"
+"m060_150_130","char_OPERATOR_M","Which means we're good for the time being. I'll keep
+monitoring the situation, too.","m060_150_130_M m060_150_130_F"
+"m060_150_140","char_OPERATOR_M","What? We've never seen anything like that before...","m060_150_140_M m060_150_140_F"
+"m060_160_010","char_INORI","So much happened so quickly... My brain can hardly keep up 
+with all of this.","m060_160_010"
+"m060_160_020","char_TAKEMIYA","Hey, kids. What's all the commotion about?","m060_160_020"
+"m060_160_030","char_TAKEMIYA","Uh—who is that child?","m060_160_030"
+"m060_160_040","char_INORI","Dad... I'm sure this is going to be hard to believe, but he's—","m060_160_040"
+"m060_160_050","char_TAKEMIYA","No, it couldn't be... Is that...?","m060_160_050"
+"m060_160_060","char_TAKEMIYA","...I see.","m060_160_060"
+"m060_160_070","char_TAKEMIYA","......","m060_160_070"
+"m060_160_080","char_TAKEMIYA","Looks like letting you stay with us was the right decision 
+after all...","m060_160_080"
+"m060_160_090","char_TAKEMIYA","I think you kids should call it quits for the day.","m060_160_090"
+"m060_160_100","char_INORI","Huh?","m060_160_100"
+"m060_160_110","char_TAKEMIYA","You should go take a break. I mean... you've had quite the 
+day, right?","m060_160_110"
+"m060_160_120","char_INORI","Um, w-well, yeah, but... This kid... I think he's—","m060_160_120"
+"m060_160_130","char_TAKEMIYA","Yeah, I know. He's not human, right?","m060_160_130"
+"m060_160_140","char_TAKEMIYA","That hammock in the attic... He can sleep there.","m060_160_140"
+"m060_160_150","char_TAKEMIYA","Go on, then. Get some rest, you guys. You've earned it.","m060_160_150"
+"m060_160_160","char_TAKEMIYA","......","m060_160_160"

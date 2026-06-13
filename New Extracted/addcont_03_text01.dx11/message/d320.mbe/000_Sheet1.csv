@@ -1,0 +1,282 @@
+string2 0,string 1,string 2,string 3
+"d320_010_010","char_TOUDO","Look...!","d320_010_010"
+"d320_010_020","char_OMEGAMON-X","So, the pro-X Program faction has run into the
+anti-X Program faction... This can't be good.","d320_010_020"
+"d320_010_030","char_JESMON_X","Selection is a natural law. The X Program is a test 
+bestowed upon us from on high...","d320_010_030"
+"d320_010_040","char_JESMON_X","...so that we might progress towards the next stage
+in our evolutionary development as a species.","d320_010_040"
+"d320_010_050","char_DUKEMON_X","The X Antibody is no instrument of divine will.
+It is a program, no more and no less.","d320_010_050"
+"d320_010_060","char_ULFORCEVDRAMON_X","You seriously believe yourselves to be chosen beings?
+Your arrogance knows no bounds.","d320_010_060"
+"d320_010_070","char_MAGNAMON_X","I can see no value in further conversation.","d320_010_070"
+"d320_010_080","char_DORUMON","Aw, they're fighting again?!","d320_010_080"
+"d320_010_090","char_OMEGAMON-X","Everyone, please... This place is not our world. Can we not
+at least work together until we are able to return home?","d320_010_090"
+"d320_010_100","char_MAGNAMON_X","You should already know the answer to that.
+Cooperation is out of the question.","d320_010_100"
+"d320_010_110","char_ULFORCEVDRAMON_X","We're going to do what we believe is right. 
+And it seems they've reached a similar conclusion.","d320_010_110"
+"d320_010_120","char_DUKEMON_X","Yes, if we can defeat Parallelmon and make use
+of its power, we can solve everything.","d320_010_120"
+"d320_010_130","char_JESMON_X","So... it comes down to a race.","d320_010_130"
+"d320_010_140","char_JESMON_X","Whoever defeats Parallelmon first will have their way.","d320_010_140"
+"d320_010_150","char_OMEGAMON-X","What exactly are you saying?","d320_010_150"
+"d320_010_160","char_OMEGAMON-X","And, in any case, Parallelmon will be no easy foe.
+Unless we all work together—","d320_010_160"
+"d320_010_170","char_DUKEMON_X","Cowards need to keep their mouth shut.","d320_010_170"
+"d320_010_180","char_JESMON_X","There are two doors here.
+We need not share the same path.","d320_010_180"
+"d320_010_190","char_MAGNAMON_X","I couldn't agree more.
+From this point on, it'll be a race.","d320_010_190"
+"d320_010_200","char_DORUMON","Ugh... Why can't we work together,
+even at a time like this?","d320_010_200"
+"d320_010_210","char_SIMMONS","Hee hee...","d320_010_210"
+"d320_010_220","char_TOUDO","What's so funny?","d320_010_220"
+"d320_010_230","char_SIMMONS","They're just so hopelessly naive!
+Immature! Idealistic!","d320_010_230"
+"d320_010_240","char_SIMMONS","Each group believes in their own sense of justice—
+that theirs is the one true way.","d320_010_240"
+"d320_010_250","char_SIMMONS","How many conflicts have broken out from a disagreement
+on what's right? So, even here, history repeats itself.","d320_010_250"
+"d320_010_260","char_SIMMONS","The world of Digimon is not so different from our own. 
+Truly fascinating...!","d320_010_260"
+"d320_010_270","char_TOUDO","Well, as far as we're concerned, we need to
+get them to band together. Otherwise...","d320_010_270"
+"d320_010_280","char_DORUMON","Yes... Otherwise, we probably won't be able to beat
+Parallelmon, meaning we'll be stuck here forever.","d320_010_280"
+"d320_010_290","char_DORUMON","We have to go after them.","d320_010_290"
+"d320_010_300","char_OMEGAMON-X","The only question is, which way do we proceed? Through the
+digital-looking door, after the pro-X Program group?","d320_010_300"
+"d320_010_310","char_OMEGAMON-X","Or through the wooden door, after the anti-X Program group?","d320_010_310"
+"d320_020_010","char_SIMMONS","I know this place... It's Akihabara.
+So... we're in our world?",""
+"d320_020_020","char_MIREI","It looks like more Akashic debris has appeared before you...
+A different space must be fragmenting this time.",""
+"d320_020_040","char_SIMMONS","""Now, THIS is a lovely part...! And that one, just
+gorgeous! Oh, ew! No. Bad part! No, thank you.""",""
+"d320_020_050","char_SIMMONS","""I need to make that device a reality, or Digimon—
+phase electron lifeforms—will prove a threat to humanity!""",""
+"d320_020_060","char_JESMON_X","Digimon? A threat?",""
+"d320_020_070","char_JESMON_X","Do Digimon attack humans in your world?",""
+"d320_020_080","char_SIMMONS","...",""
+"d320_020_090","char_MAGNAMON_X","The sad truth is, a certain number of Digimon simply cause
+trouble. If it were only the chosen, this would not happen.",""
+"d320_020_100","char_MAGNAMON_X","Overpopulation is at the root of all of this. Though it pains
+me to say it, the process of selection must continue.",""
+"d320_020_110","char_SIMMONS","Hee hee...",""
+"d320_020_120","char_TOUDO","Their conversation didn't sound very funny to me...",""
+"d320_020_130","char_SIMMONS","Oh, no. Not funny at all. They were being completely
+logical. Everything they said fits together perfectly.",""
+"d320_020_140","char_SIMMONS","Maybe a little too perfectly. They seem drunk on their own logic.
+Perhaps that's why they consider themselves ""chosen.""",""
+"d320_020_150","char_SIMMONS","If you ask me, I'd say that conversation of theirs
+was overly logical. There was no joy in it.",""
+"d320_020_160","char_TOUDO","And... that's a problem?",""
+"d320_020_170","char_SIMMONS","Of course!",""
+"d320_020_180","char_SIMMONS","Without some spark of hope, something to make the heart
+leap, their claim of an evolutionary step forward is a sham.",""
+"d320_020_190","char_SIMMONS","We need to tell them that. Which is just another
+reason we should keep going after them.",""
+"d320_030_010","char_JESMON_X","Something about this place seems... familiar.
+Would you not agree, Omnimon?",""
+"d320_030_020","char_OMEGAMON-X","There is a certain aspect of this world that resembles our own.",""
+"d320_030_030","char_OMEGAMON-X","The tension in the air is reminiscent of that following
+the conflict that broke out regarding the X Program.",""
+"d320_030_040","char_SIMMONS","I'm curious. Could you describe for me, in concrete terms,
+how exactly the X Program works?",""
+"d320_030_050","char_MAGNAMON_X","It lodges itself within a Digimon,
+then ultimately deletes it from existence.",""
+"d320_030_060","char_MAGNAMON_X","The only way to escape its effects
+is to possess the X Antibody, which is—",""
+"d320_030_070","char_KUZUHAMON","Y-You, there! Hand over your X Antibodies!",""
+"d320_030_080","char_JESMON_X","Since possessing the X Antibody is a matter of life
+and death, there are many who try to take it by force.",""
+"d320_030_090","char_OMEGAMON-X","These Digimon were likely sent here by Parallelmon as well.",""
+"d320_030_100","char_OMEGAMON-X","Beware! They are on the attack!",""
+"d320_040_010","char_KUZUHAMON","W-We're sorry! 
+It was wrong of us to attack you!",""
+"d320_040_020","char_KUZUHAMON","We won't try to steal them anymore,
+so please, just let us keep our antibodies!",""
+"d320_040_030","char_MAGNAMON_X","It seems their X Antibodies are extrinsic rather than intrinsic.",""
+"d320_040_040","char_SIMMONS","Extrinsic? So there are different types of X Antibodies?",""
+"d320_040_050","char_JESMON_X","Yes. Aside from a few special cases, most Digimon
+acquire the antibody extrinsically.",""
+"d320_040_060","char_JESMON_X","Which is where selection comes in.",""
+"d320_040_070","char_JESMON_X","It may be sad, but we must accept that this trial bestowed
+upon us will lead to the evolution of Digimon as a species.",""
+"d320_040_080","char_JESMON_X","The X Antibody completely nullifies the X Program,
+but it does not last forever.",""
+"d320_040_090","char_JESMON_X","After it has been used up, the X Program will
+continue to act as a force for natural selection.",""
+"d320_040_100","char_MAGNAMON_X","Survivors must battle amongst themselves
+for the X Antibody in order to stay alive.",""
+"d320_040_110","char_SIMMONS","I see. So those Digimon just now were risking their lives
+in an attempt to acquire the antibody.",""
+"d320_040_120","char_TOUDO","How brutal... It's like a scene straight out of hell.",""
+"d320_040_130","char_JESMON_X","No, this is a trial bestowed upon us that we must overcome.",""
+"d320_040_140","char_JESMON_X","The weak shall die... But if that is the divine law we must
+live by, I wish to at least make it so they do not suffer.",""
+"d320_040_150","char_MAGNAMON_X","Yes, that is the compassionate thing to do.",""
+"d320_040_160","char_DORUMON","They can't be serious...!",""
+"d320_040_170","char_OMEGAMON-X","Their thinking was never so extreme
+before they acquired the X Antibody...",""
+"d320_040_180","char_OMEGAMON-X","Could the antibody itself be affecting their personalities?",""
+"d320_040_190","char_SIMMONS","There are plenty of examples of bodily changes having an
+impact on personality, though they're all in human cases.",""
+"d320_040_200","char_OMEGAMON-X","Hm... I am sensing the presence of others. Most likely, there are
+more Digimon who are after the X Antibody lurking nearby.",""
+"d320_040_210","char_JESMON_X","Justice must be served, so what we do will not change. 
+If you try to stop us, we may end up in quite the rivalry.​​",""
+"d320_050_010","char_OMEGAMON-X","What is this place? This... is not our world.","d320_050_010"
+"d320_050_020","char_SIMMONS","No, but I know this lab like the back of my hand... Looks
+like our world is next.","d320_050_020"
+"d320_050_030","char_TOUDO","""You want me to leave public safety with you?""","d320_050_030"
+"d320_050_040","char_SIMMONS","""Yes... I have some concerns about the organization,
+which I suspect you share.""","d320_050_040"
+"d320_050_050","char_TOUDO","""I've already written my resignation. Ever since Captain
+Kuremi quit, I feel like things have gotten out of hand.""","d320_050_050"
+"d320_050_060","char_TOUDO","""When he was still around, it felt like we had purpose...
+But I'm surprised to hear that you're leaving, too, Dr. Simmons.""","d320_050_060"
+"d320_050_070","char_TOUDO","""I thought... Don't you see Digimon as enemies?""","d320_050_070"
+"d320_050_080","char_SIMMONS","""I did, until very recently. I believed preparing for the
+coming threat of the Digimon was the right thing to do.""","d320_050_080"
+"d320_050_090","char_SIMMONS","""But depending on the situation, the right thing to do
+can change. Clinging to a single vision of justice is foolish.""","d320_050_090"
+"d320_050_100","char_TOUDO","""...Which is exactly what the public safety office
+is doing right now.""","d320_050_100"
+"d320_050_110","char_SIMMONS","""That's right. I see you're every bit as sharp as I suspected.""","d320_050_110"
+"d320_050_120","char_SIMMONS","""That test subject Captain Kuremi's friend brought in... 
+Aegiomon, I think it was?""","d320_050_120"
+"d320_050_130","char_SIMMONS","""That Digimon clearly had his own will, his own emotions. 
+More importantly, he trusted the humans he was with.""","d320_050_130"
+"d320_050_140","char_SIMMONS","""Seeing that caused me to reevaluate my understanding.
+Or, rather, you could say that those two taught me something.""","d320_050_140"
+"d320_050_150","char_SIMMONS","""They showed me that Digimon and humans
+can understand one another.""","d320_050_150"
+"d320_050_160","char_TOUDO","""Heh...""","d320_050_160"
+"d320_050_170","char_SIMMONS","""What's so funny?""","d320_050_170"
+"d320_050_180","char_TOUDO","""The wonders never cease. What you said just now didn't 
+sound like data or facts. It sounded like a dream of yours.""","d320_050_180"
+"d320_050_190","char_SIMMONS","""What is science for but to make people's hopes and dreams 
+come true? I'm sure that's what Dr. Yuki would say.""","d320_050_190"
+"d320_050_200","char_SIMMONS","""I... don't want to create instruments of war.""","d320_050_200"
+"d320_050_210","char_JESMON_X","Instruments of war...?
+Did Digimon start a conflict in your world?","d320_050_210"
+"d320_050_220","char_SIMMONS","They played a crucial role in the outbreak of one.
+That much is objective fact.","d320_050_220"
+"d320_050_230","char_SIMMONS","But please don't misunderstand.
+I don't blame Digimon at all.","d320_050_230"
+"d320_050_240","char_SIMMONS","I believe we can find a way to coexist—","d320_050_240"
+"d320_050_250","char_MAGNAMON_X","There is no perfect future where all can be happy
+and live in harmony.","d320_050_250"
+"d320_050_260","char_MAGNAMON_X","Such lies will save no one.
+It's just as I have been saying: selection is a necessity.","d320_050_260"
+"d320_050_270","char_MAGNAMON_X","There are too many unnecessary Digimon in this world...
+Your future is the result of that.","d320_050_270"
+"d320_050_280","char_JESMON_X","We need the X Program, and with Parallelmon's ability,
+we can carry out the process of selection more efficiently.","d320_050_280"
+"d320_050_290","char_OMEGAMON-X","More efficiently...? What do you mean by that?","d320_050_290"
+"d320_050_300","char_JESMON_X","We can isolate all lesser beings in another dimension.
+That will resolve everything.","d320_050_300"
+"d320_050_310","char_OMEGAMON-X","But that is absurd! How can you even consider
+such a monstrous ""solution""...?!","d320_050_310"
+"d320_050_320","char_MAGNAMON_X","Apologies, but we aren't interested in a debate.
+If you wish to try and stop us by force, we won't hold back.","d320_050_320"
+"d320_050_330","char_TOUDO","Doesn't seem like there's any common ground
+to be found, at all.","d320_050_330"
+"d320_050_340","char_DORUMON","Maybe we won't be able to cooperate after all...","d320_050_340"
+"d320_050_350","char_SIMMONS","That's what happens when folks get too fixated
+on one idea of what's right.","d320_050_350"
+"d320_050_360","char_SIMMONS","They talk of evolution, but the true meaning of that term
+involves adapting to fit an environment.","d320_050_360"
+"d320_050_370","char_SIMMONS","For those who insist they don't need to change,
+there can be no evolution.","d320_050_370"
+"d320_060_010","char_KUREMI","""So, they haven't found Kuroi, either...""",""
+"d320_060_020","char_TOUDO","""That's right, sir... I'm afraid we've lost
+many of our old comrades.""",""
+"d320_060_030","char_TOUDO","""Some were caught up in the explosion over the government building.
+Others died because of anomalous phenomena...""",""
+"d320_060_040","char_TOUDO","""There are also lots of people who are still unaccounted for,
+but there's one thing we can say for certain.""",""
+"d320_060_050","char_TOUDO","""Every one of them was doing all they could
+to accomplish their mission.""",""
+"d320_060_060","char_TOUDO","""So I can't just sit around doing nothing.
+Dr. Simmons and I are returning to Anomalous Affairs.""",""
+"d320_060_070","char_TOUDO","""The public safety office is barely even functional anymore,
+but somebody has to do something...""",""
+"d320_060_080","char_TOUDO","""Mr. Kuremi... No, Captain Kuremi...""",""
+"d320_060_090","char_TOUDO","""...what are you going to do?""",""
+"d320_060_100","char_KUREMI","""...""",""
+"d320_060_110","char_TOUDO","""I'm going to fight. I'm going to face down our foes,
+however terrifying the enemy Digimon may be!""",""
+"d320_060_120","char_ULFORCEVDRAMON_X","You would fight Digimon?",""
+"d320_060_130","char_TOUDO","I... won't deny what I've done.",""
+"d320_060_140","char_TOUDO","I've taken up arms against Digimon many times now,
+so that we humans might survive.",""
+"d320_060_150","char_TOUDO","Hate me if you will. You have every right.",""
+"d320_060_160","char_SIMMONS","Honestly, Asuna! Did you have to put that so bluntly?",""
+"d320_060_170","char_SIMMONS","Though I suppose that IS rather in character of you...",""
+"d320_060_180","char_TOUDO","Still... I haven't given up.",""
+"d320_060_190","char_ULFORCEVDRAMON_X","Given up? On what?",""
+"d320_060_200","char_TOUDO","Coexistence.",""
+"d320_060_210","char_DUKEMON_X","You would speak of such a thing? You, who have
+taken up arms against Digimon? How absurd!",""
+"d320_060_220","char_DUKEMON_X","In truth... you are every bit as self-centered
+as those other cowards!",""
+"d320_070_010","char_KUREMI","""...Parallelmon?""",""
+"d320_070_020","char_TOUDO","""That's right, sir. They're a hostile Digimon we haven't
+been able to get much of a handle on so far.""",""
+"d320_070_030","char_TOUDO","""Dr. Simmons has a theory that they can
+travel freely through space-time.""",""
+"d320_070_040","char_KUREMI","""I see... Then we'll need to take action
+as soon as possible.""",""
+"d320_070_050","char_KUREMI","""Man, just the thought of traveling through space-time gets my
+head spinning. Makes me wonder what's even real anymore.""",""
+"d320_070_060","char_TOUDO","""Do you remember what you said to me
+back when I was still new to public safety?""",""
+"d320_070_070","char_TOUDO","""I signed up because I wanted to do what was right.""",""
+"d320_070_080","char_TOUDO","""But once I got within the bounds of the organization,
+I started to question what the right thing to do really was.""",""
+"d320_070_090","char_TOUDO","""I wasn't even sure if it was humanity
+that we should be protecting anymore...""",""
+"d320_070_100","char_TOUDO","""I was lost, I was worried, and I couldn't see my way through.
+But you noticed that, and decided to encourage me.""",""
+"d320_070_110","char_TOUDO","""You told me that I was exactly the right
+kind of person to work in public safety.""",""
+"d320_070_120","char_TOUDO","""That none are more trustworthy than those who question what is 'right.'
+That nothing is more terrifying than an arbitrary sense of justice.""",""
+"d320_070_130","char_TOUDO","""That some things matter more than using righteousness
+as a weapon... such as always questioning what is just.""",""
+"d320_070_140","char_TOUDO","""And that as such, to have doubts about
+these things is its own kind of skill.""",""
+"d320_070_150","char_TOUDO","""If it weren't for those very words, I wouldn't be standing
+here today, continuing to question what is right.""",""
+"d320_070_160","char_DORUMON","Some things matter more than using
+righteousness as a weapon... Hm...",""
+"d320_070_170","char_OMEGAMON-X","...",""
+"d320_070_180","char_TOUDO","What is it?",""
+"d320_070_190","char_DORUMON","Sorry. It's nothing. Never mind.",""
+"d320_070_200","char_MIREI","Countless fragments of space-time lie buried
+beyond an Akashic Backdoor.",""
+"d320_070_210","char_MIREI","Apparently, some of that debris was taken
+from times and places related to you.",""
+"d320_070_220","char_MIREI","While not very strong, there's a force that draws beings back
+to the parts of space-time that they were cut off from.",""
+"d320_070_230","char_MIREI","As a side effect of that, you're all basically acting like
+magnets, drawing specific bits of debris toward you.",""
+"d320_070_240","char_MIREI","I suppose you could say that's the mechanism at work
+behind the phenomena you're seeing now.",""
+"d320_080_010","char_TOUDO","""The research data on Parallelmon has been stolen?!""","d320_080_010"
+"d320_080_020","char_SIMMONS","""Yes... and it was Kuga who took it! That data could be the 
+key to a fundamental theory of travel through space-time.""","d320_080_020"
+"d320_080_030","char_SIMMONS","""I don't know his motives, but this is a disaster!
+That data could've been our ticket out of this hellish scenario!""","d320_080_030"
+"d320_080_040","char_SIMMONS","That memory is from just before we came here.","d320_080_040"
+"d320_080_050","char_SIMMONS","The two of us went after Kuga, and just when we
+finally found him, Parallelmon showed up.","d320_080_050"
+"d320_080_060","char_SIMMONS","Kuga was probably sent here as well.","d320_080_060"
+"d320_080_070","char_DUKEMON_X","Research data on Parallelmon...
+Travel through space-time...","d320_080_070"
+"d320_080_080","char_ULFORCEVDRAMON_X","That will prove useful information indeed!","d320_080_080"

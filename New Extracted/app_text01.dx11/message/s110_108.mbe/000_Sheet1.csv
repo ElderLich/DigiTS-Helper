@@ -1,0 +1,152 @@
+string2 0,string 1,string 2,string 3
+"s110_108_010","char_UNKNOWN","Bzzz...",""
+"s110_108_020","char_PLAYER_M","{next}It's a fly.",""
+"s110_108_021","char_PLAYER_M","{next}It's a mosquito.",""
+"s110_108_022","char_PLAYER_M","{next}It's nothing.",""
+"s110_108_030","char_UNKNOWN","Bzz! Bzz! Bzz! I... am the...",""
+"s110_108_040","char_UNKNOWN","Bzz! Bzz! Bzz! Bzz! I... am...",""
+"s110_108_050","char_UNKNOWN","Bzz... Bzz...",""
+"s110_108_060","char_UNKNOWN","I... am the...",""
+"s110_108_070","char_PLAYER_M","{next}The what?",""
+"s110_108_071","char_PLAYER_M","{next}Huh?",""
+"s110_108_072","char_PLAYER_M","{next}Did I hear something?",""
+"s110_108_080","char_UNKNOWN","...am the... I am...",""
+"s110_108_090","char_UNKNOWN","...isten...! I am...!",""
+"s110_108_100","char_UNKNOWN","Bzz! Bzz! Bzz! I am...!",""
+"s110_108_110","char_UNKNOWN","...am the...",""
+"s110_108_120","char_UNKNOWN","...mperor!",""
+"s110_108_130","char_PLAYER_M","{next}I heard something.",""
+"s110_108_131","char_PLAYER_M","{next}...""Pepperoni""?",""
+"s110_108_132","char_PLAYER_M","{next}I must be hearing things.",""
+"s110_108_140","char_UNKNOWN","...Look! ...ere! Over here!",""
+"s110_108_150","char_UNKNOWN","...No! ...isten! Listen! I SAID, ""LISTEN!""",""
+"s110_108_160","char_UNKNOWN","...ou! You! Are you ignoring me?!",""
+"s110_108_170","char_UNKNOWN","...Look! Look carefully! Focus your eyes!",""
+"s110_108_180","char_UNKNOWN","I am the Dragon Emperor!",""
+"s110_108_190","char_PLAYER_M","{next}Dragon... Emperor?",""
+"s110_108_191","char_PLAYER_M","{next}Drag... Queen?",""
+"s110_108_192","char_PLAYER_M","{next}Am I still hearing things?",""
+"s110_108_220","char_UNKNOWN","Yes! You are right! The Dragon Emperor!",""
+"s110_108_230","char_UNKNOWN","Are you really listening?! Oh, enough of this. Call me 
+whatever you like.",""
+"s110_108_240","char_UNKNOWN","You are doing that on purpose, are you not?! You think 
+that is funny?! Hm?!",""
+"s110_108_250","char_UNKNOWN","In any case, I am glad you have noticed. All of my comrades 
+are too thick-headed.",""
+"s110_108_260","char_EXAMON","I am Examon. I was always told I was too big, so I made 
+myself smaller, but I overdid it.",""
+"s110_108_270","char_EXAMON","I am new to this world and am struggling to get back to
+normal. Do you know a way?",""
+"s110_108_280","char_PLAYER_M","{next}Want to try medicine?",""
+"s110_108_281","char_PLAYER_M","{next}Can't you fix it on your own?",""
+"s110_108_282","char_PLAYER_M","{next}Why not just stay like that?",""
+"s110_108_290","char_EXAMON","Medicine...? If you know of something, please tell me!",""
+"s110_108_300","char_EXAMON","I have been trying for a long time now. I hate to say it, but 
+I am helpless, here!",""
+"s110_108_310","char_EXAMON","I refuse. It is inconvenient to go unnoticed by my comrades 
+and I find that I miss them...",""
+"s110_108_320","char_EXAMON","Do you have any ideas? Hmm... A recovery medicine that 
+also promotes growth...?",""
+"s110_108_330","char_EXAMON","That medicine sounds like it might work. You must take me 
+to where I can find it.",""
+"s110_108_340","char_EXAMON","Let us leave at once. Naturally, I shall accompany you!",""
+"s110_108_350","char_VENUSMON","I see. Being unable to return to its original size. That
+must be very troubling...",""
+"s110_108_360","char_VENUSMON","And where is this Examon right now?",""
+"s110_108_370","char_EXAMON","I am right here! I may be small in size, but I know you cannot 
+miss my large presence!",""
+"s110_108_380","char_VENUSMON","Hmm. Are you really here? I cannot see a thing.",""
+"s110_108_390","char_VENUSMON","Anyway, let us try using the medicine. I will pour it over
+your head.",""
+"s110_108_400","char_VENUSMON","Over here? A little more to the right? This is so difficult... 
+I will simply scatter it!",""
+"s110_108_410","char_EXAMON","Ah, this is good...! It seems to be working!",""
+"s110_108_420","char_VENUSMON","...Examon. So you WERE there. I can finally kind of see 
+you now.",""
+"s110_108_430","char_EXAMON","Say whatever you want. All I want is to get back to my 
+original size.",""
+"s110_108_440","char_EXAMON","Hmm... It looks like I am still getting bigger. Let us move to 
+a larger place.",""
+"s110_108_450","char_VENUSMON","I will accompany you. I would like to see how the medicine
+works.",""
+"s110_108_460","char_EXAMON","This is working great! My body is gradually
+returning to its original size!",""
+"s110_108_470","char_EXAMON","Hm? That is no ordinary group of Digimon coming this way. 
+I wonder what is going on...",""
+"s110_108_480","char_HERCULESKABUTERIMON","Hey! Who the hell are you?!",""
+"s110_108_490","char_EXAMON","It sounds like you do not know your manners!
+You should introduce yourself first!",""
+"s110_108_500","char_HERCULESKABUTERIMON","Your size is nothing compared to ours! Hey, guys! Let's show
+this idiot who the boss is!",""
+"s110_108_510","char_VENUSMON","You must be the remnants of the Titans. Leave this place at
+once!",""
+"s110_108_520","char_HERCULESKABUTERIMON","Hell, no. The rest of my buddies are on their way. How does
+that sound? Hm? You scared?",""
+"s110_108_530","char_EXAMON","We have nothing to fear from the likes of you. I will make
+you regret your deeds.",""
+"s110_108_540","char_EXAMON","I will join you. I cannot let these thugs run free!",""
+"s110_108_550","char_VENUSMON","But it seems you are not quite back to your full size yet...",""
+"s110_108_560","char_EXAMON","I am more than big enough to defeat these cowards!",""
+"s110_108_570","char_EXAMON","Besides, I cannot just turn a blind eye. I may not be at full 
+strength, but I can fight!",""
+"s110_108_580","char_VENUSMON","Thank you. Of course I will fight alongside you.",""
+"s110_108_590","char_EXAMON","Although I was not quite my full strength in this body, 
+it looks like we have won.",""
+"s110_108_600","char_EXAMON","Hm? Oh, it seems my power is... returning at last!",""
+"s110_108_610","char_EXAMON","Finally! I am back to normal. Oh, this feeling... 
+It has been so long...!",""
+"s110_108_620","char_VENUSMON","It seems that the medicine has worked as I hoped. 
+What a relief.",""
+"s110_108_630","char_VENUSMON","Because you were so miniscule before, now you seem enormous.",""
+"s110_108_640","char_EXAMON","I am back to normal now, despite all the trouble I went 
+through to make myself small.",""
+"s110_108_650","char_EXAMON","Although, I am starting to feel that this size suits me best. 
+May I ask what you think?",""
+"s110_108_660","char_PLAYER_M","{next}Yes, this original size is the best.",""
+"s110_108_661","char_PLAYER_M","{next}A smaller size would be more convenient.",""
+"s110_108_662","char_PLAYER_M","{next}Palm-sized was cuter.",""
+"s110_108_670","char_EXAMON","I see! So you like the bigger version of me. I mean, the
+bigger the better, they say.",""
+"s110_108_680","char_EXAMON","Hmm... Well, I suppose it was easier to move around when I
+was smaller.",""
+"s110_108_690","char_EXAMON","Do not use the word ""cute"" toward the Dragon Emperor! 
+I want to be seen as ""classy""!",""
+"s110_108_700","char_EXAMON","I have made up my mind. I will stay my original size.",""
+"s110_108_710","char_EXAMON","Those Titan remnants... Do you not think they were stronger
+than expected?",""
+"s110_108_720","char_VENUSMON","I agree with you. They were a lot trickier than I thought
+they would be.",""
+"s110_108_730","char_EXAMON","If even those thugs were strong enough to make us struggle,
+I must be more prepared!",""
+"s110_108_740","char_EXAMON","I need to be able to give my best. Now that I have recovered, 
+what should I do next...?",""
+"s110_108_750","char_PLAYER_M","{next}King Drasil is calling for you.",""
+"s110_108_751","char_PLAYER_M","{next}Don't you have any plans?",""
+"s110_108_752","char_PLAYER_M","{next}Why not try getting even bigger?",""
+"s110_108_760","char_EXAMON","King Drasil is? Ah, I remember being summoned now.",""
+"s110_108_770","char_EXAMON","Perhaps I shall catch up with my comrades. I wonder if I can
+find any at the rendezvous point.",""
+"s110_108_780","char_EXAMON","Now that I am my normal size, it is meaningless if I cannot
+find my comrades.",""
+"s110_108_790","char_EXAMON","What are you doing?! If I get any bigger, I will become too 
+big to see!",""
+"s110_108_800","char_EXAMON","I feel my current size suits me best. I shall do what I can 
+now that I am back to normal.",""
+"s110_108_810","char_EXAMON","I was preoccupied with the misfortune that had befallen me,
+but now that is over.",""
+"s110_108_820","char_EXAMON","Now that I am back to normal, I can give it my all. I am
+ready to fulfill my mission.",""
+"s110_108_830","char_EXAMON","I shall head for the appointed spot.",""
+"s110_108_840","char_VENUSMON","I am sure you can exert the best of your power in that size.
+I wish for your success.",""
+"s110_108_850","char_VENUSMON","Also... in my opinion, your original size suits you best.",""
+"s110_108_860","char_EXAMON","Hmph. You are just flattering me.",""
+"s110_108_870","char_VENUSMON","...Hohoho. It looks like your tail has a slight swing in it now.",""
+"s110_108_880","char_EXAMON","...Argh. Do not look!",""
+"s110_108_890","char_EXAMON","I shall be going now. Oh... Here. This is for helping me with 
+everything. See you soon!",""
+"s110_108_1000","char_PLAYER_M","{next}I'll show you the way.",""
+"s110_108_1001","char_PLAYER_M","{end}I'm too busy right now.",""
+"s110_108_1010","char_EXAMON","Great. I am counting on you.",""
+"s110_108_1020","char_EXAMON","Understood. Come back again when you are free.",""
+"s110_108_1030","char_EXAMON","Are you free now? Take me to where the medicine is!",""

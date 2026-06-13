@@ -1,0 +1,97 @@
+string2 0,string 1,string 2,string 3
+"s030_030_010","char_PECKMON","Squawk! Remember me? I'm the Muchomon you helped with the
+FunBeemon eight years ago.",""
+"s030_030_020","char_PECKMON","Thanks again for the help! But get a load of this weird
+""Formal Challenge"" letter I got!",""
+"s030_030_030","char_PECKMON","""Destroyer of our bases, vengeance is nigh. I await thee at
+the station."" -Secret Base Leader",""
+"s030_030_040","char_PLAYER_M","{next}Sounds like you're in trouble.",""
+"s030_030_041","char_PLAYER_M","{next}That's hard to follow...",""
+"s030_030_042","char_PLAYER_M","{next}And if I don't go?",""
+"s030_030_050","char_PECKMON","No, this is meant for you! You're the one who destroyed the
+FunBeemon hives! Squawk!",""
+"s030_030_060","char_PECKMON","And the letter goes on to say that that bees will attack us
+here if this duel is ignored!",""
+"s030_030_070","char_PECKMON","I didn't get it, either, so I asked around. Apparently this
+bee wants revenge on you.",""
+"s030_030_080","char_PECKMON","And the letter goes on to say that that bees will attack us
+here if this duel is ignored!",""
+"s030_030_090","char_PECKMON","Squawk! You make it sound like you're going to ignore this!
+You can't! You have to go!",""
+"s030_030_100","char_PECKMON","And the letter goes on to say that that bees will attack us
+here if this duel is ignored!",""
+"s030_030_110","char_PECKMON","I guess I was wrong to think the FunBeemon were part of a
+Titan plot. Now I feel awful.",""
+"s030_030_120","char_PECKMON","But, this time, it could be our village that gets destroyed!",""
+"s030_030_130","char_PECKMON","Please! Go to the requested duel site and try explaining
+that this is all just a big misunderstanding!",""
+"s030_030_140","char_PLAYER_M","{next}You got it.",""
+"s030_030_141","char_PLAYER_M","{end}I'm going to miss this place...",""
+"s030_030_150","char_PECKMON","Th-Thanks! You're the only one I can turn to!",""
+"s030_030_160","char_PECKMON","Hey! Don't go writing us off like that! This place is still
+just fine! Help us, please!",""
+"s030_030_170","char_TIGERVESPAMON","Human...! At last... At last we meet again! Lowly destroyer
+of our queendom...",""
+"s030_030_180","char_TIGERVESPAMON","...Long have I awaited this day, even suffering through
+Titan rule for my revenge!",""
+"s030_030_190","char_TIGERVESPAMON","But now, after eight years, my satisfaction is at hand.
+Human, I offer thee my thanks.",""
+"s030_030_200","char_PLAYER_M","{next}Let's settle this.",""
+"s030_030_201","char_PLAYER_M","{next}Can't we talk this out?",""
+"s030_030_202","char_PLAYER_M","{next}What were those fake beehives, really?",""
+"s030_030_210","char_TIGERVESPAMON","It would seem thou art prepared for this as well. I
+acknowledge thee as a worthy foe!",""
+"s030_030_220","char_TIGERVESPAMON","Let me ask thee, human. Eight years ago, didst thou seek out
+an exchange of words?",""
+"s030_030_230","char_TIGERVESPAMON","Or were thy actions motivated by an imagined Titan plot?
+Therein lies thy answer!",""
+"s030_030_240","char_TIGERVESPAMON","They were our... No, I dare not reveal such secrets to a
+human, but their loss was dear.",""
+"s030_030_250","char_TIGERVESPAMON","But enough talk. With my lance I shall pin thy silvered
+tongue to thy palate!",""
+"s030_030_260","char_TIGERVESPAMON","Let the battle... begin!",""
+"s030_030_270","char_TIGERVESPAMON","So... I am defeated. There is no denying the result. I lost
+that battle utterly.",""
+"s030_030_280","char_TIGERVESPAMON","As I am weak, I submit myself to the will of the strong.
+What wouldst thou have of me?",""
+"s030_030_290","char_PLAYER_M","{next}Be my ally.",""
+"s030_030_291","char_PLAYER_M","{next}I'd like us to talk.",""
+"s030_030_292","char_PLAYER_M","{next}Nothing at all.",""
+"s030_030_300","char_TIGERVESPAMON","Thou wouldst enlist the aid of a bested foe? Hahaha! Thou
+art strange, indeed!",""
+"s030_030_310","char_TIGERVESPAMON","Were our circumstances different... But no. My pride bids me
+speak no more. Instead...",""
+"s030_030_320","char_TIGERVESPAMON","Indeed... One might say that overzealous concealment of our
+base has made dialogue nigh impossible, after all.",""
+"s030_030_330","char_TIGERVESPAMON","Otherwise, we may sooner have achieved diplomatic relations.
+This has long been a bitter regret of mine.",""
+"s030_030_340","char_TIGERVESPAMON","Thou art both gracious and cruel to set aside the revenge
+that was all I lived for.",""
+"s030_030_350","char_TIGERVESPAMON","Very well. If thou bidst me to do as I will, then I shall
+act as I please.",""
+"s030_030_360","char_TIGERVESPAMON","I hereby swear that I shall retire to a home in the vicinity
+of Gear Forest Village.",""
+"s030_030_370","char_TIGERVESPAMON","I have heard various efforts at restoration are underway. I,
+too, wish to rebuild.",""
+"s030_030_380","char_TIGERVESPAMON","But do not misunderstand me. I undertake this only so as to
+ensure my own survival.",""
+"s030_030_390","char_PLAYER_M","{next}That's fine.",""
+"s030_030_391","char_PLAYER_M","{next}I recommend living in peace with the others.",""
+"s030_030_392","char_PLAYER_M","{next}Whatever you want.",""
+"s030_030_400","char_TIGERVESPAMON","I shall exact my revenge upon thee yet, by living on and
+lingering in thy heart.",""
+"s030_030_410","char_TIGERVESPAMON","Hmph! Have no fear. I gave up being leader long ago. I shall
+become part of the village.",""
+"s030_030_420","char_TIGERVESPAMON","A curious turn of phrase. I have always done so. But what am
+I suited for beside revenge?",""
+"s030_030_430","char_TIGERVESPAMON","Apologies. I begin to speak too freely. Farewell.",""
+"s030_030_440","char_PECKMON","Squawk! This cool, super strong-looking Digimon showed up!
+Was that the challenger?",""
+"s030_030_450","char_PECKMON","He apologized and asked to help rebuild, and I apologized for
+wrongfully suspecting a Titan plot.",""
+"s030_030_460","char_PECKMON","I'm glad we made up! Squawk! Oh, and here. Take this as
+thanks for saving the village!",""
+"s030_030_470","char_PECKMON","I really appreciate you taking care of things like this!
+Squawk, squawk!",""
+"s030_030_480","char_TIGERVESPAMON","My handmade sweets have grown popular indeed. Others truly
+seem to enjoy them. Hehe!",""

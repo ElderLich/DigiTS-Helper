@@ -1,0 +1,232 @@
+string2 0,string 1,string 2,string 3
+"m180_010_005","char_INORI","*sigh*","m180_010_005"
+"m180_010_010","char_INORI","I bet my dad and Hiroko are so worried...","m180_010_010"
+"m180_010_020","char_PLAYER_M","Knowing your father, he's raising hell.{next}",""
+"m180_010_021","char_PLAYER_M","Didn't you leave a note or anything?",""
+"m180_010_022","char_PLAYER_M","Every child needs to leave the nest one day...",""
+"m180_010_030","char_INORI","Right? One time, I didn't come straight home from school
+and my dad ended up searching all over town for me.","m180_010_030"
+"m180_010_040","char_INORI","I didn't have a chance to.","m180_010_040"
+"m180_010_050","char_INORI","I never imagined anything like this would happen.","m180_010_050"
+"m180_010_060","char_INORI","No, my dad doesn't think that way. He'll definitely lose his mind.","m180_010_060"
+"m180_010_070","char_INORI","I mean, can we blame him? After all, he lost two of his
+family members three years ago, too...","m180_010_070"
+"m180_010_080","char_INORI","But, yeah, he's still way too overprotective.","m180_010_080"
+"m180_010_090","char_AEGIOMON","And what about your friend Hiroko?","m180_010_090"
+"m180_010_100","char_INORI","Yeah, I bet she's worried to pieces. We've been best
+friends since we were little kids.","m180_010_100"
+"m180_010_110","char_INORI","You know that video streaming thing she does? I think she
+does that for me.","m180_010_110"
+"m180_010_120","char_INORI","She says she's doing it to get rich, but that's not true.
+She always used to say she wanted to make anime...","m180_010_120"
+"m180_010_130","char_INORI","I don't think she was ever into the supernatural or urban
+legends. At least, not until I lost my my mom and brother.","m180_010_130"
+"m180_010_140","char_PLAYER_M","She's doing all that for you?{next}",""
+"m180_010_141","char_PLAYER_M","Is she gathering information about the accident?{next}",""
+"m180_010_142","char_PLAYER_M","So she lied about doing it for the money?{next}",""
+"m180_010_150","char_INORI","Yeah, I think so. She's trying to find even the smallest
+clue about the accident.","m180_010_150"
+"m180_010_160","char_AEGIOMON","She should just say so, then.","m180_010_160"
+"m180_010_170","char_INORI","She's just worried I'd feel guilty about it. That's why she
+says it's for the money.","m180_010_170"
+"m180_010_180","char_INORI","Hiroko is really kind at heart like that.","m180_010_180"
+"m180_010_190","char_AEGIOMON","I still don't really get it.","m180_010_190"
+"m180_010_200","char_INORI","You will in time. After all, you're basically still a newborn.","m180_010_200"
+"m180_010_210","char_INORI","Is that the Gear Forest?","m180_010_210"
+"m180_010_220","char_AEGIOMON","Wait! Those things... Are they...?!","m180_010_220"
+"m180_010_230","char_AEGIOMON","Digimon are flying in the same direction as us... toward
+the Gear Forest!",""
+"m180_020_010","char_INORI","I haven't seen a forest like this since I went camping in
+elementary school... No, this place is even more amazing!","m180_020_010"
+"m180_020_020","char_AEGIOMON","The Digimon we saw earlier flew this way, too.","m180_020_020"
+"m180_020_030","char_AEGIOMON","If they're Titans...","m180_020_030"
+"m180_020_040","char_INORI","Yeah. Let's go. I just hope the fighting hasn't started yet!","m180_020_040"
+"m180_030_010","char_AEGIOMON","...?!",""
+"m180_030_020","char_INORI","What was that sound just now? Was it the Titans?",""
+"m180_030_030","char_AEGIOMON","If it was, then we'd really better hurry! Come on! Inori,
+stay behind me!",""
+"m180_030_040","char_INORI","......",""
+"m180_030_050","char_AEGIOMON","Hm? What is it?",""
+"m180_030_060","char_INORI","It's like... you're getting to be more and more like a real
+hero. I feel better just knowing you're here...",""
+"m180_030_070","char_AEGIOMON","Is that supposed to be a compliment?",""
+"m180_030_080","char_INORI","Of course! But...",""
+"m180_030_090","char_INORI","...at the same time, it also feels like we're growing farther apart.",""
+"m180_030_110","char_AEGIOMON","Inori...",""
+"m180_030_120","char_AEGIOMON","I—",""
+"m180_030_130","char_AEGIOMON","Hey! Stop that!",""
+"m180_030_140","char_INORI","They're obviously bullying the weak! We can't ignore that!",""
+"m180_040_010","char_PALMON","Thank you for saving me! They attacked so suddenly from above.","m180_040_010"
+"m180_040_020","char_PALMON","They caught me off guard. I really would've been in trouble
+if you folks didn't come along!","m180_040_020"
+"m180_040_030","char_INORI","I'm glad you're safe. Are you a Digimon of the Gear Forest?","m180_040_030"
+"m180_040_040","char_PALMON","Yes! I'm Palmon. Nice to meet you!","m180_040_040"
+"m180_040_050","char_AEGIOMON","So the Titans are all over this area, huh?","m180_040_050"
+"m180_040_060","char_PALMON","Yes, that's right! I have to warn everyone!","m180_040_060"
+"m180_040_070","char_AEGIOMON","We'll come with you. Junomon sent us here to protect this
+place.","m180_040_070"
+"m180_040_080","char_PLAYER_M","Are you worried about Aegiomon?{next}",""
+"m180_040_081","char_PLAYER_M","Do you think Aegiomon will stay in this world?{next}",""
+"m180_040_082","char_PLAYER_M","I wonder what Aegiomon wants to do after this...{next}",""
+"m180_040_090","char_INORI","Honestly...","m180_040_090"
+"m180_040_100","char_INORI","...I've been thinking how awesome it'd be if the three of
+us could stick together forever.","m180_040_100"
+"m180_040_110","char_INORI","Of course that means you, too, {player}!","m180_040_110"
+"m180_040_120","char_INORI","I first met Aegiomon in the Shinjuku underground, and then
+you came along and rescued us, {player}.","m180_040_120"
+"m180_040_130","char_INORI","You really are a nice person, you know that?","m180_040_130"
+"m180_040_140","char_INORI","My life was never the same after that.","m180_040_140"
+"m180_040_150","char_INORI","You don't know what I was like before I met you two...","m180_040_150"
+"m180_040_160","char_INORI","All I ever did was cry about the past, walling myself away
+and praying for the world to give my mom and Yuu back.","m180_040_160"
+"m180_040_170","char_INORI","It's weird, but since I met all of you... I don't pray like that
+anymore.","m180_040_170"
+"m180_040_180","char_INORI","Now I can... I can move forward.","m180_040_180"
+"m180_040_190","char_INORI","Still... it was selfish of me to hope this could continue on
+forever like this, huh?","m180_040_190"
+"m180_040_200","char_PLAYER_M","I know how it feels to lose family members...{next}",""
+"m180_040_201","char_PLAYER_M","Your story feels oddly familiar...{next}",""
+"m180_040_202","char_PLAYER_M","I wish the three of us could be like a family...{next}",""
+"m180_040_210","char_INORI","Well, thanks for hearing me out... I mean it.","m180_040_210"
+"m180_040_220","char_INORI","I've never even opened up like this to Hiroko...","m180_040_220"
+"m180_040_230","char_INORI","......","m180_040_230"
+"m180_040_240","char_INORI","Okay, I've made my decision! I'm going to be supportive.","m180_040_240"
+"m180_040_250","char_INORI","I don't care what path Aegiomon takes! I have to repay him
+for everything he's done for me!","m180_040_250"
+"m180_050_010","char_PALMON","Welcome to our village! Make yourselves at home!",""
+"m180_050_020","char_INORI","It's wonderful. Almost like a fantasy!",""
+"m180_050_030","char_PALMON","Hee hee! I'm glad you like it! ...Oh, I need to tell everyone
+about the Titans!",""
+"m180_050_040","char_PALMON","I'll make sure everyone around here hears. Could you go
+and tell Bacchusmon about it?",""
+"m180_050_050","char_AEGIOMON","Bacchusmon?",""
+"m180_050_060","char_PALMON","The chief of this village! ...Sort of?",""
+"m180_050_070","char_PALMON","He's drunk most of the time, so Sirenmon ends up doing the
+actual work.",""
+"m180_050_080","char_INORI","Got it. We'll be sure to tell Bacchusmon.",""
+"m180_050_090","char_PALMON","Thank you! I'll see you folks later.",""
+"m180_050_100","char_OPERATOR_M","The World Tree, huh?",""
+"m180_050_105","char_OPERATOR_M","It's a frequent theme of myths and legends in the human
+world, too.",""
+"m180_050_110","char_OPERATOR_M","It wouldn't be a stretch to call our various mythologies the
+greatest anomalies in human history.",""
+"m180_050_120","char_OPERATOR_M","I'm intrigued, but that's something we can look into later.
+There will be plenty of time after saving the world...",""
+"m180_060_010","char_UNKNOWN","Aaah!","m180_060_010"
+"m180_060_020","char_AEGIOMON","Ugh... What's that smell?","m180_060_020"
+"m180_060_030","char_INORI","Um... Excuse me. Who might you be?","m180_060_030"
+"m180_060_040","char_SIRENMON","That drunk Digimon you see there is Bacchusmon.","m180_060_040"
+"m180_060_050","char_SIRENMON","He's... the Chief of this village, I guess. And my name is
+Sirenmon.","m180_060_050"
+"m180_060_060","char_SIRENMON","I suppose you could call me the ""partner"" of that drunk—I mean, 
+the chief.","m180_060_060"
+"m180_060_065","char_SIRENMON","We've had a long and... one could say ""inseparable""
+relationship.","m180_060_065"
+"m180_060_070","char_AEGIOMON","So you're the drunk— I mean, Bacchusmon? There's
+something we need to tell you.","m180_060_070"
+"m180_060_090","char_BACCHUSMON","*hiccup*","m180_060_090"
+"m180_060_100","char_SIRENMON","Please, go on.","m180_060_100"
+"m180_060_110","char_INORI","Yes. Junomon asked us to come here.","m180_060_110"
+"m180_060_120","char_AEGIOMON","The World Tree is going to be targeted. We even ran into
+Titans on the way here!","m180_060_120"
+"m180_060_130","char_BACCHUSMON","......","m180_060_130"
+"m180_060_140","char_BACCHUSMON","*hiccup*","m180_060_140"
+"m180_060_150","char_SIRENMON","......","m180_060_150"
+"m180_060_160","char_PLAYER_M","Can you hear me?{next}",""
+"m180_060_161","char_PLAYER_M","You've had way too much to drink...{next}",""
+"m180_060_162","char_PLAYER_M","Cheers it is, I guess!{next}",""
+"m180_060_170","char_BACCHUSMON","Ungh...","m180_060_170"
+"m180_060_180","char_SIRENMON","I'll respond for that drunkard over there.","m180_060_180"
+"m180_060_190","char_SIRENMON","It is Bacchusmon's responsibility to guard the World Tree
+and defend it from the Titans, to the death if necessary.","m180_060_190"
+"m180_060_200","char_INORI","Is Bacchusmon even listening?","m180_060_200"
+"m180_060_210","char_SIRENMON","But we obviously can't rely on an alcoholic in this
+situation, so I will go and fulfill that duty instead.","m180_060_210"
+"m180_060_220","char_SIRENMON","Is that all right with you, Bacchusmon?","m180_060_220"
+"m180_060_230","char_BACCHUSMON","*hiccup*","m180_060_230"
+"m180_060_240","char_SIRENMON","If you're Junomon's envoys, that means you can fight, too, right?","m180_060_240"
+"m180_060_250","char_SIRENMON","I'd like some help, if you can. Will you come with me to
+the World Tree?","m180_060_250"
+"m180_060_260","char_AEGIOMON","Of course! That's the whole reason we're here. After all, I'm...","m180_060_260"
+"m180_060_270","char_AEGIOMON","I'm...","m180_060_270"
+"m180_060_280","char_AEGIOMON","Uh, never mind.","m180_060_280"
+"m180_060_290","char_INORI","......","m180_060_290"
+"m180_060_300","char_SIRENMON","All right. Let's go see what's going on. We'll listen to the
+whisperings and songs of the World Tree.","m180_060_300"
+"m180_070_010","char_SIRENMON","There's the World Tree—","m180_070_010"
+"m180_070_020","char_AEGIOMON","Everyone! There! Titans at the World Tree!","m180_070_020"
+"m180_070_030","char_SIRENMON","Those damn Titans...!","m180_070_030"
+"m180_070_040","char_INORI","Are they... sucking out its sap?","m180_070_040"
+"m180_070_050","char_SIRENMON","What kind of a monster would target the World Tree?! Do
+the Titans not care about the end of the Digital World?!","m180_070_050"
+"m180_070_060","char_AEGIOMON","Get back, Inori!","m180_070_060"
+"m180_080_010","char_SIRENMON","Thank goodness...! Is the World Tree safe...?","m180_080_010"
+"m180_080_020","char_INORI","Sirenmon. What's wrong?","m180_080_020"
+"m180_080_030","char_SIRENMON","I can't hear the World Tree's voice... I can't sense its power.","m180_080_030"
+"m180_080_040","char_SIRENMON","Even though we drove those Titans away...","m180_080_040"
+"m180_080_050","char_AEGIOMON","Did the Titans suck all the power out?","m180_080_050"
+"m180_080_060","char_SIRENMON","All of it? But that's not possible! How could it be?!","m180_080_060"
+"m180_080_070","char_SIRENMON","The World Tree...!","m180_080_070"
+"m180_080_080","char_BACCHUSMON","Hey! *hiccup* What's going on here?","m180_080_080"
+"m180_080_090","char_SIRENMON","Bacchusmon. Are you... okay?","m180_080_090"
+"m180_080_100","char_BACCHUSMON","Well, it's an emergency, isn't it? You expect me to sit
+around drunk at a time like this?! *hiccup*","m180_080_100"
+"m180_080_110","char_AEGIOMON","Is... standing around drunk any better?","m180_080_110"
+"m180_080_120","char_INORI","Shhh!","m180_080_120"
+"m180_080_130","char_BACCHUSMON","*hiccup* How impudent of those Titans! They altered the
+flow of the Current, didn't they!","m180_080_130"
+"m180_080_140","char_SIRENMON","The Current is the path along which the energy emitted by
+the World Tree is delivered throughout the Digital World.","m180_080_140"
+"m180_080_150","char_BACCHUSMON","I don't know how they did it, but they disrupted the entire
+Current! *hiccup*","m180_080_150"
+"m180_080_160","char_BACCHUSMON","One thing I do know... It seems they mixed in some strange
+substance...","m180_080_160"
+"m180_080_170","char_SIRENMON","I see. So, earlier, they weren't extracting anything...","m180_080_170"
+"m180_080_180","char_SIRENMON","...but, rather, injecting it with something instead.","m180_080_180"
+"m180_080_190","char_SIRENMON","Whatever the case, this is bad... The loss of the Current
+will cause a ton of chaos throughout the Digital World.","m180_080_190"
+"m180_080_200","char_SIRENMON","Let's reassess the situation back at the village.","m180_080_200"
+"m180_100_010","char_BACCHUSMON","Aaaaah!","m180_100_010"
+"m180_100_020","char_INORI","Wait, didn't you JUST say it was no time to be sitting
+around drunk?","m180_100_020"
+"m180_100_030","char_BACCHUSMON","*hiccup*","m180_100_030"
+"m180_100_040","char_SIRENMON","Please forgive Bacchusmon. He wasn't always like this...","m180_100_040"
+"m180_100_050","char_SIRENMON","It seems the drinking started when the pressure of
+protecting the World Tree became too much.","m180_100_050"
+"m180_100_060","char_SIRENMON","Now, the drinking never stops.","m180_100_060"
+"m180_100_070","char_SIRENMON","The pressure just goes to show how important the World
+Tree is. In the human world, it would be like...","m180_100_070"
+"m180_100_080","char_PLAYER_M","Electricity?{next}",""
+"m180_100_081","char_PLAYER_M","Fuel? {next}",""
+"m180_100_082","char_PLAYER_M","A water supply?{next}",""
+"m180_100_090","char_INORI","I wouldn't want to imagine a world without that.","m180_100_090"
+"m180_100_100","char_BACCHUSMON","Hey, Sirenmon.","m180_100_100"
+"m180_100_110","char_BACCHUSMON","Gather all the able-bodied young folk in the village. We're
+going into high alert mode.","m180_100_110"
+"m180_100_120","char_SIRENMON","Are you all right?","m180_100_120"
+"m180_100_130","char_BACCHUSMON","I'm sober. Totally sober now...","m180_100_130"
+"m180_100_140","char_BACCHUSMON","You folk. I've got a small favor to ask. A message for
+Junomon.","m180_100_140"
+"m180_100_160","char_BACCHUSMON","The World Tree has been attacked. An all-out war is
+inevitable.","m180_100_160"
+"m180_100_165","char_BACCHUSMON","It's a shame, but the days of peace are over. Unless we
+meet this attack with everything we have... we'll lose.","m180_100_165"
+"m180_100_170","char_INORI","War...?","m180_100_170"
+"m180_100_180","char_AEGIOMON","Got it. We'll relay the message to Junomon as soon as
+possible.","m180_100_180"
+"m180_100_190","char_BACCHUSMON","Next time you're around, drinks are on me. I'm counting on you.","m180_100_190"
+"m180_110_010","char_OPERATOR_M","This ""Current"" must be the energy source of the Digital
+World. Conflicts only escalate if such things get destroyed.","m180_110_010_M m180_110_010_F"
+"m180_110_030","char_OPERATOR_M","That's basically what happened here after the Shinjuku
+Inferno. So... there's another strange parallel.","m180_110_030_M m180_110_030_F"
+"m180_110_050","char_OPERATOR_M","Perhaps... this was a war that spanned eight years. One that
+spread from their world to ours... and led to its demise.","m180_110_050_M m180_110_050_F"
+"m180_110_060","char_OPERATOR_M","There have to be some clues to getting to the truth
+of things there. Keep on digging, Agent {player}.","m180_110_060_M m180_110_060_F"
+"m180_110_070","char_HAWKMON","Hey, you guys!","m180_110_070"
+"m180_110_080","char_AEGIOMON","Are you here to see us off?","m180_110_080"
+"m180_110_090","char_HAWKMON","No, that's not it. We've got trouble!","m180_110_090"
+"m180_110_100","char_HAWKMON","We just got word at the village. The Titans are attacking
+Junomon's temple in great numbers!","m180_110_100"
+"m180_110_110","char_INORI","The Titans are doing what?!","m180_110_110"
+"m180_110_120","char_AEGIOMON","That's terrible! Let's hurry back to the Guardian Palace!","m180_110_120"

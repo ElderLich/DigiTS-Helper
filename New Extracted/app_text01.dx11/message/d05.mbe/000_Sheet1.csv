@@ -1,0 +1,950 @@
+string2 0,string 1,string 2,string 3
+"f_d0501_0010_0010","char_GUARDROMON_GL","Oh, it's you folks! You met Lord Vulcanusmon, didn't you!",""
+"f_d0501_0010_0020","char_PLAYER_M","{next}How did you know?",""
+"f_d0501_0010_0021","char_PLAYER_M","{next}Yes... And I had a pretty hard time of it, too...",""
+"f_d0501_0010_0022","char_PLAYER_M","{next}No, not yet.",""
+"f_d0501_0010_0030","char_GUARDROMON_GL","Because the electricity is back on! I knew you folks would
+come through!",""
+"f_d0501_0010_0040","char_GUARDROMON_GL","I bet it wasn't! That was something none of us could do!",""
+"f_d0501_0010_0050","char_GUARDROMON_GL","Come on! Quit with the kidding! You talked to Vulcanusmon
+down there by the reactor on the lowest level, didn't you!",""
+"f_d0501_0010_0060","char_GUARDROMON_GL","There are still some Titans left, but we can handle the rest!",""
+"f_d0501_0010_0070","char_GUARDROMON_GL","Now that you've done that, the Locomon Railroad should be 
+working! Try going up this way and heading for the station!",""
+"f_d0501_0010_0080","char_GUARDROMON_GL","We've got our hands full fending off the Titans here, so
+could you head down to the lowest level on your own?",""
+"f_d0501_0010_0090","char_GUARDROMON_GL","You'll need the help of Kokuwamon here in the village to
+reach the lowest level. Go talk to Kokuwamon first, okay?",""
+"f_d0501_0010_0100","char_GUARDROMON_GL","Thanks for your help. We'll handle everything else from here!",""
+"f_d0501_0010_0110","char_GUARDROMON_GL","The Locomon Railroad should be working now! The station is
+up this way and just ahead. You should make your way there!",""
+"f_d0501_0020_0010","char_GUARDROMON","My apologies, but the Locomon Railroad isn't operating
+right now, due to a lack of power.",""
+"f_d0501_0030_0010","char_GUARDROMON","Now that power has been restored, we're making preparations
+to depart. Please wait a while longer.",""
+"f_d0501_0040_0010","char_ANDROMON","TO MY DISMAY, SOME OF THE GUARDROMON UNDER MY CONTROL HAVE
+GONE HAYWIRE...",""
+"f_d0501_0040_0020","char_ANDROMON","THE GUARDROMON IN THE LOWER LEVELS ARE VERY LIKELY TO ATTACK.
+IF YOU DECIDE TO GO, PLEASE PROCEED WITH CAUTION.",""
+"f_d0501_0040_0030","char_ANDROMON","ALTHOUGH THEY ARE OUR COMRADES, THIS IS AN EMERGENCY SITUATION,
+SO THERE IS NO NEED TO HOLD BACK IF ATTACKED.",""
+"f_d0501_0040_0040","char_ANDROMON","INFORMATION HAS BEEN SHARED. THE PROBLEM APPEARS TO BE SOLVED.",""
+"f_d0501_0040_0050","char_ANDROMON","BUT WE DO NOT KNOW IF OR WHEN THE TITANS WILL ATTACK AGAIN.
+WE MUST REINFORCE OUR SECURITY WHILE WE CAN.",""
+"f_d0501_0050_0010","char_KOKUWAMON_A","Ngh... I can't move...",""
+"f_d0501_0050_0020","char_KOKUWAMON_A","If I had a new fuse, I could be of some help. If it isn't too
+much trouble, could you bring me one?",""
+"f_d0501_0050_0030","char_KOKUWAMON_A","One of my friends in the village should have one. Thanks.",""
+"f_d0501_0050_0050","char_KOKUWAMON_A","Oh, no... You mean the merchant was out of fuses? Uh-oh.
+This complicates things.",""
+"f_d0501_0050_0060","char_AEGIOMON","Is there any way to get you back up and running without a
+fuse?",""
+"f_d0501_0050_0070","char_KOKUWAMON_A","Well... maybe, say, a HUGE burst of electricity...",""
+"f_d0501_0050_0080","char_KOKUWAMON_A","I might be able to reactivate if I were given a powerful
+jolt that got me crackling like a livewire.",""
+"f_d0501_0050_0090","char_KOKUWAMON_A","WOOOOO HOOOOOOO...! AW, YEAH! HERE WE GOOOOOOOOOOO!",""
+"f_d0501_0050_0100","char_KOKUWAMON_A","I'm buzzing! Crackling! Bursting with life! More juiced up
+than I've ever been!",""
+"f_d0501_0050_0110","char_INORI","U-Um...",""
+"f_d0501_0050_0120","char_KOKUWAMON_A","Oops. Pardon the little slip in my composure, there.",""
+"f_d0501_0050_0130","char_KOKUWAMON_A","You have my sincere thanks, everyone! As you can see, I'm
+working once again.",""
+"f_d0501_0050_0140","char_KOKUWAMON_A","Guardromon told me everything. You wish to see Lord
+Vulcanusmon, yes?",""
+"f_d0501_0050_0150","char_AEGIOMON","That's right. If you're back in working order, can you show
+us the way?",""
+"f_d0501_0050_0160","char_KOKUWAMON_A","Sadly... I still can't do that.",""
+"f_d0501_0050_0170","char_KOKUWAMON_A","I assume you're aware that I sealed the bulkheads to
+prevent the contagious enemy hack from spreading.",""
+"f_d0501_0050_0180","char_KOKUWAMON_A","Beyond the bulkheads, you'll find not only my berserk
+comrades, but stable ones who got trapped in there as well.",""
+"f_d0501_0050_0190","char_KOKUWAMON_A","I tried to keep the bulkheads open until they could get
+out, but, in the end, I had to stave off the greater calamity...",""
+"f_d0501_0050_0200","char_INORI","That must've been so difficult for you... But I don't think
+anyone would blame you for making that choice.",""
+"f_d0501_0050_0210","char_KOKUWAMON_A","...Thank you for your kind words.",""
+"f_d0501_0050_0220","char_KOKUWAMON_A","One of the comrades trapped inside the bulkheads is my
+partner.",""
+"f_d0501_0050_0230","char_KOKUWAMON_A","The reactor on the lowest level where Lord Vulcanusmon
+resides can't be reached without both of us present.",""
+"f_d0501_0050_0240","char_KOKUWAMON_A","Then it sounds like we need to go in and rescue your
+partner.",""
+"f_d0501_0050_0250","char_KOKUWAMON_A","You helped me, so I know you're up to the task. So, will
+you go in and aid my partner and other comrades?",""
+"f_d0501_0050_0260","char_KOKUWAMON_A","I would accompany you, but it's still too dangerous to
+leave this bulkhead open.",""
+"f_d0501_0050_0270","char_KOKUWAMON_A","Duty demands I remain here and close it again immediately
+after you pass through.",""
+"f_d0501_0050_0280","char_AEGIOMON","No problem. We can handle it! We'll save your partner and
+your friends!",""
+"f_d0501_0050_0290","char_KOKUWAMON_A","You have my sincere gratitude!",""
+"f_d0501_0050_0300","char_KOKUWAMON_A","There are Titans wreaking havoc beyond the bulkheads as
+well.",""
+"f_d0501_0050_0310","char_KOKUWAMON_A","Please let me know once you're ready and I'll open this
+bulkhead.",""
+"f_d0501_0060_0010","char_TANKMON","Ugh! They've taken over our gun battery, our pride and joy!
+How dare they use it!",""
+"f_d0501_0060_0020","char_TANKMON","They're not doing it justice! I'd finish the enemies off in
+better fashion!",""
+"f_d0501_0060_0030","char_TANKMON","Woo hoo! We got our gun battery back! Now I can send the enemy
+flying, one after the other!",""
+"f_d0501_0070_0010","char_MECHANORIMON","ATTACKED BY TITANS. CANNOT FLY. CANNOT SPEAK PROPERLY.",""
+"f_d0501_0070_0020","char_MECHANORIMON","EMERGENCY SITUATION.",""
+"f_d0501_0070_0030","char_MECHANORIMON","Phew. We can't let our guards down yet, but I see you managed 
+to drive the Titans away somehow.",""
+"f_d0501_0070_0040","char_MECHANORIMON","I wasn't doing so great earlier, but I'm fine now. All's well
+that ends well, right? Hahaha.",""
+"f_d0501_0080_0010","char_CLOCKMON","Aren't you the folks who were riding Blimpmon? You're everywhere!",""
+"f_d0501_0080_0020","char_CLOCKMON","You don't look like Titans, that's for sure. But this really isn't
+the best time to come here.",""
+"f_d0501_0080_0030","char_CLOCKMON","We're under attack by the Titans. You won't even be able to
+sleep in peace. Take care!",""
+"f_d0501_0080_0040","char_CLOCKMON","Yes! The power is back on, so I can start repairs immediately!",""
+"f_d0501_0090_0010","char_SOLARMON","Hmm... Is there any way to get that bulkhead open, I wonder?",""
+"f_d0501_0090_0020","char_SOLARMON","Kokuwamon is passed out over there. They could probably open it
+once back on their feet, though.",""
+"f_d0501_0090_0030","char_SOLARMON","Kokuwamon is on their feet again! We'll take any good news
+we can get!",""
+"f_d0501_0090_0040","char_SOLARMON","The Titans have been stopped in their tracks! I'm so glad
+to hear it!",""
+"f_d0501_0100_0010","char_ARMADILLOMON","It's so hot here! I wanna board Locomon and go somewhere cooler.",""
+"f_d0501_0100_0020","char_ARMADILLOMON","Locomon's finally workin' again! We should go
+somewhere nice and refreshing!",""
+"f_d0501_0110_0010","char_BLIMPMON","Sorry. I can't move after that attack just now...",""
+"f_d0501_0110_0020","char_BLIMPMON","I'll stay right here, so go to the village!",""
+"f_d0501_0110_0030","char_BLIMPMON","The power is back! And I hear Locomon is back online, too.
+I'm really glad!",""
+"f_d0501_0110_0040","char_BLIMPMON","I still can't move... You'll hafta take Locomon to get back!",""
+"f_d0501_0120_0010","char_KOKUWAMON","My clearance doesn't extend beyond this point. I'll wait here.",""
+"f_d0501_0130_0010","char_LOCOMON","I'm sorry, but I don't have enough power to move right now.",""
+"f_d0501_0130_0020","char_LOCOMON","If the reactor here in the Factorial Area was restored, I'd have the
+electrical power I need to get moving again...",""
+"f_d0501_0130_0030","char_LOCOMON","Hello! It's been a while, but I can finally move again. All
+thanks to you guys, right? You have my gratitude!",""
+"f_d0501_0140_0010","char_HAGURUMON","We're in a bit of a pickle right now. The elevator back there
+is shut down and can't be used.",""
+"f_d0501_0140_0020","char_HAGURUMON","I wonder if my friends are okay beyond the gate...",""
+"f_d0501_0140_0030","char_HAGURUMON","The elevator is working! And my friends are okay? Glad to
+hear it!",""
+"f_d0501_0150_0010","char_KOKUWAMON_A","Once you're inside, you won't be able to get back out for
+some time.",""
+"f_d0501_0150_0020","char_KOKUWAMON_A","Have you made your preparations?",""
+"f_d0501_0150_0030","char_PLAYER_M","{next}We're ready. Let's get to work.",""
+"f_d0501_0150_0031","char_PLAYER_M","{end}We need a little more time.",""
+"f_d0501_0150_0040","char_KOKUWAMON_A","Sure thing. Be sure you're fully prepared!",""
+"f_d0501_0150_0043","char_KOKUWAMON_A","All right. Then I'll open the bulkhead, and you hurry
+inside. Commencing opening procedure!",""
+"f_d0501_0150_0045","char_KOKUWAMON_A","Now, hurry through!",""
+"f_d0501_0150_0050","char_KOKUWAMON_A","I can operate the bulkhead, so please take care of the rest!",""
+"f_d0501_0150_0060","char_KOKUWAMON_A","Find my partner Kokuwamon first. We share information
+through comms, so they know to expect you.",""
+"f_d0501_0150_0070","char_KOKUWAMON_A","Okay, I'm closing the bulkhead. Take care of yourselves!",""
+"f_d0501_0150_0080","char_KOKUWAMON_A","Welcome back, partner! And the rest of you as well! Our 
+allies made it back safely, too!",""
+"f_d0501_0150_0090","char_KOKUWAMON_UN","And we owe it all to you. Thank you again!",""
+"f_d0501_0150_0100","char_KOKUWAMON_UN","By the way, I hear you have business with Lord Vulcanusmon?
+Now it's our turn to help you!",""
+"f_d0501_0150_0110","char_KOKUWAMON_A","Yes, let's head there right away!",""
+"f_d0501_0160_0010","char_MERAMON","Glad to see you're all in one piece!",""
+"f_d0501_0170_0010","char_ANKYLOMON","Oh, it's you guys! Thanks for before. You really saved my hide!",""
+"f_d0501_0170_0020","char_ANKYLOMON","Seems like things are beginnin' to calm down now, but,
+earlier, my allies suddenly attacked me!",""
+"f_d0501_0170_0030","char_ANKYLOMON","Not sure what caused it... Maybe that was because of the
+Titans, too?",""
+"f_d0501_0180_0010","char_MECHANORIMON","My body is finally back in working order. If it had been
+one hundred percent, I'm sure I could've managed the situation.",""
+"f_d0501_0180_0020","char_MECHANORIMON","This sudden malfunction came out of the blue. I'd better
+come up with some countermeasures for next time...",""
+"f_d0501_0190_0010","char_KOKUWAMON_A","Thank you for your help! You're our saviors!",""
+"f_d0501_0190_0020","char_KOKUWAMON_UN","We were able to put this area back in proper order, thanks
+to you!",""
+"f_d0501_0190_0030","char_KOKUWAMON_AUN","We're truly grateful!",""
+"f_d0501_0200_0010","char_GUARDROMON","Visitors to Vulcanusmon's Treasures are invited to use the
+UltimateBrachiomon Slide!",""
+"f_d0501_0200_0020","char_GUARDROMON","Ah, I see you have a Perpetual Passport! Thank you for your
+patronage!",""
+"f_d0501_0200_0030","","[Go down the slide.]",""
+"f_d0501_0200_0031","","{end}[Pass for now.]",""
+"f_d0501_0200_0040","char_GUARDROMON","Now, off you go to Vulcanusmon's Treasures! Enjoy your
+visit!",""
+"f_d0501_0200_0050","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may use the slide for one ticket!",""
+"f_d0501_0200_0060","","[Use a Kokuwamon Ticket to go down the slide.]",""
+"f_d0501_0200_0061","","{end}[Pass for now.]",""
+"f_d0501_0200_0070","char_GUARDROMON","You need a coupon to use the slide!",""
+"f_d0501_0210_0010","","The door is shut tight.",""
+"f_d0501_0220_0010","char_GUARDROMON","Hello, there! Welcome to Kokuwamon Park!",""
+"f_d0501_0220_0012","char_GUARDROMON","Welcome to the viewing deck! This is the most scenic spot in
+all of Factorial Town.",""
+"f_d0501_0220_0014","char_GUARDROMON","The entry gate to the Hall of the Kokuwamon Hero is right
+this way!",""
+"f_d0501_0220_0020","char_GUARDROMON","Ah, I see you have a Perpetual Passport! Thank you for your
+patronage!",""
+"f_d0501_0220_0030","char_GUARDROMON","Please enjoy Kokuwamon Park to your heart's content!",""
+"f_d0501_0220_0032","char_GUARDROMON","We hope you enjoy the finest view in all of the Factorial
+Area!",""
+"f_d0501_0220_0034","char_GUARDROMON","And now, without further ado... let the Tale of the
+Kokuwamon Hero begin!",""
+"f_d0501_0230_0010","char_GUARDROMON","Hello, there! Welcome to Kokuwamon Park!",""
+"f_d0501_0230_0012","char_GUARDROMON","Welcome to the viewing deck! This is the most scenic spot in
+all of Factorial Town.",""
+"f_d0501_0230_0014","char_GUARDROMON","The entry gate to the Hall of the Kokuwamon Hero is right
+this way!",""
+"f_d0501_0230_0020","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may enter for one ticket!",""
+"f_d0501_0230_0030","","[Use a Kokuwamon Ticket to enter.]",""
+"f_d0501_0230_0031","","{end}[Don't enter.]",""
+"f_d0501_0230_0040","","[Use a Kokuwamon Ticket to enter.]",""
+"f_d0501_0230_0041","","{end}[Don't enter.]",""
+"f_d0501_0230_0050","char_GUARDROMON","Enjoy your visit to Kokuwamon Park!",""
+"f_d0501_0240_0010","char_GUARDROMON","Welcome to Kokuwamon Park! Please purchase a ticket before
+entering!",""
+"f_d0501_0240_0012","char_GUARDROMON","Please buy a ticket if you would like to go to the viewing
+deck!",""
+"f_d0501_0240_0014","char_GUARDROMON","Please buy a ticket if you would like to enter the Hall of
+the Kokuwamon Hero!",""
+"f_d0501_0240_0020","char_VADEMON","We sell tickets over here!",""
+"f_d0501_0250_0010","char_GUARDROMON","Thank you for your patronage!",""
+"f_d0501_0260_0010","char_GUARDROMON","This is an exhibit that recreates the Locomon of bygone
+days!",""
+"f_d0501_0260_0020","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0501_0260_0030","","[Listen to the presentation.]",""
+"f_d0501_0260_0031","","{end}[Pass for now.]",""
+"f_d0501_0260_0040","char_GUARDROMON","Thank you! Now, let me begin... Ahem!",""
+"f_d0501_0260_0050","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0501_0260_0060","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0501_0260_0061","","{end}[Pass for now.]",""
+"f_d0501_0260_0070","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0501_0260_0080","char_GUARDROMON","Have you ever ridden the Locomon Railroad? Locomon is an
+essential Digimon for traveling between different regions.",""
+"f_d0501_0260_0090","char_GUARDROMON","They perform a variety of roles, from providing long-range
+travel unaffected by weather, to transporting heavy cargo.",""
+"f_d0501_0260_0100","char_GUARDROMON","Though their deeds may not be as conspicuous as those of
+Kokuwamon, this land wouldn't be what it is without Locomon.",""
+"f_d0501_0270_0010","char_TANKMON","Here, strength is everything. Only those who've proven 
+themselves worthy may pass. Go back the way you came!",""
+"f_d0501_0270_0020","char_TANKMON","What's that...? Hm? The SDGP? You say you're the Material 
+World's champion?!",""
+"f_d0501_0270_0030","char_TANKMON","I've heard rumors about your world's arena. If I let you enter, 
+it'll be quite the spectacle. Okay, you may pass.",""
+"f_d0501_0270_0040","char_TANKMON","Enter whenever you want! I look forward to seeing you
+fight!",""
+"f_d0501_0280_0010","char_HIANDROMON","You must be the unit who neutralized the intruder. The
+information has been shared with me. You have my gratitude.",""
+"f_d0501_0280_0020","char_HIANDROMON","I also engaged the target, but it eluded me after I was
+immobilized by its counterattack.",""
+"f_d0501_0280_0030","char_HIANDROMON","Though injured, it was a formidable foe... so your
+assistance was most welcome.",""
+"f_d0501_0290_0010","char_GUARDROMON_GL","Welcome to Kokuwamon Park! THE place for fun in the
+Factorial Area!",""
+"f_d0501_0290_0020","char_GUARDROMON_GL","Tickets can be purchased in the square down the pathway to
+the right! We also have Free Passes for sale!",""
+"f_d0501_0290_0030","char_GUARDROMON_GL","That should be your first stop!",""
+"f_d0501_0300_0010","char_HIANDROMON","You can reach Vulcanusmon's chamber by sliding down from
+here.",""
+"f_d0501_0300_0020","char_HIANDROMON","This attraction was built to honor a hero who once saved
+this place...",""
+"f_d0501_0300_0030","char_HIANDROMON","...but it does not compute. I fail to understand the
+thought process behind this...",""
+"f_d0501_0310_0010","char_GUARDROMON","Welcome! Now, please board the elevator!",""
+"f_d0501_0320_0010","char_GUARDROMON","The viewing deck is just ahead. Please enjoy the view!",""
+"f_d0501_0330_0010","char_GUARDROMON","If you would like to enter the Hall of the Kokuwamon Hero,
+stand before the door with your ticket or Free Pass ready.",""
+"f_d0501_0340_0010","char_GUARDROMON","Please use this elevator to go back.",""
+"f_d0501_0350_0010","char_GUARDROMON","The hotel doesn't have any vacancies at the moment. We're
+very sorry.",""
+"f_d0501_0370_0010","char_STINGMON","Callismon rules the Factorial Area now.",""
+"f_d0501_0370_0020","char_STINGMON","And Callismon's cronies are taking advantage of Lord
+Vulcanusmon's absence to run amok, too.",""
+"f_d0501_0370_0030","char_STINGMON","Did Lord Vulcanusmon leave the Digital World like Little
+Bearmon did?",""
+"f_d0501_0380_0010","char_XV-MON","They say Callismon joined the Titans looking for power...",""
+"f_d0501_0380_0020","char_XV-MON","And to think that, until recently, he used to be all about
+taking the Titans down.",""
+"f_d0501_0380_0030","char_XV-MON","What exactly happened here while I was away in the forest,
+anyway?",""
+"f_d0501_0390_0010","char_AEGIOMON","This place is... so much livelier than before. I wonder what
+happened. Let's go have a look around town.",""
+"f_d0501_0400_0010","","An elaborately-made mannequin of Kokuwamon. It almost looks
+alive from a distance.",""
+"f_d0501_0410_0010","","A model depicts the way Locomon looked back when they were
+in operation.",""
+"f_d0501_0420_0010","char_GUARDROMON","Sure, it's lively, kind of like it was before, but this isn't the
+same Factorial Town...",""
+"f_d0501_9000_0010","char_ARMADILLOMON","Wanna play cards? I got plenty of free time.",""
+"f_d0501_9000_0020","","[Challenge to a card battle.]",""
+"f_d0501_9000_0021","","{end}Now is not the time.",""
+"f_d0501_9000_0030","char_ARMADILLOMON","Okay. Just let me know if you change your mind!",""
+"f_d0501_9000_0040","char_ARMADILLOMON","Darn, I lost. And this was just supposed to be a pleasant
+pastime...",""
+"f_d0501_9000_0050","char_ARMADILLOMON","I did it! I won! This is gonna put me in a good mood for
+the rest of the day!",""
+"f_d0501_9010_0010","char_METALMAMEMON","Let's play cards! I got some new ones I want to try out!",""
+"f_d0501_9010_0020","","[Challenge to a card battle.]",""
+"f_d0501_9010_0021","","{end}Now is not the time.",""
+"f_d0501_9010_0030","char_METALMAMEMON","Got it! But I'll be here whenever you're ready, working on
+building a better deck.",""
+"f_d0501_9010_0040","char_METALMAMEMON","Aw, I lost! But it isn't the deck that's bad. It's my
+playing!",""
+"f_d0501_9010_0050","char_METALMAMEMON","Wow, I won. This deck seems pretty good, so I guess I'll
+get in some more practice with it!",""
+"f_d0502_0010_0010","char_AEGIOMON","Look over there! It's Kokuwamon!","f_d0502_0010_0010"
+"f_d0502_0010_0015","char_INORI","Look! That large group is clearly bullying the weaker one! 
+We've got to do something!",""
+"f_d0502_0020_0010","char_KOKUWAMON_UN","There isn't enough power to make it work. We'll need a
+battery.",""
+"f_d0502_0050_0010","char_KOKUWAMON_UN","Powering on!",""
+"f_d0502_0050_0020","char_KOKUWAMON_UN","Okay, let's press forward!",""
+"f_d0502_0060_0010","","There's no need to operate that now.",""
+"f_d0502_0070_0010","char_AEGIOMON","I'm back!","vo_mpc183_Location_003"
+"f_d0502_0080_0010","char_KOKUWAMON_UN","Ah, there you are! I've gotten word about you! Well, let's
+get right to it. Could you lend us a hand?",""
+"f_d0502_0080_0030","char_KOKUWAMON_UN","Thank you. I'm the partner of the Kokuwamon you met out
+front, by the way.",""
+"f_d0502_0080_0040","char_KOKUWAMON_UN","My partner already filled me in on the details. Lend me
+your strength in rescuing our comrades who couldn't escape!",""
+"f_d0502_0080_0060","char_KOKUWAMON_UN","We need to use that crane you can see over there. Come on.
+Let's go!",""
+"f_d0502_0090_0010","char_MECHANORIMON","You, there...! Help...!",""
+"f_d0502_0090_0020","char_AEGIOMON","Someone's calling for help! Let's go!","f_d0502_0090_0020"
+"f_d0502_0090_0025","char_AEGIOMON","I think I can get in through there! I'll be right back.","f_d0502_0090_0025"
+"f_d0502_0090_0030","char_MECHANORIMON","Hey! Where are you going...?! Don't run away...!",""
+"f_d0502_0090_0040","char_KAMEMON","This is terrible! How extremely cruel!","f_d0502_0090_0040"
+"f_d0502_0090_0050","char_CLOCKMON","Simply heartless!",""
+"f_d0502_0090_0080","char_AEGIOMON","Help has arrived! How are you holding up? I've got it from
+here!","f_d0502_0090_0080"
+"f_d0502_0090_0090","char_MECHANORIMON","Safe at last! Thank you. But more of our comrades are still
+trapped inside!",""
+"f_d0502_0090_0100","char_MECHANORIMON","Sorry to trouble you, but please use this to save them! I
+beg of you!",""
+"f_d0502_0100_0010","char_UNKNOWN","Somebody! Anybody! Come quick!",""
+"f_d0502_0100_0020","char_MERAMON","Please! Get those poor little guys outta the rubble!",""
+"f_d0502_0100_0030","char_MERAMON","Whew! I woulda burnt 'em if I had tried... so thanks a
+bunch! Really! Take this for your trouble.",""
+"f_d0502_0100_0040","char_MERAMON","They're trapped under the rubble! You gotta help!",""
+"f_d0502_0100_0070","char_KOKUWAMON_UN","My comrades are inside the gate! Head over that way!",""
+"f_d0502_0110_0010","char_CAPROMON","Hey, you! I got a favor to ask!",""
+"f_d0502_0110_0020","char_CAPROMON","Our ally inside started acting crazy! Ya gotta calm it down! 
+Please!",""
+"f_d0502_0110_0030","char_CLOCKMON","Whoa, whoa! What's gotten into you?! C'mon, comrade! Stop
+this!",""
+"f_d0502_0110_0040","char_GUARDROMON","DESTROY ALL ENEMIES! DESTROY ALL ENEMIES! YOU ARE AN ENEMY!
+YOU WILL BE DESTROYED!",""
+"f_d0502_0110_0050","char_GUARDROMON","I can't believe I lost control... How pathetic...",""
+"f_d0502_0110_0060","char_CLOCKMON","I don't know who you people are, but thank you! We owe you
+one!",""
+"f_d0502_0110_0070","char_CAPROMON","Thank ya for yer help! Here's a token of our gratitude!",""
+"f_d0502_0120_0010","char_SCREAM","SOMEONE, COME QUICK!",""
+"f_d0502_0120_0020","char_SCREAM","IT'S ALL OVER!",""
+"f_d0502_0120_0030","char_SCREAM","D-DAMMMMIITTTTTT! I'M STUCK!!!!!","f_d0502_0120_0030"
+"f_d0502_0130_0010","char_SOLARMON","Hey, you! Help! Those two went berserk all of a sudden and
+I can't get them under control!",""
+"f_d0502_0130_0020","char_MECHANORIMON","DESTROY ALL ENEMIES! DESTROY ALL ENEMIES! DESTROY...
+ENEMIES!",""
+"f_d0502_0130_0030","char_SOLARMON","Wow! You're strong! Thanks!",""
+"f_d0502_0130_0035","char_TANKMON","I went berserk...?",""
+"f_d0502_0130_0040","char_MECHANORIMON","I apologize for all the trouble... I truly thank you.",""
+"f_d0502_0130_0050","char_SOLARMON","Here. Take this. You earned it!",""
+"f_d0502_0130_0060","char_SOLARMON","Oh, yeah. Here's another present for you!",""
+"f_d0502_0140_0010","char_ANKYLOMON","Hey, you're strong! I need help! Can you break this door
+down for me?",""
+"f_d0502_0140_0020","char_ANKYLOMON","Awesome! Thanks! I should be able to escape now.",""
+"f_d0502_0140_0030","char_ANKYLOMON","It's not much, but here. Hope it helps!",""
+"f_d0502_0140_0040","char_GOTTSUMON","Hey! Someone bust this door down!",""
+"f_d0502_0140_0050","char_ANKYLOMON","Here. Take this as well. Put it to good use!",""
+"f_d0502_0150_0010","char_UNKNOWN","Owww...! Hey, who did that?! Stop pushin'!","f_d0502_0150_0010"
+"f_d0502_0150_0020","char_UNKNOWN","Listen up! Ya better not push me! Ya got that?!","f_d0502_0150_0020"
+"f_d0502_0150_0030","","[Push.]",""
+"f_d0502_0150_0031","","[Don't push.]",""
+"f_d0502_0150_0040","char_UNKNOWN","Ouch! That hurts! I told ya! No pushin'!","f_d0502_0150_0040"
+"f_d0502_0150_0050","char_UNKNOWN","D-DON'T PUSH!","f_d0502_0150_0050"
+"f_d0502_0150_0060","char_UNKNOWN","No, no, no!","f_d0502_0150_0060"
+"f_d0502_0150_0065","char_UNKNOWN","""Don't push"" means ""push."" Don't ya get it?!","f_d0502_0150_0065"
+"f_d0502_0150_0070","","[Push.]",""
+"f_d0502_0150_0071","","[Don't push.]",""
+"f_d0502_0150_0080","char_UNKNOWN","OWWW! DON'T PUSH!","f_d0502_0150_0080"
+"f_d0502_0150_0090","char_UNKNOWN","Whew... Sweet, sweet freedom.","f_d0502_0150_0090"
+"f_d0502_0150_0100","char_AEGIOMON","Who... are you...?","f_d0502_0150_0100"
+"f_d0502_0150_0110","char_UNKNOWN","Who am I? I'm Nanimon!","f_d0502_0150_0110"
+"f_d0502_0150_0120","char_AEGIOMON","""Nannymon""? You take care of little Digimon kids...?","f_d0502_0150_0120"
+"f_d0502_0150_0130","char_NANIMON","No! I'm ""Nanimon!"" Clean out your damn ears!","f_d0502_0150_0130"
+"f_d0502_0150_0140","char_NANIMON","But never mind that... So, are ya wonderin' how I got
+stuck?","f_d0502_0150_0140"
+"f_d0502_0150_0150","char_NANIMON","Well... I certainly wasn't huntin' for treasu— But, hey,
+enough about me!","f_d0502_0150_0150"
+"f_d0502_0150_0160","char_NANIMON","There's no treasure or anythin' here, so ya'd better just
+skedaddle! Like, now!","f_d0502_0150_0160"
+"f_d0502_0150_0170","char_NANIMON","...Eh, fine. Look. I'll give ya this, so scram!","f_d0502_0150_0170"
+"f_d0502_0150_0180","char_NANIMON","Oh, yeah. Here's another present for ya! I don't need it!","f_d0502_0150_0180"
+"f_d0502_0160_0010","","Destroying the rubble should free them.",""
+"f_d0502_0170_0010","char_KOKUWAMON_UN","That should be the last of our allies who got stuck in here. 
+Thank you!",""
+"f_d0502_0170_0020","char_KOKUWAMON_UN","Okay, let's get back to my partner. The others you helped
+should've made it out by now, too.",""
+"f_d0502_0180_0010","char_EBEMON","What's with all these evacuees? But, whatever... Now, down
+to business!",""
+"f_d0502_0190_0040","char_GUARDROMON","This is the super-duper, fun crane show!",""
+"f_d0502_0190_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! Thank you for your
+patronage!",""
+"f_d0502_0190_0060","","[Watch the crane show.]",""
+"f_d0502_0190_0061","","{end}[Pass for now.]",""
+"f_d0502_0190_0070","char_GUARDROMON","Okay, the fun crane show is about to begin!",""
+"f_d0502_0190_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may watch the show for one ticket!",""
+"f_d0502_0190_0090","","[Use a Kokuwamon Ticket to watch the show.]",""
+"f_d0502_0190_0091","","{end}[Pass for now.]",""
+"f_d0502_0190_0100","char_GUARDROMON","You need a ticket to enjoy this attraction!",""
+"f_d0502_0190_0110","char_GUARDROMON","And that ends the show! Thank you for watching!",""
+"f_d0502_0200_0040","char_GUARDROMON","This is the super crane show!",""
+"f_d0502_0200_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! Thank you for your
+patronage!",""
+"f_d0502_0200_0060","","[Watch the crane show.]",""
+"f_d0502_0200_0061","","{end}[Pass for now.]",""
+"f_d0502_0200_0070","char_GUARDROMON","Now, let the super crane show begin!",""
+"f_d0502_0200_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may watch the show for one ticket!",""
+"f_d0502_0200_0090","","[Use a Kokuwamon Ticket to watch the show.]",""
+"f_d0502_0200_0091","","{end}[Pass for now.]",""
+"f_d0502_0200_0100","char_GUARDROMON","You need a ticket to watch the crane show!",""
+"f_d0502_0200_0110","char_GUARDROMON","And that concludes the show!",""
+"f_d0502_0200_0120","char_GUARDROMON","...All we do is switch things around, but young Digimon
+really love it.",""
+"f_d0502_0210_0010","char_GUARDROMON","I didn't know what to expect when the area was closed off,
+but I'm glad to see everything safe and sound.",""
+"f_d0502_0210_0020","char_GUARDROMON","Well, I guess there are some broken bits here and there, so
+we're going to be busy with repairs for a while.",""
+"f_d0502_0220_0010","char_MECHANORIMON","This ought to be okay... Huh?",""
+"f_d0502_0220_0020","char_MECHANORIMON","Oh, it's you. Thanks to you, my suit is fit as a fiddle!",""
+"f_d0502_0220_0030","char_MECHANORIMON","Between that, and you saving our comrades, I'm truly
+grateful to you. Thank you.",""
+"f_d0502_0220_0040","char_MECHANORIMON","But... and I hate to say this when I owe you so much...",""
+"f_d0502_0220_0050","char_MECHANORIMON","...I'm going to make note of how you tried to abandon me
+back there.",""
+"f_d0502_0230_0010","char_MERAMON","Hey! How about making sure there aren't any malfunctions
+next time!",""
+"f_d0502_0230_0020","char_MERAMON","Oh, it's you guys! Thanks for stopping by!",""
+"f_d0502_0230_0030","char_MERAMON","But weren't you gonna hurry on ahead? We're fine here, so
+get going!",""
+"f_d0502_0240_0010","char_LOADERLIOMON","Where's the intruder?! Is it you?!",""
+"f_d0502_0240_0020","char_LOADERLIOMON","...No, wait. The report said it's a merchant and that it
+has more legs than you do...",""
+"f_d0502_0240_0030","char_LOADERLIOMON","If it was able to sneak in while we were fighting that
+colossal Titan... then we need to tighten our security!",""
+"f_d0502_0250_0010","char_ANKYLOMON","What in the heck was that ginormous Digimon before, anyway?",""
+"f_d0502_0250_0020","char_ANKYLOMON","I heard from folks that fought it that it just suddenly
+appeared from outside...",""
+"f_d0502_0250_0030","char_ANKYLOMON","I wonder where it was sent from... and what it was after!",""
+"f_d0502_0250_0040","char_ANKYLOMON","The threat might be gone, but it sure left us with a lot of
+questions...",""
+"f_d0502_0260_0010","char_CLOCKMON","Now, then! Let's get it in gear and fix what's broken,
+partner!",""
+"f_d0502_0260_0020","char_GUARDROMON","You bet! My suit feels lighter somehow, so I got this!",""
+"f_d0502_0260_0030","char_CLOCKMON","Oh! Thank you for earlier! As you can see, my partner here
+is back to normal!",""
+"f_d0502_0260_0040","char_GUARDROMON","I don't know if you're tourists or what, but you have my
+thanks! I owe you one!",""
+"f_d0502_0270_0010","char_ANDROMON","THE INFORMATION HAS BEEN SHARED WITH ME. THE DESTRUCTION
+WAS APPARENTLY QUITE EXTENSIVE.",""
+"f_d0502_0270_0020","char_ANDROMON","IT WAS UNAVOIDABLE, GIVEN THE EMERGENCY, AND YET... I AM
+UNSURE OF HOW TO PROCEED.",""
+"f_d0502_0270_0030","char_ANDROMON","BUT IF IT HAS DISAPPEARED SO COMPLETELY, PERHAPS THAT IS
+ALL THE MORE REASON TO LEAVE THINGS AS THEY ARE.",""
+"f_d0502_0280_0010","char_MECHANORIMON","I can't believe I was controlled like a puppet...",""
+"f_d0502_0280_0020","char_MECHANORIMON","I don't remember much, but the chagrin will never leave
+me...",""
+"f_d0502_0280_0030","char_MECHANORIMON","No point in crying over spilled oil, though. There are
+repairs to be made.",""
+"f_d0502_0290_0010","char_SOLARMON","Oh, it's you! Thank you for before!",""
+"f_d0502_0290_0020","char_SOLARMON","Hey, did you try out that thing I gave you?! I was saving
+it for a special occasion, so make sure you use it!",""
+"f_d0502_0300_0010","char_KOKUWAMON","My comrade shared the details with me. I appreciate your
+aid in reclaiming this section.",""
+"f_d0502_0300_0020","char_KOKUWAMON","We're assigned to various posts to operate the machinery.",""
+"f_d0502_0300_0030","char_KOKUWAMON","If you need to use the crane, we can operate it for you.",""
+"f_d0502_0310_0010","char_KOKUWAMON","My comrade shared the information with me. I apologize for
+not being much help during the lockdown.",""
+"f_d0502_0310_0020","char_KOKUWAMON","We all share information through comms...",""
+"f_d0502_0310_0030","char_KOKUWAMON","...but there are times when I suddenly can't get in touch
+with someone, or one of us meets an unfortunate fate...",""
+"f_d0502_0310_0040","char_KOKUWAMON","The Titans' influence hampered things, but the link is
+beginning to recover, so have no fear.",""
+"f_d0502_0320_0010","char_KOKUWAMON","Hey, I heard about you from Kokuwamon A and B.",""
+"f_d0502_0320_0020","char_KOKUWAMON","If you need the crane, I can operate it for you whenever
+you want.",""
+"f_d0502_0330_0010","char_KOKUWAMON","The information has been shared with me...",""
+"f_d0502_0330_0020","char_KOKUWAMON","My comrade who was stationed here used the last of their
+strength to close the bulkhead...",""
+"f_d0502_0330_0030","char_KOKUWAMON","A real hero who fulfilled their duty to this place, they were...
+I'd like to find some way to honor them.",""
+"f_d0502_0340_0010","char_MECHANORIMON","Hm? Aren't you the one who fought that colossal Digimon? I
+must say, taking down a beast like that was quite the feat.",""
+"f_d0502_0340_0020","char_MECHANORIMON","What? Did I see it, you ask? Well, look over there.",""
+"f_d0502_0340_0030","char_MECHANORIMON","The area took a real beating in the battle. I've been
+watching the repair work.",""
+"f_d0502_0340_0040","char_MECHANORIMON","Oh, but no need to worry about all that. You have somewhere
+else to be, no? Hurry on your way.",""
+"f_d0502_0350_0010","char_BLUEMERAMON","What a bunch of filthy lies... I can't stand it!",""
+"f_d0502_0350_0020","char_BLUEMERAMON","It was actually a hero from somewhere else that saved the
+day! Get real...!",""
+"f_d0502_0360_0010","char_GUARDROMON","As the fiendish Titans swarmed over the town, seizing its
+citizens... a brave Kokuwamon plunged into peril, alone.",""
+"f_d0502_0360_0020","char_GUARDROMON","A seemingly reckless act, but Kokuwamon's deft manipulation
+of electricity made quick work of the villains.",""
+"f_d0502_0360_0030","char_GUARDROMON","Kokuwamon mustered up their courage and marched into the
+face of danger to save the people of the town.",""
+"f_d0502_0360_0040","char_GUARDROMON","Thus begins the Tale of the Kokuwamon Hero!",""
+"f_d0502_0360_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0502_0360_0060","","[Listen to the presentation.]",""
+"f_d0502_0360_0061","","{end}[Pass for now.]",""
+"f_d0502_0360_0070","char_GUARDROMON","Now begins Chapter One of the Tale of the Kokuwamon Hero...",""
+"f_d0502_0360_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0502_0360_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0502_0360_0091","","{end}[Pass for now.]",""
+"f_d0502_0360_0100","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0502_0370_0010","char_GUARDROMON","Battered and bruised, the gallant Kokuwamon arrived before
+the captive townsfolk.",""
+"f_d0502_0370_0020","char_GUARDROMON","Paying no heed to their own wounds, Kokuwamon extended a
+hand to the frightened prisoners, a hero in both name and form.",""
+"f_d0502_0370_0030","char_GUARDROMON","The hero's strength and kindness freed the citizens' hearts
+from the grip of terror.",""
+"f_d0502_0370_0040","char_GUARDROMON","Kokuwamon fights to free the citizens! Step right up to
+hear Chapter Two of the Tale of the Kokuwamon Hero!",""
+"f_d0502_0370_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0502_0370_0060","","[Listen to the presentation.]",""
+"f_d0502_0370_0061","","{end}[Pass for now.]",""
+"f_d0502_0370_0070","char_GUARDROMON","Thank you very much! Now for Chapter Two of the Tale of the
+Kokuwamon Hero...",""
+"f_d0502_0370_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0502_0370_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0502_0370_0091","","{end}[Pass for now.]",""
+"f_d0502_0370_0100","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0502_0380_0010","char_GUARDROMON","Upon encountering citizens suffering beneath rubble,
+Kokuwamon delivered salvation with their arms of steel.",""
+"f_d0502_0380_0020","char_GUARDROMON","In spite of the desperate situation, Kokuwamon remained
+calm and collected as they swiftly removed the pile of debris.",""
+"f_d0502_0380_0030","char_GUARDROMON","Seeing the smiling faces of the now-free citizens only gave
+our hero more motivation to press onward.",""
+"f_d0502_0380_0040","char_GUARDROMON","Innocent Digimon buried beneath rubble...! Come closer and
+hear Chapter Three of the Tale of the Kokuwamon Hero!",""
+"f_d0502_0380_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0502_0380_0060","","[Listen to the presentation.]",""
+"f_d0502_0380_0061","","{end}[Pass for now.]",""
+"f_d0502_0380_0070","char_GUARDROMON","What will be the fate of the city's Digimon?! The Tale of
+the Kokuwamon Hero, Chapter Three...",""
+"f_d0502_0380_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0502_0380_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0502_0380_0091","","{end}[Pass for now.]",""
+"f_d0502_0380_0100","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0502_0390_0010","char_GUARDROMON","The citizens driven berserk by the enemy's foul schemes were
+champions on a level far outstripping Kokuwamon...",""
+"f_d0502_0390_0020","char_GUARDROMON","Any normal Digimon would have fled, too afraid to engage
+them, but our hero was resolute.",""
+"f_d0502_0390_0030","char_GUARDROMON","Kokuwamon's desperate efforts to bring their friends to their
+senses succeeded, resolving the crisis.",""
+"f_d0502_0390_0040","char_GUARDROMON","Kokuwamon faces rampaging townsfolk! Chapter Four of the
+Tale of the Kokuwamon Hero is right over here!",""
+"f_d0502_0390_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0502_0390_0060","","[Listen to the presentation.]",""
+"f_d0502_0390_0061","","{end}[Pass for now.]",""
+"f_d0502_0390_0070","char_GUARDROMON","Now, let me begin... The Tale of the Kokuwamon Hero,
+Chapter Four...",""
+"f_d0502_0390_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0502_0390_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0502_0390_0091","","{end}[Pass for now.]",""
+"f_d0502_0390_0100","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0502_0400_0010","char_GUARDROMON","Only a few foes remained... Kokuwamon steeled their resolve
+and imbued their body with electricity.",""
+"f_d0502_0400_0020","char_GUARDROMON","Our hero then discharged energy from their pincers, shredding
+the villains with their special move, Mini Scissor Claw!",""
+"f_d0502_0400_0030","char_GUARDROMON","The mighty attack brought the battle to an end! And so the
+Factorial Area was safe once more!",""
+"f_d0502_0400_0040","char_GUARDROMON","A final gallant deed! Come hear Chapter Five of the Tale of
+the Kokuwamon Hero!",""
+"f_d0502_0400_0050","char_GUARDROMON","Ah, I see you have a Perpetual Passport! You can listen to
+the presentation whenever you wish!",""
+"f_d0502_0400_0060","","[Listen to the presentation.]",""
+"f_d0502_0400_0061","","{end}[Pass for now.]",""
+"f_d0502_0400_0070","char_GUARDROMON","The end of the epic story is upon us! The Tale of the
+Kokuwamon Hero, Chapter Five...",""
+"f_d0502_0400_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0502_0400_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0502_0400_0091","","{end}[Pass for now.]",""
+"f_d0502_0400_0100","char_GUARDROMON","Please purchase a ticket to listen to the presentation!",""
+"f_d0502_9000_0010","char_GUARDROMON","This is the card battle experience. Are you prepared?",""
+"f_d0502_9000_0020","","[Challenge to a card battle.]",""
+"f_d0502_9000_0021","","{end}Now is not the time.",""
+"f_d0502_9000_0030","char_GUARDROMON","As you wish. Please speak to me again when you're ready.",""
+"f_d0502_9000_0040","char_GUARDROMON","A resounding defeat. Masterfully done. I'll do my best to
+provide an even better experience next time.",""
+"f_d0502_9000_0050","char_GUARDROMON","I win. It was a tough battle, but that just makes victory
+all the more worth it.",""
+"f_d0505_0010_0010","char_AEGIOMON","Looks like the elevator Vulcanusmon mentioned is over there!",""
+"f_d0505_0020_0010","char_KOKUWAMON_A","We'll take care of the rest. Let's get to
+work, partner!",""
+"f_d0505_0020_0020","char_KOKUWAMON_UN","Yeah, let's do it!",""
+"f_d0505_0020_0030","char_KOKUWAMON_AUN","Vulcanusmon! Please excuse this intrusion!",""
+"f_d0505_0030_0010","","There is a rumbling sound coming from within. Enter?",""
+"f_d0505_0030_0020","char_PLAYER_M","[Enter.]{next}",""
+"f_d0505_0030_0021","char_PLAYER_M","{end}[Don't enter.]",""
+"f_d0505_0040_0010","char_GUARDROMON","Lord Vulcanusmon once oversaw the entirety
+of the Factorial Area from this central control unit.",""
+"f_d0505_0040_0020","char_GUARDROMON","Perhaps due to the unit having been created
+with such complex functions, no one else was capable of operating it.",""
+"f_d0505_0040_0030","char_GUARDROMON","In Lord Vulcanusmon's absence, the control system has been modified 
+so that those of us who remain can manage the area.",""
+"f_d0505_0040_0040","char_GUARDROMON","Simply seeing Lord Vulcanusmon's likeness is like a breath
+of fresh air for the soul.",""
+"f_d0505_0040_0050","char_GUARDROMON","I see you have a Perpetual Passport. I'll deliver the
+presentation whenever you like.",""
+"f_d0505_0040_0060","","[Listen to the presentation.]",""
+"f_d0505_0040_0061","","{end}[Pass for now.]",""
+"f_d0505_0040_0070","char_GUARDROMON","I see... As I suspected, you want to hear the
+presentation...",""
+"f_d0505_0040_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0505_0040_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0505_0040_0091","","{end}[Pass for now.]",""
+"f_d0505_0040_0100","char_GUARDROMON","Do you want to hear the presentation? Then please purchase
+a ticket.",""
+"f_d0505_0050_0010","char_GUARDROMON","This is a depiction of Lord Vulcanusmon
+crafting the right arm of the Divine Arms Version Ω.",""
+"f_d0505_0050_0020","char_GUARDROMON","Completion of the right arm brought dramatic
+improvements to transport efficiency within the Factorial Area.",""
+"f_d0505_0050_0030","char_GUARDROMON","It was also apparently used in tandem with
+the previously-constructed left arm to drive off intruders.",""
+"f_d0505_0050_0040","char_GUARDROMON","If only I were blessed with but an iota of Lord
+Vulcanusmon's superior intellect...!",""
+"f_d0505_0050_0050","char_GUARDROMON","Is that a Perpetual Passport you hold? Would you like to
+hear the presentation?",""
+"f_d0505_0050_0060","","[Listen to the presentation.]",""
+"f_d0505_0050_0061","","{end}[Pass for now.]",""
+"f_d0505_0050_0070","char_GUARDROMON","I hope this presentation will help you reach new heights
+and further Digivolution...",""
+"f_d0505_0050_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0505_0050_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0505_0050_0091","","{end}[Pass for now.]",""
+"f_d0505_0050_0100","char_GUARDROMON","Do you, too, wish to hear the presentation? Then please
+purchase a ticket.",""
+"f_d0505_0060_0010","char_GUARDROMON","This is a depiction of Lord Vulcanusmon
+crafting the left arm of the Divine Arms Version Ω.",""
+"f_d0505_0060_0020","char_GUARDROMON","Numerous prototypes of the Divine Arms were
+built before arriving at the perfected iteration, Version Ω.",""
+"f_d0505_0060_0030","char_GUARDROMON","Completion of the left arm sparked a spree
+of inventions for Lord Vulcanusmon, greatly advancing the Factorial Area.",""
+"f_d0505_0060_0040","char_GUARDROMON","Here you see a depiction of Lord Vulcanusmon toiling away
+in service to us all.",""
+"f_d0505_0060_0050","char_GUARDROMON","Ah, you have a Perpetual Passport. I'll begin the
+presentation...",""
+"f_d0505_0060_0060","","[Listen to the presentation.]",""
+"f_d0505_0060_0061","","{end}[Pass for now.]",""
+"f_d0505_0060_0070","char_GUARDROMON","Then I'll begin...",""
+"f_d0505_0060_0080","char_GUARDROMON","Ah, I see you have some Kokuwamon Tickets!
+You may listen to the presentation for one ticket!",""
+"f_d0505_0060_0090","","[Use a Kokuwamon Ticket to listen to the presentation.]",""
+"f_d0505_0060_0091","","{end}[Pass for now.]",""
+"f_d0505_0060_0100","char_GUARDROMON","If you want to hear the presentation, please purchase a
+ticket.",""
+"f_d0505_0070_0010","char_GUARDROMON","Thank you for your patronage. Did you enjoy your visit?",""
+"f_d0505_0080_0010","char_VULCANUSMON","I've restored power to all of Iliad. That should get the
+railroad up and running again.",""
+"f_d0505_0080_0020","char_VULCANUSMON","You should be able to use the elevator right outside now.
+It'll take you right back up to the village.",""
+"f_d0505_0080_0030","char_VULCANUSMON","As for the rest, we'll handle things here. You folks have
+your own road to travel.",""
+"f_d0506_0010_0010","char_VOLCAMON","Do you want to enter the bouts?",""
+"f_d0506_0010_0020","","{next}[Enter the bouts.]",""
+"f_d0506_0010_0021","","{end}[Don't enter.]",""
+"f_d0506_0020_0010","","You can't go inside the arena without entering the bouts.",""
+"f_d0506_0030_0010","","You can't go inside the arena right now.",""
+"f_d0506_0040_0010","char_CYBERDRAMON","The town is in an awful state, and here you are carrying on
+like a fool!",""
+"f_d0506_0040_0020","char_CYBERDRAMON","What's more, our master is injured! Why will you not go
+back?!",""
+"f_d0506_0040_0030","char_MEGAGROWLMON","Ha! Yes, our master taught us well, but that doesn't matter
+anymore.",""
+"f_d0506_0040_0040","char_MEGAGROWLMON","All I care about now... is carving up worthy opponents. I
+have no interest in weaklings.",""
+"f_d0506_0040_0050","char_CYBERDRAMON","What?! You impudent wretch! Face me in a duel! And if I
+win... you will come back with me!",""
+"f_d0506_0040_0060","char_MEGAGROWLMON","Heh! You have courage. I will give you that! Very well.
+Challenge accepted!",""
+"f_d0506_0050_0010","char_GRADEMON","Alas... Is there no opponent capable of giving me a worthy
+challenge?",""
+"f_d0506_0060_0010","char_MACHGAOGAMON","Aw, yeah! I've finally clawed my way to the top!",""
+"f_d0506_0060_0020","char_MACHGAOGAMON","Look up there! That's me on the screen! Makes having left
+town all worth it!",""
+"f_d0506_0070_0010","char_STINGMON","I keep hearing about this ""Callismon."" Apparently, he's
+quite the fierce fighter.",""
+"f_d0506_0070_0020","char_STINGMON","Not that the others are anything to scoff at... I don't think
+we can afford to hold back with them, either.",""
+"f_d0506_0070_0030","char_XV-MON","Yeah, that's true. But let's save our ""secret weapon"" for a
+real emergency.",""
+"f_d0506_0080_0010","char_DARKSUPERSTARMON","Hey, you! Just look around you and you'll see we don't play
+games around here!",""
+"f_d0506_0080_0020","char_DARKSUPERSTARMON","WarGrowlmon, the Tyrant! The aloof yet honorable
+Cyberdramon!",""
+"f_d0506_0080_0030","char_DARKSUPERSTARMON","Boltmon, the heartless KO machine!",""
+"f_d0506_0080_0040","char_DARKSUPERSTARMON","Faster than the speed of sound, MachGaogamon and Crowmon,
+the Speed Stars!",""
+"f_d0506_0080_0050","char_DARKSUPERSTARMON","The Golden Meteor, Grademon!",""
+"f_d0506_0080_0060","char_DARKSUPERSTARMON","And Stingmon and ExVeemon, the new order everyone's got
+their eyes on!",""
+"f_d0506_0080_0070","char_DARKSUPERSTARMON","Those're the type of bruisers you'll be up against at this
+arena! Now, be a good kid and skedaddle!",""
+"f_d0506_0080_0080","char_DARKSUPERSTARMON","Hey, you! Not bad out there! Shoulda told me you knew how
+to handle yourself!",""
+"f_d0506_0080_0090","char_DARKSUPERSTARMON","Knightmon, the Silver Comet!",""
+"f_d0506_0090_0010","char_TANKMON","The arena is the best! You can make good money, AND it's fun!",""
+"f_d0506_0100_0010","char_BOLTMON","DESTROY ALL ENEMIES... DESTROY ALL ENEMIES...",""
+"f_d0506_0110_0010","char_NANOMON","Another profitable day at the arena. Truly, I could not ask
+for more.",""
+"f_d0506_0110_0020","char_NANOMON","The park is doing great as well, so investing all that time
+and money was the right choice! Hahaha!",""
+"f_d0506_0120_0010","char_LILAMON","Oh, my gosh! It's Stingmon! You're my favorite!",""
+"f_d0506_0120_0020","char_STINGMON","Uh... Thank you for your support.",""
+"f_d0506_0120_0030","char_XV-MON","Wow! Now the pressure's really on, huh?!",""
+"f_d0506_0120_0040","char_STINGMON","C-Cut it out! Stay focused or you could lose the next
+battle.",""
+"f_d0506_0130_0010","char_MARSMON","Oh, it's you guys. I hear you've been out there doing great
+things again.",""
+"f_d0506_0130_0020","char_MARSMON","I wanted to help retake Central Town...",""
+"f_d0506_0130_0030","char_MARSMON","...but I have to keep an eye on this place. I can't let
+anyone else end up like Big Bro.",""
+"f_d0506_0130_0040","char_MARSMON","That... and I have a score to settle. I want to smash the
+face of whoever did those modifications.",""
+"f_d0506_0140_0010","char_VOLCAMON","Well, well, well! Now this is a rare sight... The Shinjuku
+Dungeon Grand Prix Champ, in the flesh.",""
+"f_d0506_0140_0020","char_VOLCAMON","What brings the great and mighty champion all the way to
+the Paradise Colosseum?",""
+"f_d0506_0140_0030","char_VOLCAMON","Ha! You want to talk to Callismon?!",""
+"f_d0506_0140_0040","char_VOLCAMON","...As if you could! ...Oops. Where are my manners?",""
+"f_d0506_0140_0050","char_VOLCAMON","I suppose a big SDGP Champ like you wouldn't know. Well,
+let me fill you in...",""
+"f_d0506_0140_0060","char_VOLCAMON","Callismon calls the shots here... as the Paradise Colosseum
+Great Titan Champion!",""
+"f_d0506_0140_0070","char_VOLCAMON","That's on a completely different level from a puny SDGP
+runt like you!",""
+"f_d0506_0140_0080","char_VOLCAMON","But if... and this is just ""if""... you want to talk to
+Callismon, step into the ring!",""
+"f_d0506_0140_0090","char_VOLCAMON","Win enough to make a name for yourself, and maybe, just
+maybe, you'll earn a shot at the PCGT Champion.",""
+"f_d0506_0140_0100","char_VOLCAMON","Then you can talk all you want during the match. But this
+is all IF you aren't too weak to get that far.",""
+"f_d0506_0140_0110","char_VOLCAMON","Well? What'll it be, champ? You going to sign up?",""
+"f_d0506_0140_0120","char_VOLCAMON","So what's it going to be?",""
+"f_d0506_0140_0130","char_PLAYER_M","{next}[Enter the bouts.]",""
+"f_d0506_0140_0131","char_PLAYER_M","{end}[Don't enter.]",""
+"f_d0506_0140_0140","char_VOLCAMON","Bahahaha! So much for the SDGP Champion...!",""
+"f_d0506_0140_0150","char_VOLCAMON","That's the way! Whether anyone knows you or not, you at least
+speak like a true champion.",""
+"f_d0506_0140_0160","char_VOLCAMON","All right! We've got you entered. Now, go to the
+competitors' waiting room.",""
+"f_d0506_0160_0010","char_VOLCAMON","You're finished signing up to fight. Head to the waiting
+room!",""
+"f_d0506_0160_0020","char_VOLCAMON","Now, that's what I call a champion's pride! It's almost
+time! Go to the waiting room.",""
+"f_d0506_0160_0030","char_VOLCAMON","You sure know how to put on a fiery match! Show us how a
+real champ does things in the next one, too!",""
+"f_d0506_0160_0040","char_VOLCAMON","Time for you to prove who's the toughest of them all! I'll
+be watching!",""
+"f_d0506_0170_0010","char_INROOMBROADCAST","The second match for Group A is about to begin!
+Competitors, please proceed to the waiting room!",""
+"f_d0506_0170_0020","char_INROOMBROADCAST","The third match for Group A is about to begin! Competitors,
+please proceed to the waiting room!",""
+"f_d0506_0170_0030","char_INROOMBROADCAST","The fourth match for Group A is about to begin!
+Competitors, please proceed to the waiting room!",""
+"f_d0506_0180_0010","char_ASTAMON","The competitors' waiting room is up ahead. Come back after
+you've registered.",""
+"f_d0506_0180_0020","char_ASTAMON","A champion in action...! Now, this I have to see!",""
+"f_d0506_0180_0030","char_ASTAMON","So that's what a champion can do...! Keep up the good work.",""
+"f_d0506_0180_0040","char_ASTAMON","You have to know by now! We wanna see you fight!",""
+"f_d0506_0180_0050","char_ASTAMON","Hey! Don't go losing on us this time, either! We need
+excitement!",""
+"f_d0506_0190_0010","char_GAOMON","It's the champion! The champ is here!",""
+"f_d0506_0190_0020","char_DARKSUPERSTARMON","Hey, where have you been?! The PCGT Champion is here!",""
+"f_d0506_0190_0030","char_VOLCAMON","Hey, double champ! Stop by and see me later!",""
+"f_d0506_0190_0040","char_VOLCAMON","A new tournament is kicking off! And we want to see you in
+action again!",""
+"f_d0506_0200_0010","char_VOLCAMON","The deity of Digimon Battles! It's the Final Holy Knight,
+Omnimon!",""
+"f_d0506_0200_0011","char_VOLCAMON","And now, a tournament to honor its strength—The Greatest
+OMNI Carnival!",""
+"f_d0506_0200_0012","char_VOLCAMON","The rules are simple and clear! Win it all! Lose, and
+you're out!",""
+"f_d0506_0200_0013","char_VOLCAMON","No mealy-mouthing. Just deciding who's the strongest of
+all!",""
+"f_d0506_0200_0014","char_VOLCAMON","I went ahead and signed you up, champ. Come by and battle
+whenever you want.",""
+"f_d0506_0200_0015","char_VOLCAMON","More and more battle teams are signing up. I'll let you
+know when we settle on new cards!",""
+"f_d0506_0200_0016","char_VOLCAMON","Win and you'll be a triple champion! Show 'em what makes
+you the best!",""
+"f_d0506_0200_0020","char_VOLCAMON","How're you holding up?! The Greatest OMNI Carnival is on
+fire!",""
+"f_d0506_0200_0030","char_VOLCAMON","Deliberations on the battle cards are still underway! I'll
+be in touch once everything's finalized!",""
+"f_d0506_0200_0040","char_VOLCAMON","The last battle of The Greatest OMNI Carnival is upon us!",""
+"f_d0506_0200_0041","char_VOLCAMON","A final-round showdown with Marsmon! Set the ring on fire
+out there!",""
+"f_d0506_0200_0050","char_VOLCAMON","Well, if it isn't the triple champ! You here to burn the
+ring down again?",""
+"f_d0506_0200_0060","char_VOLCAMON","Come back anytime!",""
+"f_d0506_0200_0070","char_VOLCAMON","Nice work out there! Another scorcher of a battle!",""
+"f_d0506_0210_0010","char_VOLCAMON","It's the moment of truth... the final round of The Greatest
+OMNI Carnival!",""
+"f_d0506_0210_0020","char_VOLCAMON","Win and you'll be crowned The Greatest OMNI Champion!
+And the SDGP and PCGT Champ, too!",""
+"f_d0506_0210_0030","char_VOLCAMON","That means you're a triple champion if you emerge
+victorious! That's right! A grand slam achievement!",""
+"f_d0506_0210_0040","char_VOLCAMON","Oh, right... I'm sure you already know this, but I'll tell
+you anyway...",""
+"f_d0506_0210_0050","char_VOLCAMON","Your opponent in the championship bout is none other
+than... Marsmon!",""
+"f_d0506_0210_0060","char_VOLCAMON","A true clash between an unstoppable force and an immovable
+object! Who will be the triple champ?!",""
+"f_d0506_0210_0070","char_VOLCAMON","This will be the bout to end all bouts! Come back here once
+you're ready!",""
+"f_d0506_0220_0010","char_VOLCAMON","Oh, man... It... It... finally happened... *sniffle*",""
+"f_d0506_0220_0020","char_VOLCAMON","We have ourselves a triple champion!",""
+"f_d0506_0220_0030","char_VOLCAMON","*sniff* I'm not crying! My eyes are just raining joy!",""
+"f_d0506_0220_0040","char_VOLCAMON","I can't believe it actually happened! I never thought I'd
+live to see a grand slam victory!",""
+"f_d0506_0220_0050","char_VOLCAMON","And, just like that, The Greatest OMNI Carnival is over. It
+makes me kind of sad...",""
+"f_d0506_0220_0060","char_VOLCAMON","But... it'll always live on in our hearts. So just follow
+your own path without fear!",""
+"f_d0506_0220_0070","char_VOLCAMON","I'll keep this place open so you can use it... Come by
+anytime if you're looking to have a rematch against someone.",""
+"f_d0506_0220_0080","char_VOLCAMON","Thank you sooooo much!",""
+"f_d0506_0230_0010","char_KNIGHTMON","A sword that is true to the basics is the strongest. I
+shall prove it by winning this battle.",""
+"f_d0506_0230_0020","char_KNIGHTMON","I could not read your sword techniques at all... The
+courage to break the mold... I suppose that is also strength.",""
+"f_d0506_0240_0010","char_GRADEMON","Thanks to you, I feel like I am getting closer to the true
+Twentiest. Another match is welcome at any time!",""
+"f_d0506_9000_0010","char_REVOLMON","Fightin' ain't just about who's got the most brawn. Ya gotta
+use your noggin, too. So what do ya say to a card battle?",""
+"f_d0506_9000_0020","","[Challenge to a card battle.]",""
+"f_d0506_9000_0021","","{end}Now is not the time.",""
+"f_d0506_9000_0030","char_REVOLMON","Well, all righty, then. Best of luck out there to ya.",""
+"f_d0506_9000_0040","char_REVOLMON","Not bad. Ya got me. And here I thought I was pretty darn
+good at readin' my opponents...",""
+"f_d0506_9000_0050","char_REVOLMON","Tarnation! I win! I gotta make a habit outta this.",""
+"f_d0513_0010_0010","char_MARSMON","Hey, look at that... I hear they're all newcomers...",""
+"f_d0513_0010_0020","char_MARSMON","Fresh teams are registering one after another, inspired by
+our match against Big Bro...",""
+"f_d0513_0010_0030","char_MARSMON","I'm not quite sure how to feel about it... but I guess all
+we can do is fight.",""
+"f_d0513_0010_0040","char_MARSMON","And I am kind of looking forward to seeing what kind of
+tough customers we'll be up against...",""
+"f_d0513_0010_0050","char_MARSMON","Besides, it's not like we can just take it easy forever,
+right?",""
+"f_d0513_0020_0010","char_MARSMON","I heard you signed up for The Greatest OMNI Carnival!",""
+"f_d0513_0020_0020","char_MARSMON","Oh, me? Of course I signed up, too! What did you expect?",""
+"f_d0513_0020_0030","char_MARSMON","See, I'm also doing it partly for my Big Bro. Those of us
+who're still around have to keep Digimon Battles going.",""
+"f_d0513_0020_0040","char_MARSMON","We champions are going to meet in the final battle! And
+it'll be the best bout ever!",""
+"f_d0513_0020_0050","char_MARSMON","Will you be the triple champ? Or will a new champ be
+crowned in me?",""
+"f_d0513_0020_0060","char_MARSMON","Let's take our time and make it good!",""
+"f_d0513_0030_0010","char_MARSMON","So, I heard you're off to a good start.",""
+"f_d0513_0030_0020","char_MARSMON","But I suppose that's to be expected. It's not like you'd
+ever lose this early on!",""
+"f_d0513_0030_0030","char_MARSMON","I want to fight you closer to the top. I'm thinking, like,
+the finals...",""
+"f_d0513_0030_0040","char_MARSMON","And now that that's said... I'm in it to win it. Don't you
+go losing, either!",""
+"f_d0513_0040_0010","char_MARSMON","I watched your match. You're stronger than ever!",""
+"f_d0513_0040_0020","char_MARSMON","You never stop evolving, do you? I'm not going to lie. It's
+almost scary...",""
+"f_d0513_0040_0030","char_MARSMON","That's why I'm down to fight you as many times as you're
+willing to! See you in the finals!",""
+"f_d0513_0050_0010","char_MARSMON","Hey, looks like you're doing well for yourself! Not that I
+was worried you wouldn't be.",""
+"f_d0513_0050_0020","char_MARSMON","And have no fear. I'm racking up the wins on my end, too. I
+gave my word to face you in the finals, after all!",""
+"f_d0513_0050_0030","char_MARSMON","Here's the thing. Those newcomers who come here to be like
+us? Well, turns out they make for some interesting sport.",""
+"f_d0513_0050_0040","char_MARSMON","I don't know... it's like this place is more alive than
+ever. I hope Big Bro is happy, too...",""
+"f_d0513_0050_0050","char_MARSMON","But it's still not enough. We've got to get things even
+more hyped up! All right, I'll see you later!",""
+"f_d0513_0060_0010","char_MARSMON","So it's you and me in the finals, just as expected!",""
+"f_d0513_0060_0020","char_MARSMON","Hey, you hear that? That's the sound of an arena full of
+folks screaming for excitement.",""
+"f_d0513_0060_0030","char_MARSMON","There's nothing like basking in those cheers. In my book,
+it's the second best buzz in the world.",""
+"f_d0513_0060_0040","char_MARSMON","The best, of course... is the moment you reach the top.
+When all those cheers are for you and you alone.",""
+"f_d0513_0060_0050","char_MARSMON","Will it be you or me who gets the glory? That's what we're
+about to decide!",""
+"f_d0513_0070_0010","char_MARSMON","Hahahahaha! Man, I took a real beating out there!",""
+"f_d0513_0070_0020","char_MARSMON","You're really strong, you know that? But I'm sure I wasn't
+just some pushover, either, huh?",""
+"f_d0513_0070_0030","char_MARSMON","Haha. Laughing about losing is new for me. Before, having
+fun or wowing the audience never even entered my head.",""
+"f_d0513_0070_0040","char_MARSMON","The fun of fighting as a sport, the joy of putting smiles on the 
+spectators' faces—I learned those things battling you.",""
+"f_d0513_0070_0050","char_MARSMON","That's probably why I can laugh even though I lost. In a
+sense, it was the perfect way to lose.",""
+"f_d0513_0070_0060","char_MARSMON","Even Big Bro would give you cred. This is your win!",""
+"f_d0513_0080_0010","char_ETEMON","That's the match! And would ya believe it? We got a triple
+champion!",""
+"f_d0513_0080_0020","char_MARSMON","Wow... You really are something else! I threw everything I
+had at you. No joke.",""
+"f_d0513_0080_0030","char_MARSMON","Anybody else probably would've ended up ending me. But
+because it was you, I managed to hang in there for a while.",""
+"f_d0513_0080_0040","char_MARSMON","No regrets about losing after that. On the contrary, I feel
+like I got front-row seats to something special—",""
+"f_d0513_0080_0050","char_MARSMON","—the birth of a triple champion!",""
+"f_d0550_0010_0010","char_SOLARMON","Oh, man! Are we lucky or what?!",""
+"f_d0550_0010_0020","char_HAGURUMON","You can say that again! Normally, you'd never find a fuse
+around here.",""
+"f_d0550_0010_0030","char_MAMEMON","This is super fun! Just a little more to the right...
+There! Grab it!",""
+"f_d0550_9000_0010","char_CAPROMON","Hey! Ya wanna have a card battle? Nobody wants to play with
+me, so I'm bored...",""
+"f_d0550_9000_0020","","[Challenge to a card battle.]",""
+"f_d0550_9000_0021","","{end}Now is not the time.",""
+"f_d0550_9000_0030","char_CAPROMON","Aw, c'mon... You're just like all the rest...",""
+"f_d0550_9000_0040","char_CAPROMON","How about a rematch? Ya wanna keep fighting, too, right?",""
+"f_d0550_9000_0050","char_CAPROMON","That was fun! Just lemme know when yer ready to go again!",""
+"f_d0550_0020_0010","char_GOBURIMON","Hey, what gives?! This thing is rigged! I'm gonna smash it
+to pieces!",""
+"f_d0550_0020_0020","char_SNOWGOBURIMON","How long are ya gonna keep at this, anyway? Let's go home,
+already.",""
+"f_d0551_0010_0010","char_GERBEMON","Uh-uh! No way! We're busy right now! Get out!",""
+"f_d0551_0010_0020","char_NANOMON","Who are you? Do you have business with me?",""
+"f_d0551_0010_0030","char_NANOMON","You must forgive me, but I am currently in the middle of
+weaving a plan of utmost importance.",""
+"f_d0551_0010_0040","char_NANOMON","Please leave.",""
+"f_d0551_0010_0050","char_GERBEMON","That's right! Get this straight! Datamon is hatchin' a
+scheme that's gonna flip this area on its head!",""
+"f_d0551_0010_0060","char_GERBEMON","So get lost! Go on, scram!",""
+"f_d0551_0010_0070","char_NANOMON","There...! This is superb!",""
+"f_d0551_0010_0080","char_GERBEMON","Amazin', Datamon! Another first-rate idea! You have my
+respect!",""
+"f_d0551_0020_0010","char_PAGUMON","Hey, Gazimon! That Kokuwamon place was really fun!",""
+"f_d0551_0020_0020","char_PAGUMON","We wanna go again! Can we? Pleeeeease?",""
+"f_d0551_0020_0030","char_GAZIMON","You guys never run out of energy, do you? Fine, fine! We'll
+go after we eat.",""
+"f_d0552_0010_0010","","There's no response, but it gives off an intimidating air,
+as if it could move at any moment.",""
+"f_d0552_0020_0010","char_TOGEMON","The Hall of the Kokuwamon Hero was so amazing! I want a
+body clad in steel, too.",""
+"f_d0552_0020_0020","char_TENTOMON","I know exactly how ya feel, Togemon...",""
+"f_d0552_0020_0030","char_FUNBEEMON","I want to bee a hero, too!",""
+"f_d0552_0020_0040","char_FLORAMON","It's so nice seeing everyone having fun!",""

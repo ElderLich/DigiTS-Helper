@@ -1,0 +1,194 @@
+string2 0,string 1,string 2,string 3
+"m100_010_010","char_MINERVAMON","So, you really don't know anything about the Digital World?","m100_010_010"
+"m100_010_020","char_AEGIOMON","Nope. The first thing I remember...","m100_010_020"
+"m100_010_030","char_AEGIOMON","...is when Inori saved me. Everything before that, well...","m100_010_030"
+"m100_010_040","char_MINERVAMON","Talk about unusual! In fact, this is the first I've ever 
+heard of such a thing.","m100_010_040"
+"m100_010_050","char_MINERVAMON","Digimon are all born and raised in the Digital World.
+At least, as far as I know.","m100_010_050"
+"m100_010_060","char_AEGIOMON","...Oh, good morning, {player}.","m100_010_060"
+"m100_010_070","char_AEGIOMON","Minervamon's been telling me about all kinds of neat stuff.","m100_010_070"
+"m100_010_080","char_AEGIOMON","Like the Digital World... And that it's where Digimon usually live.","m100_010_080"
+"m100_010_090","char_AEGIOMON","But I wonder, though... How come I didn't know about any of
+this stuff?","m100_010_090"
+"m100_010_100","char_INORI","Aegiomon...","m100_010_100"
+"m100_010_110","char_MINERVAMON","If you really want to know, why not join me when I go back
+to my world?","m100_010_110"
+"m100_010_120","char_AEGIOMON","Join you?","m100_010_120"
+"m100_010_125","char_MINERVAMON","No need to be so on guard. Consider it a little vacation.","m100_010_125"
+"m100_010_130","char_MINERVAMON","But, of course... I can't go back there until I find what
+I'm looking for here...","m100_010_130"
+"m100_010_140","char_AEGIOMON","...Got it. I'm in, then! I'll do whatever I can to help!","m100_010_140"
+"m100_010_150","char_AEGIOMON","Hey, {player}, about that thing Minervamon is looking for...","m100_010_150"
+"m100_010_160","char_AEGIOMON","Why don't we ask that lady about it?","m100_010_160"
+"m100_010_170","char_INORI","You mean that Dr. Simmons character? Don't you think she was a little...
+y'know... nutty?","m100_010_170"
+"m100_010_180","char_AEGIOMON","Maybe, but she's super curious about Digimon. That's why I
+figure she'd be willing to help us out.","m100_010_180"
+"m100_010_190","char_AEGIOMON","Think we can find her if we go look for that car in the
+park again? C'mon. Let's head over there!","m100_010_190"
+"m100_010_200","char_PLAYER_M","I'm down for checking out Shinjuku Park.{next}",""
+"m100_010_201","char_PLAYER_M","Hopefully, she has information about the Shinjuku Inferno.",""
+"m100_010_202","char_PLAYER_M","Sure. Gotta keep an eye on the class-A anomalies.",""
+"m100_010_210","char_AEGIOMON","Yeah, Dr. Simmons might help us out!","m100_010_210"
+"m100_010_220","char_AEGIOMON","{player}, Minervamon, let's go!","m100_010_220"
+"m100_010_230","char_AEGIOMON","Um, what do you mean by that?","m100_010_230"
+"m100_010_240","char_AEGIOMON","""Ano...maly""? What the heck is that?","m100_010_240"
+"m100_020_010","char_INORI","Hmm. Sounds like we have to head to Akihabara, then...","m100_020_010"
+"m100_020_020","char_PLAYER_M","Where in Akihabara?{next}",""
+"m100_020_021","char_PLAYER_M","But the information is uncertain...",""
+"m100_020_022","char_PLAYER_M","To go check out some action figures?",""
+"m100_020_030","char_INORI","That guy said something about hunting for parts, right?","m100_020_030"
+"m100_020_040","char_INORI","Then I bet we should start with the shops under the overpass.
+Anyway, let's head over and see what we can find.","m100_020_040"
+"m100_020_050","char_INORI","But staying here won't help anything, either. We ought 
+to go check out some other spots, if you ask me.","m100_020_050"
+"m100_020_060","char_INORI","What, no! I mean, yeah... there are a ton of them
+around there... but no.","m100_020_060"
+"m100_020_070","char_INORI","It's just that staying here won't help anything. We ought to
+go check out some other spots, if you ask me.","m100_020_070"
+"m100_020_080","char_INORI","We need to take the train if we're going to Akihabara.
+Let's head to Shinjuku Station.","m100_020_080"
+"m100_030_010","char_SIMMONS","This one sparks joy... This one does not spark joy...",""
+"m100_030_015","char_SIMMONS","...Hmm?",""
+"m100_030_020","char_SIMMONS","Oh, it's you folks. Thinking of cooperating with my
+research again?",""
+"m100_030_030","char_PLAYER_M","We need your help.{next}",""
+"m100_030_031","char_PLAYER_M","What are you doing?",""
+"m100_030_040","char_SIMMONS","Well that's a coincidence. We, too, need someone to help.
+Still, let's start with your problem first.",""
+"m100_030_050","char_SIMMONS","Oh, I'm working on a project right now, but I'm having a
+little trouble.",""
+"m100_030_060","char_SIMMONS","I was just trying to figure out how to deal with it.",""
+"m100_030_070","char_SIMMONS","Yes, yes, I see... Quite intriguing.",""
+"m100_030_080","char_SIMMONS","So, you're looking for something Digimon-related, yes? 
+Our research might be of some use to you.",""
+"m100_030_090","char_SIMMONS","Actually, our team has been making strides on a certain
+project lately: radar that detects phase electrons.",""
+"m100_030_100","char_SIMMONS","But, currently, all it can do is detect them.",""
+"m100_030_110","char_SIMMONS","Eventually, however, we're also hoping to use the electromagnetic
+waves it emits to ""interact"" with phase electrons.",""
+"m100_030_120","char_SIMMONS","But here's the problem.",""
+"m100_030_130","char_SIMMONS","We've suddenly lost contact with the squad in charge of
+installing one of the five small base stations.",""
+"m100_030_140","char_SIMMONS","If you help me look into it, I'll give you a prototype detector. 
+It ought to help you find what you're looking for.",""
+"m100_030_150","char_PLAYER_M","All right. We'll take the job.{next}",""
+"m100_030_151","char_PLAYER_M","Tell me more about this prototype detector.",""
+"m100_030_152","char_PLAYER_M","Public safety is short staffed too, huh?",""
+"m100_030_160","char_SIMMONS","It's settled! Head to the Higashi-Shinjuku subway. That's where
+the squad should be.",""
+"m100_030_170","char_SIMMONS","Given how we lost contact, I'm guessing the squad isn't 
+exactly having a spa day over there. Tread carefully.",""
+"m100_030_180","char_SIMMONS","Think of it as radar that detects the presence of phase electrons.
+It might help you find what you're looking for.",""
+"m100_030_190","char_SIMMONS","It's still in the prototype phase, though, so it's pretty 
+bulky, to be sure.",""
+"m100_030_200","char_SIMMONS","But if I use the parts I found here, I'm certain I can make it
+smaller than it has any business being.",""
+"m100_030_210","char_SIMMONS","Be it manpower or funds, we're always short on something. 
+Not many folks rushing to join the ""anomaly squad,"" you see.",""
+"m100_030_220","char_SIMMONS","Which is why I'm willing to take any help I can get, provided it's a
+fair exchange, of course.",""
+"m100_030_230","char_SIMMONS","Not a bad deal, right? What do you say?",""
+"m100_030_240","char_OPERATOR_M","Dr. Monica Simmons... A cursory look into her background 
+shows just how famous she is in her field.",""
+"m100_030_250","char_OPERATOR_M","That being said, she apparently suddenly vanished from the
+realm of academia after a certain point.",""
+"m100_030_260","char_OPERATOR_M","Once she was in public safety, personal information and
+records became hard to find. Everything was confidential.",""
+"m100_030_270","char_OPERATOR_M","In exchange for giving up her social status, she probably
+chose to have access to state-level classified information.",""
+"m100_030_280","char_OPERATOR_M","A genius who left the public stage... Somehow, that brings
+Dr. Yuki to mind.",""
+"m100_040_010","char_SUMERAGI","Damn it all!","m100_040_010"
+"m100_040_020","char_PLAYER_M","We're here on Dr. Simmons' orders.{next}",""
+"m100_040_021","char_PLAYER_M","Are you all right?",""
+"m100_040_030","char_SUMERAGI","Her orders?","m100_040_030"
+"m100_040_040","char_SUMERAGI","Anyway, our squad can't do anything against a monster like that.","m100_040_040"
+"m100_040_050","char_SUMERAGI","Wait... I remember you guys! What are you doing here?! This
+area is off-limits!","m100_040_050"
+"m100_040_060","char_SUMERAGI","The monster stole the device's activation switch... and ran off in 
+there.","m100_040_060"
+"m100_040_070","char_PLAYER_M","We'll go take a look.{next}",""
+"m100_040_071","char_PLAYER_M","What kind of ""monster,"" exactly?",""
+"m100_040_080","char_SUMERAGI","I hate to have to ask civilians for help, but please!","m100_040_080"
+"m100_040_090","char_SUMERAGI","It's that same strange creature as before. Looks like we're
+just gonna have to count on you for this...","m100_040_090"
+"m100_050_010","char_AEGIOMON","Where are we?","m100_050_010"
+"m100_050_020","char_MINERVAMON","This charge in the air... I'd say we're in the Outer Dungeon.","m100_050_020"
+"m100_050_030","char_MINERVAMON","It's an unstable space that's in between the Digital World
+and your world.","m100_050_030"
+"m100_050_040","char_MINERVAMON","And I'm guessing the ""monster"" up ahead is a Digimon.
+Let's stay sharp.","m100_050_040"
+"m100_050_050","char_INORI","......","m100_050_050"
+"m100_050_060","char_PLAYER_M","You must be nervous...{next}",""
+"m100_050_061","char_PLAYER_M","Don't be scared. I'm right beside you.{next}",""
+"m100_050_062","char_PLAYER_M","Keeping citizens safe is an agent's duty.{next}",""
+"m100_050_070","char_INORI","I'm okay. Really, I am. The jitters I felt before are all pretty
+much gone.","m100_050_070"
+"m100_050_080","char_INORI","After all, I've got a new, dependable friend in a funny
+outfit by my side.","m100_050_080"
+"m100_050_090","char_INORI","It's like I've got an anime character watching out for me. 
+""Agent Alpha"" was my hero, you know.","m100_050_090"
+"m100_050_110","char_INORI","Anyway, I just wanted to say that I'm relying on you. 
+No need to worry about me, let's hurry ahead.","m100_050_110"
+"m100_060_010","char_BLACKTAILMON","Nyahaha! I got my hands on a real prize this time!","m100_060_010"
+"m100_060_020","char_BLACKTAILMON","More! I have to go swipe more stuff off of them! You should've
+seen the looks on their faces! Nyahaha!","m100_060_020"
+"m100_060_030","char_PLAYER_M","Give back what you stole.{next}",""
+"m100_060_031","char_PLAYER_M","What're you doing here?{next}",""
+"m100_060_032","char_PLAYER_M","Sounds like you're having fun. Mind if we join in?{next}",""
+"m100_060_040","char_BLACKTAILMON","Nuh-uh, no way! If you want it, you're going to have 
+to take it! Nyahaha!","m100_060_040"
+"m100_060_050","char_BLACKTAILMON","None of your business! Maybe I'm just enjoying the look on
+weaklings' faces when I snatch away their precious things!","m100_060_050"
+"m100_060_060","char_BLACKTAILMON","You humans are no match for us! If you don't like it, why
+don't you try to do something about it?!","m100_060_060"
+"m100_060_070","char_BLACKTAILMON","The heck are you saying?! You guys are just stupid humans!
+No way I'm going to let the likes of you in on my fun!","m100_060_070"
+"m100_060_080","char_BLACKTAILMON","It's because you humans are so weak that we play around
+with you like this. Toys should know when to keep quiet!","m100_060_080"
+"m100_070_010","char_INORI","We should go give it back to the public safety guy right
+away.","m100_070_010"
+"m100_080_010","char_SUMERAGI","We'll handle the cleanup from here. Dr. Simmons is already
+back at the public safety vehicle in Shinjuku Park.",""
+"m100_080_020","char_SUMERAGI","Thanks again for all your help. We'll close this area off to
+the public again.",""
+"m100_080_025","char_SUMERAGI","The name's Shota Kuroi. I'll be sure to return the favor
+sometime.",""
+"m100_080_030","char_SUMERAGI","I'll escort you back to Dr. Simmons' location.",""
+"m100_090_005","char_SIMMONS","I've heard the report. Fantastic work out there.","m100_090_005"
+"m100_090_010","char_SIMMONS","I've made massive leaps in my research, thanks to you.","m100_090_010"
+"m100_090_020","char_SIMMONS","Time to hold up my end of the bargain. That communicator of 
+yours... May I see it for a moment?","m100_090_020"
+"m100_090_030","char_SIMMONS","There! I've installed that miniaturized detector I proposed 
+earlier into your communicator. Works just like I explained.","m100_090_030"
+"m100_090_040","char_SIMMONS","But I have to ask...","m100_090_040"
+"m100_090_050","char_SIMMONS","Where in the world are you from, anyway? That device isn't
+tech you'd find in any retail store, that's for sure.","m100_090_050"
+"m100_090_060","char_SIMMONS","I couldn't wrap my head around most of the functionality. 
+What would you even use something like that for?","m100_090_060"
+"m100_090_070","char_PLAYER_M","I'm afraid I can't answer that.{next}",""
+"m100_090_071","char_PLAYER_M","......{next}",""
+"m100_090_072","char_PLAYER_M","Its functionality is essential for preventing a global collapse.",""
+"m100_090_080","char_SIMMONS","...""Can't,"" you say? All right. I won't push it.","m100_090_080"
+"m100_090_090","char_SIMMONS","Clamming up, huh?","m100_090_090"
+"m100_090_095","char_SIMMONS","Like a secret agent who's been through interrogation training...","m100_090_095"
+"m100_090_110","char_SIMMONS","If you can't tell me, then just say so. I don't mind leaving it at that.","m100_090_110"
+"m100_090_120","char_SIMMONS","If that were true, it would be one heck of a feature, to be sure...
+Sounds like something out of an anime.","m100_090_120"
+"m100_090_130","char_SIMMONS","And don't get me wrong. I'm into all that stuff... but, still, reckless
+lies never help.","m100_090_130"
+"m100_090_140","char_SIMMONS","Phase electron lifeforms are being pursued by the government
+agencies of all the developed nations, after all...","m100_090_140"
+"m100_090_150","char_SIMMONS","One or two spies in the mix would hardly be a surprise. The 
+only thing that astonishes me... is the beauty of your device.","m100_090_150"
+"m100_090_160","char_SIMMONS","Whoever built that marvel... They're a genius, maybe even
+more gifted than yours truly.","m100_090_160"
+"m100_090_190","char_SIMMONS","I'm fascinated by you...! Where you come from, and who's 
+backing you.","m100_090_190"
+"m100_090_200","char_SIMMONS","I imagine you're not one to easily divulge your secrets...
+Nevertheless, you'll find I don't give up easily.","m100_090_200"
+"m100_090_220","char_SIMMONS","I think this might be the start of a long and fruitful
+relationship. *giggle*","m100_090_220"

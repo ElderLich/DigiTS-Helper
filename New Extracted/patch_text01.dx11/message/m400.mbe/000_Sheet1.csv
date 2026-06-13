@@ -1,0 +1,120 @@
+string2 0,string 1,string 2,string 3
+"m400_010_010","char_SIMMONS","Ah, you return at last. There are new developments
+that I need to share with you.","m400_010_010"
+"m400_010_020","char_SIMMONS","This young lady captured Kuga and questioned him,
+but listen to this...","m400_010_020"
+"m400_010_030","char_SIMMONS","It seems that someone was providing public safety
+with the Digimon to use in their experiments.","m400_010_030"
+"m400_010_040","char_SIMMONS","The name Kuga mentioned was... Dianamon.","m400_010_040"
+"m400_010_050","char_TYUMON","A former resident of Central Town... who once went
+by the name of ""Lunamon.""","m400_010_050"
+"m400_010_060","char_TYUMON","A Digimon, selling her own kind... I hear Dianamon
+calls the Cosmic Area home now.","m400_010_060"
+"m400_010_070","char_TYUMON","If only Minervamon was here, the situation would be
+different. What in the world could've caused this?","m400_010_070"
+"m400_010_080","char_SIMMONS","Apparently, it wasn't just Digimon Kuga was getting.
+He also reportedly got their ""structural information.""","m400_010_080"
+"m400_010_090","char_SIMMONS","By incorporating that, apparently the weapon became
+capable of generating an enormous amount of power.","m400_010_090"
+"m400_010_100","char_SIMMONS","I'll look into that one.","m400_010_100"
+"m400_010_110","char_SIMMONS","You go to the Digital World and find Dianamon. Perhaps you'll 
+be able to discover the mastermind behind this war.","m400_010_110"
+"m400_010_120","char_TYUMON","I'm sure you can ask MasterBlimpmon to take you to 
+the Cosmic Area.",""
+"m400_011_010","char_SOCERIMON","This Cosmic Area was almost entirely uninhabited by
+Digimon, partly due to the harsh environment.",""
+"m400_011_015","char_SOCERIMON","Lord Apollomon and Lady Dianamon chose this place as
+their base to build up their strength against the Titans.",""
+"m400_011_020","char_SOCERIMON","However, the two have fallen out, and the current
+situation is quite tense.",""
+"m400_011_030","char_SOCERIMON","Although it's rumored that they were once quite close...",""
+"m400_011_040","char_SOCERIMON","I hear Lady Minervamon, who once served as peacemaker, has
+been imprisoned somewhere, leaving them with no mediator.",""
+"m400_011_060","char_SOCERIMON","What? You say Lady Dianamon is... selling Digimon to humans?!",""
+"m400_011_070","char_WIZARDMON","Wretched cur! You dare spread baseless rumors?! Why, I have
+a mind to silence that insolent mouth of yours permanently! ",""
+"m400_011_080","char_PUMPMON","...Hey! There you are! I've been looking all over for you.",""
+"m400_011_090","char_PUMPMON","Sorry about my pal here. Still learning the ropes and all. 
+I'll set the kid straight, so cut us some slack, okay?",""
+"m400_011_100","char_SOCERIMON","A friend of Pumpkinmon's, are you...? I suppose I can
+overlook your breach of conduct this once.",""
+"m400_011_110","char_SOCERIMON","Just know that in the future, such persiflage could
+result in full-scale conflict.",""
+"m400_011_120","char_PUMPMON","The name's Pumpkinmon. I'm going around trying to
+ease this tense situation we got brewing here.",""
+"m400_011_130","char_PUMPMON","I'm sure you got your reasons for saying what you did,
+but just try not to make things worse.",""
+"m400_011_140","char_PUMPMON","What's that? You wanna see Lady Dianamon?",""
+"m400_011_150","char_PUMPMON","Can you help Lady Dianamon and Lord Apollomon
+reconcile? I can show you the way!",""
+"m400_011_160","char_PUMPMON","You will?! You'll help me out? Then let's get out there
+and squash this beef!",""
+"m400_011_170","char_PUMPMON","That said... Going to see Lord Apollomon and Lady
+Dianamon isn't gonna be easy.",""
+"m400_011_180","char_PUMPMON","They're both mad as can be... just like kids having a spat.",""
+"m400_011_190","char_PUMPMON","It seems Lady Dianamon's heart is closed tight, so
+I think it'd be better to go see Lord Apollomon first!",""
+"m400_011_200","char_PUMPMON","Let's talk to Lord Apollomon first and see if there's a
+chance of making up.",""
+"m400_011_210","char_PUMPMON","Now that that's settled, let's ask those two to help us
+get to Lord Apollomon!",""
+"m370_100_010","char_APOLLOMON","...And who is this, now?","m370_100_010"
+"m370_100_020","char_APOLLOMON","I already know what you're going to say.","m370_100_020"
+"m370_100_030","char_APOLLOMON","You want me to make up with Dianamon, yes?","m370_100_030"
+"m370_100_050","char_APOLLOMON","Dianamon is the one who made things worse.
+You outsiders need to get lost, now.","m370_100_050"
+"m370_100_060","char_APOLLOMON","...","m370_100_060"
+"m370_100_070","char_APOLLOMON","I told you to leave, didn't I?! Do you need to get burnt
+before you figure it out?!","m370_100_070"
+"m370_110_010","char_APOLLOMON","You're... pretty strong, huh...","m370_110_010"
+"m370_110_020","char_APOLLOMON","...?!","m370_110_020"
+"m370_110_030","char_APOLLOMON","Wait! Could you be... Are you—?!","m370_110_030"
+"m370_110_040","char_APOLLOMON","Do you remember me?","m370_110_040"
+"m370_110_050","char_APOLLOMON","You heard the rumors about Dianamon, too?","m370_110_050"
+"m370_110_060","char_APOLLOMON","I see... I didn't want to believe it, but...","m370_110_060"
+"m370_110_070","char_APOLLOMON","If it's come to this... I gotta take care of Dianamon
+with my own two hands. It's my duty, as family...!","m370_110_070"
+"m400_020_060","char_APOLLOMON","Hey, is this talk of you handing over Digimon to the
+humans true? Well?! Say something!","m400_020_060"
+"m400_020_070","char_DIANAMON","You're always like this... You just say what you want to say,
+with no regard for anyone else!","m400_020_070"
+"m400_020_080","char_DIANAMON","Always, always, ALWAYS blind to what I feel!","m400_020_080"
+"m400_020_090","char_DIANAMON","Even though you can't do anything on your own!","m400_020_090"
+"m400_020_100","char_APOLLOMON","Can't... do anything... you say?","m400_020_100"
+"m400_020_110","char_APOLLOMON","Yup, there it is.","m400_020_110"
+"m400_020_120","char_APOLLOMON","For as long as I can remember, you've always treated me like this!
+Like I'm some incompetent kid who needs his hand held! ","m400_020_120"
+"m400_020_130","char_APOLLOMON","I can't take it any more!","m400_020_130"
+"m400_020_150","char_APOLLOMON","You know what, forget this! I was an idiot to try to make up with you!","m400_020_150"
+"m400_020_160","char_APOLLOMON","Let's go, I'm ready to fight!","m400_020_160"
+"m400_030_010","char_APOLLOMON","What in the world made you change?!","m400_030_010"
+"m400_030_020","char_DIANAMON","You were right by my side, but you couldn't see anything, huh.
+You have no idea what the dark side of the moon is like.","m400_030_020"
+"m400_030_030","char_DIANAMON","It's too late, I can't admit it now...","m400_030_030"
+"m400_030_040","char_DIANAMON","That I wanted you to notice...","m400_030_040"
+"m400_030_050","char_DIANAMON","It's too late! All of it! ","m400_030_050"
+"m400_040_010","char_APOLLOMON","*panting*","m400_040_010"
+"m400_040_020","char_DIANAMON","*panting*","m400_040_020"
+"m400_040_040","char_DIANAMON","Why... you, of all people...?","m400_040_040"
+"m400_040_050","char_APOLLOMON","...","m400_040_050"
+"m400_040_060","char_APOLLOMON","I'm sorry.","m400_040_060"
+"m400_040_070","char_APOLLOMON","I finally get it. It took a massive fight for me to realize,
+but you're suffering from something...","m400_040_070"
+"m400_040_080","char_APOLLOMON","I'm your family, but I didn't notice at all... I know it's late,
+but could you talk to me... please?","m400_040_080"
+"m400_040_090","char_DIANAMON","...Junomon was the one who instructed me to send
+Digimon to the human world.","m400_040_090"
+"m400_040_100","char_DIANAMON","They were meant to act as envoys—emissaries so that
+the humans could understand us better.","m400_040_100"
+"m400_040_110","char_DIANAMON","I had no idea the horrible things that were happening to them...","m400_040_110"
+"m400_040_120","char_DIANAMON","I went to Minerva for advice on what to do... but, after
+I talked to her, she disappeared and never returned.","m400_040_120"
+"m400_040_130","char_DIANAMON","I lost the capacity to tell who was really on our side...
+I even came to doubt you, my other half...","m400_040_130"
+"m400_040_140","char_DIANAMON","Will you forgive me?","m400_040_140"
+"m400_040_150","char_APOLLOMON","No... this is my fault. I should have been by your side, 
+to light your way...","m400_040_150"
+"m400_040_160","char_DIANAMON","It's because I didn't have the courage... the courage
+to tell you how I feel.","m400_040_160"
+"m400_040_170","char_APOLLOMON","Let's go question Junomon together.
+I'm sure Minerva is there, too.","m400_040_170"

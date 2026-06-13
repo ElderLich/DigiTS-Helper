@@ -1,0 +1,193 @@
+string2 0,string 1,string 2,string 3
+"f_t0301_0010_0010","char_TOUDO","Yes, this is Shiroki.","f_t0301_0010_0010"
+"f_t0301_0010_0020","char_TOUDO","A strange light in a back alley of the shopping district? 
+Understood. We'll investigate immediately.","f_t0301_0010_0020"
+"f_t0302_0010_0010","char_MAN","What's the big deal with those people? Why all the fuss
+over some vehicle in the square?",""
+"f_t0302_0020_0010","char_YOUNG_MAN","What's up with that vehicle and those people? Never seen
+them before... A crowd is gatherin' around to gawk.",""
+"f_t0302_0040_0010","char_PUBLIC_SECURITY_PERSONNEL","The target's in the underground... Everyone, take up
+positions.",""
+"f_t0302_0040_0020","char_SPECIAL_FORCES","Sir! Yes, sir!",""
+"f_t0302_0050_0010","char_TOUDO","Say, that man just now...",""
+"f_t0302_0050_0020","char_TOUDO","Perhaps we should keep an eye on him.",""
+"f_t0302_0060_0010","char_SUMERAGI","Yeah... He said, ""This organization never changes!"" didn't
+he?",""
+"f_t0302_0060_0020","char_SUMERAGI","Could he know about the Anomalous Affairs Division...?",""
+"f_t0302_0070_0010","char_WOMAN_LIKE_MOTHER","Where in the world did those kids run off to? I just hope
+they're okay...",""
+"f_t0302_0080_0010","char_PUBLIC_SECURITY_PERSONNEL","This area is currently off-limits. Turn back immediately.",""
+"f_t0302_0090_0010","char_AEGIOMON","Let's see... We still haven't looked that way, so let's
+check it out.",""
+"f_t0302_0100_0010","char_YOUNG_WOMAN","The Tokyo Metropolitan Government Building sure is huge!
+Just look how tall it is!",""
+"f_t0302_0100_0020","char_YOUNG_WOMAN","Huh? What do you mean, ""Is it still standing?"" If a building
+that big collapsed, it'd be mayhem around here.",""
+"f_t0302_0100_0030","char_YOUNG_WOMAN","Law and order's alive and well here in Japan, you know! A
+lot of weird stuff's been happening lately, but still...",""
+"f_t0302_0110_0010","char_PUBLIC_SECURITY_PERSONNEL","I remember you guys from before. What're you doing here?",""
+"f_t0302_0110_0020","","{next}We're looking for Dr. Simmons.",""
+"f_t0302_0110_0021","","Nothing, really.{end}",""
+"f_t0302_0110_0030","char_PUBLIC_SECURITY_PERSONNEL","Dr. Simmons?",""
+"f_t0302_0110_0040","char_PUBLIC_SECURITY_PERSONNEL","Then you better clear out.",""
+"f_t0302_0110_0050","char_PUBLIC_SECURITY_PERSONNEL","You won't find her here.",""
+"f_t0302_0110_0060","char_PUBLIC_SECURITY_PERSONNEL","Hmph. Trolling for parts over in Akihabara at a time like
+this... Who knows what's going through that lady's head?",""
+"f_t0302_0110_0070","char_AEGIOMON","Akihabara?",""
+"f_t0302_0110_0080","char_PUBLIC_SECURITY_PERSONNEL","Whoops. I've said too much...",""
+"f_t0302_0110_0090","char_PUBLIC_SECURITY_PERSONNEL","Go on, now. Get out of here! This area will be closed off
+again any minute now, too.",""
+"f_t0302_0110_0100","char_PUBLIC_SECURITY_PERSONNEL","Hm? Say, didn't I see you at the Kabukicho theater square?",""
+"f_t0302_0110_0110","char_INORI","Um, we don't want to disturb your work... Excuse us!",""
+"f_t0302_0110_0120","char_MINERVAMON","You sure? I bet I could squeeze a little more information
+out of him... That noggin of his looks real squeezable...",""
+"f_t0302_0110_0130","char_INORI","Nobody's squeezing anything! Come on. Let's go, already!",""
+"f_t0302_0120_0010","char_MAN_IN_WHITECOAT","We've been filled in. Please go ahead inside.",""
+"f_t0302_0130_0010","char_OPERATOR_M","A scientist working for public safety, huh. If she's
+accomplished, there must be some public info on her. ","f_t0302_0130_0010_M f_t0302_0130_0010_F"
+"f_t0302_0130_0020","char_OPERATOR_M","I'll see what I can find out about her. You'll hear from me
+as soon as I learn anything, so sit tight.","f_t0302_0130_0020_M f_t0302_0130_0020_F"
+"f_t0302_0140_0010","","Perhaps we should talk to that man.",""
+"f_t0302_0150_0010","char_TAKEMIYA","I need to have a little talk with this person. I leave the
+half-pint to you.",""
+"f_t0302_0160_0010","char_SIMMONS","Ah, you're back. Great work out there.","f_t0302_0160_0010"
+"f_t0302_0160_0020","char_SIMMONS","All of the Digimon around Shinjuku have been successfully
+eliminated.","f_t0302_0160_0020"
+"f_t0302_0160_0030","char_SIMMONS","The route to the Tokyo Metropolitan Government Building's
+secure. We can head to Nishi-Shinjuku from there.","f_t0302_0160_0030"
+"f_t0302_0160_0040","char_SIMMONS","And... take a look at this.","f_t0302_0160_0040"
+"f_t0302_0160_0050","char_SIMMONS","Here's a miniaturized version of an electromagnetic net
+generator. This bad boy may be small, but it packs a punch.","f_t0302_0160_0050"
+"f_t0302_0160_0055","char_SIMMONS","Hee hee hee. Amazing, wouldn't you agree? I sure think so.","f_t0302_0160_0055"
+"f_t0302_0160_0060","char_SIMMONS","But it can only be used once before the battery is drained,
+so even I haven't had a chance to see it in action yet.","f_t0302_0160_0060"
+"f_t0302_0160_0070","char_SIMMONS","You folks ought to be the ones to give it a test drive. It might
+come in handy.","f_t0302_0160_0070"
+"f_t0302_0160_0080","char_SIMMONS","Hee hee hee. Well, now... We're going to have our hands
+full from here on out.","f_t0302_0160_0080"
+"f_t0302_0160_0090","char_SIMMONS","The route behind the park to the government building has
+been secured. Take this device and head in that direction.","f_t0302_0160_0090"
+"f_t0302_0160_0100","char_SIMMONS","Don't you have somewhere to be? You should be prioritizing
+the task at hand.","f_t0302_0160_0100"
+"f_t0302_0170_0010","char_OPERATOR_M","Good work. The calibration is complete, and we can now
+detect your coordinates with great precision.",""
+"f_t0302_0170_0020","char_OPERATOR_M","You've noticed that people are talking about anomalous phenomena, right?
+I've been going through posts on the internet from eight years ago again.",""
+"f_t0302_0170_0030","char_OPERATOR_M","It seems the rumors of anomalies in the Shinjuku area started 
+around the time you're in right now. Coincidence?",""
+"f_t0302_0170_0040","char_OPERATOR_M","One post mentions ""a strange light in a Shinjuku Kabukicho
+back alley."" Might be some kind of anomaly.",""
+"f_t0302_0170_0050","char_OPERATOR_M","So that's your next mission. Head to this back alley in
+Shinjuku's Kabukicho.",""
+"f_t0302_0180_0010","char_PUBLIC_SECURITY_PERSONNEL","I heard about you folks from my colleagues. Thanks for the
+help.",""
+"f_t0302_0190_0010","char_MAN_IN_WHITECOAT","We've recorded very good data, but it's still not enough. I
+should talk to the doctor.",""
+"f_t0302_9000_0010","char_MAN","If you don't mind, would you care to join me for a card battle?",""
+"f_t0302_9000_0020","","[Challenge to a card battle.]",""
+"f_t0302_9000_0021","","{end}Now is not the time.",""
+"f_t0302_9000_0030","char_MAN","That's too bad. Maybe I'll just go kill time at a local cafe...",""
+"f_t0302_9000_0040","char_MAN","Oh, wow. I didn't expect to lose. This game really does have
+surprising depth.",""
+"f_t0302_9000_0050","char_MAN","I did it! I won! Looks like today is going to be a great day!",""
+"f_t0303_0010_0010","char_AEGIOMON","What's with this box...? I don't think it was there yesterday.",""
+"f_t0303_0020_0010","char_INORI","I'm going to ask this person a few more questions. Could you
+go see if you can find any other clues?",""
+"f_t0303_0020_0020","char_INORI","Coo is looking around, too. Let's see what we can find.",""
+"f_t0303_0030_0010","char_GLASSES_WEARING_MAN","Wait...! Will you just listen to me for a second?
+I'm begging you, here!",""
+"f_t0303_0040_0010","char_PLAYER_M","It's locked.",""
+"f_t0303_0040_0020","char_PLAYER_M","I bet we could break it down with the help of a Digimon.",""
+"f_t0303_0050_0010","char_WOMAN_LIKE_MOTHER","How strange. They told me they'd be playing around here...","f_t0303_0050_0010"
+"f_t0303_0050_0020","char_PLAYER_M","{next}Can I help you?",""
+"f_t0303_0050_0021","char_PLAYER_M","{next}Are you the mother of those kids from yesterday?",""
+"f_t0303_0050_0022","char_PLAYER_M","{next}I'm not suspicious. I promise.",""
+"f_t0303_0050_0030","char_WOMAN_LIKE_MOTHER","I came here to get them, but I can't find them anywhere... Wait.
+Could you be the one who played with them yesterday?","f_t0303_0050_0030"
+"f_t0303_0050_0040","char_WOMAN_LIKE_MOTHER","What? Oh. Yes... Wait. Could you be the one who played with
+them yesterday?","f_t0303_0050_0040"
+"f_t0303_0050_0050","char_WOMAN_LIKE_MOTHER","Wh-What's this about? Saying that in an outfit as conspicuous
+as yours isn't exactly convincing...","f_t0303_0050_0050"
+"f_t0303_0050_0060","char_WOMAN_LIKE_MOTHER","Wait. Could you be the one who played with them yesterday?","f_t0303_0050_0060"
+"f_t0303_0050_0070","char_AEGIOMON","Yeah, that's me.","f_t0303_0050_0070"
+"f_t0303_0050_0080","char_AEGIOMON","See?! {player}! Inori! Everyone remembered the promise!","f_t0303_0050_0080"
+"f_t0303_0050_0090","char_INORI","Are you... looking for your kids, maybe?","f_t0303_0050_0090"
+"f_t0303_0050_0100","char_WOMAN_LIKE_MOTHER","Yes, they were so insistent that I let them go play early today.","f_t0303_0050_0100"
+"f_t0303_0050_0110","char_WOMAN_LIKE_MOTHER","But now it's time for their after-school lessons... Where
+could those kids be? I doubt they've gone very far...","f_t0303_0050_0110"
+"f_t0303_0060_0010","char_AEGIOMON","Look. Small footprints. It might be from those kids. They
+must have been playing around here!",""
+"f_t0303_0060_0020","char_AEGIOMON","There might be other clues around here. Let's keep looking!",""
+"f_t0303_0070_0010","char_AEGIOMON","More footprints here... They lead that way!",""
+"f_t0303_0070_0020","char_INORI","Footprints...? Now that you mention it, I think I can just
+barely make them out, too. You've got a good eye, Aegiomon.",""
+"f_t0303_0080_0010","char_AEGIOMON","Again, more footprints?",""
+"f_t0303_0090_0010","char_INORI","It seems that Aegiomon found something interesting over there...",""
+"f_t0303_0100_0010","char_AEGIOMON","Doesn't look like those kids are here anywhere...",""
+"f_t0303_0110_0010","char_AEGIOMON","We should hurry over to that manhole by the Tokyo Metropolitan
+Government Building!",""
+"f_t0303_0120_0010","char_GLASSES_WEARING_MAN","I don't see this door opening anytime soon...","f_t0303_0120_0010"
+"f_t0303_0130_0010","char_GLASSES_WEARING_MAN","...Whoa! Wh-What the heck?!","f_t0303_0130_0010"
+"f_t0303_0130_0020","char_GLASSES_WEARING_MAN","Are... Are you the one who did that?! That's amazing!","f_t0303_0130_0020"
+"f_t0303_0130_0030","char_GLASSES_WEARING_MAN","The truth is, my daughter is stuck inside. I think she's gotten 
+mixed up with the rumored anomalous phenomenon.","f_t0303_0130_0030"
+"f_t0303_0130_0040","char_GLASSES_WEARING_MAN","Would you be willing to come with me to help? I don't know
+what I'd do if anything happened to my sweet girl!","f_t0303_0130_0040"
+"f_t0303_0130_0050","char_GLASSES_WEARING_MAN","Please...! I'm begging you...!","f_t0303_0130_0050"
+"f_t0303_0130_0060","char_PLAYER_M","{next}Copy that. Protecting civilians from anomalies is my job.",""
+"f_t0303_0130_0061","char_PLAYER_M","Anomalous phenomenon? Can you please explain that again?",""
+"f_t0303_0130_0062","char_PLAYER_M","Acting independently of the mission goes against protocol...",""
+"f_t0303_0130_0070","char_GLASSES_WEARING_MAN","Thank you so much! I owe you!","f_t0303_0130_0070"
+"f_t0303_0130_0080","char_GLASSES_WEARING_MAN","All right, let's go find that rebellious child of mine!","f_t0303_0130_0080"
+"f_t0303_0130_0090","char_GLASSES_WEARING_MAN","Judging by the phone call I just got from her, it sounded
+like she was caught up in some kind of trouble...","f_t0303_0130_0090"
+"f_t0303_0130_0100","char_GLASSES_WEARING_MAN","If I could have the strength you just showed me on my
+side...! Please! Won't you come with me?!","f_t0303_0130_0100"
+"f_t0303_0130_0110","char_GLASSES_WEARING_MAN","I-I see. If that's how it is, that's how it is...","f_t0303_0130_0110"
+"f_t0303_0140_0010","char_GLASSES_WEARING_MAN","I'll go alone, if I have to.","f_t0303_0140_0010"
+"f_t0303_0140_0020","char_GLASSES_WEARING_MAN","Still... if there's any way you could see your way to coming
+with me, you have no idea how grateful I'd be...","f_t0303_0140_0020"
+"f_t0304_0010_0010","char_TYUMON","I'm going back and fighting! It's a battle of revenge for
+Merukimon!",""
+"f_t0304_0020_0010","char_OPERATOR_M","No good. You're surrounded by countless huge readings.
+Find another route. Where'd these Digimon come from, anyway?",""
+"f_t0304_0020_0020","char_OPERATOR_M","The world you time traveled to is decidedly full of more
+hostile Digimon than the world I know.",""
+"f_t0304_0020_0030","char_OPERATOR_M","Is time traveling the cause? Could the deviation from the
+rules of time and space be bringing in new Digimon?",""
+"f_t0304_0020_0040","char_OPERATOR_M","If the research team is correct, and their hostile nature is akin to antibodies
+in an overreacting immune system, it would make sense, wouldn't it?",""
+"f_t0304_0020_0050","char_OPERATOR_M","After all, a being that has traveled through time is nothing
+more than a foreign substance to that world...!",""
+"f_t0304_0020_0060","char_OPERATOR_M","When hostile Digimon gathered in the Shinjuku underground, 
+I thought it was because of the egg that ended up there...",""
+"f_t0304_0020_0070","char_OPERATOR_M","But what if the Digimon appeared there to get rid of the egg...
+...like antibodies eliminating a foreign substance—a time traveler?",""
+"f_t0304_0020_0080","char_OPERATOR_M","I don't have any evidence, but if I'm right, it would make sense 
+that hostile Digimon increase with each time travel.",""
+"f_t0304_0020_0090","char_OPERATOR_M","Are you curious as to why I have such a wild theory?",""
+"f_t0304_0020_0100","char_OPERATOR_M","It's because ADAMAS once tried to eliminate Digimon with time
+traveling abilities the exact same way—like a foreign substance.",""
+"f_t0304_0020_0110","char_OPERATOR_M","There are numerous readings of hostile Digimon ahead. 
+Find another route!",""
+"f_t0304_0030_0010","char_OPERATOR_M","The Digimon District, used by public safety to contain Digimon... 
+Large enemy presence detected ahead. Find another route!",""
+"f_t0304_0030_0020","char_OPERATOR_M","The world you time traveled to is decidedly full of more
+hostile Digimon than the world I know.",""
+"f_t0304_0030_0030","char_OPERATOR_M","Is time traveling the cause? Could the deviation from the
+rules of time and space be bringing in new Digimon?",""
+"f_t0304_0030_0040","char_OPERATOR_M","If the research team is correct, and their hostile nature is akin to antibodies
+in an overreacting immune system, it would make sense, wouldn't it?",""
+"f_t0304_0030_0050","char_OPERATOR_M","After all, a being that has traveled through time is nothing
+more than a foreign substance to that world...!",""
+"f_t0304_0040_0010","char_OPERATOR_M","When hostile Digimon gathered in the Shinjuku underground, 
+I thought it was because of the egg that ended up there...",""
+"f_t0304_0040_0020","char_OPERATOR_M","But what if the Digimon appeared there to get rid of the egg...
+...like antibodies eliminating a foreign substance—a time traveler?",""
+"f_t0304_0040_0030","char_OPERATOR_M","I don't have any evidence, but if I'm right, it would make sense 
+that hostile Digimon increase with each time travel.",""
+"f_t0304_0040_0040","char_OPERATOR_M","Are you curious as to why I have such a wild theory?",""
+"f_t0304_0040_0050","char_OPERATOR_M","It's because ADAMAS once tried to eliminate Digimon with time
+traveling abilities the exact same way—like a foreign substance.",""
+"f_t0304_0040_0060","char_OPERATOR_M","There are numerous readings of hostile Digimon ahead. 
+Find another route!",""

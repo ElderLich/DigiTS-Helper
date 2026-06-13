@@ -1,0 +1,223 @@
+string2 0,string 1,string 2,string 3
+"m120_010_010","char_AEGIOMON","Unh...","m120_010_010"
+"m120_010_020","char_AEGIOMON","Inori?!","m120_010_020"
+"m120_010_030","char_AEGIOMON","Inori!","m120_010_030"
+"m120_010_040","char_INORI","Ngh... Mnh...","m120_010_040"
+"m120_010_050","char_INORI","Where are we?","m120_010_050"
+"m120_010_060","char_INORI","What happened to us? That gate was pulling me in, and next
+thing I knew...","m120_010_060"
+"m120_010_070","char_INORI","Is this a sewer line? That's the closest thing I can think of, but...
+Hey, where's Minervamon?","m120_010_070"
+"m120_010_080","char_PLAYER_M","First, let's find a way out.{next}",""
+"m120_010_081","char_PLAYER_M","You aren't hurt, are you?",""
+"m120_010_082","char_PLAYER_M","Is this another anomalous phenomenon?",""
+"m120_010_090","char_INORI","Good idea. We might figure something out once we get out of here.","m120_010_090"
+"m120_010_100","char_INORI","Let's start looking.","m120_010_100"
+"m120_010_110","char_INORI","Oh—I'm fine. But I have no idea what's going on.","m120_010_110"
+"m120_010_120","char_INORI","Honestly, I don't have the slightest clue.","m120_010_120"
+"m120_020_010","char_INORI","It looks like this leads outside.","m120_020_010"
+"m120_020_020","char_AEGIOMON","Inori, wait here! I'll go check it out first!","m120_020_020"
+"m120_030_001","char_AEGIOMON","Ngh...","m120_030_001"
+"m120_030_005","char_AEGIOMON","Whoa!","m120_030_005"
+"m120_030_010","char_AEGIOMON","Wow... Amazing...","m120_030_010"
+"m120_030_020","char_AEGIOMON","Are all of these...","m120_030_020"
+"m120_030_030","char_AEGIOMON","...Digimon?","m120_030_030"
+"m120_030_040","char_INORI","Wait... Is this...","m120_030_040"
+"m120_030_050","char_INORI","...the place Minervamon mentioned—the world
+where Digimon live?!","m120_030_050"
+"m120_030_060","char_AEGIOMON","We made it! We're actually in the Digital World!","m120_030_060"
+"m120_040_010","char_OPERATOR_M","Agent {player}... I overheard that just now.
+You're in the world of Digimon? Am I hearing you right?","m120_040_010_M m120_040_010_F"
+"m120_040_040","char_OPERATOR_M","If so... this is amazing! Stupendous! Absolutely fantastic!
+What else can I say?","m120_040_040_M m120_040_040_F"
+"m120_040_060","char_PLAYER_M","Now, now. Take it easy.{next}",""
+"m120_040_061","char_PLAYER_M","We're in the middle of a mission.{next}",""
+"m120_040_062","char_PLAYER_M","Amazing! Stupendous! Absolutely fantastic!{next}",""
+"m120_040_080","char_OPERATOR_M","Most anomalies are of unknown origin... But some start to
+make sense if alternate worlds and dimensions come into play.","m120_040_080_M m120_040_080_F"
+"m120_040_090","char_OPERATOR_M","Wandering into a fantastical realm, encountering
+unreal beings... Almost like you're Alice herself.","m120_040_090_M m120_040_090_F"
+"m120_040_110","char_OPERATOR_M","This discovery alone guarantees your promotion in ADAMAS.
+If you make it back safe and sound, that is...","m120_040_110_M m120_040_110_F"
+"m120_040_120","char_OPERATOR_M","Unraveling the mysteries behind phase electron life forms
+will reveal the truth of our world, and the Inferno.","m120_040_120_M m120_040_120_F"
+"m120_040_140","char_OPERATOR_M","A rift appeared atop the government building during the 
+Inferno. If it was connected to the world you're in now...","m120_040_140_M m120_040_140_F"
+"m120_040_150","char_OPERATOR_M","...then, in theory, it's very likely that collecting data
+in the Digital World could prevent world destruction.","m120_040_150_M m120_040_150_F"
+"m120_040_160","char_OPERATOR_M","This is becoming the most important mission in ADAMAS history.
+Gather as much info as you can. The future depends on it.","m120_040_160_M m120_040_160_F"
+"m120_050_010","char_MUSHMON","Hey! You, there!","m120_050_010"
+"m120_050_020","char_MUSHMON","Aven't seen you folks before. Why not take a look at my wares?","m120_050_020"
+"m120_050_030","char_INORI","Wow... I've never seen anything like this before.","m120_050_030"
+"m120_050_040","char_MUSHMON","You sure haven't! I mean, there are so many thugs 
+outside town these days, right?","m120_050_040"
+"m120_050_050","char_MUSHMON","And... rumor has it the Titans are moving back in, too. 
+Better stock up here and be ready for anything!","m120_050_050"
+"m120_060_010","char_AEGIOMON","Whoa! There are big buildings in this world, too!","m120_060_010"
+"m120_060_020","char_INORI","Aegiomon... You look so happy.","m120_060_020"
+"m120_060_030","char_AEGIOMON","You bet! After all...","m120_060_030"
+"m120_060_040","char_AEGIOMON","...I don't have to wear that hoodie here to hide who I am.","m120_060_040"
+"m120_060_050","char_INORI","That's true. I didn't think of that.","m120_060_050"
+"m120_060_060","char_INORI","This place is similar to our world in some ways,
+but so different in others...","m120_060_060"
+"m120_060_070","char_PLAYER_M","We'd better do a thorough investigation.{next}",""
+"m120_060_071","char_PLAYER_M","It seems they have a distinctive society and culture.{next}",""
+"m120_060_072","char_PLAYER_M","I'm gonna put work on hold. Let's do some sightseeing.{next}",""
+"m120_060_080","char_INORI","Yep. That seems to be the best plan of action.","m120_060_080"
+"m120_060_090","char_INORI","Yeah... Digimon are leading their own, rich lives here...","m120_060_090"
+"m120_060_100","char_INORI","Sightseeing? You sure you got your priorities straight...?","m120_060_100"
+"m120_060_110","char_INORI","We don't know a thing about this world.
+Let's walk around and get a feel for the place.","m120_060_110"
+"m120_060_120","char_OPERATOR_M","Who would've imagined an entire society and culture built by Digimon?","m120_060_120_M m120_060_120_F"
+"m120_060_130","char_OPERATOR_M","But you can't just stand around staring, I suppose. And
+sightseeing is completely out of the question.","m120_060_130_M m120_060_130_F"
+"m120_060_140","char_OPERATOR_M","The apocalyptic scenario set in motion by the Shinjuku
+Inferno isn't slowing down one bit in this timeline.","m120_060_140_M m120_060_140_F"
+"m120_060_150","char_OPERATOR_M","There might not be much time left for us to communicate
+like this.","m120_060_150_M m120_060_150_F"
+"m120_060_160","char_OPERATOR_M","We never know which conversation will be our last.","m120_060_160_M m120_060_160_F"
+"m120_060_170","char_OPERATOR_M","So send me any information you get, no matter how trivial.","m120_060_170_M m120_060_170_F"
+"m120_060_180","char_OPERATOR_M","It just might lead to saving this world.","m120_060_180_M m120_060_180_F"
+"m120_060_190","char_PLAYER_M","...I'll hurry on with the investigation, then.{next}",""
+"m120_070_010","char_RENAMON","Well, well! What do we have here? I've never seen
+Digimon like you before, certainly.",""
+"m120_070_020","char_PLAYER_M","We're not Digimon.{next}",""
+"m120_070_021","char_PLAYER_M","We're human.{next}",""
+"m120_070_022","char_PLAYER_M","Regulations demand I keep my identity secret.{next}",""
+"m120_070_030","char_RENAMON","Is that so? Then, what are you, pray tell? ",""
+"m120_070_040","char_RENAMON","Human? You don't say... We only ever see your kind
+on very rare occasions.",""
+"m120_070_050","char_RENAMON","Apparently, they wander into our world every now and again.",""
+"m120_070_060","char_RENAMON","I-Is that so? You certainly are an odd one...",""
+"m120_070_070","char_RENAMON","You have a completely different sort of aura about you.",""
+"m120_070_080","char_RENAMON","Welp, all good! ",""
+"m120_070_090","char_RENAMON","Many gather here from all over to offer their services
+as warriors under Merukimon!",""
+"m120_070_100","char_RENAMON","Feel free to stay a bit! No idea if you're warriors...
+...Or whatever you are.",""
+"m120_080_010","char_KNIGHTMON","You, there! Halt!","m120_080_010"
+"m120_080_020","char_KNIGHTMON","Identify yourselves!","m120_080_020"
+"m120_080_030","char_PLAYER_M","We're friends of Minervamon.{next}",""
+"m120_080_031","char_PLAYER_M","We're humans investigating anomalous phenomena.",""
+"m120_080_032","char_PLAYER_M","We're Digimon.",""
+"m120_080_040","char_KNIGHTMON","Is that true? I have never seen your kind before...","m120_080_040"
+"m120_080_050","char_KNIGHTMON","In any case, I shall NOT LET YOU PASS!
+LEAVE AT ONCE!","m120_080_050"
+"m120_080_060","char_KNIGHTMON","What? Human, you say? I have heard rumors
+of your existence...","m120_080_060"
+"m120_080_070","char_KNIGHTMON","...but there have been no reports of any humans
+entering Central Town.","m120_080_070"
+"m120_080_080","char_KNIGHTMON","I must insist you leave at once!","m120_080_080"
+"m120_080_090","char_KNIGHTMON","What?! Is that really true?!","m120_080_090"
+"m120_080_100","char_KNIGHTMON","But wait... You are not to be trusted.","m120_080_100"
+"m120_080_110","char_KNIGHTMON","If it is indeed true, you must bring me proof.","m120_080_110"
+"m120_090_010","char_MINERVAMON","It IS true. I am that proof.","m120_090_010"
+"m120_090_020","char_KNIGHTMON","L-Lady Minervamon! P-Pardon my insolence!
+Please, come right through!","m120_090_020"
+"m120_090_030","char_KNIGHTMON","Lord Merukimon has been very preoccupied
+of late with the security of this town.","m120_090_030"
+"m120_090_040","char_KNIGHTMON","But my liege will be happy to see you, I am sure.
+Right this way!","m120_090_040"
+"m120_100_010","char_OPERATOR_M","I'm analyzing the data you sent over, and I'm honestly
+at a loss for words.","m120_100_010_M m120_100_010_F"
+"m120_100_020","char_OPERATOR_M","Especially about the rich diversity and varied 
+characteristics of all the Digimon there!","m120_100_020_M m120_100_020_F"
+"m120_100_030","char_OPERATOR_M","The data you sent matches many of the entries in ADAMAS's
+cryptid database of unidentified mysterious animals.","m120_100_030_M m120_100_030_F"
+"m120_100_040","char_OPERATOR_M","That means the Digimon in that world are in all
+likelihood closely related to the cryptids.","m120_100_040_M m120_100_040_F"
+"m120_100_050","char_OPERATOR_M","Although still a working theory, we now believe most of the
+anomalies we've been dealing with stem from Digimon...","m120_100_050_M m120_100_050_F"
+"m120_100_060","char_OPERATOR_M","...and that Digimon are connected to the Shinjuku
+Inferno as well.","m120_100_060_M m120_100_060_F"
+"m120_100_070","char_OPERATOR_M","However, we'll need more data to make it conclusive.
+Keep gathering what you can.","m120_100_070_M m120_100_070_F"
+"m120_100_080","char_AEGIOMON","Wow. So this is the Digital World.","m120_100_080"
+"m120_100_090","char_INORI","Yeah. It's all just one surprise after another.","m120_100_090"
+"m120_100_100","char_INORI","But...","m120_100_100"
+"m120_100_110","char_AEGIOMON","What is it, Inori?","m120_100_110"
+"m120_100_120","char_INORI","How are we ever going to get back to our world...?","m120_100_120"
+"m120_100_130","char_AEGIOMON","...!","m120_100_130"
+"m120_100_140","char_INORI","Minervamon came to Shinjuku from here. There must be a 
+way to travel between the two worlds.","m120_100_140"
+"m120_100_150","char_INORI","We have to find Minervamon and ask, so we can figure all 
+this out!","m120_100_150"
+"m120_100_160","char_CORONAMON","Shut up, you little jerks!","m120_100_160"
+"m120_100_170","char_BEARMON_OB","Whatever, ya wimp!","m120_100_170"
+"m120_100_180","char_BEARMON_YB","Wimp! And Minervamon's a wimp, too!","m120_100_180"
+"m120_100_190","char_CORONAMON","What?! What part of Minnie is wimpy in any way?!","m120_100_190"
+"m120_100_200","char_LUNAMON","J-Just ignore them, Coronamon!","m120_100_200"
+"m120_100_210","char_BEARMON_OB","Anyone who's friends with a wimp is also a wimp! Wimp!","m120_100_210"
+"m120_100_220","char_BEARMON_YB","Yeah! That's right!","m120_100_220"
+"m120_100_230","char_CORONAMON","What did you say?!","m120_100_230"
+"m120_100_240","char_BEARMON_OB","If ya ain't a big ol' fraidy-cat, then come with us! I'm gonna
+nick PlatinumNumemon's jewelry down in the sewers!","m120_100_240"
+"m120_100_250","char_BEARMON_YB","Yeah, Big Bro! You're so cool!","m120_100_250"
+"m120_100_260","char_BEARMON_OB","Follow us if ya think ya can handle it, ya big WIMP!","m120_100_260"
+"m120_100_270","char_CORONAMON","I dare you to call me that one more time!","m120_100_270"
+"m120_100_280","char_CORONAMON","I'm no coward! And I'll prove it to you!","m120_100_280"
+"m120_100_290","char_LUNAMON","What?! No, Coronamon! Minerva told us not to go down into
+the underground!","m120_100_290"
+"m120_100_300","char_LUNAMON","Well, there he goes... What do I do now?!","m120_100_300"
+"m120_110_010","char_LUNAMON","*sigh* Now what am I supposed to do...?","m120_110_010"
+"m120_110_020","char_PLAYER_M","What's the matter?{next}",""
+"m120_110_021","char_PLAYER_M","I feel like we've met somewhere before...{next}",""
+"m120_110_022","char_PLAYER_M","[Pretend not to notice.]{end}",""
+"m120_110_030","char_LUNAMON","Everything's the matter! That darn Coronamon!","m120_110_030"
+"m120_110_040","char_LUNAMON","Huh? Are you... human?","m120_110_040"
+"m120_110_050","char_LUNAMON","Huh? Have we?","m120_110_050"
+"m120_110_060","char_LUNAMON","Hey, aren't you human?","m120_110_060"
+"m120_110_070","char_LUNAMON","Wait. No way...! You're that egg thief from before!","m120_110_070"
+"m120_110_080","char_LUNAMON","What are you doing here...?","m120_110_080"
+"m120_110_090","char_PLAYER_M","Do you know where Minervamon is?{next}",""
+"m120_110_091","char_PLAYER_M","I'm not an egg thief.",""
+"m120_110_092","char_PLAYER_M","Who were those noisy little kids?",""
+"m120_110_100","char_LUNAMON","That's what I'd like to know! Minerva was supposed to have
+gone to your world!","m120_110_100"
+"m120_110_110","char_LUNAMON","Hold on. You were with Minerva, but got separated, you say?","m120_110_110"
+"m120_110_120","char_LUNAMON","Oh, yeah. You're right.","m120_110_120"
+"m120_110_130","char_LUNAMON","It was all that strange shadow's fault, the shadow that YOU
+came in with, to be exact.","m120_110_130"
+"m120_110_140","char_LUNAMON","But wait a minute... What are you doing in the Digital World?","m120_110_140"
+"m120_110_150","char_LUNAMON","Oh, I almost forgot! Coronamon is in trouble!","m120_110_150"
+"m120_110_160","char_LUNAMON","The Bearmon Brothers egged Coronamon into going against
+Minnie's orders! Again!","m120_110_160"
+"m120_110_170","char_LUNAMON","I've got to do something, and fast!","m120_110_170"
+"m120_110_180","char_LUNAMON","Agh! So much is happening all at once, my head's gonna explode~!","m120_110_180"
+"m120_110_190","char_LUNAMON","B-But hold on. I'd better calm down and sort everything out...","m120_110_190"
+"m120_110_200","char_LUNAMON","You got separated from Minnie and don't know
+how to get back to your world.","m120_110_200"
+"m120_110_210","char_LUNAMON","Coronamon went down into the sewers—even though they're
+supposed to be off-limits—and might be in trouble.","m120_110_210"
+"m120_110_230","char_PLAYER_M","What kind of trouble?{next}",""
+"m120_110_231","char_PLAYER_M","Helping people in need is my job!{next}",""
+"m120_110_232","char_PLAYER_M","I still just wanna go sightseeing...{next}",""
+"m120_110_240","char_LUNAMON","I know it's sudden, but could you please do me a favor? 
+You're the only ones I can ask...!","m120_110_240"
+"m120_110_250","char_LUNAMON","Could you please stop Coronamon and drag him out of the sewers?
+I'd do it myself but I'm useless in a fight...","m120_110_250"
+"m120_110_260","char_LUNAMON","In return, I'll go try and find Minnie for you.","m120_110_260"
+"m120_110_270","char_LUNAMON","You're hoping to ask how you can get home, right?
+If I can find her, I'll bring her to you guys right away!","m120_110_270"
+"m120_110_310","char_PLAYER_M","Okay, it's a deal.{next}",""
+"m120_110_311","char_PLAYER_M","Can you please explain that all again?",""
+"m120_110_312","char_PLAYER_M","We should look for Minervamon first!",""
+"m120_110_320","char_LUNAMON","Thank you! The sewers are this way. Follow me!","m120_110_320"
+"m120_110_330","char_LUNAMON","I'll look for Minerva because I know this town well, and you'll
+go stop Coronamon because you can hold your own in a fight.","m120_110_330"
+"m120_110_340","char_LUNAMON","After all, I haven't forgotten how you got rid of that shadow
+at the temple for us.","m120_110_340"
+"m120_110_350","char_LUNAMON","All right, then. I'll show you the way to the sewers. Come
+on!","m120_110_350"
+"m120_110_360","char_LUNAMON","If Minerva is in town, it'd be better for me to look for her
+since I know my way around.","m120_110_360"
+"m120_110_370","char_LUNAMON","In the meantime, please stop Coronamon!","m120_110_370"
+"m120_120_010","char_HAGURUMON","Those kids! They shouldn't have gone in...",""
+"m120_120_020","char_HAGURUMON","Hm? You folks want to go in, too?",""
+"m120_120_030","char_HAGURUMON","If you do plan on going in, you'd better be prepared to
+encounter many unfriendly Digimon.",""
+"m120_120_040","char_HAGURUMON","The enemies down there are weak against fire, so you should
+bring allies that are good at using it.",""
+"m120_120_050","char_HAGURUMON","They sell Skill Discs at Gawappamon's store, so why don't
+you stop by before moving on?",""

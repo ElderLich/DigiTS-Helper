@@ -1,0 +1,390 @@
+string2 0,string 1,string 2,string 3
+"f_d0601_0010_0010","","Get on board?",""
+"f_d0601_0010_0020","","Yes.",""
+"f_d0601_0010_0021","","{end}No.",""
+"f_d0601_0030_0010","char_APOLLOMON","You must be surprised... that this is how things turned out.",""
+"f_d0601_0030_0020","char_APOLLOMON","That's right. This is the former site of Iliad Temple.",""
+"f_d0601_0030_0030","char_DIANAMON","Junomon has been acting strangely ever since being separated
+from the Great Guardian and having the treasure stolen from her...",""
+"f_d0601_0030_0040","char_DIANAMON","But what exactly changed her...? That is what I want to know.",""
+"f_d0602_0010_0010","","It seems you can't proceed further right now.",""
+"f_d0602_0020_0010","char_APOLLOMON","It appears we made it in time.",""
+"f_d0602_0020_0020","char_DIANAMON","We shall accompany you from here on out.",""
+"f_d0602_0030_0010","char_INROOMBROADCAST","Warning. There is an escaped Digimon with the ability to transform
+on the loose. Be careful when sharing information.",""
+"f_d0603_0010_0010","char_CLAVISANGEMON","They must be around here somewhere! Find them immediately!","f_d0603_0010_0010"
+"f_d0603_0010_0013","char_TUNOMON_TITAMON","They've gotten ahead of us, somehow. Listen up, kid.","f_d0603_0010_0013"
+"f_d0603_0010_0015","char_TUNOMON_TITAMON","In order to open the cells from the Gamma Device, you have
+to operate two other devices somewhere around here, too.","f_d0603_0010_0015"
+"f_d0603_0010_0016","char_TUNOMON_TITAMON","Those two devices are referred to as the Alpha Device
+and the Beta Device.","f_d0603_0010_0016"
+"f_d0603_0010_0017","char_TUNOMON_TITAMON","ClavisAngemon is a dangerous opponent. Make sure to
+avoid him while we look for those two devices.","f_d0603_0010_0017"
+"f_d0603_0020_0010","char_TUNOMON_TITAMON","That ought to do it. The Beta Device is taken care of.",""
+"f_d0603_0020_0020","char_TUNOMON_TITAMON","Now we try and find the Alpha Device!",""
+"f_d0603_0020_0030","char_TUNOMON_TITAMON","We should be able to use that Gamma Device now.
+Let's return to the east passage and open Minervamon's cell!",""
+"f_d0603_0020_0040","char_ORGEMON","Eh? We can get out now! I don't know how it all went down,
+but I'll take it!",""
+"f_d0603_0020_0050","char_HYOUGAMON","Lord Titamon! Youse responsible for this?! You're the best!",""
+"f_d0603_0020_0060","char_FUGAMON","This facility's more dangerous than ya think. I say we all
+follow Lord Titamon's lead!",""
+"f_d0603_0020_0070","char_ORGEMON","Yeah, that's probably the safest bet. Okay, everybody
+follow Lord Titamon!",""
+"f_d0603_0030_0010","char_TUNOMON_TITAMON","There... That unlocked the Alpha Device.","f_d0603_0030_0010"
+"f_d0603_0030_0020","char_TUNOMON_TITAMON","Now, let's find the Beta Device!","f_d0603_0030_0020"
+"f_d0603_0030_0030","char_TUNOMON_TITAMON","We should be able to use that Gamma Device now.
+Let's return to the east passage and open Minervamon's cell!","f_d0603_0030_0030"
+"f_d0603_0030_0040","char_WITCHMON","Phew, I thought I was done for! Ah, Lord Titamon...",""
+"f_d0603_0030_0050","char_TUNOMON_TITAMON","Oh, it's you, Witchmon! I'm glad to see you're safe, but...",""
+"f_d0603_0030_0060","char_TUNOMON_TITAMON","...we're totally trapped in here. Looks like we'll need to
+find a way out.",""
+"f_d0603_0030_0070","char_WITCHMON","I'll follow wherever you lead, Lord Titamon!",""
+"f_d0603_0050_0010","char_ORGEMON","Hey! What's this all about?! How're we supposed to get
+outta here now?!",""
+"f_d0603_0050_0020","char_FUGAMON","This ain't good! Not good at all! We've reached a dead end!",""
+"f_d0603_0050_0030","char_HYOUGAMON","Forget about that, will ya? What's this? It looks like some
+kinda switch or somethin'!",""
+"f_d0603_0060_0010","char_ORGEMON","We've gotta find a way out of here, and fast!",""
+"f_d0603_0060_0020","char_FUGAMON","Tell me somethin' I don't know! If it was that easy, we
+would've already found it by now!",""
+"f_d0603_0060_0030","char_HYOUGAMON","Shut yer trap for a sec, okay? There's a switch over here!",""
+"f_d0603_0060_0040","char_FUGAMON","Don't ya dare flip that switch.",""
+"f_d0603_0060_0050","char_ORGEMON","This is no joke. Don't flip it, no matter what!",""
+"f_d0603_0060_0060","char_ORGEMON","We ain't stupid, ya know. Nothin' ever goes yer way when
+ya flip these things!",""
+"f_d0603_0060_0070","char_HYOUGAMON","So yer sayin' it's a trap? Hehe. We're too smart to fall for
+that. There's no way I'm flippin' it!",""
+"f_d0603_0070_0010","char_CLAVISANGEMON","There you are! Now, surrender quietly if you know what's
+good for you!",""
+"f_d0603_0070_0020","char_HYOUGAMON","U-Uh-oh! This ain't good!",""
+"f_d0603_0070_0030","char_FUGAMON","What're we gonna do now?!",""
+"f_d0603_0070_0040","char_ORGEMON","L-Lord Titamon!",""
+"f_d0603_0070_0050","char_TUNOMON_TITAMON","We don't stand a chance in a full-on battle! Retreat!
+Run for your lives!",""
+"f_d0603_0070_0060","char_TUNOMON_TITAMON","Run and don't look back!",""
+"f_d0603_0070_0070","char_ORGEMON","Dwaaaaah!",""
+"f_d0603_0070_0080","char_HYOUGAMON","Daaaaah! Ogremon!",""
+"f_d0603_0070_0090","char_FUGAMON","Damn it! I can't just leave 'em behind...! Lord Titamon,
+get yerself to safety!",""
+"f_d0603_0070_0100","char_TUNOMON_TITAMON","Hey, wait! Urk... Okay, we'll meet up later!",""
+"f_d0603_0070_0110","char_TUNOMON_TITAMON","Let's go, kid!",""
+"f_d0603_0080_0010","char_WITCHMON","H-Here it comes...!",""
+"f_d0603_0080_0020","char_TUNOMON_TITAMON","Wait... Witchmon! Put that sucker to sleep!",""
+"f_d0603_0080_0030","char_WITCHMON","Umm... Let's see...",""
+"f_d0603_0080_0040","char_WITCHMON","Idle Bubble!",""
+"f_d0603_0080_0050","char_TUNOMON_TITAMON","Nice work! He's out cold!",""
+"f_d0603_0080_0060","char_CLAVISANGEMON","*yawn* ...Whoops!",""
+"f_d0603_0080_0070","char_WITCHMON","Whaaat?!",""
+"f_d0603_0080_0080","char_TUNOMON_TITAMON","Hit him with your spell again!",""
+"f_d0603_0080_0090","char_WITCHMON","Idle Bubble!",""
+"f_d0603_0080_0100","char_CLAVISANGEMON","...Huh? What just happened...?",""
+"f_d0603_0080_0110","char_WITCHMON","I knew it! It wears off almost immediately!",""
+"f_d0603_0080_0120","char_CLAVISANGEMON","I see... So you are the ones behind this! Your petty tricks
+will not work against me!",""
+"f_d0603_0080_0130","char_TUNOMON_TITAMON","Looks like we don't have any other choice but to flee!",""
+"f_d0603_0090_0010","char_CLAVISANGEMON","You are not getting away from me that easily!","f_d0603_0090_0010"
+"f_d0603_0100_0010","char_TUNOMON_TITAMON","Witchmon! Now!",""
+"f_d0603_0100_0020","char_WITCHMON","Idle Bubble!",""
+"f_d0603_0100_0030","char_CLAVISANGEMON","I told you your efforts were futile, did I not?! Now, prepare
+to meet your end!",""
+"f_d0603_0100_0040","char_CLAVISANGEMON","Huh?!","f_d0603_0100_0040"
+"f_d0603_0100_0045","char_CLAVISANGEMON","You lot again!","f_d0603_0100_0045"
+"f_d0603_0100_0050","char_CLAVISANGEMON","*mumble* Where am I...? Is this home?","f_d0603_0100_0050"
+"f_d0603_0100_0055","char_CLAVISANGEMON","Huh?!  YOU'RE GOING TO PAY FOR THAT!!","f_d0603_0100_0055"
+"f_d0603_0100_0060","char_CLAVISANGEMON","*mumble* I do not think I can eat all this...","f_d0603_0100_0060"
+"f_d0603_0100_0065","char_CLAVISANGEMON","Huh?!  THAT'S IT, I'VE HAD ENOUGH!!","f_d0603_0100_0065"
+"f_d0603_0110_0010","char_ORGEMON","Oh! Here it comes! Th-Th-This ain't lookin' good for us!",""
+"f_d0603_0110_0020","char_FUGAMON","Ain't no way there's just one of 'em! Exactly how many of
+'em are there?!",""
+"f_d0603_0110_0030","char_CLAVISANGEMON","There is no escaping me! It ends here and now for all of you!",""
+"f_d0603_0110_0040","char_HYOUGAMON","See?! He's even here, too!",""
+"f_d0603_0110_0050","char_TUNOMON_TITAMON","Don't worry! We can put him to sleep! Witchmon, do your thing!",""
+"f_d0603_0110_0060","char_WITCHMON","Understood! Idle Bubble!",""
+"f_d0603_0110_0070","char_WITCHMON","Oops... I need more power.",""
+"f_d0603_0110_0080","char_CLAVISANGEMON","You shall pay for humiliating me like this!",""
+"f_d0603_0110_0090","char_WITCHMON","Yikes! Now we really made it angry!",""
+"f_d0603_0120_0010","char_TUNOMON_TITAMON","We can't go this way! He'll find us for sure!","f_d0603_0120_0010"
+"f_d0603_0130_0010","char_TUNOMON_TITAMON","Let's go, kid!","f_d0603_0130_0010"
+"f_d0603_0140_0010","char_TUNOMON_TITAMON","All right, kid. The Beta Device is nearby. Take care of it first.",""
+"f_d0604_0010_0010","","It looks like it doesn't open from here.",""
+"f_d0604_0020_0010","","This must be the switch to turn off the security system.
+It's locked and can't be used right now, though.",""
+"f_d0604_0030_0010","","This must be the switch to open the cells. It's locked and
+can't be used right now, though.",""
+"f_d0604_0040_0010","","The wall is weak right here. You could probably break it
+down with the help of a Digimon.",""
+"f_d0604_0050_0010","","The wall is weak right here.",""
+"f_d0604_0060_0010","","The huge Digimon is fast asleep.",""
+"f_d0604_0060_0020","","An unfathomably evil presence can be detected here. It'd be
+best to keep some distance for now.",""
+"f_d0604_0070_0010","char_INROOMBROADCAST","Warning! Warning! There has been an escape from the
+Titans' prison ward!",""
+"f_d0604_0070_0020","char_INROOMBROADCAST","Titamon, SkullBaluchimon, and some other Titans have escaped!",""
+"f_d0604_0070_0030","char_INROOMBROADCAST","We are locking down the facility. If you come across the
+fugitives, apprehend them immediately!",""
+"f_d0604_0080_0010","char_ORGEMON","Come on, now! What happened?",""
+"f_d0604_0080_0020","char_HYOUGAMON","That ain't gonna work on us...",""
+"f_d0604_0080_0030","char_FUGAMON","Spit it out, already! Where is Lord Titamon?!",""
+"f_d0604_0080_0040","char_TUNOMON_TITAMON","Ugh! How many times do I have to explain? Look right
+in front of— Ouch!",""
+"f_d0604_0080_0050","char_ORGEMON","We ain't got time to play around. If ya don't know, just say so.",""
+"f_d0604_0080_0060","char_DORIMON","Huh?!",""
+"f_d0604_0080_0070","char_WITCHMON","Hey, you guys... That's actually Lord Titamon...",""
+"f_d0604_0080_0080","char_FUGAMON","Eh? Oh, hey there, Witchmon! We're searchin' for Lord Titamon.",""
+"f_d0604_0080_0090","char_ORGEMON_AND_FUGAMON_AND_HYOUGAMON","...Wait. Whaaat?!",""
+"f_d0604_0090_0010","char_ORGEMON","We messed up big time... What do we do now?",""
+"f_d0604_0090_0020","char_HYOUGAMON","P-Please forgive us!",""
+"f_d0604_0090_0030","char_FUGAMON","O-Ogremon told us to do it!",""
+"f_d0604_0090_0040","char_TUNOMON_TITAMON","I'll remember this, you numbskulls!","f_d0604_0090_0040"
+"f_d0604_0090_0050","char_DORIMON","Huh?!",""
+"f_d0604_0090_0060","char_WITCHMON","I'm so happy to be able to fight alongside Lord Titamon
+again... Eee hee hee!",""
+"f_d0604_0090_0061","char_WITCHMON","Oh, it's you guys. Not that I wanted to see you.",""
+"f_d0604_0090_0062","char_WITCHMON","But, right now, Lord Titamon comes first, so let's call a
+temporary ceasefire.",""
+"f_d0604_0090_0070","char_APOLLOMON","What are they doing?","f_d0604_0090_0070"
+"f_d0604_0100_0010","char_DIANAMON","Minnie... Minerva! Where are you?!","f_d0604_0100_0010"
+"f_d0604_0100_0020","char_MINERVAMON","That voice... Is that you, Dianamon?","f_d0604_0100_0020"
+"f_d0604_0100_0030","char_DIANAMON","Minnie! What are you doing in there?!","f_d0604_0100_0030"
+"f_d0604_0100_0040","char_DIANAMON","Urk... It won't open!","f_d0604_0100_0040"
+"f_d0604_0100_0050","char_MINERVAMON","This cell is apparently controlled by some kind of mechanism.","f_d0604_0100_0050"
+"f_d0604_0100_0060","char_MINERVAMON","It should be around here somewhere. I think they called it
+the ""Gamma Device.""","f_d0604_0100_0060"
+"f_d0604_0100_0070","char_DIANAMON","Got it! I'll find this ""Gamma Device"" and be right back!","f_d0604_0100_0070"
+"f_d0604_0110_0010","char_CLAVISANGEMON","So you are the fugitives?! I will apprehend you myself!","f_d0604_0110_0010"
+"f_d0604_0120_0010","char_CLAVISANGEMON","Is that all?!","f_d0604_0120_0010"
+"f_d0604_0120_0020","char_CLAVISANGEMON","......","f_d0604_0120_0020"
+"f_d0604_0120_0030","char_CLAVISANGEMON","Where did they go?!","f_d0604_0120_0030"
+"f_d0604_0120_0040","char_CLAVISANGEMON","......","f_d0604_0120_0040"
+"f_d0604_0120_0050","char_CLAVISANGEMON","Dianamon, Apollomon, and the Titans, too...?","f_d0604_0120_0050"
+"f_d0604_0120_0060","char_CLAVISANGEMON","Oh, well.","f_d0604_0120_0060"
+"f_d0604_0120_0070","char_CLAVISANGEMON","My only goal is to apprehend the fugitives. If they are
+working together, that makes it easier to catch them.","f_d0604_0120_0070"
+"f_d0604_0130_0010","char_TUNOMON_TITAMON","Those damn kids! How dare they leave me behind!","f_d0604_0130_0010"
+"f_d0604_0130_0020","char_DORIMON","Huh?!",""
+"f_d0604_0130_0030","char_TUNOMON_TITAMON","I think we should work together, kid. I have a pretty good
+idea of how to open the cells.","f_d0604_0130_0030"
+"f_d0604_0130_0040","char_TUNOMON_TITAMON","You all want to rescue Minervamon. And naturally,
+we want to escape from here, too.","f_d0604_0130_0040"
+"f_d0604_0130_0050","char_TUNOMON_TITAMON","It sounds like the makings of a mutually beneficial
+arrangement to me.","f_d0604_0130_0050"
+"f_d0604_0130_0060","char_TUNOMON_TITAMON","So, what do you say? Do we have a deal...?","f_d0604_0130_0060"
+"f_d0604_0130_0070","char_TUNOMON_TITAMON","Okay. First, we need to head to the Gamma Device that
+controls the cells. It should be up these stairs.","f_d0604_0130_0070"
+"f_d0604_0130_0080","char_TUNOMON_TITAMON","Let's go, kid.","f_d0604_0130_0080"
+"f_d0604_0130_0090","char_TUNOMON_TITAMON","This is the Gamma Device that controls the cells.
+But, it's a bit tricky to use.","f_d0604_0130_0090"
+"f_d0604_0130_0100","char_TUNOMON_TITAMON","In order to operate the Gamma Device, we need to use
+two other devices to unlock it first.","f_d0604_0130_0100"
+"f_d0604_0130_0110","char_TUNOMON_TITAMON","I can show you how to get to them. We go over the gangway
+bridge. And then, take the west passage from there.","f_d0604_0130_0110"
+"f_d0604_0140_0010","char_SHARKMON_BOSS","Eh? What're ya starin' at?! I'll break outta this cage before
+ya know it!",""
+"f_d0604_0140_0020","char_SHARKMON_BOSS","If only I could get my strength back, I'd break this cage
+in no time. Damn. Why do I feel so weak right now?!",""
+"f_d0604_0150_0010","char_HOLYANGEMON","I believe we know who we should give the key to this cell to...",""
+"f_d0604_0150_0020","char_ANGEWOMON","Yes, we agree it would be safest in ClavisAngemon's hands.",""
+"f_d0604_0150_0030","char_HOLYANGEMON","The gate is open... Wait. What is this...? Why, it is the
+escaped prisoners!",""
+"f_d0604_0150_0040","char_ANGEWOMON","Ah, perfect timing! I shall capture you myself!",""
+"f_d0604_0160_0010","char_MINERVAMON","Apparently, you need a key to open the door here. I heard
+they gave it to ClavisAngemon.",""
+"f_d0604_0160_0020","char_MINERVAMON","All I can do is cheer you on from here, but please don't do
+anything reckless, okay? Do you promise?",""
+"f_d0604_0170_0010","","It seems you need a key to open the cell.",""
+"f_d0604_0180_0010","char_TUNOMON_TITAMON","Looks like they're after us. We need to regroup!","f_d0604_0180_0010"
+"f_d0604_0180_0020","char_TUNOMON_TITAMON","You said that ClavisAngemon has the key, right?","f_d0604_0180_0020"
+"f_d0604_0180_0030","char_TUNOMON_TITAMON","I think ClavisAngemon's probably searching for us in the
+west wing. Let's head over there now.","f_d0604_0180_0030"
+"f_d0604_0190_0010","char_TUNOMON_TITAMON","Wait! Not that way, ClavisAngemon is there!","f_d0604_0190_0010"
+"f_d0604_0190_0020","char_TUNOMON_TITAMON","There's no time to deal with those damn angels right now!","f_d0604_0190_0020"
+"f_d0604_0200_0010","char_CLAVISANGEMON","Ah, I knew you were coming! Prepare yourselves, fugitives!",""
+"f_d0604_0200_0020","char_SHAKKOUMON","We found you! This is as far as you go!",""
+"f_d0604_0200_0030","char_TUNOMON_TITAMON","Urk! This way's no good, either!",""
+"f_d0604_0200_0040","char_CLAVISANGEMON","There will be no escape!",""
+"f_d0604_0200_0050","char_TUNOMON_TITAMON","At this rate, we'll be surrounded! Take those stairs down
+to safety!",""
+"f_d0604_0210_0010","char_CLAVISANGEMON","It's about time I ended this farce— Hm?","f_d0604_0210_0010"
+"f_d0604_0210_0020","char_CLAVISANGEMON","Wait. This is inside the cell... That means that the temple's
+protection does not extend...","f_d0604_0210_0020"
+"f_d0604_0210_0030","char_TUNOMON_TITAMON","His movements... He's clearly slowing down. This is our
+chance! Let's go!","f_d0604_0210_0030"
+"f_d0604_0220_0010","char_CLAVISANGEMON","Ngh...!",""
+"f_d0604_0220_0020","char_TUNOMON_TITAMON","Now, kid! Use the device!",""
+"f_d0604_0220_0030","char_CLAVISANGEMON","Curses...!",""
+"f_d0604_0220_0040","char_TUNOMON_TITAMON","Hehe. What a wonderful sight! It won't be moving now! Let's
+get going, kid!",""
+"f_d0604_0230_0010","char_APOLLOMON","Ah, you're back! The other cells have opened, but this
+one stayed closed for some reason...","f_d0604_0230_0010"
+"f_d0604_0230_0020","char_DIANAMON","Minnie's cell won't open! Everyone else has gotten out.
+Why not Minnie's!?","f_d0604_0230_0020"
+"f_d0604_0230_0030","char_APOLLOMON","Well?",""
+"f_d0604_0230_0040","","The device isn't responding. It seems this isn't the correct key.",""
+"f_d0604_0230_0050","char_TUNOMON_TITAMON","I see... It's a fake. Quite the elaborate setup they have here.",""
+"f_d0604_0230_0060","char_APOLLOMON","In that case... Dianamon!",""
+"f_d0604_0240_0010","char_TUNOMON_TITAMON","Okay, it's done. It's all thanks to your efforts back there.",""
+"f_d0604_0240_0020","char_TUNOMON_TITAMON","Their security's thinned out considerably. We should be able
+to escape on our own now.",""
+"f_d0604_0240_0030","char_TUNOMON_TITAMON","We'll settle this someday, kid. Just wait. You'll get what's
+coming to you.",""
+"f_d0604_0250_0010","char_SHARKMON_BOSS","*panting* Are there any other angel Digimon around?!
+Those punks kept us locked up like that for so damn long...!",""
+"f_d0604_0250_0020","char_SHARKMON_BOSS","They put the problematic Digimon here for ""rehabilitation,""
+and now we're getting sent to the human world. Damn Junomon!",""
+"f_d0604_0260_0010","char_CLAVISANGEMON","You! Do you really think you'll get away with all of this?!","f_d0604_0260_0010"
+"f_d0604_0260_0020","char_CLAVISANGEMON","Hey! Open this door! Where do you think you're going?!","f_d0604_0260_0020"
+"f_d0604_0270_0010","char_TUNOMON_TITAMON","Blast! It managed to get around behind us somehow. Looks
+like we've got no other choice...",""
+"f_d0604_0270_0020","char_CLAVISANGEMON","W-Wait! Stop! It's me! Hold your attack!",""
+"f_d0604_0270_0030","char_TUNOMON_TITAMON","That voice... Lanamon, is that you? It's me, Titamon.",""
+"f_d0604_0270_0040","char_RANAMON","Huh? Lord Titamon?",""
+"f_d0604_0270_0050","char_TUNOMON_TITAMON","What are you doing here?",""
+"f_d0604_0270_0060","char_RANAMON","There was some kind of commotion, so I figured I'd use the
+opportunity to escape.",""
+"f_d0604_0270_0070","char_RANAMON","But when I transformed into one of the angels wandering around,
+everyone started coming up to me and giving reports.",""
+"f_d0604_0270_0080","char_RANAMON","They kept talking about the fugitives' location, or what we're
+going to do next.",""
+"f_d0604_0270_0090","char_RANAMON","The real angel finally caught up to me, though, and it was none
+too pleased, to say the least.",""
+"f_d0604_0270_0100","char_RANAMON","Yikes! Speaking of which, look who's here!",""
+"f_d0604_0270_0110","char_WITCHMON","What terrible timing! I'm all out of power!",""
+"f_d0604_0270_0120","char_CLAVISANGEMON","How dare you use someone with the ability to transform to confuse
+me! I should have known this was all your doing!",""
+"f_d0604_0270_0130","char_TUNOMON_TITAMON","Lanamon... Are you really planning on leaving us to deal with
+this by ourselves?!",""
+"f_d0604_0270_0140","char_RANAMON","Well, it looks like you've got things pretty much handled here!
+Thanks for the help, and I'll see you all later!",""
+"f_d0604_0280_0010","char_TUNOMON_TITAMON","How did I know about the devices, you ask? Hmph.
+Did you forget that we came here on a raid?","f_d0604_0280_0010"
+"f_d0604_0280_0020","char_TUNOMON_TITAMON","Okay, that should open the cell doors. Let's hurry back
+to Minervamon!","f_d0604_0280_0020"
+"f_d0604_0290_0010","char_CLAVISANGEMON","I can still move! In the name of Junomon, I refuse to let
+you escape!",""
+"f_d0604_0290_0020","char_WITCHMON","You never learn, do you?",""
+"f_d0604_0290_0030","char_WITCHMON","Stop getting in Lord Titamon's way! Idle Bubble!",""
+"f_d0604_0290_0040","char_TUNOMON_TITAMON","Now! Yaaaaaaah!",""
+"f_d0604_0290_0050","char_TUNOMON_TITAMON","Looks like I've still got some power leftover from
+Chronomon's treasure. I've stopped time...!",""
+"f_d0604_0290_0060","char_TUNOMON_TITAMON","But the effect won't last long! Quickly! Throw that switch
+for the cell!",""
+"f_d0604_0290_0070","char_CLAVISANGEMON","...Huh?! They put me to sleep again!","f_d0604_0290_0070"
+"f_d0604_0290_0080","char_CLAVISANGEMON","Curse you! Time for me to strike back— Huh? Wh-Why am I
+trapped in here?!","f_d0604_0290_0080"
+"f_d0604_0290_0090","char_TUNOMON_TITAMON","Hehehehehe *sigh* What a wonderful sight!","f_d0604_0290_0090"
+"f_d0604_0290_0100","char_TUNOMON_TITAMON","Well done, kid.","f_d0604_0290_0100"
+"f_d0604_0290_0110","char_TUNOMON_TITAMON","That should keep him. Now, let's get to Minervamon.","f_d0604_0290_0110"
+"f_d0604_0290_0120","char_TUNOMON_TITAMON","Hey, kid! Where are you going?","f_d0604_0290_0120"
+"f_d0604_0290_0130","char_TUNOMON_TITAMON","I can't keep this up for very long. I need you to hurry up
+and throw that switch for the cell.","f_d0604_0290_0130"
+"f_d0604_0290_0140","char_PLAYER_M","Hm? What's this?",""
+"f_d0604_0290_0150","char_TUNOMON_TITAMON","Ngh... Hurry up, already! I can't keep this up forever!","f_d0604_0290_0150"
+"f_d0604_0300_0010","char_MINERVAMON","Well, you've been running all over the place, but as you
+can see, this cell is still locked up tight.","f_d0604_0300_0010"
+"f_d0604_0300_0020","char_MINERVAMON","Seriously, what's with the VIP treatment? ","f_d0604_0300_0020"
+"f_d0604_0300_0030","char_RANAMON","Hee hee... I know all about it!",""
+"f_d0604_0300_0040","char_RANAMON","I was disguised as an angel, so I heard everything. They
+really should learn to keep their mouths shut.",""
+"f_d0604_0300_0050","char_RANAMON","You see, this cell is special. The angels referred to it as
+""the high-security cell.""",""
+"f_d0604_0300_0060","char_RANAMON","It was specifically made to house the most dangerous
+offenders—the worst of the worst.",""
+"f_d0604_0300_0070","char_RANAMON","I also heard they raised its security level to the maximum,
+due to all the trouble you people have been causing.",""
+"f_d0604_0300_0080","char_RANAMON","Why did they have to go and make a cell you can't even open,
+no matter how many people try?!",""
+"f_d0604_0300_0090","char_TUNOMON_TITAMON","Well, this just got more complicated. So what do we do now?",""
+"f_d0604_0300_0100","char_APOLLOMON","I suppose we have no other choice. Dianamon!",""
+"f_d0604_0300_0101","char_APOLLOMON","We can handle this much ourselves!",""
+"f_d0604_0300_0110","char_TUNOMON_TITAMON","After all that, you just smashed the door open in the end?!
+But I guess you did live up to your end of the bargain...","f_d0604_0300_0110"
+"f_d0604_0300_0120","char_TUNOMON_TITAMON","Looks like all the commotion you caused has thinned
+out the security considerably.","f_d0604_0300_0120"
+"f_d0604_0300_0130","char_TUNOMON_TITAMON","That should give us a chance to escape. So I guess our
+little partnership has reached its end.","f_d0604_0300_0130"
+"f_d0604_0300_0140","char_TUNOMON_TITAMON","I won't show you any mercy the next time we meet.","f_d0604_0300_0140"
+"f_d0604_0300_0150","char_TUNOMON_TITAMON","Just you wait... You'll get what's coming to you, kid.","f_d0604_0300_0150"
+"f_d0604_0310_0010","char_PHARAOHMON","There is nobody in the next cell, right? It was originally
+being used to hold Greymon.",""
+"f_d0604_0310_0020","char_PHARAOHMON","They took Greymon away some time ago, though. That is
+all I know. ",""
+"f_d0604_0320_0010","char_HANGYOMON","Hey, someone let us out of here! I'm begging you!",""
+"f_d0604_0320_0020","char_HANGYOMON","At this facility, they take us out one by one and... *shudder*",""
+"f_d0604_0320_0030","char_HANGYOMON","Waaaaah! S-Someone, help uuuuus!",""
+"f_d0604_0330_0010","char_KUZUHAMON","This cell is the worst. Our power is blocked by that darned
+""temple's protection.""",""
+"f_d0604_0330_0020","char_KUZUHAMON","If only I could get out of here, I could show them my true
+power... How mortifying...",""
+"f_d0604_0340_0010","char_SAKUYAMON","Something called the ""temple's protection"" is amplifying the
+power of some angels, making them stronger than usual.",""
+"f_d0604_0340_0020","char_SAKUYAMON","And they are letting their fake power go to their heads.
+How annoying!",""
+"f_d0604_0350_0010","char_ORGEMON","Geh geh geh... Did ya see that? I gave those angel
+Digimon a good thrashin'!",""
+"f_d0604_0360_0010","char_PHARAOHMON","So you're the one who sprung me, huh? Thanks for that.
+I'll be sure to repay the favor if the opportunity ever arises.",""
+"f_d0604_0370_0010","char_HANGYOMON","We're finally free! We gave those angels quite a beating!",""
+"f_d0604_0370_0020","char_HANGYOMON","They put us in those cells that block our power because
+they're afraid of us!",""
+"f_d0604_0370_0030","char_HANGYOMON","But as soon as we got out, victory was ours. Hehe! How do
+they like that?!",""
+"f_d0604_0380_0010","char_KUZUHAMON","We managed to defeat the angels.",""
+"f_d0604_0380_0020","char_KUZUHAMON","After I got my true power back, the angels were hardly a
+challenge.",""
+"f_d0604_0390_0010","char_SAKUYAMON","So you are the ones who opened the prison cell doors?
+Thank you so much for the help!",""
+"f_d0604_0390_0020","char_SAKUYAMON","I got my strength back as soon as I got out of that cell.
+Taking down those angels was a piece of cake!",""
+"f_d0604_0400_0010","char_APOLLOMON","I see... So it is quite a difficult procedure to open this
+cell, is it...?",""
+"f_d0604_0400_0020","char_APOLLOMON","Forgive me, but would you mind searching for the device
+for me? I cannot leave Nervy here while she is so weak.",""
+"f_d0604_0410_0010","char_DIANAMON","I heard that those taken from their cells never return.",""
+"f_d0604_0410_0020","char_DIANAMON","I cannot allow anything to happen to Minnie. I must stay
+here and stand guard.",""
+"f_d0604_0420_0010","char_RANAMON","Hm? It's finally over? Phew, that sure was scary...",""
+"f_d0604_0420_0020","char_RANAMON","What was with that shark?! It just kept chomping at everyone!",""
+"f_d0604_0420_0030","char_RANAMON","*sigh* This has all been too much for me. I need a rest.",""
+"f_d0604_0430_0010","char_TUNOMON_TITAMON","Where're you going, kid? We have to find the Gamma Device.",""
+"f_d0606_0010_0010","char_TAILMON","Do you want to ride the Locomon Railroad?",""
+"f_d0606_0010_0020","char_PLAYER_M","Yes, please!",""
+"f_d0606_0010_0021","char_PLAYER_M","Not right now.",""
+"f_d0606_0010_0030","char_TAILMON","The train will pull into the station momentarily. Please
+wait until it comes to a complete stop.",""
+"f_d0606_0010_0040","char_TAILMON","We look forward to serving you again.",""
+"f_d0606_0010_0050","char_TAILMON","We heard everything. Lady Junomon is guarding something 
+important in this temple and is unable to leave.",""
+"f_d0606_0010_0060","char_TAILMON","People consider the Relic of Iliad to be a great treasure. That's 
+why there's a barrier in order to keep it safe.",""
+"f_d0606_0010_0070","char_TAILMON","We received permission to travel to the Gear Forest. Are you 
+ready to go?",""
+"f_d0606_0020_0010","char_ANGEWOMON","I bid you welcome. I am the caretaker of this temple.",""
+"f_d0606_0020_0020","char_ANGEWOMON","Junomon is within. If you have business here, you may
+proceed inside.",""
+"f_d0606_0030_0010","char_CORONAMON","I'm so jealous of you. I want to visit all kinds of different
+places, too!",""
+"f_d0606_0040_0010","char_LUNAMON","I bet you must be really tired! But go ahead on in.",""
+"f_d0606_0050_0010","char_MUMMYMON","The Guardian Palace where Lady Junomon resides is
+protected by a special barrier...",""
+"f_d0606_0050_0020","char_MUMMYMON","As a result, it is only accessible via the Locomon Railroad.
+We can journey there now that it's running again.",""
+"f_d0606_0050_0030","char_MUMMYMON","Are you ready to board?",""
+"f_d0607_0010_0010","char_JUNOMON","I connected this gate to the place where Chronomon is. 
+However, a space-time distortion has already arisen...",""
+"f_d0607_0010_0015","char_JUNOMON","I have tried to eliminate any possible side effects, but it may 
+take some time before you emerge on the other side.",""
+"f_d0607_0010_0020","char_JUNOMON","Please, if anyone can stop Chronomon, it is you...!",""
+"f_d0607_0010_0030","","{next}[Enter the gate.]",""
+"f_d0607_0010_0031","","{end}[Don't enter.]",""
+"f_d0608_0010_0010","char_JUNOMON","Observe the state of this world with your own eyes. See just
+how dire our need for the Great Guardian has become.",""
+"f_d0608_0010_0020","char_JUNOMON","Please proceed to the Abyss Area at once. I beseech you
+to return peace to our threatened seas.",""
+"f_d0608_0010_0030","char_JUNOMON","With that, Aegiomon, I leave it to you. And you as well,
+children of man...",""
+"f_d0608_0010_0040","char_JUNOMON","The World Tree is at the center of the Current. You will find
+the enemy's forces concentrated more than ever before.",""
+"f_d0608_0010_0050","char_JUNOMON","Please be careful. I shall pray for your safety, Great
+Guardian Aegiomon.",""
+"f_d0609_0010_0010","char_OPERATOR_M","What's the matter? Are you okay?! You mustn't give up!",""

@@ -1,0 +1,82 @@
+string2 0,string 1,string 2,string 3
+"m250_010_010","char_INORI","This is where we came out before... It doesn't look all that
+different. I just hope everywhere else is the same.","m250_010_010"
+"m250_010_020","char_AEGIOMON","I can hardly believe it's been eight whole years.","m250_010_020"
+"m250_010_030","char_INORI","We need to check on the occupied villages and see if we
+can negotiate with the Titans.","m250_010_030"
+"m250_010_040","char_AEGIOMON","And we gotta find that Digimon healer! Going to the town's
+tavern to gather information is probably our best bet.","m250_010_040"
+"m250_010_050","char_INORI","Yeah. I sure hope we can talk things out... Hurting each other
+like this won't make anyone happy.","m250_010_050"
+"m250_020_010","char_AEGIOMON","Is this... really Central Town? Are these all... Titans...?","m250_020_010"
+"m250_020_020","char_INORI","This town really has changed...","m250_020_020"
+"m250_030_010","char_INORI","Looks pretty much the same as the rest of town... Think any
+of these Titans will hear us out?","m250_030_010"
+"m250_030_020","char_AEGIOMON","Let's try and do what we can!","m250_030_020"
+"m250_030_030","char_AEGIOMON","Just talking to one almost turned into a fight...","m250_030_030"
+"m250_030_040","char_INORI","What do we do...?","m250_030_040"
+"m250_030_050","char_RANAMON","Hello there! Nice to meet you. You appear to be
+new faces around these parts.","m250_030_050"
+"m250_030_060","char_RANAMON","Where are you from?","m250_030_060"
+"m250_030_070","char_AEGIOMON","Huh?","m250_030_070"
+"m250_030_080","char_RANAMON","Oh, come, now! No need to be so surprised. I'm Lanamon.","m250_030_080"
+"m250_030_090","char_RANAMON","And since I'm drinking all by my lonesome today... I was
+looking for someone to talk to.","m250_030_090"
+"m250_030_100","char_AEGIOMON","U-Um, we're...","m250_030_100"
+"m250_030_110","char_RANAMON","I see...","m250_030_110"
+"m250_030_120","char_RANAMON","So, you're looking to negotiate... and you're in search of a
+certain Digimon, are you?","m250_030_120"
+"m250_030_130","char_PLAYER_M","Do you think the land the Titans conquered can be reclaimed?{next}",""
+"m250_030_131","char_PLAYER_M","Who can we negotiate with to end the fighting?{next}",""
+"m250_030_132","char_PLAYER_M","Is it really impossible to talk things out...?{next}",""
+"m250_030_140","char_RANAMON","Well, you can hardly expect me to have answers right off the
+top of my head.","m250_030_140"
+"m250_030_150","char_RANAMON","But... I suppose I can offer you a bit of help.","m250_030_150"
+"m250_030_160","char_AEGIOMON","R-Really?!","m250_030_160"
+"m250_030_170","char_RANAMON","You see, not all Titans are fond of this prickly atmosphere
+we have going on right now.","m250_030_170"
+"m250_030_180","char_RANAMON","Some of them simply want to enjoy their lives. Like... well,
+me, for example.","m250_030_180"
+"m250_030_190","char_RANAMON","If I can fill my days with fun chats like this one right
+now, that's enough for me.","m250_030_190"
+"m250_030_200","char_INORI","So not all Titans are the same...","m250_030_200"
+"m250_030_210","char_RANAMON","Why would we be? You know, the more we talk, I'm beginning
+to realize...","m250_030_210"
+"m250_030_220","char_RANAMON","...that you folks don't know nearly enough about Titans.","m250_030_220"
+"m250_030_230","char_RANAMON","Getting the Titans to relinquish the territory they've
+seized won't be easy.","m250_030_230"
+"m250_030_240","char_RANAMON","Such things may not hold any interest for me, but my
+fellow Titans must've had their reasons for attacking.","m250_030_240"
+"m250_030_250","char_RANAMON","I suggest you take a little tour of the Digital World to see
+more of its current state.","m250_030_250"
+"m250_030_260","char_AEGIOMON","A tour, huh...? Maybe the Locomon Railroad would—","m250_030_260"
+"m250_030_270","char_RANAMON","Unfortunately, the railroad isn't running now. See? It's
+like I said. There's so much you don't know.","m250_030_270"
+"m250_030_280","char_RANAMON","The Factorial Area that powers the railroad has undergone a...
+drastic makeover, you see.","m250_030_280"
+"m250_030_290","char_INORI","O-Oh...","m250_030_290"
+"m250_030_300","char_RANAMON","If you're seeking a means of transportation, I can introduce 
+you to a friend of mine. They might be able to help.","m250_030_300"
+"m250_035_010","char_RANAMON","I spoke with MasterBlimpmon, and he has agreed to
+transport you.","m250_035_010"
+"m250_035_020","char_INORI","Thank you! But... why are you helping us so much?","m250_035_020"
+"m250_035_030","char_RANAMON","I can't say this too loudly, but the truth is...","m250_035_030"
+"m250_035_040","char_RANAMON","...I'm gathering what could be called the more... moderate 
+Digimon among the Titans.","m250_035_040"
+"m250_035_050","char_RANAMON","Remember, more than a few Titans wish to see an end to
+this conflict, too.","m250_035_050"
+"m250_035_060","char_INORI","I had no idea... Hearing that makes me feel kind of happy.","m250_035_060"
+"m250_035_070","char_RANAMON","Personally, I couldn't care less about controlling territory...
+So I hope your negotiations go well!","m250_035_070"
+"m250_035_080","char_AEGIOMON","Wow. I didn't think any Digimon like Lanamon existed.","m250_035_080"
+"m250_035_090","char_AEGIOMON","Lanamon's right, you know. We have to learn more about
+the way the Digital World is now!","m250_035_090"
+"m250_035_100","char_RANAMON","Oh, that's right! Didn't you say you were looking for a certain 
+Digimon that's a skilled healer?","m250_035_100"
+"m250_035_110","char_RANAMON","If I had to guess... I'd say you might be able to find such
+a healer in a village by the sea.","m250_035_110"
+"m250_035_115","char_RANAMON","It just so happens I have some important business to do
+there, so how about we go together?","m250_035_115"
+"m250_035_120","char_AEGIOMON","...Thanks!","m250_035_120"
+"m250_035_130","char_RANAMON","Like I said, there are moderates among the Titans, too.","m250_035_130"
+"m250_035_140","char_RANAMON","All right, then. Shall we be off?","m250_035_140"

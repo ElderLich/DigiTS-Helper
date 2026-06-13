@@ -1,0 +1,79 @@
+string2 0,string 1,string 2,string 3
+"m430_010_010","char_JUPITERMON","Tah!","m430_010_010"
+"m430_010_020","char_JUPITERMON","Hah!","m430_010_020"
+"m430_020_010","char_JUPITERMON","This city where Inori was born and raised...","m430_020_010"
+"m430_020_020","char_JUPITERMON","I do not wish to harm it more. Let us go elsewhere.","m430_020_020"
+"m430_020_042","char_APOLLOMON","Hraaaaaaaaagh!","m430_020_042"
+"m430_020_044","char_DIANAMON","Yaaaaaaaaagh!","m430_020_044"
+"m430_020_046","char_APOLLOMON","Graaaaaaaaaaagh!","m430_020_046"
+"m430_020_048","char_DIANAMON","Graaaaaaaaaaagh!","m430_020_048"
+"m430_020_050","char_GRACENOVAMON","I am GraceNovamon!","m430_020_050"
+"m430_020_060","char_GRACENOVAMON","Haaaaagh!","m430_020_060"
+"m430_020_070","char_GRACENOVAMON","Raaaaagh!","m430_020_070"
+"m430_021_010","char_EVERYONE","Together!","m430_021_010"
+"m430_021_020","char_JUPITERMON","HRAAAAAAAAAGH!","m430_021_020"
+"m430_030_010","char_GRACENOVAMON","I have created this space by using the collision of
+opposing forces—the sun and the moon.","m430_030_010"
+"m430_030_020","char_GRACENOVAMON","I will give it my all to keep Chronomon trapped in this space.
+In the mean time... I'm counting on you. Finish this.","m430_030_020"
+"m430_040_010","char_GRACENOVAMON","Stay vigilant, Jupitermon. Both you and Chronomon
+possess the ability to manipulate time.","m430_040_010"
+"m430_040_030","char_GRACENOVAMON","If two such powers were to clash, it would bring upon severe
+distortions! And we have no idea what that would bring about!","m430_040_030"
+"m430_040_040","char_AEGIOMON","Ngh...","m430_040_040"
+"m430_040_041","char_AEGIOMON","Gah... What?!","m430_040_041"
+"m430_040_042","char_AEGIOMON","...Hey!","m430_040_042"
+"m430_040_043","char_AEGIOMON","Oh!","m430_040_043"
+"m430_040_044","char_AEGIOMON","Is that?","m430_040_044"
+"m430_040_050","char_MAYBE_INORI_VOICE","Where is... everyone?","m430_040_050"
+"m430_040_060","char_AEGIOMON","Inori, she's—she's inside!","m430_040_060"
+"m430_040_061","char_AEGIOMON","Hnnnh...!","m430_040_061"
+"m430_040_062","char_AEGIOMON","Huh?!","m430_040_062"
+"m430_040_070","char_AEGIOMON","Ngh!","m430_040_070"
+"m430_040_071","char_AEGIOMON","...Hnn! Ngh!","m430_040_071"
+"m430_040_080","char_AEGIOMON","Graaaaaaaaagh!","m430_040_080"
+"m430_040_090","char_AEGIOMON","Inori!","m430_040_090"
+"m430_040_091","char_AEGIOMON","What?!","m430_040_091"
+"m430_050_010","char_AEGIOMON","You two, as well?","m430_050_010"
+"m430_050_020","char_PLAYER_M","I wonder what happened.{next}",""
+"m430_050_021","char_PLAYER_M","You're back to being separated?{next}",""
+"m430_050_022","char_PLAYER_M","Is this a dream...?{next}",""
+"m430_050_040","char_DIANAMON","The space we created was transformed by space-time
+distortions.","m430_050_040"
+"m430_050_050","char_DIANAMON","And I believe that human lying over there is also
+somehow related to all of this.","m430_050_050"
+"m430_050_060","char_AEGIOMON","Inori!","m430_050_060"
+"m430_050_070","char_INORI","Ngh...","m430_050_070"
+"m430_050_080","char_AEGIOMON","Inori! I'm so glad you're okay! *sob*","m430_050_080"
+"m430_050_090","char_INORI","What happened to me?","m430_050_090"
+"m430_050_100","char_INORI","I was falling into a hole and couldn't grab your hand.","m430_050_100"
+"m430_050_110","char_INORI","After that, it felt like I was dreaming for quite a while.","m430_050_110"
+"m430_050_120","char_INORI","And now... I'm here.","m430_050_120"
+"m430_050_130","char_AEGIOMON","Hmm...","m430_050_130"
+"m430_050_140","char_AEGIOMON","Could it be... we pulled out that whole, entire moment...? 
+The moment you disappeared...?","m430_050_140"
+"m430_050_142","char_DIANAMON","In order to save her... it would seem he forced an
+expansion of the space-time disturbance.","m430_050_142"
+"m430_050_144","char_DIANAMON","How do I say this...? I think he interfered with...
+the ""laws of time.""","m430_050_144"
+"m430_050_150","char_APOLLOMON","Look at this place... Do you think we can still return to
+the previous world from here?","m430_050_150"
+"m430_050_160","char_DIANAMON","We don't even know if the previous world even exists
+anymore... Or even the Digital World, for that matter...","m430_050_160"
+"m430_050_170","char_DIANAMON","That's what happens when space-time is distorted...","m430_050_170"
+"m430_050_180","char_AEGIOMON","Maybe if us two, who have the power of time, fight...","m430_050_180"
+"m430_050_190","char_AEGIOMON","...the world inevitably turns out like this.","m430_050_190"
+"m430_050_200","char_AEGIOMON","This is exactly what Chronomon was hoping for.","m430_050_200"
+"m430_050_210","char_INORI","......","m430_050_210"
+"m430_050_220","char_AEGIOMON","But, don't worry.","m430_050_220"
+"m430_050_230","char_AEGIOMON","I'll do something about all of this in the end.","m430_050_230"
+"m430_051_010","char_AEGIOMON","I thought I saw something burst out when we pulled
+Inori in before. This must be what it was.","m430_051_010"
+"m430_051_020","char_AEGIOMON","It's so warm... I can hear Inori's voice...","m430_051_020"
+"m430_051_030","char_AEGIOMON","Inori's memories... What she felt when she was trapped...
+They're flowing into me...","m430_051_030"
+"m430_051_040","char_AEGIOMON","This must be all the times she called out to me...","m430_051_040"
+"m430_051_050","char_AEGIOMON","All those feelings she had... took on a physical form...?
+Is that what happens when time and space warp...?","m430_051_050"
+"m430_051_060","char_AEGIOMON","I can feel it... Chronomon is right over there. That means
+the Akashic Records must be just beyond...","f_d0900_0030_0010"

@@ -1,0 +1,65 @@
+string2 0,string 1,string 2,string 3
+"s110_091_010","char_CHILDHOOD_DIGIMON","Do you think my friend will be okay? Well, do you?!",""
+"s110_091_020","char_GABUMON","Okay, try explaining it to us again. Someone attacked you
+and you ran away?",""
+"s110_091_030","char_CHILDHOOD_DIGIMON","That's right. I was playing by the sea with my friend when
+something scared us!",""
+"s110_091_040","char_AGUMON","We're not familiar with this world, so we're not sure what 
+might've happened, either.",""
+"s110_091_050","char_PLAYER_M","{next}Can I help you?",""
+"s110_091_051","char_PLAYER_M","{next}Tell me more about what happened.",""
+"s110_091_052","char_PLAYER_M","{next}Did you do something wrong?",""
+"s110_091_060","char_AGUMON","It's you! I'm glad to see you again! We could really use 
+your help!",""
+"s110_091_070","char_AGUMON","Oh, it's you! Yes, we don't have very much information, 
+either...",""
+"s110_091_080","char_AGUMON","That's no way to greet someone. We just happened to get
+caught up in this ourselves.",""
+"s110_091_090","char_AGUMON","This young'un got separated from its friend down by the sea.
+It seems they were attacked.",""
+"s110_091_100","char_GABUMON","W-Well, if the friend didn't get away in time, it's probably a 
+goner by now.",""
+"s110_091_110","char_CHILDHOOD_DIGIMON","No! Don't say that! I refuse to believe it!",""
+"s110_091_120","char_AGUMON","You mustn't say such things, Gabumon! We should be trying to
+help these kids.",""
+"s110_091_130","char_PLAYER_M","{next}Let's go find the friend.",""
+"s110_091_131","char_PLAYER_M","{end}Well, good luck to you.",""
+"s110_091_140","char_AGUMON","Yes, the more we have searching, the better! We can
+definitely use your help!",""
+"s110_091_150","char_AGUMON","Why are you so cold and detached? I mean, I guess it doesn't
+directly concern you, but...",""
+"s110_091_160","char_AGUMON","Will you help us search for the lost child in the Abyss
+Area?",""
+"s110_091_170","char_PLAYER_M","{next}Let's go find their friend.",""
+"s110_091_171","char_PLAYER_M","{end}Well, good luck to you.",""
+"s110_091_180","char_AGUMON","Yes, the more we have searching, the better! We can
+definitely use your help!",""
+"s110_091_190","char_AGUMON","Why are you so cold and detached? I mean, I guess it doesn't
+directly concern you, but...",""
+"s110_091_200","char_GABUMON","Okay! We'll go on ahead! Remember! We'll be searching down 
+by the sea!",""
+"s110_091_210","char_CHILDHOOD_DIGIMON_FAIL_TO_ESCAPE","Uh-oh... I-I'm scared! Someone, help me!",""
+"s110_091_220","char_REMNANT_OF_TITAN","Looks like we've been seen... I really would've preferred to
+keep this quiet!",""
+"s110_091_230","char_AGUMON","Ah, perfect timing! I think we found what those children 
+were afraid of!",""
+"s110_091_240","char_GABUMON","This is quite the chore... Next time, let's take care of 
+things properly from the start!",""
+"s110_091_250","char_CHILDHOOD_DIGIMON_FAIL_TO_ESCAPE","Thanks! Now I can get back to my friend!",""
+"s110_091_260","char_CHILDHOOD_DIGIMON_FAIL_TO_ESCAPE","Wait... Where is my friend? Please tell me they're okay!",""
+"s110_091_270","char_GABUMON","Hey, kid... Try to calm down.",""
+"s110_091_280","char_AGUMON","We'll take you to Central Town. Come on!
+Let's get going!",""
+"s110_091_290","char_CHILDHOOD_DIGIMON","Oh, look! It's my friend!",""
+"s110_091_300","char_CHILDHOOD_DIGIMON_FAIL_TO_ESCAPE","I was so scared! *sobbing*",""
+"s110_091_310","char_GABUMON","There sure is lotsa crying going on here. Well, I suppose
+it's understandable...",""
+"s110_091_320","char_AGUMON","I'm just glad they're reunited!",""
+"s110_091_330","char_CHILDHOOD_DIGIMON","Thanks for your help, everyone! Here. You can have this! We
+found it on the ground!",""
+"s110_091_340","char_AGUMON","You take it. I'm not sure if we'd be able to get much use 
+out of such a thing.",""
+"s110_091_350","char_AGUMON","I'm more curious about what those Titans you drove off 
+were up to...",""
+"s110_091_360","char_AGUMON","There are many strange things going on in this world, so 
+we'll keep investigating.",""

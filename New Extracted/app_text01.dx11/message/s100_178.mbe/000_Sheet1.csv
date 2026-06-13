@@ -1,0 +1,41 @@
+string2 0,string 1,string 2,string 3
+"s100_178_010","char_MIREI","You made it. Please, come on in.",""
+"s100_178_020","char_YGGDRASILL","You're here.",""
+"s100_178_030","char_TOUHO","Oh, you seem to be facing quite the hardships lately.",""
+"s100_178_040","char_YGGDRASILL","Well, it looks like it's finally come to this, at last.",""
+"s100_178_050","char_TOUHO","The area around the Akashic Records is a complex place where
+time and space collide, after all.",""
+"s100_178_060","char_PLAYER_M","{next}...The natural order of this world has begun to break down?",""
+"s100_178_061","char_PLAYER_M","{next}Are you the ones behind all this?",""
+"s100_178_062","char_PLAYER_M","{next}Can't you do something about it?",""
+"s100_178_070","char_TOUHO","Yes, I suppose so. It's all rather troublesome, yes?",""
+"s100_178_080","char_TOUHO","What makes you think that? We'd never trouble ourselves in
+such a manner.",""
+"s100_178_090","char_TOUHO","I wouldn't even if I could. I'd only get in trouble. I have a role 
+to play. That's all.",""
+"s100_178_100","char_YGGDRASILL","In any case. it seems you've had some difficulties, so we've
+decided to grant you a favor.",""
+"s100_178_110","char_TOUHO","We've made it so you can go to any time and place that
+you've visited before.",""
+"s100_178_120","char_YGGDRASILL","You're now free to travel between any time and place you've
+set foot in. Isn't that wonderful?",""
+"s100_178_130","char_YGGDRASILL","As they say, seeing is believing. It's perfectly safe, so go
+ahead. Give it a try.",""
+"s100_178_140","char_PLAYER_M","{next}I can tend to unfinished business now.",""
+"s100_178_141","char_PLAYER_M","{next}There are places I wanna see again.",""
+"s100_178_142","char_PLAYER_M","{next}This can be my escape from reality.",""
+"s100_178_150","char_YGGDRASILL","Go forth and finish whatever troublesome tasks you've left
+incomplete to this point.",""
+"s100_178_160","char_YGGDRASILL","I'd like to see them myself if it weren't such a hassle. But
+you should go ahead.",""
+"s100_178_170","char_YGGDRASILL","Yes, reality can be difficult. It's good to take some time
+away... within reason.",""
+"s100_178_180","char_TOUHO","You don't want to have any regrets. There's a lot depending
+on you, after all.",""
+"s100_178_190","char_YGGDRASILL","Do what you must so as not to have any regrets, and prepare
+for the final battle.",""
+"s100_178_200","char_YGGDRASILL","Now, then. I leave it to you.",""
+"s100_178_210","char_MIREI","As per the hosts' orders, you can now travel to eras and
+areas you've already visited.",""
+"s100_178_220","char_MIREI","You should be able to do so once you exit this theater. I
+recommend you test it out.",""

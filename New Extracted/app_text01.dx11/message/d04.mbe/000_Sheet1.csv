@@ -1,0 +1,499 @@
+string2 0,string 1,string 2,string 3
+"f_d0401_0020_0010","char_PALMON","We can go across from here. Remember that pink flower!",""
+"f_d0401_0020_0020","char_PALMON","Okay. Ready? Now, jump with all your might!",""
+"f_d0401_0030_0010","char_PALMON","Huh... I knew it.",""
+"f_d0401_0030_0020","char_PALMON","This forest is meant to be confusing. It helps to defend
+the village from enemies.",""
+"f_d0401_0030_0030","char_PALMON","To tell you the truth...",""
+"f_d0401_0030_0040","char_PALMON","...I ended up getting lost, myself! I don't know the way back!",""
+"f_d0401_0030_0050","char_PALMON","Do you think you could help me find the way back to the
+village...?",""
+"f_d0401_0040_0010","char_HAWKMON","Well, well. Palmon, the dunderhead! I thought you were on
+patrol duty?",""
+"f_d0401_0040_0020","char_PALMON","These people just helped me with a Titan attack!",""
+"f_d0401_0040_0030","char_PALMON","We have to warn the village about the Titans!",""
+"f_d0401_0040_0040","char_HAWKMON","Hey, wait a moment. Can you prove that you are not a
+bunch of Titans yourselves?",""
+"f_d0401_0040_0050","char_FLORAMON","We've received word that the Titans are nearly on our doorstep.",""
+"f_d0401_0040_0060","char_FLORAMON","Lord Bacchusmon made it very clear we shouldn't let
+anyone through!",""
+"f_d0401_0040_0070","char_HAWKMON","This is to help bring peace to the forest!",""
+"f_d0401_0040_0080","char_HAWKMON","We set a few traps so no one can get to the village easily.",""
+"f_d0401_0040_0090","char_PALMON","Oh, no! My ivy is tangled around the tree.",""
+"f_d0401_0040_0100","char_PALMON","I can't use my vines with it like that. I've got to do something.",""
+"f_d0401_0050_0010","char_PALMON","You did it! We can go across now!",""
+"f_d0401_0050_0020","char_PALMON","We can keep going despite Hawkmon and Floramon's 
+interference!",""
+"f_d0401_0060_0010","char_SUNFLOWMON","Oh, hello! Do you want to ride Locomon?",""
+"f_d0401_0060_0020","char_PLAYER_M","Yes, please!",""
+"f_d0401_0060_0021","char_PLAYER_M","{end}Not right now.",""
+"f_d0401_0060_0030","char_SUNFLOWMON","Oh. Not getting on? All right...",""
+"f_d0401_0070_0010","char_PALMON","Hurry to the Guardian Palace! They say the Titans are
+storming Junomon's temple in numbers!",""
+"f_d0401_0080_0010","char_LOTOSMON","What are you doing here? Wait. That face...",""
+"f_d0401_0080_0020","char_LOTOSMON","Have we met before? You do not look like a Titan, I must say...",""
+"f_d0401_0080_0030","char_LOTOSMON","I do not mind you joining us. But let me warn you. We are
+quite tough. I wonder if you can keep up...",""
+"f_d0401_0090_0010","char_HERCULESKABUTERIMON","I'm HerculesKabuterimon, one who stands for the peace of
+this forest!",""
+"f_d0401_0090_0020","char_HERCULESKABUTERIMON","A troop of fearsome Titans are heading for this forest as we speak.",""
+"f_d0401_0090_0030","char_HERCULESKABUTERIMON","If you're joining our forces, you have our welcome. Otherwise...
+turn around and leave!",""
+"f_d0401_0100_0010","char_GARUDAMON","The Titans are so strong... They turned this forest into a
+horrible place. I can barely stand to look at it...",""
+"f_d0401_0100_0020","char_GARUDAMON","The village wasn't doing enough, so we've gathered together
+to change that.",""
+"f_d0401_0100_0030","char_GARUDAMON","But it seems the village is actually trying to improve.
+That's good to know.",""
+"f_d0401_0110_0010","char_HOLSMON","Hey! You're in the presence of Lady Lotosmon! How impudent!
+Back off!",""
+"f_d0401_0120_0010","char_TANEMON","Phew, I finally got away... I'm exhausted...",""
+"f_d0401_0130_0010","char_WOODMON","Those Digimon up ahead probably ain't such bad guys, but
+they sure are scary...",""
+"f_d0401_0140_0010","char_MEGAGROWLMON","Are there not any more worthy adversaries around? I am
+getting tired of the ones here.",""
+"f_d0401_0140_0020","char_MEGAGROWLMON","I suppose it is time to go elsewhere and find someone
+stronger... and more interesting.",""
+"f_d0401_0150_0010","char_LOTOSMON","Well! Welcome to our hideout. Thank you for what you did for
+the village.",""
+"f_d0401_0150_0020","char_LOTOSMON","If it were not for you, all of us would have been in danger.",""
+"f_d0401_0150_0030","char_LOTOSMON","We shall keep trying to fix this forest in our own way...",""
+"f_d0401_0150_0040","char_LOTOSMON","...but perhaps we can start working with the village from
+now on as well—working to trounce the Titans, of course!",""
+"f_d0401_0160_0010","char_PALMON","Okey-dokey! I'll help!",""
+"f_d0401_9000_0010","char_SILPHYMON","Card battles help you gain the experience and wisdom
+necessary for combat. How about a match?",""
+"f_d0401_9000_0020","","[Challenge to a card battle.]",""
+"f_d0401_9000_0021","","{end}Now is not the time.",""
+"f_d0401_9000_0030","char_SILPHYMON","Experience and wisdom will surely be useful in the coming
+battles. Call on me again if you change your mind!",""
+"f_d0401_9000_0040","char_SILPHYMON","You thoroughly defeated me! I see you're quite clever.",""
+"f_d0401_9000_0050","char_SILPHYMON","Looks like I win. But you did have some great moves.",""
+"f_d0401_0500_0010","char_SUNFLOWMON","The Guardian Palace's barrier shouldn't have broken so easily...
+Maybe it was 'cause the power of the Current was disturbed.",""
+"f_d0401_0500_0020","char_SUNFLOWMON","Was targeting the Current in different places all part of their plan...?
+I heard they're after the treasure in Lady Junomon's care.",""
+"f_d0401_0500_0030","char_SUNFLOWMON","It's called ""the Relic of Iliad."" I heard it's an artifact
+from a hero of lore.",""
+"f_d0401_0500_0040","char_SUNFLOWMON","In any case, this is urgent. I'll send Locomon over 
+immediately! Are you ready to board?",""
+"f_d0402_0020_0010","char_PALMON","The boss said not to let anyone ride who doesn't have money!",""
+"f_d0402_0030_0010","char_GEKOMON","Thank you very much, glurp! This place has gotten pretty
+dangerous nowadays, glurp.",""
+"f_d0402_0040_0010","char_MUCHOMON","Thanks for saving me!",""
+"f_d0402_0050_0010","char_PYOCOMON","*sniff* That was so scary...!",""
+"f_d0402_0060_0010","char_GEKOMON","You saved my life, glurp! But I never expected Lotosmon to
+show up, glurp!",""
+"f_d0402_0070_0010","char_MUCHOMON","Wow, Lotosmon! Quite the shock! But thank you!",""
+"f_d0402_0080_0010","char_PYOCOMON","Thank you... for saving me. But Lotosmon is... kind of scary...",""
+"f_d0402_0090_0010","char_PALMON","Yay! A first-time guest!",""
+"f_d0402_0090_0020","char_PALMON","Don't worry. Just leave everything to the Palmon Ride
+Company! Your first time is free! Ready for a ride?!",""
+"f_d0402_0100_0010","char_AEGIOMON","They're getting attacked! Looks like it's by the Titans? We've 
+gotta go help!","f_d0402_0100_0010"
+"f_d0402_0100_0020","char_GRIFFOMON","It's you! I knew it! Do you remember me? I used to be
+Hawkmon. Thanks for saving me, man!","f_d0402_0100_0020"
+"f_d0402_0100_0030","char_GRIFFOMON","I've got bad news! The Titans are attacking the village!","f_d0402_0100_0030"
+"f_d0402_0100_0040","char_GRIFFOMON","It's real bad out there! Will you come to the village with me?","f_d0402_0100_0040"
+"f_d0402_0110_0010","char_GRIFFOMON","That's the long way around! It's much quicker to go from
+the east!","f_d0402_0110_0010"
+"f_d0402_0120_0010","char_AEGIOMON","It's the same thing all over again... Wait. Something's different.
+Those little Digimon seem less tired this time around.",""
+"f_d0402_0120_0020","char_INORI","Maybe we've traveled back in time a bit? At any rate, we've 
+got to help them!",""
+"f_d0402_0130_0010","char_LOTOSMON","I knew it was you! The last time I saw you, I was still Floramon!","f_d0402_0130_0010"
+"f_d0402_0130_0020","char_LOTOSMON","Have you come to join the festival?","f_d0402_0130_0020"
+"f_d0402_0130_0030","char_LOTOSMON","The Titans are at the village, you say?! Oh, dear. Understood.
+Let us go right away!","f_d0402_0130_0030"
+"f_d0402_0130_0040","char_LOTOSMON","Understood. Let us go right away!","f_d0402_0130_0040"
+"f_d0402_0130_0050","char_LOTOSMON","I was just patrolling the area. Let's patrol the west side
+while we head toward the village!","f_d0402_0130_0050"
+"f_d0402_0140_0010","char_LOTOSMON","That's the long way around! We have to head to the village
+from the west!","f_d0402_0140_0010"
+"f_d0402_0150_0010","","Avoiding tragedy for Bacchusmon comes first. Let's hurry
+on.",""
+"f_d0403_0010_0010","char_HAWKMON","Well, well! Palmon, the dunderhead! You made it all the
+way here!",""
+"f_d0403_0010_0020","char_FLORAMON","None of you are to be trusted! I'm not letting you go any further!",""
+"f_d0403_0010_0030","char_HAWKMON","Not to worry, however, for this is THAT place!",""
+"f_d0403_0010_0040","char_FLORAMON","That's right! Because Woodmon's here!",""
+"f_d0403_0010_0050","char_FLORAMON","Can you people even see Woodmon? Anyway, goodbye!",""
+"f_d0403_0020_0010","char_FLORAMON","Well, well. You made it here! Let me congratulate you!",""
+"f_d0403_0020_0020","char_HAWKMON","But we will not let you get any closer to the village!",""
+"f_d0403_0020_0030","char_FLORAMON","Time for my babies to shine! Get them!",""
+"f_d0403_0020_0040","char_HAWKMON","Flora, over there! Something is happening!",""
+"f_d0403_0020_0050","char_FLORAMON","I-Is that... No way... Titans?!",""
+"f_d0403_0020_0060","char_FLORAMON","O-Okay... I'm leaving them to you people!",""
+"f_d0403_0020_0070","char_HAWKMON","They ran away! How pathetic.",""
+"f_d0403_0020_0080","char_FLORAMON","D-Do you think we really stand a chance here...?!",""
+"f_d0403_0020_0090","char_PALMON","They may not look like it, but they're friends! Please, you've 
+got to help them!",""
+"f_d0403_0030_0010","char_HAWKMON","It is just as Palmon says! You truly are good, kind people...",""
+"f_d0403_0030_0020","char_FLORAMON","Thank you for saving us.",""
+"f_d0403_0030_0030","char_FLORAMON","I'm sorry that I ever doubted you.",""
+"f_d0403_0030_0040","char_FLORAMON","But I have to say...",""
+"f_d0403_0030_0050","char_FLORAMON","...you people really are amazingly strong! And you're so cool!",""
+"f_d0403_0030_0060","char_FLORAMON","...We... we wanna be your underlings!",""
+"f_d0403_0030_0070","char_HAWKMON","Yes! Exactly! We are both your underlings now!",""
+"f_d0403_0030_0080","char_HAWKMON","And if we ever get in trouble, we will rely on you to save us!",""
+"f_d0403_0030_0090","char_FLORAMON","That's right! You're obligated to protect your underlings!",""
+"f_d0403_0030_0100","char_FLORAMON","We'll go ahead and tell the village about you!",""
+"f_d0403_0030_0110","char_PALMON","I bet they could talk their way out of anything.",""
+"f_d0403_0030_0120","char_PALMON","But now we can go to the village.",""
+"f_d0403_0030_0130","char_PALMON","We have to go warn everyone that the Titans are coming!
+Let's hurry to the village!",""
+"f_d0403_0040_0010","char_LOTOSMON","Rosemon started a business near here. You should go visit
+when you get the chance.","f_d0403_0040_0010"
+"f_d0403_0040_0020","char_LOTOSMON","We need to hurry for the village!","f_d0403_0040_0020"
+"f_d0403_0050_0010","char_PALMON","Welcome! Sorry, but I'm busy right now.",""
+"f_d0403_0050_0020","char_PALMON","Can you come back another time?",""
+"f_d0403_0060_0010","char_ROSEMON","Well, what a lovely surprise! Welcome!",""
+"f_d0403_0060_0020","char_ROSEMON","Thank you for saving the village. I had no idea such horrible
+things were happening.",""
+"f_d0403_0060_0030","char_ROSEMON","But, thanks to you, now I can focus on my business.",""
+"f_d0403_0060_0040","char_ROSEMON","And your continued support will be much appreciated, and
+will help the forest, too!",""
+"f_d0403_0070_0010","char_PALMON","Welcome! Thank you for choosing us!",""
+"f_d0403_9000_0010","char_SUNFLOWMON","Ah, I see you have some cards, too. How about a match with me?",""
+"f_d0403_9000_0020","","[Challenge to a card battle.]",""
+"f_d0403_9000_0021","","{end}Now is not the time.",""
+"f_d0403_9000_0030","char_SUNFLOWMON","I see. Well, I guess it can't be helped... But please do
+stop by again sometime.",""
+"f_d0403_9000_0040","char_SUNFLOWMON","I thought I might have a slight chance, but you were too
+good for me.",""
+"f_d0403_9000_0050","char_SUNFLOWMON","Did I really win? Hee hee! It's pretty fun having card
+battles with others.",""
+"f_d0403_0500_0010","char_HAWKMON","Aaagh...!",""
+"f_d0404_0010_0010","char_BACCHUSMON","Ungh... *hiccup*",""
+"f_d0404_0010_0020","char_BACCHUSMON","We're going into high alert mode. You folks go give
+Junomon this message...",""
+"f_d0404_0010_0030","char_BACCHUSMON","Tell Junomon that the World Tree has been attacked,
+and all-out war is now inevitable.",""
+"f_d0404_0010_0040","char_BACCHUSMON","When you get back, I'll pour you a drink.",""
+"f_d0404_0020_0010","char_SIRENMON","I never imagined the Current's flow could ever be changed...
+We must deal with this before it's too late.",""
+"f_d0404_0020_0020","char_SIRENMON","Go and tell Junomon about this immediately.
+I have a bad feeling.",""
+"f_d0404_0030_0010","char_FLORAMON","You people! Thank you for saving us earlier!",""
+"f_d0404_0030_0020","char_FLORAMON","Shurimon gave me a sound scolding... but Shurimon is a good
+person who really cares, too...",""
+"f_d0404_0030_0030","char_FLORAMON","Anyway, we're your underlings now!",""
+"f_d0404_0030_0040","char_FLORAMON","And that means you have to protect us! So there's nothing
+to worry about anymore!",""
+"f_d0404_0030_0050","char_FLORAMON","Well, I'll be looking forward to all your kind protection!",""
+"f_d0404_0040_0010","char_HAWKMON","Ah, it is you! Very good timing!",""
+"f_d0404_0040_0020","char_HAWKMON","We are about to play a thriller of a game with Puppetmon!",""
+"f_d0404_0040_0030","char_HAWKMON","You should join in with us—your underlings!",""
+"f_d0404_0050_0010","char_GARUDAMON","Beyond this point is the sanctuary where the World Tree
+grows. Don't forget that this is a sacred place.",""
+"f_d0404_0050_0020","char_GARUDAMON","How could they have infiltrated without us realizing?
+I suppose peace made us complacent...",""
+"f_d0404_0050_0030","char_GARUDAMON","Such a blunder! ...But it's time now to focus. Exactly
+where did they make their incursion?",""
+"f_d0404_0060_0010","char_ATLURKABUTERIMON","Such mastery. Who are you? I am MegaKabuterimon.",""
+"f_d0404_0060_0020","char_ATLURKABUTERIMON","You seem to be a seasoned fighter, but do be careful in
+this area.",""
+"f_d0404_0060_0030","char_ATLURKABUTERIMON","I received word that my former friend is now Okuwamon and
+is running amok.",""
+"f_d0404_0060_0040","char_ATLURKABUTERIMON","A tactician, Okuwamon, will lead a troop to attack you. If
+you strike the vanguard, however, they will disperse.",""
+"f_d0404_0060_0050","char_ATLURKABUTERIMON","If you cross swords with Okuwamon, be sure to strike first
+and you may have a chance of victory.",""
+"f_d0404_0060_0060","char_ATLURKABUTERIMON","You defeated Okuwamon! I cannot believe they made it all the
+way to the sanctuary.",""
+"f_d0404_0060_0070","char_ATLURKABUTERIMON","They used to be my friend, but that is all right. This is the
+fate of those who go astray.",""
+"f_d0404_0060_0080","char_ATLURKABUTERIMON","However, this will not be the last of this Digimon, I fear.
+Something is going on... Be on your guard.",""
+"f_d0404_0070_0010","char_PICKLEMON","Lord Bacchusmon is always drunk.
+What kind of behavior is that for a chief? Sheesh.",""
+"f_d0404_0070_0020","char_PICKLEMON","It's been a long time since I've seen that kind of drive
+in Lord Bacchusmon. It's good to see the chief sober.",""
+"f_d0404_0070_0030","char_PICKLEMON","But the situation is dire. We need to restore the
+Current at all costs!",""
+"f_d0404_0080_0010","char_LILLYMON","That flying thing earlier... I bet it's going to be real
+trouble! I didn't get a good look, but it was BIG!",""
+"f_d0404_0080_0020","char_LILAMON","I know, right? It looked really dangerous! I wonder what it was...",""
+"f_d0404_0080_0030","char_LILAMON","Anyway... Don't you think Stingmon over there is dreamy?",""
+"f_d0404_0080_0040","char_LILLYMON","What? I think that new kid, Leomon, is much better looking.",""
+"f_d0404_0090_0010","char_WASPMON","FunBee Squad, sitrep!",""
+"f_d0404_0090_0020","char_FUNBEEMON","FunBee A, reporting! Titans were spotted in the lower levels!",""
+"f_d0404_0090_0030","char_FUNBEEMON","FunBee B, reporting! A giant airborne being was sighted in
+the outer forest!",""
+"f_d0404_0090_0040","char_FUNBEEMON","FunBee C, reporting! Palmon has grouped up with some
+strange Digimon!",""
+"f_d0404_0090_0050","char_FUNBEEMON","FunBee D, reporting! I found some succulent nectar deep
+in the forest!",""
+"f_d0404_0090_0060","char_WASPMON","Master CannonBeemon, what are your orders?",""
+"f_d0404_0090_0070","char_CANNONBEEMON","We head deep into the forest for that nectar. All units, prepare
+to sortie!",""
+"f_d0404_0090_0080","char_EVERYONE","Roger! Preparing to sortie!",""
+"f_d0404_0100_0010","char_TOGEMON","Are you travelers? Wonderful to see you here. *yawn* I'm so
+sleepy...",""
+"f_d0404_0100_0020","char_TOGEMON","Hmm? Where is Bacchusmon? At the other side of that square
+over there. *yawn*",""
+"f_d0404_0100_0030","char_TOGEMON","It's nice and quiet here, and the booze is great. It's a
+paradise. *yawn* So tired...",""
+"f_d0404_0110_0010","char_LEOMON","What's this? You're the humans who were in Central Town,
+aren't you!",""
+"f_d0404_0110_0020","char_LEOMON","Thanks to you, I decided to go off on this journey.",""
+"f_d0404_0110_0030","char_LEOMON","This village is different from Central Town, somehow. It's
+livelier.",""
+"f_d0404_0110_0040","char_LEOMON","The chief is apparently a drinker, but I guess that's just
+the way it is here.",""
+"f_d0404_0110_0050","char_LEOMON","So the Titans are planning to attack this place...",""
+"f_d0404_0110_0060","char_LEOMON","It's such a nice village. I wish I could help them somehow.",""
+"f_d0404_0120_0010","char_STINGMON","Tch. Everyone is way too merry. The Titans could attack at
+any time.",""
+"f_d0404_0120_0020","char_STINGMON","Bacchusmon shouldn't be escaping reality with the bottle.
+What kind of chief does that?",""
+"f_d0404_0120_0030","char_STINGMON","Wait a tick... Who are you? And what's with the noisy blue thing
+behind you? If he's with you then scram, and take him with you.",""
+"f_d0404_0120_0040","char_STINGMON","I can't believe the Titans were allowed to defile the
+sanctuary! Pathetic!",""
+"f_d0404_0120_0050","char_STINGMON","I can't rely on the others. I must Digivolve and get stronger...!",""
+"f_d0404_0130_0010","char_V-MON","You! You were in Central Town! ...Hey, don't you think that
+Digimon over there is so cool?",""
+"f_d0404_0130_0020","char_V-MON","He never talks to me, but it'd be so awesome to go on an
+adventure together!",""
+"f_d0404_0140_0010","char_PINOCHIMON","Yo! What're we all doing today?",""
+"f_d0404_0140_0020","char_PINOCHIMON","I'm down for anything. Suggest something!",""
+"f_d0404_0140_0030","char_VEGIMON","A vine-swinging race!",""
+"f_d0404_0140_0040","char_SUNFLOWMON","Collecting Digimon bugs!",""
+"f_d0404_0140_0050","char_TANEMON","Drinking booze with really hot sauce in it!",""
+"f_d0404_0140_0060","char_PINOCHIMON","I love it! Let's do it all! Start at the top of the list!",""
+"f_d0404_0140_0070","char_PINOCHIMON","Wait a sec! Make sure Shurimon doesn't catch us. I don't
+want another earful.",""
+"f_d0404_0150_0010","char_PALMON","I know we just got here, but we have to warn everyone about
+the Titans!",""
+"f_d0404_0150_0020","char_PALMON","I'll make sure everyone around here hears. Could you go and
+tell Bacchusmon about it?",""
+"f_d0404_0150_0030","char_PALMON","I heard the sanctuary was in some kind of trouble... I hope
+it's okay.",""
+"f_d0404_0150_0040","char_PALMON","Ivy swinging is about all I have to offer, but let me know
+if there's anything I can do to help!",""
+"f_d0404_0160_0010","char_SHURIMON","I cannot believe you lot. How many times have I told you
+it is dangerous outside?!",""
+"f_d0404_0160_0020","char_HAWKMON","W-We are very sorry...",""
+"f_d0404_0160_0030","char_FLORAMON","Ugh. Someone blabbed on us.",""
+"f_d0404_0160_0040","char_SHURIMON","What did you say?! If you are not sorry...",""
+"f_d0404_0160_0050","char_FLORAMON","No, I AM sorry! I regret everything. Please forgive me!",""
+"f_d0404_0160_0060","char_HAWKMON","Flora! Wait!",""
+"f_d0404_0160_0070","char_SHURIMON","Hey! I am not done talking to you!",""
+"f_d0404_0160_0080","char_SHURIMON","Hmph! ...Oh, well. I am just glad no one was hurt...",""
+"f_d0404_0170_0010","char_SHURIMON","Are you the folks those kids mentioned?",""
+"f_d0404_0170_0020","char_SHURIMON","I apologize for any trouble those good-for-nothings may
+have caused you.",""
+"f_d0404_0170_0030","char_SHURIMON","I found those kids in a weakened state in the outskirts of
+the village, and took them in.",""
+"f_d0404_0170_0040","char_SHURIMON","Those two cause me particular grief... I hear they were
+just attacked by Titans...",""
+"f_d0404_0170_0050","char_SHURIMON","I am truly grateful to you for saving them and getting rid
+of those Titans. Thank you.",""
+"f_d0404_0180_0010","char_CENTALMON","This area is much too big. I was wandering around in
+circles until I finally found this place.",""
+"f_d0404_0180_0020","char_MERAMON","You can say that again! This ain't a very tourist-friendly location.",""
+"f_d0404_0180_0030","char_CENTALMON","It is certainly much more complicated than Central Town. Allow me
+to take a short break before we have a look around.",""
+"f_d0404_0190_0010","char_FUNBEEMON","Boy, there's so much to do. Hey, how's everything going with you?",""
+"f_d0404_0190_0020","char_TENTOMON","Uh, everythin' is...",""
+"f_d0404_0190_0030","char_TENTOMON","...goin'... oka...",""
+"f_d0404_0190_0040","char_LOTOSMON","...They are still breathing. What could have put them to sleep? It was
+far too sudden for everyone to be passing out drunk all at once...",""
+"f_d0404_0200_0010","char_SHURIMON","Hm? We have met before, have we not?",""
+"f_d0404_0200_0020","char_SHURIMON","Ngh... I am feeling... kind of... sleepy...",""
+"f_d0404_0200_0030","char_LOTOSMON","There! It happened again all of a sudden... I wonder what is 
+going on...!",""
+"f_d0404_0210_0010","char_LOTOSMON","There are some that are still fast asleep. I shall keep my
+eye on them.",""
+"f_d0404_0210_0020","char_LOTOSMON","You go on and head for the sanctuary without me. I am counting
+on you!",""
+"f_d0404_0220_0010","","It's sleeping.",""
+"f_d0404_0230_0010","char_BACCHUSMON","Hey, why don't you join me over here and have some fun!
+Don't be shy!",""
+"f_d0404_0230_0020","","It seems Bacchusmon is in a good mood. He probably
+wouldn't let you get away very easily.",""
+"f_d0404_0230_0021","","[Join Bacchusmon.]{next}",""
+"f_d0404_0230_0022","","{end}[Continue enjoying the party.]",""
+"f_d0404_0240_0010","char_LOTOSMON","Whew! It finally seems to be winding down.
+...How have you all been lately?",""
+"f_d0404_0240_0020","char_GRIFFOMON","I have plenty of work to do... You always keep me busy with
+all kinds of issues, Lotos.",""
+"f_d0404_0240_0030","char_LOTOSMON","Hohoho. What a difficult position you are in.",""
+"f_d0404_0240_0040","char_ROSEMON","I've started my own company. It keeps getting busier with
+more and more customers and employees!",""
+"f_d0404_0240_0050","","They seem to be having a private conversation. Let's leave
+them alone.",""
+"f_d0404_0250_0010","char_GRIFFOMON","Hello?! Is anyone here?! Say something if you can hear me!",""
+"f_d0404_0250_0020","char_GRIFFOMON","Urk! What is going on?!",""
+"f_d0404_0260_0010","","You should look for Bacchusmon and Sirenmon.",""
+"f_d0404_0270_0010","char_GRIFFOMON","I will keep looking around this area. You should try the sanctuary.",""
+"f_d0404_0280_0010","char_SHURIMON","Those kids have grown up and gotten so strong before I even
+realized it. How moving.",""
+"f_d0404_0280_0020","char_SHURIMON","We continued on down separate paths, but thankfully our
+hearts are still united...",""
+"f_d0404_0280_0030","char_SHURIMON","No need to worry anymore. I am truly happy.",""
+"f_d0404_0290_0010","char_CENTALMON","The feast was amazing. It is a good thing that we moved here.",""
+"f_d0404_0290_0020","char_MERAMON","You're right about that! This place is so relaxing, and the
+booze is good.",""
+"f_d0404_0290_0030","char_MERAMON","But I kinda miss Central Town sometimes, too. I wonder how
+it's doing right about now...",""
+"f_d0404_0300_0010","char_PINOCHIMON","Man, what an awesome party! All three of 'em have really
+grown!",""
+"f_d0404_0300_0020","char_PINOCHIMON","We should all get together again like we used to! I'll
+think of something fun to do!",""
+"f_d0404_0310_0010","char_LILLYMON","What does Stingmon mean, ""that noisy one""?! After all I've done!",""
+"f_d0404_0310_0020","char_LILLYMON","Speaking of which... I wonder how Lilamon is doing now...",""
+"f_d0404_0310_0030","char_LILLYMON","Haven't heard a peep since she went after Stingmon... But,
+knowing Lilamon, I'm sure she's doing fine!",""
+"f_d0404_0320_0010","char_HIPPOGRIFFOMON","Master Garudamon told me to follow the path I was meant 
+to follow.",""
+"f_d0404_0320_0020","char_HIPPOGRIFFOMON","To be honest, I am still not sure what path that is...",""
+"f_d0404_0320_0030","char_HIPPOGRIFFOMON","But I will fulfill my duties with honor, so that I can be
+proud of myself when we meet again one day.",""
+"f_d0404_0330_0010","","They seem to be sleeping.",""
+"f_d0404_0340_0010","char_GRIFFOMON","I must thank you. You saved the village.",""
+"f_d0404_0340_0020","char_GRIFFOMON","We could not have done it without you, to be sure...",""
+"f_d0404_0340_0030","char_GRIFFOMON","*sigh* But there is still so much to do...",""
+"f_d0404_0340_0040","char_GRIFFOMON","Lotos and the others are supposedly going to help, but I am
+still worried.",""
+"f_d0404_0340_0050","char_GRIFFOMON","Lotos is apparently at the station right now. You should go
+visit if you are interested.",""
+"f_d0404_0350_0010","","Investigate the village.",""
+"f_d0404_0360_0010","","Enjoy the party for now.",""
+"f_d0404_0370_0010","char_LOTOSMON","...They just fell asleep, thankfully. But I wonder why so suddenly...",""
+"f_d0404_0370_0020","char_LOTOSMON","They are all sleeping... What in the world is going on?!",""
+"f_d0404_0380_0010","char_SABERLEOMON","You... Are you the one who was in Central Town?",""
+"f_d0404_0380_0020","char_SABERLEOMON","It has been a while! Good to see you. My appearance has changed
+quite a bit as you can see, but I am doing well.",""
+"f_d0404_0380_0030","char_SABERLEOMON","And, of course, Lillymon is being her noisy self as usual. Hahaha.",""
+"f_d0404_0390_0010","char_GROWMON","Hmph! There are more worthy adversaries here than back in
+Central Town. I will admit that.",""
+"f_d0404_0390_0020","char_GROWMON","But is this really all they have?! Come on. I want more!",""
+"f_d0404_0400_0010","char_TOGEMON","This party was so much fun. We should do it again!",""
+"f_d0404_0410_0010","char_PINOCHIMON","I never thought we'd get together like this again. What an
+emotional reunion!",""
+"f_d0404_0420_0010","char_SHURIMON","You have grown so much... I am so happy for all of you...!",""
+"f_d0404_0430_0010","char_MERAMON","Whooo! Look at my burning body! Look at all this flame!",""
+"f_d0404_0440_0010","char_CENTALMON","Now, now, Meramon! Do not get too carried away!",""
+"f_d0404_0450_0010","char_GARUDAMON","You... Were you Aquilamon before? You've become quite impressive.",""
+"f_d0404_0450_0020","char_HIPPOGRIFFOMON","Master Garudamon! Please come back!",""
+"f_d0404_0450_0030","char_HIPPOGRIFFOMON","We need your guidance! Please, Master!",""
+"f_d0404_0450_0040","char_GARUDAMON","...I can't go back. You should follow the path you were
+meant to follow.",""
+"f_d0404_0450_0050","char_HIPPOGRIFFOMON","What do you mean by that?! Please tell me, Master
+Garudamon!",""
+"f_d0404_0460_0010","char_DINOHUMON","I've been doing this business for a long time now, so I've
+got a pretty good eye for things.",""
+"f_d0404_0460_0020","char_DINOHUMON","I can usually tell what a person is like at a glance.",""
+"f_d0404_0460_0030","char_DINOHUMON","I won't pry into your affairs, but you seem to be carrying a
+lot on your shoulders.",""
+"f_d0404_0460_0040","char_DINOHUMON","If you ever need anything, I'm willing to help. The only
+thing I know about is business, though.",""
+"f_d0404_0460_0050","char_DINOHUMON","Tch. I usually don't talk this much. Must be the cheap booze...",""
+"f_d0404_0470_0010","char_GAWAPPAMON","Hey! Come be mesmerized by my captivating dance!",""
+"f_d0404_0480_0010","char_SABERLEOMON","How wonderful... I am glad we moved here.",""
+"f_d0404_0490_0010","char_HERCULESKABUTERIMON","What's the meaning of this? I heard the village was in danger...",""
+"f_d0404_0490_0020","char_HERCULESKABUTERIMON","And what about you? Have you been training lately? 
+Being overconfident will get you tripped up.",""
+"f_d0404_0490_0030","char_HERCULESKABUTERIMON","Look at these fools... This is ridiculous.",""
+"f_d0404_0500_0010","char_MEGAGROWLMON","Damn it. Where are all the ""fearsome"" Titans?",""
+"f_d0404_0500_0020","char_MEGAGROWLMON","I was ready to enjoy smashing them up. What a letdown.",""
+"f_d0404_0510_0010","char_BACCHUSMON","The Current was running amok, but now it's starting to calm down.","f_d0404_0510_0010"
+"f_d0404_0510_0020","char_BACCHUSMON","Now that Sirenmon is interred in this land, perhaps she is
+cleansing the ground.","f_d0404_0510_0020"
+"f_d0404_0510_0030","char_BACCHUSMON","I owe you one, also.","f_d0404_0510_0030"
+"f_d0404_0510_0040","char_BACCHUSMON","It's a little late to ask you this now, but what did you come
+here for in the first place.","f_d0404_0510_0040"
+"f_d0404_0510_0050","char_BACCHUSMON","Ah... The fruit of Karpos Hulē, you say? That won't be
+easy to find.","f_d0404_0510_0050"
+"f_d0404_0510_0060","char_BACCHUSMON","Maybe it'll appear when this forest has fully revived.","f_d0404_0510_0060"
+"f_d0404_0510_0070","char_BACCHUSMON","It will probably take some time, but... I'll let you know as
+soon as I find some.","f_d0404_0510_0070"
+"f_d0404_0510_0080","char_BACCHUSMON","I owe it to you for saving the forest.","f_d0404_0510_0080"
+"f_d0404_9000_0010","char_KIWIMON","Let's have a card battle! I want to test some new strategies!",""
+"f_d0404_9000_0020","","[Challenge to a card battle.]",""
+"f_d0404_9000_0021","","{end}Now is not the time.",""
+"f_d0404_9000_0030","char_KIWIMON","Aw, that's too bad. But I'm sure the opportunity will
+come again soon.",""
+"f_d0404_9000_0040","char_KIWIMON","My strategies didn't work... Looks like I need to rethink things.",""
+"f_d0404_9000_0050","char_KIWIMON","I knew they were good strategies! I love it when
+everything works out.",""
+"f_d0404_9010_0010","char_FLORAMON","Are you perhaps looking for someone to have a card
+battle with? I wouldn't mind being your opponent.",""
+"f_d0404_9010_0020","","[Challenge to a card battle.]",""
+"f_d0404_9010_0021","","{end}Now is not the time.",""
+"f_d0404_9010_0030","char_FLORAMON","Oh... It seems I was mistaken. Let's play sometime
+when you're in the mood.",""
+"f_d0404_9010_0040","char_FLORAMON","You're really good. I could learn a thing or two from your
+techniques.",""
+"f_d0404_9010_0050","char_FLORAMON","Thank goodness I managed to win somehow.
+You were no easy opponent!",""
+"f_d0404_9020_0010","char_TANEMON","Want to have a card battle with me? I'm pretty sure I can
+beat you!",""
+"f_d0404_9020_0020","","[Challenge to a card battle.]",""
+"f_d0404_9020_0021","","{end}Now is not the time.",""
+"f_d0404_9020_0030","char_TANEMON","Darn! I really wanted to blow off some steam!",""
+"f_d0404_9020_0040","char_TANEMON","That can't be! Let me try again!",""
+"f_d0404_9020_0050","char_TANEMON","I win! I win! I'm the best!",""
+"f_d0404_9030_0010","char_LILLYMON","Would you mind having a card battle with me? I'm a little
+tired of singing.",""
+"f_d0404_9030_0020","","[Challenge to a card battle.]",""
+"f_d0404_9030_0021","","{end}Now is not the time.",""
+"f_d0404_9030_0030","char_LILLYMON","Not in the mood for cards, huh? I'll try asking someone
+else, then.",""
+"f_d0404_9030_0040","char_LILLYMON","I knew it wouldn't be easy. You're really good at card battles!",""
+"f_d0404_9030_0050","char_LILLYMON","Yay, I won! I want to get really good at card battles, just
+like my singing!",""
+"f_d0404_9040_0010","char_DELUMON","Hohoho! Nothing can beat my deck! Allow me to test it on you!",""
+"f_d0404_9040_0020","","[Challenge to a card battle.]",""
+"f_d0404_9040_0021","","{end}Now is not the time.",""
+"f_d0404_9040_0030","char_DELUMON","Hmph! Do you not want to witness my power?! ...I see. You
+must be too afraid!",""
+"f_d0404_9040_0040","char_DELUMON","What?! I have... lost?! You must be some kind of expert.",""
+"f_d0404_9040_0050","char_DELUMON","Hohoho! Of course! No one can defeat me!",""
+"f_d0404_1000_0010","char_LOTOSMON","Perhaps they did not fall asleep... Maybe they were all put 
+to sleep...!",""
+"f_d0406_0010_0010","","I can feel something like a heartbeat beneath my feet.
+Maybe it won't be long before we meet again.",""
+"f_d0406_0020_0010","char_SPROUT_SIRENMON","As you can see, I'm unable to leave the sanctuary. The band
+would have to come to me.",""
+"f_d0407_0010_0010","","You found me...",""
+"f_d0407_0010_0020","","Darn. You found me...",""
+"f_d0407_0010_0030","","*rustling*",""
+"f_d0407_0010_0040","char_UNKNOWN","I've been seen! Well there's only one thing to do, then!","f_d0407_0010_0040"
+"f_d0407_0020_0010","char_JYUREIMON","Halt! I will not allow you to proceed any further!","f_d0407_0020_0010"
+"f_d0407_0020_0020","char_SIRENMON","Calm down, Cherrymon. They're with me.","f_d0407_0020_0020"
+"f_d0407_0020_0030","char_JYUREIMON","Sirenmon? I see... I leave the sanctuary to you, then. You
+may proceed into the forest.","f_d0407_0020_0030"
+"f_d0407_0030_0010","char_JYUREIMON","So, you were with Sirenmon, were you? My vision was obstructed
+by the fog... I thought you were the enemy...","f_d0407_0030_0010"
+"f_d0407_0030_0020","char_JYUREIMON","You are certainly something else, though! I bet I could
+trust you folks to protect the sanctuary...","f_d0407_0030_0020"
+"f_d0407_0040_0010","char_AEGIOMON","Hmm. I don't see any way into the sanctuary. Where's the entrance?",""
+"f_d0407_0040_0020","char_INORI","Huh? The way we came in has been blocked off...! Unless
+we got lost somehow...","f_d0407_0040_0020"
+"f_d0407_0040_0030","char_OPERATOR_M","Are you lost? Try investigating with ""Analyze."" You might
+find out something.",""
+"f_d0407_0050_0010","char_JYUREIMON","My vision was obstructed by the fog... but I never imagined
+it would be Sirenmon and her guests...","f_d0407_0050_0010"
+"f_d0407_0050_0020","char_JYUREIMON","Considering your strength, though, I bet I could trust you
+folks to protect the sanctuary...","f_d0407_0050_0020"
+"f_d0407_0050_0030","char_JYUREIMON","Oh, it is you folks! Thank you for all you did for the sanctuary!",""
+"f_d0407_0050_0040","char_JYUREIMON","I never imagined the Titans would manage to not only infiltrate,
+but even stop the flow of the Current!",""
+"f_d0407_0050_0050","char_JYUREIMON","I am utterly mortified. Perhaps it is time to retire...",""
+"f_d0407_0060_0010","char_NANIMON","Who goes there?!",""
+"f_d0407_0060_0020","char_NANIMON","The fog is clearin' up, and I hear strange voices.",""
+"f_d0407_0060_0030","char_NANIMON","Oh, thank goodness. Thought I was a goner.",""
+"f_d0407_0070_0010","char_JYUREIMON","*mumbling* Apples...","f_d0407_0070_0010"
+"f_d0407_0070_0020","char_JYUREIMON","Ugh! How careless of me. I was about to fall asleep...","f_d0407_0070_0020"
+"f_d0407_0070_0030","char_JYUREIMON","Who goes there?! None shall pass!","f_d0407_0070_0030"
+"f_d0407_0070_0040","char_JYUREIMON","Ouch! *sigh* Have we met somewhere before...?","f_d0407_0070_0040"
+"f_d0407_0070_0050","char_JYUREIMON","Let me see... Ah, I remember now! You're those kids from
+a while back!","f_d0407_0070_0050"
+"f_d0407_0070_0060","char_JYUREIMON","Perhaps you may be able to do something about this situation.
+Bacchusmon is just ahead. Could you please talk to him?","f_d0407_0070_0060"
+"f_d0407_0080_0010","char_JYUREIMON","I am getting tired... So sleepy...","f_d0407_0080_0010"
+"f_d0407_0090_0010","char_JYUREIMON","I leave the sanctuary to you...! Argh! My aching back!",""
+"f_d0407_0100_0010","char_JYUREIMON","I am impressed by your strength. Now I can retire in peace.","f_d0407_0100_0010"
