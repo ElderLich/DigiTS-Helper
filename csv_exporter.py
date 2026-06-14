@@ -1,5 +1,20 @@
 """
-CSV Exporter for DTS Creator - handles exporting modified Digimon data back to CSV files
+CSV Exporter for DTS Creator.
+
+This module writes Digimon data back into the unpacked MVGLTools CSV layout.
+There are two export shapes to keep separate:
+
+1. Raw extracted CSV folders under ``data`` and ``text``.
+   These preserve the original MVGLTools format exactly, including header names,
+   integer/bool spelling, and quoted empty cells.
+2. dsts-loader patch folders.
+   These are runtime patch files used by Reloaded II and must strip numeric file
+   prefixes, convert some header types, and quote cells in the shape expected by
+   MVGL.FileLoader.Reloaded.
+
+The comments in this file intentionally document the format quirks. A small
+formatting change can make Reloaded II reject the CSV or make MVGLTools repack a
+file that looks valid but behaves differently in game.
 """
 
 import csv
@@ -12,7 +27,7 @@ from Data_Loader import DigimonData, MBELoader
 
 
 class CSVExporter:
-    """Handles exporting Digimon data back to CSV files"""
+    """Export Digimon edits while preserving the game's fragile table formats."""
     
     def __init__(self, data_path: str = "data", text_path: str = "text"):
         self.data_path = Path(data_path)
@@ -20,37 +35,31 @@ class CSVExporter:
         self.loader = MBELoader(data_path, text_path)
         
     def export_digimon_to_csv(self, digimon: DigimonData, output_dir: Path) -> bool:
-        """Export a single Digimon to all 9 required CSV files"""
+        """
+        Export one Digimon into the legacy editable CSV tree.
+
+        This is the broad editor/export path, not the Reloaded II folder writer.
+        It writes the core tables that define a playable Digimon, then appends
+        optional extended systems such as evolution and encounter data.
+        """
         try:
-            # Create output directory structure
+            # Raw CSV exports keep the same top-level split as the unpacked game.
             output_data_dir = output_dir / "data"
             output_text_dir = output_dir / "text"
             
             print(f"Exporting complete Digimon data for {digimon.name} ({digimon.chr_id})")
             
-            # Export all 9 required files
-            # 1. digimon_status.mbe
+            # Core data: status, model references, names, LOD, and field movement.
             self._export_digimon_status(digimon, output_data_dir)
-            
-            # 2. char_info.mbe  
             self._export_char_info(digimon, output_data_dir)
-            
-            # 3. text/char_name.mbe
             self._export_char_name(digimon, output_text_dir)
-            
-            # 4. model_setting.mbe
             self._export_model_setting(digimon, output_data_dir)
-            
-            # 5 & 6. model_locator.mbe (both files)
             self._export_model_locator(digimon, output_data_dir)
-            
-            # 7 & 8. lod_chara.mbe (both files)
             self._export_lod_data(digimon, output_data_dir)
-            
-            # 9. field_anime.mbe (only 00_field_move_animation.csv)
             self._export_field_anime(digimon, output_data_dir)
             
-            # Export extended character data
+            # Optional gameplay data is split out so missing sections do not block
+            # simple model/name/status edits.
             self._export_extended_character_data(digimon, output_data_dir)
             
             print(f"Successfully exported all 9 core files + extended data for {digimon.name}")
@@ -102,16 +111,19 @@ class CSVExporter:
     
     def _create_digimon_status_row(self, digimon: DigimonData) -> List[str]:
         """Create a digimon status CSV row matching original format exactly"""
-        # Create a row with 136 columns (based on header analysis)
+        # The status table currently has 136 columns. Keep explicit positions here
+        # because several columns are still unnamed in the mined headers.
         row = [""] * 136
         
-        # Basic data - match original format exactly
+        # Basic identity/classification fields. The hand-written quotes mirror
+        # MVGLTools' raw CSV output; do not replace this method with csv.writer
+        # unless the whole file format is retested in-game.
         row[0] = str(digimon.id)
         row[1] = '""'  # empty column with quotes
         row[2] = f'"{digimon.char_key}"'
         row[3] = f'"{digimon.chr_id}"'
         row[4] = str(digimon.stage_id)
-        row[5] = str(digimon.personality_id)  # This should be 1 for chr805
+        row[5] = str(digimon.personality_id)
         row[6] = str(digimon.type_id)
         
         # Elemental resistances
@@ -143,7 +155,8 @@ class CSVExporter:
         row[69] = str(digimon.base_spi)
         row[70] = str(digimon.base_spd)
         
-        # Signature skills with proper empty field handling
+        # Signature skills are stored as 12 repeating three-column blocks:
+        # skill id, empty spacer, learn slot.
         skill_indices = [
             (72, 74), (75, 77), (78, 80), (81, 83), (84, 86), (87, 89),
             (90, 92), (93, 95), (96, 98), (99, 101), (102, 104), (105, 107)
@@ -160,7 +173,8 @@ class CSVExporter:
                 if slot_idx + 1 < len(row):
                     row[slot_idx + 1] = '""'
         
-        # Generic skills with proper empty field handling
+        # Generic skills are four repeating three-column blocks:
+        # skill id, empty spacer, required level.
         generic_indices = [(108, 110), (111, 113), (114, 116), (117, 119)]
         
         for i, skill in enumerate(digimon.generic_skills):
@@ -174,7 +188,8 @@ class CSVExporter:
                 if level_idx + 1 < len(row):
                     row[level_idx + 1] = '""'
         
-        # References - preserve original format
+        # References used by field guide/script systems. Field Guide ID lives in
+        # column 131 and is the value the editor marks as occupied/free.
         row[131] = str(digimon.field_guide_id) if digimon.field_guide_id != -1 else ""
         row[132] = str(digimon.script_id) if digimon.script_id != -1 else ""
         
@@ -192,9 +207,9 @@ class CSVExporter:
     
     def _get_digimon_status_header(self) -> List[str]:
         """Get the header row for digimon status CSV"""
-        # This is a simplified header - in practice, you'd want the full header from the original file
+        # Fallback only. Normal exports preserve the original header from disk, but
+        # this keeps a new file structurally valid if the source table is missing.
         header = ["id", "empty", "char_key", "chr_id", "stage_id", "empty", "type_id"]
-        # Add more header columns as needed...
         return header + [""] * (136 - len(header))  # Pad to 136 columns
     
     def _export_char_info(self, digimon: DigimonData, output_dir: Path):
@@ -597,7 +612,7 @@ class CSVExporter:
         try:
             output_dir.mkdir(parents=True, exist_ok=True)
             
-            # Copy all .mbe directories from data folder
+            # Copy each tree whole so unknown tables stay available for data mining.
             data_source = self.data_path
             data_dest = output_dir / "data"
             
@@ -607,7 +622,6 @@ class CSVExporter:
                 shutil.copytree(data_source, data_dest)
                 print(f"Copied all data CSV files to {data_dest}")
             
-            # Copy all .mbe directories from text folder
             text_source = self.text_path
             text_dest = output_dir / "text"
             
@@ -617,7 +631,8 @@ class CSVExporter:
                 shutil.copytree(text_source, text_dest)
                 print(f"Copied all text CSV files to {text_dest}")
             
-            # Copy DLC directories
+            # DLC is kept under its own root because addcont_* names matter when
+            # repacking and when generating dsts-loader patch paths.
             workspace_root = self.data_path.parent
             dlc_source_dir = workspace_root / "DLC"
             
@@ -642,8 +657,12 @@ class CSVExporter:
 
         Structure:
             dsts-loader/
-                addcont_17/data/<*.mbe>/<csv without numeric prefix>
-                addcont_17_text01/text/<*.mbe>/<csv without numeric prefix>
+                <dlc_name>/data/<*.mbe>/<csv without numeric prefix>
+                <dlc_name>_text01/text/<*.mbe>/<csv without numeric prefix>
+
+        The default remains addcont_17 because custom Digimon are currently
+        authored there. Pass another addcont_* name when exporting a different
+        DLC payload.
         """
         try:
             workspace_root = self.data_path.parent
@@ -672,8 +691,17 @@ class CSVExporter:
             return False
 
     def _copy_mbe_tree_to_dsts(self, source_root: Path, dest_root: Path):
-        """Copy .mbe folders from source to destination, stripping numeric prefixes and transforming CSV format."""
+        """
+        Copy .mbe folders from source to destination.
+
+        dsts-loader addresses tables by their plain CSV names, while MVGLTools
+        extraction prefixes them with ordering numbers such as ``000_``. This
+        method strips those prefixes and rewrites only CSV files that need
+        Reloaded/MVGL.FileLoader formatting.
+        """
         if dest_root.exists():
+            # Replace the generated tree so removed source CSVs do not linger in a
+            # later mod export.
             shutil.rmtree(dest_root)
         dest_root.mkdir(parents=True, exist_ok=True)
 
@@ -688,13 +716,12 @@ class CSVExporter:
                 if not file.is_file():
                     continue
                 
-                # Prefer 000_ files over 00_ files (new format over old format)
+                # Prefer 000_ files over old 00_ variants when both were extracted.
                 if file.name.startswith('00_') and not file.name.startswith('000_'):
-                    # Check if 000_ version exists
                     new_name = '000_' + file.name[3:]
                     new_file = folder / new_name
                     if new_file.exists():
-                        file = new_file  # Use the 000_ version instead
+                        file = new_file
                 
                 dest_name = self._strip_numeric_prefix(file.name) if file.suffix.lower() == ".csv" else file.name
                 dest_path = dest_folder / dest_name
@@ -723,6 +750,10 @@ class CSVExporter:
         - Empty cells: ""
         - String columns: quoted
         - Numeric columns: unquoted
+
+        The output is built manually instead of using csv.writer because
+        csv.writer would quote fields based on Python's CSV rules, not the more
+        specific MVGL.FileLoader expectations.
         """
         try:
             # Read CSV file using csv.reader
@@ -736,7 +767,8 @@ class CSVExporter:
                 shutil.copy2(source_file, dest_file)
                 return
             
-            # Parse header to get column types
+            # The header names double as type information, so every later cell is
+            # formatted according to its source column.
             header_row = rows[0]
             header_types = [cell.strip() for cell in header_row]
             
@@ -757,7 +789,6 @@ class CSVExporter:
                         f_out.write('\n')
                         continue
                     
-                    # Build output row
                     output_parts = []
                     for col_idx, cell in enumerate(row):
                         if col_idx >= len(header_types):
@@ -767,9 +798,7 @@ class CSVExporter:
                         
                         col_type = header_types[col_idx].lower()
                         
-                        # Handle different column types
                         if 'bool' in col_type:
-                            # Boolean: 0 -> false, 1 -> true (no quotes)
                             if cell == '0':
                                 output_parts.append('false')
                             elif cell == '1':
@@ -798,13 +827,12 @@ class CSVExporter:
                                 output_parts.append(cell)
                         
                         else:
-                            # Unknown type: use as-is
+                            # Unknown column families are preserved conservatively.
                             if not cell:
                                 output_parts.append('""')
                             else:
                                 output_parts.append(cell)
                     
-                    # Write the row
                     f_out.write(','.join(output_parts) + '\n')
                     
         except Exception as e:
@@ -819,7 +847,8 @@ class CSVExporter:
         """
         Determine where to place data/text folders based on the selected directory.
 
-        Supports selecting the dsts-loader root, addcont_17 directories, or an empty folder.
+        Supports selecting the dsts-loader root, an addcont_* folder, a data/text
+        folder inside one, or an empty mod folder.
         """
         selected = selected_path.resolve()
         dlc_folder = dlc_name.lower()
@@ -868,7 +897,12 @@ if __name__ == "__main__":
 
 
 def repack_mbe_files(source_dir: Path, target_dir: Path) -> bool:
-    """Repack CSV folders to .mbe files using DSCSToolsCLI"""
+    """
+    Repack loose .mbe folders to packed .mbe files using DSCSToolsCLI.
+
+    This is the simple non-DLC helper. DLC repacking needs extra addcont_* path
+    handling, so it lives in repack_dlc_mbe_files().
+    """
     try:
         # Ensure target directory exists
         target_dir.mkdir(parents=True, exist_ok=True)
@@ -920,7 +954,8 @@ def repack_dlc_mbe_files(dlc_names=None) -> bool:
     Repack DLC CSV folders into .mbe files using DSCSToolsCLI.
     
     Args:
-        dlc_names: Optional DLC name or iterable of DLC names. Defaults to addcont_01-03 and addcont_17.
+        dlc_names: Optional DLC name or iterable of DLC names. Defaults to
+            MBELoader.DSTS_DLC_IDS, currently addcont_01-03 and addcont_17.
     
     Returns:
         bool: True if repacking was successful
@@ -1020,7 +1055,8 @@ def repack_dlc_mbe_files(dlc_names=None) -> bool:
             source_path_quoted = f'"{source_path}"'
             target_path_quoted = f'"{target_path}"'
             
-            # Debug: Print what paths we're using
+            # Keep these path diagnostics visible; failed repacks are usually path
+            # quoting, missing CLI, or file-lock problems.
             print(f"  Source path: {source_path}")
             print(f"  Target path: {target_path}")
             print(f"  Source exists: {abs_source.exists()}")
