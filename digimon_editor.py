@@ -4568,6 +4568,19 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.import_button)
 
+        self.remove_selected_from_mod_button = QPushButton("🗑️ Remove Selected from Mod")
+        self.remove_selected_from_mod_button.clicked.connect(self.remove_selected_from_active_mod)
+        self.remove_selected_from_mod_button.setEnabled(False)
+        self.remove_selected_from_mod_button.setToolTip(
+            "Remove the selected imported Digimon from its Reloaded II/dsts-loader mod files.\n"
+            "Use this to clean up entries that were added by mistake."
+        )
+        self.remove_selected_from_mod_button.setStyleSheet(button_style.format(
+            color1="#ef4444", color2="#b91c1c",
+            hover1="#dc2626", hover2="#991b1b"
+        ))
+        button_layout.addWidget(self.remove_selected_from_mod_button)
+
         self.remove_button = QPushButton("🗑️ Remove from DLC")
         self.remove_button.clicked.connect(self.remove_digimon_from_dlc)
         self.remove_button.setEnabled(False)
@@ -8284,8 +8297,12 @@ class DigimonEditor(QMainWindow):
         """Handle Digimon selection from list"""
         has_selection = bool(display_name)
         self.load_button.setEnabled(has_selection)
+        entry = getattr(self, "digimon_data", {}).get(display_name) if has_selection else None
+        is_imported_entry = isinstance(entry, dict) and bool(entry.get("imported"))
         if hasattr(self, "add_selected_to_mod_button"):
             self.add_selected_to_mod_button.setEnabled(has_selection and self._active_dsts_loader_root() is not None)
+        if hasattr(self, "remove_selected_from_mod_button"):
+            self.remove_selected_from_mod_button.setEnabled(is_imported_entry and self._active_dsts_loader_root() is not None)
 
     def load_selected_digimon(self):
         """Load the selected Digimon"""
@@ -8532,6 +8549,219 @@ class DigimonEditor(QMainWindow):
             f"New Chr ID: {new_chr_id}\n"
             f"Field Guide ID: {new_digimon.field_guide_id}\n\n"
             "Edit the fields, then use Save to Loaded Source to update this mod entry."
+        )
+
+    def _csv_cell(self, row: List[str], index: int) -> str:
+        """Return a cleaned CSV cell, or an empty string when the column is missing."""
+        return _clean_status_cell(row[index]) if len(row) > index else ""
+
+    def _remove_rows_from_mod_csv(self, filepath: Path, should_remove, drop_blank: bool = True) -> int:
+        """Remove matching rows from a dsts-loader CSV while preserving its header."""
+        import csv
+
+        resolved_filepath = self._resolve_prefixed_file(filepath)
+        if not resolved_filepath.exists():
+            return 0
+
+        with open(resolved_filepath, 'r', encoding='utf-8', newline='') as f:
+            header = f.readline().rstrip('\n\r')
+            rows = list(csv.reader(f))
+
+        kept_rows = []
+        removed_count = 0
+        for row in rows:
+            if drop_blank and not any(cell.strip() for cell in row):
+                removed_count += 1
+                continue
+            if should_remove(row):
+                removed_count += 1
+                continue
+            kept_rows.append(row)
+
+        if removed_count:
+            with open(resolved_filepath, 'w', encoding='utf-8', newline='') as f:
+                if header:
+                    f.write(header + '\n')
+                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
+                writer.writerows(kept_rows)
+
+        return removed_count
+
+    def _remove_digimon_from_dsts_loader(self, dsts_loader_root: Path, digimon: DigimonData) -> Dict[str, int]:
+        """Remove one imported Digimon's rows from a dsts-loader payload."""
+        root = Path(dsts_loader_root)
+        patch_data = root / "patch" / "data"
+        patch_text = root / "patch_text01" / "text"
+        app_data = root / "app_0" / "data"
+
+        id_texts = {str(getattr(digimon, "id", ""))}
+        id_texts.discard("")
+        chr_ids = {str(getattr(digimon, "chr_id", "")).strip()}
+        chr_ids.discard("")
+        char_keys = {str(getattr(digimon, "char_key", "")).strip()}
+        char_keys.discard("")
+        profile_keys = digimon_profile_key_variants(getattr(digimon, "id", ""))
+
+        def matches_status(row):
+            return (
+                self._csv_cell(row, 0) in id_texts
+                or self._csv_cell(row, 2) in char_keys
+                or self._csv_cell(row, 3) in chr_ids
+            )
+
+        def matches_char_info(row):
+            return (
+                self._csv_cell(row, 0) in char_keys
+                or self._csv_cell(row, 3) in chr_ids
+                or self._csv_cell(row, 4) in id_texts
+            )
+
+        def matches_chr(row):
+            return self._csv_cell(row, 0) in chr_ids
+
+        def matches_lod_model(row):
+            first = self._csv_cell(row, 0)
+            lod_name = self._csv_cell(row, 2)
+            return first in chr_ids or any(lod_name == f"{chr_id}_LOD_2" for chr_id in chr_ids)
+
+        def matches_evolution_to(row):
+            return self._csv_cell(row, 1) in id_texts or self._csv_cell(row, 3) in id_texts
+
+        def matches_id(row):
+            return self._csv_cell(row, 0) in id_texts
+
+        def matches_char_key(row):
+            return self._csv_cell(row, 0) in char_keys
+
+        def matches_profile(row):
+            return self._csv_cell(row, 0) in profile_keys
+
+        removals = {
+            "digimon_status": self._remove_rows_from_mod_csv(
+                patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv",
+                matches_status,
+            ),
+            "char_info": self._remove_rows_from_mod_csv(
+                patch_data / "char_info.mbe" / "000_char_info.ap.csv",
+                matches_char_info,
+            ),
+            "model_setting": self._remove_rows_from_mod_csv(
+                patch_data / "model_setting.mbe" / "000_model_setting.ap.csv",
+                matches_chr,
+            ),
+            "lod": self._remove_rows_from_mod_csv(
+                patch_data / "lod_chara.mbe" / "000_lod.ap.csv",
+                matches_chr,
+            ),
+            "lod_model": self._remove_rows_from_mod_csv(
+                patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv",
+                matches_lod_model,
+            ),
+            "same_animation": self._remove_rows_from_mod_csv(
+                patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv",
+                matches_chr,
+            ),
+            "evolution_to": self._remove_rows_from_mod_csv(
+                patch_data / "evolution.mbe" / "001_evolution_to.ap.csv",
+                matches_evolution_to,
+            ),
+            "evolution_condition": self._remove_rows_from_mod_csv(
+                patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv",
+                matches_id,
+            ),
+            "char_name": self._remove_rows_from_mod_csv(
+                patch_text / "char_name.mbe" / "000_Sheet1.ap.csv",
+                matches_char_key,
+            ),
+            "digimon_profile": self._remove_rows_from_mod_csv(
+                patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv",
+                matches_profile,
+            ),
+            "belong": self._remove_rows_from_mod_csv(
+                patch_text / "belong.mbe" / "000_Sheet1.ap.csv",
+                matches_id,
+            ),
+            "model_outline": self._remove_rows_from_mod_csv(
+                app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv",
+                matches_chr,
+            ),
+        }
+
+        return removals
+
+    def remove_selected_from_active_mod(self):
+        """Remove the selected imported Digimon from its dsts-loader mod files."""
+        entry = self._selected_digimon_entry()
+        if not entry or not entry.get("imported"):
+            QMessageBox.warning(self, "No Imported Selection", "Select an imported Digimon entry from the list first.")
+            return
+
+        digimon = self._digimon_from_entry(entry)
+        if not digimon:
+            QMessageBox.warning(self, "Remove Failed", "Could not resolve the selected imported Digimon.")
+            return
+
+        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        root = self._imported_dsts_loader_root(digimon, str(original_identity.get("chr_id", ""))) or self._active_dsts_loader_root()
+        if not root:
+            QMessageBox.warning(self, "No Active Mod", "Could not resolve the selected Digimon's dsts-loader folder.")
+            return
+
+        reply = QMessageBox.question(
+            self,
+            "Remove Digimon from Mod",
+            f"Remove {digimon.name or digimon.chr_id} from this mod?\n\n"
+            f"ID: {digimon.id}\n"
+            f"Chr ID: {digimon.chr_id}\n"
+            f"Folder:\n{root}\n\n"
+            "This removes matching rows from the mod CSV files. Asset files are left in place.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+
+        try:
+            removals = self._remove_digimon_from_dsts_loader(root, digimon)
+        except PermissionError as exc:
+            QMessageBox.warning(
+                self,
+                "Remove Failed",
+                f"Could not write one of the mod CSV files:\n\n{exc}\n\n"
+                "Close any open CSV editor tabs for this mod and try again."
+            )
+            return
+
+        if hasattr(self.loader, "imported_digimon"):
+            self.loader.imported_digimon = [
+                imported for imported in self.loader.imported_digimon
+                if not (
+                    imported is digimon
+                    or imported.id == digimon.id
+                    or imported.chr_id == digimon.chr_id
+                )
+            ]
+
+        if self.current_digimon and (
+            self.current_digimon is digimon
+            or self.current_digimon.id == digimon.id
+            or self.current_digimon.chr_id == digimon.chr_id
+        ):
+            self.current_digimon = None
+            self.current_digimon_label.setText("📂 No Digimon loaded")
+            self.save_button.setEnabled(False)
+            self.export_dlc_button.setEnabled(False)
+            self.clear_modified_flag()
+
+        self.load_digimon_list()
+        total_removed = sum(removals.values())
+        details = "\n".join(f"  • {name}: {count}" for name, count in removals.items() if count)
+        QMessageBox.information(
+            self,
+            "Removed from Mod",
+            f"✅ Removed {digimon.name or digimon.chr_id} from the active mod.\n\n"
+            f"Rows removed: {total_removed}\n"
+            + (f"\n{details}" if details else "\nNo matching rows were found; blank rows may already have been cleaned.")
         )
 
     def load_digimon_data(self, digimon: DigimonData):
@@ -8888,8 +9118,8 @@ class DigimonEditor(QMainWindow):
         root = Path(dsts_loader_root)
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
-        if hasattr(self, "add_selected_to_mod_button") and hasattr(self, "digimon_list"):
-            self.add_selected_to_mod_button.setEnabled(bool(self.digimon_list.currentText()))
+        if hasattr(self, "digimon_list"):
+            self.on_digimon_selected(self.digimon_list.currentText())
 
     def _active_dsts_loader_root(self) -> Optional[Path]:
         """Return the currently imported/exported dsts-loader payload, if any."""
@@ -9067,15 +9297,24 @@ class DigimonEditor(QMainWindow):
             for row in reader:
                 if not row or len(row) < 4:
                     continue
+                if not any(cell.strip() for cell in row):
+                    continue
+
+                raw_id = _clean_status_cell(row[0]) if len(row) > 0 else ""
+                raw_char_key = _clean_status_cell(row[2]) if len(row) > 2 else ""
+                raw_chr_id = _clean_status_cell(row[3]) if len(row) > 3 else ""
+                if not raw_id or not raw_char_key or not raw_chr_id:
+                    debug_log(f"Skipping incomplete imported status row from {csv_file.name}: {row[:4]}")
+                    continue
 
                 # Create new DigimonData object
                 digimon = DigimonData()
                 self._mark_import_source(digimon, base_path)
 
                 # Parse basic info from digimon_status_data
-                digimon.id = int(row[0]) if row[0] else 0
-                digimon.char_key = row[2].strip('"') if len(row) > 2 else ""
-                digimon.chr_id = row[3].strip('"') if len(row) > 3 else ""
+                digimon.id = int(raw_id)
+                digimon.char_key = raw_char_key
+                digimon.chr_id = raw_chr_id
                 digimon.stage_id = int(row[4]) if len(row) > 4 and row[4] else 0
                 digimon.personality_id = int(row[5]) if len(row) > 5 and row[5] else 0
                 digimon.type_id = int(row[6]) if len(row) > 6 and row[6] else 0
@@ -9188,6 +9427,8 @@ class DigimonEditor(QMainWindow):
                 # Load name from char_name
                 name_file = base_path / "patch_text01" / "text" / "char_name.mbe"
                 digimon.name = self._load_name_from_csv(name_file, digimon.char_key)
+                if not digimon.name:
+                    digimon.name = digimon.char_key or digimon.chr_id or f"Digimon {digimon.id}"
 
                 # Load profile from digimon_profile
                 profile_file = base_path / "patch_text01" / "text" / "digimon_profile.mbe"
@@ -11399,6 +11640,12 @@ class DigimonEditor(QMainWindow):
                             anim_header = anim_existing_header
                             anim_existing_rows = list(reader)
 
+                # Keep saves from carrying over blank rows left by manual CSV edits.
+                anim_existing_rows = [
+                    row for row in anim_existing_rows
+                    if any(cell.strip() for cell in row)
+                ]
+
                 found_anim = False
                 merged_anim_rows = []
                 for row in anim_existing_rows:
@@ -11493,11 +11740,19 @@ class DigimonEditor(QMainWindow):
                     reader = csv.reader(f)
                     existing_rows = list(reader)
 
+            # Empty spreadsheet rows look harmless, but the import path treats a
+            # status row as a Digimon entry. Drop only fully blank rows so normal
+            # optional empty columns remain intact.
+            existing_rows = [
+                row for row in existing_rows
+                if any(cell.strip() for cell in row)
+            ]
+
             if drop_malformed and new_rows:
                 expected_columns = len(new_rows[0])
                 existing_rows = [
                     row for row in existing_rows
-                    if len(row) == expected_columns and any(cell.strip() for cell in row)
+                    if len(row) == expected_columns
                 ]
 
             # Replace all matching old/current rows with the freshly generated row.
@@ -11567,6 +11822,11 @@ class DigimonEditor(QMainWindow):
                             header_to_use = existing_header
                         reader = csv.reader(f)
                         existing_rows = list(reader)
+
+            existing_rows = [
+                row for row in existing_rows
+                if any(cell.strip() for cell in row)
+            ]
 
             # Remove existing entries for this Digimon (both as source and target),
             # including the originally loaded ID if the user changed it.
