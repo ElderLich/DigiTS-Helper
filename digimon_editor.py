@@ -33,11 +33,18 @@ FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
+DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
 
 
 def get_default_mod_loader_path() -> Path:
     """Return the preferred folder shown by dsts-loader/mod loader file dialogs."""
     return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
+
+
+def debug_log(message: str) -> None:
+    """Print reverse-engineering diagnostics only when DIGITS_HELPER_DEBUG is enabled."""
+    if DEBUG_LOGGING:
+        print(f"DEBUG: {message}")
 
 
 def sanitize_mod_folder_name(value: str, fallback: str = "CustomDigimon") -> str:
@@ -7529,7 +7536,7 @@ class DigimonEditor(QMainWindow):
                 if len(row) > 122:
                     digimon.model_type = int(row[121]) if row[121] else 1  # Column 121: Model type
                     digimon.animation_set = int(row[122]) if row[122] else 1  # Column 122: Animation set
-                    print(f"DEBUG: Loaded model_type: {digimon.model_type}, animation_set: {digimon.animation_set}")
+                    debug_log(f"Loaded model_type: {digimon.model_type}, animation_set: {digimon.animation_set}")
 
                 # Parse field guide ID (column 131)
                 if len(row) > 131:
@@ -7541,7 +7548,10 @@ class DigimonEditor(QMainWindow):
                             digimon.field_guide_id = -1
                     else:
                         digimon.field_guide_id = -1
-                    print(f"DEBUG: Loaded field_guide_id: {digimon.field_guide_id} from column 131 (raw value: '{row[131] if len(row) > 131 else 'N/A'}')")
+                    debug_log(
+                        f"Loaded field_guide_id: {digimon.field_guide_id} from column 131 "
+                        f"(raw value: '{row[131] if len(row) > 131 else 'N/A'}')"
+                    )
                 else:
                     digimon.field_guide_id = -1
 
@@ -7555,7 +7565,10 @@ class DigimonEditor(QMainWindow):
                             digimon.script_id = -1
                     else:
                         digimon.script_id = -1
-                    print(f"DEBUG: Loaded script_id: {digimon.script_id} from column 132 (raw value: '{row[132] if len(row) > 132 else 'N/A'}')")
+                    debug_log(
+                        f"Loaded script_id: {digimon.script_id} from column 132 "
+                        f"(raw value: '{row[132] if len(row) > 132 else 'N/A'}')"
+                    )
                 else:
                     digimon.script_id = -1
 
@@ -7566,7 +7579,7 @@ class DigimonEditor(QMainWindow):
                 # Load profile from digimon_profile
                 profile_file = base_path / "patch_text01" / "text" / "digimon_profile.mbe"
                 digimon.profile_text = self._load_profile_from_csv(profile_file, digimon.id)
-                print(f"DEBUG: Loaded profile for ID {digimon.id}: '{digimon.profile_text[:50] if digimon.profile_text else 'EMPTY'}'...")
+                debug_log(f"Loaded profile for ID {digimon.id}: '{digimon.profile_text[:50] if digimon.profile_text else 'EMPTY'}'...")
 
                 # Load char_info data (contains motion_ref and model_ref)
                 char_info_file = base_path / "patch" / "data" / "char_info.mbe"
@@ -7574,7 +7587,7 @@ class DigimonEditor(QMainWindow):
                 if char_info_data:
                     digimon.motion_id = char_info_data.get('motion_ref', "")
                     digimon.model_id = char_info_data.get('model_ref', "")
-                    print(f"DEBUG: Loaded from char_info - model_id: '{digimon.model_id}', motion_id: '{digimon.motion_id}'")
+                    debug_log(f"Loaded from char_info - model_id: '{digimon.model_id}', motion_id: '{digimon.motion_id}'")
 
                 # Load model settings
                 model_file = base_path / "patch" / "data" / "model_setting.mbe"
@@ -7640,15 +7653,18 @@ class DigimonEditor(QMainWindow):
                             # Column 8: Audio ID (motion_ref)
                             model_ref = row[3].strip('"') if len(row) > 3 and row[3] else ""
                             motion_ref = row[8].strip('"') if len(row) > 8 and row[8] else ""
-                            print(f"DEBUG: Found char_info for {char_key} - motion_ref (col8): '{motion_ref}', model_ref (col3): '{model_ref}'")
+                            debug_log(
+                                f"Found char_info for {char_key} - motion_ref (col8): "
+                                f"'{motion_ref}', model_ref (col3): '{model_ref}'"
+                            )
                             return {
                                 'motion_ref': motion_ref,  # Column 8: Audio ID (motion_ref)
                                 'model_ref': model_ref  # Column 3: Model ID (model_ref)
                             }
             except Exception as e:
-                print(f"DEBUG: Error loading char_info from {csv_file}: {e}")
+                debug_log(f"Error loading char_info from {csv_file}: {e}")
                 continue
-        print(f"DEBUG: No char_info found for char_key: {char_key}")
+        debug_log(f"No char_info found for char_key: {char_key}")
         return {}
 
     def _load_profile_from_csv(self, base_path: Path, digimon_id: int) -> str:
@@ -9617,8 +9633,8 @@ class DigimonEditor(QMainWindow):
             # Use wizard's write methods to create the data row for this Digimon
             wizard = DigimonCreationWizard(parent=None, loader=self.loader)
 
-            # Debug: Print values before writing
-            print(f"DEBUG: Writing digimon - field_guide_id={digimon.field_guide_id}, script_id={digimon.script_id}")
+            # Keep field guide/script diagnostics available without noisy normal exports.
+            debug_log(f"Writing digimon - field_guide_id={digimon.field_guide_id}, script_id={digimon.script_id}")
 
             # Merge digimon_status_data
             status_file = patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv"
