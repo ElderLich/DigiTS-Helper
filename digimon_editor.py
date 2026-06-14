@@ -34,6 +34,7 @@ FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
 FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
+RELATED_SOURCE_PROMPT = "Select source Digimon..."
 # digimon_status column 132 is a numeric status/profile reference. Official rows
 # usually mirror column 0, while recolors/model variants may point at a source
 # Digimon. It is not the Field Guide number from column 131.
@@ -168,6 +169,30 @@ class SpinBoxWheelGuard(QObject):
                     scrollbar.setValue(scrollbar.value() - delta)
 
             return True
+        return False
+
+
+class ComboPromptClearFilter(QObject):
+    """Clear a combo-box prompt item as soon as the user starts typing into it."""
+
+    def __init__(self, combo: QComboBox, prompt: str):
+        super().__init__(combo)
+        self.combo = combo
+        self.prompt = prompt
+
+    def eventFilter(self, watched, event):
+        if event.type() in (QEvent.Type.FocusIn, QEvent.Type.MouseButtonPress):
+            current_text = self.combo.currentText().strip()
+            if self.combo.currentData() is None and current_text == self.prompt:
+                # The prompt is a real combo item so the empty state is obvious.
+                # Once editing starts, remove it from the line edit so searches
+                # begin from a clean field instead of appending to the prompt.
+                self.combo.blockSignals(True)
+                self.combo.setCurrentIndex(-1)
+                self.combo.setEditText("")
+                if self.combo.lineEdit():
+                    self.combo.lineEdit().clear()
+                self.combo.blockSignals(False)
         return False
 
 
@@ -5089,6 +5114,11 @@ class DigimonEditor(QMainWindow):
         """)
         if self.related_source_combo.lineEdit():
             self.related_source_combo.lineEdit().setPlaceholderText("Search by name or chr ID...")
+            self.related_source_prompt_filter = ComboPromptClearFilter(
+                self.related_source_combo,
+                RELATED_SOURCE_PROMPT
+            )
+            self.related_source_combo.lineEdit().installEventFilter(self.related_source_prompt_filter)
         related_source_layout.addWidget(self.related_source_combo, 1)
 
         related_dropdown_button = QPushButton("Open ▼")
@@ -7331,7 +7361,7 @@ class DigimonEditor(QMainWindow):
         self.related_source_entries = self.get_related_source_entries()
         self.related_source_combo.blockSignals(True)
         self.related_source_combo.clear()
-        self.related_source_combo.addItem("Select source Digimon...", None)
+        self.related_source_combo.addItem(RELATED_SOURCE_PROMPT, None)
         for entry in self.related_source_entries:
             self.related_source_combo.addItem(self.related_source_display_name(entry), entry)
         self.related_source_combo.blockSignals(False)
