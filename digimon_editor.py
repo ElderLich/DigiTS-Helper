@@ -5221,7 +5221,7 @@ class DigimonEditor(QMainWindow):
 
         rename_geom_textures_button = QPushButton("Rename .geom Textures")
         rename_geom_textures_button.setToolTip(
-            "Patch copied .geom files to use bumped texture names and rename matching images. Creates .geom.bak backups."
+            "Patch copied .geom files to use bumped texture names and rename matching images."
         )
         rename_geom_textures_button.clicked.connect(self.rename_geom_textures_now)
         rename_geom_textures_button.setStyleSheet("""
@@ -7751,15 +7751,6 @@ class DigimonEditor(QMainWindow):
                 continue
         return tokens
 
-    def _backup_geom_file(self, geom_path: Path) -> Path:
-        """Create a sibling .bak file before modifying a binary .geom."""
-        backup_path = geom_path.with_name(geom_path.name + ".bak")
-        if backup_path.exists():
-            timestamp = time.strftime("%Y%m%d_%H%M%S")
-            backup_path = geom_path.with_name(geom_path.name + f".bak.{timestamp}")
-        shutil.copy2(geom_path, backup_path)
-        return backup_path
-
     def _patch_geom_bytes(self, data: bytes, mapping: Dict[str, str]) -> Tuple[bytes, Dict[str, int]]:
         """Apply same-length texture token replacements to raw .geom bytes."""
         counts: Dict[str, int] = {}
@@ -7939,7 +7930,6 @@ class DigimonEditor(QMainWindow):
         if not plan.get("ok"):
             return plan
 
-        backups = []
         replacement_counts: Dict[str, int] = {}
         for geom_file in plan["geom_files"]:
             original_data = geom_file.read_bytes()
@@ -7948,7 +7938,6 @@ class DigimonEditor(QMainWindow):
             if not total_replacements:
                 continue
 
-            backups.append(self._backup_geom_file(geom_file))
             geom_file.write_bytes(patched_data)
             replacement_counts[geom_file.name] = total_replacements
 
@@ -7962,7 +7951,6 @@ class DigimonEditor(QMainWindow):
         return {
             "ok": True,
             "mapping": plan["mapping"],
-            "backups": backups,
             "replacement_counts": replacement_counts,
             "renamed_images": renamed_images,
             "skipped_unindexed": plan.get("skipped_unindexed", []),
@@ -7978,8 +7966,7 @@ class DigimonEditor(QMainWindow):
         return (
             f"Renamed .geom textures: {len(summary.get('mapping', {}))} texture names, "
             f"{total_replacements} replacements, "
-            f"{len(summary.get('renamed_images', []))} images renamed, "
-            f"{len(summary.get('backups', []))} .geom backups"
+            f"{len(summary.get('renamed_images', []))} images renamed"
             f"{self._format_geom_skip_suffix(summary)}"
         )
 
