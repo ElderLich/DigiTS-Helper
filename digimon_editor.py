@@ -5030,6 +5030,7 @@ class DigimonEditor(QMainWindow):
 
         related_group = QGroupBox("Related Asset Import")
         related_layout = QGridLayout(related_group)
+        related_layout.setColumnStretch(1, 1)
 
         related_layout.addWidget(QLabel("Extracted Folder:"), 0, 0)
         self.related_extract_path_edit = QLineEdit(str(DEFAULT_EXTRACTED_GAME_PATH))
@@ -5044,9 +5045,31 @@ class DigimonEditor(QMainWindow):
         self.related_source_combo.setEditable(True)
         self.related_source_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         self.related_source_combo.setToolTip("Original Digimon to copy model and image assets from, e.g. Kyubimon (chr395).")
+        configure_searchable_combo(self.related_source_combo)
         if self.related_source_combo.lineEdit():
             self.related_source_combo.lineEdit().setPlaceholderText("Search by name or chr ID...")
-        related_layout.addWidget(self.related_source_combo, 1, 1, 1, 2)
+        related_layout.addWidget(self.related_source_combo, 1, 1)
+
+        related_dropdown_button = QPushButton("▼")
+        related_dropdown_button.setFixedWidth(42)
+        related_dropdown_button.setToolTip("Open source Digimon list")
+        related_dropdown_button.clicked.connect(self.related_source_combo.showPopup)
+        related_dropdown_button.setStyleSheet("""
+            QPushButton {
+                background-color: #667eea;
+                color: white;
+                border: 2px solid #667eea;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11pt;
+                padding: 7px 0;
+            }
+            QPushButton:hover {
+                background-color: #5568d3;
+                border-color: #5568d3;
+            }
+        """)
+        related_layout.addWidget(related_dropdown_button, 1, 2)
 
         self.import_related_files_checkbox = QCheckBox("Import Related Files")
         self.import_related_files_checkbox.setToolTip(
