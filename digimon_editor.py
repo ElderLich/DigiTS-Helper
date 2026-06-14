@@ -373,6 +373,27 @@ def choose_field_guide_id(parent: QWidget, loader: Optional[MBELoader], current_
     return None
 
 
+def create_field_guide_slot_button() -> QPushButton:
+    """Create the shared visible button used to open the field guide slot picker."""
+    button = QPushButton("Choose Slot...")
+    button.setToolTip("Show custom field guide slots and mark occupied IDs in light red")
+    button.setMinimumWidth(130)
+    button.setStyleSheet("""
+        QPushButton {
+            color: white;
+            background-color: #3f7de8;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background-color: #316ad0;
+        }
+    """)
+    return button
+
+
 def get_skill_options(loader: Optional[MBELoader]) -> List[tuple]:
     """Return available skills as (skill_id, display_label) pairs."""
     if not loader:
@@ -1749,22 +1770,7 @@ class BasicInfoPage(QWizardPage):
         )
         field_guide_layout.addWidget(self.field_guide_id_spin)
 
-        pick_field_guide_button = QPushButton("Choose Slot...")
-        pick_field_guide_button.setToolTip("Show every custom field guide slot and mark occupied IDs in light red")
-        pick_field_guide_button.setMinimumWidth(130)
-        pick_field_guide_button.setStyleSheet("""
-            QPushButton {
-                color: white;
-                background-color: #3f7de8;
-                border: none;
-                border-radius: 6px;
-                padding: 8px 12px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #316ad0;
-            }
-        """)
+        pick_field_guide_button = create_field_guide_slot_button()
         pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
         field_guide_layout.addWidget(pick_field_guide_button)
         field_guide_layout.addStretch()
@@ -1783,14 +1789,6 @@ class BasicInfoPage(QWizardPage):
             self.char_key_edit.setText(f"char_DIGIMON_{digimon_id}")
         if not self.chr_id_edit.text() or self.chr_id_edit.text().startswith("chr"):
             self.chr_id_edit.setText(f"chr{digimon_id}")
-
-    def auto_assign_field_guide_id(self):
-        """Use the first free custom field guide slot."""
-        field_guide_id = first_free_field_guide_id(self.wizard.loader, self.chr_id_edit.text().strip())
-        if field_guide_id == -1:
-            QMessageBox.warning(self, "No Free IDs", "Every custom field guide ID from 500-999 is occupied.")
-            return
-        self.field_guide_id_spin.setValue(field_guide_id)
 
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
@@ -3806,14 +3804,6 @@ class DigimonEditor(QMainWindow):
         self.motion_id_edit.textChanged.connect(self.mark_as_modified)
         self.animation_ref_edit.textChanged.connect(self.mark_as_modified)
 
-    def auto_assign_field_guide_id(self):
-        """Use the first free custom field guide slot for the current form."""
-        field_guide_id = first_free_field_guide_id(self.loader, self.chr_id_edit.text().strip())
-        if field_guide_id == -1:
-            QMessageBox.warning(self, "No Free IDs", "Every custom field guide ID from 500-999 is occupied.")
-            return
-        self.field_guide_id_spin.setValue(field_guide_id)
-
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
         chosen_id = choose_field_guide_id(
@@ -4549,22 +4539,7 @@ class DigimonEditor(QMainWindow):
         )
         field_guide_layout.addWidget(self.field_guide_id_spin)
 
-        pick_field_guide_button = QPushButton("Choose Slot...")
-        pick_field_guide_button.setToolTip("Show custom field guide slots and mark occupied IDs in light red")
-        pick_field_guide_button.setMinimumWidth(130)
-        pick_field_guide_button.setStyleSheet("""
-            QPushButton {
-                color: white;
-                background-color: #3f7de8;
-                border: none;
-                border-radius: 6px;
-                padding: 8px 12px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #316ad0;
-            }
-        """)
+        pick_field_guide_button = create_field_guide_slot_button()
         pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
         field_guide_layout.addWidget(pick_field_guide_button)
         field_guide_layout.addStretch()
