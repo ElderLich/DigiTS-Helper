@@ -166,16 +166,22 @@ def install_spinbox_wheel_guard():
 
 def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> str:
     """Normalize profile text into hard-wrapped lines that fit the in-game profile panel."""
+    # Normalize copied text first so Windows, Unix, and pasted multiline descriptions
+    # are handled the same way before wrapping.
     normalized = text.replace("\r\n", "\n").replace("\r", "\n")
     wrapped_lines: List[str] = []
 
     for paragraph in normalized.split("\n"):
+        # Collapse accidental spacing inside each paragraph, but preserve intentional
+        # paragraph breaks as blank lines in the final profile text.
         paragraph = " ".join(paragraph.split())
         if not paragraph:
             if wrapped_lines and wrapped_lines[-1]:
                 wrapped_lines.append("")
             continue
 
+        # The game profile panel expects hard line breaks. Relying on QTextEdit's
+        # visual wrapping would look correct in the editor but export a bad CSV cell.
         wrapped_lines.extend(textwrap.wrap(
             paragraph,
             width=width,
@@ -524,9 +530,12 @@ class SkillEditor(QWidget):
         scroll_layout.addStretch()
 
         scroll.setWidget(scroll_widget)
-        scroll.setMinimumHeight(180 if self.skill_type == "generic" else 260)
-        scroll.setMaximumHeight(260 if self.skill_type == "generic" else 420)
-        layout.addWidget(scroll)
+        if self.skill_type == "generic":
+            scroll.setMinimumHeight(300)
+        else:
+            scroll.setMinimumHeight(260)
+            scroll.setMaximumHeight(420)
+        layout.addWidget(scroll, 1)
 
         self.setLayout(layout)
 
@@ -3607,7 +3616,7 @@ class TraitsEditor(QWidget):
         scroll_layout = QGridLayout(scroll_widget)
         scroll_layout.setContentsMargins(8, 8, 8, 8)
         scroll_layout.setHorizontalSpacing(12)
-        scroll_layout.setVerticalSpacing(6)
+        scroll_layout.setVerticalSpacing(8)
         scroll_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         for column in range(3):
             scroll_layout.setColumnStretch(column, 1)
@@ -3641,6 +3650,18 @@ class TraitsEditor(QWidget):
                 trait_name = clean_name if clean_name else f"Trait {i + 1}"
             checkbox = QCheckBox(trait_name)
             checkbox.setObjectName(f"trait_{i}")
+            checkbox.setMinimumHeight(30)
+            checkbox.setFont(QFont("Segoe UI", 10))
+            checkbox.setStyleSheet("""
+                QCheckBox {
+                    padding: 5px 8px;
+                    spacing: 8px;
+                }
+                QCheckBox::indicator {
+                    width: 18px;
+                    height: 18px;
+                }
+            """)
 
             # Add tooltip if available
             if i in trait_descriptions:
@@ -4605,7 +4626,7 @@ class DigimonEditor(QMainWindow):
 
         self.profile_text_edit = QTextEdit()
         self.profile_text_edit.setPlaceholderText("Enter Digimon description/profile text...")
-        self.profile_text_edit.setMaximumHeight(120)
+        self.profile_text_edit.setMinimumHeight(240)
         self.profile_text_edit.setStyleSheet("""
             QTextEdit {
                 background-color: white;
@@ -4620,7 +4641,7 @@ class DigimonEditor(QMainWindow):
                 background-color: #f8f9fa;
             }
         """)
-        profile_layout.addWidget(self.profile_text_edit)
+        profile_layout.addWidget(self.profile_text_edit, 1)
 
         profile_tools_layout = QHBoxLayout()
         format_profile_button = QPushButton("Format for Game")
@@ -4634,8 +4655,7 @@ class DigimonEditor(QMainWindow):
         profile_tools_layout.addWidget(self.profile_text_stats_label)
         profile_layout.addLayout(profile_tools_layout)
 
-        layout.addWidget(profile_group)
-        layout.addStretch()
+        layout.addWidget(profile_group, 1)
 
         return tab
 
@@ -4780,9 +4800,7 @@ class DigimonEditor(QMainWindow):
         self.generic_skills_editor.skillChanged.connect(self.mark_as_modified)
         gen_layout.addWidget(self.generic_skills_editor)
         gen_group.setLayout(gen_layout)
-        layout.addWidget(gen_group)
-
-        layout.addStretch()
+        layout.addWidget(gen_group, 1)
 
         return tab
 
