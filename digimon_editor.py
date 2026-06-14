@@ -8374,6 +8374,120 @@ class DigimonEditor(QMainWindow):
                     return digimon
         return self.loader.get_digimon_by_chr_id(chr_id)
 
+    def _active_mod_name_map(self, dsts_loader_root: Path) -> Dict[str, str]:
+        """Read char_key -> display name from the active mod's English text patch."""
+        names: Dict[str, str] = {}
+        name_dir = dsts_loader_root / "patch_text01" / "text" / "char_name.mbe"
+        if not name_dir.exists():
+            return names
+
+        for csv_file in sorted(name_dir.glob("*.ap.csv")):
+            try:
+                rows = self.loader.load_csv(csv_file)
+            except Exception:
+                continue
+
+            for row in rows[1:]:
+                if len(row) < 2:
+                    continue
+                char_key = _clean_status_cell(row[0])
+                name = _clean_status_cell(row[1])
+                if char_key and name:
+                    names[char_key] = name
+
+        return names
+
+    def _evolution_picker_entries(self) -> List[dict]:
+        """Build Digimon choices for evolution dialogs from base, DLC, imports, and the active mod."""
+        entries: List[dict] = []
+        seen_entries: Set[Tuple[int, str]] = set()
+
+        def add_entry(digimon_id, chr_id: str, name: str, source: str):
+            try:
+                parsed_id = int(digimon_id)
+            except (TypeError, ValueError):
+                return
+
+            clean_chr_id = _clean_status_cell(chr_id)
+            if parsed_id <= 0 or not clean_chr_id:
+                return
+
+            clean_name = (name or "").strip()
+            if not clean_name or clean_name == "Unknown":
+                clean_name = self.loader._get_digimon_name_by_chr_id(clean_chr_id) or clean_chr_id
+
+            key = (parsed_id, clean_chr_id.casefold())
+            if key in seen_entries:
+                return
+            seen_entries.add(key)
+
+            entries.append({
+                "id": parsed_id,
+                "chr_id": clean_chr_id,
+                "name": clean_name,
+                "source": source,
+                "label": f"{clean_name} ({clean_chr_id}) - ID: {parsed_id} [{source}]",
+            })
+
+        for source, from_dlc in (("Base", False), ("DLC", True)):
+            try:
+                chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
+            except Exception:
+                chr_ids = []
+
+            for chr_id in chr_ids:
+                digimon = self.loader.get_digimon_by_chr_id(chr_id)
+                if not digimon:
+                    continue
+                name = self.loader._get_digimon_name_by_chr_id(chr_id) or getattr(digimon, "name", "")
+                add_entry(getattr(digimon, "id", 0), chr_id, name, source)
+
+        for digimon in getattr(self.loader, "imported_digimon", []):
+            add_entry(
+                getattr(digimon, "id", 0),
+                getattr(digimon, "chr_id", ""),
+                getattr(digimon, "name", ""),
+                "Imported",
+            )
+
+        active_root = self._active_dsts_loader_root()
+        if active_root:
+            names_by_char_key = self._active_mod_name_map(active_root)
+            for status_file in self._dsts_loader_status_files(active_root):
+                try:
+                    rows = self.loader.load_csv(status_file)
+                except Exception:
+                    continue
+
+                for row in rows[1:]:
+                    if not row or not any(str(cell).strip() for cell in row):
+                        continue
+                    digimon_id = self._csv_cell(row, FIELD_GUIDE_DIGIMON_ID_COLUMN)
+                    char_key = self._csv_cell(row, 2)
+                    chr_id = self._csv_cell(row, FIELD_GUIDE_CHR_ID_COLUMN)
+                    name = names_by_char_key.get(char_key, "") or char_key or chr_id
+                    add_entry(digimon_id, chr_id, name, "Active Mod")
+
+        entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"]), entry["id"]))
+        return entries
+
+    def _find_evolution_picker_entry(self, text: str, entries: List[dict]) -> Optional[dict]:
+        """Resolve custom evolution text against the same entries shown in the dialog list."""
+        query = (text or "").strip()
+        if not query:
+            return None
+
+        folded_query = query.casefold()
+        for entry in entries:
+            if folded_query == entry["chr_id"].casefold() or query == str(entry["id"]):
+                return entry
+
+        for entry in entries:
+            if folded_query in entry["name"].casefold() or folded_query in entry["label"].casefold():
+                return entry
+
+        return None
+
     def _collect_used_digimon_ids(self) -> Set[int]:
         """Collect Digimon IDs from base, DLC, imported rows, and the active mod payload."""
         used_ids = set(self.loader.get_all_digimon_ids())
@@ -10601,16 +10715,13 @@ class DigimonEditor(QMainWindow):
         target_list = QListWidget()
         target_list.setMinimumHeight(300)
 
-        # Populate with all Digimon
-        chr_ids = self.loader.get_all_digimon_chr_ids()
-        for chr_id in chr_ids:
-            name = self.loader._get_digimon_name_by_chr_id(chr_id)
-            if not name:
-                name = chr_id
-            # Try to get ID
-            digimon_obj = self.loader.get_digimon_by_chr_id(chr_id)
-            digimon_id = digimon_obj.id if digimon_obj else 0
-            target_list.addItem(f"{name} ({chr_id}) - ID: {digimon_id}")
+        # Populate with official and custom Digimon. Custom mod rows are stored
+        # on each list item so the dialog does not need to parse labels.
+        picker_entries = self._evolution_picker_entries()
+        for entry in picker_entries:
+            item = QListWidgetItem(entry["label"])
+            item.setData(100, entry)
+            target_list.addItem(item)
 
         # Filter on search
         def filter_digimon(text):
@@ -10663,23 +10774,23 @@ class DigimonEditor(QMainWindow):
                 # List tab selected
                 selected_item = target_list.currentItem()
                 if selected_item:
-                    # Extract chr_id from item text (format: "Name (chr_id) - ID: 123")
-                    item_text = selected_item.text()
-                    # Try to extract chr_id (e.g., "chr050")
-                    import re
-                    chr_match = re.search(r'\(chr\d+\)', item_text)
-                    if chr_match:
-                        target_chr_id = chr_match.group(0)[1:-1]  # Remove parentheses
-            target_digimon = self.loader.get_digimon_by_chr_id(target_chr_id)
-            if target_digimon:
-                            target_digimon_id = target_digimon.id
+                    entry = selected_item.data(100)
+                    if entry:
+                        target_digimon_id = entry.get("id")
+                        target_chr_id = entry.get("chr_id")
             else:
                 # Custom tab selected
                 custom_text = custom_input.text().strip()
                 found = False
                 if custom_text:
+                    picker_entry = self._find_evolution_picker_entry(custom_text, picker_entries)
+                    if picker_entry:
+                        target_chr_id = picker_entry["chr_id"]
+                        target_digimon_id = picker_entry["id"]
+                        found = True
+
                     # First check imported Digimon (custom Digimon from dsts-loader)
-                    if hasattr(self.loader, 'imported_digimon') and self.loader.imported_digimon:
+                    if not found and hasattr(self.loader, 'imported_digimon') and self.loader.imported_digimon:
                         for imported_digimon in self.loader.imported_digimon:
                             # Check by name (case-insensitive partial match)
                             if custom_text.lower() in imported_digimon.name.lower():
@@ -10770,6 +10881,7 @@ class DigimonEditor(QMainWindow):
 
                 # Refresh the evolution tab
                 self.update_evolution_tab(self.current_digimon)
+                self.mark_as_modified()
                 display_name = target_chr_id if target_chr_id else f"ID {target_digimon_id}"
                 QMessageBox.information(self, "Success", f"Added evolution to {display_name}")
             else:
@@ -11201,48 +11313,14 @@ class DigimonEditor(QMainWindow):
         custom_layout.addStretch()
         tab_widget.addTab(custom_tab, "Custom Input")
 
-        # Populate with all Digimon and their evolution counts
-        chr_ids = self.loader.get_all_digimon_chr_ids()
-
-        # Build ID cache
-        id_cache = {}
-        try:
-            status_file = self.loader._resolve_prefixed_file(self.loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv")
-            if status_file.exists():
-                rows = self.loader.load_csv(status_file)
-                for row in rows[1:]:
-                    if len(row) > 3 and row[3]:
-                        chr_id = row[3].strip('"')
-                        if len(row) > 0 and row[0]:
-                            try:
-                                id_cache[chr_id] = int(row[0])
-                            except:
-                                pass
-        except:
-            pass
-
-        # Count evolutions for each Digimon
-        evo_counts = {}
-        try:
-            evolution_to_file = self.loader._resolve_prefixed_file(self.loader.data_path / "evolution.mbe" / "001_evolution_to.csv")
-            if evolution_to_file.exists():
-                rows = self.loader.load_csv(evolution_to_file)
-                for row in rows[1:]:
-                    if len(row) > 1 and row[1]:
-                        try:
-                            source_id = int(row[1])
-                            evo_counts[source_id] = evo_counts.get(source_id, 0) + 1
-                        except:
-                            pass
-        except:
-            pass
-
-        for chr_id in chr_ids:
-            name = self.loader._get_digimon_name_by_chr_id(chr_id)
-            if not name:
-                name = chr_id
-            digimon_id = id_cache.get(chr_id, 0)
-            evo_count = evo_counts.get(digimon_id, 0)
+        # Populate with official and custom Digimon. This mirrors Add Evolution
+        # so active Reloaded II mod entries can also be selected as sources.
+        picker_entries = self._evolution_picker_entries()
+        for entry in picker_entries:
+            digimon_id = entry["id"]
+            chr_id = entry["chr_id"]
+            name = entry["name"]
+            evo_count = self.get_evolution_count_for_digimon(digimon_id)
 
             if evo_count >= 6:
                 status = "❌ FULL"
@@ -11251,8 +11329,8 @@ class DigimonEditor(QMainWindow):
             else:
                 status = f"✅ {evo_count}/6"
 
-            item = QListWidgetItem(f"{name} [{status}] (ID: {digimon_id})")
-            item.setData(100, {'id': digimon_id, 'chr_id': chr_id, 'evo_count': evo_count})
+            item = QListWidgetItem(f"{name} [{status}] ({chr_id}) - ID: {digimon_id} [{entry['source']}]")
+            item.setData(100, {'id': digimon_id, 'chr_id': chr_id, 'evo_count': evo_count, 'source': entry['source']})
 
             if evo_count >= 6:
                 item.setForeground(Qt.GlobalColor.red)
@@ -11308,8 +11386,15 @@ class DigimonEditor(QMainWindow):
                 custom_text = custom_input.text().strip()
                 found = False
                 if custom_text:
+                    picker_entry = self._find_evolution_picker_entry(custom_text, picker_entries)
+                    if picker_entry:
+                        from_chr_id = picker_entry["chr_id"]
+                        from_id = picker_entry["id"]
+                        evo_count = self.get_evolution_count_for_digimon(from_id)
+                        found = True
+
                     # First check imported Digimon (custom Digimon from dsts-loader)
-                    if hasattr(self.loader, 'imported_digimon') and self.loader.imported_digimon:
+                    if not found and hasattr(self.loader, 'imported_digimon') and self.loader.imported_digimon:
                         for imported_digimon in self.loader.imported_digimon:
                             # Check by name (case-insensitive partial match)
                             if custom_text.lower() in imported_digimon.name.lower():
@@ -11402,14 +11487,15 @@ class DigimonEditor(QMainWindow):
                         QMessageBox.information(self, "Already Added", "This pre-evolution already exists.")
                         return
 
-                    # Add pre-evolution
-                    self.current_digimon.deevolution_sources.append({
-                        'from_id': from_id,
+                # Add pre-evolution
+                self.current_digimon.deevolution_sources.append({
+                    'from_id': from_id,
                     'from_chr_id': from_chr_id or f"chr{from_id:03d}",
-                        'evolution_type': 0
-                    })
+                    'evolution_type': 0
+                })
 
-                    self.update_evolution_tab(self.current_digimon)
+                self.update_evolution_tab(self.current_digimon)
+                self.mark_as_modified()
                 display_name = from_chr_id if from_chr_id else f"ID {from_id}"
                 QMessageBox.information(self, "Success", f"Pre-evolution added! {display_name} now evolves into {self.current_digimon.name}")
             else:
