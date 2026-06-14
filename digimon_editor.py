@@ -1074,12 +1074,19 @@ class DigimonCreationWizard(QWizard):
         # Get animation reference
         animation_ref = model_page.animation_ref_edit.text().strip() if model_page.animation_ref_edit.text().strip() else template_chr_id
 
-        # Ask user where to export
+        # Ask user where to export. If the main editor has an imported mod
+        # loaded, default to that payload so adding a second Digimon naturally
+        # appends to the same Reloaded II mod instead of starting a new one.
+        parent_editor = self.parent()
         default_path = get_default_mod_loader_path()
+        if parent_editor and hasattr(parent_editor, "_active_dsts_loader_root"):
+            active_root = parent_editor._active_dsts_loader_root()
+            if active_root:
+                default_path = active_root
 
         export_dir = QFileDialog.getExistingDirectory(
             self,
-            "Select dsts-loader Export Directory",
+            "Select Reloaded II Mod or dsts-loader Directory",
             str(default_path),
             QFileDialog.Option.ShowDirsOnly
         )
@@ -1102,12 +1109,28 @@ class DigimonCreationWizard(QWizard):
                 # User chose to discard - close wizard
                 return
 
-        # Store export path for later import
-        self.last_export_path = Path(export_dir)
+        selected_export_path = Path(export_dir)
+        output_path = selected_export_path
+        if parent_editor and hasattr(parent_editor, "_resolve_dsts_loader_root"):
+            output_path = parent_editor._resolve_dsts_loader_root(selected_export_path, allow_create=True) or selected_export_path
 
-        # Export to dsts-loader format
+        # Store export path for later import
+        self.last_export_path = output_path
+
+        # Export to dsts-loader format. Prefer the editor merge path so existing
+        # Digimon rows in a loaded mod are preserved when adding another entry.
         try:
-            success = self._export_to_dsts_loader(Path(export_dir), self.new_digimon, animation_ref)
+            if parent_editor and hasattr(parent_editor, "_merge_digimon_to_dsts_loader"):
+                success = parent_editor._merge_digimon_to_dsts_loader(
+                    output_path,
+                    self.new_digimon,
+                    animation_ref=animation_ref,
+                    sync_form=False,
+                )
+                if success and hasattr(parent_editor, "_set_active_dsts_loader_root"):
+                    parent_editor._set_active_dsts_loader_root(output_path)
+            else:
+                success = self._export_to_dsts_loader(output_path, self.new_digimon, animation_ref)
         except Exception as e:
             import traceback
             error_trace = traceback.format_exc()
@@ -1841,21 +1864,7 @@ class BasicInfoPage(QWizardPage):
         self.id_spin = QSpinBox()
         self.id_spin.setRange(1, 99999)
         # Find next available ID - check both base game and DLC
-        existing_ids = wizard.loader.get_all_digimon_ids()
-        # Also check DLC IDs
-        try:
-            for _dlc_id, dlc_status_file in wizard.loader.iter_dlc_csv_files(
-                "data", "digimon_status", "000_digimon_status_data.csv"
-            ):
-                dlc_rows = wizard.loader.load_csv(dlc_status_file)
-                for row in dlc_rows[1:]:  # Skip header
-                    if len(row) > 0 and row[0]:
-                        try:
-                            existing_ids.append(int(row[0]))
-                        except ValueError:
-                            continue
-        except Exception:
-            pass  # If DLC check fails, just use base game IDs
+        existing_ids = list(self.collect_existing_ids())
         next_id = max(existing_ids) + 1 if existing_ids else 1000
         self.id_spin.setValue(next_id)
         layout.addRow("🆔 Digimon ID:", self.id_spin)
@@ -1923,6 +1932,49 @@ class BasicInfoPage(QWizardPage):
         if chosen_id is not None:
             self.field_guide_id_spin.setValue(chosen_id)
 
+    def collect_existing_ids(self) -> Set[int]:
+        """Collect Digimon IDs from base, DLC, and imported mod rows."""
+        existing_ids = set(self.wizard.loader.get_all_digimon_ids())
+        try:
+            for _dlc_id, dlc_status_file in self.wizard.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
+                dlc_rows = self.wizard.loader.load_csv(dlc_status_file)
+                for row in dlc_rows[1:]:
+                    if len(row) > 0 and row[0]:
+                        try:
+                            existing_ids.add(int(row[0]))
+                        except ValueError:
+                            continue
+        except Exception:
+            pass
+
+        for digimon in getattr(self.wizard.loader, "imported_digimon", []):
+            try:
+                existing_ids.add(int(getattr(digimon, "id", 0)))
+            except (TypeError, ValueError):
+                continue
+        return {digimon_id for digimon_id in existing_ids if digimon_id > 0}
+
+    def collect_existing_chr_ids(self) -> Set[str]:
+        """Collect Chr IDs from base, DLC, and imported mod rows."""
+        existing_chr_ids = set()
+        for from_dlc in (False, True):
+            try:
+                existing_chr_ids.update(
+                    chr_id.strip().casefold()
+                    for chr_id in self.wizard.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
+                    if chr_id
+                )
+            except Exception:
+                continue
+
+        for digimon in getattr(self.wizard.loader, "imported_digimon", []):
+            chr_id = str(getattr(digimon, "chr_id", "")).strip()
+            if chr_id:
+                existing_chr_ids.add(chr_id.casefold())
+        return existing_chr_ids
+
     def validatePage(self):
         """Validate basic info"""
         if not self.name_edit.text().strip():
@@ -1933,6 +1985,26 @@ class BasicInfoPage(QWizardPage):
             return False
         if not self.chr_id_edit.text().strip():
             QMessageBox.warning(self, "Error", "Please enter a Chr ID")
+            return False
+
+        digimon_id = self.id_spin.value()
+        if digimon_id in self.collect_existing_ids():
+            QMessageBox.warning(
+                self,
+                "Digimon ID Occupied",
+                f"Digimon ID {digimon_id} already exists in base, DLC, or the imported mod.\n\n"
+                "Pick a free ID before continuing."
+            )
+            return False
+
+        chr_id = self.chr_id_edit.text().strip()
+        if chr_id.casefold() in self.collect_existing_chr_ids():
+            QMessageBox.warning(
+                self,
+                "Chr ID Occupied",
+                f"Chr ID {chr_id} already exists in base, DLC, or the imported mod.\n\n"
+                "Pick a free Chr ID before continuing."
+            )
             return False
 
         field_guide_id = self.field_guide_id_spin.value()
@@ -3824,6 +3896,8 @@ class DigimonEditor(QMainWindow):
         self.exporter = CSVExporter(data_path="Base/data", text_path="Base/text")
         self.current_digimon: Optional[DigimonData] = None
         self.current_digimon_from_dlc = False
+        self.active_dsts_loader_root: Optional[Path] = None
+        self.active_reloaded_mod_root: Optional[Path] = None
         self.has_unsaved_changes = False
         self.setup_ui()
         self.connect_change_signals()
@@ -4459,7 +4533,10 @@ class DigimonEditor(QMainWindow):
 
         self.new_button = QPushButton("➕ Create New")
         self.new_button.clicked.connect(self.launch_creation_wizard)
-        self.new_button.setToolTip("Create a new Digimon using the step-by-step wizard\nExports to dsts-loader format")
+        self.new_button.setToolTip(
+            "Create a new Digimon using the step-by-step wizard.\n"
+            "If a mod is loaded, the wizard defaults to that mod and merges the new Digimon into it."
+        )
         self.new_button.setStyleSheet(button_style.format(
             color1="#10b981", color2="#059669",
             hover1="#059669", hover2="#047857"
@@ -4495,7 +4572,7 @@ class DigimonEditor(QMainWindow):
             "Update the currently loaded source.\n"
             "• Base Game -> extracted base files\n"
             "• DLC -> helper DLC workspace\n"
-            "• Imported mod -> same remembered dsts-loader payload"
+            "• Imported/active mod -> same remembered dsts-loader payload"
         )
         self.save_button.setStyleSheet(button_style.format(
             color1="#f093fb", color2="#f5576c",
@@ -8038,7 +8115,7 @@ class DigimonEditor(QMainWindow):
             return None
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
         original_chr_id = str(original_identity.get("chr_id", ""))
-        return self._imported_dsts_loader_root(self.current_digimon, original_chr_id)
+        return self._imported_dsts_loader_root(self.current_digimon, original_chr_id) or self._active_dsts_loader_root()
 
     def import_related_files_now(self):
         """Manually import related model/image files into a dsts-loader folder."""
@@ -8596,6 +8673,17 @@ class DigimonEditor(QMainWindow):
             return root.parent
         return None
 
+    def _set_active_dsts_loader_root(self, dsts_loader_root: Path):
+        """Remember the mod payload that new/imported Digimon should merge into."""
+        root = Path(dsts_loader_root)
+        self.active_dsts_loader_root = root
+        self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
+
+    def _active_dsts_loader_root(self) -> Optional[Path]:
+        """Return the currently imported/exported dsts-loader payload, if any."""
+        root = getattr(self, "active_dsts_loader_root", None)
+        return Path(root) if root else None
+
     def _mark_import_source(self, digimon: DigimonData, dsts_loader_root: Path):
         """Remember where an imported Digimon should be saved back to."""
         root = Path(dsts_loader_root)
@@ -8605,6 +8693,7 @@ class DigimonEditor(QMainWindow):
 
     def _upsert_imported_digimon(self, digimon: DigimonData, dsts_loader_root: Path) -> bool:
         """Add or replace an imported Digimon by ID/chr_id while preserving source tracking."""
+        self._set_active_dsts_loader_root(dsts_loader_root)
         self._mark_import_source(digimon, dsts_loader_root)
         if not hasattr(self.loader, 'imported_digimon'):
             self.loader.imported_digimon = []
@@ -8719,7 +8808,9 @@ class DigimonEditor(QMainWindow):
                 f"✅ Successfully imported {imported_count} Digimon:\n\n" +
                 "\n".join(f"  • {name}" for name in imported_names[:10]) +
                 (f"\n  ... and {len(imported_names) - 10} more" if len(imported_names) > 10 else "") +
-                "\n\nDo you want to load the first imported Digimon for editing?",
+                f"\n\nActive mod target:\n{loader_path}\n\n"
+                "Create New will default to this mod and merge additional Digimon into it.\n\n"
+                "Do you want to load the first imported Digimon for editing?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                 QMessageBox.StandardButton.Yes
             )
@@ -9697,6 +9788,7 @@ class DigimonEditor(QMainWindow):
             QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
             return None
 
+        self._set_active_dsts_loader_root(dsts_loader_root)
         return options["mod_root"]
 
     def export_to_dlc(self):
@@ -9765,6 +9857,7 @@ class DigimonEditor(QMainWindow):
         # Always use merge mode to preserve other Digimon data
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
         if self._merge_digimon_to_dsts_loader(output_path, digimon, original_identity):
+            self._set_active_dsts_loader_root(output_path)
             self._upsert_imported_digimon(digimon, output_path)
             self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
@@ -10976,7 +11069,14 @@ class DigimonEditor(QMainWindow):
             else:
                 QMessageBox.warning(self, "Error", "Failed to export CSV files")
 
-    def _merge_digimon_to_dsts_loader(self, base_path: Path, digimon: DigimonData, original_identity: Optional[dict] = None) -> bool:
+    def _merge_digimon_to_dsts_loader(
+        self,
+        base_path: Path,
+        digimon: DigimonData,
+        original_identity: Optional[dict] = None,
+        animation_ref: Optional[str] = None,
+        sync_form: bool = True,
+    ) -> bool:
         """Merge a single Digimon into existing dsts-loader files, preserving other entries"""
         try:
             from pathlib import Path
@@ -10999,8 +11099,10 @@ class DigimonEditor(QMainWindow):
             (patch_text / "belong.mbe").mkdir(parents=True, exist_ok=True)
             (app_data / "model_outline.mbe").mkdir(parents=True, exist_ok=True)
 
-            # Update form data before saving
-            if hasattr(self, 'update_digimon_from_form'):
+            # Normal editor saves sync the visible form first. Wizard exports pass
+            # a fully built Digimon object and skip this to avoid touching the
+            # previously loaded form while adding a second Digimon to a mod.
+            if sync_form and hasattr(self, 'update_digimon_from_form'):
                 self.update_digimon_from_form()
 
             # Use wizard's write methods to create the data row for this Digimon
@@ -11059,8 +11161,8 @@ class DigimonEditor(QMainWindow):
             self._merge_csv_row(evolution_cond_file, digimon, wizard._write_evolution_condition_ap_csv, lambda r: cell(r, 0) in match_ids)
 
             # Merge anim_setting - need to handle special signature
-            anim_ref = digimon.chr_id
-            if hasattr(self, "animation_ref_edit") and self.animation_ref_edit.text().strip():
+            anim_ref = animation_ref or digimon.chr_id
+            if animation_ref is None and hasattr(self, "animation_ref_edit") and self.animation_ref_edit.text().strip():
                 anim_ref = self.animation_ref_edit.text().strip()
             anim_file = patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv"
             resolved_anim_file = self._resolve_prefixed_file(anim_file)
