@@ -6,6 +6,7 @@ import sys
 import os
 import json
 import re
+import shutil
 import textwrap
 from pathlib import Path
 from typing import Optional, List, Dict, Iterable
@@ -26,6 +27,7 @@ from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
 
 
 DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
+DEFAULT_EXTRACTED_GAME_PATH = Path(r"D:\Digimon Modding\Time Stranger Extracted")
 FIELD_GUIDE_ID_COLUMN = 131
 FIELD_GUIDE_CHR_ID_COLUMN = 3
 FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
@@ -5026,6 +5028,44 @@ class DigimonEditor(QMainWindow):
 
         layout.addWidget(model_group)
 
+        related_group = QGroupBox("Related Asset Import")
+        related_layout = QGridLayout(related_group)
+
+        related_layout.addWidget(QLabel("Extracted Folder:"), 0, 0)
+        self.related_extract_path_edit = QLineEdit(str(DEFAULT_EXTRACTED_GAME_PATH))
+        self.related_extract_path_edit.setToolTip("Root folder that contains app_0.dx11, patch.dx11, and extracted asset folders.")
+        related_layout.addWidget(self.related_extract_path_edit, 0, 1)
+        browse_related_button = QPushButton("Browse")
+        browse_related_button.clicked.connect(self.browse_related_extract_path)
+        related_layout.addWidget(browse_related_button, 0, 2)
+
+        related_layout.addWidget(QLabel("Source Digimon:"), 1, 0)
+        self.related_source_combo = QComboBox()
+        self.related_source_combo.setEditable(True)
+        self.related_source_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        self.related_source_combo.setToolTip("Original Digimon to copy model and image assets from, e.g. Kyubimon (chr395).")
+        if self.related_source_combo.lineEdit():
+            self.related_source_combo.lineEdit().setPlaceholderText("Search by name or chr ID...")
+        related_layout.addWidget(self.related_source_combo, 1, 1, 1, 2)
+
+        self.import_related_files_checkbox = QCheckBox("Import Related Files")
+        self.import_related_files_checkbox.setToolTip(
+            "When saving/exporting a Reloaded II mod, copy missing model files and images from the selected source Digimon."
+        )
+        related_layout.addWidget(self.import_related_files_checkbox, 2, 0)
+
+        import_related_button = QPushButton("Import Now")
+        import_related_button.setToolTip("Copy related files into the loaded/selected dsts-loader patch folder.")
+        import_related_button.clicked.connect(self.import_related_files_now)
+        related_layout.addWidget(import_related_button, 2, 1, 1, 2)
+
+        self.related_import_status_label = QLabel("No related files imported yet.")
+        self.related_import_status_label.setStyleSheet("color: #666; font-size: 9pt;")
+        related_layout.addWidget(self.related_import_status_label, 3, 0, 1, 3)
+
+        layout.addWidget(related_group)
+        self.populate_related_source_combo()
+
         # Model Settings Group (from model_setting.mbe)
         settings_group = QGroupBox("Model Settings (model_setting.mbe)")
         settings_layout = QGridLayout(settings_group)
@@ -7086,6 +7126,384 @@ class DigimonEditor(QMainWindow):
 
         return display_name
 
+    def related_source_display_name(self, entry: dict) -> str:
+        """Create the source selector label for original/base asset imports."""
+        source_label = "DLC" if entry.get("source") == "dlc" else "Base"
+        return f"{entry['name']} ({entry['chr_id']}) [{source_label}]"
+
+    def get_related_source_entries(self) -> List[dict]:
+        """Build source Digimon choices from base/DLC status rows."""
+        entries = []
+        seen_chr_ids = set()
+
+        status_files = []
+        base_status = self.loader._resolve_prefixed_file(
+            self.loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv"
+        )
+        if base_status.exists():
+            status_files.append(("base", base_status))
+        status_files.extend(
+            ("dlc", status_file)
+            for _dlc_id, status_file in self.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            )
+        )
+
+        for source_name, status_file in status_files:
+            try:
+                rows = self.loader.load_csv(status_file)
+            except Exception:
+                continue
+
+            for row in rows[1:]:
+                if len(row) <= 3:
+                    continue
+                chr_id = _clean_status_cell(row[3])
+                if not chr_id or chr_id in seen_chr_ids:
+                    continue
+
+                try:
+                    digimon_id = int(_clean_status_cell(row[0]))
+                except (TypeError, ValueError):
+                    digimon_id = 0
+
+                char_key = _clean_status_cell(row[2]) if len(row) > 2 else ""
+                name = self.loader._get_digimon_name(char_key) if char_key else None
+                if not name:
+                    name = self.loader._get_digimon_name_by_chr_id(chr_id) or chr_id
+
+                seen_chr_ids.add(chr_id)
+                entries.append({
+                    "id": digimon_id,
+                    "name": name,
+                    "chr_id": chr_id,
+                    "source": source_name,
+                })
+
+        entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"])))
+        return entries
+
+    def populate_related_source_combo(self):
+        """Refresh the Model Animation source Digimon dropdown."""
+        if not hasattr(self, "related_source_combo"):
+            return
+
+        previous_chr_id = ""
+        current_data = self.related_source_combo.currentData()
+        if isinstance(current_data, dict):
+            previous_chr_id = current_data.get("chr_id", "")
+        if not previous_chr_id and hasattr(self, "animation_ref_edit"):
+            previous_chr_id = self.animation_ref_edit.text().strip()
+
+        self.related_source_entries = self.get_related_source_entries()
+        self.related_source_combo.blockSignals(True)
+        self.related_source_combo.clear()
+        self.related_source_combo.addItem("Select source Digimon...", None)
+        for entry in self.related_source_entries:
+            self.related_source_combo.addItem(self.related_source_display_name(entry), entry)
+        self.related_source_combo.blockSignals(False)
+
+        if previous_chr_id:
+            self.select_related_source_by_chr(previous_chr_id)
+
+    def select_related_source_by_chr(self, chr_id: str):
+        """Select a related source entry by chr_id if it exists."""
+        if not hasattr(self, "related_source_combo") or not chr_id:
+            return
+        clean_chr_id = chr_id.strip().strip('"')
+        for index in range(self.related_source_combo.count()):
+            entry = self.related_source_combo.itemData(index)
+            if isinstance(entry, dict) and entry.get("chr_id") == clean_chr_id:
+                self.related_source_combo.setCurrentIndex(index)
+                return
+        self.related_source_combo.setCurrentIndex(0)
+
+    def get_selected_related_source(self) -> Optional[dict]:
+        """Return the selected source Digimon entry, accepting typed combo text."""
+        if not hasattr(self, "related_source_combo"):
+            return None
+
+        typed = self.related_source_combo.currentText().strip().lower()
+        current_index = self.related_source_combo.currentIndex()
+        data = self.related_source_combo.currentData()
+        current_label = self.related_source_combo.itemText(current_index).strip().lower() if current_index >= 0 else ""
+        if isinstance(data, dict) and (not typed or typed == current_label):
+            return data
+
+        chr_match = re.search(r"\(([^)]+)\)", typed)
+        typed_chr_id = chr_match.group(1).strip().lower() if chr_match else typed
+
+        for entry in getattr(self, "related_source_entries", []):
+            if typed_chr_id == entry["chr_id"].lower():
+                return entry
+            if typed and typed in entry["name"].lower():
+                return entry
+        return None
+
+    def browse_related_extract_path(self):
+        """Choose the extracted Time Stranger folder used for asset imports."""
+        start_path = self.related_extract_path_edit.text().strip() if hasattr(self, "related_extract_path_edit") else ""
+        if not start_path:
+            start_path = str(DEFAULT_EXTRACTED_GAME_PATH if DEFAULT_EXTRACTED_GAME_PATH.exists() else Path.cwd())
+
+        selected_dir = QFileDialog.getExistingDirectory(
+            self,
+            "Select Extracted Time Stranger Folder",
+            start_path,
+            QFileDialog.Option.ShowDirsOnly
+        )
+        if selected_dir:
+            self.related_extract_path_edit.setText(selected_dir)
+
+    def should_import_related_files(self) -> bool:
+        """Return whether save/export should copy missing related model/image assets."""
+        return bool(
+            hasattr(self, "import_related_files_checkbox")
+            and self.import_related_files_checkbox.isChecked()
+        )
+
+    def _chr_digits(self, chr_id: str) -> str:
+        match = re.search(r"(\d+)$", (chr_id or "").strip().strip('"'))
+        return match.group(1) if match else ""
+
+    def _replace_token(self, text: str, old: str, new: str, avoid_digit_suffix: bool = False) -> str:
+        if not old or old == new:
+            return text
+        pattern = re.escape(old)
+        if avoid_digit_suffix:
+            pattern += r"(?!\d)"
+        return re.sub(pattern, new, text, flags=re.IGNORECASE)
+
+    def _rename_related_asset(self, filename: str, source_entry: dict, target_chr_id: str, target_id: int) -> str:
+        """Rename a source asset filename for the target Digimon and convert .img to .dds."""
+        source_chr_id = source_entry.get("chr_id", "")
+        source_digits = self._chr_digits(source_chr_id)
+        target_digits = self._chr_digits(target_chr_id) or str(target_id)
+        source_id = int(source_entry.get("id") or 0)
+        target_id_text = str(target_id if target_id > 0 else target_digits)
+
+        suffix = Path(filename).suffix
+        stem = Path(filename).stem
+        if suffix.lower() == ".img":
+            suffix = ".dds"
+
+        if source_id:
+            source_id_text = str(source_id)
+            source_padded = f"{source_id:04d}"
+            source_icon_id = str(source_id + 1000)
+
+            # Common UI/image naming patterns use numeric IDs instead of chr IDs.
+            stem = self._replace_token(stem, f"ui_chara_icon_{source_icon_id}", f"ui_chara_icon_{target_id_text}", True)
+            stem = self._replace_token(stem, f"ui_chara_icon_{source_id_text}", f"ui_chara_icon_{target_id_text}", True)
+            stem = self._replace_token(stem, f"dot{source_id_text}", f"dot{target_id_text}", True)
+            stem = self._replace_token(stem, f"digimon{source_id_text}", f"digimon{target_id_text}", True)
+            stem = self._replace_token(stem, f"ef_chr_{source_padded}", f"ef_chr_{target_id_text}", True)
+
+        # Most model, animation, and texture files carry the chr token directly.
+        stem = self._replace_token(stem, source_chr_id, target_chr_id, True)
+
+        # A few animation files use r### as a secondary related reference.
+        if source_digits and target_digits:
+            stem = self._replace_token(stem, f"r{source_digits}", f"r{target_digits}", True)
+
+        return f"{stem}{suffix}"
+
+    def _related_search_roots(self, extracted_root: Path) -> List[Path]:
+        """Return likely extracted asset roots, preferring patch over app_0 overrides."""
+        roots = []
+        for name in ("patch.dx11", "app_0.dx11"):
+            root = extracted_root / name
+            if root.exists():
+                roots.append(root)
+
+        for root in sorted(extracted_root.glob("*.dx11")):
+            if root not in roots:
+                roots.append(root)
+
+        return roots if roots else [extracted_root]
+
+    def _related_file_matches(self, file_path: Path, source_entry: dict) -> bool:
+        """Return whether a file looks related to the selected source Digimon."""
+        name = file_path.name.lower()
+        source_chr_id = source_entry.get("chr_id", "").lower()
+        source_id = int(source_entry.get("id") or 0)
+
+        if source_chr_id and source_chr_id in name:
+            return True
+
+        if not source_id:
+            return False
+
+        source_id_text = str(source_id)
+        source_padded = f"{source_id:04d}"
+        source_icon_id = str(source_id + 1000)
+        numeric_patterns = (
+            f"dot{source_id_text}",
+            f"ui_chara_icon_{source_id_text}",
+            f"ui_chara_icon_{source_icon_id}",
+            f"digimon{source_id_text}",
+            f"ef_chr_{source_padded}",
+        )
+        return any(pattern in name for pattern in numeric_patterns)
+
+    def _iter_related_asset_files(self, extracted_root: Path, source_entry: dict) -> List[Path]:
+        """Find related model/animation files and images in an extracted game folder."""
+        image_suffixes = {".img", ".dds"}
+        asset_suffixes = {
+            ".anim", ".geom", ".nlst", ".sprk", ".bson", ".skel", ".matl", ".mset", ".mot", ".bin",
+            ".img", ".dds",
+        }
+
+        matches = []
+        seen = set()
+        for root in self._related_search_roots(extracted_root):
+            if not root.exists():
+                continue
+            for file_path in root.rglob("*"):
+                if not file_path.is_file():
+                    continue
+                suffix = file_path.suffix.lower()
+                if suffix not in asset_suffixes:
+                    continue
+                if suffix in image_suffixes or file_path.parent.name.lower() == "images":
+                    if self._related_file_matches(file_path, source_entry):
+                        key = str(file_path.resolve()).lower()
+                        if key not in seen:
+                            seen.add(key)
+                            matches.append(file_path)
+                elif source_entry.get("chr_id", "").lower() in file_path.name.lower():
+                    key = str(file_path.resolve()).lower()
+                    if key not in seen:
+                        seen.add(key)
+                        matches.append(file_path)
+        return matches
+
+    def import_related_files_to_dsts_loader(
+        self,
+        dsts_loader_root: Path,
+        digimon: DigimonData,
+        overwrite: bool = False,
+    ) -> dict:
+        """Copy/rename source model files and convert source .img textures to .dds."""
+        source_entry = self.get_selected_related_source()
+        if not source_entry:
+            return {"ok": False, "error": "Select a source Digimon first."}
+
+        extracted_root = Path(self.related_extract_path_edit.text().strip()) if hasattr(self, "related_extract_path_edit") else DEFAULT_EXTRACTED_GAME_PATH
+        if not extracted_root.exists():
+            return {"ok": False, "error": f"Extracted folder not found:\n{extracted_root}"}
+
+        target_chr_id = (self.chr_id_edit.text().strip() if hasattr(self, "chr_id_edit") else digimon.chr_id).strip('"')
+        target_id = self.id_spin.value() if hasattr(self, "id_spin") else digimon.id
+        if not target_chr_id:
+            return {"ok": False, "error": "Set the target Chr ID before importing related files."}
+
+        dsts_loader_root = self._resolve_dsts_loader_root(Path(dsts_loader_root), allow_create=True)
+        if not dsts_loader_root:
+            return {"ok": False, "error": "Could not resolve the dsts-loader output folder."}
+
+        patch_dir = dsts_loader_root / "patch"
+        images_dir = patch_dir / "images"
+        patch_dir.mkdir(parents=True, exist_ok=True)
+        images_dir.mkdir(parents=True, exist_ok=True)
+
+        copied = []
+        skipped = []
+        files = self._iter_related_asset_files(extracted_root, source_entry)
+        image_suffixes = {".img", ".dds"}
+
+        for source_file in files:
+            dest_name = self._rename_related_asset(source_file.name, source_entry, target_chr_id, target_id)
+            is_image = source_file.suffix.lower() in image_suffixes or source_file.parent.name.lower() == "images"
+            dest_dir = images_dir if is_image else patch_dir
+            dest_file = dest_dir / dest_name
+
+            if dest_file.exists() and not overwrite:
+                skipped.append(dest_file)
+                continue
+
+            shutil.copy2(source_file, dest_file)
+            copied.append(dest_file)
+
+        return {
+            "ok": True,
+            "source": source_entry,
+            "target_chr_id": target_chr_id,
+            "target_id": target_id,
+            "copied": copied,
+            "skipped": skipped,
+            "found": len(files),
+            "dsts_loader_root": dsts_loader_root,
+        }
+
+    def format_related_import_summary(self, summary: dict) -> str:
+        """Create a compact human-readable import result."""
+        if not summary.get("ok"):
+            return summary.get("error", "Related file import failed.")
+        source = summary.get("source", {})
+        return (
+            f"{source.get('name', 'Source')} ({source.get('chr_id', '?')}) -> "
+            f"{summary.get('target_chr_id', '?')}: "
+            f"{len(summary.get('copied', []))} copied, "
+            f"{len(summary.get('skipped', []))} skipped, "
+            f"{summary.get('found', 0)} found"
+        )
+
+    def _related_import_root_for_current_digimon(self) -> Optional[Path]:
+        """Return the remembered dsts-loader root for the current Digimon, if any."""
+        if not self.current_digimon:
+            return None
+        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        original_chr_id = str(original_identity.get("chr_id", ""))
+        return self._imported_dsts_loader_root(self.current_digimon, original_chr_id)
+
+    def import_related_files_now(self):
+        """Manually import related model/image files into a dsts-loader folder."""
+        if not self.current_digimon:
+            QMessageBox.warning(self, "No Digimon Loaded", "Load or create a Digimon before importing related files.")
+            return
+
+        self.update_digimon_from_form()
+
+        dsts_loader_root = self._related_import_root_for_current_digimon()
+        if not dsts_loader_root:
+            selected_dir = QFileDialog.getExistingDirectory(
+                self,
+                "Select Reloaded II Mod or dsts-loader Directory for Related Files",
+                str(get_default_mod_loader_path()),
+                QFileDialog.Option.ShowDirsOnly
+            )
+            if not selected_dir:
+                return
+            dsts_loader_root = self._resolve_dsts_loader_root(Path(selected_dir), allow_create=True)
+
+        if not dsts_loader_root:
+            QMessageBox.warning(self, "Import Failed", "Could not resolve the selected dsts-loader folder.")
+            return
+
+        overwrite_reply = QMessageBox.question(
+            self,
+            "Import Related Files",
+            "Overwrite existing related files?\n\nChoose No to only copy files that are missing.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel,
+            QMessageBox.StandardButton.No
+        )
+        if overwrite_reply == QMessageBox.StandardButton.Cancel:
+            return
+
+        summary = self.import_related_files_to_dsts_loader(
+            dsts_loader_root,
+            self.current_digimon,
+            overwrite=overwrite_reply == QMessageBox.StandardButton.Yes,
+        )
+        message = self.format_related_import_summary(summary)
+        self.related_import_status_label.setText(message)
+
+        if summary.get("ok"):
+            QMessageBox.information(self, "Related Files Imported", message)
+        else:
+            QMessageBox.warning(self, "Import Failed", message)
+
     def refresh_digimon_list_view(self):
         """Apply current sort/filter settings to the Digimon combo box."""
         entries = list(getattr(self, 'digimon_entries', []))
@@ -7169,6 +7587,8 @@ class DigimonEditor(QMainWindow):
                 })
 
         self.refresh_digimon_list_view()
+        if hasattr(self, "related_source_combo"):
+            self.populate_related_source_combo()
 
         if not self.digimon_entries:
             self.digimon_list.clear()
@@ -7265,9 +7685,11 @@ class DigimonEditor(QMainWindow):
         # Sync animation reference - use template chr_id if available, otherwise use digimon's chr_id
         if hasattr(self, 'template_chr_id_for_animation'):
             self.animation_ref_edit.setText(self.template_chr_id_for_animation)
+            self.select_related_source_by_chr(self.template_chr_id_for_animation)
             delattr(self, 'template_chr_id_for_animation')  # Clear after use
         else:
             self.animation_ref_edit.setText(digimon.chr_id)
+            self.select_related_source_by_chr(digimon.chr_id)
 
         # Set stage combo box
         # Ensure stage_id is in valid range (0-14, based on generation_name.mbe CSV)
@@ -8665,6 +9087,12 @@ class DigimonEditor(QMainWindow):
             QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
             return None
 
+        if self.should_import_related_files():
+            summary = self.import_related_files_to_dsts_loader(dsts_loader_root, digimon, overwrite=False)
+            self.related_import_status_label.setText(self.format_related_import_summary(summary))
+            if not summary.get("ok"):
+                QMessageBox.warning(self, "Related File Import Failed", self.format_related_import_summary(summary))
+
         return options["mod_root"]
 
     def export_to_dlc(self):
@@ -8733,6 +9161,12 @@ class DigimonEditor(QMainWindow):
         # Always use merge mode to preserve other Digimon data
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
         if self._merge_digimon_to_dsts_loader(output_path, digimon, original_identity):
+            if self.should_import_related_files():
+                summary = self.import_related_files_to_dsts_loader(output_path, digimon, overwrite=False)
+                self.related_import_status_label.setText(self.format_related_import_summary(summary))
+                if not summary.get("ok"):
+                    QMessageBox.warning(self, "Related File Import Failed", self.format_related_import_summary(summary))
+
             self._upsert_imported_digimon(digimon, output_path)
             self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
