@@ -4531,6 +4531,19 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.load_button)
 
+        self.add_selected_to_mod_button = QPushButton("➕ Add Selected as New Entry")
+        self.add_selected_to_mod_button.clicked.connect(self.add_selected_to_active_mod)
+        self.add_selected_to_mod_button.setEnabled(False)
+        self.add_selected_to_mod_button.setToolTip(
+            "Clone the selected base/DLC/imported Digimon into the active loaded mod with fresh IDs.\n"
+            "Import or export a mod first so the editor knows which dsts-loader payload to update."
+        )
+        self.add_selected_to_mod_button.setStyleSheet(button_style.format(
+            color1="#14b8a6", color2="#0f766e",
+            hover1="#0f9f94", hover2="#115e59"
+        ))
+        button_layout.addWidget(self.add_selected_to_mod_button)
+
         self.new_button = QPushButton("➕ Create New")
         self.new_button.clicked.connect(self.launch_creation_wizard)
         self.new_button.setToolTip(
@@ -8269,10 +8282,10 @@ class DigimonEditor(QMainWindow):
 
     def on_digimon_selected(self, display_name: str):
         """Handle Digimon selection from list"""
-        if display_name:
-            self.load_button.setEnabled(True)
-        else:
-            self.load_button.setEnabled(False)
+        has_selection = bool(display_name)
+        self.load_button.setEnabled(has_selection)
+        if hasattr(self, "add_selected_to_mod_button"):
+            self.add_selected_to_mod_button.setEnabled(has_selection and self._active_dsts_loader_root() is not None)
 
     def load_selected_digimon(self):
         """Load the selected Digimon"""
@@ -8323,6 +8336,203 @@ class DigimonEditor(QMainWindow):
                 self.load_digimon_data(digimon)
             else:
                 QMessageBox.warning(self, "Error", f"Could not load Digimon {display_name}")
+
+    def _selected_digimon_entry(self) -> Optional[dict]:
+        """Return the currently selected list entry metadata."""
+        display_name = self.digimon_list.currentText() if hasattr(self, "digimon_list") else ""
+        entry = getattr(self, "digimon_data", {}).get(display_name)
+        return entry if isinstance(entry, dict) else None
+
+    def _digimon_from_entry(self, entry: dict) -> Optional[DigimonData]:
+        """Load a Digimon object from a base/DLC/imported list entry."""
+        chr_id = entry.get("chr_id", "")
+        if entry.get("imported") and hasattr(self.loader, "imported_digimon"):
+            for digimon in self.loader.imported_digimon:
+                if digimon.chr_id == chr_id:
+                    return digimon
+        return self.loader.get_digimon_by_chr_id(chr_id)
+
+    def _collect_used_digimon_ids(self) -> Set[int]:
+        """Collect Digimon IDs from base, DLC, imported rows, and the active mod payload."""
+        used_ids = set(self.loader.get_all_digimon_ids())
+        try:
+            for _dlc_id, dlc_status_file in self.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
+                rows = self.loader.load_csv(dlc_status_file)
+                for row in rows[1:]:
+                    if row and row[0]:
+                        try:
+                            used_ids.add(int(_clean_status_cell(row[0])))
+                        except (TypeError, ValueError):
+                            continue
+        except Exception:
+            pass
+
+        for digimon in getattr(self.loader, "imported_digimon", []):
+            try:
+                used_ids.add(int(getattr(digimon, "id", 0)))
+            except (TypeError, ValueError):
+                continue
+
+        active_root = self._active_dsts_loader_root()
+        if active_root:
+            try:
+                for status_file in self._dsts_loader_status_files(active_root):
+                    rows = self.loader.load_csv(status_file)
+                    for row in rows[1:]:
+                        if row and row[0]:
+                            try:
+                                used_ids.add(int(_clean_status_cell(row[0])))
+                            except (TypeError, ValueError):
+                                continue
+            except Exception:
+                pass
+
+        return {digimon_id for digimon_id in used_ids if digimon_id > 0}
+
+    def _collect_used_chr_ids(self) -> Set[str]:
+        """Collect Chr IDs from base, DLC, imported rows, and the active mod payload."""
+        used_chr_ids = set()
+        for from_dlc in (False, True):
+            try:
+                used_chr_ids.update(
+                    chr_id.strip().casefold()
+                    for chr_id in self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
+                    if chr_id
+                )
+            except Exception:
+                continue
+
+        for digimon in getattr(self.loader, "imported_digimon", []):
+            chr_id = str(getattr(digimon, "chr_id", "")).strip()
+            if chr_id:
+                used_chr_ids.add(chr_id.casefold())
+
+        active_root = self._active_dsts_loader_root()
+        if active_root:
+            try:
+                for status_file in self._dsts_loader_status_files(active_root):
+                    rows = self.loader.load_csv(status_file)
+                    for row in rows[1:]:
+                        if len(row) > FIELD_GUIDE_CHR_ID_COLUMN:
+                            chr_id = _clean_status_cell(row[FIELD_GUIDE_CHR_ID_COLUMN])
+                            if chr_id:
+                                used_chr_ids.add(chr_id.casefold())
+            except Exception:
+                pass
+
+        return used_chr_ids
+
+    def _next_free_digimon_id(self) -> int:
+        """Return the next unused Digimon ID across all loaded sources."""
+        used_ids = self._collect_used_digimon_ids()
+        candidate = (max(used_ids) + 1) if used_ids else 1000
+        while candidate in used_ids:
+            candidate += 1
+        return candidate
+
+    def _make_clone_char_key(self, source_name: str, digimon_id: int) -> str:
+        """Create a readable unique char_key for a cloned mod entry."""
+        compact_name = re.sub(r"[^A-Za-z0-9]+", "_", source_name or "").strip("_").upper()
+        if not compact_name:
+            compact_name = "DIGIMON"
+        return f"char_{compact_name}_{digimon_id}"
+
+    def add_selected_to_active_mod(self):
+        """Clone the selected Digimon into the active Reloaded II/dsts-loader mod."""
+        active_root = self._active_dsts_loader_root()
+        if not active_root:
+            QMessageBox.warning(
+                self,
+                "No Active Mod",
+                "Import or export a Reloaded II mod first.\n\n"
+                "After a mod is loaded, this button can add the selected Digimon as a new entry in that same dsts-loader payload."
+            )
+            return
+
+        entry = self._selected_digimon_entry()
+        if not entry:
+            QMessageBox.warning(self, "No Selection", "Select a Digimon from the list first.")
+            return
+
+        if self.has_unsaved_changes:
+            reply = QMessageBox.question(
+                self,
+                "Unsaved Changes",
+                f"You have unsaved changes to {self.current_digimon.name if self.current_digimon else 'the current Digimon'}.\n\n"
+                "Do you want to save before adding a new mod entry?",
+                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
+                QMessageBox.StandardButton.Save
+            )
+            if reply == QMessageBox.StandardButton.Cancel:
+                return
+            if reply == QMessageBox.StandardButton.Save:
+                self.save_current_digimon()
+                if self.has_unsaved_changes:
+                    return
+
+        template = self._digimon_from_entry(entry)
+        if not template:
+            QMessageBox.warning(self, "Load Failed", "Could not load the selected Digimon as a template.")
+            return
+
+        from copy import deepcopy
+        new_digimon = deepcopy(template)
+        source_name = template.name or entry.get("name", "Digimon")
+        source_chr_id = template.chr_id
+        animation_ref = getattr(template, "animation_ref", "") or source_chr_id
+
+        new_id = self._next_free_digimon_id()
+        new_chr_id = f"chr{new_id}"
+        used_chr_ids = self._collect_used_chr_ids()
+        while new_chr_id.casefold() in used_chr_ids:
+            new_id += 1
+            new_chr_id = f"chr{new_id}"
+
+        new_digimon.id = new_id
+        new_digimon.name = f"{source_name} Copy"
+        new_digimon.char_key = self._make_clone_char_key(source_name, new_id)
+        new_digimon.chr_id = new_chr_id
+        new_digimon.field_guide_id = first_free_field_guide_id(
+            self.loader,
+            new_chr_id,
+            exclude_digimon_ids={new_id},
+        )
+        new_digimon.script_id = new_id
+        new_digimon.animation_ref = animation_ref
+
+        if not self._merge_digimon_to_dsts_loader(
+            active_root,
+            new_digimon,
+            original_identity={},
+            animation_ref=animation_ref,
+            sync_form=False,
+        ):
+            QMessageBox.warning(self, "Add Failed", "Failed to merge the new Digimon entry into the active mod.")
+            return
+
+        self._upsert_imported_digimon(new_digimon, active_root)
+        self.load_digimon_list()
+        self.load_digimon_data(new_digimon)
+
+        display_name = f"📥 {new_digimon.name} ({new_digimon.chr_id})"
+        if self.get_source_mode() == "all":
+            display_name = f"{display_name} [Imported]"
+        index = self.digimon_list.findText(display_name, Qt.MatchFlag.MatchExactly)
+        if index >= 0:
+            self.digimon_list.setCurrentIndex(index)
+
+        QMessageBox.information(
+            self,
+            "New Mod Entry Added",
+            f"✅ Added {new_digimon.name} to the active mod.\n\n"
+            f"Template: {source_name} ({source_chr_id})\n"
+            f"New ID: {new_id}\n"
+            f"New Chr ID: {new_chr_id}\n"
+            f"Field Guide ID: {new_digimon.field_guide_id}\n\n"
+            "Edit the fields, then use Save to Loaded Source to update this mod entry."
+        )
 
     def load_digimon_data(self, digimon: DigimonData):
         """Load Digimon data into the editor"""
@@ -8678,6 +8888,8 @@ class DigimonEditor(QMainWindow):
         root = Path(dsts_loader_root)
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
+        if hasattr(self, "add_selected_to_mod_button") and hasattr(self, "digimon_list"):
+            self.add_selected_to_mod_button.setEnabled(bool(self.digimon_list.currentText()))
 
     def _active_dsts_loader_root(self) -> Optional[Path]:
         """Return the currently imported/exported dsts-loader payload, if any."""
