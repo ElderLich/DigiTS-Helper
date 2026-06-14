@@ -7807,6 +7807,7 @@ class DigimonEditor(QMainWindow):
         image_ops: List[Tuple[Path, Path]] = []
         destination_keys: Set[str] = set()
         skipped_unindexed: List[str] = []
+        skipped_missing_images: List[str] = []
 
         for image_stem_lower, image_paths in sorted(image_basenames.items()):
             old_token = token_by_lower.get(image_stem_lower)
@@ -7869,6 +7870,29 @@ class DigimonEditor(QMainWindow):
                 destination_keys.add(destination_key)
                 image_ops.append((image_path, destination))
 
+        # The .geom is allowed to reference a bumped texture only when that
+        # texture is actually available locally. Optional maps such as
+        # chr###a01l/m/n/s should keep pointing at the source game's files when
+        # the recolor did not import matching bumped copies.
+        planned_image_basenames = set(image_basenames.keys())
+        planned_image_basenames.update(destination.stem.lower() for _, destination in image_ops)
+        missing_image_mapping = {
+            old_token: new_token
+            for old_token, new_token in mapping.items()
+            if new_token.lower() not in planned_image_basenames
+        }
+        if missing_image_mapping:
+            for old_token, new_token in sorted(missing_image_mapping.items()):
+                skipped_missing_images.append(f"{old_token} -> {new_token}")
+                mapping.pop(old_token, None)
+
+            allowed_targets = {new_token.lower() for new_token in mapping.values()}
+            image_ops = [
+                (source, destination)
+                for source, destination in image_ops
+                if destination.stem.lower() in allowed_targets
+            ]
+
         if not mapping:
             return {
                 "ok": False,
@@ -7877,6 +7901,7 @@ class DigimonEditor(QMainWindow):
                     "This usually means the .geom files were already patched, or the images do not match the selected source Digimon."
                 ),
                 "skipped_unindexed": skipped_unindexed,
+                "skipped_missing_images": skipped_missing_images,
             }
 
         collisions = [
@@ -7897,6 +7922,7 @@ class DigimonEditor(QMainWindow):
             "mapping": mapping,
             "image_ops": image_ops,
             "skipped_unindexed": skipped_unindexed,
+            "skipped_missing_images": skipped_missing_images,
         }
 
     def rename_geom_textures_in_patch(self, dsts_loader_root: Path, source_entry: dict, target_chr_id: str) -> dict:
@@ -7940,6 +7966,7 @@ class DigimonEditor(QMainWindow):
             "replacement_counts": replacement_counts,
             "renamed_images": renamed_images,
             "skipped_unindexed": plan.get("skipped_unindexed", []),
+            "skipped_missing_images": plan.get("skipped_missing_images", []),
         }
 
     def format_geom_texture_rename_summary(self, summary: dict) -> str:
@@ -7953,7 +7980,19 @@ class DigimonEditor(QMainWindow):
             f"{total_replacements} replacements, "
             f"{len(summary.get('renamed_images', []))} images renamed, "
             f"{len(summary.get('backups', []))} .geom backups"
+            f"{self._format_geom_skip_suffix(summary)}"
         )
+
+    def _format_geom_skip_suffix(self, summary: dict) -> str:
+        """Append compact skip counts for .geom texture references left on source assets."""
+        missing_images = summary.get("skipped_missing_images", [])
+        unindexed = summary.get("skipped_unindexed", [])
+        parts = []
+        if missing_images:
+            parts.append(f"{len(missing_images)} missing local texture refs kept original")
+        if unindexed:
+            parts.append(f"{len(unindexed)} unindexed refs skipped")
+        return f" ({'; '.join(parts)})" if parts else ""
 
     def rename_geom_textures_now(self):
         """Run the integrated geom texture rename helper for the current mod patch folder."""
