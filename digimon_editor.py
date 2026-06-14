@@ -4,6 +4,8 @@ DTS Creator - Digimon Editor GUI using PyQt6
 
 import sys
 import os
+import json
+import re
 import textwrap
 from pathlib import Path
 from typing import Optional, List, Dict
@@ -30,11 +32,106 @@ FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
 FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
+RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
 
 
 def get_default_mod_loader_path() -> Path:
     """Return the preferred folder shown by dsts-loader/mod loader file dialogs."""
     return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
+
+
+def sanitize_mod_folder_name(value: str, fallback: str = "DSTS.digimon.CustomDigimon") -> str:
+    """Create a Windows-safe single folder name while preserving readable text."""
+    name = (value or "").strip()
+    name = re.sub(r'[<>:"/\\|?*\x00-\x1F]', "", name)
+    name = re.sub(r"\s+", " ", name).strip(" .")
+    return name or fallback
+
+
+def make_default_mod_folder_name(digimon_name: str) -> str:
+    compact_name = re.sub(r"[^A-Za-z0-9]+", "", digimon_name or "")
+    return f"DSTS.digimon.{compact_name or 'CustomDigimon'}"
+
+
+def make_mod_id_from_folder_name(folder_name: str) -> str:
+    mod_id = re.sub(r"[^A-Za-z0-9._-]+", "", folder_name or "")
+    return mod_id or "DSTS.digimon.CustomDigimon"
+
+
+def build_reloaded_mod_config(mod_id: str, mod_name: str, author: str, description: str, version: str = "1.0.0") -> dict:
+    """Build a Reloaded II ModConfig.json compatible with DSTS ModLoader + MVGL FileLoader."""
+    return {
+        "ModId": mod_id,
+        "ModName": mod_name,
+        "ModAuthor": author,
+        "ModVersion": version,
+        "ModDescription": description,
+        "ModDll": "",
+        "ModIcon": "",
+        "ModR2RManagedDll32": "",
+        "ModR2RManagedDll64": "",
+        "ModNativeDll32": "",
+        "ModNativeDll64": "",
+        "Tags": [],
+        "CanUnload": None,
+        "HasExports": None,
+        "IsLibrary": False,
+        "ReleaseMetadataFileName": f"{mod_id}.ReleaseMetadata.json",
+        "PluginData": {
+            "GitHubDependencies": {
+                "IdToConfigMap": {
+                    "DSTS.ModLoader": {
+                        "Config": {
+                            "UserName": "RyoTune",
+                            "RepositoryName": "DSTS.ModLoader",
+                            "UseReleaseTag": False,
+                            "AssetFileName": "Mod.zip"
+                        },
+                        "ReleaseMetadataName": "DSTS.ModLoader.ReleaseMetadata.json"
+                    },
+                    "MVGL.FileLoader.Reloaded": {
+                        "Config": {
+                            "UserName": "RyoTune",
+                            "RepositoryName": "MVGL.FileLoader",
+                            "UseReleaseTag": False,
+                            "AssetFileName": "Mod.zip"
+                        },
+                        "ReleaseMetadataName": "MVGL.FileLoader.Reloaded.ReleaseMetadata.json"
+                    },
+                    "Reloaded.Memory.SigScan.ReloadedII": {
+                        "Config": {
+                            "UserName": "Reloaded-Project",
+                            "RepositoryName": "Reloaded.Memory.SigScan",
+                            "UseReleaseTag": False,
+                            "AssetFileName": "Mod.zip"
+                        },
+                        "ReleaseMetadataName": "Reloaded.Memory.SigScan.ReloadedII.ReleaseMetadata.json"
+                    },
+                    "reloaded.sharedlib.hooks": {
+                        "Config": {
+                            "UserName": "Sewer56",
+                            "RepositoryName": "Reloaded.SharedLib.Hooks.ReloadedII",
+                            "UseReleaseTag": True,
+                            "AssetFileName": "reloaded.sharedlib.hooks.zip"
+                        },
+                        "ReleaseMetadataName": "Sewer56.Update.ReleaseMetadata.json"
+                    }
+                }
+            }
+        },
+        "IsUniversalMod": False,
+        "ModDependencies": [
+            "DSTS.ModLoader",
+            "MVGL.FileLoader.Reloaded"
+        ],
+        "OptionalDependencies": [],
+        "SupportedAppId": [
+            RELOADED_SUPPORTED_APP_ID
+        ],
+        "ProjectUrl": "",
+        "CreatorUrl": "",
+        "IsSeparator": False
+    }
 
 
 class SpinBoxWheelGuard(QObject):
@@ -1375,16 +1472,10 @@ class DigimonCreationWizard(QWizard):
     def _write_profile_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write digimon_profile.ap.csv"""
         import csv
-        import textwrap
 
         header = 'string2 0,string 1'
         profile = digimon.profile_text if digimon.profile_text else f"A mysterious Digimon known as {digimon.name}."
-
-        # If profile doesn't already have line breaks, add them at reasonable intervals
-        # Check if profile has newlines already
-        if '\n' not in profile and len(profile) > 50:
-            # Wrap text to ~50 characters per line to match base game format (max 55-58)
-            profile = '\n'.join(textwrap.wrap(profile, width=50, break_long_words=False, break_on_hyphens=False))
+        profile = format_profile_text_for_game(profile)
 
         # Use correct profile key format: digimon_{id}_profile
         profile_key = f"digimon_{digimon.id}_profile"
@@ -4245,7 +4336,7 @@ class DigimonEditor(QMainWindow):
         self.save_button = QPushButton("💾 Save Changes")
         self.save_button.clicked.connect(self.save_current_digimon)
         self.save_button.setEnabled(False)
-        self.save_button.setToolTip("Save changes to the current Digimon\n• Base Game → Saves to .mbe files\n• DLC → Saves to DLC files\n• Imported → Choose save location")
+        self.save_button.setToolTip("Save changes to the current Digimon\n• Base Game → Saves to extracted files\n• DLC → Saves to helper DLC workspace\n• Imported → Choose save location")
         self.save_button.setStyleSheet(button_style.format(
             color1="#f093fb", color2="#f5576c",
             hover1="#de7fe9", hover2="#e34556"
@@ -4258,12 +4349,12 @@ class DigimonEditor(QMainWindow):
         separator.setStyleSheet("background-color: #dee2e6; border-radius: 1px;")
         button_layout.addWidget(separator)
 
-        self.export_dlc_button = QPushButton("📦 Export to DLC")
+        self.export_dlc_button = QPushButton("📦 Export Reloaded II Mod")
         self.export_dlc_button.clicked.connect(self.export_to_dlc)
         self.export_dlc_button.setEnabled(False)
         self.export_dlc_button.setToolTip(
-            "Export the current Digimon into the helper DLC workspace:\n"
-            r"D:\Digimon Modding\Programs\DigiTS Helper\DLC\addcont_17.dx11"
+            "Create/update a Reloaded II mod folder with ModConfig.json and dsts-loader files.\n"
+            f"Default folder: {get_default_mod_loader_path()}"
         )
         self.export_dlc_button.setStyleSheet(button_style.format(
             color1="#4CAF50", color2="#45a049",
@@ -4914,18 +5005,12 @@ class DigimonEditor(QMainWindow):
         ref_group = QGroupBox("References")
         ref_layout = QGridLayout(ref_group)
 
-        # Field Guide ID
-        ref_layout.addWidget(QLabel("Field Guide ID:"), 0, 0)
-        field_guide_hint = QLabel("Edit on the Basic Info tab")
-        field_guide_hint.setStyleSheet("color: #666; font-style: italic;")
-        ref_layout.addWidget(field_guide_hint, 0, 1)
-
         # Script ID
-        ref_layout.addWidget(QLabel("Script ID:"), 1, 0)
+        ref_layout.addWidget(QLabel("Script ID:"), 0, 0)
         self.script_id_spin = QSpinBox()
         self.script_id_spin.setRange(-1, 99999)
         self.script_id_spin.setValue(-1)
-        ref_layout.addWidget(self.script_id_spin, 1, 1)
+        ref_layout.addWidget(self.script_id_spin, 0, 1)
 
         layout.addWidget(ref_group)
         layout.addStretch()
@@ -7917,7 +8002,7 @@ class DigimonEditor(QMainWindow):
             f"Animation Reference: {template_chr_id}\n\n"
             f"The new Digimon has a unique chr_id ({new_chr_id})\n"
             f"but uses animations from {template_chr_id}.\n\n"
-            f"Customize the stats and click 'Export to DLC'."
+            f"Customize the stats and click 'Export Reloaded II Mod'."
         )
 
         # Refresh the digimon list to show the new Digimon
@@ -7958,11 +8043,11 @@ class DigimonEditor(QMainWindow):
             dialog.setText(f"Where would you like to save {self.current_digimon.name}?")
             dialog.setInformativeText(
                 "📥 dsts-loader: Update the .ap.csv files\n"
-                "📦 DLC: Add to DLC files"
+                "📦 Reloaded II Mod: Create/update a ready-to-load mod folder"
             )
 
             dsts_button = dialog.addButton("📥 Save to dsts-loader", QMessageBox.ButtonRole.AcceptRole)
-            dlc_button = dialog.addButton("📦 Save to DLC", QMessageBox.ButtonRole.ActionRole)
+            dlc_button = dialog.addButton("📦 Export Reloaded II Mod", QMessageBox.ButtonRole.ActionRole)
             cancel_button = dialog.addButton("Cancel", QMessageBox.ButtonRole.RejectRole)
 
             dialog.exec()
@@ -7975,8 +8060,7 @@ class DigimonEditor(QMainWindow):
                 self.save_to_dsts_loader(self.current_digimon)
                 return
             elif clicked == dlc_button:
-                # Save to DLC
-                self.save_to_dlc(self.current_digimon, chr_id_to_reload)
+                self.export_digimon_to_reloaded_mod(self.current_digimon)
                 return
 
         # Check if this Digimon is from DLC or base game
@@ -8104,8 +8188,149 @@ class DigimonEditor(QMainWindow):
                 f"Check the console for details."
             )
 
+    def get_reloaded_mod_export_options(self, digimon: DigimonData) -> Optional[dict]:
+        """Ask for Reloaded II mod folder and ModConfig metadata."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Export Reloaded II Mod")
+        dialog.setMinimumWidth(620)
+
+        layout = QVBoxLayout(dialog)
+
+        info = QLabel(
+            "This creates a Reloaded II mod folder with ModConfig.json and a dsts-loader payload."
+        )
+        info.setWordWrap(True)
+        info.setStyleSheet("color: #555; padding: 8px; background-color: #f8f9fa; border-radius: 6px;")
+        layout.addWidget(info)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        folder_edit = QLineEdit()
+        folder_edit.setText(make_default_mod_folder_name(digimon.name))
+        folder_edit.setPlaceholderText("Example: DSTS.digimon.Youkomon or Youkomon")
+        form.addRow("Folder Name:", folder_edit)
+
+        mod_name_edit = QLineEdit()
+        mod_name_edit.setText(digimon.name or "Custom Digimon")
+        form.addRow("Mod Name:", mod_name_edit)
+
+        author_edit = QLineEdit()
+        author_edit.setText(getattr(self, "last_mod_author", os.environ.get("USERNAME", "")))
+        author_edit.setPlaceholderText("Your name")
+        form.addRow("Author:", author_edit)
+
+        version_edit = QLineEdit()
+        version_edit.setText("1.0.0")
+        form.addRow("Version:", version_edit)
+
+        description_edit = QTextEdit()
+        description_edit.setPlainText(f"Adds {digimon.name} to Digimon Story Time Stranger.")
+        description_edit.setMaximumHeight(90)
+        form.addRow("Description:", description_edit)
+
+        path_preview = QLabel()
+        path_preview.setWordWrap(True)
+        path_preview.setStyleSheet("color: #495057; padding: 8px; background-color: #eef4ff; border-radius: 6px;")
+        form.addRow("Output:", path_preview)
+
+        layout.addLayout(form)
+
+        result = {}
+
+        def update_preview():
+            folder_name = sanitize_mod_folder_name(folder_edit.text(), make_default_mod_folder_name(digimon.name))
+            mod_root = get_default_mod_loader_path() / folder_name
+            path_preview.setText(str(mod_root / "dsts-loader"))
+
+        def validate_and_accept():
+            folder_name = sanitize_mod_folder_name(folder_edit.text(), make_default_mod_folder_name(digimon.name))
+            mod_name = mod_name_edit.text().strip()
+            author = author_edit.text().strip()
+            version = version_edit.text().strip() or "1.0.0"
+            description = description_edit.toPlainText().strip()
+
+            if not mod_name:
+                QMessageBox.warning(dialog, "Missing Mod Name", "Please enter a mod name.")
+                return
+            if not author:
+                QMessageBox.warning(dialog, "Missing Author", "Please enter your user/author name.")
+                return
+            if not description:
+                QMessageBox.warning(dialog, "Missing Description", "Please enter a mod description.")
+                return
+
+            mod_root = get_default_mod_loader_path() / folder_name
+            if mod_root.exists():
+                reply = QMessageBox.question(
+                    dialog,
+                    "Update Existing Mod Folder",
+                    f"The folder already exists:\n{mod_root}\n\n"
+                    "Update ModConfig.json and merge this Digimon into its dsts-loader files?",
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                    QMessageBox.StandardButton.Yes
+                )
+                if reply == QMessageBox.StandardButton.No:
+                    return
+
+            result.update({
+                "folder_name": folder_name,
+                "mod_id": make_mod_id_from_folder_name(folder_name),
+                "mod_name": mod_name,
+                "author": author,
+                "version": version,
+                "description": description,
+                "mod_root": mod_root,
+                "dsts_loader_root": mod_root / "dsts-loader"
+            })
+            self.last_mod_author = author
+            dialog.accept()
+
+        folder_edit.textChanged.connect(update_preview)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.button(QDialogButtonBox.StandardButton.Ok).setText("Export Mod")
+        buttons.accepted.connect(validate_and_accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+
+        update_preview()
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return None
+        return result
+
+    def write_reloaded_mod_config(self, options: dict):
+        """Write ModConfig.json for a generated Reloaded II mod folder."""
+        mod_root = options["mod_root"]
+        mod_root.mkdir(parents=True, exist_ok=True)
+        config = build_reloaded_mod_config(
+            mod_id=options["mod_id"],
+            mod_name=options["mod_name"],
+            author=options["author"],
+            description=options["description"],
+            version=options["version"]
+        )
+        with open(mod_root / "ModConfig.json", "w", encoding="utf-8") as f:
+            json.dump(config, f, indent=2)
+            f.write("\n")
+
+    def export_digimon_to_reloaded_mod(self, digimon: DigimonData) -> Optional[Path]:
+        """Create/update a Reloaded II mod folder and merge this Digimon into dsts-loader files."""
+        options = self.get_reloaded_mod_export_options(digimon)
+        if not options:
+            return None
+
+        self.write_reloaded_mod_config(options)
+        dsts_loader_root = options["dsts_loader_root"]
+        dsts_loader_root.mkdir(parents=True, exist_ok=True)
+
+        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon):
+            QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
+            return None
+
+        return options["mod_root"]
+
     def export_to_dlc(self):
-        """Export the current Digimon to DLC files"""
+        """Export the current Digimon as a Reloaded II compatible mod folder."""
         if not self.current_digimon:
             return
         if not self.validate_field_guide_id():
@@ -8114,41 +8339,16 @@ class DigimonEditor(QMainWindow):
         # Update current digimon with form data
         self.update_digimon_from_form()
 
-        # Don't sync chr_id for DLC export - use animation_ref separately
-        # chr_id = unique ID for this Digimon (e.g., chr1000)
-        # animation_ref = which chr_id to use for animations (e.g., chr805)
-
-        # Confirm export
-        reply = QMessageBox.question(
-            self,
-            "Export to DLC",
-            f"Export {self.current_digimon.name} (ID: {self.current_digimon.id}) to DLC files?\n\n"
-            f"This will create/update entries in:\n"
-            f"- the configured mod DLC data folder\n"
-            f"- the configured mod DLC English text folder\n\n"
-            f"Base game files will NOT be modified.",
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
-        )
-
-        if reply == QMessageBox.StandardButton.No:
-            return
-
-        # Export to DLC
-        dlc_exporter = DLCExporter(self.loader)
-
-        # Pass the animation reference chr_id
-        animation_ref_chr_id = self.animation_ref_edit.text().strip() if self.animation_ref_edit.text().strip() else self.current_digimon.chr_id
-
-        if dlc_exporter.save_digimon_to_dlc(self.current_digimon, animation_ref_chr_id):
+        mod_root = self.export_digimon_to_reloaded_mod(self.current_digimon)
+        if mod_root:
+            self.clear_modified_flag()
             QMessageBox.information(
                 self,
                 "Success",
-                f"✅ {self.current_digimon.name} exported to DLC!\n\n"
-                f"The Digimon has been added to DLC files and will appear in-game\n"
-                f"without modifying the base game data."
+                f"✅ {self.current_digimon.name} exported as a Reloaded II mod!\n\n"
+                f"Mod folder:\n{mod_root}\n\n"
+                f"dsts-loader payload:\n{mod_root / 'dsts-loader'}"
             )
-        else:
-            QMessageBox.warning(self, "Error", "Failed to export to DLC")
 
     def save_to_dsts_loader(self, digimon: DigimonData):
         """Save Digimon back to dsts-loader format (merges with existing data)"""
@@ -9435,7 +9635,9 @@ class DigimonEditor(QMainWindow):
             self._merge_csv_row(evolution_cond_file, digimon, wizard._write_evolution_condition_ap_csv, lambda r: len(r) > 0 and r[0] == str(digimon.id))
 
             # Merge anim_setting - need to handle special signature
-            anim_ref = digimon.chr_id  # Use chr_id as animation reference by default
+            anim_ref = digimon.chr_id
+            if hasattr(self, "animation_ref_edit") and self.animation_ref_edit.text().strip():
+                anim_ref = self.animation_ref_edit.text().strip()
             anim_file = patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv"
             resolved_anim_file = self._resolve_prefixed_file(anim_file)
             import tempfile
@@ -9485,7 +9687,13 @@ class DigimonEditor(QMainWindow):
 
             profile_file = patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv"
             profile_key = f"digimon_{digimon.id}_profile"
-            self._merge_csv_row(profile_file, digimon, wizard._write_profile_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == profile_key)
+            self._merge_csv_row(
+                profile_file,
+                digimon,
+                wizard._write_profile_ap_csv,
+                lambda r: len(r) > 0 and r[0].strip('"') == profile_key,
+                drop_malformed=True
+            )
 
             belong_file = patch_text / "belong.mbe" / "000_Sheet1.ap.csv"
             self._merge_csv_row(belong_file, digimon, wizard._write_belong_ap_csv, lambda r: len(r) > 0 and r[0] == str(digimon.id))
@@ -9502,7 +9710,7 @@ class DigimonEditor(QMainWindow):
             traceback.print_exc()
             return False
 
-    def _merge_csv_row(self, filepath: Path, digimon_or_data, write_func, find_row_func):
+    def _merge_csv_row(self, filepath: Path, digimon_or_data, write_func, find_row_func, drop_malformed: bool = False):
         """Merge a single row into a CSV file, preserving other rows"""
         import csv
         import tempfile
@@ -9522,9 +9730,8 @@ class DigimonEditor(QMainWindow):
             if temp_file.exists():
                 with open(temp_file, 'r', encoding='utf-8') as f:
                     header_str = f.readline().rstrip('\n\r')  # Read header as raw string
-                    for line in f:
-                        reader = csv.reader([line])
-                        new_rows.extend(reader)
+                    reader = csv.reader(f)
+                    new_rows = list(reader)
                 temp_file.unlink()  # Delete temp file
             else:
                 print(f"Warning: Temp file {temp_file} was not created")
@@ -9541,9 +9748,12 @@ class DigimonEditor(QMainWindow):
                     existing_header = f.readline().rstrip('\n\r')
                     if existing_header:
                         header_to_use = existing_header  # Use existing header if file exists
-                    for line in f:
-                        reader = csv.reader([line])
-                        existing_rows.extend(reader)
+                    reader = csv.reader(f)
+                    existing_rows = list(reader)
+
+            if drop_malformed and new_rows:
+                expected_columns = len(new_rows[0])
+                existing_rows = [row for row in existing_rows if len(row) == expected_columns]
 
             # Find and replace existing row or add new
             found = False
@@ -9587,10 +9797,8 @@ class DigimonEditor(QMainWindow):
             # Read new rows
             with open(temp_file, 'r', encoding='utf-8') as f:
                 header_str = f.readline().rstrip('\n\r')
-                new_rows = []
-                for line in f:
-                    reader = csv.reader([line])
-                    new_rows.extend(reader)
+                reader = csv.reader(f)
+                new_rows = list(reader)
             temp_file.unlink()
 
             # Resolve filepath to handle any numeric prefix variation
@@ -9604,9 +9812,8 @@ class DigimonEditor(QMainWindow):
                         existing_header = f.readline().rstrip('\n\r')
                         if existing_header:
                             header_to_use = existing_header
-                        for line in f:
-                            reader = csv.reader([line])
-                            existing_rows.extend(reader)
+                        reader = csv.reader(f)
+                        existing_rows = list(reader)
 
             # Remove existing entries for this digimon (both as source and target)
             filtered_rows = []
