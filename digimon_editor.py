@@ -8,7 +8,7 @@ import json
 import re
 import textwrap
 from pathlib import Path
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Iterable
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QLineEdit, QSpinBox, QComboBox, QPushButton, QTabWidget,
@@ -211,13 +211,21 @@ def _clean_status_cell(value: str) -> str:
     return str(value).strip().strip('"')
 
 
-def collect_field_guide_usage(loader: Optional[MBELoader], exclude_chr_id: str = "") -> Dict[int, List[str]]:
+def collect_field_guide_usage(
+    loader: Optional[MBELoader],
+    exclude_chr_id: str = "",
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+) -> Dict[int, List[str]]:
     """Collect occupied custom field guide IDs from base, DLC, and imported data."""
     usage: Dict[int, List[str]] = {}
     if not loader:
         return usage
 
-    exclude_chr_id = exclude_chr_id.strip().casefold()
+    excluded_chr_ids = {exclude_chr_id.strip().casefold()} if exclude_chr_id else set()
+    if exclude_chr_ids:
+        excluded_chr_ids.update(str(chr_id).strip().casefold() for chr_id in exclude_chr_ids if str(chr_id).strip())
+    excluded_digimon_ids = {str(digimon_id).strip() for digimon_id in (exclude_digimon_ids or []) if str(digimon_id).strip()}
 
     def add_rows(rows: List[List[str]], source_name: str):
         for row in rows[1:]:
@@ -231,10 +239,10 @@ def collect_field_guide_usage(loader: Optional[MBELoader], exclude_chr_id: str =
                 continue
 
             chr_id = _clean_status_cell(row[FIELD_GUIDE_CHR_ID_COLUMN]) if len(row) > FIELD_GUIDE_CHR_ID_COLUMN else ""
-            if exclude_chr_id and chr_id.casefold() == exclude_chr_id:
+            digimon_id = _clean_status_cell(row[FIELD_GUIDE_DIGIMON_ID_COLUMN]) if len(row) > FIELD_GUIDE_DIGIMON_ID_COLUMN else "?"
+            if chr_id.casefold() in excluded_chr_ids or digimon_id in excluded_digimon_ids:
                 continue
 
-            digimon_id = _clean_status_cell(row[FIELD_GUIDE_DIGIMON_ID_COLUMN]) if len(row) > FIELD_GUIDE_DIGIMON_ID_COLUMN else "?"
             label = f"{source_name}: {chr_id or 'unknown chr'} (Digimon ID {digimon_id})"
             usage.setdefault(field_guide_id, []).append(label)
 
@@ -271,7 +279,8 @@ def collect_field_guide_usage(loader: Optional[MBELoader], exclude_chr_id: str =
     for digimon in getattr(loader, "imported_digimon", []):
         field_guide_id = getattr(digimon, "field_guide_id", -1)
         chr_id = getattr(digimon, "chr_id", "")
-        if exclude_chr_id and chr_id.strip().casefold() == exclude_chr_id:
+        digimon_id = str(getattr(digimon, "id", "")).strip()
+        if chr_id.strip().casefold() in excluded_chr_ids or digimon_id in excluded_digimon_ids:
             continue
         if FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
             usage.setdefault(field_guide_id, []).append(
@@ -281,17 +290,29 @@ def collect_field_guide_usage(loader: Optional[MBELoader], exclude_chr_id: str =
     return usage
 
 
-def first_free_field_guide_id(loader: Optional[MBELoader], exclude_chr_id: str = "") -> int:
-    occupied = set(collect_field_guide_usage(loader, exclude_chr_id))
+def first_free_field_guide_id(
+    loader: Optional[MBELoader],
+    exclude_chr_id: str = "",
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+) -> int:
+    occupied = set(collect_field_guide_usage(loader, exclude_chr_id, exclude_chr_ids, exclude_digimon_ids))
     for field_guide_id in range(FIELD_GUIDE_CUSTOM_MIN, FIELD_GUIDE_CUSTOM_MAX + 1):
         if field_guide_id not in occupied:
             return field_guide_id
     return -1
 
 
-def choose_field_guide_id(parent: QWidget, loader: Optional[MBELoader], current_value: int = -1, exclude_chr_id: str = "") -> Optional[int]:
-    usage = collect_field_guide_usage(loader, exclude_chr_id)
-    first_free = first_free_field_guide_id(loader, exclude_chr_id)
+def choose_field_guide_id(
+    parent: QWidget,
+    loader: Optional[MBELoader],
+    current_value: int = -1,
+    exclude_chr_id: str = "",
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+) -> Optional[int]:
+    usage = collect_field_guide_usage(loader, exclude_chr_id, exclude_chr_ids, exclude_digimon_ids)
+    first_free = first_free_field_guide_id(loader, exclude_chr_id, exclude_chr_ids, exclude_digimon_ids)
 
     dialog = QDialog(parent)
     dialog.setWindowTitle("Select Field Guide ID")
@@ -3814,11 +3835,14 @@ class DigimonEditor(QMainWindow):
 
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
+        identity_values = self._current_identity_values()
         chosen_id = choose_field_guide_id(
             self,
             self.loader,
             self.field_guide_id_spin.value(),
-            self.chr_id_edit.text().strip()
+            self.chr_id_edit.text().strip(),
+            identity_values["chr_ids"],
+            identity_values["digimon_ids"],
         )
         if chosen_id is not None:
             self.field_guide_id_spin.setValue(chosen_id)
@@ -3835,7 +3859,13 @@ class DigimonEditor(QMainWindow):
             return True
 
         if FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
-            usage = collect_field_guide_usage(self.loader, self.chr_id_edit.text().strip())
+            identity_values = self._current_identity_values()
+            usage = collect_field_guide_usage(
+                self.loader,
+                self.chr_id_edit.text().strip(),
+                identity_values["chr_ids"],
+                identity_values["digimon_ids"],
+            )
             if field_guide_id in usage:
                 QMessageBox.warning(
                     self,
@@ -4343,9 +4373,12 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.new_button)
 
-        self.import_button = QPushButton("📥 Import from dsts-loader")
+        self.import_button = QPushButton("📥 Import Mod / dsts-loader")
         self.import_button.clicked.connect(self.import_from_dsts_loader)
-        self.import_button.setToolTip("Import Digimon from dsts-loader .ap.csv files\nAllows you to edit previously exported Digimon")
+        self.import_button.setToolTip(
+            "Import Digimon from a Reloaded II mod folder or its dsts-loader payload.\n"
+            "Imported Digimon remember this folder for Save Changes."
+        )
         self.import_button.setStyleSheet(button_style.format(
             color1="#f59e0b", color2="#d97706",
             hover1="#d97706", hover2="#b45309"
@@ -4362,10 +4395,15 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.remove_button)
 
-        self.save_button = QPushButton("💾 Save Changes")
+        self.save_button = QPushButton("💾 Save to Loaded Source")
         self.save_button.clicked.connect(self.save_current_digimon)
         self.save_button.setEnabled(False)
-        self.save_button.setToolTip("Save changes to the current Digimon\n• Base Game → Saves to extracted files\n• DLC → Saves to helper DLC workspace\n• Imported → Choose save location")
+        self.save_button.setToolTip(
+            "Update the currently loaded source.\n"
+            "• Base Game -> extracted base files\n"
+            "• DLC -> helper DLC workspace\n"
+            "• Imported mod -> same remembered dsts-loader payload"
+        )
         self.save_button.setStyleSheet(button_style.format(
             color1="#f093fb", color2="#f5576c",
             hover1="#de7fe9", hover2="#e34556"
@@ -4378,11 +4416,12 @@ class DigimonEditor(QMainWindow):
         separator.setStyleSheet("background-color: #dee2e6; border-radius: 1px;")
         button_layout.addWidget(separator)
 
-        self.export_dlc_button = QPushButton("📦 Export Reloaded II Mod")
+        self.export_dlc_button = QPushButton("📦 Export / Copy Mod")
         self.export_dlc_button.clicked.connect(self.export_to_dlc)
         self.export_dlc_button.setEnabled(False)
         self.export_dlc_button.setToolTip(
-            "Create/update a Reloaded II mod folder with ModConfig.json and dsts-loader files.\n"
+            "Create or copy into a Reloaded II mod folder with ModConfig.json and dsts-loader files.\n"
+            "For an imported mod, Save to Loaded Source is enough when you only want to update the same mod.\n"
             f"Default folder: {get_default_mod_loader_path()}"
         )
         self.export_dlc_button.setStyleSheet(button_style.format(
@@ -7135,6 +7174,7 @@ class DigimonEditor(QMainWindow):
     def load_digimon_data(self, digimon: DigimonData):
         """Load Digimon data into the editor"""
         self.current_digimon = digimon
+        self._remember_loaded_identity(digimon)
         self.current_digimon_label.setText(f"✏️ Editing: {digimon.name} ({digimon.chr_id})")
 
         # Clear unsaved changes flag when loading new Digimon
@@ -7281,6 +7321,49 @@ class DigimonEditor(QMainWindow):
         self.save_button.setEnabled(True)
         self.export_dlc_button.setEnabled(True)
         self.clear_modified_flag()
+
+    def _remember_loaded_identity(self, digimon: DigimonData):
+        """Snapshot the row identity originally loaded into the form."""
+        self.loaded_digimon_identity = {
+            "id": getattr(digimon, "id", 0),
+            "chr_id": getattr(digimon, "chr_id", ""),
+            "char_key": getattr(digimon, "char_key", ""),
+            "field_guide_id": getattr(digimon, "field_guide_id", -1),
+            "imported_dsts_loader_root": getattr(digimon, "imported_dsts_loader_root", ""),
+            "imported_mod_root": getattr(digimon, "imported_mod_root", ""),
+        }
+
+    def _current_identity_values(self) -> dict:
+        """Return current and originally loaded IDs used for validation/merge matching."""
+        identity = getattr(self, "loaded_digimon_identity", {}) or {}
+        chr_ids = {self.chr_id_edit.text().strip()}
+        raw_digimon_ids = {self.id_spin.value()}
+        char_keys = {self.char_key_edit.text().strip()}
+
+        if self.current_digimon:
+            chr_ids.add(getattr(self.current_digimon, "chr_id", ""))
+            raw_digimon_ids.add(getattr(self.current_digimon, "id", 0))
+            char_keys.add(getattr(self.current_digimon, "char_key", ""))
+
+        chr_ids.add(identity.get("chr_id", ""))
+        raw_digimon_ids.add(identity.get("id", 0))
+        char_keys.add(identity.get("char_key", ""))
+
+        digimon_ids = set()
+        for value in raw_digimon_ids:
+            try:
+                parsed = int(value)
+            except (TypeError, ValueError):
+                continue
+            if parsed > 0:
+                digimon_ids.add(parsed)
+
+        return {
+            "chr_ids": {value for value in chr_ids if value},
+            "digimon_ids": digimon_ids,
+            "char_keys": {value for value in char_keys if value},
+            "identity": identity,
+        }
 
     def launch_creation_wizard(self):
         """Launch the Digimon creation wizard"""
@@ -8228,7 +8311,10 @@ class DigimonEditor(QMainWindow):
                 self.save_to_dsts_loader(self.current_digimon)
                 return
             elif clicked == dlc_button:
-                self.export_digimon_to_reloaded_mod(self.current_digimon)
+                self.export_digimon_to_reloaded_mod(
+                    self.current_digimon,
+                    dict(getattr(self, "loaded_digimon_identity", {}) or {})
+                )
                 return
 
         # Check if this Digimon is from DLC or base game
@@ -8481,7 +8567,7 @@ class DigimonEditor(QMainWindow):
             json.dump(config, f, indent=2)
             f.write("\n")
 
-    def export_digimon_to_reloaded_mod(self, digimon: DigimonData) -> Optional[Path]:
+    def export_digimon_to_reloaded_mod(self, digimon: DigimonData, original_identity: Optional[dict] = None) -> Optional[Path]:
         """Create/update a Reloaded II mod folder and merge this Digimon into dsts-loader files."""
         options = self.get_reloaded_mod_export_options(digimon)
         if not options:
@@ -8491,7 +8577,7 @@ class DigimonEditor(QMainWindow):
         dsts_loader_root = options["dsts_loader_root"]
         dsts_loader_root.mkdir(parents=True, exist_ok=True)
 
-        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon):
+        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon, original_identity):
             QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
             return None
 
@@ -8507,7 +8593,8 @@ class DigimonEditor(QMainWindow):
         # Update current digimon with form data
         self.update_digimon_from_form()
 
-        mod_root = self.export_digimon_to_reloaded_mod(self.current_digimon)
+        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        mod_root = self.export_digimon_to_reloaded_mod(self.current_digimon, original_identity)
         if mod_root:
             self.clear_modified_flag()
             QMessageBox.information(
@@ -8560,8 +8647,10 @@ class DigimonEditor(QMainWindow):
                 has_existing = True
 
         # Always use merge mode to preserve other Digimon data
-        if self._merge_digimon_to_dsts_loader(output_path, digimon):
+        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        if self._merge_digimon_to_dsts_loader(output_path, digimon, original_identity):
             self._upsert_imported_digimon(digimon, output_path)
+            self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
             if has_existing:
                 QMessageBox.information(
@@ -9681,7 +9770,8 @@ class DigimonEditor(QMainWindow):
 
                     if clicked == merge_button:
                         # Merge: Update only the current Digimon, preserve others
-                        if self._merge_digimon_to_dsts_loader(output_path, self.current_digimon):
+                        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+                        if self._merge_digimon_to_dsts_loader(output_path, self.current_digimon, original_identity):
                             QMessageBox.information(
                                 self,
                                 "Success",
@@ -9694,7 +9784,8 @@ class DigimonEditor(QMainWindow):
                     # else continue with overwrite (below)
                 else:
                     # No existing data, just export single Digimon (this creates new files with just this Digimon)
-                    if self._merge_digimon_to_dsts_loader(output_path, self.current_digimon):
+                    original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+                    if self._merge_digimon_to_dsts_loader(output_path, self.current_digimon, original_identity):
                         QMessageBox.information(
                             self,
                             "Success",
@@ -9758,7 +9849,7 @@ class DigimonEditor(QMainWindow):
             else:
                 QMessageBox.warning(self, "Error", "Failed to export CSV files")
 
-    def _merge_digimon_to_dsts_loader(self, base_path: Path, digimon: DigimonData) -> bool:
+    def _merge_digimon_to_dsts_loader(self, base_path: Path, digimon: DigimonData, original_identity: Optional[dict] = None) -> bool:
         """Merge a single Digimon into existing dsts-loader files, preserving other entries"""
         try:
             from pathlib import Path
@@ -9791,32 +9882,52 @@ class DigimonEditor(QMainWindow):
             # Keep field guide/script diagnostics available without noisy normal exports.
             debug_log(f"Writing digimon - field_guide_id={digimon.field_guide_id}, script_id={digimon.script_id}")
 
+            original_identity = original_identity or {}
+            match_ids = {str(digimon.id)}
+            if original_identity.get("id"):
+                match_ids.add(str(original_identity["id"]))
+            match_chr_ids = {digimon.chr_id}
+            if original_identity.get("chr_id"):
+                match_chr_ids.add(str(original_identity["chr_id"]))
+            match_char_keys = {digimon.char_key}
+            if original_identity.get("char_key"):
+                match_char_keys.add(str(original_identity["char_key"]))
+            match_profile_keys = {f"digimon_{digimon_id}_profile" for digimon_id in match_ids if digimon_id}
+
+            def cell(row, index: int) -> str:
+                return row[index].strip('"') if len(row) > index and row[index] else ""
+
             # Merge digimon_status_data
             status_file = patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv"
-            self._merge_csv_row(status_file, digimon, wizard._write_digimon_status_ap_csv, lambda r: len(r) > 3 and r[3].strip('"') == digimon.chr_id)
+            self._merge_csv_row(
+                status_file,
+                digimon,
+                wizard._write_digimon_status_ap_csv,
+                lambda r: cell(r, 3) in match_chr_ids or cell(r, 0) in match_ids,
+            )
 
             # Merge char_info
             char_info_file = patch_data / "char_info.mbe" / "000_char_info.ap.csv"
-            self._merge_csv_row(char_info_file, digimon, wizard._write_char_info_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.char_key)
+            self._merge_csv_row(char_info_file, digimon, wizard._write_char_info_ap_csv, lambda r: cell(r, 0) in match_char_keys)
 
             # Merge model_setting (if we have the data)
             if digimon.model_setting_data:
                 model_file = patch_data / "model_setting.mbe" / "000_model_setting.ap.csv"
-                self._merge_csv_row(model_file, digimon, wizard._write_model_setting_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.chr_id)
+                self._merge_csv_row(model_file, digimon, wizard._write_model_setting_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
             # Merge lod files
             lod_file = patch_data / "lod_chara.mbe" / "000_lod.ap.csv"
-            self._merge_csv_row(lod_file, digimon, wizard._write_lod_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.chr_id)
+            self._merge_csv_row(lod_file, digimon, wizard._write_lod_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
             lod_model_file = patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv"
-            self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.chr_id)
+            self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
             # Merge evolution files
             evolution_file = patch_data / "evolution.mbe" / "001_evolution_to.ap.csv"
-            self._merge_evolution_file(evolution_file, digimon, wizard._write_evolution_ap_csv)
+            self._merge_evolution_file(evolution_file, digimon, wizard._write_evolution_ap_csv, match_ids)
 
             evolution_cond_file = patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv"
-            self._merge_csv_row(evolution_cond_file, digimon, wizard._write_evolution_condition_ap_csv, lambda r: len(r) > 0 and r[0] == str(digimon.id))
+            self._merge_csv_row(evolution_cond_file, digimon, wizard._write_evolution_condition_ap_csv, lambda r: cell(r, 0) in match_ids)
 
             # Merge anim_setting - need to handle special signature
             anim_ref = digimon.chr_id
@@ -9846,13 +9957,18 @@ class DigimonEditor(QMainWindow):
                             anim_existing_rows = list(reader)
 
                 found_anim = False
-                for i, row in enumerate(anim_existing_rows):
-                    if len(row) > 0 and row[0].strip('"') == digimon.chr_id:
-                        anim_existing_rows[i] = anim_new_rows[0] if anim_new_rows else row
+                merged_anim_rows = []
+                for row in anim_existing_rows:
+                    if cell(row, 0) in match_chr_ids:
+                        if not found_anim and anim_new_rows:
+                            merged_anim_rows.extend(anim_new_rows)
                         found_anim = True
-                        break
+                        continue
+                    merged_anim_rows.append(row)
 
-                if not found_anim and anim_new_rows:
+                if found_anim:
+                    anim_existing_rows = merged_anim_rows
+                elif anim_new_rows:
                     anim_existing_rows.extend(anim_new_rows)
 
                 with open(resolved_anim_file, 'w', encoding='utf-8', newline='') as f:
@@ -9867,24 +9983,23 @@ class DigimonEditor(QMainWindow):
 
             # Merge text files
             char_name_file = patch_text / "char_name.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(char_name_file, digimon, wizard._write_char_name_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.char_key)
+            self._merge_csv_row(char_name_file, digimon, wizard._write_char_name_ap_csv, lambda r: cell(r, 0) in match_char_keys)
 
             profile_file = patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv"
-            profile_key = f"digimon_{digimon.id}_profile"
             self._merge_csv_row(
                 profile_file,
                 digimon,
                 wizard._write_profile_ap_csv,
-                lambda r: len(r) > 0 and r[0].strip('"') == profile_key,
+                lambda r: cell(r, 0) in match_profile_keys,
                 drop_malformed=True
             )
 
             belong_file = patch_text / "belong.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(belong_file, digimon, wizard._write_belong_ap_csv, lambda r: len(r) > 0 and r[0] == str(digimon.id))
+            self._merge_csv_row(belong_file, digimon, wizard._write_belong_ap_csv, lambda r: cell(r, 0) in match_ids)
 
             # Merge model_outline
             outline_file = app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv"
-            self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: len(r) > 0 and r[0].strip('"') == digimon.chr_id)
+            self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
             return True
 
@@ -9939,16 +10054,23 @@ class DigimonEditor(QMainWindow):
                 expected_columns = len(new_rows[0])
                 existing_rows = [row for row in existing_rows if len(row) == expected_columns]
 
-            # Find and replace existing row or add new
+            # Replace all matching old/current rows with the freshly generated row.
+            # This also collapses duplicates left by earlier saves that appended
+            # after a chr_id/ID change instead of updating the original entry.
             found = False
-            for i, row in enumerate(existing_rows):
+            merged_rows = []
+            for row in existing_rows:
                 if find_row_func(row):
-                    existing_rows[i] = new_rows[0]  # Replace with new data
+                    if not found:
+                        merged_rows.extend(new_rows)
                     found = True
-                    break
+                    continue
+                merged_rows.append(row)
 
-            if not found:
-                existing_rows.extend(new_rows)  # Add new rows
+            if found:
+                existing_rows = merged_rows
+            else:
+                existing_rows.extend(new_rows)
 
             # Write back preserving dsts-loader format
             if header_to_use:
@@ -9969,9 +10091,10 @@ class DigimonEditor(QMainWindow):
             if temp_file.exists():
                 temp_file.unlink()
 
-    def _merge_evolution_file(self, filepath: Path, digimon, write_func):
+    def _merge_evolution_file(self, filepath: Path, digimon, write_func, match_ids: Optional[Iterable[str]] = None):
         """Merge evolution data, removing old entries for this digimon first"""
         import csv
+        match_ids = {str(value) for value in (match_ids or {digimon.id}) if str(value)}
 
         # Generate new evolution rows
         temp_file = filepath.parent / f"_temp_{filepath.name}"
@@ -9999,13 +10122,14 @@ class DigimonEditor(QMainWindow):
                         reader = csv.reader(f)
                         existing_rows = list(reader)
 
-            # Remove existing entries for this digimon (both as source and target)
+            # Remove existing entries for this Digimon (both as source and target),
+            # including the originally loaded ID if the user changed it.
             filtered_rows = []
             for row in existing_rows:
                 if len(row) > 1:
                     source_id = row[1] if row[1] else None
                     target_id = row[3] if len(row) > 3 and row[3] else None
-                    if source_id != str(digimon.id) and target_id != str(digimon.id):
+                    if source_id not in match_ids and target_id not in match_ids:
                         filtered_rows.append(row)
 
             # Add new rows
