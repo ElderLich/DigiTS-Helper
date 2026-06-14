@@ -5073,12 +5073,26 @@ class DigimonEditor(QMainWindow):
         self.related_source_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         self.related_source_combo.setToolTip("Original Digimon to copy model and image assets from, e.g. Kyubimon (chr395).")
         configure_searchable_combo(self.related_source_combo)
+        self.related_source_combo.setStyleSheet(self.related_source_combo.styleSheet() + """
+            QComboBox {
+                padding-right: 8px;
+            }
+            QComboBox::drop-down {
+                width: 0px;
+                border: none;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                width: 0px;
+                height: 0px;
+            }
+        """)
         if self.related_source_combo.lineEdit():
             self.related_source_combo.lineEdit().setPlaceholderText("Search by name or chr ID...")
         related_source_layout.addWidget(self.related_source_combo, 1)
 
-        related_dropdown_button = QPushButton("▼")
-        related_dropdown_button.setFixedWidth(42)
+        related_dropdown_button = QPushButton("Open ▼")
+        related_dropdown_button.setMinimumWidth(96)
         related_dropdown_button.setToolTip("Open source Digimon list")
         related_dropdown_button.clicked.connect(self.related_source_combo.showPopup)
         related_dropdown_button.setStyleSheet("""
@@ -5088,8 +5102,7 @@ class DigimonEditor(QMainWindow):
                 border: 2px solid #667eea;
                 border-radius: 6px;
                 font-weight: bold;
-                font-size: 11pt;
-                padding: 7px 0;
+                padding: 7px 10px;
             }
             QPushButton:hover {
                 background-color: #5568d3;
