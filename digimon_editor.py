@@ -8,8 +8,9 @@ import json
 import re
 import shutil
 import textwrap
+import time
 from pathlib import Path
-from typing import Optional, List, Dict, Iterable
+from typing import Optional, List, Dict, Iterable, Set, Tuple
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QLineEdit, QSpinBox, QComboBox, QPushButton, QTabWidget,
@@ -35,6 +36,8 @@ FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
 RELATED_SOURCE_PROMPT = "Select source Digimon..."
+GEOM_TEXTURE_TOKEN_RE = re.compile(rb"[A-Za-z0-9_]{4,64}")
+GEOM_INDEXED_TEXTURE_RE = re.compile(r"^(?P<head>.*?)(?P<idx>\d{2})(?P<tail>[A-Za-z_]+)?$")
 # digimon_status column 132 is a numeric status/profile reference. Official rows
 # usually mirror column 0, while recolors/model variants may point at a source
 # Digimon. It is not the Field Guide number from column 131.
@@ -5219,6 +5222,27 @@ class DigimonEditor(QMainWindow):
             }
         """)
         related_actions_layout.addWidget(import_related_button)
+
+        rename_geom_textures_button = QPushButton("Rename .geom Textures")
+        rename_geom_textures_button.setToolTip(
+            "Patch copied .geom files to use bumped texture names and rename matching images. Creates .geom.bak backups."
+        )
+        rename_geom_textures_button.clicked.connect(self.rename_geom_textures_now)
+        rename_geom_textures_button.setStyleSheet("""
+            QPushButton {
+                background-color: #10b981;
+                color: white;
+                border: 2px solid #10b981;
+                border-radius: 6px;
+                font-weight: bold;
+                padding: 8px 12px;
+            }
+            QPushButton:hover {
+                background-color: #059669;
+                border-color: #059669;
+            }
+        """)
+        related_actions_layout.addWidget(rename_geom_textures_button)
         related_actions_layout.addStretch()
         related_layout.addWidget(related_actions_widget, 3, 1, 1, 2)
 
@@ -7681,6 +7705,268 @@ class DigimonEditor(QMainWindow):
             "found": len(files),
             "dsts_loader_root": dsts_loader_root,
         }
+
+    def _parse_geom_texture_name(self, name: str) -> Optional[Tuple[str, int, str]]:
+        """Split a texture basename into head, two-digit variant index, and tail."""
+        match = GEOM_INDEXED_TEXTURE_RE.match(name)
+        if not match:
+            return None
+        return (
+            match.group("head"),
+            int(match.group("idx")),
+            match.group("tail") or "",
+        )
+
+    def _next_free_geom_texture_name(self, old_name: str, reserved_lower: Set[str]) -> Optional[str]:
+        """Return the next same-length texture name by bumping its final two-digit index."""
+        parsed = self._parse_geom_texture_name(old_name)
+        if not parsed:
+            return None
+
+        head, index, tail = parsed
+        for candidate_index in range(index + 1, 100):
+            candidate = f"{head}{candidate_index:02d}{tail}"
+            if candidate.lower() in reserved_lower:
+                continue
+            if len(candidate.encode("ascii")) == len(old_name.encode("ascii")):
+                return candidate
+        return None
+
+    def _list_patch_texture_images(self, images_dir: Path) -> Dict[str, List[Path]]:
+        """Return image files keyed by lowercase basename, matching the original geom helper script."""
+        image_suffixes = {".img", ".dds", ".png"}
+        image_basenames: Dict[str, List[Path]] = {}
+        if not images_dir.exists():
+            return image_basenames
+
+        for path in sorted(images_dir.glob("*")):
+            if not path.is_file() or path.suffix.lower() not in image_suffixes:
+                continue
+            image_basenames.setdefault(path.stem.lower(), []).append(path)
+        return image_basenames
+
+    def _extract_geom_texture_tokens(self, geom_path: Path) -> Set[str]:
+        """Read ASCII-ish texture tokens from a .geom without attempting to parse the full format."""
+        tokens: Set[str] = set()
+        for match in GEOM_TEXTURE_TOKEN_RE.finditer(geom_path.read_bytes()):
+            try:
+                tokens.add(match.group().decode("ascii"))
+            except UnicodeDecodeError:
+                continue
+        return tokens
+
+    def _backup_geom_file(self, geom_path: Path) -> Path:
+        """Create a sibling .bak file before modifying a binary .geom."""
+        backup_path = geom_path.with_name(geom_path.name + ".bak")
+        if backup_path.exists():
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            backup_path = geom_path.with_name(geom_path.name + f".bak.{timestamp}")
+        shutil.copy2(geom_path, backup_path)
+        return backup_path
+
+    def _patch_geom_bytes(self, data: bytes, mapping: Dict[str, str]) -> Tuple[bytes, Dict[str, int]]:
+        """Apply same-length texture token replacements to raw .geom bytes."""
+        counts: Dict[str, int] = {}
+        for old_name, new_name in sorted(mapping.items(), key=lambda item: (-len(item[0]), item[0])):
+            old_bytes = old_name.encode("ascii")
+            new_bytes = new_name.encode("ascii")
+            if len(old_bytes) != len(new_bytes):
+                raise ValueError(f"Unsafe .geom texture rename length: {old_name} -> {new_name}")
+
+            count = data.count(old_bytes)
+            counts[old_name] = count
+            if count:
+                data = data.replace(old_bytes, new_bytes)
+        return data, counts
+
+    def _build_geom_texture_rename_plan(
+        self,
+        patch_dir: Path,
+        source_entry: dict,
+        target_chr_id: str,
+    ) -> dict:
+        """Plan safe .geom texture token patches and matching image renames."""
+        images_dir = patch_dir / "images"
+        geom_files = sorted(patch_dir.glob("*.geom"))
+        if not images_dir.is_dir():
+            return {"ok": False, "error": f"Images folder not found:\n{images_dir}"}
+        if not geom_files:
+            return {"ok": False, "error": f"No .geom files found in:\n{patch_dir}"}
+
+        image_basenames = self._list_patch_texture_images(images_dir)
+        if not image_basenames:
+            return {"ok": False, "error": f"No .img/.dds/.png files found in:\n{images_dir}"}
+
+        geom_tokens: Set[str] = set()
+        for geom_file in geom_files:
+            geom_tokens.update(self._extract_geom_texture_tokens(geom_file))
+
+        token_by_lower = {token.lower(): token for token in geom_tokens}
+        reserved_lower = set(image_basenames.keys()) | {token.lower() for token in geom_tokens}
+        source_chr_id = str(source_entry.get("chr_id", "")).strip().strip('"')
+        source_chr_lower = source_chr_id.lower()
+        target_chr_lower = target_chr_id.lower()
+
+        mapping: Dict[str, str] = {}
+        image_ops: List[Tuple[Path, Path]] = []
+        destination_keys: Set[str] = set()
+        skipped_unindexed: List[str] = []
+
+        for image_stem_lower, image_paths in sorted(image_basenames.items()):
+            old_token = token_by_lower.get(image_stem_lower)
+
+            # The editor imports copied images under the new Chr ID first. The
+            # original .geom still contains source-length texture tokens, so the
+            # safe route is: target image name -> source token -> bumped variant.
+            if not old_token and source_chr_lower and target_chr_lower and image_stem_lower.startswith(target_chr_lower):
+                source_like_stem = source_chr_lower + image_stem_lower[len(target_chr_lower):]
+                old_token = token_by_lower.get(source_like_stem)
+
+            if not old_token:
+                continue
+            if source_chr_lower and not old_token.lower().startswith(source_chr_lower):
+                continue
+
+            new_token = mapping.get(old_token)
+            if not new_token:
+                new_token = self._next_free_geom_texture_name(old_token, reserved_lower)
+                if not new_token:
+                    skipped_unindexed.append(old_token)
+                    continue
+                mapping[old_token] = new_token
+                reserved_lower.add(new_token.lower())
+
+            for image_path in image_paths:
+                destination = image_path.with_name(new_token + image_path.suffix)
+                destination_key = str(destination).lower()
+                if destination_key in destination_keys:
+                    continue
+                destination_keys.add(destination_key)
+                image_ops.append((image_path, destination))
+
+        if not mapping:
+            return {
+                "ok": False,
+                "error": (
+                    "No matching texture names found to rename.\n\n"
+                    "This usually means the .geom files were already patched, or the images do not match the selected source Digimon."
+                ),
+                "skipped_unindexed": skipped_unindexed,
+            }
+
+        collisions = [
+            destination for source, destination in image_ops
+            if destination.exists() and str(source).lower() != str(destination).lower()
+        ]
+        if collisions:
+            preview = "\n".join(f"- {path.name}" for path in collisions[:10])
+            extra = f"\n... and {len(collisions) - 10} more" if len(collisions) > 10 else ""
+            return {
+                "ok": False,
+                "error": f"Texture rename destination already exists. Nothing was changed:\n{preview}{extra}",
+            }
+
+        return {
+            "ok": True,
+            "geom_files": geom_files,
+            "mapping": mapping,
+            "image_ops": image_ops,
+            "skipped_unindexed": skipped_unindexed,
+        }
+
+    def rename_geom_textures_in_patch(self, dsts_loader_root: Path, source_entry: dict, target_chr_id: str) -> dict:
+        """Patch copied .geom files so recolor images can use their own bumped texture names."""
+        dsts_loader_root = self._resolve_dsts_loader_root(Path(dsts_loader_root), allow_create=False)
+        if not dsts_loader_root:
+            return {"ok": False, "error": "Could not resolve the dsts-loader folder."}
+
+        patch_dir = dsts_loader_root / "patch"
+        if not patch_dir.exists():
+            return {"ok": False, "error": f"Patch folder not found:\n{patch_dir}"}
+
+        plan = self._build_geom_texture_rename_plan(patch_dir, source_entry, target_chr_id)
+        if not plan.get("ok"):
+            return plan
+
+        backups = []
+        replacement_counts: Dict[str, int] = {}
+        for geom_file in plan["geom_files"]:
+            original_data = geom_file.read_bytes()
+            patched_data, counts = self._patch_geom_bytes(original_data, plan["mapping"])
+            total_replacements = sum(counts.values())
+            if not total_replacements:
+                continue
+
+            backups.append(self._backup_geom_file(geom_file))
+            geom_file.write_bytes(patched_data)
+            replacement_counts[geom_file.name] = total_replacements
+
+        renamed_images = []
+        for source, destination in plan["image_ops"]:
+            if str(source).lower() == str(destination).lower():
+                continue
+            source.rename(destination)
+            renamed_images.append((source, destination))
+
+        return {
+            "ok": True,
+            "mapping": plan["mapping"],
+            "backups": backups,
+            "replacement_counts": replacement_counts,
+            "renamed_images": renamed_images,
+            "skipped_unindexed": plan.get("skipped_unindexed", []),
+        }
+
+    def format_geom_texture_rename_summary(self, summary: dict) -> str:
+        """Create a compact status line for the .geom texture rename action."""
+        if not summary.get("ok"):
+            return summary.get("error", "Texture rename failed.")
+
+        total_replacements = sum(summary.get("replacement_counts", {}).values())
+        return (
+            f"Renamed .geom textures: {len(summary.get('mapping', {}))} texture names, "
+            f"{total_replacements} replacements, "
+            f"{len(summary.get('renamed_images', []))} images renamed, "
+            f"{len(summary.get('backups', []))} .geom backups"
+        )
+
+    def rename_geom_textures_now(self):
+        """Run the integrated geom texture rename helper for the current mod patch folder."""
+        if not self.current_digimon:
+            QMessageBox.warning(self, "No Digimon Loaded", "Load or create a Digimon before renaming .geom textures.")
+            return
+
+        self.update_digimon_from_form()
+        source_entry = self.get_selected_related_source()
+        if not source_entry:
+            QMessageBox.warning(self, "No Source Digimon", "Select the original source Digimon first.")
+            return
+
+        target_chr_id = self.chr_id_edit.text().strip().strip('"') if hasattr(self, "chr_id_edit") else self.current_digimon.chr_id
+        if not target_chr_id:
+            QMessageBox.warning(self, "Missing Chr ID", "Set the target Chr ID before renaming .geom textures.")
+            return
+
+        dsts_loader_root = self._related_import_root_for_current_digimon()
+        if not dsts_loader_root:
+            selected_dir = QFileDialog.getExistingDirectory(
+                self,
+                "Select Reloaded II Mod or dsts-loader Directory for .geom Texture Rename",
+                str(get_default_mod_loader_path()),
+                QFileDialog.Option.ShowDirsOnly
+            )
+            if not selected_dir:
+                return
+            dsts_loader_root = self._resolve_dsts_loader_root(Path(selected_dir), allow_create=False)
+
+        summary = self.rename_geom_textures_in_patch(dsts_loader_root, source_entry, target_chr_id)
+        message = self.format_geom_texture_rename_summary(summary)
+        self.related_import_status_label.setText(message)
+
+        if summary.get("ok"):
+            QMessageBox.information(self, ".geom Textures Renamed", message)
+        else:
+            QMessageBox.warning(self, ".geom Texture Rename Failed", message)
 
     def format_related_import_summary(self, summary: dict) -> str:
         """Create a compact human-readable import result."""
