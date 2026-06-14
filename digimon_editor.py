@@ -40,7 +40,7 @@ def get_default_mod_loader_path() -> Path:
     return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
 
 
-def sanitize_mod_folder_name(value: str, fallback: str = "DSTS.digimon.CustomDigimon") -> str:
+def sanitize_mod_folder_name(value: str, fallback: str = "CustomDigimon") -> str:
     """Create a Windows-safe single folder name while preserving readable text."""
     name = (value or "").strip()
     name = re.sub(r'[<>:"/\\|?*\x00-\x1F]', "", name)
@@ -50,12 +50,12 @@ def sanitize_mod_folder_name(value: str, fallback: str = "DSTS.digimon.CustomDig
 
 def make_default_mod_folder_name(digimon_name: str) -> str:
     compact_name = re.sub(r"[^A-Za-z0-9]+", "", digimon_name or "")
-    return f"DSTS.digimon.{compact_name or 'CustomDigimon'}"
+    return compact_name or "CustomDigimon"
 
 
 def make_mod_id_from_folder_name(folder_name: str) -> str:
     mod_id = re.sub(r"[^A-Za-z0-9._-]+", "", folder_name or "")
-    return mod_id or "DSTS.digimon.CustomDigimon"
+    return mod_id or "CustomDigimon"
 
 
 def build_reloaded_mod_config(mod_id: str, mod_name: str, author: str, description: str, version: str = "1.0.0") -> dict:
@@ -1740,15 +1740,25 @@ class BasicInfoPage(QWizardPage):
         )
         field_guide_layout.addWidget(self.field_guide_id_spin)
 
-        pick_field_guide_button = QPushButton("Pick Free")
+        pick_field_guide_button = QPushButton("Choose Slot...")
         pick_field_guide_button.setToolTip("Show every custom field guide slot and mark occupied IDs in light red")
+        pick_field_guide_button.setMinimumWidth(130)
+        pick_field_guide_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #3f7de8;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #316ad0;
+            }
+        """)
         pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
         field_guide_layout.addWidget(pick_field_guide_button)
-
-        auto_field_guide_button = QPushButton("Auto")
-        auto_field_guide_button.setToolTip("Use the first free custom field guide ID")
-        auto_field_guide_button.clicked.connect(self.auto_assign_field_guide_id)
-        field_guide_layout.addWidget(auto_field_guide_button)
+        field_guide_layout.addStretch()
         layout.addRow("📘 Field Guide ID:", field_guide_widget)
 
         # Auto-generate based on ID
@@ -4518,15 +4528,25 @@ class DigimonEditor(QMainWindow):
         )
         field_guide_layout.addWidget(self.field_guide_id_spin)
 
-        pick_field_guide_button = QPushButton("Pick Free")
+        pick_field_guide_button = QPushButton("Choose Slot...")
         pick_field_guide_button.setToolTip("Show custom field guide slots and mark occupied IDs in light red")
+        pick_field_guide_button.setMinimumWidth(130)
+        pick_field_guide_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #3f7de8;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #316ad0;
+            }
+        """)
         pick_field_guide_button.clicked.connect(self.pick_field_guide_id)
         field_guide_layout.addWidget(pick_field_guide_button)
-
-        auto_field_guide_button = QPushButton("Auto")
-        auto_field_guide_button.setToolTip("Use the first free custom field guide ID")
-        auto_field_guide_button.clicked.connect(self.auto_assign_field_guide_id)
-        field_guide_layout.addWidget(auto_field_guide_button)
+        field_guide_layout.addStretch()
         main_info_layout.addWidget(field_guide_widget, 4, 1)
 
         layout.addWidget(main_info_group)
@@ -8208,7 +8228,7 @@ class DigimonEditor(QMainWindow):
 
         folder_edit = QLineEdit()
         folder_edit.setText(make_default_mod_folder_name(digimon.name))
-        folder_edit.setPlaceholderText("Example: DSTS.digimon.Youkomon or Youkomon")
+        folder_edit.setPlaceholderText("Example: Youkomon")
         form.addRow("Folder Name:", folder_edit)
 
         mod_name_edit = QLineEdit()
