@@ -32,6 +32,10 @@ FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
 FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
+# digimon_status column 132 is a numeric status/profile reference. Official rows
+# usually mirror column 0, while recolors/model variants may point at a source
+# Digimon. It is not the Field Guide number from column 131.
+STATUS_REFERENCE_ID_COLUMN = 132
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
 DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
 DSTS_LOADER_DIR_NAMES = {"dsts-loader", "dts-loader"}
@@ -198,6 +202,65 @@ def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> 
         ))
 
     return "\n".join(wrapped_lines).strip()
+
+
+def digimon_profile_key(digimon_id: int) -> str:
+    """Return the game text key for a Digimon profile entry."""
+    try:
+        numeric_id = int(digimon_id)
+    except (TypeError, ValueError):
+        return f"digimon_{digimon_id}_profile"
+
+    if numeric_id >= 0:
+        return f"digimon_{numeric_id:04d}_profile"
+    return f"digimon_{numeric_id}_profile"
+
+
+def digimon_profile_key_variants(digimon_id) -> set[str]:
+    """Return canonical and legacy profile keys that should update the same row."""
+    if digimon_id in (None, ""):
+        return set()
+
+    raw_id = str(digimon_id)
+    keys = {f"digimon_{raw_id}_profile"}
+    try:
+        keys.add(digimon_profile_key(int(raw_id)))
+    except (TypeError, ValueError):
+        pass
+    return keys
+
+
+def normalize_status_reference_id(digimon_id: int, field_guide_id: int, reference_id: int) -> int:
+    """Return a safe value for digimon_status column 132.
+
+    Column 131 is the visible Field Guide number. Column 132 is a numeric
+    status/profile reference used by the game to look up related text/script
+    data. For normal custom Digimon it should mirror column 0. Some recolors
+    deliberately point at a source Digimon, so only repair obviously broken
+    values such as empty/zero or a copied Field Guide number.
+    """
+    try:
+        digimon_id = int(digimon_id)
+    except (TypeError, ValueError):
+        digimon_id = -1
+
+    try:
+        field_guide_id = int(field_guide_id)
+    except (TypeError, ValueError):
+        field_guide_id = -1
+
+    try:
+        reference_id = int(reference_id)
+    except (TypeError, ValueError):
+        reference_id = -1
+
+    if digimon_id <= 0:
+        return reference_id if reference_id > 0 else -1
+    if reference_id <= 0:
+        return digimon_id
+    if field_guide_id >= 0 and reference_id == field_guide_id and reference_id != digimon_id:
+        return digimon_id
+    return reference_id
 
 
 def _parse_optional_int(value: str) -> Optional[int]:
@@ -1276,6 +1339,11 @@ class DigimonCreationWizard(QWizard):
         # Remaining fields (120-135)
         # Column 126: Signature Animation Reference - Formula: 20000 + (ID × 10) + 1
         anim_ref = 20000 + (digimon.id * 10) + 1
+        status_reference_id = normalize_status_reference_id(
+            digimon.id,
+            digimon.field_guide_id,
+            getattr(digimon, "script_id", -1),
+        )
 
         parts.extend([
             "2",  # 120 - Size category
@@ -1290,7 +1358,7 @@ class DigimonCreationWizard(QWizard):
             "0",  # 129 - Texture/Material ID (0 for new Digimon)
             "0",  # 130 - Model Variant (0 for new Digimon)
             str(digimon.field_guide_id),  # 131 - Field Guide ID (-1 = none, 0+ = valid ID)
-            str(digimon.script_id),  # 132 - Script ID (internal ID for scripts, -1 = none, 0+ = valid ID)
+            str(status_reference_id),  # 132 - Status/profile reference ID, usually the Digimon ID
             "-1",  # 133 - Reserved (don't touch)
             "0",  # 134 - Reserved (always 0)
             "-1"  # 135 - Reserved (always -1)
@@ -1536,8 +1604,7 @@ class DigimonCreationWizard(QWizard):
         profile = digimon.profile_text if digimon.profile_text else f"A mysterious Digimon known as {digimon.name}."
         profile = format_profile_text_for_game(profile)
 
-        # Use correct profile key format: digimon_{id}_profile
-        profile_key = f"digimon_{digimon.id}_profile"
+        profile_key = digimon_profile_key(digimon.id)
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
@@ -5065,11 +5132,17 @@ class DigimonEditor(QMainWindow):
         ref_group = QGroupBox("References")
         ref_layout = QGridLayout(ref_group)
 
-        # Script ID
-        ref_layout.addWidget(QLabel("Script ID:"), 0, 0)
+        # Column 132 links this row to the profile/script reference the game
+        # should read. Normal custom Digimon use their own numeric Digimon ID.
+        status_ref_label = QLabel("Profile Ref ID:")
+        status_ref_label.setToolTip("Column 132 in digimon_status. Usually the Digimon ID; use another ID only to share a source profile/script.")
+        ref_layout.addWidget(status_ref_label, 0, 0)
         self.script_id_spin = QSpinBox()
-        self.script_id_spin.setRange(-1, 99999)
+        self.script_id_spin.setRange(-1, 999999999)
         self.script_id_spin.setValue(-1)
+        self.script_id_spin.setToolTip(
+            "Column 132 in 000_digimon_status_data. If this accidentally equals the Field Guide ID, the game cannot find the custom profile."
+        )
         ref_layout.addWidget(self.script_id_spin, 0, 1)
 
         layout.addWidget(ref_group)
@@ -7772,9 +7845,9 @@ class DigimonEditor(QMainWindow):
                 else:
                     digimon.field_guide_id = -1
 
-                # Parse script ID (column 132)
-                if len(row) > 132:
-                    script_val = row[132].strip() if row[132] else ""
+                # Parse status/profile reference ID (column 132)
+                if len(row) > STATUS_REFERENCE_ID_COLUMN:
+                    script_val = row[STATUS_REFERENCE_ID_COLUMN].strip() if row[STATUS_REFERENCE_ID_COLUMN] else ""
                     if script_val:
                         try:
                             digimon.script_id = int(script_val)
@@ -7783,11 +7856,23 @@ class DigimonEditor(QMainWindow):
                     else:
                         digimon.script_id = -1
                     debug_log(
-                        f"Loaded script_id: {digimon.script_id} from column 132 "
-                        f"(raw value: '{row[132] if len(row) > 132 else 'N/A'}')"
+                        f"Loaded status reference ID: {digimon.script_id} from column {STATUS_REFERENCE_ID_COLUMN} "
+                        f"(raw value: '{row[STATUS_REFERENCE_ID_COLUMN] if len(row) > STATUS_REFERENCE_ID_COLUMN else 'N/A'}')"
                     )
                 else:
                     digimon.script_id = -1
+
+                normalized_script_id = normalize_status_reference_id(
+                    digimon.id,
+                    digimon.field_guide_id,
+                    digimon.script_id,
+                )
+                if normalized_script_id != digimon.script_id:
+                    debug_log(
+                        f"Corrected status reference ID from {digimon.script_id} to {normalized_script_id} "
+                        f"for {digimon.name or digimon.chr_id}; column 132 must not mirror Field Guide ID."
+                    )
+                    digimon.script_id = normalized_script_id
 
                 # Load name from char_name
                 name_file = base_path / "patch_text01" / "text" / "char_name.mbe"
@@ -7888,8 +7973,7 @@ class DigimonEditor(QMainWindow):
         """Load Digimon profile from digimon_profile CSV files"""
         import csv
 
-        # Profile key format is "digimon_{id}_profile"
-        profile_key = f"digimon_{digimon_id}_profile"
+        profile_keys = digimon_profile_key_variants(digimon_id)
 
         csv_files = list(base_path.glob("*.ap.csv"))
         for csv_file in csv_files:
@@ -7898,7 +7982,7 @@ class DigimonEditor(QMainWindow):
                     reader = csv.reader(f)
                     next(reader)  # Skip header
                     for row in reader:
-                        if len(row) >= 2 and row[0] == profile_key:
+                        if len(row) >= 2 and row[0] in profile_keys:
                             return row[1]  # Don't strip quotes - csv.reader already handles that
             except:
                 continue
@@ -8819,6 +8903,16 @@ class DigimonEditor(QMainWindow):
         # References
         self.current_digimon.field_guide_id = self.field_guide_id_spin.value()
         self.current_digimon.script_id = self.script_id_spin.value()
+        normalized_script_id = normalize_status_reference_id(
+            self.current_digimon.id,
+            self.current_digimon.field_guide_id,
+            self.current_digimon.script_id,
+        )
+        if normalized_script_id != self.current_digimon.script_id:
+            self.current_digimon.script_id = normalized_script_id
+            self.script_id_spin.blockSignals(True)
+            self.script_id_spin.setValue(normalized_script_id)
+            self.script_id_spin.blockSignals(False)
 
     def add_evolution(self):
         """Add a new evolution path"""
@@ -9879,8 +9973,8 @@ class DigimonEditor(QMainWindow):
             # Use wizard's write methods to create the data row for this Digimon
             wizard = DigimonCreationWizard(parent=None, loader=self.loader)
 
-            # Keep field guide/script diagnostics available without noisy normal exports.
-            debug_log(f"Writing digimon - field_guide_id={digimon.field_guide_id}, script_id={digimon.script_id}")
+            # Keep field guide/profile reference diagnostics available without noisy normal exports.
+            debug_log(f"Writing digimon - field_guide_id={digimon.field_guide_id}, status_reference_id={digimon.script_id}")
 
             original_identity = original_identity or {}
             match_ids = {str(digimon.id)}
@@ -9892,7 +9986,9 @@ class DigimonEditor(QMainWindow):
             match_char_keys = {digimon.char_key}
             if original_identity.get("char_key"):
                 match_char_keys.add(str(original_identity["char_key"]))
-            match_profile_keys = {f"digimon_{digimon_id}_profile" for digimon_id in match_ids if digimon_id}
+            match_profile_keys = set()
+            for digimon_id in match_ids:
+                match_profile_keys.update(digimon_profile_key_variants(digimon_id))
 
             def cell(row, index: int) -> str:
                 return row[index].strip('"') if len(row) > index and row[index] else ""

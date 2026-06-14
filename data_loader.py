@@ -12,6 +12,38 @@ from pathlib import Path
 import shutil
 
 
+def normalize_status_reference_id(digimon_id: int, field_guide_id: int, reference_id: int) -> int:
+    """Return a safe digimon_status column 132 value.
+
+    Column 131 is the visible Field Guide number. Column 132 is a numeric
+    status/profile reference, usually the Digimon ID from column 0. Some mods
+    intentionally point this at a source Digimon, so only repair values that
+    are clearly wrong: empty/zero or a copied Field Guide number.
+    """
+    try:
+        digimon_id = int(digimon_id)
+    except (TypeError, ValueError):
+        digimon_id = -1
+
+    try:
+        field_guide_id = int(field_guide_id)
+    except (TypeError, ValueError):
+        field_guide_id = -1
+
+    try:
+        reference_id = int(reference_id)
+    except (TypeError, ValueError):
+        reference_id = -1
+
+    if digimon_id <= 0:
+        return reference_id if reference_id > 0 else -1
+    if reference_id <= 0:
+        return digimon_id
+    if field_guide_id >= 0 and reference_id == field_guide_id and reference_id != digimon_id:
+        return digimon_id
+    return reference_id
+
+
 @dataclass
 class DigimonData:
     """Represents a complete Digimon entry with all associated data"""
@@ -66,8 +98,10 @@ class DigimonData:
     animation_set: int = 1  # Column 122: Animation set (1-8)
     lod_data: Dict[str, Any] = field(default_factory=dict)
     
-    # Field guide and script references
+    # Field guide and status/profile references
     field_guide_id: int = -1
+    # digimon_status column 132. Usually mirrors id; can point at a source
+    # Digimon for recolors/model variants. It is not the Field Guide number.
     script_id: int = -1
     
     # Complete file data for all 9 required files
@@ -196,6 +230,8 @@ class MBELoader:
                 "resNull": 7, "resFire": 8, "resWater": 9, "resIce": 10,
                 "resGrass": 11, "resWind": 12, "resElec": 13, "resGround": 14,
                 "resSteel": 15, "resLight": 16, "resDark": 17,
+                # 131 is the visible Field Guide No.; 132 is the numeric
+                # status/profile reference, usually the Digimon ID.
                 "fieldGuideId": 131, "scriptId": 132
             },
             "main/evolution.mbe/01_evolution_to.csv": {
@@ -466,9 +502,14 @@ class MBELoader:
                 trait_value = val in ('1', 'true', 'yes')
                 digimon.traits.append(trait_value)
         
-        # Field guide and script IDs
+        # Field guide and status/profile reference IDs
         digimon.field_guide_id = int(digimon_row[headers["fieldGuideId"]]) if digimon_row[headers["fieldGuideId"]] else -1
         digimon.script_id = int(digimon_row[headers["scriptId"]]) if digimon_row[headers["scriptId"]] else -1
+        digimon.script_id = normalize_status_reference_id(
+            digimon.id,
+            digimon.field_guide_id,
+            digimon.script_id,
+        )
         
         # Load name from text files
         digimon.name = self._get_digimon_name(digimon.char_key)
@@ -1487,11 +1528,16 @@ class MBELoader:
                 if traits_start + i < len(row):
                     row[traits_start + i] = "1" if trait_value else "0"
             
-            # Field guide and script IDs
+            # Field guide and status/profile reference IDs
             if "fieldGuideId" in headers:
                 row[headers["fieldGuideId"]] = str(digimon.field_guide_id) if digimon.field_guide_id >= 0 else "-1"
             if "scriptId" in headers:
-                row[headers["scriptId"]] = str(digimon.script_id) if digimon.script_id >= 0 else "-1"
+                status_reference_id = normalize_status_reference_id(
+                    digimon.id,
+                    digimon.field_guide_id,
+                    digimon.script_id,
+                )
+                row[headers["scriptId"]] = str(status_reference_id) if status_reference_id >= 0 else "-1"
             
             # The reference fields are already set above
             
@@ -3123,11 +3169,16 @@ class DLCExporter:
                 if traits_start + i < len(row):
                     row[traits_start + i] = "1" if trait_value else "0"
             
-            # Field guide and script IDs
+            # Field guide and status/profile reference IDs
             if "fieldGuideId" in headers:
                 row[headers["fieldGuideId"]] = str(digimon.field_guide_id) if digimon.field_guide_id >= 0 else "-1"
             if "scriptId" in headers:
-                row[headers["scriptId"]] = str(digimon.script_id) if digimon.script_id >= 0 else "-1"
+                status_reference_id = normalize_status_reference_id(
+                    digimon.id,
+                    digimon.field_guide_id,
+                    digimon.script_id,
+                )
+                row[headers["scriptId"]] = str(status_reference_id) if status_reference_id >= 0 else "-1"
             
             # Fill remaining empty integer/bool fields with defaults
             # Column 51: int field
