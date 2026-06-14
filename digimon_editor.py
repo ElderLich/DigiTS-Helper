@@ -38,6 +38,7 @@ PROFILE_WRAP_WIDTH = 50
 RELATED_SOURCE_PROMPT = "Select source Digimon..."
 GEOM_TEXTURE_TOKEN_RE = re.compile(rb"[A-Za-z0-9_]{4,64}")
 GEOM_INDEXED_TEXTURE_RE = re.compile(r"^(?P<head>.*?)(?P<idx>\d{2})(?P<tail>[A-Za-z_]+)?$")
+TINY_EFFECT_TEXTURE_RE = re.compile(r"^chr\d+(?:e\d{2}|f\d{2}em)$", re.IGNORECASE)
 # digimon_status column 132 is a numeric status/profile reference. Official rows
 # usually mirror column 0, while recolors/model variants may point at a source
 # Digimon. It is not the Field Guide number from column 131.
@@ -3895,6 +3896,10 @@ class DigimonEditor(QMainWindow):
         self.active_dsts_loader_root: Optional[Path] = None
         self.active_reloaded_mod_root: Optional[Path] = None
         self.has_unsaved_changes = False
+        self._related_source_entries_cache: Optional[List[dict]] = None
+        self._status_ref_user_edited = False
+        self._syncing_status_reference = False
+        self._loading_digimon_form = False
         self.setup_ui()
         self.connect_change_signals()
         self.load_digimon_list()
@@ -3993,7 +3998,10 @@ class DigimonEditor(QMainWindow):
         self.profile_text_edit.textChanged.connect(self.mark_as_modified)
         self.profile_text_edit.textChanged.connect(self.update_profile_text_stats)
         self.field_guide_id_spin.valueChanged.connect(self.mark_as_modified)
+        self.field_guide_id_spin.valueChanged.connect(self.sync_status_reference_to_current_id)
         self.script_id_spin.valueChanged.connect(self.mark_as_modified)
+        self.script_id_spin.valueChanged.connect(self.on_status_reference_changed)
+        self.id_spin.valueChanged.connect(self.sync_status_reference_to_current_id)
 
         # Stats
         for widget in self.stat_widgets.values():
@@ -4008,6 +4016,43 @@ class DigimonEditor(QMainWindow):
         self.model_id_edit.textChanged.connect(self.mark_as_modified)
         self.motion_id_edit.textChanged.connect(self.mark_as_modified)
         self.animation_ref_edit.textChanged.connect(self.mark_as_modified)
+
+    def on_status_reference_changed(self, value: int):
+        """Remember when the user deliberately points column 132 at another Digimon."""
+        if getattr(self, "_loading_digimon_form", False) or getattr(self, "_syncing_status_reference", False):
+            return
+
+        if hasattr(self, "id_spin") and value == self.id_spin.value():
+            self._status_ref_user_edited = False
+        else:
+            self._status_ref_user_edited = True
+
+    def sync_status_reference_to_current_id(self, *_args):
+        """Keep column 132 aligned with the Digimon ID until the user edits it."""
+        if (
+            getattr(self, "_loading_digimon_form", False)
+            or getattr(self, "_syncing_status_reference", False)
+            or getattr(self, "_status_ref_user_edited", False)
+            or not hasattr(self, "script_id_spin")
+            or not hasattr(self, "id_spin")
+        ):
+            return
+
+        digimon_id = self.id_spin.value()
+        if digimon_id <= 0:
+            return
+
+        current_ref = self.script_id_spin.value()
+        if current_ref == digimon_id:
+            return
+
+        self._syncing_status_reference = True
+        try:
+            self.script_id_spin.blockSignals(True)
+            self.script_id_spin.setValue(digimon_id)
+        finally:
+            self.script_id_spin.blockSignals(False)
+            self._syncing_status_reference = False
 
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
@@ -5470,14 +5515,17 @@ class DigimonEditor(QMainWindow):
 
         # Column 132 links this row to the profile/script reference the game
         # should read. Normal custom Digimon use their own numeric Digimon ID.
-        status_ref_label = QLabel("Profile Ref ID:")
-        status_ref_label.setToolTip("Column 132 in digimon_status. Usually the Digimon ID; use another ID only to share a source profile/script.")
+        status_ref_label = QLabel("Status/Profile Ref ID:")
+        status_ref_label.setToolTip(
+            "Column 132 in digimon_status. Usually this equals the Digimon ID, not the Field Guide ID."
+        )
         ref_layout.addWidget(status_ref_label, 0, 0)
         self.script_id_spin = QSpinBox()
         self.script_id_spin.setRange(-1, 999999999)
         self.script_id_spin.setValue(-1)
         self.script_id_spin.setToolTip(
-            "Column 132 in 000_digimon_status_data. If this accidentally equals the Field Guide ID, the game cannot find the custom profile."
+            "Column 132 in 000_digimon_status_data. Keep it equal to the Digimon ID for normal custom entries; "
+            "use another Digimon ID only when intentionally sharing or redirecting profile/status data."
         )
         ref_layout.addWidget(self.script_id_spin, 0, 1)
 
@@ -7429,6 +7477,9 @@ class DigimonEditor(QMainWindow):
 
     def get_related_source_entries(self) -> List[dict]:
         """Build source Digimon choices from base/DLC status rows."""
+        if self._related_source_entries_cache is not None:
+            return list(self._related_source_entries_cache)
+
         entries = []
         seen_chr_ids = set()
 
@@ -7477,7 +7528,8 @@ class DigimonEditor(QMainWindow):
                 })
 
         entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"])))
-        return entries
+        self._related_source_entries_cache = list(entries)
+        return list(entries)
 
     def populate_related_source_combo(self):
         """Refresh the Model Animation source Digimon dropdown."""
@@ -7682,6 +7734,16 @@ class DigimonEditor(QMainWindow):
         tail = stem[len(source_chr_id):]
         return bool(re.search(r"\d[hlmns]$", tail))
 
+    def _is_tiny_related_effect_texture(self, file_path: Path, source_entry: dict) -> bool:
+        """Skip tiny effect/dot textures that do not help normal recolor imports."""
+        stem = file_path.stem.lower()
+        source_chr_id = source_entry.get("chr_id", "").lower()
+        if source_chr_id and stem.startswith(source_chr_id):
+            tail = stem[len(source_chr_id):]
+            if re.fullmatch(r"e\d{2}|f\d{2}em", tail):
+                return True
+        return bool(TINY_EFFECT_TEXTURE_RE.fullmatch(stem))
+
     def _iter_related_asset_files(
         self,
         extracted_root: Path,
@@ -7732,6 +7794,8 @@ class DigimonEditor(QMainWindow):
                         continue
                     if suffix in image_suffixes or file_path.parent.name.lower() == "images":
                         if self._related_file_matches(file_path, source_entry):
+                            if self._is_tiny_related_effect_texture(file_path, source_entry):
+                                continue
                             if not include_texture_extras and self._is_optional_related_texture_map(file_path, source_entry):
                                 continue
                             key = file_path.name.lower()
@@ -8883,6 +8947,7 @@ class DigimonEditor(QMainWindow):
     def load_digimon_data(self, digimon: DigimonData):
         """Load Digimon data into the editor"""
         self.current_digimon = digimon
+        self._loading_digimon_form = True
         self._remember_loaded_identity(digimon)
         self.current_digimon_label.setText(f"✏️ Editing: {digimon.name} ({digimon.chr_id})")
 
@@ -9026,6 +9091,8 @@ class DigimonEditor(QMainWindow):
         # References
         self.field_guide_id_spin.setValue(digimon.field_guide_id)
         self.script_id_spin.setValue(digimon.script_id)
+        self._status_ref_user_edited = digimon.script_id not in (-1, 0, digimon.id)
+        self._loading_digimon_form = False
 
         # Update extended tabs
         self.update_evolution_tab(digimon)
