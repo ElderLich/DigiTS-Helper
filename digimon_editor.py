@@ -11495,7 +11495,10 @@ class DigimonEditor(QMainWindow):
 
             if drop_malformed and new_rows:
                 expected_columns = len(new_rows[0])
-                existing_rows = [row for row in existing_rows if len(row) == expected_columns]
+                existing_rows = [
+                    row for row in existing_rows
+                    if len(row) == expected_columns and any(cell.strip() for cell in row)
+                ]
 
             # Replace all matching old/current rows with the freshly generated row.
             # This also collapses duplicates left by earlier saves that appended
