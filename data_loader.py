@@ -96,6 +96,12 @@ class DigimonData:
     can_mount: bool = False  # Mountable Digimon flag
     is_boss_variant: bool = False  # Boss enemy variant
 
+    # Imported mod source tracking. These are set by Digimon_Editor when a
+    # Digimon is loaded from a Reloaded II/dsts-loader folder, so Save Changes can
+    # update the same files without asking the user to browse again.
+    imported_dsts_loader_root: str = ""
+    imported_mod_root: str = ""
+
 
 class MBELoader:
     """Loads and parses .mbe directories containing CSV files"""

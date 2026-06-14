@@ -34,6 +34,7 @@ FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
 DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
+DSTS_LOADER_DIR_NAMES = {"dsts-loader", "dts-loader"}
 
 
 def get_default_mod_loader_path() -> Path:
@@ -7302,10 +7303,18 @@ class DigimonEditor(QMainWindow):
                 if hasattr(wizard, 'last_export_path') and wizard.last_export_path:
                     try:
                         from pathlib import Path
-                        loader_path = wizard.last_export_path
+                        loader_path = self._resolve_dsts_loader_root(wizard.last_export_path)
+                        if not loader_path:
+                            QMessageBox.warning(
+                                self,
+                                "Import Failed",
+                                "Could not resolve the exported dsts-loader folder.\n"
+                                "Try using 'Import from dsts-loader' manually."
+                            )
+                            return
 
                         # Look for the exported digimon_status_data.ap.csv
-                        status_files = list((loader_path / "patch" / "data" / "digimon_status.mbe").glob("*.ap.csv"))
+                        status_files = self._dsts_loader_status_files(loader_path)
 
                         if not status_files:
                             QMessageBox.warning(
@@ -7316,23 +7325,25 @@ class DigimonEditor(QMainWindow):
                             )
                             return
 
-                        # Parse and import
                         if not hasattr(self.loader, 'imported_digimon'):
                             self.loader.imported_digimon = []
 
-                        imported_before = len(self.loader.imported_digimon)
+                        imported_any = False
+                        last_imported = None
 
                         for status_file in status_files:
                             digimon_list = self._parse_digimon_status_csv(status_file, loader_path)
                             for digimon in digimon_list:
-                                self.loader.imported_digimon.append(digimon)
+                                self._upsert_imported_digimon(digimon, loader_path)
+                                imported_any = True
+                                last_imported = digimon
 
-                        if len(self.loader.imported_digimon) > imported_before:
+                        if imported_any and last_imported:
                             # Refresh list to show imported Digimon
                             self.load_digimon_list()
 
                             # Find and select the newly imported Digimon
-                            first_digimon = self.loader.imported_digimon[-1]  # Get last imported
+                            first_digimon = last_imported
                             self.load_digimon_data(first_digimon)
                             self.current_digimon = first_digimon
 
@@ -7364,16 +7375,119 @@ class DigimonEditor(QMainWindow):
                             f"Try using 'Import from dsts-loader' manually."
                         )
 
+    def _dsts_loader_status_files(self, dsts_loader_root: Path) -> List[Path]:
+        """Return status .ap.csv files for a normalized dsts-loader payload root."""
+        status_dir = dsts_loader_root / "patch" / "data" / "digimon_status.mbe"
+        return sorted(status_dir.glob("*.ap.csv")) if status_dir.exists() else []
+
+    def _resolve_dsts_loader_root(self, selected_path: Path, allow_create: bool = False) -> Optional[Path]:
+        """
+        Normalize a selected folder to the actual dsts-loader payload root.
+
+        Users often select the Reloaded II mod folder, while the editable CSV
+        payload lives one level deeper in ``dsts-loader``. This accepts both
+        shapes and also walks upward if the chosen folder is inside the payload.
+        """
+        selected = Path(selected_path)
+        candidates: List[Path] = []
+
+        def add_candidate(path: Path):
+            if path not in candidates:
+                candidates.append(path)
+
+        add_candidate(selected)
+        for loader_name in DSTS_LOADER_DIR_NAMES:
+            add_candidate(selected / loader_name)
+
+        for parent in [selected, *selected.parents]:
+            if parent.name.lower() in DSTS_LOADER_DIR_NAMES:
+                add_candidate(parent)
+            for loader_name in DSTS_LOADER_DIR_NAMES:
+                add_candidate(parent / loader_name)
+
+        for candidate in candidates:
+            if self._dsts_loader_status_files(candidate):
+                return candidate
+
+        if not allow_create:
+            return None
+
+        if selected.name.lower() in DSTS_LOADER_DIR_NAMES:
+            return selected
+
+        for loader_name in DSTS_LOADER_DIR_NAMES:
+            child = selected / loader_name
+            if child.exists():
+                return child
+
+        if (selected / "ModConfig.json").exists():
+            return selected / "dsts-loader"
+
+        return selected
+
+    def _infer_reloaded_mod_root(self, dsts_loader_root: Path) -> Optional[Path]:
+        """Return the Reloaded II mod folder when the payload sits below one."""
+        root = Path(dsts_loader_root)
+        if root.name.lower() in DSTS_LOADER_DIR_NAMES and (root.parent / "ModConfig.json").exists():
+            return root.parent
+        return None
+
+    def _mark_import_source(self, digimon: DigimonData, dsts_loader_root: Path):
+        """Remember where an imported Digimon should be saved back to."""
+        root = Path(dsts_loader_root)
+        digimon.imported_dsts_loader_root = str(root)
+        mod_root = self._infer_reloaded_mod_root(root)
+        digimon.imported_mod_root = str(mod_root) if mod_root else ""
+
+    def _upsert_imported_digimon(self, digimon: DigimonData, dsts_loader_root: Path) -> bool:
+        """Add or replace an imported Digimon by ID/chr_id while preserving source tracking."""
+        self._mark_import_source(digimon, dsts_loader_root)
+        if not hasattr(self.loader, 'imported_digimon'):
+            self.loader.imported_digimon = []
+
+        for index, existing in enumerate(self.loader.imported_digimon):
+            if existing is digimon or existing.chr_id == digimon.chr_id or existing.id == digimon.id:
+                self.loader.imported_digimon[index] = digimon
+                return False
+
+        self.loader.imported_digimon.append(digimon)
+        return True
+
+    def _find_imported_digimon(self, digimon: DigimonData, original_chr_id: str = "") -> Optional[DigimonData]:
+        """Find the imported record matching the active Digimon, even if chr_id changed in the form."""
+        if not hasattr(self.loader, 'imported_digimon'):
+            return None
+
+        chr_ids = {digimon.chr_id, original_chr_id}
+        chr_ids.discard("")
+        for imported in self.loader.imported_digimon:
+            if imported is digimon or imported.chr_id in chr_ids or imported.id == digimon.id:
+                return imported
+        return None
+
+    def _imported_dsts_loader_root(self, digimon: DigimonData, original_chr_id: str = "") -> Optional[Path]:
+        """Return the remembered dsts-loader root for an imported Digimon."""
+        source = getattr(digimon, "imported_dsts_loader_root", "")
+        if source:
+            return Path(source)
+
+        imported = self._find_imported_digimon(digimon, original_chr_id)
+        if imported:
+            source = getattr(imported, "imported_dsts_loader_root", "")
+            if source:
+                return Path(source)
+        return None
+
     def import_from_dsts_loader(self):
         """Import Digimon from dsts-loader format files"""
         import csv
 
-        # Ask user to select dsts-loader directory
+        # Ask user to select either the Reloaded II mod root or its dsts-loader payload.
         default_path = get_default_mod_loader_path()
 
         loader_dir = QFileDialog.getExistingDirectory(
             self,
-            "Select dsts-loader Directory to Import From",
+            "Select Reloaded II Mod or dsts-loader Directory",
             str(default_path),
             QFileDialog.Option.ShowDirsOnly
         )
@@ -7381,22 +7495,35 @@ class DigimonEditor(QMainWindow):
         if not loader_dir:
             return
 
-        loader_path = Path(loader_dir)
+        selected_path = Path(loader_dir)
+        loader_path = self._resolve_dsts_loader_root(selected_path)
 
-        # Look for digimon_status_data.ap.csv files
-        status_files = list((loader_path / "patch" / "data" / "digimon_status.mbe").glob("*.ap.csv"))
+        if not loader_path:
+            QMessageBox.warning(
+                self,
+                "No Files Found",
+                "No .ap.csv files found in this folder or its dsts-loader child.\n\n"
+                "You can select either the Reloaded II mod folder, for example:\n"
+                f"{DEFAULT_MOD_LOADER_PATH / 'Youkomon'}\n\n"
+                "or the inner dsts-loader folder."
+            )
+            return
+
+        # Look for digimon_status_data.ap.csv files in the normalized payload root.
+        status_files = self._dsts_loader_status_files(loader_path)
 
         if not status_files:
             QMessageBox.warning(
                 self,
                 "No Files Found",
                 "No .ap.csv files found in patch/data/digimon_status.mbe/\n\n"
-                "Make sure you selected the correct dsts-loader directory."
+                "Make sure you selected the correct Reloaded II mod or dsts-loader directory."
             )
             return
 
         imported_count = 0
         imported_names = []
+        first_imported_digimon = None
 
         try:
             for status_file in status_files:
@@ -7404,13 +7531,19 @@ class DigimonEditor(QMainWindow):
                 digimon_list = self._parse_digimon_status_csv(status_file, loader_path)
 
                 for digimon in digimon_list:
-                    # Add to loader's digimon list
-                    if not hasattr(self.loader, 'imported_digimon'):
-                        self.loader.imported_digimon = []
-
-                    self.loader.imported_digimon.append(digimon)
+                    self._upsert_imported_digimon(digimon, loader_path)
                     imported_count += 1
                     imported_names.append(digimon.name)
+                    if first_imported_digimon is None:
+                        first_imported_digimon = digimon
+
+            if imported_count == 0:
+                QMessageBox.warning(
+                    self,
+                    "Import Failed",
+                    "The selected files were found, but no Digimon rows could be imported."
+                )
+                return
 
             # Refresh the list
             self.load_digimon_list()
@@ -7427,9 +7560,9 @@ class DigimonEditor(QMainWindow):
                 QMessageBox.StandardButton.Yes
             )
 
-            if reply == QMessageBox.StandardButton.Yes and hasattr(self.loader, 'imported_digimon') and self.loader.imported_digimon:
+            if reply == QMessageBox.StandardButton.Yes and first_imported_digimon:
                 # Load the first imported Digimon
-                first_digimon = self.loader.imported_digimon[0]
+                first_digimon = first_imported_digimon
                 self.load_digimon_data(first_digimon)
                 self.current_digimon = first_digimon
 
@@ -7470,6 +7603,7 @@ class DigimonEditor(QMainWindow):
 
                 # Create new DigimonData object
                 digimon = DigimonData()
+                self._mark_import_source(digimon, base_path)
 
                 # Parse basic info from digimon_status_data
                 digimon.id = int(row[0]) if row[0] else 0
@@ -8060,12 +8194,17 @@ class DigimonEditor(QMainWindow):
             self.current_digimon.chr_id = original_chr_id
             return
 
-        # Check if this is an imported Digimon
-        is_imported = hasattr(self.loader, 'imported_digimon') and any(
-            d.chr_id == self.current_digimon.chr_id for d in self.loader.imported_digimon
-        )
+        # Imported Digimon keep their source folder, so Save Changes can update
+        # the same Reloaded II/dsts-loader payload without asking again.
+        imported_record = self._find_imported_digimon(self.current_digimon, original_chr_id)
+        is_imported = imported_record is not None
 
         if is_imported:
+            imported_root = self._imported_dsts_loader_root(self.current_digimon, original_chr_id)
+            if imported_root:
+                self.save_to_dsts_loader(self.current_digimon, imported_root, ask_for_path=False)
+                return
+
             # Create custom dialog for save options
             dialog = QMessageBox(self)
             dialog.setWindowTitle("Save Imported Digimon")
@@ -8379,28 +8518,37 @@ class DigimonEditor(QMainWindow):
                 f"dsts-loader payload:\n{mod_root / 'dsts-loader'}"
             )
 
-    def save_to_dsts_loader(self, digimon: DigimonData):
-        """Save Digimon back to dsts-loader format (merges with existing data)"""
+    def save_to_dsts_loader(self, digimon: DigimonData, dsts_loader_root: Optional[Path] = None, ask_for_path: bool = True) -> bool:
+        """Save Digimon back to a dsts-loader payload, merging with existing data."""
         if not self.validate_field_guide_id():
-            return
+            return False
 
-        # Ask user to select dsts-loader directory
-        default_path = get_default_mod_loader_path()
+        if dsts_loader_root is None and ask_for_path:
+            default_path = get_default_mod_loader_path()
 
-        loader_dir = QFileDialog.getExistingDirectory(
-            self,
-            "Select dsts-loader Directory to Save To",
-            str(default_path),
-            QFileDialog.Option.ShowDirsOnly
-        )
+            loader_dir = QFileDialog.getExistingDirectory(
+                self,
+                "Select Reloaded II Mod or dsts-loader Directory to Save To",
+                str(default_path),
+                QFileDialog.Option.ShowDirsOnly
+            )
 
-        if not loader_dir:
-            return
+            if not loader_dir:
+                return False
+
+            selected_path = Path(loader_dir)
+        elif dsts_loader_root is not None:
+            selected_path = Path(dsts_loader_root)
+        else:
+            return False
 
         # Update form data before saving
         self.update_digimon_from_form()
 
-        output_path = Path(loader_dir)
+        output_path = self._resolve_dsts_loader_root(selected_path, allow_create=True)
+        if not output_path:
+            QMessageBox.warning(self, "Error", "Could not resolve the selected dsts-loader folder.")
+            return False
 
         # Check if destination already has files
         patch_data_dir = output_path / "patch" / "data"
@@ -8413,13 +8561,14 @@ class DigimonEditor(QMainWindow):
 
         # Always use merge mode to preserve other Digimon data
         if self._merge_digimon_to_dsts_loader(output_path, digimon):
+            self._upsert_imported_digimon(digimon, output_path)
             self.clear_modified_flag()
             if has_existing:
                 QMessageBox.information(
                     self,
                     "Success! ✅",
                     f"✅ {digimon.name} has been updated in dsts-loader!\n\n"
-                    f"Location: {loader_dir}\n\n"
+                    f"Location: {output_path}\n\n"
                     "Other Digimon data was preserved."
                 )
             else:
@@ -8427,11 +8576,13 @@ class DigimonEditor(QMainWindow):
                     self,
                     "Success! ✅",
                     f"✅ {digimon.name} has been saved to dsts-loader format!\n\n"
-                    f"Location: {loader_dir}\n\n"
+                    f"Location: {output_path}\n\n"
                     "All .ap.csv files have been created."
                 )
+            return True
         else:
             QMessageBox.warning(self, "Error", "Failed to save to dsts-loader format")
+            return False
 
     def save_to_dlc(self, digimon: DigimonData, chr_id_to_reload: str):
         """Save Digimon to DLC files"""
@@ -9475,7 +9626,8 @@ class DigimonEditor(QMainWindow):
         if directory:
             from pathlib import Path
             output_path = Path(directory)
-            use_dsts_format = self._is_dsts_loader_directory(output_path)
+            resolved_dsts_path = self._resolve_dsts_loader_root(output_path)
+            use_dsts_format = resolved_dsts_path is not None or self._is_dsts_loader_directory(output_path)
 
             if not use_dsts_format:
                 format_dialog = QMessageBox(self)
@@ -9495,9 +9647,11 @@ class DigimonEditor(QMainWindow):
                     return
                 if clicked == dsts_button:
                     use_dsts_format = True
+                    resolved_dsts_path = self._resolve_dsts_loader_root(output_path, allow_create=True)
 
             # If we have a current Digimon and dsts-loader format, offer merge option
             if use_dsts_format and self.current_digimon:
+                output_path = resolved_dsts_path or self._resolve_dsts_loader_root(output_path, allow_create=True) or output_path
                 # Check if destination already has files
                 patch_data_dir = output_path / "patch" / "data"
                 has_existing = False
@@ -9553,6 +9707,7 @@ class DigimonEditor(QMainWindow):
             # Show warning about overwriting existing data (only for full export)
             warning_text = ""
             if use_dsts_format:
+                output_path = resolved_dsts_path or self._resolve_dsts_loader_root(output_path, allow_create=True) or output_path
                 warning_text = (
                     "⚠️ WARNING: Exporting to dsts-loader format will:\n\n"
                     "• DELETE all existing files in the destination directory\n"
@@ -9873,12 +10028,14 @@ class DigimonEditor(QMainWindow):
     def _is_dsts_loader_directory(self, path: Path) -> bool:
         """Check if the selected export path appears to be a dsts-loader directory."""
         try:
+            if self._resolve_dsts_loader_root(path) is not None:
+                return True
             lowered_parts = [part.lower() for part in path.parts]
-            if "dsts-loader" in lowered_parts:
+            if any(loader_name in lowered_parts for loader_name in DSTS_LOADER_DIR_NAMES):
                 return True
             if path.name.lower() in {"addcont_01", "addcont_01_text01", "addcont_02", "addcont_02_text01", "addcont_03", "addcont_03_text01", "addcont_17", "addcont_17_text01", "data", "text"}:
                 parent_parts = [part.lower() for part in path.parent.parts]
-                if "dsts-loader" in parent_parts:
+                if any(loader_name in parent_parts for loader_name in DSTS_LOADER_DIR_NAMES):
                     return True
             return any(
                 (path / f"addcont_{dlc_id}").exists()
