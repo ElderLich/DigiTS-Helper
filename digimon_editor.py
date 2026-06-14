@@ -5031,16 +5031,43 @@ class DigimonEditor(QMainWindow):
         related_group = QGroupBox("Related Asset Import")
         related_layout = QGridLayout(related_group)
         related_layout.setColumnStretch(1, 1)
+        related_layout.setHorizontalSpacing(8)
+        related_layout.setVerticalSpacing(8)
 
         related_layout.addWidget(QLabel("Extracted Folder:"), 0, 0)
+        related_path_widget = QWidget()
+        related_path_layout = QHBoxLayout(related_path_widget)
+        related_path_layout.setContentsMargins(0, 0, 0, 0)
+        related_path_layout.setSpacing(8)
         self.related_extract_path_edit = QLineEdit(str(DEFAULT_EXTRACTED_GAME_PATH))
         self.related_extract_path_edit.setToolTip("Root folder that contains app_0.dx11, patch.dx11, and extracted asset folders.")
-        related_layout.addWidget(self.related_extract_path_edit, 0, 1)
-        browse_related_button = QPushButton("Browse")
+        related_path_layout.addWidget(self.related_extract_path_edit, 1)
+        browse_related_button = QPushButton("Browse...")
+        browse_related_button.setMinimumWidth(96)
+        browse_related_button.setToolTip("Choose the extracted Time Stranger folder")
         browse_related_button.clicked.connect(self.browse_related_extract_path)
-        related_layout.addWidget(browse_related_button, 0, 2)
+        browse_related_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f8f9fa;
+                color: #333333;
+                border: 2px solid #dee2e6;
+                border-radius: 6px;
+                font-weight: bold;
+                padding: 7px 10px;
+            }
+            QPushButton:hover {
+                border-color: #667eea;
+                background-color: #eef4ff;
+            }
+        """)
+        related_path_layout.addWidget(browse_related_button)
+        related_layout.addWidget(related_path_widget, 0, 1, 1, 2)
 
         related_layout.addWidget(QLabel("Source Digimon:"), 1, 0)
+        related_source_widget = QWidget()
+        related_source_layout = QHBoxLayout(related_source_widget)
+        related_source_layout.setContentsMargins(0, 0, 0, 0)
+        related_source_layout.setSpacing(8)
         self.related_source_combo = QComboBox()
         self.related_source_combo.setEditable(True)
         self.related_source_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
@@ -5048,7 +5075,7 @@ class DigimonEditor(QMainWindow):
         configure_searchable_combo(self.related_source_combo)
         if self.related_source_combo.lineEdit():
             self.related_source_combo.lineEdit().setPlaceholderText("Search by name or chr ID...")
-        related_layout.addWidget(self.related_source_combo, 1, 1)
+        related_source_layout.addWidget(self.related_source_combo, 1)
 
         related_dropdown_button = QPushButton("▼")
         related_dropdown_button.setFixedWidth(42)
@@ -5069,18 +5096,67 @@ class DigimonEditor(QMainWindow):
                 border-color: #5568d3;
             }
         """)
-        related_layout.addWidget(related_dropdown_button, 1, 2)
+        related_source_layout.addWidget(related_dropdown_button)
+        related_layout.addWidget(related_source_widget, 1, 1, 1, 2)
 
-        self.import_related_files_checkbox = QCheckBox("Import Related Files")
+        related_layout.addWidget(QLabel("Related Files:"), 2, 0)
+        related_actions_widget = QWidget()
+        related_actions_layout = QHBoxLayout(related_actions_widget)
+        related_actions_layout.setContentsMargins(0, 0, 0, 0)
+        related_actions_layout.setSpacing(8)
+
+        self.import_related_files_checkbox = QPushButton("Auto Import: OFF")
+        self.import_related_files_checkbox.setCheckable(True)
         self.import_related_files_checkbox.setToolTip(
             "When saving/exporting a Reloaded II mod, copy missing model files and images from the selected source Digimon."
         )
-        related_layout.addWidget(self.import_related_files_checkbox, 2, 0)
+        self.import_related_files_checkbox.toggled.connect(
+            lambda checked: self.import_related_files_checkbox.setText(
+                "Auto Import: ON" if checked else "Auto Import: OFF"
+            )
+        )
+        self.import_related_files_checkbox.setStyleSheet("""
+            QPushButton {
+                background-color: #ffffff;
+                color: #333333;
+                border: 2px solid #dee2e6;
+                border-radius: 6px;
+                font-weight: bold;
+                padding: 8px 12px;
+                text-align: left;
+            }
+            QPushButton:hover {
+                border-color: #667eea;
+                background-color: #f8f9fa;
+            }
+            QPushButton:checked {
+                background-color: #10b981;
+                color: white;
+                border-color: #059669;
+            }
+        """)
+        related_actions_layout.addWidget(self.import_related_files_checkbox)
 
         import_related_button = QPushButton("Import Now")
         import_related_button.setToolTip("Copy related files into the loaded/selected dsts-loader patch folder.")
         import_related_button.clicked.connect(self.import_related_files_now)
-        related_layout.addWidget(import_related_button, 2, 1, 1, 2)
+        import_related_button.setStyleSheet("""
+            QPushButton {
+                background-color: #667eea;
+                color: white;
+                border: 2px solid #667eea;
+                border-radius: 6px;
+                font-weight: bold;
+                padding: 8px 12px;
+            }
+            QPushButton:hover {
+                background-color: #5568d3;
+                border-color: #5568d3;
+            }
+        """)
+        related_actions_layout.addWidget(import_related_button)
+        related_actions_layout.addStretch()
+        related_layout.addWidget(related_actions_widget, 2, 1, 1, 2)
 
         self.related_import_status_label = QLabel("No related files imported yet.")
         self.related_import_status_label.setStyleSheet("color: #666; font-size: 9pt;")
