@@ -1457,13 +1457,9 @@ class DigimonCreationWizard(QWizard):
         template_chr_id = raw_data[0].strip('"') if raw_data[0] else ""
         new_chr_id = digimon.chr_id
 
-        # Update model_id and motion_id from the digimon object if they're set
-        if hasattr(digimon, 'model_id') and digimon.model_id:
-            if len(raw_data) > 2:
-                raw_data[2] = f'"{digimon.model_id}"'
-        if hasattr(digimon, 'motion_id') and digimon.motion_id:
-            if len(raw_data) > 3:
-                raw_data[3] = f'"{digimon.motion_id}"'
+        # Model/audio references live in char_info. Preserve model_setting's
+        # raw string columns instead of forcing the form's Model ID/Audio ID
+        # into unrelated slots; doing so can break imported recolor mods.
 
         for i, value in enumerate(raw_data):
             col_type = header_types[i] if i < len(header_types) else ''
@@ -7814,6 +7810,14 @@ class DigimonEditor(QMainWindow):
 
         for image_stem_lower, image_paths in sorted(image_basenames.items()):
             old_token = token_by_lower.get(image_stem_lower)
+            existing_bumped_token = ""
+            if old_token:
+                token_parts = self._parse_geom_texture_name(old_token)
+                if token_parts and token_parts[1] > 1:
+                    # A source-style image already matching a non-01 .geom token
+                    # is usually the result of a previous successful patch. Do
+                    # not keep bumping it on repeated runs.
+                    continue
 
             # The editor imports copied images under the new Chr ID first. The
             # original .geom still contains source-length texture tokens, so the
@@ -7822,6 +7826,27 @@ class DigimonEditor(QMainWindow):
                 source_like_stem = source_chr_lower + image_stem_lower[len(target_chr_lower):]
                 old_token = token_by_lower.get(source_like_stem)
 
+            # If the user already renamed images manually, recover by matching a
+            # bumped image name back to the older same-length token still inside
+            # the .geom. Example: image chr395a02.dds + geom chr395a01.
+            if not old_token and source_chr_lower and image_stem_lower.startswith(source_chr_lower):
+                image_parts = self._parse_geom_texture_name(image_stem_lower)
+                if image_parts:
+                    image_head, image_index, image_tail = image_parts
+                    for token in sorted(geom_tokens):
+                        token_parts = self._parse_geom_texture_name(token)
+                        if not token_parts:
+                            continue
+                        token_head, token_index, token_tail = token_parts
+                        if not token.lower().startswith(source_chr_lower):
+                            continue
+                        if token_index >= image_index:
+                            continue
+                        if token_head.lower() == image_head.lower() and token_tail.lower() == image_tail.lower():
+                            old_token = token
+                            existing_bumped_token = image_paths[0].stem
+                            break
+
             if not old_token:
                 continue
             if source_chr_lower and not old_token.lower().startswith(source_chr_lower):
@@ -7829,7 +7854,7 @@ class DigimonEditor(QMainWindow):
 
             new_token = mapping.get(old_token)
             if not new_token:
-                new_token = self._next_free_geom_texture_name(old_token, reserved_lower)
+                new_token = existing_bumped_token or self._next_free_geom_texture_name(old_token, reserved_lower)
                 if not new_token:
                     skipped_unindexed.append(old_token)
                     continue
@@ -8219,6 +8244,9 @@ class DigimonEditor(QMainWindow):
             self.animation_ref_edit.setText(self.template_chr_id_for_animation)
             self.select_related_source_by_chr(self.template_chr_id_for_animation)
             delattr(self, 'template_chr_id_for_animation')  # Clear after use
+        elif getattr(digimon, "animation_ref", ""):
+            self.animation_ref_edit.setText(digimon.animation_ref)
+            self.select_related_source_by_chr(digimon.animation_ref)
         else:
             self.animation_ref_edit.setText(digimon.chr_id)
             self.select_related_source_by_chr(digimon.chr_id)
@@ -8849,6 +8877,11 @@ class DigimonEditor(QMainWindow):
                 model_file = base_path / "patch" / "data" / "model_setting.mbe"
                 digimon.model_setting_data = self._load_model_setting_from_csv(model_file, digimon.chr_id)
 
+                # Load animation source mapping. Recolors usually keep a new
+                # model/Chr ID but point animations at the original source Chr ID.
+                anim_file = base_path / "patch" / "data" / "anim_setting.mbe"
+                digimon.animation_ref = self._load_animation_ref_from_csv(anim_file, digimon.chr_id)
+
                 # Load LOD data
                 lod_file = base_path / "patch" / "data" / "lod_chara.mbe"
                 digimon.lod_data = self._load_lod_from_csv(lod_file, digimon.chr_id)
@@ -8905,23 +8938,42 @@ class DigimonEditor(QMainWindow):
                     for row in reader:
                         if len(row) >= 1 and row[0].strip('"') == char_key:
                             # Extract relevant fields and strip quotes
-                            # Column 3: Model ID (model_ref)
+                            # Column 3 is this entry's Chr ID. Column 10 is the
+                            # model/animation reference used by existing mods.
                             # Column 8: Audio ID (motion_ref)
-                            model_ref = row[3].strip('"') if len(row) > 3 and row[3] else ""
+                            model_ref = row[10].strip('"') if len(row) > 10 and row[10] else ""
                             motion_ref = row[8].strip('"') if len(row) > 8 and row[8] else ""
                             debug_log(
                                 f"Found char_info for {char_key} - motion_ref (col8): "
-                                f"'{motion_ref}', model_ref (col3): '{model_ref}'"
+                                f"'{motion_ref}', model_ref (col10): '{model_ref}'"
                             )
                             return {
                                 'motion_ref': motion_ref,  # Column 8: Audio ID (motion_ref)
-                                'model_ref': model_ref  # Column 3: Model ID (model_ref)
+                                'model_ref': model_ref  # Column 10: model/animation reference
                             }
             except Exception as e:
                 debug_log(f"Error loading char_info from {csv_file}: {e}")
                 continue
         debug_log(f"No char_info found for char_key: {char_key}")
         return {}
+
+    def _load_animation_ref_from_csv(self, base_path: Path, chr_id: str) -> str:
+        """Load same_animation_data mapping for an imported dsts-loader Digimon."""
+        import csv
+
+        csv_files = list(base_path.glob("*.ap.csv"))
+        for csv_file in csv_files:
+            try:
+                with open(csv_file, 'r', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    next(reader)  # Skip header
+                    for row in reader:
+                        if len(row) >= 2 and row[0].strip('"') == chr_id:
+                            return row[1].strip('"') if row[1] else ""
+            except Exception as e:
+                debug_log(f"Error loading animation ref from {csv_file}: {e}")
+                continue
+        return ""
 
     def _load_profile_from_csv(self, base_path: Path, digimon_id: int) -> str:
         """Load Digimon profile from digimon_profile CSV files"""
@@ -9796,6 +9848,7 @@ class DigimonEditor(QMainWindow):
         # Model data
         self.current_digimon.model_id = self.model_id_edit.text()
         self.current_digimon.motion_id = self.motion_id_edit.text()
+        self.current_digimon.animation_ref = self.animation_ref_edit.text().strip()
 
         # LOD data - FIX: Save LOD distances from widgets
         if not hasattr(self.current_digimon, 'lod_data') or not self.current_digimon.lod_data:

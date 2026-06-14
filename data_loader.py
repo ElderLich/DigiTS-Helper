@@ -94,6 +94,7 @@ class DigimonData:
     # Model and animation data
     model_id: str = ""
     motion_id: str = ""
+    animation_ref: str = ""
     model_type: int = 1  # Column 121: Model type (1-4)
     animation_set: int = 1  # Column 122: Animation set (1-8)
     lod_data: Dict[str, Any] = field(default_factory=dict)
