@@ -52,6 +52,11 @@ def get_default_mod_loader_path() -> Path:
     return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
 
 
+def get_mvgl_fileloader_cache_path() -> Path:
+    """Return MVGL FileLoader's generated cache for Time Stranger."""
+    return DEFAULT_MOD_LOADER_PATH / "MVGL.FileLoader.Reloaded" / "cached" / RELOADED_SUPPORTED_APP_ID
+
+
 def debug_log(message: str) -> None:
     """Print reverse-engineering diagnostics only when DIGITS_HELPER_DEBUG is enabled."""
     if DEBUG_LOGGING:
@@ -10375,6 +10380,48 @@ class DigimonEditor(QMainWindow):
             json.dump(config, f, indent=2)
             f.write("\n")
 
+    def _clear_mvgl_fileloader_cache(self) -> str:
+        """
+        Clear MVGL FileLoader's generated cache after dsts-loader files change.
+
+        FileLoader builds packed .mbe cache files from every enabled mod. If that
+        cache survives while app_0 MBE patches change, FileLoader can fail on
+        startup with duplicate archive keys such as "app_0". The cache is safe to
+        delete because Reloaded rebuilds it on the next launch.
+        """
+        cache_path = get_mvgl_fileloader_cache_path()
+        if not cache_path.exists():
+            return ""
+
+        try:
+            allowed_root = (DEFAULT_MOD_LOADER_PATH / "MVGL.FileLoader.Reloaded" / "cached").resolve()
+            resolved_cache = cache_path.resolve()
+            if resolved_cache != allowed_root and allowed_root not in resolved_cache.parents:
+                raise RuntimeError(f"Refusing to clear unexpected cache path: {resolved_cache}")
+
+            def retry_readonly(func, path, exc_info):
+                try:
+                    os.chmod(path, 0o700)
+                    func(path)
+                except Exception:
+                    raise exc_info[1]
+
+            shutil.rmtree(resolved_cache, onerror=retry_readonly)
+            return "MVGL FileLoader cache was cleared so Reloaded can rebuild it."
+        except Exception as exc:
+            return (
+                "Could not clear MVGL FileLoader cache automatically.\n"
+                f"Cache path: {cache_path}\n"
+                f"Reason: {exc}\n\n"
+                "If Reloaded shows a duplicate app_0 error, close the game/Reloaded and delete that cache folder."
+            )
+
+    def _consume_mvgl_cache_notice(self) -> str:
+        """Return and clear the latest cache notice for save/export dialogs."""
+        notice = getattr(self, "last_mvgl_cache_notice", "")
+        self.last_mvgl_cache_notice = ""
+        return f"\n\n{notice}" if notice else ""
+
     def export_digimon_to_reloaded_mod(self, digimon: DigimonData, original_identity: Optional[dict] = None) -> Optional[Path]:
         """Create/update a Reloaded II mod folder and merge this Digimon into dsts-loader files."""
         options = self.get_reloaded_mod_export_options(digimon)
@@ -10439,12 +10486,14 @@ class DigimonEditor(QMainWindow):
         mod_root = self.export_digimon_to_reloaded_mod(self.current_digimon, original_identity)
         if mod_root:
             self.clear_modified_flag()
+            cache_notice = self._consume_mvgl_cache_notice()
             QMessageBox.information(
                 self,
                 "Success",
                 f"✅ {self.current_digimon.name} exported as a Reloaded II mod!\n\n"
                 f"Mod folder:\n{mod_root}\n\n"
                 f"dsts-loader payload:\n{mod_root / 'dsts-loader'}"
+                f"{cache_notice}"
             )
 
     def save_to_dsts_loader(self, digimon: DigimonData, dsts_loader_root: Optional[Path] = None, ask_for_path: bool = True) -> bool:
@@ -10503,6 +10552,7 @@ class DigimonEditor(QMainWindow):
             self._upsert_imported_digimon(digimon, output_path)
             self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
+            cache_notice = self._consume_mvgl_cache_notice()
             if has_existing:
                 QMessageBox.information(
                     self,
@@ -10510,6 +10560,7 @@ class DigimonEditor(QMainWindow):
                     f"✅ {digimon.name} has been updated in dsts-loader!\n\n"
                     f"Location: {output_path}\n\n"
                     "Other Digimon data was preserved."
+                    f"{cache_notice}"
                 )
             else:
                 QMessageBox.information(
@@ -10518,6 +10569,7 @@ class DigimonEditor(QMainWindow):
                     f"✅ {digimon.name} has been saved to dsts-loader format!\n\n"
                     f"Location: {output_path}\n\n"
                     "All .ap.csv files have been created."
+                    f"{cache_notice}"
                 )
             return True
         else:
@@ -11852,6 +11904,7 @@ class DigimonEditor(QMainWindow):
             outline_file = app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv"
             self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
+            self.last_mvgl_cache_notice = self._clear_mvgl_fileloader_cache()
             return True
 
         except Exception as e:
