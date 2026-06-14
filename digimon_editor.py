@@ -1907,19 +1907,10 @@ class BasicInfoPage(QWizardPage):
         field_guide_layout.addStretch()
         layout.addRow("📘 Field Guide ID:", field_guide_widget)
 
-        # Auto-generate based on ID
-        self.id_spin.valueChanged.connect(self.auto_generate_ids)
-        self.auto_generate_ids()
+        # Leave Chr ID and Character Key under user control. The ID spinner is
+        # only a suggestion; validation below catches collisions before export.
 
         self.setLayout(layout)
-
-    def auto_generate_ids(self):
-        """Auto-generate char_key and chr_id based on ID"""
-        digimon_id = self.id_spin.value()
-        if not self.char_key_edit.text() or self.char_key_edit.text().startswith("char_"):
-            self.char_key_edit.setText(f"char_DIGIMON_{digimon_id}")
-        if not self.chr_id_edit.text() or self.chr_id_edit.text().startswith("chr"):
-            self.chr_id_edit.setText(f"chr{digimon_id}")
 
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
@@ -3930,41 +3921,54 @@ class DigimonEditor(QMainWindow):
             if label_text.endswith(" *"):
                 self.current_digimon_label.setText(label_text[:-2])
 
-    def validate_digimon_uniqueness(self, original_id: int, original_chr_id: str) -> bool:
-        """Validate that ID and chr_id are unique"""
+    def validate_digimon_uniqueness(self, original_id: int, original_chr_id: str, original_char_key: str = "") -> bool:
+        """Validate that ID, Chr ID, and Character Key are unique."""
         new_id = self.current_digimon.id
-        new_chr_id = self.current_digimon.chr_id
+        new_chr_id = self.current_digimon.chr_id.strip()
+        new_char_key = self.current_digimon.char_key.strip()
+        original_chr_id = (original_chr_id or "").strip()
+        original_char_key = (original_char_key or "").strip()
 
         # If values haven't changed, no need to validate
-        if new_id == original_id and new_chr_id == original_chr_id:
+        if (
+            new_id == original_id
+            and new_chr_id.casefold() == original_chr_id.casefold()
+            and new_char_key.casefold() == original_char_key.casefold()
+        ):
             return True
 
         # Check ID uniqueness
         if new_id != original_id:
-            # Get all Digimon IDs from both base game and DLC
-            all_chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=False)
-            all_chr_ids.extend(self.loader.get_all_digimon_chr_ids(from_dlc=True))
-
-            for chr_id in all_chr_ids:
-                digimon = self.loader.get_digimon_by_chr_id(chr_id)
-                if digimon and digimon.id == new_id and digimon.chr_id != original_chr_id:
-                    QMessageBox.warning(
-                        self,
-                        "Duplicate ID",
-                        f"❌ ID {new_id} is already used by {digimon.name} ({digimon.chr_id})!\n\n"
-                        "Please choose a different ID."
-                    )
-                    return False
+            used_ids = self._collect_used_digimon_ids()
+            if new_id in used_ids:
+                QMessageBox.warning(
+                    self,
+                    "Duplicate ID",
+                    f"ID {new_id} already exists in base, DLC, imported entries, or the active mod.\n\n"
+                    "Choose a different Digimon ID before saving."
+                )
+                return False
 
         # Check chr_id uniqueness
-        if new_chr_id != original_chr_id:
-            existing_digimon = self.loader.get_digimon_by_chr_id(new_chr_id)
-            if existing_digimon and existing_digimon.chr_id != original_chr_id:
+        if new_chr_id.casefold() != original_chr_id.casefold():
+            if new_chr_id.casefold() in self._collect_used_chr_ids():
                 QMessageBox.warning(
                     self,
                     "Duplicate Chr ID",
-                    f"❌ Chr ID '{new_chr_id}' is already used by {existing_digimon.name}!\n\n"
-                    "Please choose a different Chr ID."
+                    f"Chr ID '{new_chr_id}' already exists in base, DLC, imported entries, or the active mod.\n\n"
+                    "Choose a different Chr ID before saving."
+                )
+                return False
+
+        # Check Character Key uniqueness. This is separate from Chr ID; text,
+        # char_info, and status rows all use it as a join key.
+        if new_char_key.casefold() != original_char_key.casefold():
+            if new_char_key.casefold() in self._collect_used_char_keys():
+                QMessageBox.warning(
+                    self,
+                    "Duplicate Character Key",
+                    f"Character Key '{new_char_key}' already exists in base, DLC, imported entries, or the active mod.\n\n"
+                    "Choose a different Character Key before saving."
                 )
                 return False
 
@@ -4027,9 +4031,10 @@ class DigimonEditor(QMainWindow):
 
         if FIELD_GUIDE_CUSTOM_MIN <= field_guide_id <= FIELD_GUIDE_CUSTOM_MAX:
             identity_values = self._current_identity_values()
+            exclude_chr_id = "" if identity_values.get("pending_new_mod_entry") else self.chr_id_edit.text().strip()
             usage = collect_field_guide_usage(
                 self.loader,
-                self.chr_id_edit.text().strip(),
+                exclude_chr_id,
                 identity_values["chr_ids"],
                 identity_values["digimon_ids"],
             )
@@ -4535,8 +4540,8 @@ class DigimonEditor(QMainWindow):
         self.add_selected_to_mod_button.clicked.connect(self.add_selected_to_active_mod)
         self.add_selected_to_mod_button.setEnabled(False)
         self.add_selected_to_mod_button.setToolTip(
-            "Clone the selected base/DLC/imported Digimon into the active loaded mod with fresh IDs.\n"
-            "Import or export a mod first so the editor knows which dsts-loader payload to update."
+            "Load the selected base/DLC/imported Digimon as a pending entry for the active mod.\n"
+            "You choose the new ID, Chr ID, Character Key, and Field Guide slot before saving."
         )
         self.add_selected_to_mod_button.setStyleSheet(button_style.format(
             color1="#14b8a6", color2="#0f766e",
@@ -8441,23 +8446,42 @@ class DigimonEditor(QMainWindow):
 
         return used_chr_ids
 
-    def _next_free_digimon_id(self) -> int:
-        """Return the next unused Digimon ID across all loaded sources."""
-        used_ids = self._collect_used_digimon_ids()
-        candidate = (max(used_ids) + 1) if used_ids else 1000
-        while candidate in used_ids:
-            candidate += 1
-        return candidate
+    def _collect_used_char_keys(self) -> Set[str]:
+        """Collect Character Keys from base, DLC, imported rows, and the active mod payload."""
+        used_char_keys = set()
 
-    def _make_clone_char_key(self, source_name: str, digimon_id: int) -> str:
-        """Create a readable unique char_key for a cloned mod entry."""
-        compact_name = re.sub(r"[^A-Za-z0-9]+", "_", source_name or "").strip("_").upper()
-        if not compact_name:
-            compact_name = "DIGIMON"
-        return f"char_{compact_name}_{digimon_id}"
+        for from_dlc in (False, True):
+            try:
+                for chr_id in self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc):
+                    digimon = self.loader.get_digimon_by_chr_id(chr_id)
+                    char_key = str(getattr(digimon, "char_key", "")).strip() if digimon else ""
+                    if char_key:
+                        used_char_keys.add(char_key.casefold())
+            except Exception:
+                continue
+
+        for digimon in getattr(self.loader, "imported_digimon", []):
+            char_key = str(getattr(digimon, "char_key", "")).strip()
+            if char_key:
+                used_char_keys.add(char_key.casefold())
+
+        active_root = self._active_dsts_loader_root()
+        if active_root:
+            try:
+                for status_file in self._dsts_loader_status_files(active_root):
+                    rows = self.loader.load_csv(status_file)
+                    for row in rows[1:]:
+                        if len(row) > 2:
+                            char_key = _clean_status_cell(row[2])
+                            if char_key:
+                                used_char_keys.add(char_key.casefold())
+            except Exception:
+                pass
+
+        return used_char_keys
 
     def add_selected_to_active_mod(self):
-        """Clone the selected Digimon into the active Reloaded II/dsts-loader mod."""
+        """Load the selected Digimon as an unsaved new entry for the active mod."""
         active_root = self._active_dsts_loader_root()
         if not active_root:
             QMessageBox.warning(
@@ -8500,55 +8524,28 @@ class DigimonEditor(QMainWindow):
         source_chr_id = template.chr_id
         animation_ref = getattr(template, "animation_ref", "") or source_chr_id
 
-        new_id = self._next_free_digimon_id()
-        new_chr_id = f"chr{new_id}"
-        used_chr_ids = self._collect_used_chr_ids()
-        while new_chr_id.casefold() in used_chr_ids:
-            new_id += 1
-            new_chr_id = f"chr{new_id}"
-
-        new_digimon.id = new_id
-        new_digimon.name = f"{source_name} Copy"
-        new_digimon.char_key = self._make_clone_char_key(source_name, new_id)
-        new_digimon.chr_id = new_chr_id
-        new_digimon.field_guide_id = first_free_field_guide_id(
-            self.loader,
-            new_chr_id,
-            exclude_digimon_ids={new_id},
-        )
-        new_digimon.script_id = new_id
+        # Keep the template's visible identity intact. The editor marks this as a
+        # pending mod entry so Save/Export will require the user-selected final
+        # IDs instead of silently inventing chr/id/key values.
+        new_digimon.pending_new_mod_entry = True
+        new_digimon.template_id = getattr(template, "id", "")
+        new_digimon.template_chr_id = source_chr_id
+        new_digimon.template_char_key = getattr(template, "char_key", "")
         new_digimon.animation_ref = animation_ref
+        self._mark_import_source(new_digimon, active_root)
 
-        if not self._merge_digimon_to_dsts_loader(
-            active_root,
-            new_digimon,
-            original_identity={},
-            animation_ref=animation_ref,
-            sync_form=False,
-        ):
-            QMessageBox.warning(self, "Add Failed", "Failed to merge the new Digimon entry into the active mod.")
-            return
-
-        self._upsert_imported_digimon(new_digimon, active_root)
-        self.load_digimon_list()
+        self.current_digimon_from_dlc = False
         self.load_digimon_data(new_digimon)
-
-        display_name = f"📥 {new_digimon.name} ({new_digimon.chr_id})"
-        if self.get_source_mode() == "all":
-            display_name = f"{display_name} [Imported]"
-        index = self.digimon_list.findText(display_name, Qt.MatchFlag.MatchExactly)
-        if index >= 0:
-            self.digimon_list.setCurrentIndex(index)
+        self.current_digimon_label.setText(f"📝 New Entry Template: {source_name} ({source_chr_id}) *")
+        self.mark_as_modified()
 
         QMessageBox.information(
             self,
-            "New Mod Entry Added",
-            f"✅ Added {new_digimon.name} to the active mod.\n\n"
+            "Template Loaded",
+            f"✅ Loaded {source_name} as a new pending mod entry.\n\n"
             f"Template: {source_name} ({source_chr_id})\n"
-            f"New ID: {new_id}\n"
-            f"New Chr ID: {new_chr_id}\n"
-            f"Field Guide ID: {new_digimon.field_guide_id}\n\n"
-            "Edit the fields, then use Save to Loaded Source to update this mod entry."
+            f"Active mod:\n{active_root}\n\n"
+            "Choose the new Digimon ID, Chr ID, Character Key, and Field Guide slot, then use Save to Loaded Source."
         )
 
     def _csv_cell(self, row: List[str], index: int) -> str:
@@ -8929,23 +8926,38 @@ class DigimonEditor(QMainWindow):
             "field_guide_id": getattr(digimon, "field_guide_id", -1),
             "imported_dsts_loader_root": getattr(digimon, "imported_dsts_loader_root", ""),
             "imported_mod_root": getattr(digimon, "imported_mod_root", ""),
+            "pending_new_mod_entry": bool(getattr(digimon, "pending_new_mod_entry", False)),
+            "template_id": getattr(digimon, "template_id", ""),
+            "template_chr_id": getattr(digimon, "template_chr_id", ""),
+            "template_char_key": getattr(digimon, "template_char_key", ""),
         }
 
     def _current_identity_values(self) -> dict:
         """Return current and originally loaded IDs used for validation/merge matching."""
         identity = getattr(self, "loaded_digimon_identity", {}) or {}
-        chr_ids = {self.chr_id_edit.text().strip()}
-        raw_digimon_ids = {self.id_spin.value()}
-        char_keys = {self.char_key_edit.text().strip()}
+        pending_new = bool(
+            identity.get("pending_new_mod_entry")
+            or (self.current_digimon and getattr(self.current_digimon, "pending_new_mod_entry", False))
+        )
 
-        if self.current_digimon:
+        if pending_new:
+            chr_ids = set()
+            raw_digimon_ids = set()
+            char_keys = set()
+        else:
+            chr_ids = {self.chr_id_edit.text().strip()}
+            raw_digimon_ids = {self.id_spin.value()}
+            char_keys = {self.char_key_edit.text().strip()}
+
+        if self.current_digimon and not pending_new:
             chr_ids.add(getattr(self.current_digimon, "chr_id", ""))
             raw_digimon_ids.add(getattr(self.current_digimon, "id", 0))
             char_keys.add(getattr(self.current_digimon, "char_key", ""))
 
-        chr_ids.add(identity.get("chr_id", ""))
-        raw_digimon_ids.add(identity.get("id", 0))
-        char_keys.add(identity.get("char_key", ""))
+        if not pending_new:
+            chr_ids.add(identity.get("chr_id", ""))
+            raw_digimon_ids.add(identity.get("id", 0))
+            char_keys.add(identity.get("char_key", ""))
 
         digimon_ids = set()
         for value in raw_digimon_ids:
@@ -8961,6 +8973,7 @@ class DigimonEditor(QMainWindow):
             "digimon_ids": digimon_ids,
             "char_keys": {value for value in char_keys if value},
             "identity": identity,
+            "pending_new_mod_entry": pending_new,
         }
 
     def launch_creation_wizard(self):
@@ -9920,8 +9933,19 @@ class DigimonEditor(QMainWindow):
             return
 
         # Store original values before updating
-        original_id = self.current_digimon.id
-        original_chr_id = self.current_digimon.chr_id
+        loaded_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        is_pending_new = bool(
+            loaded_identity.get("pending_new_mod_entry")
+            or getattr(self.current_digimon, "pending_new_mod_entry", False)
+        )
+        if is_pending_new:
+            original_id = -1
+            original_chr_id = ""
+            original_char_key = ""
+        else:
+            original_id = self.current_digimon.id
+            original_chr_id = self.current_digimon.chr_id
+            original_char_key = self.current_digimon.char_key
         chr_id_to_reload = self.current_digimon.chr_id
 
         if not self.validate_field_guide_id():
@@ -9931,11 +9955,21 @@ class DigimonEditor(QMainWindow):
         self.update_digimon_from_form()
 
         # Validate for duplicates
-        if not self.validate_digimon_uniqueness(original_id, original_chr_id):
+        if not self.validate_digimon_uniqueness(original_id, original_chr_id, original_char_key):
             # Revert changes
-            self.current_digimon.id = original_id
-            self.current_digimon.chr_id = original_chr_id
+            if not is_pending_new:
+                self.current_digimon.id = original_id
+                self.current_digimon.chr_id = original_chr_id
+                self.current_digimon.char_key = original_char_key
             return
+
+        if is_pending_new:
+            pending_root = self._imported_dsts_loader_root(self.current_digimon, "") or self._active_dsts_loader_root()
+            if not pending_root:
+                QMessageBox.warning(self, "No Active Mod", "Could not resolve the active mod folder for this pending entry.")
+                return
+            if self.save_to_dsts_loader(self.current_digimon, pending_root, ask_for_path=False):
+                return
 
         # Imported Digimon keep their source folder, so Save Changes can update
         # the same Reloaded II/dsts-loader payload without asking again.
@@ -10237,22 +10271,55 @@ class DigimonEditor(QMainWindow):
         dsts_loader_root = options["dsts_loader_root"]
         dsts_loader_root.mkdir(parents=True, exist_ok=True)
 
-        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon, original_identity):
+        original_identity = dict(original_identity or {})
+        pending_new = bool(
+            original_identity.get("pending_new_mod_entry")
+            or getattr(digimon, "pending_new_mod_entry", False)
+        )
+        merge_identity = {} if pending_new else original_identity
+
+        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon, merge_identity):
             QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
             return None
 
         self._set_active_dsts_loader_root(dsts_loader_root)
+        if pending_new:
+            digimon.pending_new_mod_entry = False
+            self.loaded_digimon_identity = {}
+        self._upsert_imported_digimon(digimon, dsts_loader_root)
+        self._remember_loaded_identity(digimon)
         return options["mod_root"]
 
     def export_to_dlc(self):
         """Export the current Digimon as a Reloaded II compatible mod folder."""
         if not self.current_digimon:
             return
+        loaded_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+        is_pending_new = bool(
+            loaded_identity.get("pending_new_mod_entry")
+            or getattr(self.current_digimon, "pending_new_mod_entry", False)
+        )
+        if is_pending_new:
+            original_id = -1
+            original_chr_id = ""
+            original_char_key = ""
+        else:
+            original_id = self.current_digimon.id
+            original_chr_id = self.current_digimon.chr_id
+            original_char_key = self.current_digimon.char_key
+
         if not self.validate_field_guide_id():
             return
 
         # Update current digimon with form data
         self.update_digimon_from_form()
+
+        if not self.validate_digimon_uniqueness(original_id, original_chr_id, original_char_key):
+            if not is_pending_new:
+                self.current_digimon.id = original_id
+                self.current_digimon.chr_id = original_chr_id
+                self.current_digimon.char_key = original_char_key
+            return
 
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
         mod_root = self.export_digimon_to_reloaded_mod(self.current_digimon, original_identity)
@@ -10309,8 +10376,16 @@ class DigimonEditor(QMainWindow):
 
         # Always use merge mode to preserve other Digimon data
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
-        if self._merge_digimon_to_dsts_loader(output_path, digimon, original_identity):
+        pending_new = bool(
+            original_identity.get("pending_new_mod_entry")
+            or getattr(digimon, "pending_new_mod_entry", False)
+        )
+        merge_identity = {} if pending_new else original_identity
+        if self._merge_digimon_to_dsts_loader(output_path, digimon, merge_identity):
             self._set_active_dsts_loader_root(output_path)
+            if pending_new:
+                digimon.pending_new_mod_entry = False
+                self.loaded_digimon_identity = {}
             self._upsert_imported_digimon(digimon, output_path)
             self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
