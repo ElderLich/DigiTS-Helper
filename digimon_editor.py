@@ -5112,23 +5112,23 @@ class DigimonEditor(QMainWindow):
         related_source_layout.addWidget(related_dropdown_button)
         related_layout.addWidget(related_source_widget, 1, 1, 1, 2)
 
-        related_layout.addWidget(QLabel("Related Files:"), 2, 0)
-        related_actions_widget = QWidget()
-        related_actions_layout = QHBoxLayout(related_actions_widget)
-        related_actions_layout.setContentsMargins(0, 0, 0, 0)
-        related_actions_layout.setSpacing(8)
+        related_layout.addWidget(QLabel("Import Options:"), 2, 0)
+        related_options_widget = QWidget()
+        related_options_layout = QHBoxLayout(related_options_widget)
+        related_options_layout.setContentsMargins(0, 0, 0, 0)
+        related_options_layout.setSpacing(8)
 
-        self.import_related_files_checkbox = QPushButton("Auto Import: OFF")
-        self.import_related_files_checkbox.setCheckable(True)
-        self.import_related_files_checkbox.setToolTip(
-            "When saving/exporting a Reloaded II mod, copy missing model files and images from the selected source Digimon."
+        self.related_normals_toggle = QPushButton("Normals/Extras: OFF")
+        self.related_normals_toggle.setCheckable(True)
+        self.related_normals_toggle.setToolTip(
+            "Include optional texture maps such as l/m/n/h/s files. Leave OFF for simple recolors."
         )
-        self.import_related_files_checkbox.toggled.connect(
-            lambda checked: self.import_related_files_checkbox.setText(
-                "Auto Import: ON" if checked else "Auto Import: OFF"
+        self.related_normals_toggle.toggled.connect(
+            lambda checked: self.related_normals_toggle.setText(
+                "Normals/Extras: ON" if checked else "Normals/Extras: OFF"
             )
         )
-        self.import_related_files_checkbox.setStyleSheet("""
+        self.related_normals_toggle.setStyleSheet("""
             QPushButton {
                 background-color: #ffffff;
                 color: #333333;
@@ -5148,7 +5148,28 @@ class DigimonEditor(QMainWindow):
                 border-color: #059669;
             }
         """)
-        related_actions_layout.addWidget(self.import_related_files_checkbox)
+        related_options_layout.addWidget(self.related_normals_toggle)
+
+        self.related_all_assets_toggle = QPushButton("All Model Files: OFF")
+        self.related_all_assets_toggle.setCheckable(True)
+        self.related_all_assets_toggle.setToolTip(
+            "Include every matching model/animation/effect file. Leave OFF to import only chr*.anim/.geom/.nlst and chr*_lod_2 files."
+        )
+        self.related_all_assets_toggle.toggled.connect(
+            lambda checked: self.related_all_assets_toggle.setText(
+                "All Model Files: ON" if checked else "All Model Files: OFF"
+            )
+        )
+        self.related_all_assets_toggle.setStyleSheet(self.related_normals_toggle.styleSheet())
+        related_options_layout.addWidget(self.related_all_assets_toggle)
+        related_options_layout.addStretch()
+        related_layout.addWidget(related_options_widget, 2, 1, 1, 2)
+
+        related_layout.addWidget(QLabel("Related Files:"), 3, 0)
+        related_actions_widget = QWidget()
+        related_actions_layout = QHBoxLayout(related_actions_widget)
+        related_actions_layout.setContentsMargins(0, 0, 0, 0)
+        related_actions_layout.setSpacing(8)
 
         import_related_button = QPushButton("Import Now")
         import_related_button.setToolTip("Copy related files into the loaded/selected dsts-loader patch folder.")
@@ -5169,11 +5190,11 @@ class DigimonEditor(QMainWindow):
         """)
         related_actions_layout.addWidget(import_related_button)
         related_actions_layout.addStretch()
-        related_layout.addWidget(related_actions_widget, 2, 1, 1, 2)
+        related_layout.addWidget(related_actions_widget, 3, 1, 1, 2)
 
         self.related_import_status_label = QLabel("No related files imported yet.")
         self.related_import_status_label.setStyleSheet("color: #666; font-size: 9pt;")
-        related_layout.addWidget(self.related_import_status_label, 3, 0, 1, 3)
+        related_layout.addWidget(self.related_import_status_label, 4, 0, 1, 3)
 
         layout.addWidget(related_group)
         self.populate_related_source_combo()
@@ -7367,11 +7388,18 @@ class DigimonEditor(QMainWindow):
         if selected_dir:
             self.related_extract_path_edit.setText(selected_dir)
 
-    def should_import_related_files(self) -> bool:
-        """Return whether save/export should copy missing related model/image assets."""
+    def include_related_texture_extras(self) -> bool:
+        """Return whether optional texture maps should be imported."""
         return bool(
-            hasattr(self, "import_related_files_checkbox")
-            and self.import_related_files_checkbox.isChecked()
+            hasattr(self, "related_normals_toggle")
+            and self.related_normals_toggle.isChecked()
+        )
+
+    def import_all_related_model_files(self) -> bool:
+        """Return whether all matching model/animation files should be imported."""
+        return bool(
+            hasattr(self, "related_all_assets_toggle")
+            and self.related_all_assets_toggle.isChecked()
         )
 
     def _chr_digits(self, chr_id: str) -> str:
@@ -7437,6 +7465,9 @@ class DigimonEditor(QMainWindow):
     def _related_file_matches(self, file_path: Path, source_entry: dict) -> bool:
         """Return whether a file looks related to the selected source Digimon."""
         name = file_path.name.lower()
+        if name.startswith(("ui_digicard_card_", "ui_digicard_thum_")):
+            return False
+
         source_chr_id = source_entry.get("chr_id", "").lower()
         source_id = int(source_entry.get("id") or 0)
 
@@ -7458,7 +7489,43 @@ class DigimonEditor(QMainWindow):
         )
         return any(pattern in name for pattern in numeric_patterns)
 
-    def _iter_related_asset_files(self, extracted_root: Path, source_entry: dict) -> List[Path]:
+    def _is_basic_related_model_file(self, file_path: Path, source_entry: dict) -> bool:
+        """Return whether a model file is part of the lean recolor import set."""
+        source_chr_id = source_entry.get("chr_id", "").lower()
+        if not source_chr_id:
+            return False
+
+        name = file_path.name.lower()
+        basic_names = {
+            f"{source_chr_id}.anim",
+            f"{source_chr_id}.geom",
+            f"{source_chr_id}.nlst",
+            f"{source_chr_id}_lod_2.anim",
+            f"{source_chr_id}_lod_2.geom",
+            f"{source_chr_id}_lod_2.nlst",
+        }
+        return name in basic_names
+
+    def _is_optional_related_texture_map(self, file_path: Path, source_entry: dict) -> bool:
+        """Return whether a texture is an optional normal/material/extra map."""
+        source_chr_id = source_entry.get("chr_id", "").lower()
+        if not source_chr_id:
+            return False
+
+        stem = file_path.stem.lower()
+        if not stem.startswith(source_chr_id):
+            return False
+
+        tail = stem[len(source_chr_id):]
+        return bool(re.search(r"\d[hlmns]$", tail))
+
+    def _iter_related_asset_files(
+        self,
+        extracted_root: Path,
+        source_entry: dict,
+        include_texture_extras: bool = False,
+        import_all_model_files: bool = False,
+    ) -> List[Path]:
         """Find related model/animation files and images in an extracted game folder."""
         image_suffixes = {".img", ".dds"}
         asset_suffixes = {
@@ -7471,23 +7538,50 @@ class DigimonEditor(QMainWindow):
         for root in self._related_search_roots(extracted_root):
             if not root.exists():
                 continue
-            for file_path in root.rglob("*"):
-                if not file_path.is_file():
-                    continue
-                suffix = file_path.suffix.lower()
-                if suffix not in asset_suffixes:
-                    continue
-                if suffix in image_suffixes or file_path.parent.name.lower() == "images":
-                    if self._related_file_matches(file_path, source_entry):
-                        key = str(file_path.resolve()).lower()
+            search_dirs = [root]
+            images_dir = root / "images"
+            if images_dir.exists():
+                search_dirs.append(images_dir)
+
+            for search_dir in search_dirs:
+                source_chr_id = source_entry.get("chr_id", "").lower()
+                source_id = int(source_entry.get("id") or 0)
+                patterns = [f"*{source_chr_id}*"] if source_chr_id else []
+                if search_dir.name.lower() == "images" and source_id:
+                    patterns.extend([
+                        f"*{source_id}*",
+                        f"*{source_id + 1000}*",
+                        f"*{source_id:04d}*",
+                    ])
+
+                candidate_files = []
+                for pattern in dict.fromkeys(patterns):
+                    try:
+                        candidate_files.extend(search_dir.glob(pattern))
+                    except OSError:
+                        continue
+
+                for file_path in candidate_files:
+                    if not file_path.is_file():
+                        continue
+                    suffix = file_path.suffix.lower()
+                    if suffix not in asset_suffixes:
+                        continue
+                    if suffix in image_suffixes or file_path.parent.name.lower() == "images":
+                        if self._related_file_matches(file_path, source_entry):
+                            if not include_texture_extras and self._is_optional_related_texture_map(file_path, source_entry):
+                                continue
+                            key = file_path.name.lower()
+                            if key not in seen:
+                                seen.add(key)
+                                matches.append(file_path)
+                    elif source_entry.get("chr_id", "").lower() in file_path.name.lower():
+                        if not import_all_model_files and not self._is_basic_related_model_file(file_path, source_entry):
+                            continue
+                        key = file_path.name.lower()
                         if key not in seen:
                             seen.add(key)
                             matches.append(file_path)
-                elif source_entry.get("chr_id", "").lower() in file_path.name.lower():
-                    key = str(file_path.resolve()).lower()
-                    if key not in seen:
-                        seen.add(key)
-                        matches.append(file_path)
         return matches
 
     def import_related_files_to_dsts_loader(
@@ -7521,14 +7615,24 @@ class DigimonEditor(QMainWindow):
 
         copied = []
         skipped = []
-        files = self._iter_related_asset_files(extracted_root, source_entry)
+        files = self._iter_related_asset_files(
+            extracted_root,
+            source_entry,
+            include_texture_extras=self.include_related_texture_extras(),
+            import_all_model_files=self.import_all_related_model_files(),
+        )
         image_suffixes = {".img", ".dds"}
+        seen_destinations = set()
 
         for source_file in files:
             dest_name = self._rename_related_asset(source_file.name, source_entry, target_chr_id, target_id)
             is_image = source_file.suffix.lower() in image_suffixes or source_file.parent.name.lower() == "images"
             dest_dir = images_dir if is_image else patch_dir
             dest_file = dest_dir / dest_name
+            destination_key = str(dest_file).lower()
+            if destination_key in seen_destinations:
+                continue
+            seen_destinations.add(destination_key)
 
             if dest_file.exists() and not overwrite:
                 skipped.append(dest_file)
@@ -9199,12 +9303,6 @@ class DigimonEditor(QMainWindow):
             QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
             return None
 
-        if self.should_import_related_files():
-            summary = self.import_related_files_to_dsts_loader(dsts_loader_root, digimon, overwrite=False)
-            self.related_import_status_label.setText(self.format_related_import_summary(summary))
-            if not summary.get("ok"):
-                QMessageBox.warning(self, "Related File Import Failed", self.format_related_import_summary(summary))
-
         return options["mod_root"]
 
     def export_to_dlc(self):
@@ -9273,12 +9371,6 @@ class DigimonEditor(QMainWindow):
         # Always use merge mode to preserve other Digimon data
         original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
         if self._merge_digimon_to_dsts_loader(output_path, digimon, original_identity):
-            if self.should_import_related_files():
-                summary = self.import_related_files_to_dsts_loader(output_path, digimon, overwrite=False)
-                self.related_import_status_label.setText(self.format_related_import_summary(summary))
-                if not summary.get("ok"):
-                    QMessageBox.warning(self, "Related File Import Failed", self.format_related_import_summary(summary))
-
             self._upsert_imported_digimon(digimon, output_path)
             self._remember_loaded_identity(digimon)
             self.clear_modified_flag()
