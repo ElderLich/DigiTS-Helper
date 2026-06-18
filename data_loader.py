@@ -44,6 +44,19 @@ def normalize_status_reference_id(digimon_id: int, field_guide_id: int, referenc
     return reference_id
 
 
+def safe_int_value(value: Any, default: int = 0) -> int:
+    """Parse a CSV integer cell without letting blanks or quoted values crash callers."""
+    try:
+        if value is None:
+            return default
+        text = str(value).strip().strip('"')
+        if not text:
+            return default
+        return int(text)
+    except (TypeError, ValueError):
+        return default
+
+
 @dataclass
 class DigimonData:
     """Represents a complete Digimon entry with all associated data"""
@@ -141,6 +154,14 @@ class DigimonData:
 class MBELoader:
     """Loads and parses .mbe directories containing CSV files"""
     DSTS_DLC_IDS = ("01", "02", "03", "17")
+    MODE_CHANGE_HEADER = [
+        "int32 0", "int32 1", "empty 2", "empty 3", "int32 4", "int32 5",
+        "int32 6", "empty 7", "int32 8", "empty 9", "int32 10", "empty 11",
+        "int32 12", "empty 13", "int32 14", "empty 15", "int32 16", "empty 17",
+        "int32 18", "empty 19", "int32 20", "empty 21", "int32 22", "empty 23",
+        "int32 24", "empty 25", "int32 26", "empty 27", "int32 28", "empty 29",
+    ]
+    MODE_CHANGE_SKILL_COLUMNS = tuple(range(6, 29, 2))
     
     def __init__(self, data_path: str = "data", text_path: str = "text"):
         self.data_path = Path(data_path)
@@ -363,6 +384,29 @@ class MBELoader:
             for candidate in file_path.parent.glob(f"*_{suffix}"):
                 if candidate.is_file():
                     return candidate
+        return file_path
+
+    def _data_csv_path(self, data_root: Optional[Path], mbe_folder: str, csv_name: str) -> Path:
+        """Resolve a data CSV under either the loader base path or an explicit mod data root."""
+        root = Path(data_root) if data_root is not None else self.data_path
+        return self._resolve_prefixed_file(root / mbe_folder / csv_name)
+
+    def _battle_skill_csv_path(self, data_root: Optional[Path] = None, prefer_ap: bool = False) -> Path:
+        csv_name = "000_battle_skill_list.ap.csv" if prefer_ap else "000_battle_skill_list.csv"
+        file_path = self._data_csv_path(data_root, "battle_skill.mbe", csv_name)
+        if prefer_ap and not file_path.exists():
+            fallback = self._data_csv_path(data_root, "battle_skill.mbe", "000_battle_skill_list.csv")
+            if fallback.exists():
+                return fallback
+        return file_path
+
+    def _skill_mode_change_csv_path(self, data_root: Optional[Path] = None, prefer_ap: bool = False) -> Path:
+        csv_name = "003_skill_mode_change.ap.csv" if prefer_ap else "003_skill_mode_change.csv"
+        file_path = self._data_csv_path(data_root, "battle_skill.mbe", csv_name)
+        if prefer_ap and not file_path.exists():
+            fallback = self._data_csv_path(data_root, "battle_skill.mbe", "003_skill_mode_change.csv")
+            if fallback.exists():
+                return fallback
         return file_path
     
     def _invalidate_digimon_status_cache(self):
@@ -990,6 +1034,7 @@ class MBELoader:
                         "evolution_id": int(row[0]) if row[0] else 0,
                         "from_id": int(row[1]) if row[1] else 0,
                         "to_id": int(row[3]) if len(row) > 3 and row[3] else 0,
+                        "evolution_type": safe_int_value(row[5], 0) if len(row) > 5 else 0,
                         "condition_flags": row[5:] if len(row) > 5 else [],
                         "raw_data": row
                     })
@@ -1006,6 +1051,7 @@ class MBELoader:
                         "evolution_id": int(row[0]) if row[0] else 0,
                         "from_id": int(row[1]) if row[1] else 0,
                         "to_id": int(row[3]) if len(row) > 3 and row[3] else 0,
+                        "evolution_type": safe_int_value(row[5], 0) if len(row) > 5 else 0,
                         "condition_flags": row[5:] if len(row) > 5 else [],
                         "raw_data": row
                     })
@@ -1042,22 +1088,35 @@ class MBELoader:
                 'jogressPersonalityB': safe_int(row[29]) if len(row) > 29 else 0
             }
         
+        seen_current_condition_targets = set()
+
+        def apply_evolution_condition_row(row):
+            if len(row) <= 0:
+                return
+
+            target_digimon_id = row[0].strip('"') if row[0] else ""
+            conditions = parse_evolution_conditions(row)
+
+            # evolution_condition rows describe requirements to evolve INTO the
+            # target Digimon. Keep the current Digimon's own row separate from
+            # outgoing target rows so the editor label and pre-evolution boxes
+            # do not inherit requirements from an unrelated target.
+            if target_digimon_id == str(digimon.id) and target_digimon_id not in seen_current_condition_targets:
+                digimon.evolution_conditions.append(conditions)
+                seen_current_condition_targets.add(target_digimon_id)
+
+            # Outgoing evolution paths still need the target row for their
+            # requirement summary and Jogress classification.
+            for evo_path in digimon.evolution_paths:
+                if str(evo_path.get('to_id', 0)) == target_digimon_id:
+                    evo_path['conditions'] = conditions
+
         # Check base game first
         evolution_cond_file = self._resolve_prefixed_file(self.data_path / "evolution.mbe" / "000_evolution_condition.csv")
         if evolution_cond_file.exists():
             rows = self.load_csv(evolution_cond_file)
             for row in rows[1:]:  # Skip header
-                if len(row) > 0:
-                    target_digimon_id = row[0].strip('"') if row[0] else ""
-                    # Embed conditions directly into matching evolution_path entries
-                    for evo_path in digimon.evolution_paths:
-                        # FIXED: Match by TARGET Digimon ID (to_id), not source Digimon ID
-                        # Column 0 in evolution_condition = requirements to evolve INTO that Digimon
-                        if str(evo_path.get('to_id', 0)) == target_digimon_id:
-                            conditions = parse_evolution_conditions(row)
-                            evo_path['conditions'] = conditions
-                            # Also store in separate list for backwards compatibility
-                            digimon.evolution_conditions.append(conditions)
+                apply_evolution_condition_row(row)
         
         # Check DLC files
         for _dlc_id, dlc_evolution_cond_file in self.iter_dlc_csv_files(
@@ -1065,17 +1124,7 @@ class MBELoader:
         ):
             rows = self.load_csv(dlc_evolution_cond_file)
             for row in rows[1:]:  # Skip header
-                if len(row) > 0:
-                    target_digimon_id = row[0].strip('"') if row[0] else ""
-                    # Embed conditions directly into matching evolution_path entries
-                    for evo_path in digimon.evolution_paths:
-                        # FIXED: Match by TARGET Digimon ID (to_id), not source Digimon ID
-                        # Column 0 in evolution_condition = requirements to evolve INTO that Digimon
-                        if str(evo_path.get('to_id', 0)) == target_digimon_id:
-                            conditions = parse_evolution_conditions(row)
-                            evo_path['conditions'] = conditions
-                            # Also store in separate list for backwards compatibility
-                            digimon.evolution_conditions.append(conditions)
+                apply_evolution_condition_row(row)
         
         # Load de-evolution sources (what can evolve into this Digimon)
         # Check base game first
@@ -1087,6 +1136,7 @@ class MBELoader:
                         "evolution_id": int(row[0]) if row[0] else 0,
                         "from_id": int(row[1]) if row[1] else 0,
                         "to_id": int(row[3]) if row[3] else 0,
+                        "evolution_type": safe_int_value(row[5], 0) if len(row) > 5 else 0,
                         "raw_data": row
                     })
         
@@ -1099,6 +1149,7 @@ class MBELoader:
                         "evolution_id": int(row[0]) if row[0] else 0,
                         "from_id": int(row[1]) if row[1] else 0,
                         "to_id": int(row[3]) if row[3] else 0,
+                        "evolution_type": safe_int_value(row[5], 0) if len(row) > 5 else 0,
                         "raw_data": row
                     })
     
@@ -2137,55 +2188,64 @@ class MBELoader:
         text = ' '.join(text.split())
         return text.strip()
     
-    def load_skill_data(self, skill_id: int) -> Dict[str, Any]:
-        """Load skill data from battle_skill.mbe"""
-        skill_file = self.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv"
-        skill_file = self._resolve_prefixed_file(skill_file)
+    def load_skill_data(
+        self,
+        skill_id: int,
+        data_root: Optional[Path] = None,
+        prefer_ap: bool = False,
+    ) -> Dict[str, Any]:
+        """Load skill data from battle_skill.mbe, optionally from an active dsts-loader patch."""
+        skill_file = self._battle_skill_csv_path(data_root, prefer_ap)
         if skill_file.exists():
             rows = self.load_csv(skill_file)
             for row in rows[1:]:  # Skip header
-                if len(row) > 0 and int(row[0]) == skill_id:
+                if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
                     return {
-                        "skill_id": int(row[0]) if row[0] else 0,
-                        "name_id": int(row[4]) if len(row) > 4 and row[4] else 0,
-                        "description_id": int(row[5]) if len(row) > 5 and row[5] else 0,
-                        "animation_id": int(row[10]) if len(row) > 10 and row[10] else 0,
-                        "effect_id": int(row[12]) if len(row) > 12 and row[12] else 0,
-                        "power": int(row[23]) if len(row) > 23 and row[23] else 0,
-                        "sp_cost": int(row[36]) if len(row) > 36 and row[36] else 0,
-                        "cp_cost": int(row[38]) if len(row) > 38 and row[38] else 0,
-                        "accuracy": int(row[40]) if len(row) > 40 and row[40] else 0,
-                        "crit_rate": int(row[42]) if len(row) > 42 and row[42] else 0,
-                        "damage_type": int(row[22]) if len(row) > 22 and row[22] else 0,
-                        "element": int(row[28]) if len(row) > 28 and row[28] else 0,
-                        "min_hits": int(row[34]) if len(row) > 34 and row[34] else 1,
-                        "max_hits": int(row[35]) if len(row) > 35 and row[35] else 1,
-                        "additional_property_1": int(row[26]) if len(row) > 26 and row[26] else 0,
-                        "additional_property": int(row[27]) if len(row) > 27 and row[27] else 0,
-                        "conditional_type": int(row[46]) if len(row) > 46 and row[46] else 0,
-                        "conditional_effect": int(row[47]) if len(row) > 47 and row[47] else 0,
-                        "conditional_arg": int(row[49]) if len(row) > 49 and row[49] else 0,
-                        "hp_drain": int(row[43]) if len(row) > 43 and row[43] else 0,
-                        "sp_drain": int(row[44]) if len(row) > 44 and row[44] else 0,
-                        "recoil": int(row[45]) if len(row) > 45 and row[45] else 0,
-                        "always_hits": bool(int(row[39])) if len(row) > 39 and row[39] else False,
-                        "buff_set_0": int(row[52]) if len(row) > 52 and row[52] else 0,
-                        "buff_set_1": int(row[54]) if len(row) > 54 and row[54] else 0,
-                        "buff_set_2": int(row[56]) if len(row) > 56 and row[56] else 0,
-                        "buff_set_3": int(row[58]) if len(row) > 58 and row[58] else 0,
-                        "buff_set_4": int(row[60]) if len(row) > 60 and row[60] else 0,
-                        "mode_change_id": int(row[61]) if len(row) > 61 and row[61] else 0,
-                        "jogress_skill_id": int(row[63]) if len(row) > 63 and row[63] else 0,
-                        "jogress_partner_1": int(row[64]) if len(row) > 64 and row[64] else 0,
-                        "jogress_partner_2": int(row[66]) if len(row) > 66 and row[66] else 0,
-                        "raw_data": row
+                        "skill_id": safe_int_value(row[0], 0),
+                        "name_id": safe_int_value(row[4], 0) if len(row) > 4 else 0,
+                        "description_id": safe_int_value(row[5], 0) if len(row) > 5 else 0,
+                        "animation_id": safe_int_value(row[10], 0) if len(row) > 10 else 0,
+                        "effect_id": safe_int_value(row[12], 0) if len(row) > 12 else 0,
+                        "power": safe_int_value(row[23], 0) if len(row) > 23 else 0,
+                        "sp_cost": safe_int_value(row[36], 0) if len(row) > 36 else 0,
+                        "cp_cost": safe_int_value(row[38], 0) if len(row) > 38 else 0,
+                        "accuracy": safe_int_value(row[40], 0) if len(row) > 40 else 0,
+                        "crit_rate": safe_int_value(row[42], 0) if len(row) > 42 else 0,
+                        "damage_type": safe_int_value(row[22], 0) if len(row) > 22 else 0,
+                        "element": safe_int_value(row[28], 0) if len(row) > 28 else 0,
+                        "min_hits": safe_int_value(row[34], 1) if len(row) > 34 else 1,
+                        "max_hits": safe_int_value(row[35], 1) if len(row) > 35 else 1,
+                        "additional_property_1": safe_int_value(row[26], 0) if len(row) > 26 else 0,
+                        "additional_property": safe_int_value(row[27], 0) if len(row) > 27 else 0,
+                        "conditional_type": safe_int_value(row[46], 0) if len(row) > 46 else 0,
+                        "conditional_effect": safe_int_value(row[47], 0) if len(row) > 47 else 0,
+                        "conditional_arg": safe_int_value(row[49], 0) if len(row) > 49 else 0,
+                        "hp_drain": safe_int_value(row[43], 0) if len(row) > 43 else 0,
+                        "sp_drain": safe_int_value(row[44], 0) if len(row) > 44 else 0,
+                        "recoil": safe_int_value(row[45], 0) if len(row) > 45 else 0,
+                        "always_hits": bool(safe_int_value(row[39], 0)) if len(row) > 39 else False,
+                        "buff_set_0": safe_int_value(row[52], 0) if len(row) > 52 else 0,
+                        "buff_set_1": safe_int_value(row[54], 0) if len(row) > 54 else 0,
+                        "buff_set_2": safe_int_value(row[56], 0) if len(row) > 56 else 0,
+                        "buff_set_3": safe_int_value(row[58], 0) if len(row) > 58 else 0,
+                        "buff_set_4": safe_int_value(row[60], 0) if len(row) > 60 else 0,
+                        "mode_change_id": safe_int_value(row[61], -1) if len(row) > 61 else -1,
+                        "jogress_skill_id": safe_int_value(row[63], 0) if len(row) > 63 else 0,
+                        "jogress_partner_1": safe_int_value(row[64], -1) if len(row) > 64 else -1,
+                        "jogress_partner_2": safe_int_value(row[66], -1) if len(row) > 66 else -1,
+                        "source_file": str(skill_file),
+                        "raw_data": row,
                     }
         return {}
     
-    def save_skill_data(self, skill_data: Dict[str, Any]) -> bool:
-        """Save skill data back to battle_skill.mbe"""
-        skill_file = self.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv"
-        skill_file = self._resolve_prefixed_file(skill_file)
+    def save_skill_data(
+        self,
+        skill_data: Dict[str, Any],
+        data_root: Optional[Path] = None,
+        prefer_ap: bool = False,
+    ) -> bool:
+        """Save skill data back to battle_skill.mbe or an active dsts-loader patch."""
+        skill_file = self._battle_skill_csv_path(data_root, prefer_ap)
         if not skill_file.exists():
             return False
         
@@ -2195,7 +2255,7 @@ class MBELoader:
         
         # Find and update the skill row
         for i, row in enumerate(rows[1:], 1):  # Skip header
-            if len(row) > 0 and int(row[0]) == skill_id:
+            if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
                 # Update the row with new data
                 if len(row) > 4: row[4] = str(skill_data.get("name_id", skill_id))  # Use skill_id as name_id if not specified
                 if len(row) > 5: row[5] = str(skill_data.get("description_id", 0))
@@ -2225,10 +2285,10 @@ class MBELoader:
                 if len(row) > 56: row[56] = str(skill_data.get("buff_set_2", 0))
                 if len(row) > 58: row[58] = str(skill_data.get("buff_set_3", 0))
                 if len(row) > 60: row[60] = str(skill_data.get("buff_set_4", 0))
-                if len(row) > 61: row[61] = str(skill_data.get("mode_change_id", 0))
+                if len(row) > 61: row[61] = str(skill_data.get("mode_change_id", -1))
                 if len(row) > 63: row[63] = str(skill_data.get("jogress_skill_id", 0))
-                if len(row) > 64: row[64] = str(skill_data.get("jogress_partner_1", 0))
-                if len(row) > 66: row[66] = str(skill_data.get("jogress_partner_2", 0))
+                if len(row) > 64: row[64] = str(skill_data.get("jogress_partner_1", -1))
+                if len(row) > 66: row[66] = str(skill_data.get("jogress_partner_2", -1))
                 break
         
         # Write back to file (preserve exact CSV format with quotes)
@@ -2245,7 +2305,7 @@ class MBELoader:
             if "target_type" in skill_data:
                 # Update target_type in the skill row (column 33)
                 for i, row in enumerate(rows[1:], 1):
-                    if len(row) > 0 and int(row[0]) == skill_id:
+                    if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
                         if len(row) > 33:
                             row[33] = str(skill_data.get("target_type", 1))
                         # Write back again with target_type
@@ -2257,6 +2317,148 @@ class MBELoader:
             return True
         except Exception as e:
             print(f"Error saving skill data: {e}")
+            return False
+
+    def _mode_change_header_from_disk(self) -> List[str]:
+        """Return the official mode-change header when present, otherwise the known layout."""
+        mode_file = self._skill_mode_change_csv_path()
+        if mode_file.exists():
+            rows = self.load_csv(mode_file)
+            if rows:
+                return list(rows[0])
+        return list(self.MODE_CHANGE_HEADER)
+
+    def load_skill_mode_change_data(
+        self,
+        mode_change_id: int,
+        data_root: Optional[Path] = None,
+        prefer_ap: bool = False,
+    ) -> Dict[str, Any]:
+        """Load one row from battle_skill.mbe/003_skill_mode_change."""
+        mode_change_id = safe_int_value(mode_change_id, -1)
+        if mode_change_id <= 0:
+            return {}
+
+        mode_file = self._skill_mode_change_csv_path(data_root, prefer_ap)
+        if not mode_file.exists():
+            return {}
+
+        rows = self.load_csv(mode_file)
+        for row in rows[1:]:
+            if not row or safe_int_value(row[0], -1) != mode_change_id:
+                continue
+
+            skill_ids = []
+            for column in self.MODE_CHANGE_SKILL_COLUMNS:
+                skill_id = safe_int_value(row[column], 0) if len(row) > column else 0
+                if skill_id > 0:
+                    skill_ids.append(skill_id)
+
+            return {
+                "mode_change_id": mode_change_id,
+                "source_digimon_id": safe_int_value(row[1], 0) if len(row) > 1 else 0,
+                "flag_4": safe_int_value(row[4], 1) if len(row) > 4 else 1,
+                "flag_5": safe_int_value(row[5], 1) if len(row) > 5 else 1,
+                "skill_ids": skill_ids,
+                "source_file": str(mode_file),
+                "raw_data": row,
+            }
+
+        return {}
+
+    def load_skill_mode_change_for_source(
+        self,
+        source_digimon_id: int,
+        data_root: Optional[Path] = None,
+        prefer_ap: bool = False,
+    ) -> Dict[str, Any]:
+        """Find a mode-change row by its source Digimon ID."""
+        source_digimon_id = safe_int_value(source_digimon_id, 0)
+        if source_digimon_id <= 0:
+            return {}
+
+        mode_file = self._skill_mode_change_csv_path(data_root, prefer_ap)
+        if not mode_file.exists():
+            return {}
+
+        rows = self.load_csv(mode_file)
+        for row in rows[1:]:
+            if len(row) > 1 and safe_int_value(row[1], -1) == source_digimon_id:
+                mode_id = safe_int_value(row[0], -1)
+                if mode_id > 0:
+                    return self.load_skill_mode_change_data(mode_id, data_root, prefer_ap)
+        return {}
+
+    def save_skill_mode_change_data(
+        self,
+        mode_change_data: Dict[str, Any],
+        data_root: Optional[Path] = None,
+        prefer_ap: bool = False,
+    ) -> bool:
+        """Create or update battle_skill.mbe/003_skill_mode_change for a mode-change skill set."""
+        mode_change_id = safe_int_value(mode_change_data.get("mode_change_id"), -1)
+        if mode_change_id <= 0:
+            return True
+
+        source_digimon_id = safe_int_value(mode_change_data.get("source_digimon_id"), 0)
+        flag_4 = safe_int_value(mode_change_data.get("flag_4"), 1)
+        flag_5 = safe_int_value(mode_change_data.get("flag_5"), 1)
+        skill_ids = [
+            safe_int_value(skill_id, 0)
+            for skill_id in mode_change_data.get("skill_ids", [])
+            if safe_int_value(skill_id, 0) > 0
+        ]
+
+        mode_file = self._skill_mode_change_csv_path(data_root, prefer_ap)
+        mode_file.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            if mode_file.exists():
+                rows = self.load_csv(mode_file)
+                header = list(rows[0]) if rows else self._mode_change_header_from_disk()
+                existing_rows = rows[1:] if rows else []
+            else:
+                header = self._mode_change_header_from_disk()
+                existing_rows = []
+
+            row_len = max(len(header), len(self.MODE_CHANGE_HEADER))
+            new_row = [""] * row_len
+            new_row[0] = str(mode_change_id)
+            new_row[1] = str(source_digimon_id)
+            new_row[2] = ""
+            new_row[3] = ""
+            new_row[4] = str(flag_4)
+            new_row[5] = str(flag_5)
+
+            for index, column in enumerate(self.MODE_CHANGE_SKILL_COLUMNS):
+                if column >= len(new_row):
+                    continue
+                new_row[column] = str(skill_ids[index]) if index < len(skill_ids) else "0"
+                if column + 1 < len(new_row):
+                    new_row[column + 1] = ""
+
+            merged_rows = []
+            replaced = False
+            for row in existing_rows:
+                if not row or not any(cell.strip() for cell in row):
+                    continue
+                if safe_int_value(row[0], -1) == mode_change_id:
+                    if not replaced:
+                        merged_rows.append(new_row)
+                    replaced = True
+                else:
+                    merged_rows.append(row)
+
+            if not replaced:
+                merged_rows.append(new_row)
+
+            with open(mode_file, 'w', encoding='utf-8', newline='') as f:
+                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
+                writer.writerow(header)
+                writer.writerows(merged_rows)
+            return True
+        except Exception as e:
+            print(f"Error saving mode-change data: {e}")
             return False
     
     def save_skill_name(self, skill_id: int, skill_name: str) -> bool:

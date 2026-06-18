@@ -713,7 +713,7 @@ class SkillEditor(QWidget):
         # Skill ID with name display
         layout.addWidget(QLabel("ID:"))
         skill_id = QSpinBox()
-        skill_id.setRange(0, 99999)
+        skill_id.setRange(0, 9999999)
         skill_id.setObjectName(f"skill_id_{index}")
         skill_id.setMinimumWidth(110)
         skill_id.valueChanged.connect(lambda _value, idx=index: self.on_skill_value_changed(idx))
@@ -1868,7 +1868,7 @@ class BasicInfoPage(QWizardPage):
 
         # ID
         self.id_spin = QSpinBox()
-        self.id_spin.setRange(1, 99999)
+        self.id_spin.setRange(1, 9999999)
         # Find next available ID - check both base game and DLC
         existing_ids = list(self.collect_existing_ids())
         next_id = max(existing_ids) + 1 if existing_ids else 1000
@@ -2926,35 +2926,49 @@ class EvolutionPage(QWizardPage):
             QMessageBox.warning(self, "Error", f"Failed to open evolution dialog: {str(e)}")
 
     def get_evolution_count_for_digimon(self, digimon_id: int) -> int:
-        """Count how many evolution targets a Digimon has in the base game + pending additions"""
-        count = 0
+        """Count unique evolution targets in base, DLC, Reloaded II mods, and pending additions."""
+        targets: Set[str] = set()
+
+        def add_targets_from_file(evolution_to_file: Path):
+            if not evolution_to_file.exists():
+                return
+            rows = self.wizard.loader.load_csv(evolution_to_file)
+            for row in rows[1:]:
+                if len(row) <= 3:
+                    continue
+                source_id = _clean_status_cell(row[1])
+                target_id = _clean_status_cell(row[3])
+                if source_id == str(digimon_id) and target_id:
+                    targets.add(target_id)
 
         # Check base game evolution_to.csv
         try:
             evolution_to_file = self.wizard.loader._resolve_prefixed_file(self.wizard.loader.data_path / "evolution.mbe" / "001_evolution_to.csv")
-            if evolution_to_file.exists():
-                rows = self.wizard.loader.load_csv(evolution_to_file)
-                for row in rows[1:]:  # Skip header
-                    if len(row) > 1 and row[1] == str(digimon_id):
-                        count += 1
+            add_targets_from_file(evolution_to_file)
 
             # Also check DLC files
             for _dlc_id, dlc_path in self.wizard.loader.iter_dlc_csv_files(
                 "data", "evolution", "001_evolution_to.csv"
             ):
-                rows = self.wizard.loader.load_csv(dlc_path)
-                for row in rows[1:]:
-                    if len(row) > 1 and row[1] == str(digimon_id):
-                        count += 1
+                add_targets_from_file(dlc_path)
+
+            mods_root = get_default_mod_loader_path()
+            if mods_root.exists():
+                for mod_dir in sorted((path for path in mods_root.iterdir() if path.is_dir()), key=lambda path: path.name.casefold()):
+                    for loader_name in sorted(DSTS_LOADER_DIR_NAMES):
+                        evolution_dir = mod_dir / loader_name / "patch" / "data" / "evolution.mbe"
+                        if evolution_dir.exists():
+                            for mod_evolution_file in sorted(evolution_dir.glob("*_evolution_to.ap.csv")):
+                                add_targets_from_file(mod_evolution_file)
         except Exception as e:
             print(f"Error counting evolutions: {e}")
 
         # Also count pending pre-evolutions we've added that use this Digimon as source
         for deevo in self.deevolution_sources:
             if deevo.get('from_id') == digimon_id:
-                count += 1
+                targets.add(str(getattr(self.wizard.new_digimon, "id", "")))
 
-        return count
+        return len(targets)
 
     def add_pre_evolution(self):
         """Show dialog to select a Digimon that evolves into this one"""
@@ -2968,7 +2982,7 @@ class EvolutionPage(QWizardPage):
             # Info banner
             info_banner = QLabel(
                 "⚠️ IMPORTANT: When you add a pre-evolution, that Digimon gains a new evolution target.\n"
-                "Each Digimon can only have 6 evolution targets maximum!"
+                "Each Digimon can only have 6 evolution targets maximum. Base, DLC, and Reloaded II mod rows are counted."
             )
             info_banner.setStyleSheet("background-color: #fff3cd; padding: 10px; border-radius: 6px; color: #856404;")
             info_banner.setWordWrap(True)
@@ -3004,7 +3018,7 @@ class EvolutionPage(QWizardPage):
                         count = self.get_evolution_count_for_digimon(from_id)
                         status = "✅ Can add" if count < 6 else "❌ FULL - Cannot add!"
                         color = "#28a745" if count < 6 else "#dc3545"
-                        self.evo_count_label.setText(f"Evolution slots: {count}/6 — {status}")
+                        self.evo_count_label.setText(f"Evolution slots: {count}/6 — {status} (base/DLC/mods)")
                         self.evo_count_label.setStyleSheet(f"padding: 5px; font-weight: bold; color: {color};")
 
             digimon_list.currentItemChanged.connect(lambda: update_evo_count())
@@ -3506,7 +3520,7 @@ class EvolutionPage(QWizardPage):
         scroll_layout.addWidget(item_group)
 
         # Jogress Requirements
-        jogress_group = QGroupBox("Jogress/DNA Digivolution (Mode 3)")
+        jogress_group = QGroupBox("Jogress/DNA Digivolution Requirements")
         jogress_layout = QFormLayout()
 
         jogress_a_id_spin = QSpinBox()
@@ -4794,7 +4808,7 @@ class DigimonEditor(QMainWindow):
         id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         main_info_layout.addWidget(id_label, 0, 0)
         self.id_spin = QSpinBox()
-        self.id_spin.setRange(0, 99999)
+        self.id_spin.setRange(0, 9999999)
         main_info_layout.addWidget(self.id_spin, 0, 1)
 
         # Character Key
@@ -5660,7 +5674,7 @@ class DigimonEditor(QMainWindow):
         skill_selection_layout.addWidget(skill_id_label)
 
         self.advanced_skill_id_edit = QSpinBox()
-        self.advanced_skill_id_edit.setRange(0, 99999)
+        self.advanced_skill_id_edit.setRange(0, 9999999)
         self.advanced_skill_id_edit.setMinimumWidth(150)
         self.advanced_skill_id_edit.valueChanged.connect(self.update_advanced_skill_display)
         skill_selection_layout.addWidget(self.advanced_skill_id_edit)
@@ -5946,8 +5960,8 @@ class DigimonEditor(QMainWindow):
 
         layout.addWidget(damage_group)
 
-        # Mode change / Jogress
-        mode_group = QGroupBox("🔀 Mode Change & Jogress")
+        # Mode change
+        mode_group = QGroupBox("🔁 Mode Change")
         mode_group.setStyleSheet("""
             QGroupBox {
                 font-weight: bold;
@@ -5966,43 +5980,152 @@ class DigimonEditor(QMainWindow):
                 background-color: white;
             }
         """)
-        mode_layout = QFormLayout(mode_group)
+        mode_layout = QVBoxLayout(mode_group)
         mode_layout.setSpacing(10)
-        mode_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
 
-        mode_change_label = QLabel("🔁 Mode Change ID:")
+        mode_form = QFormLayout()
+        mode_form.setSpacing(10)
+        mode_form.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+
+        mode_change_label = QLabel("Mode Row ID (col 61):")
         mode_change_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        mode_change_label.setMinimumWidth(180)
+        mode_change_label.setMinimumWidth(220)
         self.skill_mode_change_edit = QSpinBox()
-        self.skill_mode_change_edit.setRange(0, 999999)
+        self.skill_mode_change_edit.setRange(-1, 99999999)
         self.skill_mode_change_edit.setMinimumWidth(150)
-        mode_layout.addRow(mode_change_label, self.skill_mode_change_edit)
+        self.skill_mode_change_edit.setToolTip("battle_skill column 61. Use -1 for no mode change; positive values must exist in 003_skill_mode_change.")
+        mode_form.addRow(mode_change_label, self.skill_mode_change_edit)
 
-        jogress_skill_label = QLabel("🧬 Jogress Skill ID:")
+        mode_source_label = QLabel("Source Digimon ID:")
+        mode_source_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        mode_source_label.setMinimumWidth(220)
+        self.mode_change_source_digimon_edit = QSpinBox()
+        self.mode_change_source_digimon_edit.setRange(0, 9999999)
+        self.mode_change_source_digimon_edit.setMinimumWidth(150)
+        self.mode_change_source_digimon_edit.setToolTip("003_skill_mode_change column 1: the Digimon whose mode-change skill set this row describes.")
+        mode_form.addRow(mode_source_label, self.mode_change_source_digimon_edit)
+
+        mode_flags_widget = QWidget()
+        mode_flags_layout = QHBoxLayout(mode_flags_widget)
+        mode_flags_layout.setContentsMargins(0, 0, 0, 0)
+        mode_flags_layout.setSpacing(8)
+        self.mode_change_flag_4_edit = QSpinBox()
+        self.mode_change_flag_4_edit.setRange(0, 99)
+        self.mode_change_flag_4_edit.setValue(1)
+        self.mode_change_flag_4_edit.setToolTip("003_skill_mode_change column 4. Official rows usually use 1.")
+        self.mode_change_flag_5_edit = QSpinBox()
+        self.mode_change_flag_5_edit.setRange(0, 99)
+        self.mode_change_flag_5_edit.setValue(1)
+        self.mode_change_flag_5_edit.setToolTip("003_skill_mode_change column 5. Official rows usually use 1; one official MagnaGarurumon row uses 2.")
+        mode_flags_layout.addWidget(QLabel("Col 4:"))
+        mode_flags_layout.addWidget(self.mode_change_flag_4_edit)
+        mode_flags_layout.addSpacing(12)
+        mode_flags_layout.addWidget(QLabel("Col 5:"))
+        mode_flags_layout.addWidget(self.mode_change_flag_5_edit)
+        mode_flags_layout.addStretch()
+        mode_form.addRow("Mode Flags:", mode_flags_widget)
+
+        mode_skills_widget = QWidget()
+        mode_skills_grid = QGridLayout(mode_skills_widget)
+        mode_skills_grid.setContentsMargins(0, 0, 0, 0)
+        mode_skills_grid.setHorizontalSpacing(8)
+        mode_skills_grid.setVerticalSpacing(6)
+        self.mode_change_skill_widgets = []
+        for index in range(12):
+            skill_spin = QSpinBox()
+            skill_spin.setRange(0, 9999999)
+            skill_spin.setMinimumWidth(105)
+            skill_spin.setToolTip(f"003_skill_mode_change skill slot {index + 1}")
+            self.mode_change_skill_widgets.append(skill_spin)
+            row_index = index // 4
+            column_index = (index % 4) * 2
+            mode_skills_grid.addWidget(QLabel(f"{index + 1}:"), row_index, column_index)
+            mode_skills_grid.addWidget(skill_spin, row_index, column_index + 1)
+        mode_form.addRow("Mode Skill Set:", mode_skills_widget)
+        mode_layout.addLayout(mode_form)
+
+        mode_button_row = QHBoxLayout()
+        self.mode_change_use_current_button = QPushButton("Use Current Digimon")
+        self.mode_change_use_current_button.setToolTip("Set source ID to the current Digimon, use ID*10+1 as the mode row, and copy signature skills into the mode row.")
+        self.mode_change_use_current_button.clicked.connect(self.populate_mode_change_from_current_digimon)
+        mode_button_row.addWidget(self.mode_change_use_current_button)
+
+        self.mode_change_load_button = QPushButton("Load Mode Row")
+        self.mode_change_load_button.setToolTip("Load 003_skill_mode_change data for the row ID above.")
+        self.mode_change_load_button.clicked.connect(lambda: self.load_mode_change_row_for_current_skill(show_messages=True))
+        mode_button_row.addWidget(self.mode_change_load_button)
+
+        self.mode_change_clear_button = QPushButton("Clear Mode")
+        self.mode_change_clear_button.setToolTip("Set the battle-skill mode pointer to -1 and clear the displayed row fields.")
+        self.mode_change_clear_button.clicked.connect(self.clear_mode_change_fields)
+        mode_button_row.addWidget(self.mode_change_clear_button)
+        mode_button_row.addStretch()
+        mode_layout.addLayout(mode_button_row)
+
+        self.mode_change_status_label = QLabel("No mode row loaded.")
+        self.mode_change_status_label.setWordWrap(True)
+        self.mode_change_status_label.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        mode_layout.addWidget(self.mode_change_status_label)
+
+        layout.addWidget(mode_group)
+
+        # Jogress battle-skill fields
+        jogress_group = QGroupBox("🧬 Jogress Battle Skill")
+        jogress_group.setStyleSheet("""
+            QGroupBox {
+                font-weight: bold;
+                border: 2px solid #9b5de5;
+                border-radius: 8px;
+                margin-top: 12px;
+                padding-top: 15px;
+                background-color: white;
+                font-size: 11pt;
+            }
+            QGroupBox::title {
+                color: #6f42c1;
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 8px;
+                background-color: white;
+            }
+        """)
+        jogress_layout = QFormLayout(jogress_group)
+        jogress_layout.setSpacing(10)
+        jogress_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+
+        jogress_skill_label = QLabel("Jogress Flag/Type (col 63):")
         jogress_skill_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_skill_label.setMinimumWidth(180)
+        jogress_skill_label.setMinimumWidth(220)
         self.skill_jogress_skill_edit = QSpinBox()
         self.skill_jogress_skill_edit.setRange(0, 999999)
         self.skill_jogress_skill_edit.setMinimumWidth(150)
-        mode_layout.addRow(jogress_skill_label, self.skill_jogress_skill_edit)
+        self.skill_jogress_skill_edit.setToolTip("battle_skill column 63. Official Jogress skills usually use 1 here.")
+        jogress_layout.addRow(jogress_skill_label, self.skill_jogress_skill_edit)
 
-        jogress_p1_label = QLabel("🤝 Jogress Partner 1 ID:")
+        jogress_p1_label = QLabel("Partner A Digimon ID (col 64):")
         jogress_p1_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_p1_label.setMinimumWidth(180)
+        jogress_p1_label.setMinimumWidth(220)
         self.skill_jogress_p1_edit = QSpinBox()
-        self.skill_jogress_p1_edit.setRange(0, 999999)
+        self.skill_jogress_p1_edit.setRange(-1, 9999999)
         self.skill_jogress_p1_edit.setMinimumWidth(150)
-        mode_layout.addRow(jogress_p1_label, self.skill_jogress_p1_edit)
+        self.skill_jogress_p1_edit.setToolTip("battle_skill column 64. Use -1 when this skill is not a Jogress skill.")
+        jogress_layout.addRow(jogress_p1_label, self.skill_jogress_p1_edit)
 
-        jogress_p2_label = QLabel("🤝 Jogress Partner 2 ID:")
+        jogress_p2_label = QLabel("Partner B Digimon ID (col 66):")
         jogress_p2_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_p2_label.setMinimumWidth(180)
+        jogress_p2_label.setMinimumWidth(220)
         self.skill_jogress_p2_edit = QSpinBox()
-        self.skill_jogress_p2_edit.setRange(0, 999999)
+        self.skill_jogress_p2_edit.setRange(-1, 9999999)
         self.skill_jogress_p2_edit.setMinimumWidth(150)
-        mode_layout.addRow(jogress_p2_label, self.skill_jogress_p2_edit)
+        self.skill_jogress_p2_edit.setToolTip("battle_skill column 66. Use -1 when this skill is not a Jogress skill.")
+        jogress_layout.addRow(jogress_p2_label, self.skill_jogress_p2_edit)
 
-        layout.addWidget(mode_group)
+        self.jogress_skill_status_label = QLabel("These fields are for battle skills; evolution Jogress/DNA requirements are edited on the Evolution tab.")
+        self.jogress_skill_status_label.setWordWrap(True)
+        self.jogress_skill_status_label.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        jogress_layout.addRow("", self.jogress_skill_status_label)
+
+        layout.addWidget(jogress_group)
 
         # Advanced properties
         advanced_group = QGroupBox("⚙️ Advanced Properties")
@@ -6286,6 +6409,137 @@ class DigimonEditor(QMainWindow):
 
         return tab
 
+    def _safe_evolution_int(self, value, default: int = 0) -> int:
+        try:
+            if value is None:
+                return default
+            text = str(value).strip().strip('"')
+            if not text:
+                return default
+            return int(text)
+        except (TypeError, ValueError):
+            return default
+
+    def _first_evolution_condition_dict(self, conditions):
+        if isinstance(conditions, dict):
+            return conditions
+        if isinstance(conditions, list) and conditions:
+            first = conditions[0]
+            return first if isinstance(first, dict) else {}
+        return {}
+
+    def _evolution_type_value(self, path_data: dict) -> int:
+        if not isinstance(path_data, dict):
+            return 0
+        if "evolution_type" in path_data:
+            return self._safe_evolution_int(path_data.get("evolution_type"), 0)
+        flags = path_data.get("condition_flags", [])
+        if flags:
+            return self._safe_evolution_int(flags[0], 0)
+        raw_data = path_data.get("raw_data", [])
+        if len(raw_data) > 5:
+            return self._safe_evolution_int(raw_data[5], 0)
+        return 0
+
+    def _conditions_have_jogress(self, conditions: dict) -> bool:
+        if not isinstance(conditions, dict):
+            return False
+        return (
+            self._safe_evolution_int(conditions.get("jogressDbIdA"), 0) > 0
+            or self._safe_evolution_int(conditions.get("jogressDbIdB"), 0) > 0
+        )
+
+    def _evolution_path_category(self, path_data: dict, target_conditions: Optional[dict] = None) -> str:
+        if self._evolution_type_value(path_data) == 2:
+            return "mode_change"
+        path_conditions = path_data.get("conditions") if isinstance(path_data, dict) else {}
+        if self._conditions_have_jogress(path_conditions) or self._conditions_have_jogress(target_conditions or {}):
+            return "jogress"
+        return "normal"
+
+    def _make_path_list_widget(self, selected_color: str, hover_color: str, min_height: int = 120) -> QListWidget:
+        list_widget = QListWidget()
+        list_widget.setMinimumHeight(min_height)
+        list_widget.setStyleSheet(f"""
+            QListWidget {{
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                padding: 5px;
+                background-color: white;
+            }}
+            QListWidget::item {{
+                padding: 8px;
+                border-radius: 4px;
+                margin: 2px;
+            }}
+            QListWidget::item:selected {{
+                background-color: {selected_color};
+                color: #1a1a1a;
+            }}
+            QListWidget::item:hover {{
+                background-color: {hover_color};
+            }}
+        """)
+        return list_widget
+
+    def _add_path_box(self, parent_layout, title: str, attr_name: str, selected_color: str, hover_color: str, min_height: int = 120):
+        box = QGroupBox(title)
+        box.setStyleSheet("QGroupBox { font-weight: bold; }")
+        box_layout = QVBoxLayout(box)
+        list_widget = self._make_path_list_widget(selected_color, hover_color, min_height)
+        setattr(self, attr_name, list_widget)
+        box_layout.addWidget(list_widget)
+        parent_layout.addWidget(box)
+
+    def _clear_path_peer_selections(self, active_list: QListWidget, list_names: Iterable[str]):
+        for list_name in list_names:
+            list_widget = getattr(self, list_name, None)
+            if list_widget is not None and list_widget is not active_list:
+                list_widget.clearSelection()
+                list_widget.setCurrentRow(-1)
+
+    def _connect_path_list_group(self, list_names: Iterable[str], edit_on_double_click: bool = False):
+        list_names = tuple(list_names)
+        for list_name in list_names:
+            list_widget = getattr(self, list_name, None)
+            if list_widget is None:
+                continue
+            list_widget.itemClicked.connect(
+                lambda _item, active=list_widget, names=list_names: self._clear_path_peer_selections(active, names)
+            )
+            if edit_on_double_click:
+                list_widget.itemDoubleClicked.connect(lambda _item: self.edit_evolution())
+
+    def _selected_path_index(self, list_names: Iterable[str]) -> Optional[int]:
+        for list_name in list_names:
+            list_widget = getattr(self, list_name, None)
+            if list_widget is None:
+                continue
+            selected_items = list_widget.selectedItems()
+            item = selected_items[0] if selected_items else list_widget.currentItem()
+            if not item:
+                continue
+            path_index = item.data(Qt.ItemDataRole.UserRole)
+            if path_index is None:
+                continue
+            try:
+                return int(path_index)
+            except (TypeError, ValueError):
+                continue
+        return None
+
+    def _add_path_item(self, list_widget: QListWidget, text: str, path_index: int):
+        item = QListWidgetItem(text)
+        item.setData(Qt.ItemDataRole.UserRole, path_index)
+        list_widget.addItem(item)
+
+    def _add_empty_path_placeholder(self, list_widget: QListWidget, text: str):
+        if list_widget.count() == 0:
+            item = QListWidgetItem(text)
+            item.setData(Qt.ItemDataRole.UserRole, None)
+            item.setForeground(Qt.GlobalColor.darkGray)
+            list_widget.addItem(item)
+
     def create_evolution_tab(self) -> QWidget:
         """Create evolution management tab - matching wizard layout"""
         tab = QWidget()
@@ -6372,38 +6626,30 @@ class DigimonEditor(QMainWindow):
         add_evo_btn.setMinimumHeight(40)
         add_evo_btn.setStyleSheet(action_button_style)
         add_evo_btn.clicked.connect(self.add_evolution)
+        edit_evo_btn = QPushButton("Edit Selected Evolution")
+        edit_evo_btn.setMinimumHeight(40)
+        edit_evo_btn.setStyleSheet(action_button_style)
+        edit_evo_btn.clicked.connect(self.edit_evolution)
         remove_evo_btn = QPushButton("Remove Selected Evolution")
         remove_evo_btn.setMinimumHeight(40)
         remove_evo_btn.setStyleSheet(action_button_style)
         remove_evo_btn.clicked.connect(self.remove_evolution)
         evo_buttons.addWidget(add_evo_btn)
+        evo_buttons.addWidget(edit_evo_btn)
         evo_buttons.addWidget(remove_evo_btn)
         evo_buttons.addStretch()
         evo_layout.addLayout(evo_buttons)
 
-        self.evolution_list = QListWidget()
-        self.evolution_list.setMinimumHeight(150)
-        self.evolution_list.setStyleSheet("""
-            QListWidget {
-                border: 1px solid #ddd;
-                border-radius: 6px;
-                padding: 5px;
-                background-color: white;
-            }
-            QListWidget::item {
-                padding: 8px;
-                border-radius: 4px;
-                margin: 2px;
-            }
-            QListWidget::item:selected {
-                background-color: #84fab0;
-                color: #1a1a1a;
-            }
-            QListWidget::item:hover {
-                background-color: #e8f5e9;
-            }
-        """)
-        evo_layout.addWidget(self.evolution_list)
+        evo_lists = QHBoxLayout()
+        evo_lists.setSpacing(10)
+        self._add_path_box(evo_lists, "Normal", "evolution_list", "#84fab0", "#e8f5e9", 150)
+        self._add_path_box(evo_lists, "Jogress / DNA", "evolution_jogress_list", "#bde0fe", "#edf6ff", 150)
+        self._add_path_box(evo_lists, "Mode Change", "evolution_mode_change_list", "#ffd166", "#fff4d6", 150)
+        evo_layout.addLayout(evo_lists)
+        self._connect_path_list_group(
+            ("evolution_list", "evolution_jogress_list", "evolution_mode_change_list"),
+            edit_on_double_click=True,
+        )
         evo_group.setLayout(evo_layout)
         layout.addWidget(evo_group)
 
@@ -6414,7 +6660,7 @@ class DigimonEditor(QMainWindow):
 
         deevo_info = QLabel(
             "💡 Adding a pre-evolution creates an evolution entry where THAT Digimon evolves into THIS one.\n"
-            "⚠️ Each Digimon can only have 6 evolution targets maximum!"
+            "⚠️ Each Digimon can only have 6 evolution targets maximum. Base, DLC, and Reloaded II mod rows are counted."
         )
         deevo_info.setWordWrap(True)
         deevo_info.setStyleSheet("""
@@ -6441,29 +6687,15 @@ class DigimonEditor(QMainWindow):
         deevo_buttons.addStretch()
         deevo_layout.addLayout(deevo_buttons)
 
-        self.deevolution_list = QListWidget()
-        self.deevolution_list.setMinimumHeight(120)
-        self.deevolution_list.setStyleSheet("""
-            QListWidget {
-                border: 1px solid #ddd;
-                border-radius: 6px;
-                padding: 5px;
-                background-color: white;
-            }
-            QListWidget::item {
-                padding: 8px;
-                border-radius: 4px;
-                margin: 2px;
-            }
-            QListWidget::item:selected {
-                background-color: #e1bee7;
-                color: #1a1a1a;
-            }
-            QListWidget::item:hover {
-                background-color: #f3e5f5;
-            }
-        """)
-        deevo_layout.addWidget(self.deevolution_list)
+        deevo_lists = QHBoxLayout()
+        deevo_lists.setSpacing(10)
+        self._add_path_box(deevo_lists, "Normal", "deevolution_list", "#e1bee7", "#f3e5f5", 130)
+        self._add_path_box(deevo_lists, "Jogress / DNA", "deevolution_jogress_list", "#bde0fe", "#edf6ff", 130)
+        self._add_path_box(deevo_lists, "Mode Change", "deevolution_mode_change_list", "#ffd166", "#fff4d6", 130)
+        deevo_layout.addLayout(deevo_lists)
+        self._connect_path_list_group(
+            ("deevolution_list", "deevolution_jogress_list", "deevolution_mode_change_list")
+        )
 
         deevo_group.setLayout(deevo_layout)
         layout.addWidget(deevo_group)
@@ -6673,7 +6905,7 @@ class DigimonEditor(QMainWindow):
         skill_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         skill_id_label.setMinimumWidth(220)
         self.ai_skill_id_edit = QSpinBox()
-        self.ai_skill_id_edit.setRange(0, 99999)
+        self.ai_skill_id_edit.setRange(0, 9999999)
         self.ai_skill_id_edit.setMinimumWidth(150)
         enemy_layout.addRow(skill_id_label, self.ai_skill_id_edit)
 
@@ -6871,10 +7103,16 @@ class DigimonEditor(QMainWindow):
     def update_evolution_tab(self, digimon: DigimonData):
         """Update evolution tab with current Digimon data"""
         # Clear existing data
-        self.evolution_list.clear()
-        self.deevolution_list.clear()
+        for list_name in (
+            "evolution_list", "evolution_jogress_list", "evolution_mode_change_list",
+            "deevolution_list", "deevolution_jogress_list", "deevolution_mode_change_list",
+        ):
+            list_widget = getattr(self, list_name, None)
+            if list_widget is not None:
+                list_widget.clear()
 
         # Update evolution requirements label (using wizard format)
+        target_conditions = {}
         if digimon.evolution_conditions:
             # Check what type we have
             cond_data = digimon.evolution_conditions
@@ -6886,6 +7124,7 @@ class DigimonEditor(QMainWindow):
 
             # Now process based on type
             if isinstance(cond_data, dict):
+                target_conditions = cond_data
                 parts = []
 
                 # Agent Rank (Mode)
@@ -6944,7 +7183,18 @@ class DigimonEditor(QMainWindow):
             self.requirements_label.setText("Agent Rank: 1")
 
         # Populate evolution paths with detailed requirements
-        for evo in digimon.evolution_paths:
+        outgoing_lists = {
+            "normal": self.evolution_list,
+            "jogress": self.evolution_jogress_list,
+            "mode_change": self.evolution_mode_change_list,
+        }
+        incoming_lists = {
+            "normal": self.deevolution_list,
+            "jogress": self.deevolution_jogress_list,
+            "mode_change": self.deevolution_mode_change_list,
+        }
+
+        for evo_index, evo in enumerate(digimon.evolution_paths):
             to_id = evo['to_id']
             to_name = None
 
@@ -6997,10 +7247,11 @@ class DigimonEditor(QMainWindow):
                     reqs.append(f"Lv{level_req}")
                 req_str = f" [{', '.join(reqs)}]" if reqs else ""
 
-            self.evolution_list.addItem(f"→ {to_name} (ID: {to_id}){req_str}")
+            category = self._evolution_path_category(evo)
+            self._add_path_item(outgoing_lists[category], f"→ {to_name} (ID: {to_id}){req_str}", evo_index)
 
         # Populate de-evolution sources
-        for deevo in digimon.deevolution_sources:
+        for deevo_index, deevo in enumerate(digimon.deevolution_sources):
             from_id = deevo['from_id']
             from_name = None
 
@@ -7037,7 +7288,18 @@ class DigimonEditor(QMainWindow):
             if not from_name:
                 from_name = f"Unknown (ID: {from_id})"
 
-            self.deevolution_list.addItem(f"← {from_name} (ID: {from_id})")
+            category = self._evolution_path_category(deevo, target_conditions)
+            req_str = ""
+            if category == "jogress" and target_conditions:
+                req_str = f" {self._format_requirements_summary(target_conditions)}"
+            self._add_path_item(incoming_lists[category], f"← {from_name} (ID: {from_id}){req_str}", deevo_index)
+
+        self._add_empty_path_placeholder(self.evolution_list, "(No normal evolution paths)")
+        self._add_empty_path_placeholder(self.evolution_jogress_list, "(No Jogress/DNA evolution paths)")
+        self._add_empty_path_placeholder(self.evolution_mode_change_list, "(No Mode Change evolution paths)")
+        self._add_empty_path_placeholder(self.deevolution_list, "(No normal pre-evolutions)")
+        self._add_empty_path_placeholder(self.deevolution_jogress_list, "(No Jogress/DNA pre-evolutions)")
+        self._add_empty_path_placeholder(self.deevolution_mode_change_list, "(No Mode Change pre-evolutions)")
 
     def edit_evolution_requirements(self):
         """Edit requirements to obtain this Digimon"""
@@ -8519,10 +8781,9 @@ class DigimonEditor(QMainWindow):
                 "Imported",
             )
 
-        active_root = self._active_dsts_loader_root()
-        if active_root:
-            names_by_char_key = self._active_mod_name_map(active_root)
-            for status_file in self._dsts_loader_status_files(active_root):
+        for mod_root, source_label in self._iter_reloaded_mod_dsts_loader_roots():
+            names_by_char_key = self._active_mod_name_map(mod_root)
+            for status_file in self._dsts_loader_status_files(mod_root):
                 try:
                     rows = self.loader.load_csv(status_file)
                 except Exception:
@@ -8535,7 +8796,7 @@ class DigimonEditor(QMainWindow):
                     char_key = self._csv_cell(row, 2)
                     chr_id = self._csv_cell(row, FIELD_GUIDE_CHR_ID_COLUMN)
                     name = names_by_char_key.get(char_key, "") or char_key or chr_id
-                    add_entry(digimon_id, chr_id, name, "Active Mod")
+                    add_entry(digimon_id, chr_id, name, source_label)
 
         entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"]), entry["id"]))
         return entries
@@ -9260,6 +9521,46 @@ class DigimonEditor(QMainWindow):
         status_dir = dsts_loader_root / "patch" / "data" / "digimon_status.mbe"
         return sorted(status_dir.glob("*.ap.csv")) if status_dir.exists() else []
 
+    def _dsts_loader_evolution_files(self, dsts_loader_root: Path) -> List[Path]:
+        """Return evolution_to .ap.csv files for a normalized dsts-loader payload root."""
+        evolution_dir = dsts_loader_root / "patch" / "data" / "evolution.mbe"
+        return sorted(evolution_dir.glob("*_evolution_to.ap.csv")) if evolution_dir.exists() else []
+
+    def _iter_reloaded_mod_dsts_loader_roots(self) -> List[Tuple[Path, str]]:
+        """List dsts-loader payloads from the Reloaded II mods folder plus the active payload."""
+        roots: List[Tuple[Path, str]] = []
+        seen = set()
+
+        def add_root(root: Path, label: str):
+            try:
+                key = str(root.resolve()).casefold()
+            except Exception:
+                key = str(root).casefold()
+            if key in seen:
+                return
+            if not root.exists():
+                return
+            seen.add(key)
+            roots.append((root, label))
+
+        mods_root = get_default_mod_loader_path()
+        if mods_root.exists():
+            for mod_dir in sorted((path for path in mods_root.iterdir() if path.is_dir()), key=lambda path: path.name.casefold()):
+                for loader_name in sorted(DSTS_LOADER_DIR_NAMES):
+                    candidate = mod_dir / loader_name
+                    if candidate.exists():
+                        add_root(candidate, f"Mod: {mod_dir.name}")
+
+        active_root = self._active_dsts_loader_root()
+        if active_root:
+            active_label = "Active Mod"
+            inferred = self._infer_reloaded_mod_root(active_root)
+            if inferred:
+                active_label = f"Active Mod: {inferred.name}"
+            add_root(active_root, active_label)
+
+        return roots
+
     def _resolve_dsts_loader_root(self, selected_path: Path, allow_create: bool = False) -> Optional[Path]:
         """
         Normalize a selected folder to the actual dsts-loader payload root.
@@ -9317,6 +9618,8 @@ class DigimonEditor(QMainWindow):
         root = Path(dsts_loader_root)
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
+        if hasattr(self, "skill_browser_combo"):
+            self.populate_skill_browser()
         if hasattr(self, "digimon_list"):
             self.on_digimon_selected(self.digimon_list.currentText())
 
@@ -9866,8 +10169,38 @@ class DigimonEditor(QMainWindow):
         """Load evolution paths and conditions from CSV files"""
         import csv
 
+        def safe_int(value, default: int = 0) -> int:
+            try:
+                text = str(value).strip().strip('"')
+                return int(text) if text else default
+            except (TypeError, ValueError):
+                return default
+
+        def parse_condition_row(row):
+            return {
+                'mode': safe_int(row[2], 1) if len(row) > 2 else 1,
+                'tamerLevel': safe_int(row[3]) if len(row) > 3 else 0,
+                'HP': safe_int(row[4]) if len(row) > 4 else 0,
+                'SP': safe_int(row[5]) if len(row) > 5 else 0,
+                'ATK': safe_int(row[6]) if len(row) > 6 else 0,
+                'DEF': safe_int(row[7]) if len(row) > 7 else 0,
+                'INT': safe_int(row[8]) if len(row) > 8 else 0,
+                'SPI': safe_int(row[9]) if len(row) > 9 else 0,
+                'SPD': safe_int(row[10]) if len(row) > 10 else 0,
+                'skillCountValor': safe_int(row[13]) if len(row) > 13 else 0,
+                'skillCountPhilantropy': safe_int(row[14]) if len(row) > 14 else 0,
+                'skillCountAmicable': safe_int(row[15]) if len(row) > 15 else 0,
+                'skillCountWisdom': safe_int(row[16]) if len(row) > 16 else 0,
+                'needsItem': safe_int(row[22]) if len(row) > 22 else 0,
+                'jogressDbIdA': safe_int(row[24]) if len(row) > 24 else 0,
+                'jogressPersonalityA': safe_int(row[26]) if len(row) > 26 else 0,
+                'jogressDbIdB': safe_int(row[27]) if len(row) > 27 else 0,
+                'jogressPersonalityB': safe_int(row[29]) if len(row) > 29 else 0
+            }
+
         evolution_paths = []
         evolution_conditions = []
+        conditions_by_target = {}
 
         # Load evolution paths from 001_evolution_to.ap.csv
         evo_file = self._resolve_prefixed_file(base_path / "001_evolution_to.ap.csv")
@@ -9878,10 +10211,10 @@ class DigimonEditor(QMainWindow):
                     next(reader)  # Skip header
                     for row in reader:
                         if len(row) >= 4:
-                            from_id = int(row[1]) if row[1] else 0
+                            from_id = safe_int(row[1])
                             if from_id == digimon_id:
-                                to_id = int(row[3]) if row[3] else 0
-                                evo_type = int(row[5]) if len(row) > 5 and row[5] else 0
+                                to_id = safe_int(row[3])
+                                evo_type = safe_int(row[5]) if len(row) > 5 else 0
                                 if to_id > 0:
                                     evolution_paths.append({
                                         'to_id': to_id,
@@ -9899,30 +10232,20 @@ class DigimonEditor(QMainWindow):
                     next(reader)  # Skip header
                     for row in reader:
                         if len(row) >= 3:
-                            target_id = int(row[0]) if row[0] else 0
+                            target_id = safe_int(row[0])
+                            if target_id <= 0:
+                                continue
+                            conditions = parse_condition_row(row)
+                            conditions_by_target[target_id] = conditions
                             if target_id == digimon_id:
-                                evolution_conditions.append({
-                                    'mode': int(row[2]) if row[2] else 1,
-                                    'tamerLevel': int(row[3]) if len(row) > 3 and row[3] else 0,
-                                    'HP': int(row[4]) if len(row) > 4 and row[4] else 0,
-                                    'SP': int(row[5]) if len(row) > 5 and row[5] else 0,
-                                    'ATK': int(row[6]) if len(row) > 6 and row[6] else 0,
-                                    'DEF': int(row[7]) if len(row) > 7 and row[7] else 0,
-                                    'INT': int(row[8]) if len(row) > 8 and row[8] else 0,
-                                    'SPI': int(row[9]) if len(row) > 9 and row[9] else 0,
-                                    'SPD': int(row[10]) if len(row) > 10 and row[10] else 0,
-                                    'skillCountValor': int(row[13]) if len(row) > 13 and row[13] else 0,
-                                    'skillCountPhilantropy': int(row[14]) if len(row) > 14 and row[14] else 0,
-                                    'skillCountAmicable': int(row[15]) if len(row) > 15 and row[15] else 0,
-                                    'skillCountWisdom': int(row[16]) if len(row) > 16 and row[16] else 0,
-                                    'needsItem': int(row[22]) if len(row) > 22 and row[22] else 0,
-                                    'jogressDbIdA': int(row[24]) if len(row) > 24 and row[24] else 0,
-                                    'jogressPersonalityA': int(row[26]) if len(row) > 26 and row[26] else 0,
-                                    'jogressDbIdB': int(row[27]) if len(row) > 27 and row[27] else 0,
-                                    'jogressPersonalityB': int(row[29]) if len(row) > 29 and row[29] else 0
-                                })
+                                evolution_conditions.append(conditions)
             except Exception as e:
                 print(f"Error loading evolution conditions: {e}")
+
+        for evo_path in evolution_paths:
+            conditions = conditions_by_target.get(evo_path.get('to_id', 0))
+            if conditions:
+                evo_path['conditions'] = conditions
 
         return evolution_paths, evolution_conditions
 
@@ -10818,6 +11141,13 @@ class DigimonEditor(QMainWindow):
         info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
         layout.addWidget(info_label)
 
+        path_type_combo = QComboBox()
+        path_type_combo.addItem("Normal evolution", 0)
+        path_type_combo.addItem("Mode Change path", 2)
+        path_type_combo.setToolTip("Evolution path type written to evolution_to column 5.")
+        layout.addWidget(QLabel("Evolution path type:"))
+        layout.addWidget(path_type_combo)
+
         # Tab widget for list selection vs custom input
         tab_widget = QTabWidget()
 
@@ -10993,6 +11323,7 @@ class DigimonEditor(QMainWindow):
                     'from_id': self.current_digimon.id,
                     'to_id': target_digimon_id,
                     'to_chr_id': target_chr_id,  # Store chr_id for reference
+                    'evolution_type': path_type_combo.currentData(),
                     'condition_flags': ['0', '-1', '-1', '-1', '-1', '-1'],
                     'raw_data': []
                 }
@@ -11184,7 +11515,7 @@ class DigimonEditor(QMainWindow):
         scroll_layout.addWidget(item_group)
 
         # Jogress Requirements
-        jogress_group = QGroupBox("Jogress/DNA Digivolution (Mode 3)")
+        jogress_group = QGroupBox("Jogress/DNA Digivolution Requirements")
         jogress_layout = QFormLayout()
 
         jogress_a_id_spin = QSpinBox()
@@ -11277,8 +11608,10 @@ class DigimonEditor(QMainWindow):
         if not self.current_digimon:
             return
 
-        current_index = self.evolution_list.currentRow()
-        if current_index < 0:
+        current_index = self._selected_path_index(
+            ("evolution_list", "evolution_jogress_list", "evolution_mode_change_list")
+        )
+        if current_index is None:
             QMessageBox.warning(self, "Warning", "Please select an evolution to edit")
             return
 
@@ -11304,9 +11637,7 @@ class DigimonEditor(QMainWindow):
             self.current_digimon.evolution_paths[current_index]['conditions'] = new_conditions
 
             # Update display
-            req_text = self._format_requirements_summary(new_conditions)
-            item_text = f"→ {to_name} (ID: {to_id}) {req_text}"
-            self.evolution_list.item(current_index).setText(item_text)
+            self.update_evolution_tab(self.current_digimon)
 
             self.mark_as_modified()
             QMessageBox.information(self, "Success", f"Evolution requirements updated for {to_name}")
@@ -11318,8 +11649,10 @@ class DigimonEditor(QMainWindow):
         if not self.current_digimon:
             return
 
-        current_index = self.evolution_list.currentRow()
-        if current_index < 0:
+        current_index = self._selected_path_index(
+            ("evolution_list", "evolution_jogress_list", "evolution_mode_change_list")
+        )
+        if current_index is None:
             QMessageBox.warning(self, "Warning", "Please select an evolution to remove")
             return
 
@@ -11331,27 +11664,39 @@ class DigimonEditor(QMainWindow):
             if reply == QMessageBox.StandardButton.Yes:
                 self.current_digimon.evolution_paths.pop(current_index)
                 self.update_evolution_tab(self.current_digimon)
+                self.mark_as_modified()
                 QMessageBox.information(self, "Success", "Evolution removed")
 
     def get_evolution_count_for_digimon(self, digimon_id: int) -> int:
-        """Count how many evolution targets a Digimon has"""
-        count = 0
+        """Count unique evolution targets from base, DLC, Reloaded II mods, and pending edits."""
+        targets: Set[str] = set()
+
+        def add_targets_from_file(evolution_to_file: Path):
+            if not evolution_to_file.exists():
+                return
+            rows = self.loader.load_csv(evolution_to_file)
+            for row in rows[1:]:
+                if len(row) <= 3:
+                    continue
+                source_id = self._csv_cell(row, 1)
+                target_id = self._csv_cell(row, 3)
+                if source_id == str(digimon_id) and target_id:
+                    targets.add(target_id)
 
         try:
             # Check base game evolution_to.csv
             evolution_to_file = self.loader._resolve_prefixed_file(self.loader.data_path / "evolution.mbe" / "001_evolution_to.csv")
-            if evolution_to_file.exists():
-                rows = self.loader.load_csv(evolution_to_file)
-                for row in rows[1:]:
-                    if len(row) > 1 and row[1] == str(digimon_id):
-                        count += 1
+            add_targets_from_file(evolution_to_file)
 
             # Also check DLC files
             for _dlc_id, dlc_path in self.loader.iter_dlc_csv_files("data", "evolution", "001_evolution_to.csv"):
-                rows = self.loader.load_csv(dlc_path)
-                for row in rows[1:]:
-                    if len(row) > 1 and row[1] == str(digimon_id):
-                        count += 1
+                add_targets_from_file(dlc_path)
+
+            # Include every Reloaded II mod payload so occupied slots are visible
+            # even before importing a specific mod into the current editor session.
+            for mod_root, _source_label in self._iter_reloaded_mod_dsts_loader_roots():
+                for mod_evolution_file in self._dsts_loader_evolution_files(mod_root):
+                    add_targets_from_file(mod_evolution_file)
         except Exception as e:
             print(f"Error counting evolutions: {e}")
 
@@ -11359,9 +11704,9 @@ class DigimonEditor(QMainWindow):
         if self.current_digimon:
             for deevo in self.current_digimon.deevolution_sources:
                 if deevo.get('from_id') == digimon_id:
-                    count += 1
+                    targets.add(str(getattr(self.current_digimon, "id", "")))
 
-        return count
+        return len(targets)
 
     def add_pre_evolution(self):
         """Add a pre-evolution (a Digimon that evolves INTO this one)"""
@@ -11378,11 +11723,18 @@ class DigimonEditor(QMainWindow):
         # Info banner
         info_banner = QLabel(
             "⚠️ Adding a pre-evolution creates an evolution entry where THAT Digimon evolves into THIS one.\n"
-            "Each Digimon can only have 6 evolution targets maximum!"
+            "Each Digimon can only have 6 evolution targets maximum. Base, DLC, and Reloaded II mod rows are counted."
         )
         info_banner.setStyleSheet("background-color: #fff3cd; padding: 10px; border-radius: 6px; color: #856404;")
         info_banner.setWordWrap(True)
         layout.addWidget(info_banner)
+
+        path_type_combo = QComboBox()
+        path_type_combo.addItem("Normal evolution", 0)
+        path_type_combo.addItem("Mode Change path", 2)
+        path_type_combo.setToolTip("Evolution path type written to evolution_to column 5 for this source -> current Digimon row.")
+        layout.addWidget(QLabel("Incoming path type:"))
+        layout.addWidget(path_type_combo)
 
         # Tab widget for list selection vs custom input
         tab_widget = QTabWidget()
@@ -11467,7 +11819,7 @@ class DigimonEditor(QMainWindow):
                     count = data.get('evo_count', 0)
                     status = "✅ Can add" if count < 6 else "❌ FULL - Cannot add!"
                     color = "#28a745" if count < 6 else "#dc3545"
-                    evo_count_label.setText(f"Evolution slots: {count}/6 — {status}")
+                    evo_count_label.setText(f"Evolution slots: {count}/6 — {status} (base/DLC/mods)")
                     evo_count_label.setStyleSheet(f"padding: 5px; font-weight: bold; color: {color};")
 
         source_list.currentItemChanged.connect(lambda: update_evo_count())
@@ -11610,7 +11962,7 @@ class DigimonEditor(QMainWindow):
                 self.current_digimon.deevolution_sources.append({
                     'from_id': from_id,
                     'from_chr_id': from_chr_id or f"chr{from_id:03d}",
-                    'evolution_type': 0
+                    'evolution_type': path_type_combo.currentData()
                 })
 
                 self.update_evolution_tab(self.current_digimon)
@@ -11625,8 +11977,10 @@ class DigimonEditor(QMainWindow):
         if not self.current_digimon:
             return
 
-        current_index = self.deevolution_list.currentRow()
-        if current_index < 0:
+        current_index = self._selected_path_index(
+            ("deevolution_list", "deevolution_jogress_list", "deevolution_mode_change_list")
+        )
+        if current_index is None:
             QMessageBox.warning(self, "Warning", "Please select a pre-evolution to remove")
             return
 
@@ -11644,6 +11998,7 @@ class DigimonEditor(QMainWindow):
             if reply == QMessageBox.StandardButton.Yes:
                 self.current_digimon.deevolution_sources.pop(current_index)
                 self.update_evolution_tab(self.current_digimon)
+                self.mark_as_modified()
                 QMessageBox.information(self, "Success", "Pre-evolution removed")
 
 
@@ -12268,6 +12623,215 @@ class DigimonEditor(QMainWindow):
         for tribe_name in sorted(unique_tribes):
             self.tribe_combo.addItem(tribe_name)
 
+    def _active_skill_data_root(self) -> Optional[Path]:
+        active_root = self._active_dsts_loader_root()
+        return active_root / "patch" / "data" if active_root else None
+
+    def _skill_name_map_from_mod(self, dsts_loader_root: Path) -> Dict[str, str]:
+        names: Dict[str, str] = {}
+        skill_name_dir = dsts_loader_root / "patch_text01" / "text" / "skill_name.mbe"
+        if not skill_name_dir.exists():
+            return names
+
+        for csv_file in sorted(skill_name_dir.glob("*.ap.csv")):
+            try:
+                rows = self.loader.load_csv(csv_file)
+            except Exception:
+                continue
+            for row in rows[1:]:
+                if len(row) >= 2:
+                    key = _clean_status_cell(row[0])
+                    value = _clean_status_cell(row[1])
+                    if key and value:
+                        names[key] = value
+        return names
+
+    def _active_mod_skill_options(self) -> List[tuple]:
+        """Return skill browser options from the active Reloaded II mod payload."""
+        active_root = self._active_dsts_loader_root()
+        if not active_root:
+            return []
+
+        skill_file = self._resolve_prefixed_file(
+            active_root / "patch" / "data" / "battle_skill.mbe" / "000_battle_skill_list.ap.csv"
+        )
+        if not skill_file.exists():
+            return []
+
+        names = self._skill_name_map_from_mod(active_root)
+        options = []
+        seen = set()
+        try:
+            rows = self.loader.load_csv(skill_file)
+            for row in rows[1:]:
+                if not row or not row[0]:
+                    continue
+                try:
+                    skill_id = int(_clean_status_cell(row[0]))
+                except (TypeError, ValueError):
+                    continue
+                if skill_id in seen:
+                    continue
+                seen.add(skill_id)
+
+                name_id = _clean_status_cell(row[4]) if len(row) > 4 else ""
+                skill_name = names.get(str(skill_id)) or names.get(name_id) or self.loader.get_skill_name(skill_id)
+                skill_name = self.loader.clean_ui_text(skill_name) if skill_name else ""
+                if not skill_name or skill_name.startswith("Skill_"):
+                    skill_name = name_id or f"Skill {skill_id}"
+                options.append((skill_id, f"ID {skill_id}: {skill_name} [Active Mod]"))
+        except Exception as exc:
+            print(f"Error loading active mod skill options: {exc}")
+        return sorted(options, key=lambda option: option[0])
+
+    def _load_advanced_skill_data(self, skill_id: int) -> Dict[str, object]:
+        """Load a skill for the advanced editor, preferring the active mod payload."""
+        active_data_root = self._active_skill_data_root()
+        if active_data_root:
+            skill_data = self.loader.load_skill_data(skill_id, data_root=active_data_root, prefer_ap=True)
+            if skill_data:
+                skill_data["_data_root"] = active_data_root
+                skill_data["_prefer_ap"] = True
+                skill_data["_source_label"] = "Active Mod"
+                return skill_data
+
+        skill_data = self.loader.load_skill_data(skill_id)
+        if skill_data:
+            skill_data["_data_root"] = None
+            skill_data["_prefer_ap"] = False
+            skill_data["_source_label"] = "Base/DLC Workspace"
+        return skill_data
+
+    def _advanced_skill_contexts(self) -> List[tuple]:
+        """Return mode-change lookup contexts, with the current skill source first."""
+        contexts = []
+        current_root = getattr(self, "current_advanced_skill_data_root", None)
+        current_prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
+        current_label = getattr(self, "current_advanced_skill_source_label", "")
+        contexts.append((current_root, current_prefer_ap, current_label or "Current Skill Source"))
+
+        active_root = self._active_skill_data_root()
+        if active_root:
+            contexts.append((active_root, True, "Active Mod"))
+        contexts.append((None, False, "Base/DLC Workspace"))
+
+        unique_contexts = []
+        seen = set()
+        for data_root, prefer_ap, label in contexts:
+            key = (str(Path(data_root).resolve()).casefold() if data_root else "", prefer_ap)
+            if key in seen:
+                continue
+            seen.add(key)
+            unique_contexts.append((data_root, prefer_ap, label))
+        return unique_contexts
+
+    def _set_mode_change_skill_values(self, skill_ids: List[int]):
+        if not hasattr(self, "mode_change_skill_widgets"):
+            return
+        for index, widget in enumerate(self.mode_change_skill_widgets):
+            widget.setValue(skill_ids[index] if index < len(skill_ids) else 0)
+
+    def _mode_change_skill_values(self) -> List[int]:
+        if not hasattr(self, "mode_change_skill_widgets"):
+            return []
+        return [widget.value() for widget in self.mode_change_skill_widgets if widget.value() > 0]
+
+    def _populate_mode_change_fields(self, mode_data: Optional[Dict[str, object]], source_label: str = ""):
+        if not hasattr(self, "mode_change_source_digimon_edit"):
+            return
+
+        if not mode_data:
+            self.mode_change_source_digimon_edit.setValue(0)
+            self.mode_change_flag_4_edit.setValue(1)
+            self.mode_change_flag_5_edit.setValue(1)
+            self._set_mode_change_skill_values([])
+            if hasattr(self, "mode_change_status_label"):
+                self.mode_change_status_label.setText("No mode row loaded.")
+            return
+
+        self.mode_change_source_digimon_edit.setValue(int(mode_data.get("source_digimon_id", 0) or 0))
+        self.mode_change_flag_4_edit.setValue(int(mode_data.get("flag_4", 1) or 1))
+        self.mode_change_flag_5_edit.setValue(int(mode_data.get("flag_5", 1) or 1))
+        self._set_mode_change_skill_values([int(skill_id) for skill_id in mode_data.get("skill_ids", [])])
+        if hasattr(self, "mode_change_status_label"):
+            location = source_label or mode_data.get("source_file", "")
+            self.mode_change_status_label.setText(f"Loaded mode row {mode_data.get('mode_change_id', '')} from {location}.")
+
+    def clear_mode_change_fields(self):
+        if hasattr(self, "skill_mode_change_edit"):
+            self.skill_mode_change_edit.setValue(-1)
+        self._populate_mode_change_fields(None)
+
+    def populate_mode_change_from_current_digimon(self):
+        if not self.current_digimon:
+            QMessageBox.warning(self, "No Digimon Loaded", "Load a Digimon before building a mode-change row.")
+            return
+
+        source_id = self.id_spin.value() if hasattr(self, "id_spin") else int(getattr(self.current_digimon, "id", 0) or 0)
+        if source_id <= 0:
+            QMessageBox.warning(self, "Missing Digimon ID", "Set a valid Digimon ID before building a mode-change row.")
+            return
+
+        skill_ids = []
+        if hasattr(self, "signature_skills_editor"):
+            skill_ids = [skill.get("id", 0) for skill in self.signature_skills_editor.get_skills()]
+        if not skill_ids:
+            skill_ids = [skill.get("id", 0) for skill in getattr(self.current_digimon, "signature_skills", [])]
+
+        self.skill_mode_change_edit.setValue(source_id * 10 + 1)
+        self.mode_change_source_digimon_edit.setValue(source_id)
+        self.mode_change_flag_4_edit.setValue(1)
+        self.mode_change_flag_5_edit.setValue(1)
+        self._set_mode_change_skill_values([skill_id for skill_id in skill_ids if skill_id])
+        if hasattr(self, "mode_change_status_label"):
+            self.mode_change_status_label.setText(
+                f"Prepared mode row {source_id * 10 + 1} for Digimon {source_id}. Save the skill to write 003_skill_mode_change."
+            )
+
+    def load_mode_change_row_for_current_skill(self, show_messages: bool = False):
+        if not hasattr(self, "skill_mode_change_edit"):
+            return
+
+        mode_change_id = self.skill_mode_change_edit.value()
+        if mode_change_id <= 0:
+            self._populate_mode_change_fields(None)
+            if show_messages:
+                QMessageBox.information(self, "No Mode Change", "This skill does not point to a mode-change row.")
+            return
+
+        for data_root, prefer_ap, label in self._advanced_skill_contexts():
+            mode_data = self.loader.load_skill_mode_change_data(
+                mode_change_id,
+                data_root=data_root,
+                prefer_ap=prefer_ap,
+            )
+            if mode_data:
+                self._populate_mode_change_fields(mode_data, label)
+                if show_messages:
+                    QMessageBox.information(self, "Mode Row Loaded", f"Loaded mode row {mode_change_id} from {label}.")
+                return
+
+        self._populate_mode_change_fields(None)
+        if hasattr(self, "mode_change_status_label"):
+            self.mode_change_status_label.setText(
+                f"Mode row {mode_change_id} was not found. Fill Source Digimon ID and Mode Skill Set, then save to create it."
+            )
+        if show_messages:
+            QMessageBox.warning(
+                self,
+                "Mode Row Missing",
+                f"Mode row {mode_change_id} was not found in the active mod or base workspace."
+            )
+
+    def _mode_change_data_from_widgets(self) -> Dict[str, object]:
+        return {
+            "mode_change_id": self.skill_mode_change_edit.value(),
+            "source_digimon_id": self.mode_change_source_digimon_edit.value(),
+            "flag_4": self.mode_change_flag_4_edit.value(),
+            "flag_5": self.mode_change_flag_5_edit.value(),
+            "skill_ids": self._mode_change_skill_values(),
+        }
+
     def populate_skill_browser(self):
         """Populate the searchable skill browser dropdown."""
         if not hasattr(self, "skill_browser_combo"):
@@ -12278,7 +12842,16 @@ class DigimonEditor(QMainWindow):
         self.skill_browser_combo.clear()
         self.skill_browser_combo.addItem("Select a skill...", 0)
 
+        seen_skill_ids = set()
+        for skill_id, label in self._active_mod_skill_options():
+            self.skill_browser_combo.addItem(label, skill_id)
+            seen_skill_ids.add(skill_id)
+            if skill_id == current_skill_id:
+                self.skill_browser_combo.setCurrentIndex(self.skill_browser_combo.count() - 1)
+
         for skill_id, label in get_skill_options(self.loader):
+            if skill_id in seen_skill_ids:
+                continue
             self.skill_browser_combo.addItem(label, skill_id)
             if skill_id == current_skill_id:
                 self.skill_browser_combo.setCurrentIndex(self.skill_browser_combo.count() - 1)
@@ -12351,9 +12924,13 @@ class DigimonEditor(QMainWindow):
                 self.skill_browser_combo.setCurrentIndex(index)
                 self.skill_browser_combo.blockSignals(False)
         if skill_id > 0:
-            # Load skill data
-            skill_data = self.loader.load_skill_data(skill_id)
+            # Load skill data. Active mods win so custom skills save back to their .ap.csv payload.
+            skill_data = self._load_advanced_skill_data(skill_id)
             if skill_data:
+                self.current_advanced_skill_data_root = skill_data.get("_data_root")
+                self.current_advanced_skill_prefer_ap = bool(skill_data.get("_prefer_ap", False))
+                self.current_advanced_skill_source_label = str(skill_data.get("_source_label", "Base/DLC Workspace"))
+
                 # Update skill name
                 skill_name = self.loader.get_skill_name(skill_id)
                 clean_name = self.loader.clean_ui_text(skill_name)
@@ -12376,6 +12953,7 @@ class DigimonEditor(QMainWindow):
                 self.skill_jogress_skill_edit.setValue(skill_data.get("jogress_skill_id", 0))
                 self.skill_jogress_p1_edit.setValue(skill_data.get("jogress_partner_1", 0))
                 self.skill_jogress_p2_edit.setValue(skill_data.get("jogress_partner_2", 0))
+                self.load_mode_change_row_for_current_skill(show_messages=False)
                 self.skill_accuracy_edit.setValue(skill_data.get("accuracy", 0))
                 self.skill_crit_rate_edit.setValue(skill_data.get("crit_rate", 0))
 
@@ -12425,11 +13003,19 @@ class DigimonEditor(QMainWindow):
                 self.skill_recoil_edit.setValue(skill_data.get("recoil", 0))
                 self.skill_always_hits_check.setChecked(skill_data.get("always_hits", False))
             else:
+                self.current_advanced_skill_data_root = None
+                self.current_advanced_skill_prefer_ap = False
+                self.current_advanced_skill_source_label = ""
                 self.advanced_skill_name_edit.setText("Skill not found")
                 self.advanced_skill_desc.setPlainText("")
+                self.clear_mode_change_fields()
         else:
+            self.current_advanced_skill_data_root = None
+            self.current_advanced_skill_prefer_ap = False
+            self.current_advanced_skill_source_label = ""
             self.advanced_skill_name_edit.setText("")
             self.advanced_skill_desc.setPlainText("")
+            self.clear_mode_change_fields()
 
     def save_advanced_skill(self):
         """Save the current skill data"""
@@ -12437,6 +13023,27 @@ class DigimonEditor(QMainWindow):
         if skill_id <= 0:
             QMessageBox.warning(self, "Error", "Please enter a valid skill ID")
             return
+
+        mode_change_data = self._mode_change_data_from_widgets()
+        if mode_change_data["mode_change_id"] > 0:
+            if mode_change_data["source_digimon_id"] <= 0:
+                QMessageBox.warning(
+                    self,
+                    "Mode Change Source Missing",
+                    "Mode Change ID is positive, but the 003_skill_mode_change row has no Source Digimon ID."
+                )
+                return
+            if not mode_change_data["skill_ids"]:
+                QMessageBox.warning(
+                    self,
+                    "Mode Change Skills Missing",
+                    "Mode Change ID is positive, but the 003_skill_mode_change row has no skill IDs."
+                )
+                return
+
+        data_root = getattr(self, "current_advanced_skill_data_root", None)
+        prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
+        source_label = getattr(self, "current_advanced_skill_source_label", "Base/DLC Workspace")
 
         # Collect all form data
         skill_data = {
@@ -12472,17 +13079,26 @@ class DigimonEditor(QMainWindow):
             skill_data[f"buff_set_{i}"] = widget.value()
 
         # Save skill data
-        skill_saved = self.loader.save_skill_data(skill_data)
+        skill_saved = self.loader.save_skill_data(skill_data, data_root=data_root, prefer_ap=prefer_ap)
+        mode_saved = True
+        if skill_saved and mode_change_data["mode_change_id"] > 0:
+            mode_saved = self.loader.save_skill_mode_change_data(
+                mode_change_data,
+                data_root=data_root,
+                prefer_ap=prefer_ap,
+            )
 
         # Save skill name if it was edited
         skill_name = self.advanced_skill_name_edit.text().strip()
         name_saved = True
-        if skill_name and skill_name != "Skill not found":
+        if skill_name and skill_name != "Skill not found" and not prefer_ap:
             name_saved = self.loader.save_skill_name(skill_id, skill_name)
 
         # Show result message
-        if skill_saved and name_saved:
-            QMessageBox.information(self, "Success", f"Skill {skill_id} and name saved successfully!")
+        if skill_saved and mode_saved and name_saved:
+            QMessageBox.information(self, "Success", f"Skill {skill_id} saved successfully to {source_label}!")
+        elif skill_saved and not mode_saved:
+            QMessageBox.warning(self, "Partial Success", f"Skill {skill_id} saved, but the mode-change row could not be saved.")
         elif skill_saved:
             QMessageBox.warning(self, "Partial Success", f"Skill {skill_id} saved, but skill name could not be saved.")
         elif name_saved:
