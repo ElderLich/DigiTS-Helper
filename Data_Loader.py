@@ -163,6 +163,98 @@ class MBELoader:
         "int32 24", "empty 25", "int32 26", "empty 27", "int32 28", "empty 29",
     ]
     MODE_CHANGE_SKILL_COLUMNS = tuple(range(6, 29, 2))
+    BUFF_ID_NAMES = {
+        0: "None",
+        2: "Instant Death",
+        3: "Poison",
+        5: "Confusion",
+        6: "Paralysis",
+        7: "Sleep",
+        8: "Deadly Poison",
+        10: "Chaos",
+        11: "Immobilization",
+        12: "Deep Slumber",
+        13: "Crystallization",
+        14: "Reverse",
+        15: "HP Recovery Rate Up",
+        16: "HP Recovery Rate Down",
+        17: "SP Recovery Rate Up",
+        18: "SP Recovery Rate Down",
+        19: "Max HP Up",
+        20: "Max HP Down",
+        21: "Max SP Up",
+        22: "Max SP Down",
+        23: "Turn HP Recovery",
+        24: "Turn SP Recovery",
+        25: "ATK Up",
+        26: "DEF Up",
+        27: "INT Up",
+        28: "SPI Up",
+        29: "SPD Up",
+        30: "ACU Up",
+        31: "EVA Up",
+        32: "CRT Rate Up",
+        33: "ATK Down",
+        34: "DEF Down",
+        35: "INT Down",
+        36: "SPI Down",
+        37: "SPD Down",
+        38: "ACU Down",
+        39: "EVA Down",
+        40: "CRT Rate Down",
+        41: "Null Resistance Up",
+        42: "Fire Resistance Up",
+        43: "Ice Resistance Up",
+        44: "Plant Resistance Up",
+        45: "Water Resistance Up",
+        46: "Electricity Resistance Up",
+        47: "Steel Resistance Up",
+        48: "Wind Resistance Up",
+        49: "Earth Resistance Up",
+        50: "Light Resistance Up",
+        51: "Dark Resistance Up",
+        63: "Null Resistance Down",
+        64: "Fire Resistance Down",
+        65: "Ice Resistance Down",
+        66: "Plant Resistance Down",
+        67: "Water Resistance Down",
+        68: "Electricity Resistance Down",
+        69: "Steel Resistance Down",
+        70: "Wind Resistance Down",
+        71: "Earth Resistance Down",
+        72: "Light Resistance Down",
+        73: "Dark Resistance Down",
+        85: "Counter Physical",
+        86: "Counter Magic",
+        87: "Reflect Physical",
+        88: "Reflect Magic",
+        89: "Status Abnormality Immunity",
+        90: "Stat Debuff Immunity",
+        91: "Guts",
+        92: "Guard",
+        93: "Physical Damage Taken Up",
+        94: "Physical Damage Taken Down",
+        95: "Magic Damage Taken Up",
+        96: "Magic Damage Taken Down",
+        97: "Physical Damage Dealt Up",
+        98: "Physical Damage Dealt Down",
+        99: "Magic Damage Dealt Up",
+        100: "Magic Damage Dealt Down",
+        101: "Charge Physical",
+        102: "Charge Magic",
+        103: "Taunting",
+        105: "Immobilized next turn",
+        106: "Acts First",
+        107: "Acts Last",
+        112: "Stat buffs",
+        113: "Stat debuffs",
+        114: "Status abnormalities",
+        115: "Injury/Disease",
+        116: "All Status Abnormalities",
+        118: "Injury",
+        119: "Disease",
+        120: "Addled",
+    }
     
     def __init__(self, data_path: str = "data", text_path: str = "text"):
         self.data_path = Path(data_path)
@@ -191,6 +283,7 @@ class MBELoader:
         self._belong_names_cache = None
         self._digimon_profiles_cache = None
         self._buff_names_cache = None
+        self._battle_buff_effect_alias_cache = None
         self._status_names_cache = None
 
     def get_dlc_ids(self) -> tuple:
@@ -1949,47 +2042,6 @@ class MBELoader:
             self._element_names_cache = self._load_text_file("element.mbe")
         return self._element_names_cache.get(str(element_id), f"Element_{element_id}")
     
-    def get_buff_name(self, buff_id: int) -> str:
-        """Get buff/status effect name by ID (0-133)"""
-        if self._buff_names_cache is None:
-            # Buff names from battle_skill.mbe/002_buff_set.csv
-            self._buff_names_cache = {
-                0: "None", 1: "Exhausted", 2: "Instant Death", 3: "Poison", 4: "None",
-                5: "Confusion", 6: "Paralysis", 7: "Sleep", 8: "Severe Poison", 9: "None",
-                10: "Panic", 11: "Cannot Act", 12: "Deep Sleep", 13: "Pixelation", 14: "Bug",
-                15: "HP Recovery Up", 16: "HP Recovery Down", 17: "SP Recovery Up", 18: "SP Recovery Down",
-                19: "Max HP Up", 20: "Max HP Down", 21: "Max SP Up", 22: "Max SP Down",
-                23: "Regen HP", 24: "Regen SP",
-                25: "ATK Up", 26: "DEF Up", 27: "INT Up", 28: "SPI Up", 29: "SPD Up",
-                30: "Accuracy Up", 31: "Evasion Up", 32: "Critical Up",
-                33: "ATK Down", 34: "DEF Down", 35: "INT Down", 36: "SPI Down", 37: "SPD Down",
-                38: "Accuracy Down", 39: "Evasion Down", 40: "Critical Down",
-                41: "Null Resist Up", 42: "Fire Resist Up", 43: "Ice Resist Up", 44: "Grass Resist Up",
-                45: "Water Resist Up", 46: "Elec Resist Up", 47: "Steel Resist Up", 48: "Wind Resist Up",
-                49: "Ground Resist Up", 50: "Light Resist Up", 51: "Dark Resist Up", 52: "Null Resist Up",
-                53: "None", 54: "None", 55: "None", 56: "None", 57: "None",
-                58: "None", 59: "None", 60: "None", 61: "None", 62: "None",
-                63: "Null Resist Down", 64: "Fire Resist Down", 65: "Ice Resist Down", 66: "Grass Resist Down",
-                67: "Water Resist Down", 68: "Elec Resist Down", 69: "Steel Resist Down", 70: "Wind Resist Down",
-                71: "Ground Resist Down", 72: "Light Resist Down", 73: "Dark Resist Down", 74: "Null Resist Down",
-                75: "None", 76: "None", 77: "None", 78: "None", 79: "None",
-                80: "None", 81: "None", 82: "None", 83: "None", 84: "None",
-                85: "Physical Counter", 86: "Magic Counter", 87: "Physical Reflect", 88: "Magic Reflect",
-                89: "Status Barrier", 90: "Debuff Barrier", 91: "Survive Fatal", 92: "Defend",
-                93: "Physical Dmg Reduction", 94: "Physical Dmg Barrier", 95: "Magic Dmg Reduction", 96: "Magic Dmg Barrier",
-                97: "Physical Dmg Up", 98: "Physical Dmg Down", 99: "Magic Dmg Up", 100: "Magic Dmg Down",
-                101: "Physical Power Up", 102: "Magic Power Up", 103: "Taunt", 104: "None",
-                105: "Cannot Act (Recoil)", 106: "Move First", 107: "Move Last",
-                108: "Multi-Action", 109: "Multi-Action?", 110: "None", 111: "None",
-                112: "Stat Up", 113: "Stat Down", 114: "Cure Basic Status", 115: "Cure Special Status",
-                116: "Cure All Status", 117: "None", 118: "Injured", 119: "Sick",
-                120: "Cannot Act (Charge Break)", 121: "None", 122: "None", 123: "None",
-                124: "Death Countdown", 125: "Death Countdown", 126: "Unmotivated",
-                127: "None", 128: "None", 129: "None", 130: "None", 131: "None",
-                132: "Cannot Act (Fear)", 133: "CP Freeze"
-            }
-        return self._buff_names_cache.get(buff_id, f"Buff_{buff_id}")
-    
     def get_type_name(self, type_id: int) -> str:
         """Get localized type name by type ID"""
         if self._type_names_cache is None:
@@ -2166,11 +2218,48 @@ class MBELoader:
         
         return self._digimon_profiles_cache.get(digimon_id, "")
     
+    def _load_battle_buff_effect_aliases(self) -> Dict[int, int]:
+        """Load hidden battle_buff IDs that point at known visible effect IDs."""
+        if self._battle_buff_effect_alias_cache is not None:
+            return self._battle_buff_effect_alias_cache
+
+        aliases: Dict[int, int] = {}
+        rows = self.load_csv(self.data_path / "battle_buff.mbe" / "000_battle_buff.csv")
+        for row in rows[1:]:
+            buff_id = safe_int_value(row[0], 0) if len(row) > 0 else 0
+            visible_effect_id = safe_int_value(row[6], 0) if len(row) > 6 else 0
+            if buff_id > 0 and visible_effect_id > 0 and visible_effect_id != buff_id:
+                aliases[buff_id] = visible_effect_id
+
+        self._battle_buff_effect_alias_cache = aliases
+        return aliases
+
     def get_buff_name(self, buff_id: int) -> str:
-        """Get localized buff name by buff ID"""
+        """Get localized buff/status effect name by buff ID."""
         if self._buff_names_cache is None:
             self._buff_names_cache = self._load_text_file("buff_name.mbe")
-        return self._buff_names_cache.get(str(buff_id), f"Buff_{buff_id}")
+        key = str(buff_id)
+        raw_name = self._buff_names_cache.get(key, "")
+        clean_name = self.clean_ui_text(raw_name) if raw_name else ""
+        if clean_name:
+            return clean_name
+
+        try:
+            numeric_buff_id = int(buff_id or 0)
+        except (TypeError, ValueError):
+            numeric_buff_id = -1
+        reference_name = self.BUFF_ID_NAMES.get(numeric_buff_id, "")
+        if reference_name:
+            return reference_name
+        alias_id = self._load_battle_buff_effect_aliases().get(numeric_buff_id, 0)
+        if alias_id:
+            alias_raw_name = self._buff_names_cache.get(str(alias_id), "")
+            alias_name = self.clean_ui_text(alias_raw_name) if alias_raw_name else ""
+            if not alias_name:
+                alias_name = self.BUFF_ID_NAMES.get(alias_id, "")
+            if alias_name:
+                return f"{alias_name} (variant {numeric_buff_id})"
+        return "None" if numeric_buff_id == 0 else f"Buff_{buff_id}"
     
     def get_status_name(self, status_id: int) -> str:
         """Get localized status name by status ID"""

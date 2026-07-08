@@ -271,15 +271,26 @@ def build_reloaded_mod_config(mod_id: str, mod_name: str, author: str, descripti
 
 
 class SpinBoxWheelGuard(QObject):
-    """Keep mouse-wheel scrolling from changing value fields unless they have focus."""
+    """Keep mouse-wheel scrolling from accidentally changing value fields."""
+
+    def _guarded_value_widget(self, watched):
+        current = watched
+        while current:
+            if isinstance(current, (QAbstractSpinBox, QComboBox)):
+                return current
+            current = current.parent()
+        return None
 
     def eventFilter(self, watched, event):
-        guarded_widget = isinstance(watched, (QAbstractSpinBox, QComboBox))
-        if event.type() == QEvent.Type.Wheel and guarded_widget:
-            if watched.hasFocus() or (isinstance(watched, QComboBox) and watched.view().isVisible()):
+        if event.type() == QEvent.Type.Wheel:
+            guarded_widget = self._guarded_value_widget(watched)
+            if not guarded_widget:
                 return False
 
-            scroll_parent = watched.parent()
+            if isinstance(guarded_widget, QComboBox) and guarded_widget.view().isVisible():
+                return False
+
+            scroll_parent = guarded_widget.parent()
             while scroll_parent and not isinstance(scroll_parent, QAbstractScrollArea):
                 scroll_parent = scroll_parent.parent()
 
@@ -3669,6 +3680,7 @@ class EvolutionPage(QWizardPage):
 
     def show_evolution_requirements_dialog(self, target_name: str):
         """Show dialog to configure evolution requirements"""
+        existing_conditions = normalize_evolution_conditions(getattr(self, "evolution_requirements", {}))
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Evolution Requirements → {target_name}")
         dialog.setMinimumWidth(500)
@@ -3701,7 +3713,8 @@ class EvolutionPage(QWizardPage):
         mode_combo.addItem("Rank 8", 8)
         mode_combo.addItem("Rank 9", 9)
         mode_combo.addItem("Rank 10", 10)
-        mode_combo.setCurrentIndex(0)  # Default to Rank 1
+        mode_index = mode_combo.findData(existing_conditions.get('mode', 1))
+        mode_combo.setCurrentIndex(mode_index if mode_index >= 0 else 0)
         mode_layout.addWidget(mode_combo)
         mode_group.setLayout(mode_layout)
         scroll_layout.addWidget(mode_group)
@@ -3711,6 +3724,7 @@ class EvolutionPage(QWizardPage):
         tamer_layout = QFormLayout()
         tamer_level_spin = QSpinBox()
         tamer_level_spin.setRange(0, 99)
+        tamer_level_spin.setValue(existing_conditions.get('tamerLevel', 0))
         tamer_level_spin.setSuffix(" (0 = no requirement)")
         tamer_layout.addRow("Tamer Level:", tamer_level_spin)
         tamer_group.setLayout(tamer_layout)
@@ -3722,36 +3736,43 @@ class EvolutionPage(QWizardPage):
 
         hp_spin = QSpinBox()
         hp_spin.setRange(0, 99999)
+        hp_spin.setValue(existing_conditions.get('HP', 0))
         hp_spin.setSuffix(" HP")
         stats_layout.addRow("HP:", hp_spin)
 
         sp_spin = QSpinBox()
         sp_spin.setRange(0, 99999)
+        sp_spin.setValue(existing_conditions.get('SP', 0))
         sp_spin.setSuffix(" SP")
         stats_layout.addRow("SP:", sp_spin)
 
         atk_spin = QSpinBox()
         atk_spin.setRange(0, 9999)
+        atk_spin.setValue(existing_conditions.get('ATK', 0))
         atk_spin.setSuffix(" ATK")
         stats_layout.addRow("ATK:", atk_spin)
 
         def_spin = QSpinBox()
         def_spin.setRange(0, 9999)
+        def_spin.setValue(existing_conditions.get('DEF', 0))
         def_spin.setSuffix(" DEF")
         stats_layout.addRow("DEF:", def_spin)
 
         int_spin = QSpinBox()
         int_spin.setRange(0, 9999)
+        int_spin.setValue(existing_conditions.get('INT', 0))
         int_spin.setSuffix(" INT")
         stats_layout.addRow("INT:", int_spin)
 
         spi_spin = QSpinBox()
         spi_spin.setRange(0, 9999)
+        spi_spin.setValue(existing_conditions.get('SPI', 0))
         spi_spin.setSuffix(" SPI")
         stats_layout.addRow("SPI:", spi_spin)
 
         spd_spin = QSpinBox()
         spd_spin.setRange(0, 9999)
+        spd_spin.setValue(existing_conditions.get('SPD', 0))
         spd_spin.setSuffix(" SPD")
         stats_layout.addRow("SPD:", spd_spin)
 
@@ -3787,18 +3808,22 @@ class EvolutionPage(QWizardPage):
 
         valor_spin = QSpinBox()
         valor_spin.setRange(0, 999)
+        valor_spin.setValue(existing_conditions.get('skillCountValor', 0))
         skills_layout.addRow("Valor Skills:", valor_spin)
 
         philanthropy_spin = QSpinBox()
         philanthropy_spin.setRange(0, 999)
+        philanthropy_spin.setValue(existing_conditions.get('skillCountPhilantropy', 0))
         skills_layout.addRow("Philanthropy Skills:", philanthropy_spin)
 
         amicable_spin = QSpinBox()
         amicable_spin.setRange(0, 999)
+        amicable_spin.setValue(existing_conditions.get('skillCountAmicable', 0))
         skills_layout.addRow("Amicable Skills:", amicable_spin)
 
         wisdom_spin = QSpinBox()
         wisdom_spin.setRange(0, 999)
+        wisdom_spin.setValue(existing_conditions.get('skillCountWisdom', 0))
         skills_layout.addRow("Wisdom Skills:", wisdom_spin)
 
         skills_group.setLayout(skills_layout)
@@ -3809,6 +3834,7 @@ class EvolutionPage(QWizardPage):
         item_layout = QFormLayout()
         item_spin = QSpinBox()
         item_spin.setRange(0, 999999)
+        item_spin.setValue(existing_conditions.get('needsItem', 0))
         item_spin.setSuffix(" (Item ID, 0 = none)")
         item_layout.addRow("Required Item:", item_spin)
         item_group.setLayout(item_layout)
@@ -3820,21 +3846,25 @@ class EvolutionPage(QWizardPage):
 
         jogress_a_id_spin = QSpinBox()
         jogress_a_id_spin.setRange(0, 999999)
+        jogress_a_id_spin.setValue(existing_conditions.get('jogressDbIdA', 0))
         jogress_a_id_spin.setSuffix(" (Partner A ID)")
         jogress_layout.addRow("Partner A Digimon ID:", jogress_a_id_spin)
 
         jogress_a_personality_spin = QSpinBox()
         jogress_a_personality_spin.setRange(0, 99)
+        jogress_a_personality_spin.setValue(existing_conditions.get('jogressPersonalityA', 0))
         jogress_a_personality_spin.setSuffix(" (Personality)")
         jogress_layout.addRow("Partner A Personality:", jogress_a_personality_spin)
 
         jogress_b_id_spin = QSpinBox()
         jogress_b_id_spin.setRange(0, 999999)
+        jogress_b_id_spin.setValue(existing_conditions.get('jogressDbIdB', 0))
         jogress_b_id_spin.setSuffix(" (Partner B ID)")
         jogress_layout.addRow("Partner B Digimon ID:", jogress_b_id_spin)
 
         jogress_b_personality_spin = QSpinBox()
         jogress_b_personality_spin.setRange(0, 99)
+        jogress_b_personality_spin.setValue(existing_conditions.get('jogressPersonalityB', 0))
         jogress_b_personality_spin.setSuffix(" (Personality)")
         jogress_layout.addRow("Partner B Personality:", jogress_b_personality_spin)
 
@@ -4218,6 +4248,7 @@ class DigimonEditor(QMainWindow):
         self._evolution_picker_entries_cache: Optional[List[dict]] = None
         self._evolution_char_name_map_cache: Optional[Dict[str, str]] = None
         self._evolution_target_map_cache: Optional[Dict[int, Set[str]]] = None
+        self._buff_set_cache: Dict[Tuple[str, float], Dict[int, List[dict]]] = {}
         self._auto_loaded_mod_roots: Set[str] = set()
         self._status_ref_user_edited = False
         self._syncing_status_reference = False
@@ -4640,8 +4671,7 @@ class DigimonEditor(QMainWindow):
                 border-color: #667eea;
             }
             QTabBar::tab:hover:!selected {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #e7f5ff, stop:1 #d0ebff);
+                background: #f1f3f5;
             }
 
             /* Modern Input Fields */
@@ -4672,7 +4702,7 @@ class DigimonEditor(QMainWindow):
                 color: #495057;
             }
             QComboBox:hover {
-                border-color: #667eea;
+                border-color: #cbd3da;
             }
             QComboBox:focus {
                 border-color: #667eea;
@@ -4882,7 +4912,7 @@ class DigimonEditor(QMainWindow):
                 color: #333333;
             }
             QComboBox:hover {
-                background: #e7f5ff;
+                background: #f1f3f5;
             }
             QComboBox::drop-down {
                 border: none;
@@ -4988,7 +5018,7 @@ class DigimonEditor(QMainWindow):
                 color: #333333;
             }
             QComboBox:hover {
-                border-color: #667eea;
+                border-color: #cbd3da;
                 background: #f8f9fa;
             }
             QComboBox:focus {
@@ -5276,7 +5306,7 @@ class DigimonEditor(QMainWindow):
 
         # Multi Language Tab
         self.multi_language_tab = self.create_multi_language_tab()
-        self.tab_widget.addTab(self.multi_language_tab, "🌐 Multi Language")
+        self.tab_widget.addTab(self.multi_language_tab, "🌐 Other Languages")
 
         layout.addWidget(self.tab_widget)
 
@@ -5465,6 +5495,9 @@ class DigimonEditor(QMainWindow):
         self.localized_text_tab_widget = QTabWidget()
 
         for folder, language_name in TEXT_LANGUAGE_FOLDERS:
+            if folder == ENGLISH_TEXT_FOLDER:
+                continue
+
             page = QWidget()
             page_layout = QVBoxLayout(page)
             page_layout.setSpacing(10)
@@ -7128,7 +7161,8 @@ class DigimonEditor(QMainWindow):
                     border-left: 3px solid #667eea;
                 }
             """)
-            buff_name_label.setMinimumWidth(200)
+            buff_name_label.setMinimumWidth(360)
+            buff_name_label.setWordWrap(True)
             buff_widget_layout.addWidget(buff_name_label)
             self.buff_name_labels.append(buff_name_label)
 
@@ -7242,7 +7276,61 @@ class DigimonEditor(QMainWindow):
 
     def _set_current_evolution_conditions(self, conditions: dict):
         if self.current_digimon:
-            self.current_digimon.evolution_conditions = [normalize_evolution_conditions(conditions)]
+            normalized = normalize_evolution_conditions(conditions)
+            self.current_digimon.evolution_conditions = [normalized]
+            return normalized
+        return normalize_evolution_conditions(conditions)
+
+    def _format_obtain_requirements_summary(self, conditions) -> str:
+        """Format requirements for the current Digimon's inbound evolution row."""
+        conditions = normalize_evolution_conditions(conditions)
+        parts = [f"Agent Rank: {conditions.get('mode', 1)}"]
+
+        tamer_level = safe_evolution_int(conditions.get('tamerLevel'), 0)
+        if tamer_level > 0:
+            parts.append(f"Digimon Lv{tamer_level}")
+
+        stats = []
+        for stat in ['HP', 'SP', 'ATK', 'DEF', 'INT', 'SPI', 'SPD']:
+            value = safe_evolution_int(conditions.get(stat), 0)
+            if value > 0:
+                stats.append(f"{stat}{value}")
+        if stats:
+            parts.append(", ".join(stats))
+
+        item_value = safe_evolution_int(conditions.get('needsItem'), 0)
+        if item_value > 0:
+            parts.append(f"Item#{item_value}")
+
+        skill_counts = []
+        skill_labels = [
+            ('skillCountValor', "Valor"),
+            ('skillCountPhilantropy', "Philanthropy"),
+            ('skillCountAmicable', "Amicable"),
+            ('skillCountWisdom', "Wisdom"),
+        ]
+        for key, label in skill_labels:
+            value = safe_evolution_int(conditions.get(key), 0)
+            if value > 0:
+                skill_counts.append(f"{label} {value}")
+        if skill_counts:
+            parts.append("Skills: " + ", ".join(skill_counts))
+
+        extras = []
+        column_11 = safe_evolution_int(conditions.get('unknown1'), 0)
+        column_12 = safe_evolution_int(conditions.get('unknown2'), 0)
+        if column_11 > 0:
+            extras.append(f"Col11 {column_11}")
+        if column_12 > 0:
+            extras.append(f"Col12 {column_12}")
+        if extras:
+            parts.append(", ".join(extras))
+
+        jogress_partners = jogress_partner_ids_from_conditions(conditions)
+        if jogress_partners:
+            parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
+
+        return " | ".join(parts)
 
     def _path_type_combo_is_jogress(self, combo: QComboBox) -> bool:
         return combo.currentText().strip().lower().startswith("jogress")
@@ -8084,43 +8172,10 @@ class DigimonEditor(QMainWindow):
                 list_widget.clear()
 
         # Update evolution requirements label (using normalized condition data)
-        target_conditions = normalize_evolution_conditions(digimon.evolution_conditions) if digimon.evolution_conditions else {}
-        if target_conditions:
-            parts = [f"Agent Rank: {target_conditions.get('mode', 1)}"]
-
-            tamer_level = safe_evolution_int(target_conditions.get('tamerLevel'), 0)
-            if tamer_level > 0:
-                parts.append(f"Digimon Lv{tamer_level}")
-
-            stats = []
-            for stat in ['HP', 'SP', 'ATK', 'DEF', 'INT', 'SPI', 'SPD']:
-                value = safe_evolution_int(target_conditions.get(stat), 0)
-                if value > 0:
-                    stats.append(f"{stat}{value}")
-            if stats:
-                parts.append(", ".join(stats))
-
-            item_value = safe_evolution_int(target_conditions.get('needsItem'), 0)
-            if item_value > 0:
-                parts.append(f"Item#{item_value}")
-
-            extras = []
-            column_11 = safe_evolution_int(target_conditions.get('unknown1'), 0)
-            column_12 = safe_evolution_int(target_conditions.get('unknown2'), 0)
-            if column_11 > 0:
-                extras.append(f"Col11 {column_11}")
-            if column_12 > 0:
-                extras.append(f"Col12 {column_12}")
-            if extras:
-                parts.append(", ".join(extras))
-
-            jogress_partners = jogress_partner_ids_from_conditions(target_conditions)
-            if jogress_partners:
-                parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
-
-            self.requirements_label.setText(" | ".join(parts))
-        else:
-            self.requirements_label.setText("Agent Rank: 1")
+        target_conditions = normalize_evolution_conditions(digimon.evolution_conditions)
+        if digimon.evolution_conditions:
+            digimon.evolution_conditions = [target_conditions]
+        self.requirements_label.setText(self._format_obtain_requirements_summary(target_conditions))
 
         # Populate evolution paths with detailed requirements
         outgoing_lists = {
@@ -8247,16 +8302,7 @@ class DigimonEditor(QMainWindow):
             QMessageBox.warning(self, "No Digimon Loaded", "Please load a Digimon first.")
             return
 
-        # Get existing requirements or create defaults
-        existing = self.current_digimon.evolution_conditions if self.current_digimon.evolution_conditions else {
-            'mode': 1, 'tamerLevel': 0,
-            'HP': 0, 'SP': 0, 'ATK': 0, 'DEF': 0, 'INT': 0, 'SPI': 0, 'SPD': 0,
-            'skillCountValor': 0, 'skillCountPhilantropy': 0,
-            'skillCountAmicable': 0, 'skillCountWisdom': 0,
-            'needsItem': 0,
-            'jogressDbIdA': 0, 'jogressPersonalityA': 0,
-            'jogressDbIdB': 0, 'jogressPersonalityB': 0
-        }
+        existing = normalize_evolution_conditions(self.current_digimon.evolution_conditions)
 
         # Show the same dialog as used for evolution paths
         new_conditions = self._show_evolution_requirements_dialog(
@@ -8265,7 +8311,11 @@ class DigimonEditor(QMainWindow):
         )
 
         if new_conditions is not None:
-            self._set_current_evolution_conditions(new_conditions)
+            normalized_conditions = self._set_current_evolution_conditions(new_conditions)
+            for evo in getattr(self.current_digimon, "evolution_paths", []):
+                if safe_evolution_int(evo.get("to_id"), 0) == safe_evolution_int(self.current_digimon.id, 0):
+                    evo["conditions"] = dict(normalized_conditions)
+                    evo["export_conditions"] = True
             self.update_evolution_tab(self.current_digimon)
             self.mark_as_modified()
             QMessageBox.information(self, "Success", "Evolution requirements updated!")
@@ -12327,6 +12377,12 @@ class DigimonEditor(QMainWindow):
             self.current_digimon.evolution_paths = []
         if not hasattr(self.current_digimon, 'deevolution_sources'):
             self.current_digimon.deevolution_sources = []
+        if getattr(self.current_digimon, 'evolution_conditions', None):
+            self.current_digimon.evolution_conditions = [
+                normalize_evolution_conditions(self.current_digimon.evolution_conditions)
+            ]
+        elif not hasattr(self.current_digimon, 'evolution_conditions'):
+            self.current_digimon.evolution_conditions = []
 
         # References
         self.current_digimon.field_guide_id = self.field_guide_id_spin.value()
@@ -14460,35 +14516,152 @@ class DigimonEditor(QMainWindow):
             self.advanced_skill_id_edit.setValue(skill_id)
             # This will trigger update_advanced_skill_display automatically
 
+    def _buff_set_csv_path(self, data_root: Optional[Path] = None, prefer_ap: bool = False) -> Path:
+        """Resolve the buff set CSV for a skill data root."""
+        root = Path(data_root) if data_root else self.loader.data_path
+        filename = "002_buff_set.ap.csv" if prefer_ap else "002_buff_set.csv"
+        battle_skill_dir = "battle_skill.mbe"
+        dlc_match = re.search(r"addcont_(\d+)\.dx11", str(root), re.IGNORECASE)
+        if dlc_match:
+            battle_skill_dir = f"battle_skill_dlc{dlc_match.group(1)}.mbe"
+
+        buff_set_file = self.loader._resolve_prefixed_file(root / battle_skill_dir / filename)
+        if not buff_set_file.exists() and dlc_match and not prefer_ap:
+            # DLC 17 currently ships this table without the leading zero.
+            legacy_file = self.loader._resolve_prefixed_file(root / battle_skill_dir / "02_buff_set.csv")
+            if legacy_file.exists():
+                return legacy_file
+        return buff_set_file
+
+    def _buff_set_contexts(self) -> List[Tuple[Optional[Path], bool, str]]:
+        """Return buff-set lookup contexts, preferring the current skill source."""
+        contexts: List[Tuple[Optional[Path], bool, str]] = []
+        current_root = getattr(self, "current_advanced_skill_data_root", None)
+        current_prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
+        current_label = getattr(self, "current_advanced_skill_source_label", "")
+        if current_root:
+            contexts.append((current_root, current_prefer_ap, current_label or "Current Skill Source"))
+
+        active_root = self._active_skill_data_root()
+        if active_root:
+            contexts.append((active_root, True, "Active Mod"))
+        contexts.append((None, False, "Base Workspace"))
+        try:
+            for dlc_id, dlc_root in self.loader.iter_dlc_data_roots():
+                contexts.append((dlc_root, False, f"DLC {dlc_id}"))
+        except Exception:
+            pass
+
+        unique_contexts = []
+        seen = set()
+        for data_root, prefer_ap, label in contexts:
+            key = (str(Path(data_root).resolve()).casefold() if data_root else "", prefer_ap)
+            if key in seen:
+                continue
+            seen.add(key)
+            unique_contexts.append((data_root, prefer_ap, label))
+        return unique_contexts
+
+    def _load_buff_set_map(self, data_root: Optional[Path] = None, prefer_ap: bool = False) -> Dict[int, List[dict]]:
+        """Load buff set rows as decoded effect entries."""
+        buff_set_file = self._buff_set_csv_path(data_root, prefer_ap)
+        if not buff_set_file.exists():
+            return {}
+
+        try:
+            cache_key = (str(buff_set_file.resolve()).casefold(), buff_set_file.stat().st_mtime)
+        except OSError:
+            cache_key = (str(buff_set_file).casefold(), 0.0)
+
+        cached = self._buff_set_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        buff_sets: Dict[int, List[dict]] = {}
+        try:
+            rows = self.loader.load_csv(buff_set_file)
+        except Exception as exc:
+            print(f"Error loading buff set data from {buff_set_file}: {exc}")
+            return {}
+
+        slot_starts = range(6, 57, 5)
+        for row in rows[1:]:
+            if not row:
+                continue
+            set_id = safe_evolution_int(_clean_status_cell(row[0]) if len(row) > 0 else "", -1)
+            if set_id < 0:
+                continue
+
+            entries = []
+            for start in slot_starts:
+                effect_id = safe_evolution_int(row[start] if len(row) > start else 0, 0)
+                if effect_id <= 0:
+                    continue
+                rate = safe_evolution_int(row[start + 1] if len(row) > start + 1 else 0, 0)
+                change_percent = safe_evolution_int(row[start + 2] if len(row) > start + 2 else 0, 0)
+                turn_override = safe_evolution_int(row[start + 3] if len(row) > start + 3 else 0, 0)
+                name = self.loader.get_buff_name(effect_id)
+                entries.append({
+                    "effect_id": effect_id,
+                    "name": name,
+                    "rate": rate,
+                    "change_percent": change_percent,
+                    "turn_override": turn_override,
+                })
+            buff_sets[set_id] = entries
+
+        stale_keys = [key for key in self._buff_set_cache if key[0] == cache_key[0] and key != cache_key]
+        for key in stale_keys:
+            self._buff_set_cache.pop(key, None)
+        self._buff_set_cache[cache_key] = buff_sets
+        return buff_sets
+
+    def _format_buff_effect_summary(self, entry: dict) -> str:
+        """Return a compact label for one buff effect entry."""
+        pieces = [entry.get("name", f"Buff {entry.get('effect_id', '')}")]
+        change_percent = entry.get("change_percent", 0)
+        rate = entry.get("rate", 0)
+        turns = entry.get("turn_override", 0)
+        if change_percent:
+            pieces.append(f"{change_percent}%")
+        if rate:
+            pieces.append(f"{rate}% rate")
+        if turns > 0:
+            pieces.append(f"{turns}t")
+        elif turns == -1:
+            pieces.append("until removed")
+        return " / ".join(str(piece) for piece in pieces if str(piece))
+
+    def _describe_buff_set(self, buff_set_id: int) -> Tuple[str, str]:
+        """Return a short label and tooltip for a buff set ID."""
+        for data_root, prefer_ap, source_label in self._buff_set_contexts():
+            buff_sets = self._load_buff_set_map(data_root, prefer_ap)
+            if buff_set_id not in buff_sets:
+                continue
+
+            entries = buff_sets.get(buff_set_id, [])
+            if not entries:
+                return f"Set {buff_set_id}: No effects", f"Set {buff_set_id} found in {source_label}, but all effect slots are empty."
+
+            effect_labels = [self._format_buff_effect_summary(entry) for entry in entries]
+            preview = "; ".join(effect_labels[:2])
+            if len(effect_labels) > 2:
+                preview += f"; +{len(effect_labels) - 2} more"
+            tooltip = f"Set {buff_set_id} from {source_label}\n" + "\n".join(f"- {label}" for label in effect_labels)
+            return f"Set {buff_set_id}: {preview}", tooltip
+
+        return f"Set {buff_set_id}: Not found", f"No row for buff set {buff_set_id} was found in the active mod or Base data."
+
     def update_buff_name_display(self, buff_index: int, buff_set_id: int):
         """Update the buff name label when buff set ID changes"""
         if buff_index < len(self.buff_name_labels):
             if buff_set_id > 0:
-                # Try to load buff set and display first buff effect
-                try:
-                    buff_set_file = self.loader._resolve_prefixed_file(self.loader.data_path / "battle_skill.mbe" / "002_buff_set.csv")
-                    if buff_set_file.exists():
-                        rows = self.loader.load_csv(buff_set_file)
-                        # Find the buff set row
-                        for row in rows[1:]:  # Skip header
-                            if len(row) > 0 and row[0]:
-                                try:
-                                    set_id = int(row[0])
-                                    if set_id == buff_set_id:
-                                        # Get first buff effect (column 6)
-                                        if len(row) > 6 and row[6]:
-                                            buff_effect_id = int(row[6])
-                                            buff_name = self.loader.get_buff_name(buff_effect_id)
-                                            self.buff_name_labels[buff_index].setText(f"Set {buff_set_id}: {buff_name}...")
-                                            return
-                                except (ValueError, IndexError):
-                                    continue
-                    # If not found, just show the set ID
-                    self.buff_name_labels[buff_index].setText(f"Set {buff_set_id}")
-                except Exception as e:
-                    self.buff_name_labels[buff_index].setText(f"Set {buff_set_id}")
+                summary, tooltip = self._describe_buff_set(buff_set_id)
+                self.buff_name_labels[buff_index].setText(summary)
+                self.buff_name_labels[buff_index].setToolTip(tooltip)
             else:
                 self.buff_name_labels[buff_index].setText("")
+                self.buff_name_labels[buff_index].setToolTip("")
 
     def update_advanced_skill_display(self):
         """Update advanced skill display when skill ID changes"""
