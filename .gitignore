@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+*.tmp
+
+build/
+dist/
+New Extracted/
+
+.vscode/
+.idea/
