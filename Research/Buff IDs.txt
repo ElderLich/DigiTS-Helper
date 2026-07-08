@@ -1,0 +1,104 @@
+========================================== [ BUFF IDS ] ==========================================
+
+---- [ IDs ] ----
+2 - Instant Death
+3 - Poison
+5 - Confusion
+6 - Paralysis
+7 - Sleep
+8 - Deadly Poison
+10 - Chaos
+11 - Immobilization
+12 - Deep Slumber
+13 - Crystallization
+14 - Reverse
+--
+15 - HP Recovery Rate Up
+16 - HP Recovery Rate Down
+17 - SP Recovery Rate Up
+18 - SP Recovery Rate Down
+--
+19 - Max HP Up
+20 - Max HP Down
+21 - Max SP Up
+22 - Max SP Down
+--
+23 - Turn HP Recovery
+24 - Turn SP Recovery
+--
+25 - ATK Up
+26 - DEF Up
+27 - INT Up
+28 - SPI Up
+29 - SPD Up
+30 - ACU Up
+31 - EVA Up
+32 - CRT Rate Up
+33 - ATK Down
+34 - DEF Down
+35 - INT Down
+36 - SPI Down
+37 - SPD Down
+38 - ACU Down
+39 - EVA Down
+40 - CRT Rate Down
+--
+41 - Null Resistance Up
+42 - Fire Resistance Up
+43 - Ice Resistance Up
+44 - Plant Resistance Up
+45 - Water Resistance Up
+46 - Electricity Resistance Up
+47 - Steel Resistance Up
+48 - Wind Resistance Up
+49 - Earth Resistance Up
+50 - Light Resistance Up
+51 - Dark Resistance Up
+--
+63 - Null Resistance Down
+64 - Fire Resistance Down
+65 - Ice Resistance Down
+66 - Plant Resistance Down
+67 - Water Resistance Down
+68 - Electricity Resistance Down
+69 - Steel Resistance Down
+70 - Wind Resistance Down
+71 - Earth Resistance Down
+72 - Light Resistance Down
+73 - Dark Resistance Down
+--
+85 - Counter Physical
+86 - Counter Magic
+87 - Reflect Physical
+88 - Reflect Magic
+--
+89 - Status Abnormality Immunity
+90 - Stat Debuff Immunity
+--
+91 - Guts
+92 - Guard
+--
+93 - Physical Damage Taken Up
+94 - Physical Damage Taken Down
+95 - Magic Damage Taken Up
+96 - Magic Damage Taken Down
+97 - Physical Damage Dealt Up
+98 - Physical Damage Dealt Down
+99 - Magic Damage Dealt Up
+100 - Magic Damage Dealt Down
+--
+101 - Charge Physical
+102 - Charge Magic
+103 - Taunting
+--
+105 - Immobilized next turn
+106 - Acts First
+107 - Acts Last
+112 - Stat buffs
+113 - Stat debuffs
+114 - Status abnormalities
+115 - Injury/Disease
+116 - All Status Abnormalities
+118 - Injury
+119 - Disease
+120 - Addled
