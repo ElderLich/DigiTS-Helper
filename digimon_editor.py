@@ -289,6 +289,9 @@ class SpinBoxWheelGuard(QObject):
 
             if isinstance(guarded_widget, QComboBox) and guarded_widget.view().isVisible():
                 return False
+            focus_widget = QApplication.focusWidget()
+            if guarded_widget.hasFocus() or (focus_widget and guarded_widget.isAncestorOf(focus_widget)):
+                return False
 
             scroll_parent = guarded_widget.parent()
             while scroll_parent and not isinstance(scroll_parent, QAbstractScrollArea):
@@ -799,7 +802,7 @@ def configure_searchable_combo(combo: QComboBox):
             font-size: 10pt;
         }
         QComboBox:hover {
-            border-color: #667eea;
+            border-color: #cbd3da;
         }
         QComboBox::drop-down {
             subcontrol-origin: padding;
@@ -903,10 +906,11 @@ class SkillEditor(QWidget):
 
         scroll.setWidget(scroll_widget)
         if self.skill_type == "generic":
-            scroll.setMinimumHeight(300)
+            scroll.setMinimumHeight(190)
+            scroll.setMaximumHeight(235)
         else:
-            scroll.setMinimumHeight(260)
-            scroll.setMaximumHeight(420)
+            scroll.setMinimumHeight(340)
+            scroll.setMaximumHeight(16777215)
         layout.addWidget(scroll, 1)
 
         self.setLayout(layout)
@@ -915,14 +919,16 @@ class SkillEditor(QWidget):
         """Create a single skill input widget"""
         widget = QFrame()
         widget.setObjectName(f"skill_slot_{index}")
-        widget.setStyleSheet("""
-            QFrame#skill_slot_0, QFrame#skill_slot_1, QFrame#skill_slot_2, QFrame#skill_slot_3,
-            QFrame#skill_slot_4, QFrame#skill_slot_5, QFrame#skill_slot_6, QFrame#skill_slot_7,
-            QFrame#skill_slot_8, QFrame#skill_slot_9, QFrame#skill_slot_10, QFrame#skill_slot_11 {
+        accent = "#667eea" if self.skill_type == "signature" else "#10b981"
+        soft_bg = "#f8faff" if self.skill_type == "signature" else "#f6fffb"
+        border_color = "#ccd5ff" if self.skill_type == "signature" else "#b7f4d5"
+        widget.setStyleSheet(f"""
+            QFrame#{widget.objectName()} {{
                 background-color: #ffffff;
-                border: 1px solid #d8dee9;
+                border: 1px solid {border_color};
+                border-left: 4px solid {accent};
                 border-radius: 8px;
-            }
+            }}
         """)
         layout = QHBoxLayout()
         layout.setContentsMargins(10, 8, 10, 8)
@@ -930,7 +936,17 @@ class SkillEditor(QWidget):
 
         slot_title = QLabel(f"Slot {index + 1}")
         slot_title.setMinimumWidth(58)
-        slot_title.setStyleSheet("font-weight: bold; color: #667eea;")
+        slot_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        slot_title.setStyleSheet(f"""
+            QLabel {{
+                font-weight: bold;
+                color: {accent};
+                background: {soft_bg};
+                border: 1px solid {border_color};
+                border-radius: 7px;
+                padding: 6px 8px;
+            }}
+        """)
         layout.addWidget(slot_title)
 
         # Skill ID with name display
@@ -5926,26 +5942,49 @@ class DigimonEditor(QMainWindow):
         """Create skills tab"""
         tab = QWidget()
         layout = QVBoxLayout(tab)
+        layout.setSpacing(12)
+
+        def skill_group_style(accent: str, title: str) -> str:
+            return f"""
+                QGroupBox {{
+                    font-weight: bold;
+                    border: 2px solid {accent};
+                    border-radius: 8px;
+                    margin-top: 10px;
+                    padding-top: 14px;
+                    background-color: white;
+                    font-size: 11pt;
+                }}
+                QGroupBox::title {{
+                    color: {title};
+                    subcontrol-origin: margin;
+                    left: 12px;
+                    padding: 0 8px;
+                    background-color: white;
+                }}
+            """
 
         # Signature Skills Section
         sig_group = QGroupBox("Signature Skills (up to 12)")
+        sig_group.setStyleSheet(skill_group_style("#667eea", "#4c63d9"))
         sig_layout = QVBoxLayout()
 
         self.signature_skills_editor = SkillEditor("signature", self.loader)
         self.signature_skills_editor.skillChanged.connect(self.mark_as_modified)
         sig_layout.addWidget(self.signature_skills_editor)
         sig_group.setLayout(sig_layout)
-        layout.addWidget(sig_group)
+        layout.addWidget(sig_group, 1)
 
         # Generic Skills Section
         gen_group = QGroupBox("Generic Skills (up to 4)")
+        gen_group.setStyleSheet(skill_group_style("#10b981", "#087f5b"))
         gen_layout = QVBoxLayout()
 
         self.generic_skills_editor = SkillEditor("generic", self.loader)
         self.generic_skills_editor.skillChanged.connect(self.mark_as_modified)
         gen_layout.addWidget(self.generic_skills_editor)
         gen_group.setLayout(gen_layout)
-        layout.addWidget(gen_group, 1)
+        layout.addWidget(gen_group)
 
         return tab
 
@@ -7129,6 +7168,7 @@ class DigimonEditor(QMainWindow):
         buff_layout.setSpacing(8)
 
         self.buff_set_widgets = []
+        self.buff_set_combos = []
         self.buff_name_labels = []
         buff_icons = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
         for i in range(5):
@@ -7142,10 +7182,20 @@ class DigimonEditor(QMainWindow):
             buff_widget_layout.addWidget(buff_label)
 
             buff_set_edit = QSpinBox()
-            buff_set_edit.setRange(0, 9999)
+            buff_set_edit.setRange(0, 9999999)
             buff_set_edit.setObjectName(f"buff_set_{i}")
-            buff_set_edit.setMinimumWidth(100)
+            buff_set_edit.setMinimumWidth(120)
+            buff_set_edit.setToolTip("battle_skill buff-set ID. This points to a row in 002_buff_set, not a raw effect ID.")
             buff_widget_layout.addWidget(buff_set_edit)
+
+            buff_set_combo = QComboBox()
+            buff_set_combo.setObjectName(f"buff_set_combo_{i}")
+            configure_searchable_combo(buff_set_combo)
+            buff_set_combo.setMinimumWidth(420)
+            buff_set_combo.setToolTip("Choose an existing 002_buff_set row from Base, DLC, or the active mod.")
+            buff_set_combo.activated.connect(lambda _combo_index, idx=i: self.on_buff_set_combo_selected(idx))
+            buff_widget_layout.addWidget(buff_set_combo, 1)
+            self.buff_set_combos.append(buff_set_combo)
 
             # Add label to show buff name
             buff_name_label = QLabel("")
@@ -7161,19 +7211,20 @@ class DigimonEditor(QMainWindow):
                     border-left: 3px solid #667eea;
                 }
             """)
-            buff_name_label.setMinimumWidth(360)
+            buff_name_label.setMinimumWidth(280)
             buff_name_label.setWordWrap(True)
-            buff_widget_layout.addWidget(buff_name_label)
+            buff_widget_layout.addWidget(buff_name_label, 1)
             self.buff_name_labels.append(buff_name_label)
 
             # Connect to update buff name when value changes
-            buff_set_edit.valueChanged.connect(lambda v, idx=i: self.update_buff_name_display(idx, v))
+            buff_set_edit.valueChanged.connect(lambda v, idx=i: self.on_buff_set_value_changed(idx, v))
 
             buff_widget_layout.addStretch()
 
             self.buff_set_widgets.append(buff_set_edit)
             buff_layout.addWidget(buff_widget)
 
+        self.populate_buff_set_combos()
         layout.addWidget(buff_group)
 
         # Special effects
@@ -10708,6 +10759,8 @@ class DigimonEditor(QMainWindow):
         self._invalidate_evolution_picker_cache()
         if hasattr(self, "skill_browser_combo"):
             self.populate_skill_browser()
+        if hasattr(self, "buff_set_combos"):
+            self.populate_buff_set_combos()
         if hasattr(self, "digimon_list"):
             self.on_digimon_selected(self.digimon_list.currentText())
 
@@ -14650,7 +14703,78 @@ class DigimonEditor(QMainWindow):
             tooltip = f"Set {buff_set_id} from {source_label}\n" + "\n".join(f"- {label}" for label in effect_labels)
             return f"Set {buff_set_id}: {preview}", tooltip
 
-        return f"Set {buff_set_id}: Not found", f"No row for buff set {buff_set_id} was found in the active mod or Base data."
+        effect_name = self.loader.get_buff_name(buff_set_id) if self.loader else ""
+        if effect_name and effect_name != "None" and not effect_name.startswith("Buff_"):
+            return (
+                f"Effect ID {buff_set_id}: {effect_name}",
+                f"{buff_set_id} is a known battle_buff effect ID, but battle_skill buff fields expect a 002_buff_set row ID."
+            )
+
+        return f"Set {buff_set_id}: Not found", f"No row for buff set {buff_set_id} was found in the active mod, Base, or DLC data."
+
+    def _available_buff_set_options(self) -> List[Tuple[int, str, str]]:
+        """Return selectable buff-set row IDs with compact summaries."""
+        options: Dict[int, Tuple[str, str]] = {}
+        for data_root, prefer_ap, source_label in self._buff_set_contexts():
+            for set_id, entries in self._load_buff_set_map(data_root, prefer_ap).items():
+                if set_id <= 0 or set_id in options:
+                    continue
+                if entries:
+                    effect_labels = [self._format_buff_effect_summary(entry) for entry in entries]
+                    preview = "; ".join(effect_labels[:2])
+                    if len(effect_labels) > 2:
+                        preview += f"; +{len(effect_labels) - 2} more"
+                    tooltip = f"Set {set_id} from {source_label}\n" + "\n".join(f"- {label}" for label in effect_labels)
+                else:
+                    preview = "No effects"
+                    tooltip = f"Set {set_id} from {source_label}, but all effect slots are empty."
+                options[set_id] = (f"Set {set_id}: {preview}", tooltip)
+        return [(set_id, label, tooltip) for set_id, (label, tooltip) in sorted(options.items())]
+
+    def populate_buff_set_combos(self):
+        """Populate each buff-set picker from current active/base/DLC data."""
+        if not hasattr(self, "buff_set_combos"):
+            return
+
+        options = self._available_buff_set_options()
+        for combo_index, combo in enumerate(self.buff_set_combos):
+            current_value = 0
+            if combo_index < len(getattr(self, "buff_set_widgets", [])):
+                current_value = self.buff_set_widgets[combo_index].value()
+
+            combo.blockSignals(True)
+            combo.clear()
+            combo.addItem("Select a buff set...", 0)
+            for set_id, label, tooltip in options:
+                combo.addItem(label, set_id)
+                combo.setItemData(combo.count() - 1, tooltip, Qt.ItemDataRole.ToolTipRole)
+            combo.blockSignals(False)
+            self._sync_buff_combo_to_value(combo_index, current_value)
+
+    def _sync_buff_combo_to_value(self, buff_index: int, buff_set_id: int):
+        if buff_index >= len(getattr(self, "buff_set_combos", [])):
+            return
+        combo = self.buff_set_combos[buff_index]
+        combo.blockSignals(True)
+        combo_index = combo.findData(buff_set_id)
+        if combo_index >= 0:
+            combo.setCurrentIndex(combo_index)
+        else:
+            combo.setCurrentIndex(0)
+            if combo.lineEdit():
+                combo.lineEdit().setText(f"Custom set {buff_set_id}" if buff_set_id > 0 else "")
+                combo.lineEdit().setPlaceholderText("Select a buff set...")
+        combo.blockSignals(False)
+
+    def on_buff_set_combo_selected(self, buff_index: int):
+        if buff_index >= len(getattr(self, "buff_set_combos", [])) or buff_index >= len(getattr(self, "buff_set_widgets", [])):
+            return
+        buff_set_id = self.buff_set_combos[buff_index].currentData()
+        self.buff_set_widgets[buff_index].setValue(safe_evolution_int(buff_set_id, 0))
+
+    def on_buff_set_value_changed(self, buff_index: int, buff_set_id: int):
+        self.update_buff_name_display(buff_index, buff_set_id)
+        self._sync_buff_combo_to_value(buff_index, buff_set_id)
 
     def update_buff_name_display(self, buff_index: int, buff_set_id: int):
         """Update the buff name label when buff set ID changes"""
@@ -14679,6 +14803,7 @@ class DigimonEditor(QMainWindow):
                 self.current_advanced_skill_data_root = skill_data.get("_data_root")
                 self.current_advanced_skill_prefer_ap = bool(skill_data.get("_prefer_ap", False))
                 self.current_advanced_skill_source_label = str(skill_data.get("_source_label", "Base/DLC Workspace"))
+                self.populate_buff_set_combos()
 
                 # Update skill name
                 skill_name = self.loader.get_skill_name(skill_id)
@@ -14758,6 +14883,7 @@ class DigimonEditor(QMainWindow):
                 self.advanced_skill_name_edit.setText("Skill not found")
                 self.advanced_skill_desc.setPlainText("")
                 self.clear_mode_change_fields()
+                self.populate_buff_set_combos()
         else:
             self.current_advanced_skill_data_root = None
             self.current_advanced_skill_prefer_ap = False
@@ -14765,6 +14891,7 @@ class DigimonEditor(QMainWindow):
             self.advanced_skill_name_edit.setText("")
             self.advanced_skill_desc.setPlainText("")
             self.clear_mode_change_fields()
+            self.populate_buff_set_combos()
 
     def save_advanced_skill(self):
         """Save the current skill data"""
