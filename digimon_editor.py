@@ -38,6 +38,14 @@ FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
 FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
 PROFILE_WRAP_WIDTH = 50
+EVOLUTION_TYPE_NORMAL = 0
+EVOLUTION_TYPE_MODE_CHANGE = 2
+EVOLUTION_CONDITION_HEADER = (
+    "int32 0,empty 1,int32 2,int32 3,int32 4,int32 5,int32 6,int32 7,"
+    "int32 8,int32 9,int32 10,int32 11,int32 12,int32 13,int32 14,"
+    "int32 15,int32 16,int32 17,empty 18,int32 19,int32 20,int32 21,"
+    "int32 22,empty 23,int32 24,empty 25,int32 26,int32 27,empty 28,int32 29"
+)
 RELATED_SOURCE_PROMPT = "Select source Digimon..."
 GEOM_TEXTURE_TOKEN_RE = re.compile(rb"[A-Za-z0-9_]{4,64}")
 GEOM_INDEXED_TEXTURE_RE = re.compile(r"^(?P<head>.*?)(?P<idx>\d{2})(?P<tail>[A-Za-z_]+)?$")
@@ -396,6 +404,105 @@ def _parse_optional_int(value: str) -> Optional[int]:
 
 def _clean_status_cell(value: str) -> str:
     return str(value).strip().strip('"')
+
+
+def safe_evolution_int(value, default: int = 0) -> int:
+    try:
+        if value is None:
+            return default
+        text = str(value).strip().strip('"')
+        if not text:
+            return default
+        return int(text)
+    except (TypeError, ValueError):
+        return default
+
+
+def default_evolution_conditions(mode: int = 1) -> Dict[str, int]:
+    return {
+        'mode': mode,
+        'tamerLevel': 0,
+        'HP': 0,
+        'SP': 0,
+        'ATK': 0,
+        'DEF': 0,
+        'INT': 0,
+        'SPI': 0,
+        'SPD': 0,
+        'unknown1': 0,
+        'unknown2': 0,
+        'skillCountValor': 0,
+        'skillCountPhilantropy': 0,
+        'skillCountAmicable': 0,
+        'skillCountWisdom': 0,
+        'needsItem': 0,
+        'jogressDbIdA': 0,
+        'jogressPersonalityA': 0,
+        'jogressDbIdB': 0,
+        'jogressPersonalityB': 0,
+    }
+
+
+def normalize_evolution_conditions(conditions, default_mode: int = 1) -> Dict[str, int]:
+    normalized = default_evolution_conditions(default_mode)
+
+    if isinstance(conditions, list):
+        if not conditions:
+            return normalized
+        first = conditions[0]
+        if isinstance(first, dict):
+            conditions = first
+        else:
+            row = conditions
+            conditions = {
+                'mode': safe_evolution_int(row[2], default_mode) if len(row) > 2 else default_mode,
+                'tamerLevel': safe_evolution_int(row[3]) if len(row) > 3 else 0,
+                'HP': safe_evolution_int(row[4]) if len(row) > 4 else 0,
+                'SP': safe_evolution_int(row[5]) if len(row) > 5 else 0,
+                'ATK': safe_evolution_int(row[6]) if len(row) > 6 else 0,
+                'DEF': safe_evolution_int(row[7]) if len(row) > 7 else 0,
+                'INT': safe_evolution_int(row[8]) if len(row) > 8 else 0,
+                'SPI': safe_evolution_int(row[9]) if len(row) > 9 else 0,
+                'SPD': safe_evolution_int(row[10]) if len(row) > 10 else 0,
+                'unknown1': safe_evolution_int(row[11]) if len(row) > 11 else 0,
+                'unknown2': safe_evolution_int(row[12]) if len(row) > 12 else 0,
+                'skillCountValor': safe_evolution_int(row[13]) if len(row) > 13 else 0,
+                'skillCountPhilantropy': safe_evolution_int(row[14]) if len(row) > 14 else 0,
+                'skillCountAmicable': safe_evolution_int(row[15]) if len(row) > 15 else 0,
+                'skillCountWisdom': safe_evolution_int(row[16]) if len(row) > 16 else 0,
+                'needsItem': safe_evolution_int(row[22]) if len(row) > 22 else 0,
+                'jogressDbIdA': safe_evolution_int(row[24]) if len(row) > 24 else 0,
+                'jogressPersonalityA': safe_evolution_int(row[26]) if len(row) > 26 else 0,
+                'jogressDbIdB': safe_evolution_int(row[27]) if len(row) > 27 else 0,
+                'jogressPersonalityB': safe_evolution_int(row[29]) if len(row) > 29 else 0,
+            }
+
+    if isinstance(conditions, dict):
+        for key in normalized:
+            if key in conditions:
+                normalized[key] = safe_evolution_int(conditions.get(key), normalized[key])
+
+    return normalized
+
+
+def evolution_conditions_have_jogress(conditions) -> bool:
+    if not isinstance(conditions, dict):
+        conditions = normalize_evolution_conditions(conditions)
+    return (
+        safe_evolution_int(conditions.get("jogressDbIdA"), 0) > 0
+        or safe_evolution_int(conditions.get("jogressDbIdB"), 0) > 0
+    )
+
+
+def jogress_partner_ids_from_conditions(conditions) -> List[int]:
+    if not isinstance(conditions, dict):
+        conditions = normalize_evolution_conditions(conditions)
+    partner_ids = []
+    for key in ("jogressDbIdA", "jogressDbIdB"):
+        partner_id = safe_evolution_int(conditions.get(key), 0)
+        if partner_id > 0 and partner_id not in partner_ids:
+            partner_ids.append(partner_id)
+    return partner_ids
 
 
 def collect_field_guide_usage(
@@ -1654,7 +1761,7 @@ class DigimonCreationWizard(QWizard):
         - Pre-evolutions TO this Digimon (what evolves into it)
 
         Format: [evo_id], [source_id], "", [target_id], "", [type], -1, -1, -1, -1, -1
-        - type 0 = Normal evolution
+        - type 0 = Normal evolution, including Jogress/DNA source edges
         - type 2 = Mode Change
 
         Note: Max 6 evolutions per source Digimon or game will crash!
@@ -1673,31 +1780,40 @@ class DigimonCreationWizard(QWizard):
 
             # 1. Write evolutions FROM this Digimon (what it evolves into)
             for evo in digimon.evolution_paths:
-                to_id = evo.get('to_id', 0)
+                to_id = safe_evolution_int(evo.get('to_id'), 0)
+                source_ids = [safe_evolution_int(evo.get('from_id'), digimon.id) or digimon.id]
+                conditions = normalize_evolution_conditions(evo.get('conditions', {}))
+                if evo.get('export_partner_rows') and evolution_conditions_have_jogress(conditions):
+                    for partner_id in jogress_partner_ids_from_conditions(conditions):
+                        if partner_id not in source_ids:
+                            source_ids.append(partner_id)
 
-                # Skip if to_id is 0 or already written
-                entry_key = (digimon.id, to_id)
-                if to_id == 0 or entry_key in seen_entries:
+                if to_id == 0:
                     continue
-                seen_entries.add(entry_key)
 
                 # Get evolution type/mode (default to 0 for normal evolution)
-                evo_type = evo.get('evolution_type', 0)
+                evo_type = safe_evolution_int(evo.get('evolution_type'), EVOLUTION_TYPE_NORMAL)
 
-                # Calculate evolution ID
-                evo_id = (digimon.id * 100) + counter
-                counter += 1
+                for source_id in source_ids:
+                    entry_key = (source_id, to_id)
+                    if source_id == 0 or entry_key in seen_entries:
+                        continue
+                    seen_entries.add(entry_key)
 
-                parts = [
-                    str(evo_id),
-                    str(digimon.id),  # Source: this Digimon
-                    '',  # empty column
-                    str(to_id),  # Target: what it evolves into
-                    '',  # empty column
-                    str(evo_type),  # Evolution type: 0=Normal, 2=Mode Change
-                    '-1', '-1', '-1', '-1', '-1'
-                ]
-                f.write(','.join(parts) + '\n')
+                    # Calculate evolution ID
+                    evo_id = (source_id * 100) + counter
+                    counter += 1
+
+                    parts = [
+                        str(evo_id),
+                        str(source_id),  # Source Digimon
+                        '',  # empty column
+                        str(to_id),  # Target: what it evolves into
+                        '',  # empty column
+                        str(evo_type),  # Evolution type: 0=Normal/Jogress source edge, 2=Mode Change
+                        '-1', '-1', '-1', '-1', '-1'
+                    ]
+                    f.write(','.join(parts) + '\n')
 
             # 2. Write pre-evolutions TO this Digimon (what evolves into it)
             # These are stored as: [pre-evo ID] evolves TO [this Digimon's ID]
@@ -1711,7 +1827,7 @@ class DigimonCreationWizard(QWizard):
                 seen_entries.add(entry_key)
 
                 # Get evolution type (default to 0 for normal evolution)
-                evo_type = deevo.get('evolution_type', 0)
+                evo_type = safe_evolution_int(deevo.get('evolution_type'), EVOLUTION_TYPE_NORMAL)
 
                 # Calculate evolution ID using the PRE-evolution's ID as base
                 evo_id = (from_id * 100) + 50 + counter  # Offset by 50 to avoid collision
@@ -1771,24 +1887,14 @@ class DigimonCreationWizard(QWizard):
 
     def _write_evolution_condition_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write evolution_condition.ap.csv - requirements to evolve INTO this new Digimon"""
-        header = 'int32 0,empty 1,int32 2,int32 3,int32 4,int32 5,int32 6,int32 7,int32 8,int32 9,int32 10,int32 11,int32 12,int32 13,int32 14,int32 15,int32 16,int32 17,empty 18,int32 19,int32 20,int32 21,int32 22,empty 23,int32 24,empty 25,int32 26,int32 27,empty 28,int32 29'
+        header = EVOLUTION_CONDITION_HEADER
 
-        with open(filepath, 'w', encoding='utf-8', newline='') as f:
-            f.write(header + '\n')
-
-            # For the NEW Digimon we're creating, we need to define what requirements
-            # are needed for OTHER Digimon to evolve INTO this new one
-            # Column 0 is THIS new Digimon's ID (what requirements to become it)
-
-            # Use the evolution_requirements from the wizard
-            condition = {}
-            if digimon.evolution_conditions and len(digimon.evolution_conditions) > 0:
-                condition = digimon.evolution_conditions[0]
-
-            parts = [
-                str(digimon.id),  # 0: THIS Digimon's ID (requirements to evolve INTO it)
+        def condition_row(target_id: int, condition: dict) -> List[str]:
+            condition = normalize_evolution_conditions(condition)
+            return [
+                str(target_id),  # 0: target Digimon ID
                 '',  # 1: empty
-                str(condition.get('mode', 1)),  # 2: condition type/mode (default 1 = no requirements)
+                str(condition.get('mode', 1)),  # 2: condition type/mode
                 str(condition.get('tamerLevel', 0)),  # 3: tamer level
                 str(condition.get('HP', 0)),  # 4: HP requirement
                 str(condition.get('SP', 0)),  # 5: SP requirement
@@ -1803,7 +1909,7 @@ class DigimonCreationWizard(QWizard):
                 str(condition.get('skillCountPhilantropy', 0)),  # 14
                 str(condition.get('skillCountAmicable', 0)),  # 15
                 str(condition.get('skillCountWisdom', 0)),  # 16
-                '0', # 17
+                '0',  # 17
                 '',  # 18: empty
                 '0', '0', '0',  # 19-21
                 str(condition.get('needsItem', 0)),  # 22
@@ -1815,7 +1921,27 @@ class DigimonCreationWizard(QWizard):
                 '',  # 28: empty
                 str(condition.get('jogressPersonalityB', 0))  # 29
             ]
-            f.write(','.join(parts) + '\n')
+
+        with open(filepath, 'w', encoding='utf-8', newline='') as f:
+            f.write(header + '\n')
+
+            target_conditions = {
+                safe_evolution_int(digimon.id): normalize_evolution_conditions(digimon.evolution_conditions)
+            }
+
+            # Outgoing DNA paths may target another Digimon. Only export those
+            # target condition rows when they were created/edited by this mod flow.
+            for evo in getattr(digimon, 'evolution_paths', []):
+                if not evo.get('export_conditions'):
+                    continue
+                target_id = safe_evolution_int(evo.get('to_id'), 0)
+                if target_id <= 0:
+                    continue
+                target_conditions[target_id] = normalize_evolution_conditions(evo.get('conditions', {}))
+
+            for target_id, condition in target_conditions.items():
+                if target_id > 0:
+                    f.write(','.join(condition_row(target_id, condition)) + '\n')
 
     def _write_belong_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write belong.ap.csv (tribe/species classification)"""
@@ -2667,6 +2793,7 @@ class EvolutionPage(QWizardPage):
             'mode': 1,  # Default: no requirements
             'tamerLevel': 0,
             'HP': 0, 'SP': 0, 'ATK': 0, 'DEF': 0, 'INT': 0, 'SPI': 0, 'SPD': 0,
+            'unknown1': 0, 'unknown2': 0,
             'skillCountValor': 0, 'skillCountPhilantropy': 0,
             'skillCountAmicable': 0, 'skillCountWisdom': 0,
             'needsItem': 0,
@@ -2822,6 +2949,28 @@ class EvolutionPage(QWizardPage):
         stats_group.setLayout(stats_layout)
         scroll_layout.addWidget(stats_group)
 
+        extra_group = QGroupBox("Extra Requirement Fields")
+        extra_layout = QFormLayout()
+
+        extra_011_spin = QSpinBox()
+        extra_011_spin.setRange(0, 9999)
+        extra_011_spin.setValue(self.evolution_requirements.get('unknown1', 0))
+        extra_011_spin.setToolTip(
+            "evolution_condition column 11. Official data only uses this on Lucemon (30) and Parallelmon (40); all known Jogress rows use 0."
+        )
+        extra_layout.addRow("Column 11:", extra_011_spin)
+
+        extra_012_spin = QSpinBox()
+        extra_012_spin.setRange(0, 9999)
+        extra_012_spin.setValue(self.evolution_requirements.get('unknown2', 0))
+        extra_012_spin.setToolTip(
+            "evolution_condition column 12. No nonzero official Base/DLC rows were found in the local data scan."
+        )
+        extra_layout.addRow("Column 12:", extra_012_spin)
+
+        extra_group.setLayout(extra_layout)
+        scroll_layout.addWidget(extra_group)
+
         # Skill Count Requirements
         skills_group = QGroupBox("Skill Count Requirements (by Personality Type)")
         skills_layout = QFormLayout()
@@ -2908,8 +3057,8 @@ class EvolutionPage(QWizardPage):
                 'INT': int_spin.value(),
                 'SPI': spi_spin.value(),
                 'SPD': spd_spin.value(),
-                'unknown1': 0,
-                'unknown2': 0,
+                'unknown1': extra_011_spin.value(),
+                'unknown2': extra_012_spin.value(),
                 'skillCountValor': valor_spin.value(),
                 'skillCountPhilantropy': philanthropy_spin.value(),
                 'skillCountAmicable': amicable_spin.value(),
@@ -2942,6 +3091,18 @@ class EvolutionPage(QWizardPage):
 
         if self.evolution_requirements.get('needsItem', 0) > 0:
             parts.append(f"Item#{self.evolution_requirements['needsItem']}")
+
+        extras = []
+        if self.evolution_requirements.get('unknown1', 0) > 0:
+            extras.append(f"Col11 {self.evolution_requirements['unknown1']}")
+        if self.evolution_requirements.get('unknown2', 0) > 0:
+            extras.append(f"Col12 {self.evolution_requirements['unknown2']}")
+        if extras:
+            parts.append(", ".join(extras))
+
+        jogress_partners = jogress_partner_ids_from_conditions(self.evolution_requirements)
+        if jogress_partners:
+            parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
 
         self.requirements_label.setText(" | ".join(parts) if len(parts) > 1 else parts[0])
 
@@ -3575,6 +3736,29 @@ class EvolutionPage(QWizardPage):
         stats_group.setLayout(stats_layout)
         scroll_layout.addWidget(stats_group)
 
+        # Extra requirement fields observed in evolution_condition columns 11/12.
+        extra_group = QGroupBox("Extra Requirement Fields")
+        extra_layout = QFormLayout()
+
+        extra_011_spin = QSpinBox()
+        extra_011_spin.setRange(0, 9999)
+        extra_011_spin.setValue(existing_conditions.get('unknown1', 0))
+        extra_011_spin.setToolTip(
+            "evolution_condition column 11. Official data only uses this on Lucemon (30) and Parallelmon (40); all known Jogress rows use 0."
+        )
+        extra_layout.addRow("Column 11:", extra_011_spin)
+
+        extra_012_spin = QSpinBox()
+        extra_012_spin.setRange(0, 9999)
+        extra_012_spin.setValue(existing_conditions.get('unknown2', 0))
+        extra_012_spin.setToolTip(
+            "evolution_condition column 12. No nonzero official Base/DLC rows were found in the local data scan."
+        )
+        extra_layout.addRow("Column 12:", extra_012_spin)
+
+        extra_group.setLayout(extra_layout)
+        scroll_layout.addWidget(extra_group)
+
         # Skill Count Requirements
         skills_group = QGroupBox("Skill Count Requirements (by Personality)")
         skills_layout = QFormLayout()
@@ -3656,8 +3840,8 @@ class EvolutionPage(QWizardPage):
                 'INT': int_spin.value(),
                 'SPI': spi_spin.value(),
                 'SPD': spd_spin.value(),
-                'unknown1': 0,
-                'unknown2': 0,
+                'unknown1': extra_011_spin.value(),
+                'unknown2': extra_012_spin.value(),
                 'skillCountValor': valor_spin.value(),
                 'skillCountPhilantropy': philanthropy_spin.value(),
                 'skillCountAmicable': amicable_spin.value(),
@@ -3686,8 +3870,17 @@ class EvolutionPage(QWizardPage):
         if conditions.get('needsItem', 0) > 0:
             parts.append(f"Item#{conditions['needsItem']}")
 
-        if conditions.get('jogressDbIdA', 0) > 0:
-            parts.append(f"Jogress w/ ID{conditions['jogressDbIdA']}")
+        extras = []
+        if conditions.get('unknown1', 0) > 0:
+            extras.append(f"Col11 {conditions['unknown1']}")
+        if conditions.get('unknown2', 0) > 0:
+            extras.append(f"Col12 {conditions['unknown2']}")
+        if extras:
+            parts.append(", ".join(extras))
+
+        jogress_partners = jogress_partner_ids_from_conditions(normalize_evolution_conditions(conditions))
+        if jogress_partners:
+            parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
 
         if parts:
             return f"[{'; '.join(parts)}]"
@@ -6684,47 +6877,184 @@ class DigimonEditor(QMainWindow):
         return tab
 
     def _safe_evolution_int(self, value, default: int = 0) -> int:
-        try:
-            if value is None:
-                return default
-            text = str(value).strip().strip('"')
-            if not text:
-                return default
-            return int(text)
-        except (TypeError, ValueError):
-            return default
+        return safe_evolution_int(value, default)
 
     def _first_evolution_condition_dict(self, conditions):
-        if isinstance(conditions, dict):
+        return normalize_evolution_conditions(conditions)
+
+    def _set_current_evolution_conditions(self, conditions: dict):
+        if self.current_digimon:
+            self.current_digimon.evolution_conditions = [normalize_evolution_conditions(conditions)]
+
+    def _path_type_combo_is_jogress(self, combo: QComboBox) -> bool:
+        return combo.currentText().strip().lower().startswith("jogress")
+
+    def _chr_id_for_digimon_id(self, digimon_id: int) -> str:
+        digimon_id = safe_evolution_int(digimon_id, 0)
+        if digimon_id <= 0:
+            return ""
+        if self.current_digimon and self.current_digimon.id == digimon_id:
+            return self.current_digimon.chr_id or f"chr{digimon_id:03d}"
+        if hasattr(self.loader, 'imported_digimon'):
+            for imported_digimon in self.loader.imported_digimon:
+                if imported_digimon.id == digimon_id:
+                    return imported_digimon.chr_id or f"chr{digimon_id:03d}"
+        for entry in self._evolution_picker_entries():
+            if entry.get("id") == digimon_id:
+                return entry.get("chr_id") or f"chr{digimon_id:03d}"
+        return f"chr{digimon_id:03d}"
+
+    def _base_personality_for_digimon_id(self, digimon_id: int) -> int:
+        digimon_id = safe_evolution_int(digimon_id, 0)
+        if digimon_id <= 0:
+            return 0
+        if self.current_digimon and self.current_digimon.id == digimon_id:
+            return safe_evolution_int(getattr(self.current_digimon, "base_personality", 0), 0)
+        if hasattr(self.loader, 'imported_digimon'):
+            for imported_digimon in self.loader.imported_digimon:
+                if imported_digimon.id == digimon_id:
+                    return safe_evolution_int(getattr(imported_digimon, "base_personality", 0), 0)
+
+        def scan_status_file(status_file: Path) -> Optional[int]:
+            if not status_file.exists():
+                return None
+            rows = self.loader.load_csv(status_file)
+            for row in rows[1:]:
+                if len(row) > 61 and _clean_status_cell(row[0]) == str(digimon_id):
+                    return safe_evolution_int(row[61], 0)
+            return None
+
+        try:
+            status_file = self.loader._resolve_prefixed_file(
+                self.loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv"
+            )
+            personality = scan_status_file(status_file)
+            if personality is not None:
+                return personality
+            for _dlc_id, dlc_status_file in self.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
+                personality = scan_status_file(dlc_status_file)
+                if personality is not None:
+                    return personality
+        except Exception:
+            pass
+        return 0
+
+    def _find_evolution_conditions_for_target(self, target_id: int) -> dict:
+        target_id = safe_evolution_int(target_id, 0)
+        if target_id <= 0:
+            return default_evolution_conditions()
+
+        if self.current_digimon:
+            if self.current_digimon.id == target_id and self.current_digimon.evolution_conditions:
+                return normalize_evolution_conditions(self.current_digimon.evolution_conditions)
+            for evo in self.current_digimon.evolution_paths:
+                if safe_evolution_int(evo.get("to_id"), 0) == target_id and evo.get("conditions"):
+                    return normalize_evolution_conditions(evo.get("conditions"))
+
+        if hasattr(self.loader, 'imported_digimon'):
+            for imported_digimon in self.loader.imported_digimon:
+                if imported_digimon.id == target_id and imported_digimon.evolution_conditions:
+                    return normalize_evolution_conditions(imported_digimon.evolution_conditions)
+
+        def scan_condition_file(condition_file: Path) -> Optional[dict]:
+            if not condition_file.exists():
+                return None
+            rows = self.loader.load_csv(condition_file)
+            for row in rows[1:]:
+                if row and _clean_status_cell(row[0]) == str(target_id):
+                    return normalize_evolution_conditions(row)
+            return None
+
+        try:
+            condition_file = self.loader._resolve_prefixed_file(
+                self.loader.data_path / "evolution.mbe" / "000_evolution_condition.csv"
+            )
+            conditions = scan_condition_file(condition_file)
+            if conditions is not None:
+                return conditions
+            for _dlc_id, dlc_condition_file in self.loader.iter_dlc_csv_files(
+                "data", "evolution", "000_evolution_condition.csv"
+            ):
+                conditions = scan_condition_file(dlc_condition_file)
+                if conditions is not None:
+                    return conditions
+        except Exception:
+            pass
+
+        return default_evolution_conditions()
+
+    def _prefill_jogress_partner(self, conditions: dict, partner_id: int) -> dict:
+        conditions = normalize_evolution_conditions(conditions)
+        partner_id = safe_evolution_int(partner_id, 0)
+        if partner_id <= 0:
             return conditions
-        if isinstance(conditions, list) and conditions:
-            first = conditions[0]
-            return first if isinstance(first, dict) else {}
-        return {}
+        if partner_id in jogress_partner_ids_from_conditions(conditions):
+            return conditions
+
+        personality = self._base_personality_for_digimon_id(partner_id)
+        if safe_evolution_int(conditions.get('jogressDbIdA'), 0) <= 0:
+            conditions['jogressDbIdA'] = partner_id
+            conditions['jogressPersonalityA'] = personality
+        elif safe_evolution_int(conditions.get('jogressDbIdB'), 0) <= 0:
+            conditions['jogressDbIdB'] = partner_id
+            conditions['jogressPersonalityB'] = personality
+        return conditions
+
+    def _validate_jogress_conditions(self, conditions: dict, required_partner_id: int, title: str) -> bool:
+        partner_ids = jogress_partner_ids_from_conditions(normalize_evolution_conditions(conditions))
+        if len(partner_ids) < 2:
+            QMessageBox.warning(
+                self,
+                title,
+                "Jogress/DNA needs two different partner Digimon IDs in the requirements."
+            )
+            return False
+        required_partner_id = safe_evolution_int(required_partner_id, 0)
+        if required_partner_id > 0 and required_partner_id not in partner_ids:
+            QMessageBox.warning(
+                self,
+                title,
+                f"The selected Digimon ID {required_partner_id} must be Partner A or Partner B."
+            )
+            return False
+        return True
+
+    def _ensure_deevolution_source(self, from_id: int, from_chr_id: str = "", evolution_type: int = EVOLUTION_TYPE_NORMAL) -> bool:
+        from_id = safe_evolution_int(from_id, 0)
+        if from_id <= 0:
+            return False
+        for deevo in self.current_digimon.deevolution_sources:
+            if safe_evolution_int(deevo.get('from_id'), 0) == from_id:
+                deevo['from_chr_id'] = from_chr_id or deevo.get('from_chr_id') or self._chr_id_for_digimon_id(from_id)
+                deevo['evolution_type'] = evolution_type
+                return False
+        self.current_digimon.deevolution_sources.append({
+            'from_id': from_id,
+            'from_chr_id': from_chr_id or self._chr_id_for_digimon_id(from_id),
+            'evolution_type': evolution_type
+        })
+        return True
 
     def _evolution_type_value(self, path_data: dict) -> int:
         if not isinstance(path_data, dict):
-            return 0
+            return EVOLUTION_TYPE_NORMAL
         if "evolution_type" in path_data:
-            return self._safe_evolution_int(path_data.get("evolution_type"), 0)
+            return self._safe_evolution_int(path_data.get("evolution_type"), EVOLUTION_TYPE_NORMAL)
         flags = path_data.get("condition_flags", [])
         if flags:
-            return self._safe_evolution_int(flags[0], 0)
+            return self._safe_evolution_int(flags[0], EVOLUTION_TYPE_NORMAL)
         raw_data = path_data.get("raw_data", [])
         if len(raw_data) > 5:
-            return self._safe_evolution_int(raw_data[5], 0)
-        return 0
+            return self._safe_evolution_int(raw_data[5], EVOLUTION_TYPE_NORMAL)
+        return EVOLUTION_TYPE_NORMAL
 
     def _conditions_have_jogress(self, conditions: dict) -> bool:
-        if not isinstance(conditions, dict):
-            return False
-        return (
-            self._safe_evolution_int(conditions.get("jogressDbIdA"), 0) > 0
-            or self._safe_evolution_int(conditions.get("jogressDbIdB"), 0) > 0
-        )
+        return evolution_conditions_have_jogress(conditions)
 
     def _evolution_path_category(self, path_data: dict, target_conditions: Optional[dict] = None) -> str:
-        if self._evolution_type_value(path_data) == 2:
+        if self._evolution_type_value(path_data) == EVOLUTION_TYPE_MODE_CHANGE:
             return "mode_change"
         path_conditions = path_data.get("conditions") if isinstance(path_data, dict) else {}
         if self._conditions_have_jogress(path_conditions) or self._conditions_have_jogress(target_conditions or {}):
@@ -6900,6 +7230,10 @@ class DigimonEditor(QMainWindow):
         add_evo_btn.setMinimumHeight(40)
         add_evo_btn.setStyleSheet(action_button_style)
         add_evo_btn.clicked.connect(self.add_evolution)
+        add_jogress_evo_btn = QPushButton("Add Jogress / DNA")
+        add_jogress_evo_btn.setMinimumHeight(40)
+        add_jogress_evo_btn.setStyleSheet(action_button_style)
+        add_jogress_evo_btn.clicked.connect(lambda _checked=False: self.add_evolution(force_jogress=True))
         edit_evo_btn = QPushButton("Edit Selected Evolution")
         edit_evo_btn.setMinimumHeight(40)
         edit_evo_btn.setStyleSheet(action_button_style)
@@ -6909,6 +7243,7 @@ class DigimonEditor(QMainWindow):
         remove_evo_btn.setStyleSheet(action_button_style)
         remove_evo_btn.clicked.connect(self.remove_evolution)
         evo_buttons.addWidget(add_evo_btn)
+        evo_buttons.addWidget(add_jogress_evo_btn)
         evo_buttons.addWidget(edit_evo_btn)
         evo_buttons.addWidget(remove_evo_btn)
         evo_buttons.addStretch()
@@ -6952,11 +7287,16 @@ class DigimonEditor(QMainWindow):
         add_deevo_btn.setMinimumHeight(40)
         add_deevo_btn.setStyleSheet(action_button_style)
         add_deevo_btn.clicked.connect(self.add_pre_evolution)
+        add_jogress_deevo_btn = QPushButton("Add Jogress / DNA")
+        add_jogress_deevo_btn.setMinimumHeight(40)
+        add_jogress_deevo_btn.setStyleSheet(action_button_style)
+        add_jogress_deevo_btn.clicked.connect(lambda _checked=False: self.add_pre_evolution(force_jogress=True))
         remove_deevo_btn = QPushButton("Remove Selected Pre-Evolution")
         remove_deevo_btn.setMinimumHeight(40)
         remove_deevo_btn.setStyleSheet(action_button_style)
         remove_deevo_btn.clicked.connect(self.remove_pre_evolution)
         deevo_buttons.addWidget(add_deevo_btn)
+        deevo_buttons.addWidget(add_jogress_deevo_btn)
         deevo_buttons.addWidget(remove_deevo_btn)
         deevo_buttons.addStretch()
         deevo_layout.addLayout(deevo_buttons)
@@ -7385,74 +7725,42 @@ class DigimonEditor(QMainWindow):
             if list_widget is not None:
                 list_widget.clear()
 
-        # Update evolution requirements label (using wizard format)
-        target_conditions = {}
-        if digimon.evolution_conditions:
-            # Check what type we have
-            cond_data = digimon.evolution_conditions
+        # Update evolution requirements label (using normalized condition data)
+        target_conditions = normalize_evolution_conditions(digimon.evolution_conditions) if digimon.evolution_conditions else {}
+        if target_conditions:
+            parts = [f"Agent Rank: {target_conditions.get('mode', 1)}"]
 
-            # If it's a list of dicts (multiple conditions), take the first one
-            if isinstance(cond_data, list) and len(cond_data) > 0:
-                if isinstance(cond_data[0], dict):
-                    cond_data = cond_data[0]  # Take first condition dict
+            tamer_level = safe_evolution_int(target_conditions.get('tamerLevel'), 0)
+            if tamer_level > 0:
+                parts.append(f"Digimon Lv{tamer_level}")
 
-            # Now process based on type
-            if isinstance(cond_data, dict):
-                target_conditions = cond_data
-                parts = []
+            stats = []
+            for stat in ['HP', 'SP', 'ATK', 'DEF', 'INT', 'SPI', 'SPD']:
+                value = safe_evolution_int(target_conditions.get(stat), 0)
+                if value > 0:
+                    stats.append(f"{stat}{value}")
+            if stats:
+                parts.append(", ".join(stats))
 
-                # Agent Rank (Mode)
-                agent_rank = cond_data.get('mode', 1)
-                parts.append(f"Agent Rank: {agent_rank}")
+            item_value = safe_evolution_int(target_conditions.get('needsItem'), 0)
+            if item_value > 0:
+                parts.append(f"Item#{item_value}")
 
-                # Digimon Level
-                tamer_level = cond_data.get('tamerLevel', 0)
-                if isinstance(tamer_level, (int, str)) and int(tamer_level) > 0:
-                    parts.append(f"Digimon Lv{tamer_level}")
+            extras = []
+            column_11 = safe_evolution_int(target_conditions.get('unknown1'), 0)
+            column_12 = safe_evolution_int(target_conditions.get('unknown2'), 0)
+            if column_11 > 0:
+                extras.append(f"Col11 {column_11}")
+            if column_12 > 0:
+                extras.append(f"Col12 {column_12}")
+            if extras:
+                parts.append(", ".join(extras))
 
-                # Stats (compact format)
-                stats = []
-                for stat in ['HP', 'SP', 'ATK', 'DEF', 'INT', 'SPI', 'SPD']:
-                    val = cond_data.get(stat, 0)
-                    if isinstance(val, (int, str)) and int(val) > 0:
-                        stats.append(f"{stat}{val}")
-                if stats:
-                    parts.append(", ".join(stats))
+            jogress_partners = jogress_partner_ids_from_conditions(target_conditions)
+            if jogress_partners:
+                parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
 
-                # Item requirement
-                item_val = cond_data.get('needsItem', 0)
-                if isinstance(item_val, (int, str)) and int(item_val) > 0:
-                    parts.append(f"Item#{item_val}")
-
-                # Jogress partners
-                jogress_a = cond_data.get('jogressDbIdA', 0)
-                if isinstance(jogress_a, (int, str)) and int(jogress_a) > 0:
-                    parts.append(f"Jogress#{jogress_a}")
-
-                self.requirements_label.setText(" | ".join(parts) if len(parts) > 1 else parts[0])
-            elif isinstance(cond_data, list):
-                # Raw CSV row format
-                row = cond_data
-                parts = []
-
-                # Agent Rank
-                if len(row) > 2 and row[2]:
-                    parts.append(f"Agent Rank: {row[2]}")
-                else:
-                    parts.append("Agent Rank: 1")
-
-                # Digimon Level
-                if len(row) > 3 and row[3]:
-                    try:
-                        level = int(row[3])
-                        if level > 0:
-                            parts.append(f"Digimon Lv{level}")
-                    except:
-                        pass
-
-                self.requirements_label.setText(" | ".join(parts))
-            else:
-                self.requirements_label.setText("Agent Rank: 1")
+            self.requirements_label.setText(" | ".join(parts))
         else:
             self.requirements_label.setText("Agent Rank: 1")
 
@@ -7599,8 +7907,9 @@ class DigimonEditor(QMainWindow):
         )
 
         if new_conditions is not None:
-            self.current_digimon.evolution_conditions = new_conditions
+            self._set_current_evolution_conditions(new_conditions)
             self.update_evolution_tab(self.current_digimon)
+            self.mark_as_modified()
             QMessageBox.information(self, "Success", "Evolution requirements updated!")
 
     def update_evolution_tree_tab(self, digimon: DigimonData):
@@ -10537,6 +10846,8 @@ class DigimonEditor(QMainWindow):
                 'INT': safe_int(row[8]) if len(row) > 8 else 0,
                 'SPI': safe_int(row[9]) if len(row) > 9 else 0,
                 'SPD': safe_int(row[10]) if len(row) > 10 else 0,
+                'unknown1': safe_int(row[11]) if len(row) > 11 else 0,
+                'unknown2': safe_int(row[12]) if len(row) > 12 else 0,
                 'skillCountValor': safe_int(row[13]) if len(row) > 13 else 0,
                 'skillCountPhilantropy': safe_int(row[14]) if len(row) > 14 else 0,
                 'skillCountAmicable': safe_int(row[15]) if len(row) > 15 else 0,
@@ -10596,6 +10907,9 @@ class DigimonEditor(QMainWindow):
             conditions = conditions_by_target.get(evo_path.get('to_id', 0))
             if conditions:
                 evo_path['conditions'] = conditions
+                evo_path['export_conditions'] = True
+                if safe_int(digimon_id) in jogress_partner_ids_from_conditions(conditions):
+                    evo_path['export_partner_rows'] = True
 
         return evolution_paths, evolution_conditions
 
@@ -11474,7 +11788,7 @@ class DigimonEditor(QMainWindow):
             self.script_id_spin.setValue(normalized_script_id)
             self.script_id_spin.blockSignals(False)
 
-    def add_evolution(self):
+    def add_evolution(self, force_jogress: bool = False):
         """Add a new evolution path"""
         if not self.current_digimon:
             return
@@ -11492,9 +11806,12 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(info_label)
 
         path_type_combo = QComboBox()
-        path_type_combo.addItem("Normal evolution", 0)
-        path_type_combo.addItem("Mode Change path", 2)
-        path_type_combo.setToolTip("Evolution path type written to evolution_to column 5.")
+        path_type_combo.addItem("Normal evolution", EVOLUTION_TYPE_NORMAL)
+        path_type_combo.addItem("Jogress / DNA", EVOLUTION_TYPE_NORMAL)
+        path_type_combo.addItem("Mode Change path", EVOLUTION_TYPE_MODE_CHANGE)
+        if force_jogress:
+            path_type_combo.setCurrentIndex(path_type_combo.findText("Jogress / DNA"))
+        path_type_combo.setToolTip("Jogress/DNA writes type 0 source edges plus partner requirements in evolution_condition.")
         layout.addWidget(QLabel("Evolution path type:"))
         layout.addWidget(path_type_combo)
 
@@ -11667,16 +11984,56 @@ class DigimonEditor(QMainWindow):
                     QMessageBox.warning(self, "Already Exists", f"Evolution to Digimon ID {target_digimon_id} already exists!")
                     return
 
+                selected_evolution_type = safe_evolution_int(path_type_combo.currentData(), EVOLUTION_TYPE_NORMAL)
+                new_conditions = {}
+                export_conditions = False
+                export_partner_rows = False
+                if self._path_type_combo_is_jogress(path_type_combo):
+                    default_conditions = self._find_evolution_conditions_for_target(target_digimon_id)
+                    default_conditions = self._prefill_jogress_partner(default_conditions, self.current_digimon.id)
+                    display_name = target_chr_id if target_chr_id else f"ID {target_digimon_id}"
+                    new_conditions = self._show_evolution_requirements_dialog(
+                        f"{display_name} (Jogress/DNA target)",
+                        default_conditions
+                    )
+                    if new_conditions is None:
+                        return
+                    new_conditions = normalize_evolution_conditions(new_conditions)
+                    if not self._validate_jogress_conditions(
+                        new_conditions,
+                        self.current_digimon.id,
+                        "Jogress / DNA Evolution"
+                    ):
+                        return
+                    for partner_id in jogress_partner_ids_from_conditions(new_conditions):
+                        partner_targets = self._evolution_targets_for_digimon(partner_id)
+                        if str(target_digimon_id) not in partner_targets and len(partner_targets) >= 6:
+                            partner_name = self.loader._get_digimon_name_by_id(partner_id) or f"ID {partner_id}"
+                            QMessageBox.warning(
+                                self,
+                                "Evolution Limit Reached",
+                                f"Cannot add Jogress/DNA partner {partner_name}.\n\n"
+                                f"That Digimon already has 6 evolution targets."
+                            )
+                            return
+                    selected_evolution_type = EVOLUTION_TYPE_NORMAL
+                    export_conditions = True
+                    export_partner_rows = True
+
                 # Add to evolution paths
                 new_evo = {
                     'evolution_id': 0,  # Will be assigned when saved
                     'from_id': self.current_digimon.id,
                     'to_id': target_digimon_id,
                     'to_chr_id': target_chr_id,  # Store chr_id for reference
-                    'evolution_type': path_type_combo.currentData(),
+                    'evolution_type': selected_evolution_type,
                     'condition_flags': ['0', '-1', '-1', '-1', '-1', '-1'],
                     'raw_data': []
                 }
+                if new_conditions:
+                    new_evo['conditions'] = new_conditions
+                    new_evo['export_conditions'] = export_conditions
+                    new_evo['export_partner_rows'] = export_partner_rows
                 self.current_digimon.evolution_paths.append(new_evo)
 
                 # Refresh the evolution tab
@@ -11689,43 +12046,7 @@ class DigimonEditor(QMainWindow):
 
     def _show_evolution_requirements_dialog(self, target_name: str, existing_conditions: dict = None):
         """Show comprehensive dialog to configure evolution requirements"""
-        if existing_conditions is None:
-            existing_conditions = {}
-
-        # Convert list format to dict format if needed
-        if isinstance(existing_conditions, list):
-            row = existing_conditions
-            def safe_int(val):
-                try:
-                    if val is None or val == '':
-                        return 0
-                    return int(val)
-                except (ValueError, TypeError):
-                    return 0
-
-            existing_conditions = {
-                'mode': safe_int(row[2]) if len(row) > 2 else 4,
-                'tamerLevel': safe_int(row[3]) if len(row) > 3 else 0,
-                'HP': safe_int(row[4]) if len(row) > 4 else 0,
-                'SP': safe_int(row[5]) if len(row) > 5 else 0,
-                'ATK': safe_int(row[6]) if len(row) > 6 else 0,
-                'DEF': safe_int(row[7]) if len(row) > 7 else 0,
-                'INT': safe_int(row[8]) if len(row) > 8 else 0,
-                'SPI': safe_int(row[9]) if len(row) > 9 else 0,
-                'SPD': safe_int(row[10]) if len(row) > 10 else 0,
-                'skillCountValor': safe_int(row[13]) if len(row) > 13 else 0,
-                'skillCountPhilantropy': safe_int(row[14]) if len(row) > 14 else 0,
-                'skillCountAmicable': safe_int(row[15]) if len(row) > 15 else 0,
-                'skillCountWisdom': safe_int(row[16]) if len(row) > 16 else 0,
-                'needsItem': safe_int(row[22]) if len(row) > 22 else 0,
-                'jogressDbIdA': safe_int(row[24]) if len(row) > 24 else 0,
-                'jogressPersonalityA': safe_int(row[26]) if len(row) > 26 else 0,
-                'jogressDbIdB': safe_int(row[27]) if len(row) > 27 else 0,
-                'jogressPersonalityB': safe_int(row[29]) if len(row) > 29 else 0
-            }
-        elif not isinstance(existing_conditions, dict):
-            # If it's neither list nor dict, create default
-            existing_conditions = {}
+        existing_conditions = normalize_evolution_conditions(existing_conditions or {})
 
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Evolution Requirements → {target_name}")
@@ -11826,6 +12147,29 @@ class DigimonEditor(QMainWindow):
         stats_group.setLayout(stats_layout)
         scroll_layout.addWidget(stats_group)
 
+        # Extra requirement fields observed in evolution_condition columns 11/12.
+        extra_group = QGroupBox("Extra Requirement Fields")
+        extra_layout = QFormLayout()
+
+        extra_011_spin = QSpinBox()
+        extra_011_spin.setRange(0, 9999)
+        extra_011_spin.setValue(existing_conditions.get('unknown1', 0))
+        extra_011_spin.setToolTip(
+            "evolution_condition column 11. Official data only uses this on Lucemon (30) and Parallelmon (40); all known Jogress rows use 0."
+        )
+        extra_layout.addRow("Column 11:", extra_011_spin)
+
+        extra_012_spin = QSpinBox()
+        extra_012_spin.setRange(0, 9999)
+        extra_012_spin.setValue(existing_conditions.get('unknown2', 0))
+        extra_012_spin.setToolTip(
+            "evolution_condition column 12. No nonzero official Base/DLC rows were found in the local data scan."
+        )
+        extra_layout.addRow("Column 12:", extra_012_spin)
+
+        extra_group.setLayout(extra_layout)
+        scroll_layout.addWidget(extra_group)
+
         # Skill Count Requirements
         skills_group = QGroupBox("Skill Count Requirements (by Personality)")
         skills_layout = QFormLayout()
@@ -11916,8 +12260,8 @@ class DigimonEditor(QMainWindow):
                 'INT': int_spin.value(),
                 'SPI': spi_spin.value(),
                 'SPD': spd_spin.value(),
-                'unknown1': 0,
-                'unknown2': 0,
+                'unknown1': extra_011_spin.value(),
+                'unknown2': extra_012_spin.value(),
                 'skillCountValor': valor_spin.value(),
                 'skillCountPhilantropy': philanthropy_spin.value(),
                 'skillCountAmicable': amicable_spin.value(),
@@ -11946,8 +12290,17 @@ class DigimonEditor(QMainWindow):
         if conditions.get('needsItem', 0) > 0:
             parts.append(f"Item#{conditions['needsItem']}")
 
-        if conditions.get('jogressDbIdA', 0) > 0:
-            parts.append(f"Jogress w/ ID{conditions['jogressDbIdA']}")
+        extras = []
+        if conditions.get('unknown1', 0) > 0:
+            extras.append(f"Col11 {conditions['unknown1']}")
+        if conditions.get('unknown2', 0) > 0:
+            extras.append(f"Col12 {conditions['unknown2']}")
+        if extras:
+            parts.append(", ".join(extras))
+
+        jogress_partners = jogress_partner_ids_from_conditions(normalize_evolution_conditions(conditions))
+        if jogress_partners:
+            parts.append(f"Jogress {' + '.join(f'ID{partner_id}' for partner_id in jogress_partners)}")
 
         if parts:
             return f"[{'; '.join(parts)}]"
@@ -11983,8 +12336,33 @@ class DigimonEditor(QMainWindow):
         new_conditions = self._show_evolution_requirements_dialog(to_name, existing_conditions)
 
         if new_conditions is not None:
+            new_conditions = normalize_evolution_conditions(new_conditions)
+            if evolution_conditions_have_jogress(new_conditions):
+                if not self._validate_jogress_conditions(
+                    new_conditions,
+                    self.current_digimon.id,
+                    "Jogress / DNA Evolution"
+                ):
+                    return
+                for partner_id in jogress_partner_ids_from_conditions(new_conditions):
+                    partner_targets = self._evolution_targets_for_digimon(partner_id)
+                    if str(to_id) not in partner_targets and len(partner_targets) >= 6:
+                        partner_name = self.loader._get_digimon_name_by_id(partner_id) or f"ID {partner_id}"
+                        QMessageBox.warning(
+                            self,
+                            "Evolution Limit Reached",
+                            f"Cannot add Jogress/DNA partner {partner_name}.\n\n"
+                            f"That Digimon already has 6 evolution targets."
+                        )
+                        return
             # Update the evolution path with new conditions
             self.current_digimon.evolution_paths[current_index]['conditions'] = new_conditions
+            self.current_digimon.evolution_paths[current_index]['export_conditions'] = True
+            if evolution_conditions_have_jogress(new_conditions):
+                self.current_digimon.evolution_paths[current_index]['evolution_type'] = EVOLUTION_TYPE_NORMAL
+                self.current_digimon.evolution_paths[current_index]['export_partner_rows'] = True
+            else:
+                self.current_digimon.evolution_paths[current_index].pop('export_partner_rows', None)
 
             # Update display
             self.update_evolution_tab(self.current_digimon)
@@ -12056,25 +12434,45 @@ class DigimonEditor(QMainWindow):
         self._evolution_target_map_cache = target_map
         return target_map
 
+    def _pending_evolution_targets_for_source(self, digimon_id: int) -> Set[str]:
+        """Return unsaved target IDs that would consume slots for a source Digimon."""
+        targets: Set[str] = set()
+        digimon_id = safe_evolution_int(digimon_id, 0)
+        if digimon_id <= 0 or not self.current_digimon:
+            return targets
+
+        current_id = safe_evolution_int(getattr(self.current_digimon, "id", 0), 0)
+        for evo in getattr(self.current_digimon, "evolution_paths", []):
+            target_id = evo.get('to_id')
+            if not target_id:
+                continue
+
+            if current_id == digimon_id:
+                targets.add(str(target_id))
+
+            if evo.get('export_partner_rows'):
+                partner_ids = jogress_partner_ids_from_conditions(evo.get('conditions', {}))
+                if digimon_id in partner_ids:
+                    targets.add(str(target_id))
+
+        for deevo in getattr(self.current_digimon, "deevolution_sources", []):
+            if safe_evolution_int(deevo.get('from_id'), 0) == digimon_id and current_id > 0:
+                targets.add(str(current_id))
+
+        return targets
+
+    def _evolution_targets_for_digimon(self, digimon_id: int) -> Set[str]:
+        """Count saved and pending evolution targets for slot-limit checks."""
+        digimon_id = safe_evolution_int(digimon_id, 0)
+        targets = set(self._build_evolution_target_map().get(digimon_id, set()))
+        targets.update(self._pending_evolution_targets_for_source(digimon_id))
+        return targets
+
     def get_evolution_count_for_digimon(self, digimon_id: int) -> int:
         """Count unique evolution targets from base, DLC, Reloaded II mods, and pending edits."""
-        targets = set(self._build_evolution_target_map().get(digimon_id, set()))
+        return len(self._evolution_targets_for_digimon(digimon_id))
 
-        # Include pending edits that are not saved to CSV yet.
-        if self.current_digimon:
-            if getattr(self.current_digimon, "id", None) == digimon_id:
-                for evo in self.current_digimon.evolution_paths:
-                    target_id = evo.get('to_id')
-                    if target_id:
-                        targets.add(str(target_id))
-
-            for deevo in self.current_digimon.deevolution_sources:
-                if deevo.get('from_id') == digimon_id:
-                    targets.add(str(getattr(self.current_digimon, "id", "")))
-
-        return len(targets)
-
-    def add_pre_evolution(self):
+    def add_pre_evolution(self, force_jogress: bool = False):
         """Add a pre-evolution (a Digimon that evolves INTO this one)"""
         if not self.current_digimon:
             QMessageBox.warning(self, "Warning", "Please select a Digimon first")
@@ -12096,9 +12494,12 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(info_banner)
 
         path_type_combo = QComboBox()
-        path_type_combo.addItem("Normal evolution", 0)
-        path_type_combo.addItem("Mode Change path", 2)
-        path_type_combo.setToolTip("Evolution path type written to evolution_to column 5 for this source -> current Digimon row.")
+        path_type_combo.addItem("Normal evolution", EVOLUTION_TYPE_NORMAL)
+        path_type_combo.addItem("Jogress / DNA", EVOLUTION_TYPE_NORMAL)
+        path_type_combo.addItem("Mode Change path", EVOLUTION_TYPE_MODE_CHANGE)
+        if force_jogress:
+            path_type_combo.setCurrentIndex(path_type_combo.findText("Jogress / DNA"))
+        path_type_combo.setToolTip("Jogress/DNA writes type 0 source edges plus partner requirements for this target.")
         layout.addWidget(QLabel("Incoming path type:"))
         layout.addWidget(path_type_combo)
 
@@ -12306,6 +12707,66 @@ class DigimonEditor(QMainWindow):
                     evo_count = self.get_evolution_count_for_digimon(from_id)
 
             if from_id:
+                selected_evolution_type = safe_evolution_int(path_type_combo.currentData(), EVOLUTION_TYPE_NORMAL)
+
+                if self._path_type_combo_is_jogress(path_type_combo):
+                    default_conditions = normalize_evolution_conditions(self.current_digimon.evolution_conditions)
+                    default_conditions = self._prefill_jogress_partner(default_conditions, from_id)
+                    new_conditions = self._show_evolution_requirements_dialog(
+                        f"{self.current_digimon.name} (Jogress/DNA target)",
+                        default_conditions
+                    )
+                    if new_conditions is None:
+                        return
+                    new_conditions = normalize_evolution_conditions(new_conditions)
+                    if not self._validate_jogress_conditions(
+                        new_conditions,
+                        from_id,
+                        "Jogress / DNA Pre-Evolution"
+                    ):
+                        return
+
+                    partner_ids = jogress_partner_ids_from_conditions(new_conditions)
+                    if self.current_digimon.id in partner_ids:
+                        QMessageBox.warning(
+                            self,
+                            "Jogress / DNA Pre-Evolution",
+                            "The target Digimon cannot also be one of its own Jogress/DNA source partners."
+                        )
+                        return
+
+                    partners_to_add = []
+                    for partner_id in partner_ids:
+                        existing = any(
+                            safe_evolution_int(deevo.get('from_id'), 0) == partner_id
+                            for deevo in self.current_digimon.deevolution_sources
+                        )
+                        if not existing and self.get_evolution_count_for_digimon(partner_id) >= 6:
+                            partner_name = self.loader._get_digimon_name_by_id(partner_id) or f"ID {partner_id}"
+                            QMessageBox.warning(
+                                self,
+                                "Evolution Limit Reached",
+                                f"Cannot add Jogress/DNA partner {partner_name}.\n\n"
+                                f"That Digimon already has 6 evolution targets."
+                            )
+                            return
+                        partner_chr_id = from_chr_id if partner_id == from_id else self._chr_id_for_digimon_id(partner_id)
+                        partners_to_add.append((partner_id, partner_chr_id))
+
+                    for partner_id, partner_chr_id in partners_to_add:
+                        self._ensure_deevolution_source(partner_id, partner_chr_id, EVOLUTION_TYPE_NORMAL)
+
+                    self._set_current_evolution_conditions(new_conditions)
+                    self.update_evolution_tab(self.current_digimon)
+                    self.mark_as_modified()
+                    partner_text = " + ".join(str(partner_id) for partner_id, _chr_id in partners_to_add)
+                    QMessageBox.information(
+                        self,
+                        "Success",
+                        f"Jogress/DNA pre-evolution added: {partner_text} -> {self.current_digimon.name}"
+                    )
+                    return
+
                 # Check limit
                 if evo_count >= 6:
                     from_name = self.loader._get_digimon_name_by_id(from_id) or f"ID {from_id}"
@@ -12328,7 +12789,7 @@ class DigimonEditor(QMainWindow):
                 self.current_digimon.deevolution_sources.append({
                     'from_id': from_id,
                     'from_chr_id': from_chr_id or f"chr{from_id:03d}",
-                    'evolution_type': path_type_combo.currentData()
+                    'evolution_type': selected_evolution_type
                 })
 
                 self.update_evolution_tab(self.current_digimon)
@@ -12354,15 +12815,39 @@ class DigimonEditor(QMainWindow):
             deevo = self.current_digimon.deevolution_sources[current_index]
             from_id = deevo.get('from_id', 0)
             from_name = self.loader._get_digimon_name_by_id(from_id) or f"ID {from_id}"
+            target_conditions = normalize_evolution_conditions(self.current_digimon.evolution_conditions)
+            jogress_partner_ids = jogress_partner_ids_from_conditions(target_conditions)
+            remove_jogress_group = safe_evolution_int(from_id, 0) in jogress_partner_ids
 
+            confirm_text = (
+                f"Remove pre-evolution from {from_name}?\n\n"
+                f"This means {from_name} will no longer evolve into {self.current_digimon.name}."
+            )
+            if remove_jogress_group:
+                partner_text = " + ".join(str(partner_id) for partner_id in jogress_partner_ids)
+                confirm_text = (
+                    f"Remove Jogress/DNA pre-evolution {partner_text} -> {self.current_digimon.name}?\n\n"
+                    "Both partner source rows and the DNA partner requirement will be cleared together."
+                )
             reply = QMessageBox.question(
                 self, "Confirm",
-                f"Remove pre-evolution from {from_name}?\n\n"
-                f"This means {from_name} will no longer evolve into {self.current_digimon.name}.",
+                confirm_text,
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
             )
             if reply == QMessageBox.StandardButton.Yes:
-                self.current_digimon.deevolution_sources.pop(current_index)
+                if remove_jogress_group:
+                    partner_set = set(jogress_partner_ids)
+                    self.current_digimon.deevolution_sources = [
+                        source for source in self.current_digimon.deevolution_sources
+                        if safe_evolution_int(source.get('from_id'), 0) not in partner_set
+                    ]
+                    target_conditions['jogressDbIdA'] = 0
+                    target_conditions['jogressPersonalityA'] = 0
+                    target_conditions['jogressDbIdB'] = 0
+                    target_conditions['jogressPersonalityB'] = 0
+                    self._set_current_evolution_conditions(target_conditions)
+                else:
+                    self.current_digimon.deevolution_sources.pop(current_index)
                 self.update_evolution_tab(self.current_digimon)
                 self.mark_as_modified()
                 QMessageBox.information(self, "Success", "Pre-evolution removed")
@@ -12607,12 +13092,35 @@ class DigimonEditor(QMainWindow):
             lod_model_file = patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv"
             self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
 
+            evolution_cond_file = patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv"
+            jogress_cleanup_targets, jogress_cleanup_edges = self._jogress_cleanup_from_existing_conditions(
+                evolution_cond_file,
+                match_ids,
+            )
+
             # Merge evolution files
             evolution_file = patch_data / "evolution.mbe" / "001_evolution_to.ap.csv"
-            self._merge_evolution_file(evolution_file, digimon, wizard._write_evolution_ap_csv, match_ids)
+            self._merge_evolution_file(
+                evolution_file,
+                digimon,
+                wizard._write_evolution_ap_csv,
+                match_ids,
+                cleanup_entry_keys=jogress_cleanup_edges,
+            )
 
-            evolution_cond_file = patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv"
-            self._merge_csv_row(evolution_cond_file, digimon, wizard._write_evolution_condition_ap_csv, lambda r: cell(r, 0) in match_ids)
+            condition_match_ids = set(match_ids)
+            condition_match_ids.update(jogress_cleanup_targets)
+            for evo in getattr(digimon, "evolution_paths", []):
+                if evo.get("export_conditions"):
+                    target_id = evo.get("to_id")
+                    if target_id:
+                        condition_match_ids.add(str(target_id))
+            self._merge_csv_row(
+                evolution_cond_file,
+                digimon,
+                wizard._write_evolution_condition_ap_csv,
+                lambda r: cell(r, 0) in condition_match_ids
+            )
 
             # Merge anim_setting - need to handle special signature
             anim_ref = animation_ref or digimon.chr_id
@@ -12794,10 +13302,59 @@ class DigimonEditor(QMainWindow):
             if temp_file.exists():
                 temp_file.unlink()
 
-    def _merge_evolution_file(self, filepath: Path, digimon, write_func, match_ids: Optional[Iterable[str]] = None):
+    def _jogress_cleanup_from_existing_conditions(
+        self,
+        filepath: Path,
+        match_ids: Iterable[str],
+    ) -> Tuple[Set[str], Set[Tuple[str, str]]]:
+        """Find old DNA targets/edges involving this Digimon in an existing mod."""
+        import csv
+
+        match_ids = {str(value) for value in match_ids if str(value)}
+        cleanup_targets: Set[str] = set()
+        cleanup_edges: Set[Tuple[str, str]] = set()
+        resolved_filepath = self._resolve_prefixed_file(filepath)
+        if not resolved_filepath.exists():
+            return cleanup_targets, cleanup_edges
+
+        try:
+            with open(resolved_filepath, 'r', encoding='utf-8', newline='') as f:
+                f.readline()
+                reader = csv.reader(f)
+                for row in reader:
+                    target_id = self._csv_cell(row, 0)
+                    if not target_id:
+                        continue
+                    partner_ids = [
+                        str(partner_id)
+                        for partner_id in jogress_partner_ids_from_conditions(row)
+                    ]
+                    if not partner_ids or not match_ids.intersection(partner_ids):
+                        continue
+                    cleanup_targets.add(target_id)
+                    for partner_id in partner_ids:
+                        cleanup_edges.add((partner_id, target_id))
+        except Exception as e:
+            print(f"Error inspecting Jogress cleanup rows in {filepath.name}: {e}")
+
+        return cleanup_targets, cleanup_edges
+
+    def _merge_evolution_file(
+        self,
+        filepath: Path,
+        digimon,
+        write_func,
+        match_ids: Optional[Iterable[str]] = None,
+        cleanup_entry_keys: Optional[Iterable[Tuple[str, str]]] = None,
+    ):
         """Merge evolution data, removing old entries for this digimon first"""
         import csv
         match_ids = {str(value) for value in (match_ids or {digimon.id}) if str(value)}
+        cleanup_entry_keys = {
+            (str(source_id), str(target_id))
+            for source_id, target_id in (cleanup_entry_keys or set())
+            if str(source_id) and str(target_id)
+        }
 
         # Generate new evolution rows
         temp_file = filepath.parent / f"_temp_{filepath.name}"
@@ -12810,6 +13367,11 @@ class DigimonEditor(QMainWindow):
                 reader = csv.reader(f)
                 new_rows = list(reader)
             temp_file.unlink()
+            new_entry_keys = {
+                (row[1], row[3])
+                for row in new_rows
+                if len(row) > 3 and row[1] and row[3]
+            }
 
             # Resolve filepath to handle any numeric prefix variation
             resolved_filepath = self._resolve_prefixed_file(filepath)
@@ -12837,7 +13399,12 @@ class DigimonEditor(QMainWindow):
                 if len(row) > 1:
                     source_id = row[1] if row[1] else None
                     target_id = row[3] if len(row) > 3 and row[3] else None
-                    if source_id not in match_ids and target_id not in match_ids:
+                    if (
+                        source_id not in match_ids
+                        and target_id not in match_ids
+                        and (source_id, target_id) not in new_entry_keys
+                        and (source_id, target_id) not in cleanup_entry_keys
+                    ):
                         filtered_rows.append(row)
 
             # Add new rows
