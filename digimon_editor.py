@@ -3911,6 +3911,9 @@ class DigimonEditor(QMainWindow):
         self.active_reloaded_mod_root: Optional[Path] = None
         self.has_unsaved_changes = False
         self._related_source_entries_cache: Optional[List[dict]] = None
+        self._evolution_picker_entries_cache: Optional[List[dict]] = None
+        self._evolution_char_name_map_cache: Optional[Dict[str, str]] = None
+        self._evolution_target_map_cache: Optional[Dict[int, Set[str]]] = None
         self._status_ref_user_edited = False
         self._syncing_status_reference = False
         self._loading_digimon_form = False
@@ -8587,6 +8590,7 @@ class DigimonEditor(QMainWindow):
 
     def load_digimon_list(self):
         """Load list of available Digimon by selected source."""
+        self._invalidate_evolution_picker_cache()
         source_mode = self.get_source_mode()
         source_requests = []
         if source_mode in ("base", "all"):
@@ -8747,8 +8751,74 @@ class DigimonEditor(QMainWindow):
 
         return names
 
+    def _invalidate_evolution_picker_cache(self):
+        """Discard cached data used by the evolution add dialogs."""
+        self._evolution_picker_entries_cache = None
+        self._evolution_char_name_map_cache = None
+        self._evolution_target_map_cache = None
+
+    def _load_evolution_char_name_map(self) -> Dict[str, str]:
+        """Load base and DLC char_key -> name rows once for evolution pickers."""
+        if self._evolution_char_name_map_cache is not None:
+            return dict(self._evolution_char_name_map_cache)
+
+        names: Dict[str, str] = {}
+
+        def add_name_file(name_file: Path):
+            try:
+                rows = self.loader.load_csv(name_file)
+            except Exception:
+                return
+
+            for row in rows[1:]:
+                char_key = self._csv_cell(row, 0)
+                name = self._csv_cell(row, 1)
+                if char_key and name:
+                    names[char_key] = name
+
+        base_name_file = self.loader._resolve_prefixed_file(
+            self.loader.text_path / "char_name.mbe" / "000_Sheet1.csv"
+        )
+        if base_name_file.exists():
+            add_name_file(base_name_file)
+
+        try:
+            for _dlc_id, dlc_name_file in self.loader.iter_dlc_csv_files("text", "char_name", "000_Sheet1.csv"):
+                add_name_file(dlc_name_file)
+        except Exception:
+            pass
+
+        self._evolution_char_name_map_cache = dict(names)
+        return dict(names)
+
+    def _add_status_rows_to_evolution_picker(
+        self,
+        status_file: Path,
+        source: str,
+        names_by_char_key: Dict[str, str],
+        add_entry,
+    ):
+        """Add lightweight picker entries from a digimon_status CSV."""
+        try:
+            rows = self.loader.load_csv(status_file)
+        except Exception:
+            return
+
+        for row in rows[1:]:
+            if len(row) <= FIELD_GUIDE_CHR_ID_COLUMN or not any(str(cell).strip() for cell in row):
+                continue
+
+            digimon_id = self._csv_cell(row, FIELD_GUIDE_DIGIMON_ID_COLUMN)
+            char_key = self._csv_cell(row, 2)
+            chr_id = self._csv_cell(row, FIELD_GUIDE_CHR_ID_COLUMN)
+            name = names_by_char_key.get(char_key, "") or char_key or chr_id
+            add_entry(digimon_id, chr_id, name, source)
+
     def _evolution_picker_entries(self) -> List[dict]:
         """Build Digimon choices for evolution dialogs from base, DLC, imports, and the active mod."""
+        if self._evolution_picker_entries_cache is not None:
+            return list(self._evolution_picker_entries_cache)
+
         entries: List[dict] = []
         seen_entries: Set[Tuple[int, str]] = set()
 
@@ -8779,18 +8849,21 @@ class DigimonEditor(QMainWindow):
                 "label": f"{clean_name} ({clean_chr_id}) - ID: {parsed_id} [{source}]",
             })
 
-        for source, from_dlc in (("Base", False), ("DLC", True)):
-            try:
-                chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
-            except Exception:
-                chr_ids = []
+        names_by_char_key = self._load_evolution_char_name_map()
 
-            for chr_id in chr_ids:
-                digimon = self.loader.get_digimon_by_chr_id(chr_id)
-                if not digimon:
-                    continue
-                name = self.loader._get_digimon_name_by_chr_id(chr_id) or getattr(digimon, "name", "")
-                add_entry(getattr(digimon, "id", 0), chr_id, name, source)
+        base_status_file = self.loader._resolve_prefixed_file(
+            self.loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv"
+        )
+        if base_status_file.exists():
+            self._add_status_rows_to_evolution_picker(base_status_file, "Base", names_by_char_key, add_entry)
+
+        try:
+            for _dlc_id, dlc_status_file in self.loader.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
+                self._add_status_rows_to_evolution_picker(dlc_status_file, "DLC", names_by_char_key, add_entry)
+        except Exception:
+            pass
 
         for digimon in getattr(self.loader, "imported_digimon", []):
             add_entry(
@@ -8818,6 +8891,7 @@ class DigimonEditor(QMainWindow):
                     add_entry(digimon_id, chr_id, name, source_label)
 
         entries.sort(key=lambda entry: (entry["name"].casefold(), self.chr_sort_key(entry["chr_id"]), entry["id"]))
+        self._evolution_picker_entries_cache = list(entries)
         return entries
 
     def _find_evolution_picker_entry(self, text: str, entries: List[dict]) -> Optional[dict]:
@@ -9637,6 +9711,7 @@ class DigimonEditor(QMainWindow):
         root = Path(dsts_loader_root)
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
+        self._invalidate_evolution_picker_cache()
         if hasattr(self, "skill_browser_combo"):
             self.populate_skill_browser()
         if hasattr(self, "digimon_list"):
@@ -11686,9 +11761,12 @@ class DigimonEditor(QMainWindow):
                 self.mark_as_modified()
                 QMessageBox.information(self, "Success", "Evolution removed")
 
-    def get_evolution_count_for_digimon(self, digimon_id: int) -> int:
-        """Count unique evolution targets from base, DLC, Reloaded II mods, and pending edits."""
-        targets: Set[str] = set()
+    def _build_evolution_target_map(self) -> Dict[int, Set[str]]:
+        """Build source Digimon ID -> unique target IDs from saved evolution files."""
+        if self._evolution_target_map_cache is not None:
+            return self._evolution_target_map_cache
+
+        target_map: Dict[int, Set[str]] = {}
 
         def add_targets_from_file(evolution_to_file: Path):
             if not evolution_to_file.exists():
@@ -11697,10 +11775,10 @@ class DigimonEditor(QMainWindow):
             for row in rows[1:]:
                 if len(row) <= 3:
                     continue
-                source_id = self._csv_cell(row, 1)
+                source_id = _parse_optional_int(self._csv_cell(row, 1))
                 target_id = self._csv_cell(row, 3)
-                if source_id == str(digimon_id) and target_id:
-                    targets.add(target_id)
+                if source_id is not None and target_id:
+                    target_map.setdefault(source_id, set()).add(target_id)
 
         try:
             # Check base game evolution_to.csv
@@ -11719,8 +11797,21 @@ class DigimonEditor(QMainWindow):
         except Exception as e:
             print(f"Error counting evolutions: {e}")
 
-        # Also count pending pre-evolutions we've added that use this Digimon as source
+        self._evolution_target_map_cache = target_map
+        return target_map
+
+    def get_evolution_count_for_digimon(self, digimon_id: int) -> int:
+        """Count unique evolution targets from base, DLC, Reloaded II mods, and pending edits."""
+        targets = set(self._build_evolution_target_map().get(digimon_id, set()))
+
+        # Include pending edits that are not saved to CSV yet.
         if self.current_digimon:
+            if getattr(self.current_digimon, "id", None) == digimon_id:
+                for evo in self.current_digimon.evolution_paths:
+                    target_id = evo.get('to_id')
+                    if target_id:
+                        targets.add(str(target_id))
+
             for deevo in self.current_digimon.deevolution_sources:
                 if deevo.get('from_id') == digimon_id:
                     targets.add(str(getattr(self.current_digimon, "id", "")))
