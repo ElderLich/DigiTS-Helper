@@ -4196,6 +4196,7 @@ class DigimonEditor(QMainWindow):
         self._evolution_picker_entries_cache: Optional[List[dict]] = None
         self._evolution_char_name_map_cache: Optional[Dict[str, str]] = None
         self._evolution_target_map_cache: Optional[Dict[int, Set[str]]] = None
+        self._auto_loaded_mod_roots: Set[str] = set()
         self._status_ref_user_edited = False
         self._syncing_status_reference = False
         self._loading_digimon_form = False
@@ -4830,10 +4831,18 @@ class DigimonEditor(QMainWindow):
         source_layout.addWidget(source_label)
 
         self.source_combo = QComboBox()
-        self.source_combo.addItem("Base + DLC", "all")
+        self.source_combo.addItem("Base + DLC + Mods", "all")
         self.source_combo.addItem("Base Game", "base")
         self.source_combo.addItem("DLC (addcont_01-03,17)", "dlc")
-        self.source_combo.setToolTip("Select which Digimon to view:\n• Base + DLC - Combined list\n• Base Game - Original game Digimon\n• DLC - addcont_01-03 and addcont_17 Digimon\n\nSaving/removal follows the loaded Digimon source")
+        self.source_combo.addItem("Mods Folder", "mods")
+        self.source_combo.setToolTip(
+            "Select which Digimon to view:\n"
+            "• Base + DLC + Mods - Combined list, including Reloaded II mod entries\n"
+            "• Base Game - Original game Digimon\n"
+            "• DLC - addcont_01-03 and addcont_17 Digimon\n"
+            "• Mods Folder - Digimon found in configured Reloaded II mod folders\n\n"
+            "Saving/removal follows the loaded Digimon source"
+        )
         self.source_combo.currentIndexChanged.connect(self.load_digimon_list)
         self.source_combo.currentIndexChanged.connect(self.on_source_changed)
         self.source_combo.setStyleSheet("""
@@ -5122,28 +5131,30 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.export_dlc_button)
 
-        self.export_button = QPushButton("📄 Export CSV")
-        self.export_button.clicked.connect(self.export_csv)
-        self.export_button.setToolTip(
-            "Export CSV files\n"
-            f"Folder picker starts at: {get_default_mod_loader_path()}\n"
-            "⚠️ WARNING: This will DELETE and replace all existing files in the destination directory!\n"
-            "Only data currently in your DLC folder will be exported."
-        )
-        self.export_button.setStyleSheet(button_style.format(
-            color1="#fa709a", color2="#fee140",
-            hover1="#e85c89", hover2="#ecd32f"
-        ))
-        button_layout.addWidget(self.export_button)
+        # Disabled for now: these utility actions are too easy to hit from the
+        # main editor and are not part of the normal Reloaded II mod workflow.
+        # self.export_button = QPushButton("📄 Export CSV")
+        # self.export_button.clicked.connect(self.export_csv)
+        # self.export_button.setToolTip(
+        #     "Export CSV files\n"
+        #     f"Folder picker starts at: {get_default_mod_loader_path()}\n"
+        #     "⚠️ WARNING: This will DELETE and replace all existing files in the destination directory!\n"
+        #     "Only data currently in your DLC folder will be exported."
+        # )
+        # self.export_button.setStyleSheet(button_style.format(
+        #     color1="#fa709a", color2="#fee140",
+        #     hover1="#e85c89", hover2="#ecd32f"
+        # ))
+        # button_layout.addWidget(self.export_button)
 
-        self.repack_button = QPushButton("📦 Repack to MBE Files")
-        self.repack_button.clicked.connect(self.repack_mbe_files)
-        self.repack_button.setToolTip("Repack DLC CSV files back into .mbe format\nRequired after making DLC changes")
-        self.repack_button.setStyleSheet(button_style.format(
-            color1="#667eea", color2="#764ba2",
-            hover1="#5568d3", hover2="#653b8e"
-        ))
-        button_layout.addWidget(self.repack_button)
+        # self.repack_button = QPushButton("📦 Repack to MBE Files")
+        # self.repack_button.clicked.connect(self.repack_mbe_files)
+        # self.repack_button.setToolTip("Repack DLC CSV files back into .mbe format\nRequired after making DLC changes")
+        # self.repack_button.setStyleSheet(button_style.format(
+        #     color1="#667eea", color2="#764ba2",
+        #     hover1="#5568d3", hover2="#653b8e"
+        # ))
+        # button_layout.addWidget(self.repack_button)
 
         layout.addLayout(button_layout)
         layout.addStretch()
@@ -8304,12 +8315,13 @@ class DigimonEditor(QMainWindow):
         prefix = "📥 " if entry.get("imported") else ""
         display_name = f"{prefix}{entry['name']} ({entry['chr_id']})"
 
-        if self.get_source_mode() == "all":
+        if self.get_source_mode() in ("all", "mods"):
             source_label = {
                 "base": "Base",
                 "dlc": "DLC",
                 "imported": "Imported",
-            }.get(entry.get("source"), entry.get("source", ""))
+                "mod": entry.get("source_label", "Mod"),
+            }.get(entry.get("source"), entry.get("source_label", entry.get("source", "")))
             if source_label:
                 display_name = f"{display_name} [{source_label}]"
 
@@ -9165,6 +9177,9 @@ class DigimonEditor(QMainWindow):
 
         self.digimon_entries = []
         seen_entries = set()
+        include_mod_entries = source_mode in ("all", "mods")
+        if include_mod_entries:
+            self._load_mod_folder_digimon_cache()
 
         for source_name, from_dlc in source_requests:
             chr_ids = self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
@@ -9186,13 +9201,18 @@ class DigimonEditor(QMainWindow):
                     "imported": False,
                 })
 
-        # Add imported Digimon (marked with 📥)
-        if hasattr(self.loader, 'imported_digimon'):
+        # Add Digimon from manually imported or auto-discovered Reloaded II mods.
+        if include_mod_entries and hasattr(self.loader, 'imported_digimon'):
             for digimon in self.loader.imported_digimon:
+                source_label = getattr(digimon, "imported_source_label", "") or self._mod_source_label(
+                    Path(getattr(digimon, "imported_dsts_loader_root", ""))
+                )
+                source_name = "mod" if source_label.startswith(("Mod:", "Active Mod")) else "imported"
                 self.digimon_entries.append({
                     "name": digimon.name,
                     "chr_id": digimon.chr_id,
-                    "source": "imported",
+                    "source": source_name,
+                    "source_label": source_label,
                     "imported": True,
                 })
 
@@ -9202,7 +9222,12 @@ class DigimonEditor(QMainWindow):
 
         if not self.digimon_entries:
             self.digimon_list.clear()
-            message = "(No DLC Digimon found)" if source_mode == "dlc" else "(No Digimon found)"
+            if source_mode == "dlc":
+                message = "(No DLC Digimon found)"
+            elif source_mode == "mods":
+                message = "(No mod Digimon found)"
+            else:
+                message = "(No Digimon found)"
             self.digimon_list.addItem(message)
             self.all_digimon_names = []
 
@@ -10294,10 +10319,88 @@ class DigimonEditor(QMainWindow):
         mod_root = self._infer_reloaded_mod_root(root)
         digimon.imported_mod_root = str(mod_root) if mod_root else ""
 
+    def _mod_source_label(self, dsts_loader_root: Path) -> str:
+        """Return a compact label for a dsts-loader source."""
+        mod_root = self._infer_reloaded_mod_root(dsts_loader_root)
+        if mod_root:
+            return f"Mod: {mod_root.name}"
+        return "Imported"
+
+    def _quiet_upsert_imported_digimon(self, digimon: DigimonData, dsts_loader_root: Path, source_label: str = "") -> bool:
+        """Cache a mod-folder Digimon without changing the active save target."""
+        root = Path(dsts_loader_root)
+        self._mark_import_source(digimon, root)
+        digimon.imported_source_label = source_label or self._mod_source_label(root)
+
+        if not hasattr(self.loader, 'imported_digimon'):
+            self.loader.imported_digimon = []
+
+        try:
+            root_key = str(root.resolve()).casefold()
+        except Exception:
+            root_key = str(root).casefold()
+
+        for index, existing in enumerate(self.loader.imported_digimon):
+            existing_root = getattr(existing, "imported_dsts_loader_root", "")
+            try:
+                existing_root_key = str(Path(existing_root).resolve()).casefold() if existing_root else ""
+            except Exception:
+                existing_root_key = str(existing_root).casefold()
+
+            if existing_root_key == root_key and (
+                existing.chr_id == digimon.chr_id
+                or existing.id == digimon.id
+            ):
+                self.loader.imported_digimon[index] = digimon
+                return False
+
+        self.loader.imported_digimon.append(digimon)
+        return True
+
+    def _load_mod_folder_digimon_cache(self):
+        """Load Digimon entries found in configured Reloaded II mod folders."""
+        if not hasattr(self.loader, 'imported_digimon'):
+            self.loader.imported_digimon = []
+
+        for mod_root, source_label in self._iter_reloaded_mod_dsts_loader_roots():
+            try:
+                root_key = str(mod_root.resolve()).casefold()
+            except Exception:
+                root_key = str(mod_root).casefold()
+
+            status_files = self._dsts_loader_status_files(mod_root)
+            if not status_files:
+                continue
+
+            try:
+                file_signature = tuple(
+                    (str(path.resolve()).casefold(), path.stat().st_mtime_ns, path.stat().st_size)
+                    for path in status_files
+                )
+            except Exception:
+                file_signature = tuple(str(path).casefold() for path in status_files)
+
+            cache_key = repr((root_key, file_signature))
+            if cache_key in self._auto_loaded_mod_roots:
+                continue
+
+            for status_file in status_files:
+                try:
+                    digimon_list = self._parse_digimon_status_csv(status_file, mod_root)
+                except Exception as exc:
+                    debug_log(f"Could not auto-load mod Digimon from {status_file}: {exc}")
+                    continue
+
+                for digimon in digimon_list:
+                    self._quiet_upsert_imported_digimon(digimon, mod_root, source_label)
+
+            self._auto_loaded_mod_roots.add(cache_key)
+
     def _upsert_imported_digimon(self, digimon: DigimonData, dsts_loader_root: Path) -> bool:
         """Add or replace an imported Digimon by ID/chr_id while preserving source tracking."""
         self._set_active_dsts_loader_root(dsts_loader_root)
         self._mark_import_source(digimon, dsts_loader_root)
+        digimon.imported_source_label = self._mod_source_label(dsts_loader_root)
         if not hasattr(self.loader, 'imported_digimon'):
             self.loader.imported_digimon = []
 
