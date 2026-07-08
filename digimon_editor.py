@@ -73,6 +73,7 @@ TEXT_LANGUAGE_FOLDERS = (
 TEXT_LANGUAGE_LABELS = dict(TEXT_LANGUAGE_FOLDERS)
 TEXT_LANGUAGE_FOLDER_RE = re.compile(r"^patch_text(?P<code>\d+)$")
 ENGLISH_TEXT_FOLDER = "patch_text01"
+BUFF_SET_SLOT_STARTS = tuple(range(6, 57, 5))
 _PATH_SETTINGS_CACHE: Optional[Dict[str, str]] = None
 
 
@@ -798,7 +799,7 @@ def configure_searchable_combo(combo: QComboBox):
             background-color: white;
             border: 2px solid #dee2e6;
             border-radius: 6px;
-            padding: 7px 34px 7px 8px;
+            padding: 7px 58px 7px 8px;
             font-size: 10pt;
         }
         QComboBox:hover {
@@ -813,6 +814,18 @@ def configure_searchable_combo(combo: QComboBox):
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
         }
+        QComboBox::down-arrow {
+            image: none;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #667eea;
+            margin-right: 8px;
+        }
+        QComboBox::down-arrow:on {
+            border-top-color: #495057;
+        }
         QComboBox QAbstractItemView {
             color: #333333;
             background-color: white;
@@ -826,6 +839,168 @@ def configure_searchable_combo(combo: QComboBox):
     if completer:
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         completer.setFilterMode(Qt.MatchFlag.MatchContains)
+
+
+class BuffSetCreatorDialog(QDialog):
+    """Create one battle_skill 002_buff_set row from existing effect IDs."""
+
+    def __init__(
+        self,
+        parent: QWidget,
+        effect_options: List[Tuple[int, str]],
+        suggested_set_id: int,
+        existing_set_ids: Set[int],
+        target_label: str,
+    ):
+        super().__init__(parent)
+        self.effect_combos: List[QComboBox] = []
+        self.rate_spins: List[QSpinBox] = []
+        self.change_spins: List[QSpinBox] = []
+        self.turn_spins: List[QSpinBox] = []
+        self.existing_set_ids = set(existing_set_ids)
+
+        self.setWindowTitle("Create Buff Set")
+        self.setMinimumSize(980, 720)
+
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+
+        target_label_widget = QLabel(f"Target: {target_label}")
+        target_label_widget.setStyleSheet("color: #495057; font-weight: bold;")
+        layout.addWidget(target_label_widget)
+
+        form = QGridLayout()
+        form.setHorizontalSpacing(10)
+        form.setVerticalSpacing(8)
+
+        self.set_id_spin = QSpinBox()
+        self.set_id_spin.setRange(1, 9999999)
+        self.set_id_spin.setValue(max(1, suggested_set_id))
+        self.set_id_spin.setToolTip("New 002_buff_set row ID. Skill buff fields should point to this value.")
+        form.addWidget(QLabel("Set ID:"), 0, 0)
+        form.addWidget(self.set_id_spin, 0, 1)
+
+        self.unknown_001_spin = QSpinBox()
+        self.unknown_001_spin.setRange(-1, 9999999)
+        self.unknown_001_spin.setValue(-1)
+        self.unknown_001_spin.setToolTip("002_buff_set column unknown_001. Official rows usually use -1.")
+        form.addWidget(QLabel("unknown_001:"), 0, 2)
+        form.addWidget(self.unknown_001_spin, 0, 3)
+
+        self.unknown_002_spin = QSpinBox()
+        self.unknown_002_spin.setRange(0, 9999999)
+        self.unknown_002_spin.setValue(0)
+        self.unknown_002_spin.setToolTip("002_buff_set column unknown_002. Official rows most often use 0.")
+        form.addWidget(QLabel("unknown_002:"), 1, 0)
+        form.addWidget(self.unknown_002_spin, 1, 1)
+
+        self.unknown_003_combo = QComboBox()
+        self.unknown_003_combo.addItem("false", "false")
+        self.unknown_003_combo.addItem("true", "true")
+        self.unknown_003_combo.setToolTip("002_buff_set column unknown_003. Official rows use true/false.")
+        form.addWidget(QLabel("unknown_003:"), 1, 2)
+        form.addWidget(self.unknown_003_combo, 1, 3)
+
+        layout.addLayout(form)
+
+        hint = QLabel("Each non-empty slot becomes one effect inside the set. Rate and Change % follow the official 002_buff_set columns.")
+        hint.setWordWrap(True)
+        hint.setStyleSheet("color: #6c757d;")
+        layout.addWidget(hint)
+
+        self.effect_table = QTableWidget(11, 4)
+        self.effect_table.setHorizontalHeaderLabels(["Effect", "Rate", "Change %", "Turns"])
+        self.effect_table.verticalHeader().setVisible(True)
+        self.effect_table.verticalHeader().setDefaultSectionSize(46)
+        self.effect_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        for column in range(1, 4):
+            self.effect_table.horizontalHeader().setSectionResizeMode(column, QHeaderView.ResizeMode.ResizeToContents)
+        self.effect_table.setAlternatingRowColors(True)
+
+        for row_index in range(11):
+            effect_combo = QComboBox()
+            configure_searchable_combo(effect_combo)
+            effect_combo.setMinimumWidth(360)
+            effect_combo.addItem("No effect", 0)
+            for effect_id, label in effect_options:
+                if effect_id <= 0:
+                    continue
+                effect_combo.addItem(label, effect_id)
+            self.effect_table.setCellWidget(row_index, 0, effect_combo)
+            self.effect_combos.append(effect_combo)
+
+            rate_spin = QSpinBox()
+            rate_spin.setRange(-999999, 999999)
+            rate_spin.setValue(100)
+            rate_spin.setToolTip("buff_X_rate. Official rows often use 20 or 100 depending on effect behavior.")
+            self.effect_table.setCellWidget(row_index, 1, rate_spin)
+            self.rate_spins.append(rate_spin)
+
+            change_spin = QSpinBox()
+            change_spin.setRange(-999999, 999999)
+            change_spin.setValue(0)
+            change_spin.setToolTip("buff_X_change_percent. Use positive or negative values to match the effect.")
+            self.effect_table.setCellWidget(row_index, 2, change_spin)
+            self.change_spins.append(change_spin)
+
+            turn_spin = QSpinBox()
+            turn_spin.setRange(-1, 999)
+            turn_spin.setValue(0)
+            turn_spin.setToolTip("buff_X_turn_override. 0 keeps default behavior; -1 means until removed when supported.")
+            self.effect_table.setCellWidget(row_index, 3, turn_spin)
+            self.turn_spins.append(turn_spin)
+
+        layout.addWidget(self.effect_table, 1)
+
+        button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        button_box.accepted.connect(self.accept)
+        button_box.rejected.connect(self.reject)
+        layout.addWidget(button_box)
+
+    def accept(self):
+        set_id = self.set_id_spin.value()
+        if set_id in self.existing_set_ids:
+            reply = QMessageBox.question(
+                self,
+                "Overwrite Buff Set?",
+                f"Buff set {set_id} already exists in Base, DLC, or a mod.\n\nCreate or replace that ID in the active mod file?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No,
+            )
+            if reply != QMessageBox.StandardButton.Yes:
+                return
+
+        if not any(combo.currentData() for combo in self.effect_combos):
+            QMessageBox.warning(self, "No Effects", "Choose at least one effect before creating a buff set.")
+            return
+
+        super().accept()
+
+    def buff_set_data(self) -> Dict[str, object]:
+        effects = []
+        for combo, rate_spin, change_spin, turn_spin in zip(
+            self.effect_combos,
+            self.rate_spins,
+            self.change_spins,
+            self.turn_spins,
+        ):
+            effect_id = safe_evolution_int(combo.currentData(), 0)
+            if effect_id <= 0:
+                continue
+            effects.append({
+                "effect_id": effect_id,
+                "rate": rate_spin.value(),
+                "change_percent": change_spin.value(),
+                "turn_override": turn_spin.value(),
+            })
+
+        return {
+            "set_id": self.set_id_spin.value(),
+            "unknown_001": self.unknown_001_spin.value(),
+            "unknown_002": self.unknown_002_spin.value(),
+            "unknown_003": self.unknown_003_combo.currentData(),
+            "effects": effects,
+        }
 
 
 def choose_skill_id(parent: QWidget, loader: Optional[MBELoader], title: str, current_skill_id: int = 0) -> Optional[int]:
@@ -4713,7 +4888,7 @@ class DigimonEditor(QMainWindow):
                 background-color: white;
                 border: 2px solid #dee2e6;
                 border-radius: 6px;
-                padding: 8px;
+                padding: 8px 42px 8px 8px;
                 font-size: 10pt;
                 color: #495057;
             }
@@ -4725,7 +4900,22 @@ class DigimonEditor(QMainWindow):
                 background-color: #f8f9fa;
             }
             QComboBox::drop-down {
-                border: none;
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 30px;
+                border-left: 1px solid #dee2e6;
+                background-color: #f8f9fa;
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid #667eea;
+                margin-right: 8px;
             }
 
             /* Group Box Styling */
@@ -4923,7 +5113,7 @@ class DigimonEditor(QMainWindow):
                 border: none;
                 background: white;
                 border-radius: 6px;
-                padding: 6px 10px;
+                padding: 6px 42px 6px 10px;
                 font-size: 10pt;
                 color: #333333;
             }
@@ -4931,7 +5121,22 @@ class DigimonEditor(QMainWindow):
                 background: #f1f3f5;
             }
             QComboBox::drop-down {
-                border: none;
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 30px;
+                border-left: 1px solid #dee2e6;
+                background-color: #f8f9fa;
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid #667eea;
+                margin-right: 8px;
             }
             QComboBox QAbstractItemView {
                 background: white;
@@ -5029,7 +5234,7 @@ class DigimonEditor(QMainWindow):
                 background: white;
                 border: 2px solid #dee2e6;
                 border-radius: 8px;
-                padding: 10px;
+                padding: 10px 46px 10px 10px;
                 font-size: 11pt;
                 color: #333333;
             }
@@ -5041,8 +5246,22 @@ class DigimonEditor(QMainWindow):
                 border-color: #667eea;
             }
             QComboBox::drop-down {
-                border: none;
-                padding-right: 10px;
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 34px;
+                border-left: 1px solid #dee2e6;
+                background-color: #f8f9fa;
+                border-top-right-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid #667eea;
+                margin-right: 10px;
             }
             QComboBox QAbstractItemView {
                 background: white;
@@ -6168,16 +6387,7 @@ class DigimonEditor(QMainWindow):
         configure_searchable_combo(self.related_source_combo)
         self.related_source_combo.setStyleSheet(self.related_source_combo.styleSheet() + """
             QComboBox {
-                padding-right: 8px;
-            }
-            QComboBox::drop-down {
-                width: 0px;
-                border: none;
-            }
-            QComboBox::down-arrow {
-                image: none;
-                width: 0px;
-                height: 0px;
+                padding-right: 58px;
             }
         """)
         if self.related_source_combo.lineEdit():
@@ -7166,6 +7376,32 @@ class DigimonEditor(QMainWindow):
         """)
         buff_layout = QVBoxLayout(buff_group)
         buff_layout.setSpacing(8)
+
+        buff_tool_row = QHBoxLayout()
+        buff_hint = QLabel("Skill rows use buff-set IDs. Create a set to combine existing battle_buff effects.")
+        buff_hint.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        buff_hint.setWordWrap(True)
+        buff_tool_row.addWidget(buff_hint, 1)
+
+        create_buff_button = QPushButton("+ Create Buff Set")
+        create_buff_button.setMinimumHeight(38)
+        create_buff_button.setToolTip("Build a new 002_buff_set row in the active mod, then use it in one of the buff-set slots below.")
+        create_buff_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                background-color: #d9a400;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #c29100;
+            }
+        """)
+        create_buff_button.clicked.connect(self.open_buff_set_creator)
+        buff_tool_row.addWidget(create_buff_button)
+        buff_layout.addLayout(buff_tool_row)
 
         self.buff_set_widgets = []
         self.buff_set_combos = []
@@ -14777,6 +15013,204 @@ class DigimonEditor(QMainWindow):
                 options[set_id] = (f"Set {set_id}: {preview}", tooltip)
         return [(set_id, label, tooltip) for set_id, (label, tooltip) in sorted(options.items())]
 
+    def _all_known_buff_set_ids(self) -> Set[int]:
+        """Return buff-set IDs known from active mod, Base, and DLC."""
+        set_ids: Set[int] = set()
+        for data_root, prefer_ap, _source_label in self._buff_set_contexts():
+            set_ids.update(self._load_buff_set_map(data_root, prefer_ap).keys())
+        return set_ids
+
+    def _next_custom_buff_set_id(self) -> int:
+        """Suggest a custom buff-set ID outside the observed official range."""
+        used_ids = self._all_known_buff_set_ids()
+        candidate = 900001
+        while candidate in used_ids:
+            candidate += 1
+        return candidate
+
+    def _available_buff_effect_options(self) -> List[Tuple[int, str]]:
+        """Return known battle_buff effect IDs for creator dropdowns."""
+        options: Dict[int, str] = {}
+
+        for effect_id, name in getattr(self.loader, "BUFF_ID_NAMES", {}).items():
+            if effect_id > 0 and name and name != "None":
+                options[effect_id] = f"ID {effect_id}: {name}"
+
+        for data_root, prefer_ap, _source_label in self._buff_set_contexts():
+            for entries in self._load_buff_set_map(data_root, prefer_ap).values():
+                for entry in entries:
+                    effect_id = safe_evolution_int(entry.get("effect_id"), 0)
+                    if effect_id <= 0 or effect_id in options:
+                        continue
+                    name = self.loader.get_buff_name(effect_id)
+                    options[effect_id] = f"ID {effect_id}: {name}"
+
+        try:
+            battle_buff_file = self.loader._resolve_prefixed_file(self.loader.data_path / "battle_buff.mbe" / "000_battle_buff.csv")
+            for row in self.loader.load_csv(battle_buff_file)[1:]:
+                for column in (0, 6):
+                    effect_id = safe_evolution_int(row[column] if len(row) > column else 0, 0)
+                    if effect_id <= 0 or effect_id in options:
+                        continue
+                    name = self.loader.get_buff_name(effect_id)
+                    options[effect_id] = f"ID {effect_id}: {name}"
+        except Exception as exc:
+            debug_log(f"Could not load battle_buff effect options: {exc}")
+
+        return sorted(options.items())
+
+    def _buff_set_header_for_save(self, target_file: Path) -> List[str]:
+        """Return an existing/official buff-set header for creator output."""
+        for source_file in (target_file, self._buff_set_csv_path(None, prefer_ap=False)):
+            if source_file.exists():
+                try:
+                    rows = self.loader.load_csv(source_file)
+                    if rows:
+                        return list(rows[0])
+                except Exception:
+                    pass
+
+        header = ["set_id", "unknown_001", "unknown_002", "unknown_003", "empty_004", "empty_005"]
+        for slot_index in range(1, 12):
+            header.extend([
+                f"buff_{slot_index:02d}_effect",
+                f"buff_{slot_index:02d}_rate",
+                f"buff_{slot_index:02d}_change_percent",
+                f"buff_{slot_index:02d}_turn_override",
+            ])
+            if slot_index < 11:
+                header.append(f"empty_{slot_index * 5 + 5:03d}")
+        return header
+
+    def _make_buff_set_row(self, buff_set_data: Dict[str, object], column_count: int) -> List[str]:
+        """Build a 002_buff_set row from dialog data."""
+        min_columns = BUFF_SET_SLOT_STARTS[-1] + 4
+        row = [""] * max(column_count, min_columns)
+
+        def set_cell(index: int, value):
+            if 0 <= index < len(row):
+                row[index] = str(value)
+
+        set_cell(0, safe_evolution_int(buff_set_data.get("set_id"), 0))
+        set_cell(1, safe_evolution_int(buff_set_data.get("unknown_001"), -1))
+        set_cell(2, safe_evolution_int(buff_set_data.get("unknown_002"), 0))
+        set_cell(3, str(buff_set_data.get("unknown_003", "false")).lower())
+
+        for start in BUFF_SET_SLOT_STARTS:
+            set_cell(start, 0)
+            set_cell(start + 1, 0)
+            set_cell(start + 2, 0)
+            set_cell(start + 3, 0)
+
+        for slot_index, entry in enumerate(list(buff_set_data.get("effects", []))[:len(BUFF_SET_SLOT_STARTS)]):
+            start = BUFF_SET_SLOT_STARTS[slot_index]
+            set_cell(start, safe_evolution_int(entry.get("effect_id"), 0))
+            set_cell(start + 1, safe_evolution_int(entry.get("rate"), 0))
+            set_cell(start + 2, safe_evolution_int(entry.get("change_percent"), 0))
+            set_cell(start + 3, safe_evolution_int(entry.get("turn_override"), 0))
+
+        return row
+
+    def _save_buff_set_to_active_mod(self, buff_set_data: Dict[str, object]) -> Tuple[bool, Optional[Path], str]:
+        """Create or replace one 002_buff_set row in the active dsts-loader mod."""
+        import csv
+
+        data_root = self._active_skill_data_root()
+        if not data_root:
+            return False, None, "Load or create a Reloaded II mod first. Buff sets are written to the active mod, not Base/DLC files."
+
+        buff_set_file = self._buff_set_csv_path(data_root, prefer_ap=True)
+        buff_set_file.parent.mkdir(parents=True, exist_ok=True)
+        resolved_file = self._resolve_prefixed_file(buff_set_file)
+        if not resolved_file.exists():
+            resolved_file = buff_set_file
+
+        header = self._buff_set_header_for_save(resolved_file)
+        new_row = self._make_buff_set_row(buff_set_data, len(header))
+        set_id = str(safe_evolution_int(buff_set_data.get("set_id"), 0))
+
+        rows: List[List[str]] = []
+        if resolved_file.exists():
+            try:
+                with open(resolved_file, "r", encoding="utf-8", newline="") as f:
+                    reader = csv.reader(f)
+                    existing_header = next(reader, None)
+                    if existing_header:
+                        header = existing_header
+                    rows = [row for row in reader if any(cell.strip() for cell in row)]
+            except PermissionError:
+                return False, resolved_file, "Could not read the buff-set CSV. Close any CSV editor tab that has it open, then try again."
+
+        merged_rows: List[List[str]] = []
+        replaced = False
+        for row in rows:
+            if self._csv_cell(row, 0) == set_id:
+                if not replaced:
+                    merged_rows.append(new_row)
+                replaced = True
+                continue
+            merged_rows.append(row)
+        if not replaced:
+            merged_rows.append(new_row)
+
+        try:
+            with open(resolved_file, "w", encoding="utf-8", newline="") as f:
+                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
+                writer.writerow(header)
+                writer.writerows(merged_rows)
+        except PermissionError:
+            return False, resolved_file, "Could not write the buff-set CSV. Close any CSV editor tab that has it open, then try again."
+        except Exception as exc:
+            return False, resolved_file, f"Could not write the buff-set CSV:\n{exc}"
+
+        self._buff_set_cache.clear()
+        return True, resolved_file, "Updated" if replaced else "Created"
+
+    def open_buff_set_creator(self):
+        """Open the active-mod buff-set creator."""
+        active_root = self._active_dsts_loader_root()
+        if not active_root:
+            QMessageBox.warning(
+                self,
+                "No Active Mod",
+                "Load a Reloaded II mod first, then create the buff set in its dsts-loader payload."
+            )
+            return
+
+        target_file = self._buff_set_csv_path(self._active_skill_data_root(), prefer_ap=True)
+        dialog = BuffSetCreatorDialog(
+            self,
+            self._available_buff_effect_options(),
+            self._next_custom_buff_set_id(),
+            self._all_known_buff_set_ids(),
+            str(target_file),
+        )
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+
+        buff_set_data = dialog.buff_set_data()
+        success, output_file, message = self._save_buff_set_to_active_mod(buff_set_data)
+        if not success:
+            QMessageBox.warning(self, "Buff Set Not Saved", message)
+            return
+
+        set_id = safe_evolution_int(buff_set_data.get("set_id"), 0)
+        self.populate_buff_set_combos()
+
+        assigned_slot = None
+        for index, widget in enumerate(getattr(self, "buff_set_widgets", [])):
+            if widget.value() == 0:
+                widget.setValue(set_id)
+                assigned_slot = index + 1
+                break
+
+        slot_message = f"\n\nAssigned to Buff Set slot {assigned_slot}." if assigned_slot else "\n\nNo empty skill buff slot was available, so the set was only created."
+        QMessageBox.information(
+            self,
+            "Buff Set Saved",
+            f"{message} buff set {set_id}.\n\nFile:\n{output_file}{slot_message}"
+        )
+
     def populate_buff_set_combos(self):
         """Populate each buff-set picker from current active/base/DLC data."""
         if not hasattr(self, "buff_set_combos"):
@@ -15054,6 +15488,25 @@ def main():
         QComboBox, QListWidget, QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox {
             color: #333333;
             background-color: white;
+        }
+        QComboBox {
+            padding-right: 42px;
+        }
+        QComboBox::drop-down {
+            subcontrol-origin: padding;
+            subcontrol-position: top right;
+            width: 30px;
+            border-left: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+        }
+        QComboBox::down-arrow {
+            image: none;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #667eea;
+            margin-right: 8px;
         }
         QComboBox QAbstractItemView {
             color: #333333;
