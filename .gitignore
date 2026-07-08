@@ -3,6 +3,7 @@ __pycache__/
 *.pyo
 *.log
 *.tmp
+DigiTS_Helper_Paths.json
 
 build/
 dist/

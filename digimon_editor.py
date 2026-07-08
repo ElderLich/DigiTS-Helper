@@ -29,6 +29,9 @@ from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
 
 DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
 DEFAULT_EXTRACTED_GAME_PATH = Path(r"D:\Digimon Modding\Time Stranger Extracted")
+PATH_SETTINGS_FILE_NAME = "DigiTS_Helper_Paths.json"
+PATH_SETTINGS_MODS_KEY = "reloaded_mods_path"
+PATH_SETTINGS_EXTRACTED_KEY = "extracted_game_path"
 FIELD_GUIDE_ID_COLUMN = 131
 FIELD_GUIDE_CHR_ID_COLUMN = 3
 FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
@@ -46,16 +49,101 @@ STATUS_REFERENCE_ID_COLUMN = 132
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
 DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
 DSTS_LOADER_DIR_NAMES = {"dsts-loader", "dts-loader"}
+_PATH_SETTINGS_CACHE: Optional[Dict[str, str]] = None
+
+
+def get_app_settings_dir() -> Path:
+    """Return the folder where portable per-PC settings should be stored."""
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
+def get_path_settings_file() -> Path:
+    """Return the user-editable path settings JSON beside the editor."""
+    return get_app_settings_dir() / PATH_SETTINGS_FILE_NAME
+
+
+def load_path_settings() -> Dict[str, str]:
+    """Load per-PC paths while preserving hardcoded defaults as fallback."""
+    global _PATH_SETTINGS_CACHE
+    if _PATH_SETTINGS_CACHE is not None:
+        return dict(_PATH_SETTINGS_CACHE)
+
+    config_path = get_path_settings_file()
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        data = {}
+    except Exception as exc:
+        print(f"Could not load path settings {config_path}: {exc}")
+        data = {}
+
+    if not isinstance(data, dict):
+        data = {}
+
+    _PATH_SETTINGS_CACHE = {
+        key: str(value).strip()
+        for key, value in data.items()
+        if isinstance(value, str) and value.strip()
+    }
+    return dict(_PATH_SETTINGS_CACHE)
+
+
+def save_path_settings(settings: Dict[str, str]):
+    """Persist per-PC path settings."""
+    global _PATH_SETTINGS_CACHE
+    config_path = get_path_settings_file()
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    clean_settings = {
+        key: str(value).strip()
+        for key, value in settings.items()
+        if str(value).strip()
+    }
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(clean_settings, f, indent=2)
+        f.write("\n")
+    _PATH_SETTINGS_CACHE = dict(clean_settings)
+
+
+def config_path_from_text(value: str, fallback: Path) -> Path:
+    """Convert a settings value to a Path without requiring it to exist yet."""
+    text = str(value or "").strip()
+    if not text:
+        return fallback
+    return Path(os.path.expandvars(text)).expanduser()
+
+
+def get_configured_path(key: str, fallback: Path) -> Path:
+    """Return a configured path or its fallback default."""
+    return config_path_from_text(load_path_settings().get(key, ""), fallback)
+
+
+def get_default_extracted_game_path() -> Path:
+    """Return the configured extracted Time Stranger folder."""
+    return get_configured_path(PATH_SETTINGS_EXTRACTED_KEY, DEFAULT_EXTRACTED_GAME_PATH)
+
+
+def get_existing_directory_start(path: Path) -> Path:
+    """Return an existing folder suitable for file-dialog start paths."""
+    current = Path(path).expanduser()
+    while current and not current.exists():
+        parent = current.parent
+        if parent == current:
+            return Path.cwd()
+        current = parent
+    return current if current.exists() else Path.cwd()
 
 
 def get_default_mod_loader_path() -> Path:
-    """Return the preferred folder shown by dsts-loader/mod loader file dialogs."""
-    return DEFAULT_MOD_LOADER_PATH if DEFAULT_MOD_LOADER_PATH.exists() else Path.cwd()
+    """Return the configured Reloaded II Mods folder."""
+    return get_configured_path(PATH_SETTINGS_MODS_KEY, DEFAULT_MOD_LOADER_PATH)
 
 
 def get_mvgl_fileloader_cache_path() -> Path:
     """Return MVGL FileLoader's generated cache for Time Stranger."""
-    return DEFAULT_MOD_LOADER_PATH / "MVGL.FileLoader.Reloaded" / "cached" / RELOADED_SUPPORTED_APP_ID
+    return get_default_mod_loader_path() / "MVGL.FileLoader.Reloaded" / "cached" / RELOADED_SUPPORTED_APP_ID
 
 
 def debug_log(message: str) -> None:
@@ -359,15 +447,16 @@ def collect_field_guide_usage(
         print(f"Could not scan DLC field guide IDs: {exc}")
 
     try:
-        if DEFAULT_MOD_LOADER_PATH.exists():
-            for status_file in DEFAULT_MOD_LOADER_PATH.rglob("*.ap.csv"):
+        mods_root = get_default_mod_loader_path()
+        if mods_root.exists():
+            for status_file in mods_root.rglob("*.ap.csv"):
                 if status_file.parent.name != "digimon_status.mbe":
                     continue
                 if not status_file.name.endswith("digimon_status_data.ap.csv"):
                     continue
 
                 try:
-                    mod_name = status_file.relative_to(DEFAULT_MOD_LOADER_PATH).parts[0]
+                    mod_name = status_file.relative_to(mods_root).parts[0]
                 except ValueError:
                     mod_name = status_file.parent.name
 
@@ -1093,7 +1182,7 @@ class DigimonCreationWizard(QWizard):
         export_dir = QFileDialog.getExistingDirectory(
             self,
             "Select Reloaded II Mod or dsts-loader Directory",
-            str(default_path),
+            str(get_existing_directory_start(default_path)),
             QFileDialog.Option.ShowDirsOnly
         )
 
@@ -3948,6 +4037,148 @@ class DigimonEditor(QMainWindow):
             if label_text.endswith(" *"):
                 self.current_digimon_label.setText(label_text[:-2])
 
+    def refresh_path_settings_ui(self, update_extract_field: bool = False):
+        """Update labels/tooltips that show configured shared paths."""
+        mods_path = get_default_mod_loader_path()
+        extracted_path = get_default_extracted_game_path()
+        settings_file = get_path_settings_file()
+
+        if hasattr(self, "export_dlc_button"):
+            self.export_dlc_button.setToolTip(
+                "Create or copy into a Reloaded II mod folder with ModConfig.json and dsts-loader files.\n"
+                "For an imported mod, Save to Loaded Source is enough when you only want to update the same mod.\n"
+                f"Configured Mods folder: {mods_path}"
+            )
+
+        if hasattr(self, "export_button"):
+            self.export_button.setToolTip(
+                "Export CSV files\n"
+                f"Folder picker starts at: {mods_path}\n"
+                "WARNING: This will DELETE and replace all existing files in the destination directory!\n"
+                "Only data currently in your DLC folder will be exported."
+            )
+
+        if hasattr(self, "configure_paths_button"):
+            self.configure_paths_button.setToolTip(
+                "Configure per-PC paths used by imports, exports, related assets, and cache cleanup.\n\n"
+                f"Reloaded II Mods:\n{mods_path}\n\n"
+                f"Extracted Game Folder:\n{extracted_path}\n\n"
+                f"Settings file:\n{settings_file}"
+            )
+
+        if update_extract_field and hasattr(self, "related_extract_path_edit"):
+            self.related_extract_path_edit.setText(str(extracted_path))
+
+    def configure_paths(self):
+        """Open the per-PC path settings dialog."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Configure Paths")
+        dialog.setMinimumWidth(760)
+
+        layout = QVBoxLayout(dialog)
+        info = QLabel(
+            "Set these folders for this PC. They are saved in a local JSON file beside DigiTS Helper, "
+            "so shared copies of the editor do not need hardcoded personal paths."
+        )
+        info.setWordWrap(True)
+        info.setStyleSheet("color: #555; padding: 10px; background-color: #eef4ff; border-radius: 6px;")
+        layout.addWidget(info)
+
+        form = QGridLayout()
+        form.setColumnStretch(1, 1)
+        form.setHorizontalSpacing(8)
+        form.setVerticalSpacing(10)
+
+        mods_path_edit = QLineEdit(str(get_default_mod_loader_path()))
+        mods_path_edit.setPlaceholderText(str(DEFAULT_MOD_LOADER_PATH))
+        mods_path_edit.setToolTip("Folder containing Reloaded II mod folders, for example ...\\Reloaded II\\Mods")
+
+        extracted_path_edit = QLineEdit(str(get_default_extracted_game_path()))
+        extracted_path_edit.setPlaceholderText(str(DEFAULT_EXTRACTED_GAME_PATH))
+        extracted_path_edit.setToolTip("Root extracted Time Stranger folder containing app_0.dx11, patch.dx11, and DLC folders")
+
+        def browse_path(line_edit: QLineEdit, title: str):
+            start = get_existing_directory_start(config_path_from_text(line_edit.text(), Path.cwd()))
+            selected = QFileDialog.getExistingDirectory(
+                dialog,
+                title,
+                str(start),
+                QFileDialog.Option.ShowDirsOnly
+            )
+            if selected:
+                line_edit.setText(selected)
+
+        mods_browse = QPushButton("Browse...")
+        mods_browse.clicked.connect(lambda: browse_path(mods_path_edit, "Select Reloaded II Mods Folder"))
+        extracted_browse = QPushButton("Browse...")
+        extracted_browse.clicked.connect(lambda: browse_path(extracted_path_edit, "Select Extracted Time Stranger Folder"))
+
+        form.addWidget(QLabel("Reloaded II Mods:"), 0, 0)
+        form.addWidget(mods_path_edit, 0, 1)
+        form.addWidget(mods_browse, 0, 2)
+        form.addWidget(QLabel("Extracted Game Folder:"), 1, 0)
+        form.addWidget(extracted_path_edit, 1, 1)
+        form.addWidget(extracted_browse, 1, 2)
+        layout.addLayout(form)
+
+        settings_path_label = QLabel(f"Settings file: {get_path_settings_file()}")
+        settings_path_label.setWordWrap(True)
+        settings_path_label.setStyleSheet("color: #666; font-size: 9pt;")
+        layout.addWidget(settings_path_label)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        defaults_button = buttons.addButton("Use Defaults", QDialogButtonBox.ButtonRole.ResetRole)
+        defaults_button.clicked.connect(lambda: (
+            mods_path_edit.setText(str(DEFAULT_MOD_LOADER_PATH)),
+            extracted_path_edit.setText(str(DEFAULT_EXTRACTED_GAME_PATH))
+        ))
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+
+        mods_text = mods_path_edit.text().strip()
+        extracted_text = extracted_path_edit.text().strip()
+        if not mods_text or not extracted_text:
+            QMessageBox.warning(dialog, "Missing Path", "Both paths need a value.")
+            return
+
+        mods_path = config_path_from_text(mods_text, DEFAULT_MOD_LOADER_PATH)
+        extracted_path = config_path_from_text(extracted_text, DEFAULT_EXTRACTED_GAME_PATH)
+
+        missing = []
+        if not mods_path.exists():
+            missing.append(f"Reloaded II Mods:\n{mods_path}")
+        if not extracted_path.exists():
+            missing.append(f"Extracted Game Folder:\n{extracted_path}")
+        if missing:
+            reply = QMessageBox.question(
+                dialog,
+                "Path Does Not Exist",
+                "These paths do not exist yet:\n\n"
+                + "\n\n".join(missing)
+                + "\n\nSave them anyway?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No
+            )
+            if reply != QMessageBox.StandardButton.Yes:
+                return
+
+        try:
+            save_path_settings({
+                PATH_SETTINGS_MODS_KEY: str(mods_path),
+                PATH_SETTINGS_EXTRACTED_KEY: str(extracted_path),
+            })
+        except Exception as exc:
+            QMessageBox.warning(self, "Save Failed", f"Could not save path settings:\n\n{exc}")
+            return
+
+        self._invalidate_evolution_picker_cache()
+        self.refresh_path_settings_ui(update_extract_field=True)
+        QMessageBox.information(self, "Paths Saved", "Path settings saved successfully.")
+
     def validate_digimon_uniqueness(self, original_id: int, original_chr_id: str, original_char_key: str = "") -> bool:
         """Validate that ID, Chr ID, and Character Key are unique."""
         new_id = self.current_digimon.id
@@ -4724,6 +4955,27 @@ class DigimonEditor(QMainWindow):
         layout.addLayout(button_layout)
         layout.addStretch()
 
+        self.configure_paths_button = QPushButton("⚙️ Configure Paths")
+        self.configure_paths_button.clicked.connect(self.configure_paths)
+        self.configure_paths_button.setMinimumHeight(42)
+        self.configure_paths_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f8f9fa;
+                color: #333333;
+                border: 2px solid #adb5bd;
+                border-radius: 8px;
+                padding: 10px 14px;
+                font-weight: bold;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                border-color: #667eea;
+                background-color: #eef4ff;
+            }
+        """)
+        layout.addWidget(self.configure_paths_button)
+        self.refresh_path_settings_ui()
+
         return panel
 
     def create_right_panel(self) -> QWidget:
@@ -5257,7 +5509,7 @@ class DigimonEditor(QMainWindow):
         related_path_layout = QHBoxLayout(related_path_widget)
         related_path_layout.setContentsMargins(0, 0, 0, 0)
         related_path_layout.setSpacing(8)
-        self.related_extract_path_edit = QLineEdit(str(DEFAULT_EXTRACTED_GAME_PATH))
+        self.related_extract_path_edit = QLineEdit(str(get_default_extracted_game_path()))
         self.related_extract_path_edit.setToolTip("Root folder that contains app_0.dx11, patch.dx11, and extracted asset folders.")
         related_path_layout.addWidget(self.related_extract_path_edit, 1)
         browse_related_button = QPushButton("Browse...")
@@ -7876,7 +8128,7 @@ class DigimonEditor(QMainWindow):
         """Choose the extracted Time Stranger folder used for asset imports."""
         start_path = self.related_extract_path_edit.text().strip() if hasattr(self, "related_extract_path_edit") else ""
         if not start_path:
-            start_path = str(DEFAULT_EXTRACTED_GAME_PATH if DEFAULT_EXTRACTED_GAME_PATH.exists() else Path.cwd())
+            start_path = str(get_existing_directory_start(get_default_extracted_game_path()))
 
         selected_dir = QFileDialog.getExistingDirectory(
             self,
@@ -8106,7 +8358,11 @@ class DigimonEditor(QMainWindow):
         if not source_entry:
             return {"ok": False, "error": "Select a source Digimon first."}
 
-        extracted_root = Path(self.related_extract_path_edit.text().strip()) if hasattr(self, "related_extract_path_edit") else DEFAULT_EXTRACTED_GAME_PATH
+        extracted_root = (
+            Path(self.related_extract_path_edit.text().strip())
+            if hasattr(self, "related_extract_path_edit")
+            else get_default_extracted_game_path()
+        )
         if not extracted_root.exists():
             return {"ok": False, "error": f"Extracted folder not found:\n{extracted_root}"}
 
@@ -8464,7 +8720,7 @@ class DigimonEditor(QMainWindow):
             selected_dir = QFileDialog.getExistingDirectory(
                 self,
                 "Select Reloaded II Mod or dsts-loader Directory for .geom Texture Rename",
-                str(get_default_mod_loader_path()),
+                str(get_existing_directory_start(get_default_mod_loader_path())),
                 QFileDialog.Option.ShowDirsOnly
             )
             if not selected_dir:
@@ -8514,7 +8770,7 @@ class DigimonEditor(QMainWindow):
             selected_dir = QFileDialog.getExistingDirectory(
                 self,
                 "Select Reloaded II Mod or dsts-loader Directory for Related Files",
-                str(get_default_mod_loader_path()),
+                str(get_existing_directory_start(get_default_mod_loader_path())),
                 QFileDialog.Option.ShowDirsOnly
             )
             if not selected_dir:
@@ -9779,7 +10035,7 @@ class DigimonEditor(QMainWindow):
         loader_dir = QFileDialog.getExistingDirectory(
             self,
             "Select Reloaded II Mod or dsts-loader Directory",
-            str(default_path),
+            str(get_existing_directory_start(default_path)),
             QFileDialog.Option.ShowDirsOnly
         )
 
@@ -9795,7 +10051,7 @@ class DigimonEditor(QMainWindow):
                 "No Files Found",
                 "No .ap.csv files found in this folder or its dsts-loader child.\n\n"
                 "You can select either the Reloaded II mod folder, for example:\n"
-                f"{DEFAULT_MOD_LOADER_PATH / 'Youkomon'}\n\n"
+                f"{get_default_mod_loader_path() / 'Youkomon'}\n\n"
                 "or the inner dsts-loader folder."
             )
             return
@@ -10878,7 +11134,7 @@ class DigimonEditor(QMainWindow):
             return ""
 
         try:
-            allowed_root = (DEFAULT_MOD_LOADER_PATH / "MVGL.FileLoader.Reloaded" / "cached").resolve()
+            allowed_root = (get_default_mod_loader_path() / "MVGL.FileLoader.Reloaded" / "cached").resolve()
             resolved_cache = cache_path.resolve()
             if resolved_cache != allowed_root and allowed_root not in resolved_cache.parents:
                 raise RuntimeError(f"Refusing to clear unexpected cache path: {resolved_cache}")
@@ -10991,7 +11247,7 @@ class DigimonEditor(QMainWindow):
             loader_dir = QFileDialog.getExistingDirectory(
                 self,
                 "Select Reloaded II Mod or dsts-loader Directory to Save To",
-                str(default_path),
+                str(get_existing_directory_start(default_path)),
                 QFileDialog.Option.ShowDirsOnly
             )
 
@@ -12128,7 +12384,7 @@ class DigimonEditor(QMainWindow):
         directory = QFileDialog.getExistingDirectory(
             self,
             "Select Export Directory",
-            str(get_default_mod_loader_path())
+            str(get_existing_directory_start(get_default_mod_loader_path()))
         )
         if directory:
             from pathlib import Path
