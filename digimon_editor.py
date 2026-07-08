@@ -10659,6 +10659,37 @@ class DigimonEditor(QMainWindow):
         status_dir = dsts_loader_root / "patch" / "data" / "digimon_status.mbe"
         return sorted(status_dir.glob("*.ap.csv")) if status_dir.exists() else []
 
+    def _dsts_loader_ap_csv_files(self, dsts_loader_root: Path) -> List[Path]:
+        """Return .ap.csv files from known dsts-loader payload areas."""
+        root = Path(dsts_loader_root)
+        if not root.exists() or not root.is_dir():
+            return []
+
+        search_roots = [root / "patch", root / "app_0"]
+        search_roots.extend(root / folder for folder, _language_name in TEXT_LANGUAGE_FOLDERS)
+
+        files: List[Path] = []
+        for search_root in search_roots:
+            if search_root.exists() and search_root.is_dir():
+                files.extend(sorted(search_root.rglob("*.ap.csv")))
+        return files
+
+    def _looks_like_dsts_loader_root(self, dsts_loader_root: Path) -> bool:
+        """Return True when a folder appears to be a dsts-loader payload root."""
+        root = Path(dsts_loader_root)
+        if not root.exists() or not root.is_dir():
+            return False
+        if self._dsts_loader_status_files(root):
+            return True
+
+        has_known_payload_area = (
+            root.name.lower() in DSTS_LOADER_DIR_NAMES
+            or (root / "patch").exists()
+            or (root / "app_0").exists()
+            or any((root / folder).exists() for folder, _language_name in TEXT_LANGUAGE_FOLDERS)
+        )
+        return has_known_payload_area and bool(self._dsts_loader_ap_csv_files(root))
+
     def _dsts_loader_evolution_files(self, dsts_loader_root: Path) -> List[Path]:
         """Return evolution_to .ap.csv files for a normalized dsts-loader payload root."""
         evolution_dir = dsts_loader_root / "patch" / "data" / "evolution.mbe"
@@ -10724,8 +10755,18 @@ class DigimonEditor(QMainWindow):
             for loader_name in DSTS_LOADER_DIR_NAMES:
                 add_candidate(parent / loader_name)
 
+        if selected.exists() and selected.is_dir():
+            child_payloads: List[Path] = []
+            for child in sorted((path for path in selected.iterdir() if path.is_dir()), key=lambda path: path.name.casefold()):
+                for loader_name in DSTS_LOADER_DIR_NAMES:
+                    child_payload = child / loader_name
+                    if self._looks_like_dsts_loader_root(child_payload):
+                        child_payloads.append(child_payload)
+            if len(child_payloads) == 1:
+                add_candidate(child_payloads[0])
+
         for candidate in candidates:
-            if self._dsts_loader_status_files(candidate):
+            if self._looks_like_dsts_loader_root(candidate):
                 return candidate
 
         if not allow_create:
@@ -10900,6 +10941,11 @@ class DigimonEditor(QMainWindow):
 
         # Ask user to select either the Reloaded II mod root or its dsts-loader payload.
         default_path = get_default_mod_loader_path()
+        active_mod_root = getattr(self, "active_reloaded_mod_root", None)
+        if active_mod_root:
+            active_mod_parent = Path(active_mod_root).parent
+            if active_mod_parent.exists():
+                default_path = active_mod_parent
 
         loader_dir = QFileDialog.getExistingDirectory(
             self,
@@ -10918,10 +10964,10 @@ class DigimonEditor(QMainWindow):
             QMessageBox.warning(
                 self,
                 "No Files Found",
-                "No .ap.csv files found in this folder or its dsts-loader child.\n\n"
-                "You can select either the Reloaded II mod folder, for example:\n"
+                "No dsts-loader payload was found in this folder.\n\n"
+                "Select a specific Reloaded II mod folder, for example:\n"
                 f"{get_default_mod_loader_path() / 'Youkomon'}\n\n"
-                "or the inner dsts-loader folder."
+                "or select the inner dsts-loader folder."
             )
             return
 
