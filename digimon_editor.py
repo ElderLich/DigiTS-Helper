@@ -57,6 +57,22 @@ STATUS_REFERENCE_ID_COLUMN = 132
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
 DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
 DSTS_LOADER_DIR_NAMES = {"dsts-loader", "dts-loader"}
+TEXT_LANGUAGE_FOLDERS = (
+    ("patch_text00", "Japanese"),
+    ("patch_text01", "English"),
+    ("patch_text02", "French"),
+    ("patch_text03", "Spanish"),
+    ("patch_text04", "German"),
+    ("patch_text05", "Italian"),
+    ("patch_text07", "Brazilian Portuguese"),
+    ("patch_text09", "Korean"),
+    ("patch_text10", "Chinese Traditional"),
+    ("patch_text11", "Chinese Simplified"),
+    ("patch_text30", "Spanish Alternate"),
+)
+TEXT_LANGUAGE_LABELS = dict(TEXT_LANGUAGE_FOLDERS)
+TEXT_LANGUAGE_FOLDER_RE = re.compile(r"^patch_text(?P<code>\d+)$")
+ENGLISH_TEXT_FOLDER = "patch_text01"
 _PATH_SETTINGS_CACHE: Optional[Dict[str, str]] = None
 
 
@@ -1844,24 +1860,29 @@ class DigimonCreationWizard(QWizard):
                 ]
                 f.write(','.join(parts) + '\n')
 
-    def _write_char_name_ap_csv(self, filepath: Path, digimon: DigimonData):
+    def _write_char_name_ap_csv(self, filepath: Path, digimon: DigimonData, name_text: Optional[str] = None):
         """Write char_name.ap.csv"""
         import csv
 
         header = 'string2 0,string 1'
+        display_name = digimon.name if name_text is None else name_text
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
             # Use csv.writer to properly handle special characters
             writer = csv.writer(f, quoting=csv.QUOTE_ALL)
-            writer.writerow([digimon.char_key, digimon.name])
+            writer.writerow([digimon.char_key, display_name])
 
-    def _write_profile_ap_csv(self, filepath: Path, digimon: DigimonData):
+    def _write_profile_ap_csv(self, filepath: Path, digimon: DigimonData, profile_text: Optional[str] = None, name_text: Optional[str] = None):
         """Write digimon_profile.ap.csv"""
         import csv
 
         header = 'string2 0,string 1'
-        profile = digimon.profile_text if digimon.profile_text else f"A mysterious Digimon known as {digimon.name}."
+        fallback_name = digimon.name if name_text is None else name_text
+        if profile_text is None:
+            profile = digimon.profile_text if digimon.profile_text else f"A mysterious Digimon known as {fallback_name}."
+        else:
+            profile = profile_text
         profile = format_profile_text_for_game(profile)
 
         profile_key = digimon_profile_key(digimon.id)
@@ -1943,16 +1964,17 @@ class DigimonCreationWizard(QWizard):
                 if target_id > 0:
                     f.write(','.join(condition_row(target_id, condition)) + '\n')
 
-    def _write_belong_ap_csv(self, filepath: Path, digimon: DigimonData):
+    def _write_belong_ap_csv(self, filepath: Path, digimon: DigimonData, tribe_name: Optional[str] = None):
         """Write belong.ap.csv (tribe/species classification)"""
         import csv
 
         header = 'string2 0,string 1'
 
         # Use the tribe_name if available, otherwise fallback to "Unknown"
-        tribe_name = "Unknown"
-        if hasattr(digimon, 'tribe_name') and digimon.tribe_name:
-            tribe_name = digimon.tribe_name
+        if tribe_name is None:
+            tribe_name = "Unknown"
+            if hasattr(digimon, 'tribe_name') and digimon.tribe_name:
+                tribe_name = digimon.tribe_name
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
@@ -4199,7 +4221,9 @@ class DigimonEditor(QMainWindow):
         self._auto_loaded_mod_roots: Set[str] = set()
         self._status_ref_user_edited = False
         self._syncing_status_reference = False
+        self._syncing_multilanguage_ui = False
         self._loading_digimon_form = False
+        self.localized_text_widgets: Dict[str, Dict[str, QWidget]] = {}
         self.setup_ui()
         self.connect_change_signals()
         self.load_digimon_list()
@@ -4433,11 +4457,14 @@ class DigimonEditor(QMainWindow):
         self.char_key_edit.textChanged.connect(self.mark_as_modified)
         self.chr_id_edit.textChanged.connect(self.mark_as_modified)
         self.name_edit.textChanged.connect(self.mark_as_modified)
+        self.name_edit.textChanged.connect(self.sync_english_text_from_basic_info)
         self.stage_combo.currentIndexChanged.connect(self.mark_as_modified)
         self.type_combo.currentIndexChanged.connect(self.mark_as_modified)
         self.personality_combo.currentIndexChanged.connect(self.mark_as_modified)
         self.tribe_combo.currentIndexChanged.connect(self.mark_as_modified)
+        self.tribe_combo.currentIndexChanged.connect(self.sync_english_text_from_basic_info)
         self.profile_text_edit.textChanged.connect(self.mark_as_modified)
+        self.profile_text_edit.textChanged.connect(self.sync_english_text_from_basic_info)
         self.profile_text_edit.textChanged.connect(self.update_profile_text_stats)
         self.field_guide_id_spin.valueChanged.connect(self.mark_as_modified)
         self.field_guide_id_spin.valueChanged.connect(self.sync_status_reference_to_current_id)
@@ -5247,6 +5274,10 @@ class DigimonEditor(QMainWindow):
         self.battle_tab = self.create_battle_tab()
         self.tab_widget.addTab(self.battle_tab, "⚔️ Battle Data")
 
+        # Multi Language Tab
+        self.multi_language_tab = self.create_multi_language_tab()
+        self.tab_widget.addTab(self.multi_language_tab, "🌐 Multi Language")
+
         layout.addWidget(self.tab_widget)
 
         return panel
@@ -5423,6 +5454,322 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(profile_group, 1)
 
         return tab
+
+    def create_multi_language_tab(self) -> QWidget:
+        """Create localized name/profile/belong text tab."""
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(10)
+
+        self.localized_text_widgets = {}
+        self.localized_text_tab_widget = QTabWidget()
+
+        for folder, language_name in TEXT_LANGUAGE_FOLDERS:
+            page = QWidget()
+            page_layout = QVBoxLayout(page)
+            page_layout.setSpacing(10)
+
+            text_group = QGroupBox(f"{folder} - {language_name}")
+            text_layout = QGridLayout(text_group)
+            text_layout.setSpacing(10)
+
+            name_label = QLabel("Name:")
+            name_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+            text_layout.addWidget(name_label, 0, 0)
+            name_edit = QLineEdit()
+            text_layout.addWidget(name_edit, 0, 1)
+
+            belong_label = QLabel("Belong:")
+            belong_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+            text_layout.addWidget(belong_label, 1, 0)
+            belong_edit = QLineEdit()
+            text_layout.addWidget(belong_edit, 1, 1)
+
+            profile_label = QLabel("Profile:")
+            profile_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+            text_layout.addWidget(profile_label, 2, 0, Qt.AlignmentFlag.AlignTop)
+            profile_edit = QTextEdit()
+            profile_edit.setMinimumHeight(260)
+            profile_edit.setStyleSheet("""
+                QTextEdit {
+                    background-color: white;
+                    border: 2px solid #dee2e6;
+                    border-radius: 6px;
+                    padding: 10px;
+                    font-size: 10pt;
+                    color: #495057;
+                }
+                QTextEdit:focus {
+                    border-color: #84fab0;
+                    background-color: #f8f9fa;
+                }
+            """)
+            text_layout.addWidget(profile_edit, 2, 1)
+
+            page_layout.addWidget(text_group, 1)
+
+            tools_layout = QHBoxLayout()
+            format_button = QPushButton("Format Text")
+            format_button.setMinimumWidth(120)
+            format_button.setToolTip("Wrap this localized profile for the in-game profile panel")
+            format_button.clicked.connect(
+                lambda _checked=False, folder=folder: self.format_localized_profile_text(folder)
+            )
+            format_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #2c9558;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 8px 14px;
+                    font-weight: bold;
+                    font-size: 10pt;
+                }
+                QPushButton:hover {
+                    background-color: #247a49;
+                }
+                QPushButton:pressed {
+                    background-color: #1d633b;
+                }
+            """)
+            tools_layout.addWidget(format_button)
+            tools_layout.addStretch()
+
+            stats_label = QLabel("")
+            stats_label.setStyleSheet("color: #666; font-size: 9pt;")
+            tools_layout.addWidget(stats_label)
+            page_layout.addLayout(tools_layout)
+
+            self.localized_text_widgets[folder] = {
+                "name": name_edit,
+                "tribe_name": belong_edit,
+                "profile_text": profile_edit,
+                "stats_label": stats_label,
+            }
+
+            name_edit.textChanged.connect(
+                lambda _text, folder=folder: self.on_localized_text_changed(folder)
+            )
+            belong_edit.textChanged.connect(
+                lambda _text, folder=folder: self.on_localized_text_changed(folder)
+            )
+            profile_edit.textChanged.connect(
+                lambda folder=folder: self.on_localized_text_changed(folder)
+            )
+
+            self.localized_text_tab_widget.addTab(page, self._localized_tab_title(folder))
+
+        layout.addWidget(self.localized_text_tab_widget)
+
+        return tab
+
+    def _localized_tab_title(self, folder: str) -> str:
+        """Return a compact language tab label."""
+        language_name = TEXT_LANGUAGE_LABELS.get(folder, "Language")
+        code = folder.replace("patch_text", "")
+        return f"{code} {language_name}"
+
+    def on_localized_text_changed(self, folder: str):
+        """React to edits in one localized text page."""
+        self.update_localized_profile_stats(folder)
+        if getattr(self, "_loading_digimon_form", False) or getattr(self, "_syncing_multilanguage_ui", False):
+            return
+        if folder == ENGLISH_TEXT_FOLDER:
+            self.sync_basic_info_from_english_text()
+        self.mark_as_modified()
+
+    def format_localized_profile_text(self, folder: str):
+        """Wrap one localized profile text field to the game profile width."""
+        widgets = getattr(self, "localized_text_widgets", {}).get(folder)
+        if not widgets:
+            return
+        profile_edit = widgets["profile_text"]
+        formatted_text = format_profile_text_for_game(profile_edit.toPlainText())
+        if formatted_text != profile_edit.toPlainText():
+            profile_edit.setPlainText(formatted_text)
+            self.mark_as_modified()
+        self.update_localized_profile_stats(folder)
+
+    def update_localized_profile_stats(self, folder: str):
+        """Update the line stats label for one localized profile."""
+        widgets = getattr(self, "localized_text_widgets", {}).get(folder)
+        if not widgets:
+            return
+        profile_edit = widgets["profile_text"]
+        stats_label = widgets["stats_label"]
+        text = profile_edit.toPlainText()
+        lines = text.splitlines() or [""]
+        longest_line = max(len(line) for line in lines)
+        stats_label.setText(f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}")
+        stats_label.setStyleSheet(
+            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+        )
+
+    def _normalize_text_folder_name(self, folder: str) -> str:
+        """Normalize text language ids to patch_textXX folder names."""
+        text = str(folder or "").strip()
+        if not text:
+            return ""
+        match = TEXT_LANGUAGE_FOLDER_RE.match(text)
+        if not match:
+            digits = re.search(r"(\d+)$", text)
+            if not digits:
+                return ""
+            code = digits.group(1)
+        else:
+            code = match.group("code")
+        if len(code) == 1:
+            code = code.zfill(2)
+        return f"patch_text{code}"
+
+    def _language_sort_key(self, folder: str) -> Tuple[int, str]:
+        """Sort text language folders by numeric suffix."""
+        normalized = self._normalize_text_folder_name(folder)
+        match = TEXT_LANGUAGE_FOLDER_RE.match(normalized)
+        if not match:
+            return (9999, normalized)
+        try:
+            return (int(match.group("code")), normalized)
+        except ValueError:
+            return (9999, normalized)
+
+    def _normalize_localized_text_map(self, localized_text) -> Dict[str, Dict[str, str]]:
+        """Normalize stored localized text maps from old or imported shapes."""
+        normalized: Dict[str, Dict[str, str]] = {}
+        if not isinstance(localized_text, dict):
+            return normalized
+
+        for raw_folder, raw_values in localized_text.items():
+            folder = self._normalize_text_folder_name(raw_folder)
+            if not folder or not isinstance(raw_values, dict):
+                continue
+
+            values = {
+                "name": str(raw_values.get("name", "") or ""),
+                "profile_text": str(raw_values.get("profile_text", raw_values.get("profile", "")) or ""),
+                "tribe_name": str(raw_values.get("tribe_name", raw_values.get("belong", "")) or ""),
+            }
+            normalized[folder] = values
+
+        return normalized
+
+    def _basic_info_language_payload(self) -> Dict[str, str]:
+        """Return the Basic Info tab's English text payload."""
+        tribe_name = self.tribe_combo.currentText() if self.tribe_combo.currentText() else "None"
+        return {
+            "name": self.name_edit.text(),
+            "profile_text": self.profile_text_edit.toPlainText(),
+            "tribe_name": tribe_name,
+        }
+
+    def sync_english_text_from_basic_info(self, *_args):
+        """Mirror Basic Info into the English localized tab."""
+        if (
+            getattr(self, "_loading_digimon_form", False)
+            or getattr(self, "_syncing_multilanguage_ui", False)
+            or ENGLISH_TEXT_FOLDER not in getattr(self, "localized_text_widgets", {})
+        ):
+            return
+
+        widgets = self.localized_text_widgets[ENGLISH_TEXT_FOLDER]
+        payload = self._basic_info_language_payload()
+        self._syncing_multilanguage_ui = True
+        try:
+            if widgets["name"].text() != payload["name"]:
+                widgets["name"].setText(payload["name"])
+            if widgets["tribe_name"].text() != payload["tribe_name"]:
+                widgets["tribe_name"].setText(payload["tribe_name"])
+            if widgets["profile_text"].toPlainText() != payload["profile_text"]:
+                widgets["profile_text"].setPlainText(payload["profile_text"])
+        finally:
+            self._syncing_multilanguage_ui = False
+        self.update_localized_profile_stats(ENGLISH_TEXT_FOLDER)
+
+    def sync_basic_info_from_english_text(self):
+        """Mirror the English localized tab back into Basic Info."""
+        widgets = getattr(self, "localized_text_widgets", {}).get(ENGLISH_TEXT_FOLDER)
+        if not widgets:
+            return
+
+        name = widgets["name"].text()
+        tribe_name = widgets["tribe_name"].text().strip()
+        profile_text = widgets["profile_text"].toPlainText()
+
+        self._syncing_multilanguage_ui = True
+        try:
+            if self.name_edit.text() != name:
+                self.name_edit.setText(name)
+            if tribe_name:
+                tribe_index = self.tribe_combo.findText(tribe_name)
+                if tribe_index < 0:
+                    self.tribe_combo.addItem(tribe_name)
+                    tribe_index = self.tribe_combo.findText(tribe_name)
+                if tribe_index >= 0 and self.tribe_combo.currentIndex() != tribe_index:
+                    self.tribe_combo.setCurrentIndex(tribe_index)
+            if self.profile_text_edit.toPlainText() != profile_text:
+                self.profile_text_edit.setPlainText(profile_text)
+        finally:
+            self._syncing_multilanguage_ui = False
+
+        self.update_profile_text_stats()
+
+    def load_multilanguage_text_tab(self, digimon: DigimonData):
+        """Load localized text values into the Multi Language tab."""
+        if not hasattr(self, "localized_text_widgets"):
+            return
+
+        localized_text = self._normalize_localized_text_map(getattr(digimon, "localized_text", {}))
+        english_values = dict(localized_text.get(ENGLISH_TEXT_FOLDER, {}))
+        if not english_values.get("name"):
+            english_values["name"] = getattr(digimon, "name", "")
+        if not english_values.get("profile_text"):
+            english_values["profile_text"] = getattr(digimon, "profile_text", "")
+        if not english_values.get("tribe_name"):
+            english_values["tribe_name"] = getattr(digimon, "tribe_name", "") or "None"
+        localized_text[ENGLISH_TEXT_FOLDER] = english_values
+        digimon.localized_text = localized_text
+
+        self._syncing_multilanguage_ui = True
+        try:
+            for folder, widgets in self.localized_text_widgets.items():
+                values = localized_text.get(folder, {})
+                widgets["name"].setText(values.get("name", ""))
+                widgets["tribe_name"].setText(values.get("tribe_name", ""))
+                widgets["profile_text"].setPlainText(values.get("profile_text", ""))
+        finally:
+            self._syncing_multilanguage_ui = False
+
+        for folder in self.localized_text_widgets:
+            self.update_localized_profile_stats(folder)
+
+    def collect_multilanguage_text_from_form(self):
+        """Collect localized text edits back onto the current Digimon."""
+        if not self.current_digimon or not hasattr(self, "localized_text_widgets"):
+            return
+
+        localized_text = self._normalize_localized_text_map(getattr(self.current_digimon, "localized_text", {}))
+
+        for folder, widgets in self.localized_text_widgets.items():
+            if folder == ENGLISH_TEXT_FOLDER:
+                values = self._basic_info_language_payload()
+            else:
+                values = {
+                    "name": widgets["name"].text().strip(),
+                    "profile_text": widgets["profile_text"].toPlainText(),
+                    "tribe_name": widgets["tribe_name"].text().strip(),
+                }
+
+            has_text = any(str(value).strip() for value in values.values())
+            if has_text or folder in localized_text:
+                localized_text[folder] = values
+            else:
+                localized_text.pop(folder, None)
+
+        english_values = self._basic_info_language_payload()
+        if any(str(value).strip() for value in english_values.values()):
+            localized_text[ENGLISH_TEXT_FOLDER] = english_values
+
+        self.current_digimon.localized_text = localized_text
 
     def create_stats_tab(self) -> QWidget:
         """Create stats tab"""
@@ -9715,7 +10062,6 @@ class DigimonEditor(QMainWindow):
         """Remove one imported Digimon's rows from a dsts-loader payload."""
         root = Path(dsts_loader_root)
         patch_data = root / "patch" / "data"
-        patch_text = root / "patch_text01" / "text"
         app_data = root / "app_0" / "data"
 
         id_texts = {str(getattr(digimon, "id", ""))}
@@ -9793,23 +10139,27 @@ class DigimonEditor(QMainWindow):
                 patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv",
                 matches_id,
             ),
-            "char_name": self._remove_rows_from_mod_csv(
-                patch_text / "char_name.mbe" / "000_Sheet1.ap.csv",
-                matches_char_key,
-            ),
-            "digimon_profile": self._remove_rows_from_mod_csv(
-                patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv",
-                matches_profile,
-            ),
-            "belong": self._remove_rows_from_mod_csv(
-                patch_text / "belong.mbe" / "000_Sheet1.ap.csv",
-                matches_id,
-            ),
             "model_outline": self._remove_rows_from_mod_csv(
                 app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv",
                 matches_chr,
             ),
         }
+
+        for patch_text_dir in self._iter_patch_text_dirs(root):
+            folder = self._normalize_text_folder_name(patch_text_dir.name)
+            patch_text = patch_text_dir / "text"
+            removals[f"{folder}/char_name"] = self._remove_rows_from_mod_csv(
+                patch_text / "char_name.mbe" / "000_Sheet1.ap.csv",
+                matches_char_key,
+            )
+            removals[f"{folder}/digimon_profile"] = self._remove_rows_from_mod_csv(
+                patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv",
+                matches_profile,
+            )
+            removals[f"{folder}/belong"] = self._remove_rows_from_mod_csv(
+                patch_text / "belong.mbe" / "000_Sheet1.ap.csv",
+                matches_id,
+            )
 
         return removals
 
@@ -9950,6 +10300,9 @@ class DigimonEditor(QMainWindow):
         # Set tribe combo box
         if hasattr(digimon, 'tribe_name') and digimon.tribe_name:
             tribe_index = self.tribe_combo.findText(digimon.tribe_name)
+            if tribe_index < 0:
+                self.tribe_combo.addItem(digimon.tribe_name)
+                tribe_index = self.tribe_combo.findText(digimon.tribe_name)
             if tribe_index >= 0:
                 self.tribe_combo.setCurrentIndex(tribe_index)
         else:
@@ -9958,6 +10311,7 @@ class DigimonEditor(QMainWindow):
 
         # Profile text
         self.profile_text_edit.setPlainText(digimon.profile_text)
+        self.load_multilanguage_text_tab(digimon)
 
         # Stats
         self.stat_widgets["hp"].setValue(digimon.base_hp)
@@ -10732,6 +11086,9 @@ class DigimonEditor(QMainWindow):
                 belong_file = base_path / "patch_text01" / "text" / "belong.mbe"
                 digimon.tribe_name = self._load_tribe_from_csv(belong_file, digimon.id)
 
+                digimon.localized_text = self._load_localized_text_from_dsts_loader(base_path, digimon)
+                self._apply_english_localized_text_to_digimon(digimon)
+
                 # Initialize other required data structures
                 digimon.model_locator_data = {}
                 digimon.model_locator_motion_data = []
@@ -10741,6 +11098,99 @@ class DigimonEditor(QMainWindow):
                 digimon_list.append(digimon)
 
         return digimon_list
+
+    def _load_text_table_value(self, base_path: Path, keys: Iterable[str]) -> str:
+        """Load one value from a text table by any accepted key."""
+        import csv
+
+        key_set = {str(key).strip('"') for key in keys if str(key).strip('"')}
+        if not key_set:
+            return ""
+
+        for csv_file in base_path.glob("*.ap.csv"):
+            try:
+                with open(csv_file, 'r', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    next(reader, None)
+                    for row in reader:
+                        if len(row) >= 2 and row[0].strip('"') in key_set:
+                            return row[1]
+            except Exception as exc:
+                debug_log(f"Error loading text table value from {csv_file}: {exc}")
+                continue
+        return ""
+
+    def _iter_patch_text_dirs(self, base_path: Path, include_known: bool = False) -> List[Path]:
+        """Return discovered patch_textXX folders under a dsts-loader root."""
+        folder_paths: Dict[str, Path] = {}
+        root = Path(base_path)
+
+        if root.exists():
+            for child in root.iterdir():
+                if not child.is_dir():
+                    continue
+                if not TEXT_LANGUAGE_FOLDER_RE.match(child.name):
+                    continue
+                folder = self._normalize_text_folder_name(child.name)
+                if folder:
+                    folder_paths[folder] = child
+
+        if include_known:
+            for folder, _language_name in TEXT_LANGUAGE_FOLDERS:
+                folder_paths.setdefault(folder, root / folder)
+
+        return [folder_paths[folder] for folder in sorted(folder_paths, key=self._language_sort_key)]
+
+    def _load_localized_text_from_dsts_loader(self, base_path: Path, digimon: DigimonData) -> Dict[str, Dict[str, str]]:
+        """Load name/profile/belong text from every patch_textXX folder in a mod."""
+        localized_text: Dict[str, Dict[str, str]] = {}
+
+        for patch_text_dir in self._iter_patch_text_dirs(base_path):
+            folder = self._normalize_text_folder_name(patch_text_dir.name)
+            text_root = patch_text_dir / "text"
+            values = {
+                "name": self._load_text_table_value(text_root / "char_name.mbe", {digimon.char_key}),
+                "profile_text": self._load_text_table_value(
+                    text_root / "digimon_profile.mbe",
+                    digimon_profile_key_variants(digimon.id),
+                ),
+                "tribe_name": self._load_text_table_value(text_root / "belong.mbe", {str(digimon.id)}),
+            }
+
+            if any(value.strip() for value in values.values()):
+                localized_text[folder] = values
+
+        return localized_text
+
+    def _apply_english_localized_text_to_digimon(self, digimon: DigimonData):
+        """Keep legacy single-language fields aligned with patch_text01."""
+        localized_text = self._normalize_localized_text_map(getattr(digimon, "localized_text", {}))
+        digimon.localized_text = localized_text
+        english_values = localized_text.get(ENGLISH_TEXT_FOLDER, {})
+
+        if english_values.get("name"):
+            digimon.name = english_values["name"]
+        elif not getattr(digimon, "name", "") or digimon.name == "Unknown":
+            for values in localized_text.values():
+                if values.get("name"):
+                    digimon.name = values["name"]
+                    break
+
+        if english_values.get("profile_text"):
+            digimon.profile_text = english_values["profile_text"]
+        elif not getattr(digimon, "profile_text", ""):
+            for values in localized_text.values():
+                if values.get("profile_text"):
+                    digimon.profile_text = values["profile_text"]
+                    break
+
+        if english_values.get("tribe_name"):
+            digimon.tribe_name = english_values["tribe_name"]
+        elif not getattr(digimon, "tribe_name", "") or digimon.tribe_name == "None":
+            for values in localized_text.values():
+                if values.get("tribe_name"):
+                    digimon.tribe_name = values["tribe_name"]
+                    break
 
     def _load_name_from_csv(self, base_path: Path, char_key: str) -> str:
         """Load Digimon name from char_name CSV files"""
@@ -11784,6 +12234,7 @@ class DigimonEditor(QMainWindow):
 
         # Profile text
         self.current_digimon.profile_text = self.profile_text_edit.toPlainText()
+        self.collect_multilanguage_text_from_form()
 
         # Stats
         self.current_digimon.base_hp = self.stat_widgets["hp"].value()
@@ -13111,6 +13562,101 @@ class DigimonEditor(QMainWindow):
             else:
                 QMessageBox.warning(self, "Error", "Failed to export CSV files")
 
+    def _localized_texts_for_export(self, digimon: DigimonData) -> Dict[str, Dict[str, str]]:
+        """Return localized text rows that should be written to dsts-loader."""
+        localized_text = self._normalize_localized_text_map(getattr(digimon, "localized_text", {}))
+        english_values = {
+            "name": getattr(digimon, "name", "") or "",
+            "profile_text": getattr(digimon, "profile_text", "") or "",
+            "tribe_name": getattr(digimon, "tribe_name", "") or "None",
+        }
+        localized_text[ENGLISH_TEXT_FOLDER] = english_values
+
+        export_text: Dict[str, Dict[str, str]] = {}
+        for folder in sorted(localized_text, key=self._language_sort_key):
+            values = localized_text[folder]
+            export_text[folder] = {
+                "name": str(values.get("name", "") or ""),
+                "profile_text": str(values.get("profile_text", "") or ""),
+                "tribe_name": str(values.get("tribe_name", "") or ""),
+            }
+
+        digimon.localized_text = export_text
+        return export_text
+
+    def _merge_localized_text_files(
+        self,
+        base_path: Path,
+        digimon: DigimonData,
+        wizard,
+        match_char_keys: Set[str],
+        match_profile_keys: Set[str],
+        match_ids: Set[str],
+    ):
+        """Merge localized name/profile/belong rows into patch_textXX folders."""
+        localized_text = self._localized_texts_for_export(digimon)
+
+        for folder, values in localized_text.items():
+            export_values = dict(values)
+            patch_text = base_path / folder / "text"
+
+            if folder != ENGLISH_TEXT_FOLDER and not any(str(value).strip() for value in export_values.values()):
+                self._remove_rows_from_mod_csv(
+                    patch_text / "char_name.mbe" / "000_Sheet1.ap.csv",
+                    lambda r: self._csv_cell(r, 0) in match_char_keys,
+                )
+                self._remove_rows_from_mod_csv(
+                    patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv",
+                    lambda r: self._csv_cell(r, 0) in match_profile_keys,
+                )
+                self._remove_rows_from_mod_csv(
+                    patch_text / "belong.mbe" / "000_Sheet1.ap.csv",
+                    lambda r: self._csv_cell(r, 0) in match_ids,
+                )
+                continue
+
+            (patch_text / "char_name.mbe").mkdir(parents=True, exist_ok=True)
+            (patch_text / "digimon_profile.mbe").mkdir(parents=True, exist_ok=True)
+            (patch_text / "belong.mbe").mkdir(parents=True, exist_ok=True)
+
+            char_name_file = patch_text / "char_name.mbe" / "000_Sheet1.ap.csv"
+            self._merge_csv_row(
+                char_name_file,
+                digimon,
+                lambda path, row_digimon, name_text=export_values["name"]: wizard._write_char_name_ap_csv(
+                    path,
+                    row_digimon,
+                    name_text=name_text,
+                ),
+                lambda r: self._csv_cell(r, 0) in match_char_keys,
+            )
+
+            profile_file = patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv"
+            self._merge_csv_row(
+                profile_file,
+                digimon,
+                lambda path, row_digimon, profile_text=export_values["profile_text"], name_text=export_values["name"]: wizard._write_profile_ap_csv(
+                    path,
+                    row_digimon,
+                    profile_text=profile_text,
+                    name_text=name_text,
+                ),
+                lambda r: self._csv_cell(r, 0) in match_profile_keys,
+                drop_malformed=True,
+            )
+
+            belong_file = patch_text / "belong.mbe" / "000_Sheet1.ap.csv"
+            self._merge_csv_row(
+                belong_file,
+                digimon,
+                lambda path, row_digimon, tribe_name=export_values["tribe_name"]: wizard._write_belong_ap_csv(
+                    path,
+                    row_digimon,
+                    tribe_name=tribe_name,
+                ),
+                lambda r: self._csv_cell(r, 0) in match_ids,
+            )
+
     def _merge_digimon_to_dsts_loader(
         self,
         base_path: Path,
@@ -13126,7 +13672,7 @@ class DigimonEditor(QMainWindow):
 
             # Create directory structure
             patch_data = base_path / "patch" / "data"
-            patch_text = base_path / "patch_text01" / "text"
+            patch_text = base_path / ENGLISH_TEXT_FOLDER / "text"
             app_data = base_path / "app_0" / "data"
 
             # Create directories if they don't exist
@@ -13283,21 +13829,15 @@ class DigimonEditor(QMainWindow):
                 if Path(temp_anim.name).exists():
                     Path(temp_anim.name).unlink()
 
-            # Merge text files
-            char_name_file = patch_text / "char_name.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(char_name_file, digimon, wizard._write_char_name_ap_csv, lambda r: cell(r, 0) in match_char_keys)
-
-            profile_file = patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(
-                profile_file,
+            # Merge localized text files
+            self._merge_localized_text_files(
+                base_path,
                 digimon,
-                wizard._write_profile_ap_csv,
-                lambda r: cell(r, 0) in match_profile_keys,
-                drop_malformed=True
+                wizard,
+                match_char_keys,
+                match_profile_keys,
+                match_ids,
             )
-
-            belong_file = patch_text / "belong.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(belong_file, digimon, wizard._write_belong_ap_csv, lambda r: cell(r, 0) in match_ids)
 
             # Merge model_outline
             outline_file = app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv"

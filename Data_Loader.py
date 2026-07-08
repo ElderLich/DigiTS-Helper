@@ -141,6 +141,7 @@ class DigimonData:
     # Character Profile & Personality
     personality_data: Dict[str, Any] = field(default_factory=dict)  # Personality system data
     profile_text: str = ""  # Character description/profile
+    localized_text: Dict[str, Dict[str, str]] = field(default_factory=dict)  # patch_textXX name/profile/belong text
     can_mount: bool = False  # Mountable Digimon flag
     is_boss_variant: bool = False  # Boss enemy variant
 
