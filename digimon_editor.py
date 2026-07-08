@@ -4931,9 +4931,28 @@ class DigimonEditor(QMainWindow):
         profile_layout.addWidget(self.profile_text_edit, 1)
 
         profile_tools_layout = QHBoxLayout()
-        format_profile_button = QPushButton("Format for Game")
+        format_profile_button = QPushButton("Format Text")
+        format_profile_button.setObjectName("formatProfileTextButton")
+        format_profile_button.setMinimumWidth(120)
         format_profile_button.setToolTip("Wrap the description so it fits the in-game profile panel")
         format_profile_button.clicked.connect(self.format_current_profile_text)
+        format_profile_button.setStyleSheet("""
+            QPushButton#formatProfileTextButton {
+                background-color: #2c9558;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 14px;
+                font-weight: bold;
+                font-size: 10pt;
+            }
+            QPushButton#formatProfileTextButton:hover {
+                background-color: #247a49;
+            }
+            QPushButton#formatProfileTextButton:pressed {
+                background-color: #1d633b;
+            }
+        """)
         profile_tools_layout.addWidget(format_profile_button)
         profile_tools_layout.addStretch()
 
