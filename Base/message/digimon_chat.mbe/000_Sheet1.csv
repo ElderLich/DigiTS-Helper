@@ -3248,6 +3248,20 @@ while astride my back.",""
 "aonb_001_4_replay","char_PLAYER_M","I'd love to!",""
 "aonb_001_4_reaction_char_ENBARRMON","char_ENBARRMON","Understood. Though I cannot take you now, I vow to fulfill 
 my promise before you die.",""
+"jyos_001_0_char_ASSISTANT_TERRIERMON","char_ASSISTANT_TERRIERMON","As a human, what do you think of Digimon?
+I'd like to ask for your opinion as part of my research!",""
+"jyos_001_1_replay","char_PLAYER_M","They are vital for completing my mission.",""
+"jyos_001_1_reaction_char_ASSISTANT_TERRIERMON","char_ASSISTANT_TERRIERMON","Oh! Your courage to take on the most grueling of missions
+is quite admirable! I'll be sure to give it my best, too!",""
+"jyos_001_2_replay","char_PLAYER_M","They're an anomaly steeped in mystery.",""
+"jyos_001_2_reaction_char_ASSISTANT_TERRIERMON","char_ASSISTANT_TERRIERMON","You think so? Yes, I suppose there are many mysteries
+surrounding Digimon! Let's seek them out together!",""
+"jyos_001_3_replay","char_PLAYER_M","They are trustworthy allies who fight by my side.",""
+"jyos_001_3_reaction_char_ASSISTANT_TERRIERMON","char_ASSISTANT_TERRIERMON","I couldn't agree with you more!
+I'll be sure to ask for your help again in the future!",""
+"jyos_001_4_replay","char_PLAYER_M","I love them dearly.",""
+"jyos_001_4_reaction_char_ASSISTANT_TERRIERMON","char_ASSISTANT_TERRIERMON","I know, right?!
+Okay, fine... I'll let you rub my ears, just this once.",""
 "common001_0_child_courage","","Hey, what's courage?",""
 "common001_0_male_courage","","Hey, what's courage?",""
 "common001_0_female_courage","","Hey, what's courage?",""
@@ -7600,8 +7614,8 @@ Still, it makes me a touch sad.",""
 "common064_2_reaction_male_knowledge","","Hohoho! Yes, yes, I know.",""
 "common064_2_reaction_female_knowledge","","Hohoho! Yes, yes, I know.",""
 "common064_2_reaction_old_knowledge","","Hohoho! Yes, yes, I know.",""
-"digimon_chat_personality_change_01","char_DIGIVICE","{fc9{d0}}'s Personality has shifted toward {d1}.",""
-"digimon_chat_personality_change_02","char_DIGIVICE","{fc9{d0}}'s Personality has changed to {d1}.",""
+"digimon_chat_personality_change_01","char_DIGIVICE","{fc9 {d0}}'s Personality has shifted toward {d1}.",""
+"digimon_chat_personality_change_02","char_DIGIVICE","{fc9 {d0}}'s Personality has changed to {d1}.",""
 "digimon_chat_ps_00","","How about I learn a new Personality Skill?",""
 "digimon_chat_ps_01","","How about I learn a new Personality Skill?",""
 "digimon_chat_ps_02","","How about I learn a new Personality Skill?",""

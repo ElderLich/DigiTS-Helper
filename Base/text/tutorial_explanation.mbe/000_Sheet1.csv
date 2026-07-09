@@ -30,7 +30,7 @@ Damage output also varies depending on the level.
 The higher the attacker's level, the greater the damage inflicted."
 "tutorial_exp_Compatibility_01_004","Detailed information on Attributes, Elements, and Traits can be
 found via Digivice > System > Tutorials > Battle, under:
-{fc9 - Attribute Compatibility
+ {fc9 - Attribute Compatibility
  - Elements
  - Traits}"
 "tutorial_exp_BattleCrossarts_01_001","A battle action which can be employed by agents.
@@ -40,7 +40,7 @@ powerful Cross Arts capable of changing the course of battle."
 "tutorial_exp_BattleCrossarts_01_002","{fc9When CP (Critical Points) charge to max during battle, 
 you will enter a ""Cross Art Standby"" state. 
 Press {r2} to pull the trigger and fire off the Cross Art.}"
-"tutorial_exp_Escape_01_001","{fc9Press {r1} in battle to flee from hostile Digimon.}
+"tutorial_exp_Escape_01_001","{fc9Hold {r1} in battle to flee from hostile Digimon.}
 There is no shame for an agent to exercise discretion in the course
 of a mission.
 
@@ -156,8 +156,8 @@ CRT Rate: Affects the rate at which {fc9critical hits (1.3x damage)} occur."
 In-Training I and II Digimon are {fc9{is28}{image(ui_icon_type_120)} No Data}.
 
 You can confirm a Digimon's Attribute via their stats screen."
-"tutorial_exp_Status_04_001"," - Favorable compatibility:{fc9 2x damage}
- - Unfavorable compatibility:{fc9 0.5x damage}
+"tutorial_exp_Status_04_001"," - Favorable compatibility: {fc9 2x damage}
+ - Unfavorable compatibility: {fc9 0.5x damage}
  - {is28}{image(ui_icon_type_120)} {fc9No Data}, {is28}{image(ui_icon_type_060)} {fc9Free}, {is28}{image(ui_icon_type_080)} {fc9Variable}, and {is28}{image(ui_icon_type_100)} {fc9Unknown} have no
 favorability toward other Attributes."
 "tutorial_exp_Convert_01_001","Create new partner Digimon based on battle data.
@@ -757,11 +757,11 @@ misused by entities such as the military industrial complex."
 {is28}{image(ui_icon_skill_000)} Null.
 
 These affinities affect their elemental resistances, as per below.
-{fc11◎}:{fc9 2x damage}
-{fc11○}:{fc9 1.5x damage}
+{fc11◎}: {fc9 2x damage}
+{fc11○}: {fc9 1.5x damage}
 －: No effect
-{fc2△}:{fc9 0.5x damage}
-{fc2×}:{fc9 No damage}"
+{fc2△}: {fc9 0.5x damage}
+{fc2×}: {fc9 No damage}"
 "tutorial_exp_Attribute_01_002","Your offensive options may also possess an elemental affinity.
 
  - Attack: a normal attack without elemental affinity.
@@ -775,7 +775,7 @@ Simply look at the damage output display when selecting a
 target to view an attack's compatibility."
 "tutorial_exp_Factor_01_001","Each Digimon possesses Traits which are based on their type and
 characteristics. Certain special skills are effective against specific
-Traits, resulting in{fc9 1.5x damage dealt}.
+Traits, resulting in {fc9 1.5x damage dealt}.
 
 {fc9You can view the Traits of enemy Digimon via {l2} Analyze during
 battle.}"

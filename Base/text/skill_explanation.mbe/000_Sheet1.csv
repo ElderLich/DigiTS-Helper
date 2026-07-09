@@ -404,3 +404,6 @@ damage to targets with Unknown Trait."
 50% chance to apply {is28}{image(ui_icon_btlStatus_002)} Confusion."
 "21681","[Target: 1 enemy]
 100% chance of reduction to {is28}{image(ui_icon_skill_005)} Electricity resistance/30% reduction to DEF for 3 turn(s)."
+"27901","[Target: 1 enemy]
+Performs {is28}{image(ui_icon_skill_000)} Null physical attack at power 30.
+100% chance of 60% reduction to random stat for 1 turn."

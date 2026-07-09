@@ -23,7 +23,7 @@ string2 0,string 1
 "121","{d0}%"
 "122","Condition"
 "123","{d0}/{d1}"
-"124","{fc2{n0}}/{n1}"
+"124","{fc2 {n0}}/{n1}"
 "125","{fc9 {d0}}/{d1}"
 "126","?"
 "127","%"
@@ -467,7 +467,7 @@ Note: Level, Personality, Talent, and Bond will not change.}"
 "19025","Cancel"
 "19026","Menu Controls"
 "19027","Open Digivice/Toggle Info/Skip Cutscene"
-"19028","Quick Access (Confirm)"
+"19028","Quick Access (Confirm)/Photo Mode"
 "19029","DigiRide/Escape from Battle"
 "19030","Analyze/Switch Tab"
 "19031","DigiAttack/Perform Cross Art/Switch Tab"
@@ -518,6 +518,16 @@ Note: Level, Personality, Talent, and Bond will not change.}"
 "19076","Auto Dialogue Advance"
 "19077","Auto Battle"
 "19078","Copyright"
+"19079","Graphics Mode"
+"19080","Quality Mode"
+"19081","This setting prioritizes {fc9graphical quality}.
+You can enjoy the game in {fc9 4K resolution} with HDR visuals.
+Note: Your display must be capable of 4K and HDR output.
+Note: This setting can be changed later."
+"19082","Performance Mode"
+"19083","This setting prioritizes {fc9frame rate}.
+You can enjoy the game in up to a {fc9maximum of 60 FPS}.
+Note: This setting can be changed later."
 "20000",""
 "20001",""
 "20100","Personality"
@@ -697,7 +707,7 @@ Note: Level, Personality, Talent, and Bond will not change.}"
 "ui_shop_0011","Sell"
 "ui_shop_0012","Held"
 "ui_shop_0013","Cost"
-"ui_shop_0020","{d0} {d1}  → {fc{d2} {d3}}"
+"ui_shop_0020","{d0} {d1} → {fc{d2} {d3}}"
 "ui_shop_0110","Create"
 "ui_shop_0111","Take Apart"
 "ui_shop_0112","Items Needed"
@@ -738,7 +748,7 @@ Note: Level, Personality, Talent, and Bond will not change.}"
 "ui_digifarm_digimon_0030","Feed"
 "ui_digifarm_digimon_0040","Current Personality Skill"
 "ui_digifarm_digimon_0050","New Personality Skill"
-"ui_digifarm_digimon_0055","A new Personality Skill is available for {fc9{d0}}.
+"ui_digifarm_digimon_0055","A new Personality Skill is available for {fc9 {d0}}.
 Replace their current Personality Skill?"
 "ui_digifarm_digimon_0060","Training Items"
 "ui_digifarm_digimon_0070","Time Needed"
@@ -874,7 +884,7 @@ Please refrain from turning off the game while the autosaving icon is displayed.
 "ui_playerselect_0020","{d0} Yuki"
 "ui_kizunaskill_0010","—Secret—"
 "ui_kizunaskill_0020","Required for Next Rank: {fc13{d0}}"
-"ui_kizunaskill_0025","{fc13{d0} {d1}}  → {fc{d2} {d3}}"
+"ui_kizunaskill_0025","{fc13{d0} {d1}} → {fc{d2} {d3}}"
 "ui_kizunaskill_0030","No. of {is32}{image(ui_icon_personal01_00)} Valor-type Digimon: {n0} {fc15/ {n1}}"
 "ui_kizunaskill_0031","No. of {is32}{image(ui_icon_personal01_01)} Philanthropy-type Digimon: {n0} {fc15/ {n1}}"
 "ui_kizunaskill_0032","No. of {is32}{image(ui_icon_personal01_02)} Amicability-type Digimon: {n0} {fc15/ {n1}}"
@@ -1100,9 +1110,9 @@ This mode makes every fight a thrilling experience.
 "ui_evolution_condition_010","Base Digimon Personality: {d0}"
 "ui_evolution_condition_020","{d1} {d0} Agent Skills learned"
 "ui_fieldlog_expyen","{d0} {d1}"
-"ui_mission_recommendedlv","Recommended Lv: {fc9 {d0}}"
-"ui_mission_recommendedlv_none","Recommended Lv: -"
-"ui_reinforcement_nextlv","To Next Lv: {fc1 {d0}}"
+"ui_mission_recommendedlv","Recommended Lv.: {fc9 {d0}}"
+"ui_mission_recommendedlv_none","Recommended Lv.: -"
+"ui_reinforcement_nextlv","To Next Lv.: {fc1 {d0}}"
 "ui_analyse_damage_010","Resistance Legend"
 "ui_analyse_damage_020","Increased damage"
 "ui_analyse_damage_030","Damage unaffected"
@@ -1134,7 +1144,7 @@ This mode makes every fight a thrilling experience.
 "ui_title_demo_0010","— DEMO —"
 "ui_title_demo_0020","Central Town - Adventure Trial"
 "ui_title_demo_0030","Parrotmon - Boss Battle Challenge"
-"ui_title_demo_0040","Buy Retail Version"
+"ui_title_demo_0040","Retail Version Available"
 "ui_title_demo_0110","Select Protagonist"
 "ui_title_demo_0120","Type A (Dan Yuki)"
 "ui_title_demo_0130","Type B (Kanan Yuki)"
@@ -1144,16 +1154,14 @@ This mode makes every fight a thrilling experience.
 — A story of the bond between humans and Digimon that spans
 across worlds, transcending the boundaries of time and space. —
 
-Be sure to pick up the retail version in order to experience the
-rest of this exciting tale."
+Experience the rest of this exciting tale in the retail version."
 "ui_end_demo_0030","Your save data from the demo version can be imported into the
 retail version of the game.
 
 — A story of the bond between humans and Digimon that spans
 across worlds, transcending the boundaries of time and space. —
 
-Be sure to pick up the retail version in order to experience the
-rest of this exciting tale."
+Experience the rest of this exciting tale in the retail version."
 "dlc_name_unknown","******"
 "dlc_name_01","Additional Digimon & Episode Pack 1: Alternate Dimension"
 "dlc_name_02","Additional Digimon & Episode Pack 2: GAKU-RAN"

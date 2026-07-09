@@ -826,7 +826,7 @@ char_key,empty_001,empty_002,chr_id,numeric_id,empty_005,gender_flag,flag_007,mo
 "char_AGUMON_TAILMON",,,"","6060",,2,0,"",0,"",0,"",0
 "char_CERESMON_SPROUT",,,"","6061",,2,0,"",0,"",0,"",0
 "char_MAN_IN_WHITECOAT",,,"","3017",,0,0,"",0,"",0,"",0
-"char_ASSISTANT_TERRIERMON",,,"","9999",,2,0,"",0,"",0,"",0
+"char_ASSISTANT_TERRIERMON",,,"chr790","1790",,0,0,"chr790",0,"",0,"",0
 "char_ORGEMON_AND_FUGAMON_AND_HYOUGAMON",,,"","9999",,0,0,"",0,"",0,"",0
 "char_UNKNOWN_USER",,,"","9999",,0,0,"",0,"",0,"",0
 "char_FRONTCLERK",,,"","9999",,0,0,"",0,"",0,"",0

@@ -1318,7 +1318,7 @@ Digimon HP/SP fully recovered."
 {fc15Digivice > Digimon > Digivolution}."
 "kizuna_possible","New {fc9Agent Skills} are now available to learn. View them under
 {fc15Digivice > Agent > Agent Skills}."
-"digifarm_training_01","{fc9{d0}} has completed their training.
+"digifarm_training_01","{fc9 {d0}} has completed their training.
 If you would like it to continue training, just say the word."
 "digifarm_training_02","Very well. It will continue with the same training. Be sure to
 check in on the Digifarm from time to time."

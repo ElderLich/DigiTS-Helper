@@ -48,7 +48,7 @@ Your box is full."
 "1900","Can't use this now."
 "1901","Using this would have no effect."
 "1903",""
-"1904","{d0}'s Bond has grown to {fc9{n0}}."
+"1904","{d0}'s Bond has grown to {fc9 {n0}}."
 "1905","{d0}'s Personality has changed to {fc9{d1}}."
 "1906","{d0}'s cumulative {d1} has been increased."
 "1907","Increased level cap of {d0}."
@@ -181,7 +181,7 @@ at the Paradise Colosseum!"
 "7057","{fc9Bacchusmon} joined the party."
 "7058","{fc9Neptunemon} joined the party."
 "7059","{fc9Neptunemon} left the party."
-"8000","Paid {fc9{n0} YEN}."
+"8000","Paid {fc9 {n0} YEN}."
 "9000","Press the button you want to assign to the selected action."
 "9001","Press the button you want to assign to the selected action.
 Cancel and return to the previous screen using the Esc key."
@@ -217,7 +217,7 @@ This mission cannot be advanced any further."
 "10100","You received {fc9one of each type} of {fc9Augment Chip I}."
 "10110100","You received {fc9HP Capsule I x5}."
 "10350100","You can now use the Special Skill {fc9Stun Beat Blow}."
-"11800100","Items cannot be used due to Iliad Temple's Sealing Spell."
+"11800100","Items cannot be used due to the Guardian Palace's Sealing Spell."
 "1101040040","{player} sprinkled Flower Extract on Tanemon's head!"
 "1103010100","Stamp Card obtained!"
 "1103060020","{player} handed over the Stamp Card to Mummymon!"
@@ -267,7 +267,7 @@ At least one Digimon must be assigned as a battle member."
 "info_message_kizunaskill_01","You must progress further in the story to unlock
 Agent Skills."
 "info_message_kizunaskill_02","You have unlocked {fc9Cross Arts} in battle."
-"info_message_kizunaskill_03","You have reached Agent Rank{fc9 {d0}}.
+"info_message_kizunaskill_03","You have reached Agent Rank {fc9 {d0}}.
 
 {fc15Tip: Check the Digivolution menu to see if there are
 any new Digivolution options for your Digimon.}"
@@ -283,7 +283,7 @@ Load Enhancements."
 Return to Data."
 "info_message_lockmenu_10","You must progress further in the story to unlock
 this function."
-"info_message_personality_skill","{fc9{d0}} has learned a new Personality Skill!"
+"info_message_personality_skill","{fc9 {d0}} has learned a new Personality Skill!"
 "info_message_mission_01","This mission cannot currently be advanced.
 Please progress further in your Main Mission first."
 "info_message_title_clear","{fc9New Game Plus} unlocked!
@@ -308,7 +308,7 @@ free up some space and try again."
 "info_message_load_error_02","The save data of other users cannot be
 loaded."
 "info_message_load_error_03","An unknown error has occurred."
-"info_message_item_tp","Received{fc9 {d1}} {fc13{d0}Anomaly Points}."
+"info_message_item_tp","Received {fc9 {d1}} {fc13{d0} Anomaly Points}."
 "info_message_setup_error",""
 "info_message_reinforcement_error","No Digimon that fit the criteria for Auto-Select available.
 
@@ -316,105 +316,105 @@ loaded."
 "info_message_reinforcement_none","Unable to perform Auto-Select.
 This Digimon has reached their maximum level."
 "info_message_training_01","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
+{d0} {n0} → {fc7 {n1}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_02","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_03","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_04","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_05","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_06","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
-{d5} {n10}  → {fc7 {n11}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
+{d5} {n10} → {fc7 {n11}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_07","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
-{d5} {n10}  → {fc7 {n11}}
-{d6} {n12}  → {fc7 {n13}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
+{d5} {n10} → {fc7 {n11}}
+{d6} {n12} → {fc7 {n13}}
 
 Personality has changed from {d7} to {d8}!"
 "info_message_training_11","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
+{d0} {n0} → {fc7 {n1}}
 
 Personality has shifted toward {d9}."
 "info_message_training_12","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
 
 Personality has shifted toward {d9}."
 "info_message_training_13","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
 
 Personality has shifted toward {d9}."
 "info_message_training_14","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
 
 Personality has shifted toward {d9}."
 "info_message_training_15","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
 
 Personality has shifted toward {d9}."
 "info_message_training_16","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
-{d5} {n10}  → {fc7 {n11}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
+{d5} {n10} → {fc7 {n11}}
 
 Personality has shifted toward {d9}."
 "info_message_training_17","[Training Results]
-{d0} {n0}  → {fc7 {n1}}
-{d1} {n2}  → {fc7 {n3}}
-{d2} {n4}  → {fc7 {n5}}
-{d3} {n6}  → {fc7 {n7}}
-{d4} {n8}  → {fc7 {n9}}
-{d5} {n10}  → {fc7 {n11}}
-{d6} {n12}  → {fc7 {n13}}
+{d0} {n0} → {fc7 {n1}}
+{d1} {n2} → {fc7 {n3}}
+{d2} {n4} → {fc7 {n5}}
+{d3} {n6} → {fc7 {n7}}
+{d4} {n8} → {fc7 {n9}}
+{d5} {n10} → {fc7 {n11}}
+{d6} {n12} → {fc7 {n13}}
 
 Personality has shifted toward {d9}."
 "info_message_training_18","[Training Results]
-{d0} {n0}  → {fc7 {n1}}"
+{d0} {n0} → {fc7 {n1}}"
 "info_message_dlc_detection",""
 "info_message_dlc_itempack_01","Received the following items."
 "info_message_dlc_itempack_02","Received the following Digimon."

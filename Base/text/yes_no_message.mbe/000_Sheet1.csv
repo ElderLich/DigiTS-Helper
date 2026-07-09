@@ -20,7 +20,7 @@ string2 0,string 1
 restored to its previous state. Use caution when performing this action.}"
 "1204","Perform Mode Change on {d0}?"
 "1205",""
-"1206","Convert {fc9{d0}}?
+"1206","Convert {fc9 {d0}}?
 
 {fc15Tip: The closer the Scan Rate is to 200%, the higher
 this Digimon's Max HP and Talent will be.}"
@@ -87,7 +87,7 @@ will be inherited only by the main Digimon."
 "20004",""
 "20005","Discard name change and return to the previous screen?"
 "20010",""
-"20100","Restore default settings for{fc9 {d0}}?"
+"20100","Restore default settings for {fc9 {d0}}?"
 "20101","This setting is duplicated by other controls.
 Apply this setting to the selected button?"
 "20102","Graphics settings have been applied. Save these settings?
@@ -118,7 +118,7 @@ will exceed your maximum inventory capacity.
 
 Do you want to proceed?"
 "yesno_conversion_0010","This action will convert the selected Digimon into:
-{is28}{image(ui_icon_item_075)}{fc9 {d0}}
+{is28}{image(ui_icon_item_075)} {fc9 {d0}}
 {fc9The converted Digimon will be lost} and cannot be restored.
 
 Do you want to proceed?"
@@ -126,7 +126,7 @@ Do you want to proceed?"
 There are battle/reserve members among the selected Digimon.}
 
 This action will convert the selected Digimon into:
-{is28}{image(ui_icon_item_075)}{fc9 {d0}}
+{is28}{image(ui_icon_item_075)} {fc9 {d0}}
 {fc9The converted Digimon will be lost} and cannot be restored.
 
 Do you want to proceed?"
@@ -141,7 +141,7 @@ Do you want to proceed?"
 "yesno_shop_0030","Create {fc9{d0} x{d1}}?"
 "yesno_shop_0040","Take apart {fc9{d0} x{d1}}?"
 "yesno_shop_0050","The materials below will exceed your maximum inventory capacity.
-{{fc2The portion exceeding the maximum capacity will be lost}.
+{fc2The portion exceeding the maximum capacity will be lost}.
 
 Do you want to proceed?"
 "yesno_hazamagate_0010","Return to the real world?
@@ -154,7 +154,7 @@ your current mission objective?"
 {fc15Tip: Win at least one round to obtain a card even if you lose the match.
 Note: If you forfeit, you will not earn any cards.}"
 "yesno_digimoncard_battle_0020","Confirm your selection?"
-"yesno_digimoncard_battle_0030","You can still receive{fc9 {n0}} more card(s).
+"yesno_digimoncard_battle_0030","You can still receive {fc9 {n0}} more card(s).
 Confirm your selection?"
 "yesno_gameover_0010","Lower the difficulty to {fc9{d0}} and retry the battle?
 
@@ -177,11 +177,11 @@ All progress within this Outer Dungeon will be lost."
 "yesno_hazama_dl_0010","Go to Outer Dungeon
 {fc9{d0}}?"
 "yesno_arena_0010","Battle {fc9Team {d0}}?"
-"yesno_arena_0020","Battle {fc9Team {d0}}?
+"yesno_arena_0020","Battle {fc8Team {d0}}?
 
 Note: You have already defeated this challenger,
 so you will receive fewer rewards."
-"yesno_digifarm_0010","Return {fc9{d0}} to your box?"
+"yesno_digifarm_0010","Return {fc9 {d0}} to your box?"
 "yesno_digifarm_0020","Move this Digimon to the Digifarm?"
 "yesno_digifarm_0030",""
 "yesno_digifarm_0040","This Digimon is still in training.
@@ -290,7 +290,7 @@ until you return to the title screen.}/Go to the Online Store?
 
 {fc9Note: Purchased downloadable content will not be activated
 until you return to the title screen.})}"
-"yesno_digimonselect_0010","Select {fc9{d0}} as your partner Digimon?"
+"yesno_digimonselect_0010","Select {fc9 {d0}} as your partner Digimon?"
 "yesno_unequip_0010","Remove all Skill Discs and equipment
 from the Digimon in your box and farm?
 
@@ -338,3 +338,9 @@ Do you want to proceed?
 
 Note: Save data from the demo version can be imported
 into the retail version of the game."
+"yesno_graphics_0010","In order to change graphics modes, your game progress
+will be saved and you will be returned to the title screen.
+Do you want to proceed?"
+"yesno_graphics_0020","In order to change graphics modes, your settings
+will be saved and the game will relaunch.
+Do you want to proceed?"

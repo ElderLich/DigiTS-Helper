@@ -7,17 +7,17 @@ string2 0,string 1,string 2,string 3
 "d240_020_020","char_PARALLELMON","...",""
 "d240_020_030","char_HIROKO","Here we spent all this time running away from Parallelmon,
 and now they're the one fleeing from us!",""
-"d240_020_040","char_BANCHOLEOMON","It looks like it's waiting for us to tire out.",""
+"d240_020_040","char_BANCHOLEOMON","It looks like they're waiting for us to tire out.",""
 "d240_020_050","char_BANCHOLILIMON","I think they are waiting for us to expend all our energy.",""
 "d240_020_060","char_BANCHOSTINGMON","They're probably trying to stay out of reach in the hope that
-we tire out eventually. Where's its sense of pride?",""
-"d240_020_070","char_BANCHOGOLEMON","Is it waiting for us to exhaust ourselves?",""
-"d240_020_080","char_BANCHOMAMEMON","It looks like it's just runnin' around,
-hoping we wear ourselves out chasin' it.",""
-"d240_020_090","char_OMEGAMON","It is clearly trying to turn this into a test of endurance.
+we tire out eventually. Where's their sense of pride?",""
+"d240_020_070","char_BANCHOGOLEMON","Are they waiting for us to exhaust ourselves?",""
+"d240_020_080","char_BANCHOMAMEMON","It looks like they're just runnin' around,
+hoping we wear ourselves out chasin' em.",""
+"d240_020_090","char_OMEGAMON","They're clearly trying to turn this into a test of endurance.
 We must come up with some kind of plan in response.",""
-"d240_020_100","char_HIROKO","If we could just block off its path somehow, 
-we might be able to corner it.",""
+"d240_020_100","char_HIROKO","If we could just block off their path somehow, 
+we might be able to corner them.",""
 "d240_020_110","char_OMEGAMON","Yes... and I believe I know how we can accomplish that feat...",""
 "d240_020_120","char_OMEGAMON","...but it depends on you.",""
 "d240_020_130","char_HIROKO","M-Me?!",""
@@ -100,10 +100,10 @@ Soon we will have control of all of the crystals.",""
 "d240_060_020","char_HIROKO","Hnh...!",""
 "d240_061_010","char_HIROKO","""Oh, I was so close... So close to
 getting Parallelmon on camera that time!""",""
-"d240_061_020","char_TOUDO","""I thought I warned you to stay away from that thing.""",""
+"d240_061_020","char_TOUDO","""I thought I warned you to stay away from them.""",""
 "d240_061_030","char_TOUDO","""Why are you so obsessed with Parallelmon, anyway?""",""
-"d240_061_040","char_HIROKO","""It can travel freely through space-time, right?""",""
-"d240_061_050","char_HIROKO","""If you could analyze its data for me, then maybe...""",""
+"d240_061_040","char_HIROKO","""They can travel freely through space-time, right?""",""
+"d240_061_050","char_HIROKO","""If you could analyze their data for me, then maybe...""",""
 "d240_061_060","char_HIROKO","""...maybe we could get my voice to reach my friends...""",""
 "d240_061_070","char_HIROKO","""I'd be like an interdimensional messenger,
 communicating across time and space... right?""",""
