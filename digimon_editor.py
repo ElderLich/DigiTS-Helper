@@ -445,6 +445,84 @@ def _clean_status_cell(value: str) -> str:
     return str(value).strip().strip('"')
 
 
+def _csv_output_cell_text(value) -> str:
+    """Return a CSV cell value without one layer of literal surrounding quotes."""
+    if value is None:
+        return ""
+    text = str(value)
+    if len(text) >= 2 and text.startswith('"') and text.endswith('"'):
+        return text[1:-1].replace('""', '"')
+    return text
+
+
+def _csv_escape_quoted_text(value: str) -> str:
+    return value.replace('"', '""')
+
+
+def _csv_header_types(header) -> List[str]:
+    if isinstance(header, str):
+        return [cell.strip() for cell in header.split(',')]
+    return [str(cell).strip() for cell in header]
+
+
+def _looks_like_string_csv_column(column_type: str) -> bool:
+    column_type = column_type.lower()
+    return (
+        "string" in column_type
+        or column_type in {"chr_id", "char_key", "strkey"}
+        or column_type.endswith("_key")
+        or column_type.endswith("_name")
+        or column_type.endswith("_text")
+        or column_type.endswith("_profile")
+    )
+
+
+def _looks_like_numeric_csv_column(column_type: str) -> bool:
+    column_type = column_type.lower()
+    return (
+        "int" in column_type
+        or "float" in column_type
+        or "bool" in column_type
+        or "byte" in column_type
+    )
+
+
+def format_dsts_typed_csv_row(header, row: List[str]) -> str:
+    """Format a row using dsts-loader/MVGL header types instead of csv.writer rules."""
+    header_types = _csv_header_types(header)
+    parts: List[str] = []
+    column_count = max(len(header_types), len(row))
+
+    for index in range(column_count):
+        col_type = header_types[index].lower() if index < len(header_types) else ""
+        value = row[index] if index < len(row) else ""
+        text = _csv_output_cell_text(value)
+
+        if "empty" in col_type:
+            parts.append('""')
+        elif _looks_like_string_csv_column(col_type):
+            parts.append(f'"{_csv_escape_quoted_text(text)}"' if text else '""')
+        elif _looks_like_numeric_csv_column(col_type):
+            numeric_text = text.strip()
+            parts.append(numeric_text if numeric_text else '""')
+        else:
+            if not text:
+                parts.append('""')
+            elif any(char in text for char in [",", '"', "\n", "\r"]):
+                parts.append(f'"{_csv_escape_quoted_text(text)}"')
+            else:
+                parts.append(text)
+
+    return ",".join(parts)
+
+
+def write_dsts_typed_csv_rows(file_obj, header, rows: Iterable[List[str]]):
+    header_line = ",".join(_csv_header_types(header)) if not isinstance(header, str) else header
+    file_obj.write(header_line + "\n")
+    for row in rows:
+        file_obj.write(format_dsts_typed_csv_row(header_line, row) + "\n")
+
+
 def parse_chr_id_slot(value: str, allow_prefix_match: bool = False) -> Optional[int]:
     """Return the numeric chr slot from chrNNN or bare NNN text."""
     clean_value = _clean_status_cell(value).strip()
@@ -2262,7 +2340,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_char_info_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write char_info.ap.csv
@@ -2305,7 +2383,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_model_setting_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write model_setting.ap.csv"""
@@ -2353,7 +2431,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_lod_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write lod.ap.csv"""
@@ -2368,7 +2446,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_lod_model_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write lod_model.ap.csv"""
@@ -2383,7 +2461,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_anim_setting_ap_csv(self, filepath: Path, chr_id: str, animation_ref: str):
         """Write same_animation_data.ap.csv"""
@@ -2392,7 +2470,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_evolution_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write evolution_to.ap.csv
@@ -2454,7 +2532,7 @@ class DigimonCreationWizard(QWizard):
                         str(evo_type),  # Evolution type: 0=Normal/Jogress source edge, 2=Mode Change
                         '-1', '-1', '-1', '-1', '-1'
                     ]
-                    f.write(','.join(parts) + '\n')
+                    f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
             # 2. Write pre-evolutions TO this Digimon (what evolves into it)
             # These are stored as: [pre-evo ID] evolves TO [this Digimon's ID]
@@ -2483,7 +2561,7 @@ class DigimonCreationWizard(QWizard):
                     str(evo_type),  # Evolution type: 0=Normal, 2=Mode Change
                     '-1', '-1', '-1', '-1', '-1'
                 ]
-                f.write(','.join(parts) + '\n')
+                f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_char_name_ap_csv(self, filepath: Path, digimon: DigimonData, name_text: Optional[str] = None):
         """Write char_name.ap.csv"""
@@ -2529,7 +2607,7 @@ class DigimonCreationWizard(QWizard):
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
-            f.write(','.join(parts) + '\n')
+            f.write(format_dsts_typed_csv_row(header, parts) + '\n')
 
     def _write_evolution_condition_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write evolution_condition.ap.csv - requirements to evolve INTO this new Digimon"""
@@ -10944,9 +11022,7 @@ class DigimonEditor(QMainWindow):
         if removed_count:
             with open(resolved_filepath, 'w', encoding='utf-8', newline='') as f:
                 if header:
-                    f.write(header + '\n')
-                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
-                writer.writerows(kept_rows)
+                    write_dsts_typed_csv_rows(f, header, kept_rows)
 
         return removed_count
 
@@ -14837,10 +14913,7 @@ class DigimonEditor(QMainWindow):
                     anim_existing_rows.extend(anim_new_rows)
 
                 with open(resolved_anim_file, 'w', encoding='utf-8', newline='') as f:
-                    writer = csv.writer(f)
-                    writer.writerow(anim_header)
-                    for row in anim_existing_rows:
-                        writer.writerow(row)
+                    write_dsts_typed_csv_rows(f, anim_header, anim_existing_rows)
             except PermissionError as e:
                 self._set_merge_error(
                     f"Could not write {resolved_anim_file}.\n\n"
@@ -14964,12 +15037,7 @@ class DigimonEditor(QMainWindow):
             # Write back preserving dsts-loader format
             if header_to_use:
                 with open(filepath, 'w', encoding='utf-8', newline='') as f:
-                    # Write header (as raw string to preserve format)
-                    f.write(header_to_use + '\n')
-                    # Write rows - csv.writer handles proper quoting/escaping
-                    writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
-                    for row in existing_rows:
-                        writer.writerow(row)
+                    write_dsts_typed_csv_rows(f, header_to_use, existing_rows)
             else:
                 self._set_merge_error(f"No CSV header was available while merging:\n\n{filepath}")
                 print(f"Warning: No header available for {filepath.name}, skipping write")
@@ -15107,12 +15175,7 @@ class DigimonEditor(QMainWindow):
 
             # Write back preserving format (use resolved path to maintain existing prefix)
             with open(resolved_filepath, 'w', encoding='utf-8', newline='') as f:
-                # Write header (as raw string to preserve format)
-                f.write(header_to_use + '\n')
-                # Write rows
-                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
-                for row in filtered_rows:
-                    writer.writerow(row)
+                write_dsts_typed_csv_rows(f, header_to_use, filtered_rows)
 
             return True
 
@@ -15829,9 +15892,7 @@ class DigimonEditor(QMainWindow):
 
         try:
             with open(resolved_file, "w", encoding="utf-8", newline="") as f:
-                writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
-                writer.writerow(header)
-                writer.writerows(merged_rows)
+                write_dsts_typed_csv_rows(f, header, merged_rows)
         except PermissionError:
             return False, resolved_file, "Could not write the buff-set CSV. Close any CSV editor tab that has it open, then try again."
         except Exception as exc:
