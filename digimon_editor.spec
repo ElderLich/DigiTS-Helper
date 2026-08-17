@@ -5,7 +5,7 @@ a = Analysis(
     ['Digimon_Editor.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('assets', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

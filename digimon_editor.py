@@ -20,7 +20,7 @@ from PyQt6.QtWidgets import (
     QDialog, QDialogButtonBox, QWizard, QWizardPage, QFrame, QAbstractSpinBox,
     QAbstractScrollArea
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer
+from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer, QSize
 from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
@@ -78,11 +78,62 @@ TEXT_LANGUAGE_FOLDERS = (
     ("patch_text11", "Chinese Simplified"),
     ("patch_text30", "Spanish Alternate"),
 )
+
+APP_RESOURCE_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+GAME_ICON_DIR = APP_RESOURCE_ROOT / "assets" / "game_icons"
+GAME_ICON_SIZE = QSize(24, 24)
+TYPE_ICON_STEMS = {
+    0: "ui_icon_type_000",  # Vaccine
+    1: "ui_icon_type_020",  # Data
+    2: "ui_icon_type_040",  # Virus
+    3: "ui_icon_type_060",  # Free
+    4: "ui_icon_type_080",  # Variable
+    5: "ui_icon_type_100",  # Unknown
+    6: "ui_icon_type_120",  # No Data
+}
+ELEMENT_ICON_STEMS = {element_id: f"ui_icon_skill_{element_id:03d}" for element_id in range(11)}
+_GAME_ICON_CACHE: Dict[str, QIcon] = {}
 TEXT_LANGUAGE_LABELS = dict(TEXT_LANGUAGE_FOLDERS)
 TEXT_LANGUAGE_FOLDER_RE = re.compile(r"^patch_text(?P<code>\d+)$")
 ENGLISH_TEXT_FOLDER = "patch_text01"
 BUFF_SET_SLOT_STARTS = tuple(range(6, 57, 5))
 _PATH_SETTINGS_CACHE: Optional[Dict[str, str]] = None
+
+
+def get_game_icon(stem: Optional[str]) -> QIcon:
+    """Return a bundled game UI icon, or a null icon when unavailable."""
+    if not stem:
+        return QIcon()
+    cached = _GAME_ICON_CACHE.get(stem)
+    if cached is not None:
+        return cached
+    icon = QIcon(str(GAME_ICON_DIR / f"{stem}.png"))
+    _GAME_ICON_CACHE[stem] = icon
+    return icon
+
+
+def configure_game_icon_combo(combo: QComboBox) -> None:
+    combo.setIconSize(GAME_ICON_SIZE)
+
+
+def add_game_icon_combo_item(combo: QComboBox, text: str, user_data, icon_stem: Optional[str]) -> None:
+    icon = get_game_icon(icon_stem)
+    if icon.isNull():
+        combo.addItem(text, user_data)
+    else:
+        combo.addItem(icon, text, user_data)
+
+
+def get_personality_icon_stem(personality_id: int) -> Optional[str]:
+    if 1 <= personality_id <= 4:
+        return "ui_icon_personal01_00"
+    if 5 <= personality_id <= 8:
+        return "ui_icon_personal01_01"
+    if 9 <= personality_id <= 12:
+        return "ui_icon_personal01_02"
+    if 13 <= personality_id <= 16:
+        return "ui_icon_personal01_03"
+    return None
 
 
 def get_app_settings_dir() -> Path:
@@ -3085,15 +3136,16 @@ class ClassificationPage(QWizardPage):
 
         # Type (for game mechanics)
         self.type_combo = QComboBox()
+        configure_game_icon_combo(self.type_combo)
         for i in range(20):
             type_name = wizard.loader.get_type_name(i)
             if not type_name or type_name == str(i):
                 type_name = f"Type {i}"
             else:
                 type_name = wizard.loader.clean_ui_text(type_name)
-            self.type_combo.addItem(type_name, i)
+            add_game_icon_combo_item(self.type_combo, type_name, i, TYPE_ICON_STEMS.get(i))
         self.type_combo.setToolTip("Digimon type (for game mechanics like weaknesses)")
-        layout.addRow("🔷 Type:", self.type_combo)
+        layout.addRow("Type:", self.type_combo)
 
         # Tribe/Species (Belong) - Load unique tribes from belong.mbe
         self.tribe_combo = QComboBox()
@@ -3112,12 +3164,13 @@ class ClassificationPage(QWizardPage):
 
         # Personality
         self.personality_combo = QComboBox()
+        configure_game_icon_combo(self.personality_combo)
         for i in range(17):
             personality_name = wizard.loader.get_personality_name(i)
             clean_name = wizard.loader.clean_ui_text(personality_name)
-            self.personality_combo.addItem(clean_name, i)
+            add_game_icon_combo_item(self.personality_combo, clean_name, i, get_personality_icon_stem(i))
         self.personality_combo.setToolTip("Digimon personality type (affects skill learning)")
-        layout.addRow("🎭 Personality:", self.personality_combo)
+        layout.addRow("Personality:", self.personality_combo)
 
         # Set defaults from template
         if wizard.template_digimon:
@@ -6342,18 +6395,20 @@ class DigimonEditor(QMainWindow):
         classification_layout.addWidget(self.stage_combo, 0, 1)
 
         # Type ID with dropdown
-        type_label = QLabel("🔷 Type:")
+        type_label = QLabel("Type:")
         type_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         classification_layout.addWidget(type_label, 1, 0)
         self.type_combo = QComboBox()
+        configure_game_icon_combo(self.type_combo)
         self.populate_type_dropdown()
         classification_layout.addWidget(self.type_combo, 1, 1)
 
         # Personality with dropdown
-        personality_label = QLabel("🎭 Personality:")
+        personality_label = QLabel("Personality:")
         personality_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         classification_layout.addWidget(personality_label, 2, 0)
         self.personality_combo = QComboBox()
+        configure_game_icon_combo(self.personality_combo)
         self.populate_personality_dropdown()
         classification_layout.addWidget(self.personality_combo, 2, 1)
 
@@ -7752,14 +7807,15 @@ class DigimonEditor(QMainWindow):
         self.skill_damage_type_combo.setMinimumWidth(200)
         damage_layout.addRow(dtype_label, self.skill_damage_type_combo)
 
-        element_label = QLabel("🔥 Element:")
+        element_label = QLabel("Element:")
         element_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         element_label.setMinimumWidth(180)
         self.skill_element_combo = QComboBox()
+        configure_game_icon_combo(self.skill_element_combo)
         for i in range(11):  # Elements 0-10
             element_name = self.loader.get_element_name(i)
             clean_name = self.loader.clean_ui_text(element_name)
-            self.skill_element_combo.addItem(clean_name, i)
+            add_game_icon_combo_item(self.skill_element_combo, clean_name, i, ELEMENT_ICON_STEMS.get(i))
         self.skill_element_combo.setMinimumWidth(200)
         damage_layout.addRow(element_label, self.skill_element_combo)
 
@@ -15433,14 +15489,14 @@ class DigimonEditor(QMainWindow):
         for i in range(7):  # Types 0-6
             type_name = self.loader.get_type_name(i)
             clean_name = self.loader.clean_ui_text(type_name)
-            self.type_combo.addItem(clean_name, i)
+            add_game_icon_combo_item(self.type_combo, clean_name, i, TYPE_ICON_STEMS.get(i))
 
     def populate_personality_dropdown(self):
         """Populate the personality dropdown with localized names"""
         for i in range(17):  # Personalities 0-16
             personality_name = self.loader.get_personality_name(i)
             clean_name = self.loader.clean_ui_text(personality_name)
-            self.personality_combo.addItem(clean_name, i)
+            add_game_icon_combo_item(self.personality_combo, clean_name, i, get_personality_icon_stem(i))
 
     def populate_tribe_dropdown(self):
         """Populate the tribe dropdown with unique tribes from belong.mbe"""
