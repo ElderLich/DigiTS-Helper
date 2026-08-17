@@ -21,7 +21,7 @@ from PyQt6.QtWidgets import (
     QAbstractScrollArea
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer, QSize
-from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor
+from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
@@ -82,6 +82,7 @@ TEXT_LANGUAGE_FOLDERS = (
 APP_RESOURCE_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
 GAME_ICON_DIR = APP_RESOURCE_ROOT / "assets" / "game_icons"
 GAME_ICON_SIZE = QSize(24, 24)
+GAME_ICON_TILE_COLOR = QColor(8, 15, 28)
 TYPE_ICON_STEMS = {
     0: "ui_icon_type_000",  # Vaccine
     1: "ui_icon_type_020",  # Data
@@ -92,6 +93,41 @@ TYPE_ICON_STEMS = {
     6: "ui_icon_type_120",  # No Data
 }
 ELEMENT_ICON_STEMS = {element_id: f"ui_icon_skill_{element_id:03d}" for element_id in range(11)}
+STAT_ICON_STEMS = {
+    "hp": "ui_icon_btlstatus_032",
+    "sp": "ui_icon_btlstatus_033",
+    "atk": "ui_icon_btlstatus_016",
+    "def": "ui_icon_btlstatus_018",
+    "int": "ui_icon_btlstatus_020",
+    "spi": "ui_icon_btlstatus_022",
+    "spd": "ui_icon_btlstatus_024",
+}
+RESISTANCE_ELEMENT_IDS = {
+    "null": 0,
+    "fire": 1,
+    "ice": 2,
+    "grass": 3,
+    "water": 4,
+    "elec": 5,
+    "steel": 6,
+    "wind": 7,
+    "ground": 8,
+    "light": 9,
+    "dark": 10,
+}
+TAB_ICON_STEMS = {
+    # Editor tabs do not have one-to-one game text mappings, so these are
+    # visual matches from the extracted tab icon sheet.
+    "basic": "ui_icon_tab_0103",
+    "stats": "ui_icon_tab_0501",
+    "skills": "ui_icon_tab_0202",
+    "advanced_skills": "ui_icon_tab_0500",
+    "traits": "ui_icon_tab_0003",
+    "model": "ui_icon_tab_0604",
+    "evolution": "ui_icon_tab_0400",
+    "battle": "ui_icon_tab_0001",
+    "languages": "ui_icon_tab_0903",
+}
 _GAME_ICON_CACHE: Dict[str, QIcon] = {}
 TEXT_LANGUAGE_LABELS = dict(TEXT_LANGUAGE_FOLDERS)
 TEXT_LANGUAGE_FOLDER_RE = re.compile(r"^patch_text(?P<code>\d+)$")
@@ -107,7 +143,18 @@ def get_game_icon(stem: Optional[str]) -> QIcon:
     cached = _GAME_ICON_CACHE.get(stem)
     if cached is not None:
         return cached
-    icon = QIcon(str(GAME_ICON_DIR / f"{stem}.png"))
+    pixmap = QPixmap(str(GAME_ICON_DIR / f"{stem}.png"))
+    if pixmap.isNull():
+        icon = QIcon()
+    else:
+        # Extracted UI icons are often white transparent glyphs; give them the
+        # same dark backing the game uses so they remain visible in light forms.
+        tile = QPixmap(pixmap.size())
+        tile.fill(GAME_ICON_TILE_COLOR)
+        painter = QPainter(tile)
+        painter.drawPixmap(0, 0, pixmap)
+        painter.end()
+        icon = QIcon(tile)
     _GAME_ICON_CACHE[stem] = icon
     return icon
 
@@ -122,6 +169,51 @@ def add_game_icon_combo_item(combo: QComboBox, text: str, user_data, icon_stem: 
         combo.addItem(text, user_data)
     else:
         combo.addItem(icon, text, user_data)
+
+
+def add_game_icon_tab(tab_widget: QTabWidget, page: QWidget, text: str, icon_stem: Optional[str]) -> None:
+    icon = get_game_icon(icon_stem)
+    if icon.isNull():
+        tab_widget.addTab(page, text)
+    else:
+        tab_widget.addTab(page, icon, text)
+
+
+def create_game_icon_label(
+    text: str,
+    icon_stem: Optional[str],
+    icon_size: int = 20,
+    *,
+    bold: bool = False,
+    minimum_width: int = 0,
+) -> QWidget:
+    wrapper = QWidget()
+    if minimum_width:
+        wrapper.setMinimumWidth(minimum_width)
+    layout = QHBoxLayout(wrapper)
+    layout.setContentsMargins(0, 0, 0, 0)
+    layout.setSpacing(6)
+
+    icon = get_game_icon(icon_stem)
+    if not icon.isNull():
+        icon_label = QLabel()
+        icon_label.setPixmap(icon.pixmap(QSize(icon_size, icon_size)))
+        icon_label.setFixedSize(icon_size, icon_size)
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(icon_label)
+
+    text_label = QLabel(text)
+    if bold:
+        text_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+    text_label.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
+    layout.addWidget(text_label)
+    layout.addStretch()
+    return wrapper
+
+
+def get_resistance_icon_stem(resistance_key: str) -> Optional[str]:
+    element_id = RESISTANCE_ELEMENT_IDS.get(resistance_key)
+    return ELEMENT_ICON_STEMS.get(element_id)
 
 
 def get_personality_icon_stem(personality_id: int) -> Optional[str]:
@@ -3329,31 +3421,31 @@ class StatsPage(QWizardPage):
 
         self.hp_spin = QSpinBox()
         self.hp_spin.setRange(1, 9999)
-        layout.addRow("❤️ HP:", self.hp_spin)
+        layout.addRow(create_game_icon_label("HP:", STAT_ICON_STEMS.get("hp")), self.hp_spin)
 
         self.sp_spin = QSpinBox()
         self.sp_spin.setRange(1, 9999)
-        layout.addRow("💙 SP:", self.sp_spin)
+        layout.addRow(create_game_icon_label("SP:", STAT_ICON_STEMS.get("sp")), self.sp_spin)
 
         self.atk_spin = QSpinBox()
         self.atk_spin.setRange(1, 9999)
-        layout.addRow("⚔️ ATK:", self.atk_spin)
+        layout.addRow(create_game_icon_label("ATK:", STAT_ICON_STEMS.get("atk")), self.atk_spin)
 
         self.def_spin = QSpinBox()
         self.def_spin.setRange(1, 9999)
-        layout.addRow("🛡️ DEF:", self.def_spin)
+        layout.addRow(create_game_icon_label("DEF:", STAT_ICON_STEMS.get("def")), self.def_spin)
 
         self.int_spin = QSpinBox()
         self.int_spin.setRange(1, 9999)
-        layout.addRow("🧠 INT:", self.int_spin)
+        layout.addRow(create_game_icon_label("INT:", STAT_ICON_STEMS.get("int")), self.int_spin)
 
         self.spi_spin = QSpinBox()
         self.spi_spin.setRange(1, 9999)
-        layout.addRow("✨ SPI:", self.spi_spin)
+        layout.addRow(create_game_icon_label("SPI:", STAT_ICON_STEMS.get("spi")), self.spi_spin)
 
         self.spd_spin = QSpinBox()
         self.spd_spin.setRange(1, 9999)
-        layout.addRow("⚡ SPD:", self.spd_spin)
+        layout.addRow(create_game_icon_label("SPD:", STAT_ICON_STEMS.get("spd")), self.spd_spin)
 
         # Set defaults from template
         if wizard.template_digimon:
@@ -3417,7 +3509,7 @@ class ResistancesPage(QWizardPage):
         for i, (resist_key, resist_name) in enumerate(resistances):
             row = i // 2
             col = (i % 2) * 3
-            layout.addWidget(QLabel(f"{resist_name}:"), row, col)
+            layout.addWidget(create_game_icon_label(f"{resist_name}:", get_resistance_icon_stem(resist_key)), row, col)
 
             spin = QSpinBox()
             spin.setRange(0, 4)
@@ -6251,42 +6343,43 @@ class DigimonEditor(QMainWindow):
 
         # Tab widget
         self.tab_widget = QTabWidget()
+        self.tab_widget.setIconSize(GAME_ICON_SIZE)
 
         # Basic Info Tab
         self.basic_tab = self.create_basic_tab()
-        self.tab_widget.addTab(self.basic_tab, "📝 Basic Info")
+        add_game_icon_tab(self.tab_widget, self.basic_tab, "Basic Info", TAB_ICON_STEMS.get("basic"))
 
         # Stats Tab
         self.stats_tab = self.create_stats_tab()
-        self.tab_widget.addTab(self.stats_tab, "📊 Stats")
+        add_game_icon_tab(self.tab_widget, self.stats_tab, "Stats", TAB_ICON_STEMS.get("stats"))
 
         # Skills Tab
         self.skills_tab = self.create_skills_tab()
-        self.tab_widget.addTab(self.skills_tab, "⚡ Skills")
+        add_game_icon_tab(self.tab_widget, self.skills_tab, "Skills", TAB_ICON_STEMS.get("skills"))
 
         # Advanced Skills Tab
         self.advanced_skills_tab = self.create_advanced_skills_tab()
-        self.tab_widget.addTab(self.advanced_skills_tab, "🎯 Advanced Skills")
+        add_game_icon_tab(self.tab_widget, self.advanced_skills_tab, "Advanced Skills", TAB_ICON_STEMS.get("advanced_skills"))
 
         # Traits Tab
         self.traits_tab = TraitsEditor(self.loader)
-        self.tab_widget.addTab(self.traits_tab, "✨ Traits")
+        add_game_icon_tab(self.tab_widget, self.traits_tab, "Traits", TAB_ICON_STEMS.get("traits"))
 
         # Model Tab
         self.model_tab = self.create_model_tab()
-        self.tab_widget.addTab(self.model_tab, "🎨 Model & Animation")
+        add_game_icon_tab(self.tab_widget, self.model_tab, "Model & Animation", TAB_ICON_STEMS.get("model"))
 
         # Evolution Tab
         self.evolution_tab = self.create_evolution_tab()
-        self.tab_widget.addTab(self.evolution_tab, "🔄 Evolution")
+        add_game_icon_tab(self.tab_widget, self.evolution_tab, "Evolution", TAB_ICON_STEMS.get("evolution"))
 
         # Battle Tab
         self.battle_tab = self.create_battle_tab()
-        self.tab_widget.addTab(self.battle_tab, "⚔️ Battle Data")
+        add_game_icon_tab(self.tab_widget, self.battle_tab, "Battle Data", TAB_ICON_STEMS.get("battle"))
 
         # Multi Language Tab
         self.multi_language_tab = self.create_multi_language_tab()
-        self.tab_widget.addTab(self.multi_language_tab, "🌐 Other Languages")
+        add_game_icon_tab(self.tab_widget, self.multi_language_tab, "Other Languages", TAB_ICON_STEMS.get("languages"))
 
         layout.addWidget(self.tab_widget)
 
@@ -6822,7 +6915,7 @@ class DigimonEditor(QMainWindow):
         stats = ["HP", "SP", "ATK", "DEF", "INT", "SPI", "SPD"]
 
         for i, stat in enumerate(stats):
-            stats_layout.addWidget(QLabel(f"{stat}:"), i, 0)
+            stats_layout.addWidget(create_game_icon_label(f"{stat}:", STAT_ICON_STEMS.get(stat.lower())), i, 0)
             spin = QSpinBox()
             spin.setRange(0, 9999)
             self.stat_widgets[stat.lower()] = spin
@@ -6865,7 +6958,7 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(growth_group)
 
         # Elemental Resistances Group
-        resist_group = QGroupBox("🛡️ Elemental Resistances")
+        resist_group = QGroupBox("Elemental Resistances")
         resist_layout = QGridLayout(resist_group)
 
         # Create resistance spinboxes with element names
@@ -6896,7 +6989,7 @@ class DigimonEditor(QMainWindow):
         for i, (resist_key, resist_name) in enumerate(resistances):
             row = i // 2
             col = (i % 2) * 3  # Changed to *3 to make room for label
-            resist_layout.addWidget(QLabel(f"{resist_name}:"), row, col)
+            resist_layout.addWidget(create_game_icon_label(f"{resist_name}:", get_resistance_icon_stem(resist_key)), row, col)
 
             spin = QSpinBox()
             spin.setRange(0, 4)
@@ -8963,57 +9056,57 @@ class DigimonEditor(QMainWindow):
         enemy_layout.addRow(ai_level_label, self.ai_level_edit)
 
         # Battle stats (columns 17-23)
-        hp_label = QLabel("❤️ Battle HP (Col 17):")
-        hp_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        hp_label.setMinimumWidth(220)
+        hp_label = create_game_icon_label(
+            "Battle HP (Col 17):", STAT_ICON_STEMS.get("hp"), bold=True, minimum_width=220
+        )
         self.battle_hp_edit = QSpinBox()
         self.battle_hp_edit.setRange(1, 99999)
         self.battle_hp_edit.setMinimumWidth(150)
         enemy_layout.addRow(hp_label, self.battle_hp_edit)
 
-        sp_label = QLabel("💙 Battle SP (Col 18):")
-        sp_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        sp_label.setMinimumWidth(220)
+        sp_label = create_game_icon_label(
+            "Battle SP (Col 18):", STAT_ICON_STEMS.get("sp"), bold=True, minimum_width=220
+        )
         self.battle_sp_edit = QSpinBox()
         self.battle_sp_edit.setRange(1, 9999)
         self.battle_sp_edit.setMinimumWidth(150)
         enemy_layout.addRow(sp_label, self.battle_sp_edit)
 
-        atk_label = QLabel("⚔️ Battle ATK (Col 19):")
-        atk_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        atk_label.setMinimumWidth(220)
+        atk_label = create_game_icon_label(
+            "Battle ATK (Col 19):", STAT_ICON_STEMS.get("atk"), bold=True, minimum_width=220
+        )
         self.battle_attack_edit = QSpinBox()
         self.battle_attack_edit.setRange(1, 9999)
         self.battle_attack_edit.setMinimumWidth(150)
         enemy_layout.addRow(atk_label, self.battle_attack_edit)
 
-        def_label = QLabel("🛡️ Battle DEF (Col 20):")
-        def_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        def_label.setMinimumWidth(220)
+        def_label = create_game_icon_label(
+            "Battle DEF (Col 20):", STAT_ICON_STEMS.get("def"), bold=True, minimum_width=220
+        )
         self.battle_defense_edit = QSpinBox()
         self.battle_defense_edit.setRange(1, 9999)
         self.battle_defense_edit.setMinimumWidth(150)
         enemy_layout.addRow(def_label, self.battle_defense_edit)
 
-        int_label = QLabel("🧠 Battle INT (Col 21):")
-        int_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        int_label.setMinimumWidth(220)
+        int_label = create_game_icon_label(
+            "Battle INT (Col 21):", STAT_ICON_STEMS.get("int"), bold=True, minimum_width=220
+        )
         self.battle_intelligence_edit = QSpinBox()
         self.battle_intelligence_edit.setRange(1, 9999)
         self.battle_intelligence_edit.setMinimumWidth(150)
         enemy_layout.addRow(int_label, self.battle_intelligence_edit)
 
-        spi_label = QLabel("✨ Battle SPI (Col 22):")
-        spi_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        spi_label.setMinimumWidth(220)
+        spi_label = create_game_icon_label(
+            "Battle SPI (Col 22):", STAT_ICON_STEMS.get("spi"), bold=True, minimum_width=220
+        )
         self.battle_spirit_edit = QSpinBox()
         self.battle_spirit_edit.setRange(1, 9999)
         self.battle_spirit_edit.setMinimumWidth(150)
         enemy_layout.addRow(spi_label, self.battle_spirit_edit)
 
-        spd_label = QLabel("⚡ Battle SPD (Col 23):")
-        spd_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        spd_label.setMinimumWidth(220)
+        spd_label = create_game_icon_label(
+            "Battle SPD (Col 23):", STAT_ICON_STEMS.get("spd"), bold=True, minimum_width=220
+        )
         self.battle_speed_edit = QSpinBox()
         self.battle_speed_edit.setRange(1, 9999)
         self.battle_speed_edit.setMinimumWidth(150)
