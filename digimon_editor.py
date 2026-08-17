@@ -524,6 +524,44 @@ def modern_action_button_style(accent: str = "#d8872b", checked_accent: str = "#
     """
 
 
+def modern_info_panel_style(accent: str = "#88e9e0") -> str:
+    return f"""
+        color: #dce9ea;
+        padding: 10px 12px;
+        background-color: rgba(5, 24, 29, 190);
+        border: 1px solid rgba(143, 211, 207, 95);
+        border-left: 4px solid {accent};
+        border-radius: 2px;
+    """
+
+
+def modern_status_panel_style(accent: str = "#88e9e0") -> str:
+    return f"""
+        color: #dce9ea;
+        padding: 10px 12px;
+        background-color: rgba(9, 41, 48, 180);
+        border: 1px solid rgba(143, 211, 207, 100);
+        border-left: 4px solid {accent};
+        border-radius: 2px;
+        margin-top: 10px;
+    """
+
+
+def modern_warning_panel_style() -> str:
+    return """
+        color: #f0d6a8;
+        padding: 9px 12px;
+        background-color: rgba(95, 62, 18, 170);
+        border: 1px solid rgba(216, 135, 43, 135);
+        border-left: 4px solid #d8872b;
+        border-radius: 2px;
+    """
+
+
+def modern_muted_text_style(font_size: str = "9pt") -> str:
+    return f"color: #a9c1c2; font-size: {font_size};"
+
+
 def prepare_modern_scroll_surface(scroll: QScrollArea, content: QWidget, object_name: str) -> None:
     scroll.setFrameShape(QFrame.Shape.NoFrame)
     scroll.setStyleSheet("QScrollArea { background: transparent; border: none; }")
@@ -2518,11 +2556,15 @@ class DigimonCreationWizard(QWizard):
 
         # Connect signals
         self.button(QWizard.WizardButton.FinishButton).clicked.connect(self.finish_wizard)
+        self.currentIdChanged.connect(lambda _page_id: QTimer.singleShot(0, self._modernize_wizard_chrome))
 
         # Apply styling
         self.setStyleSheet(modern_dialog_stylesheet() + """
             QWizard {
                 background-color: #041316;
+            }
+            QWizard QWidget {
+                color: #dce9ea;
             }
             QWizardPage {
                 background-color: rgba(3, 18, 23, 220);
@@ -2533,7 +2575,51 @@ class DigimonCreationWizard(QWizard):
             QWizard QLabel {
                 color: #dce9ea;
             }
+            QWizard QGroupBox {
+                color: #e8f2f1;
+                font-weight: 700;
+                border: 1px solid rgba(136, 233, 224, 130);
+                border-radius: 2px;
+                margin-top: 18px;
+                padding: 18px 10px 10px 10px;
+                background-color: rgba(3, 18, 23, 185);
+                font-size: 10.5pt;
+            }
+            QWizard QGroupBox::title {
+                color: #88e9e0;
+                subcontrol-origin: margin;
+                left: 14px;
+                padding: 0 9px;
+                background-color: rgba(3, 18, 23, 235);
+            }
         """)
+        QTimer.singleShot(0, self._modernize_wizard_chrome)
+
+    def _modernize_wizard_chrome(self):
+        """Darken QWizard's native title/subtitle chrome and old inline panels."""
+        modernize_inline_light_styles(self)
+        header_style = """
+            QWidget {
+                background-color: #041316;
+                color: #e8f2f1;
+                border-bottom: 1px solid rgba(143, 211, 207, 85);
+            }
+            QLabel {
+                background: transparent;
+                color: #e8f2f1;
+                border: none;
+            }
+        """
+        for child in self.findChildren(QWidget):
+            geom = child.geometry()
+            if (
+                child is not self
+                and geom.y() <= 4
+                and 20 <= geom.height() <= 90
+                and geom.width() >= max(240, self.width() // 2)
+            ):
+                child.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+                child.setStyleSheet(header_style)
 
     def finish_wizard(self):
         """Called when wizard is finished - export to DLC"""
@@ -3384,7 +3470,7 @@ class TemplateSelectionPage(QWizardPage):
             "You can customize them in the following steps."
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info_label)
 
         # Template selection
@@ -3431,7 +3517,7 @@ class TemplateSelectionPage(QWizardPage):
         # Preview info
         self.preview_label = QLabel("")
         self.preview_label.setWordWrap(True)
-        self.preview_label.setStyleSheet("padding: 10px; background-color: #e7f5ff; border-radius: 6px; margin-top: 10px;")
+        self.preview_label.setStyleSheet(modern_status_panel_style())
         layout.addWidget(self.preview_label)
 
         layout.addStretch()
@@ -3824,7 +3910,7 @@ class ProfilePage(QWizardPage):
             "You can enter it as one paragraph or pre-format it with line breaks."
         )
         info.setWordWrap(True)
-        info.setStyleSheet("color: #666; padding: 8px; background: #f0f0f0; border-radius: 4px; margin-bottom: 10px;")
+        info.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info)
 
         # Profile text editor
@@ -3844,7 +3930,7 @@ class ProfilePage(QWizardPage):
 
         # Character counter
         self.char_count_label = QLabel("Characters: 0")
-        self.char_count_label.setStyleSheet("color: #666; font-size: 9pt;")
+        self.char_count_label.setStyleSheet(modern_muted_text_style())
         self.profile_edit.textChanged.connect(self.update_char_count)
         layout.addWidget(self.char_count_label)
 
@@ -3861,7 +3947,7 @@ class ProfilePage(QWizardPage):
             f"Characters: {char_count} | Lines: {len(lines)} | Longest line: {longest_line}/{PROFILE_WRAP_WIDTH}"
         )
         self.char_count_label.setStyleSheet(
-            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+            "color: #ff8b93; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else modern_muted_text_style()
         )
 
     def apply_game_format(self):
@@ -4000,7 +4086,7 @@ class ResistancesPage(QWizardPage):
 
             value_label = QLabel(resistance_labels[0])
             value_label.setObjectName(f"resist_label_{resist_key}")
-            value_label.setStyleSheet("color: #666; font-size: 9pt;")
+            value_label.setStyleSheet(modern_muted_text_style())
             layout.addWidget(value_label, row, col + 2)
 
             spin.valueChanged.connect(lambda v, label=value_label: label.setText(resistance_labels.get(v, "Unknown")))
@@ -4055,11 +4141,12 @@ class SkillsPage(QWizardPage):
             "Click 'Add Skill' to select from a list, or enter skill ID manually."
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info_label)
 
         # Signature Skills
         sig_group = QGroupBox("Signature Skills (up to 12)")
+        sig_group.setStyleSheet(modern_groupbox_style("rgba(122, 162, 255, 150)", "#7aa2ff"))
         sig_layout = QVBoxLayout()
 
         self.signature_skills_editor = SkillEditor("signature", wizard.loader)
@@ -4069,6 +4156,7 @@ class SkillsPage(QWizardPage):
 
         # Generic Skills
         gen_group = QGroupBox("Generic Skills (up to 4)")
+        gen_group.setStyleSheet(modern_groupbox_style("rgba(32, 214, 163, 150)", "#20d6a3"))
         gen_layout = QVBoxLayout()
 
         self.generic_skills_editor = SkillEditor("generic", wizard.loader)
@@ -4187,12 +4275,12 @@ class EvolutionPage(QWizardPage):
             "Then configure evolution paths (what this Digimon can evolve into) and pre-evolutions."
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info_label)
 
         # Evolution Requirements section (for obtaining THIS Digimon)
         req_group = QGroupBox("⭐ Requirements to Obtain This Digimon")
-        req_group.setStyleSheet("QGroupBox { font-weight: bold; }")
+        req_group.setStyleSheet(modern_groupbox_style("rgba(136, 233, 224, 140)", "#88e9e0"))
         req_layout = QVBoxLayout()
 
         req_info = QLabel(
@@ -4200,26 +4288,10 @@ class EvolutionPage(QWizardPage):
             "Leave values at 0 for no requirement."
         )
         req_info.setWordWrap(True)
-        req_info.setStyleSheet("color: #555; font-size: 10pt; font-weight: normal;")
+        req_info.setStyleSheet("color: #dce9ea; font-size: 10pt; font-weight: 500;")
         req_layout.addWidget(req_info)
 
-        action_button_style = """
-            QPushButton {
-                color: white;
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #667eea, stop:1 #764ba2);
-                border: none;
-                border-radius: 7px;
-                padding: 10px 16px;
-                font-size: 10pt;
-                font-weight: bold;
-                min-height: 24px;
-            }
-            QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #5568d3, stop:1 #653b8e);
-            }
-        """
+        action_button_style = modern_action_button_style("#d8872b")
 
         edit_req_btn = QPushButton("Edit Evolution Requirements")
         edit_req_btn.setMinimumHeight(44)
@@ -4229,7 +4301,7 @@ class EvolutionPage(QWizardPage):
         req_layout.addWidget(edit_req_btn)
 
         self.requirements_label = QLabel("Mode: No Requirements (default)")
-        self.requirements_label.setStyleSheet("color: #666; padding: 5px; background: #f0f0f0; border-radius: 3px;")
+        self.requirements_label.setStyleSheet(modern_status_panel_style("#20d6a3"))
         self.requirements_label.setWordWrap(True)
         req_layout.addWidget(self.requirements_label)
 
@@ -4251,6 +4323,7 @@ class EvolutionPage(QWizardPage):
 
         # Evolution paths section
         evo_group = QGroupBox("Evolution Paths (what this Digimon evolves into)")
+        evo_group.setStyleSheet(modern_groupbox_style("rgba(122, 162, 255, 150)", "#7aa2ff"))
         evo_layout = QVBoxLayout()
 
         evo_buttons = QHBoxLayout()
@@ -4275,13 +4348,14 @@ class EvolutionPage(QWizardPage):
 
         # Pre-evolution section
         deevo_group = QGroupBox("⬅️ Pre-Evolutions (Digimon that evolve INTO this one)")
+        deevo_group.setStyleSheet(modern_groupbox_style("rgba(32, 214, 163, 150)", "#20d6a3"))
         deevo_layout = QVBoxLayout()
 
         deevo_info = QLabel(
             "💡 Adding a pre-evolution creates an evolution entry where THAT Digimon evolves into THIS one.\n"
             "⚠️ Each Digimon can only have 6 evolution targets. If a Digimon is full, you cannot add it as a pre-evolution."
         )
-        deevo_info.setStyleSheet("color: #666; font-size: 9pt; padding: 5px; background-color: #fff3cd; border-radius: 4px;")
+        deevo_info.setStyleSheet(modern_warning_panel_style())
         deevo_info.setWordWrap(True)
         deevo_layout.addWidget(deevo_info)
 
@@ -4330,7 +4404,7 @@ class EvolutionPage(QWizardPage):
         # Info label
         info = QLabel("Configure the requirements needed for other Digimon to evolve INTO this new Digimon.\nLeave values at 0 for no requirement.")
         info.setWordWrap(True)
-        info.setStyleSheet("color: #666; padding: 8px; background: #f0f0f0; border-radius: 4px; margin-bottom: 10px;")
+        info.setStyleSheet(modern_info_panel_style())
         scroll_layout.addWidget(info)
 
         # Agent Rank Requirement
@@ -4685,7 +4759,7 @@ class EvolutionPage(QWizardPage):
                 "⚠️ IMPORTANT: When you add a pre-evolution, that Digimon gains a new evolution target.\n"
                 "Each Digimon can only have 6 evolution targets maximum. Base, DLC, and Reloaded II mod rows are counted."
             )
-            info_banner.setStyleSheet("background-color: #fff3cd; padding: 10px; border-radius: 6px; color: #856404;")
+            info_banner.setStyleSheet(modern_warning_panel_style())
             info_banner.setWordWrap(True)
             layout.addWidget(info_banner)
 
@@ -4698,7 +4772,7 @@ class EvolutionPage(QWizardPage):
 
             # Evolution count display
             self.evo_count_label = QLabel("Select a Digimon to see their evolution count")
-            self.evo_count_label.setStyleSheet("padding: 5px; font-style: italic; color: #666;")
+            self.evo_count_label.setStyleSheet(modern_muted_text_style())
             layout.addWidget(self.evo_count_label)
 
             # Digimon list
@@ -5115,7 +5189,7 @@ class EvolutionPage(QWizardPage):
         # Info label
         info = QLabel("Configure the requirements needed to evolve to this Digimon.\nLeave values at 0 for no requirement.")
         info.setWordWrap(True)
-        info.setStyleSheet("color: #666; padding: 8px; background: #f0f0f0; border-radius: 4px; margin-bottom: 10px;")
+        info.setStyleSheet(modern_info_panel_style())
         scroll_layout.addWidget(info)
 
         # Agent Rank (column 2 in evolution_condition.csv)
@@ -5450,7 +5524,7 @@ class ModelPage(QWizardPage):
         # Info label
         info_label = QLabel("💡 The Animation Reference determines which Digimon's animations this Digimon uses.\nSet to the template's chr_id or another Digimon with similar animations.")
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; font-size: 9pt; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(modern_info_panel_style())
         layout.addRow("", info_label)
 
         # Set defaults from template
@@ -5493,7 +5567,7 @@ class ReviewPage(QWizardPage):
             "The wizard will create .ap.csv files ready for dsts-loader!"
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #495057; padding: 10px; background-color: #e7f5ff; border-radius: 6px; margin-top: 10px;")
+        info_label.setStyleSheet(modern_status_panel_style("#d8872b"))
         layout.addWidget(info_label)
 
         self.setLayout(layout)
