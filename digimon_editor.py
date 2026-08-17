@@ -18,7 +18,7 @@ from PyQt6.QtWidgets import (
     QMessageBox, QFileDialog, QTableWidget, QTableWidgetItem, QPlainTextEdit,
     QHeaderView, QSplitter, QListWidget, QListWidgetItem, QDoubleSpinBox, QFormLayout,
     QDialog, QDialogButtonBox, QWizard, QWizardPage, QFrame, QAbstractSpinBox,
-    QAbstractScrollArea
+    QAbstractScrollArea, QAbstractItemView
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer, QSize
 from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLinearGradient, QPen
@@ -848,6 +848,32 @@ class SpinBoxWheelGuard(QObject):
         return False
 
 
+class ClickOnlyItemSelectionGuard(QObject):
+    """Prevent hover movement from becoming the current list/dropdown item."""
+
+    def _guarded_item_view(self, watched):
+        current = watched
+        while current:
+            if isinstance(current, QAbstractItemView):
+                return current
+            current = current.parent()
+        return None
+
+    def eventFilter(self, watched, event):
+        if event.type() not in (QEvent.Type.MouseMove, QEvent.Type.HoverMove):
+            return False
+
+        view = self._guarded_item_view(watched)
+        if view is None:
+            return False
+
+        if event.type() == QEvent.Type.MouseMove and event.buttons() != Qt.MouseButton.NoButton:
+            return False
+
+        event.accept()
+        return True
+
+
 class ComboPromptClearFilter(QObject):
     """Clear a combo-box prompt item as soon as the user starts typing into it."""
 
@@ -877,6 +903,9 @@ def install_spinbox_wheel_guard():
     if app and not hasattr(app, "_digimon_spinbox_wheel_guard"):
         app._digimon_spinbox_wheel_guard = SpinBoxWheelGuard(app)
         app.installEventFilter(app._digimon_spinbox_wheel_guard)
+    if app and not hasattr(app, "_digimon_click_only_item_selection_guard"):
+        app._digimon_click_only_item_selection_guard = ClickOnlyItemSelectionGuard(app)
+        app.installEventFilter(app._digimon_click_only_item_selection_guard)
 
 
 def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> str:
