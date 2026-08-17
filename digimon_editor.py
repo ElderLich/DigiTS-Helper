@@ -8625,7 +8625,7 @@ class DigimonEditor(QMainWindow):
             *,
             label_width: int = 190,
             icon_size: int = 30,
-            field_width: Optional[int] = None,
+            field_width: Optional[int] = 170,
         ) -> None:
             field_row = QWidget()
             field_layout = QHBoxLayout(field_row)
@@ -8760,38 +8760,24 @@ class DigimonEditor(QMainWindow):
 
         self.skill_power_edit = QSpinBox()
         self.skill_power_edit.setRange(0, 9999)
-        self.skill_power_edit.setMinimumWidth(150)
-        self.skill_power_edit.setMaximumWidth(220)
 
         self.skill_sp_cost_edit = QSpinBox()
         self.skill_sp_cost_edit.setRange(0, 999)
-        self.skill_sp_cost_edit.setMinimumWidth(150)
-        self.skill_sp_cost_edit.setMaximumWidth(220)
 
         self.skill_cp_cost_edit = QSpinBox()
         self.skill_cp_cost_edit.setRange(0, 9999)
-        self.skill_cp_cost_edit.setMinimumWidth(150)
-        self.skill_cp_cost_edit.setMaximumWidth(220)
 
         self.skill_animation_id_edit = QSpinBox()
         self.skill_animation_id_edit.setRange(0, 999999)
-        self.skill_animation_id_edit.setMinimumWidth(150)
-        self.skill_animation_id_edit.setMaximumWidth(220)
 
         self.skill_effect_id_edit = QSpinBox()
         self.skill_effect_id_edit.setRange(0, 999999)
-        self.skill_effect_id_edit.setMinimumWidth(150)
-        self.skill_effect_id_edit.setMaximumWidth(220)
 
         self.skill_accuracy_edit = QSpinBox()
         self.skill_accuracy_edit.setRange(0, 100)
-        self.skill_accuracy_edit.setMinimumWidth(150)
-        self.skill_accuracy_edit.setMaximumWidth(220)
 
         self.skill_crit_rate_edit = QSpinBox()
         self.skill_crit_rate_edit.setRange(0, 100)
-        self.skill_crit_rate_edit.setMinimumWidth(150)
-        self.skill_crit_rate_edit.setMaximumWidth(220)
 
         add_compact_field(basic_layout, 0, 0, "Power:", self.skill_power_edit, TAB_ICON_STEMS.get("battle"))
         add_compact_field(basic_layout, 1, 0, "SP Cost:", self.skill_sp_cost_edit, STAT_ICON_STEMS.get("sp"))
@@ -8815,8 +8801,6 @@ class DigimonEditor(QMainWindow):
         damage_types = ["None/Self", "Physical", "Magic", "Fixed damage at", "Fixed %", "Buff", "Major Damage"]
         self.skill_damage_type_combo.addItems(damage_types)
         apply_modern_combo_palette(self.skill_damage_type_combo)
-        self.skill_damage_type_combo.setMinimumWidth(260)
-        self.skill_damage_type_combo.setMaximumWidth(420)
 
         self.skill_element_combo = QComboBox()
         configure_game_icon_combo(self.skill_element_combo)
@@ -8824,18 +8808,12 @@ class DigimonEditor(QMainWindow):
             element_name = self.loader.get_element_name(i)
             clean_name = self.loader.clean_ui_text(element_name)
             add_game_icon_combo_item(self.skill_element_combo, clean_name, i, ELEMENT_ICON_STEMS.get(i))
-        self.skill_element_combo.setMinimumWidth(260)
-        self.skill_element_combo.setMaximumWidth(420)
 
         self.skill_min_hits_edit = QSpinBox()
         self.skill_min_hits_edit.setRange(1, 10)
-        self.skill_min_hits_edit.setMinimumWidth(150)
-        self.skill_min_hits_edit.setMaximumWidth(180)
 
         self.skill_max_hits_edit = QSpinBox()
         self.skill_max_hits_edit.setRange(1, 10)
-        self.skill_max_hits_edit.setMinimumWidth(150)
-        self.skill_max_hits_edit.setMaximumWidth(180)
 
         add_compact_field(
             damage_layout,
@@ -8898,12 +8876,10 @@ class DigimonEditor(QMainWindow):
         mode_top_grid.setVerticalSpacing(12)
         self.skill_mode_change_edit = QSpinBox()
         self.skill_mode_change_edit.setRange(-1, 99999999)
-        self.skill_mode_change_edit.setMinimumWidth(150)
         self.skill_mode_change_edit.setToolTip("battle_skill column 61. Use -1 for no mode change; positive values must exist in 003_skill_mode_change.")
 
         self.mode_change_source_digimon_edit = QSpinBox()
         self.mode_change_source_digimon_edit.setRange(0, 9999999)
-        self.mode_change_source_digimon_edit.setMinimumWidth(150)
         self.mode_change_source_digimon_edit.setToolTip("003_skill_mode_change column 1: the Digimon whose mode-change skill set this row describes.")
 
         self.mode_change_flag_4_edit = QSpinBox()
@@ -8914,16 +8890,8 @@ class DigimonEditor(QMainWindow):
         self.mode_change_flag_5_edit.setRange(0, 99)
         self.mode_change_flag_5_edit.setValue(1)
         self.mode_change_flag_5_edit.setToolTip("003_skill_mode_change column 5. Official rows usually use 1; one official MagnaGarurumon row uses 2.")
-        for mode_spin in (
-            self.skill_mode_change_edit,
-            self.mode_change_source_digimon_edit,
-            self.mode_change_flag_4_edit,
-            self.mode_change_flag_5_edit,
-        ):
-            mode_spin.setMaximumWidth(220)
-
         add_compact_field(mode_top_grid, 0, 0, "Mode Row ID (battle_skill col 61):", self.skill_mode_change_edit, TAB_ICON_STEMS.get("evolution"), label_width=285, field_width=170)
-        add_compact_field(mode_top_grid, 0, 1, "Source Digimon ID:", self.mode_change_source_digimon_edit, TAB_ICON_STEMS.get("basic"), label_width=205)
+        add_compact_field(mode_top_grid, 0, 1, "Source Digimon ID:", self.mode_change_source_digimon_edit, TAB_ICON_STEMS.get("basic"), label_width=205, field_width=170)
         add_compact_field(mode_top_grid, 1, 0, "Mode Flag A (col 4):", self.mode_change_flag_4_edit, TAB_ICON_STEMS.get("advanced_skills"), label_width=285, field_width=170)
         add_compact_field(mode_top_grid, 1, 1, "Mode Flag B (col 5):", self.mode_change_flag_5_edit, TAB_ICON_STEMS.get("advanced_skills"), label_width=205, field_width=170)
         mode_layout.addLayout(mode_top_grid)
@@ -8950,8 +8918,7 @@ class DigimonEditor(QMainWindow):
         for index in range(12):
             skill_spin = QSpinBox()
             skill_spin.setRange(0, 9999999)
-            skill_spin.setMinimumWidth(110)
-            skill_spin.setMaximumWidth(150)
+            set_compact_field_width(skill_spin, 150)
             skill_spin.setToolTip(f"003_skill_mode_change skill slot {index + 1}")
             self.mode_change_skill_widgets.append(skill_spin)
             row_index = index // 3
