@@ -378,12 +378,32 @@ MODERN_INLINE_STYLE_REPLACEMENTS = (
     ("color: #2c9558;", "color: #20d6a3;"),
     ("color: #087f5b;", "color: #20d6a3;"),
     ("color: #c967cc;", "color: #d8872b;"),
+    ("color: #e85c89;", "color: #88e9e0;"),
+    ("color: #c77d00;", "color: #88e9e0;"),
+    ("color: #6f42c1;", "color: #88e9e0;"),
+    ("color: #d9b12f;", "color: #88e9e0;"),
+    ("color: #7d6aad;", "color: #88e9e0;"),
+    ("color: #856404;", "color: #d9b77a;"),
     ("color: #555;", "color: #bfd1d2;"),
     ("color: #666;", "color: #a9c1c2;"),
     ("color: #6c757d;", "color: #9fb7b8;"),
     ("color: #adb5bd;", "color: rgba(230, 238, 238, 90);"),
     ("border: 2px solid #dee2e6;", "border: 1px solid rgba(143, 211, 207, 105);"),
+    ("border: 2px solid #667eea;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #c9d6ff;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #8fd3f4;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #84fab0;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #fa709a;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #ffd166;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #9b5de5;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #f093fb;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #fee140;", "border: 1px solid rgba(136, 233, 224, 115);"),
+    ("border: 2px solid #a18cd1;", "border: 1px solid rgba(136, 233, 224, 115);"),
     ("border-color: #dee2e6;", "border-color: rgba(143, 211, 207, 105);"),
+    ("border-color: #667eea;", "border-color: rgba(136, 233, 224, 115);"),
+    ("border-color: #5568d3;", "border-color: rgba(235, 229, 210, 190);"),
+    ("border-color: #10b981;", "border-color: rgba(32, 214, 163, 150);"),
+    ("border-color: #059669;", "border-color: rgba(32, 214, 163, 150);"),
     ("border-radius: 8px;", "border-radius: 2px;"),
     ("border-radius: 6px;", "border-radius: 2px;"),
 )
@@ -475,6 +495,12 @@ def prepare_modern_scroll_surface(scroll: QScrollArea, content: QWidget, object_
             background-color: rgba(3, 18, 23, 150);
         }}
     """)
+
+
+def set_compact_field_width(widget: QWidget, width: int = 170) -> QWidget:
+    widget.setMinimumWidth(width)
+    widget.setMaximumWidth(width)
+    return widget
 
 
 def get_resistance_icon_stem(resistance_key: str) -> Optional[str]:
@@ -8091,119 +8117,198 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(related_group)
         self.related_source_combo.addItem(RELATED_SOURCE_PROMPT, None)
 
+        model_label_width = 235
+        model_control_width = 310
+
+        def configure_compact_model_grid(grid: QGridLayout) -> None:
+            grid.setContentsMargins(20, 24, 20, 18)
+            grid.setHorizontalSpacing(12)
+            grid.setVerticalSpacing(10)
+            grid.setColumnMinimumWidth(0, model_label_width)
+            grid.setColumnMinimumWidth(1, model_control_width)
+            grid.setColumnMinimumWidth(2, 28)
+            grid.setColumnMinimumWidth(3, model_label_width)
+            grid.setColumnMinimumWidth(4, model_control_width)
+            for column in range(5):
+                grid.setColumnStretch(column, 0)
+            grid.setColumnStretch(5, 1)
+
+        def compact_model_label(text: str) -> QLabel:
+            label = QLabel(text)
+            label.setMinimumWidth(model_label_width)
+            label.setMaximumWidth(model_label_width)
+            label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+            label.setStyleSheet("font-weight: 650; color: #f4fbfb;")
+            return label
+
+        def compact_model_section(text: str) -> QLabel:
+            label = QLabel(text)
+            label.setStyleSheet(
+                "color: #62fff2; font-weight: 800; padding: 8px 0 2px 0;"
+            )
+            return label
+
+        def tune_model_control(widget: QWidget) -> QWidget:
+            widget.setMinimumWidth(220)
+            widget.setMaximumWidth(model_control_width)
+            return widget
+
+        def add_model_section(grid: QGridLayout, row: int, title: str) -> None:
+            grid.addWidget(compact_model_section(title), row, 0, 1, 5)
+
+        def add_model_pair(
+            grid: QGridLayout,
+            row: int,
+            left_label: str,
+            left_widget: QWidget,
+            right_label: Optional[str] = None,
+            right_widget: Optional[QWidget] = None,
+        ) -> None:
+            grid.addWidget(compact_model_label(left_label), row, 0)
+            grid.addWidget(tune_model_control(left_widget), row, 1)
+            if right_label and right_widget:
+                grid.addWidget(compact_model_label(right_label), row, 3)
+                grid.addWidget(tune_model_control(right_widget), row, 4)
+
         # Model Settings Group (from model_setting.mbe)
         settings_group = QGroupBox("Model Settings (model_setting.mbe)")
         settings_layout = QGridLayout(settings_group)
+        configure_compact_model_grid(settings_layout)
 
         # Scale settings
-        settings_layout.addWidget(QLabel("<b>Scale Settings</b>"), 0, 0, 1, 4)
+        add_model_section(settings_layout, 0, "Scale Settings")
 
-        settings_layout.addWidget(QLabel("Battle Scale:"), 1, 0)
         self.battle_scale_spin = QDoubleSpinBox()
         self.battle_scale_spin.setRange(0.0, 100.0)
         self.battle_scale_spin.setDecimals(3)
         self.battle_scale_spin.setSingleStep(0.1)
         self.battle_scale_spin.setValue(1.0)
-        settings_layout.addWidget(self.battle_scale_spin, 1, 1)
 
-        settings_layout.addWidget(QLabel("Menu Scale:"), 1, 2)
         self.menu_scale_spin = QDoubleSpinBox()
         self.menu_scale_spin.setRange(0.0, 100.0)
         self.menu_scale_spin.setDecimals(3)
         self.menu_scale_spin.setSingleStep(0.1)
         self.menu_scale_spin.setValue(1.0)
-        settings_layout.addWidget(self.menu_scale_spin, 1, 3)
+        add_model_pair(
+            settings_layout,
+            1,
+            "Battle Scale:",
+            self.battle_scale_spin,
+            "Menu Scale:",
+            self.menu_scale_spin,
+        )
 
-        settings_layout.addWidget(QLabel("Field Scale:"), 2, 0)
         self.field_scale_spin = QDoubleSpinBox()
         self.field_scale_spin.setRange(0.0, 100.0)
         self.field_scale_spin.setDecimals(3)
         self.field_scale_spin.setSingleStep(0.1)
         self.field_scale_spin.setValue(1.0)
-        settings_layout.addWidget(self.field_scale_spin, 2, 1)
+        add_model_pair(settings_layout, 2, "Field Scale:", self.field_scale_spin)
 
         # Collision and Shield
-        settings_layout.addWidget(QLabel("<b>Collision & Shield</b>"), 3, 0, 1, 4)
+        add_model_section(settings_layout, 3, "Collision & Shield")
 
-        settings_layout.addWidget(QLabel("NPC Collision:"), 4, 0)
         self.npc_collision_spin = QDoubleSpinBox()
         self.npc_collision_spin.setRange(0.0, 1000.0)
         self.npc_collision_spin.setDecimals(3)
         self.npc_collision_spin.setSingleStep(0.1)
-        settings_layout.addWidget(self.npc_collision_spin, 4, 1)
 
-        settings_layout.addWidget(QLabel("Shield Size:"), 4, 2)
         self.shield_size_spin = QDoubleSpinBox()
         self.shield_size_spin.setRange(0.0, 1000.0)
         self.shield_size_spin.setDecimals(3)
         self.shield_size_spin.setSingleStep(0.1)
-        settings_layout.addWidget(self.shield_size_spin, 4, 3)
+        add_model_pair(
+            settings_layout,
+            4,
+            "NPC Collision:",
+            self.npc_collision_spin,
+            "Shield Size:",
+            self.shield_size_spin,
+        )
 
         # Distance settings
-        settings_layout.addWidget(QLabel("<b>Distance Settings</b>"), 5, 0, 1, 4)
+        add_model_section(settings_layout, 5, "Distance Settings")
 
-        settings_layout.addWidget(QLabel("Agent Distance:"), 6, 0)
         self.agent_distance_spin = QSpinBox()
         self.agent_distance_spin.setRange(0, 99999)
-        settings_layout.addWidget(self.agent_distance_spin, 6, 1)
 
-        settings_layout.addWidget(QLabel("Agent Distance 2:"), 6, 2)
         self.agent_distance_2_spin = QDoubleSpinBox()
         self.agent_distance_2_spin.setRange(0.0, 1000.0)
         self.agent_distance_2_spin.setDecimals(3)
         self.agent_distance_2_spin.setSingleStep(0.1)
-        settings_layout.addWidget(self.agent_distance_2_spin, 6, 3)
+        add_model_pair(
+            settings_layout,
+            6,
+            "Agent Distance:",
+            self.agent_distance_spin,
+            "Agent Distance 2:",
+            self.agent_distance_2_spin,
+        )
 
-        settings_layout.addWidget(QLabel("Digimon Distance from Agent:"), 7, 0)
         self.digimon_distance_spin = QDoubleSpinBox()
         self.digimon_distance_spin.setRange(0.0, 1000.0)
         self.digimon_distance_spin.setDecimals(3)
         self.digimon_distance_spin.setSingleStep(0.1)
-        settings_layout.addWidget(self.digimon_distance_spin, 7, 1)
 
-        settings_layout.addWidget(QLabel("Camera Distance (Skill):"), 7, 2)
         self.camera_distance_skill_spin = QDoubleSpinBox()
         self.camera_distance_skill_spin.setRange(0.0, 1000.0)
         self.camera_distance_skill_spin.setDecimals(3)
         self.camera_distance_skill_spin.setSingleStep(0.1)
         self.camera_distance_skill_spin.setToolTip("Camera distance when selecting a skill (camera faces front of digimon)")
-        settings_layout.addWidget(self.camera_distance_skill_spin, 7, 3)
+        add_model_pair(
+            settings_layout,
+            7,
+            "Digimon Distance from Agent:",
+            self.digimon_distance_spin,
+            "Camera Distance (Skill):",
+            self.camera_distance_skill_spin,
+        )
 
         # Rideable checkbox
-        settings_layout.addWidget(QLabel("<b>Other Settings</b>"), 8, 0, 1, 4)
+        add_model_section(settings_layout, 8, "Other Settings")
 
-        self.rideable_checkbox = QCheckBox("Rideable")
+        self.rideable_checkbox = QCheckBox("Enabled")
         self.rideable_checkbox.setToolTip("Enable/disable if this Digimon can be ridden")
-        settings_layout.addWidget(self.rideable_checkbox, 9, 0, 1, 2)
+        add_model_pair(settings_layout, 9, "Rideable:", self.rideable_checkbox)
 
         layout.addWidget(settings_group)
 
         # LOD Data Group
         lod_group = QGroupBox("LOD (Level of Detail) Data")
         lod_layout = QGridLayout(lod_group)
+        configure_compact_model_grid(lod_layout)
 
         # LOD distances
         self.lod_widgets = {}
+        lod_spins: List[QSpinBox] = []
         for i in range(1, 4):
-            lod_layout.addWidget(QLabel(f"LOD Distance {i}:"), i-1, 0)
             spin = QSpinBox()
             spin.setRange(0, 1000)
             self.lod_widgets[f"lod_distance_{i}"] = spin
-            lod_layout.addWidget(spin, i-1, 1)
+            lod_spins.append(spin)
+        add_model_pair(
+            lod_layout,
+            0,
+            "LOD Distance 1:",
+            lod_spins[0],
+            "LOD Distance 2:",
+            lod_spins[1],
+        )
+        add_model_pair(lod_layout, 1, "LOD Distance 3:", lod_spins[2])
 
         layout.addWidget(lod_group)
 
         # References Group
         ref_group = QGroupBox("References")
         ref_layout = QGridLayout(ref_group)
+        configure_compact_model_grid(ref_layout)
 
         # Column 132 links this row to the profile/script reference the game
         # should read. Normal custom Digimon use their own numeric Digimon ID.
-        status_ref_label = QLabel("Status/Profile Ref ID:")
+        status_ref_label = compact_model_label("Status/Profile Ref ID:")
         status_ref_label.setToolTip(
             "Column 132 in digimon_status. Usually this equals the Digimon ID, not the Field Guide ID."
         )
-        ref_layout.addWidget(status_ref_label, 0, 0)
         self.script_id_spin = QSpinBox()
         self.script_id_spin.setRange(-1, 999999999)
         self.script_id_spin.setValue(-1)
@@ -8211,7 +8316,8 @@ class DigimonEditor(QMainWindow):
             "Column 132 in 000_digimon_status_data. Keep it equal to the Digimon ID for normal custom entries; "
             "use another Digimon ID only when intentionally sharing or redirecting profile/status data."
         )
-        ref_layout.addWidget(self.script_id_spin, 0, 1)
+        ref_layout.addWidget(status_ref_label, 0, 0)
+        ref_layout.addWidget(tune_model_control(self.script_id_spin), 0, 1)
 
         layout.addWidget(ref_group)
         layout.addStretch()
@@ -8301,48 +8407,64 @@ class DigimonEditor(QMainWindow):
         layout.setSpacing(15)
         layout.setContentsMargins(10, 10, 10, 10)
 
+        advanced_section_style = modern_groupbox_style("#3a8582", "#88e9e0")
+        advanced_hint_style = "color: #a9c1c2; font-size: 9.5pt;"
+
+        def advanced_label(
+            text: str,
+            icon_stem: Optional[str] = None,
+            *,
+            width: int = 190,
+            icon_size: int = 30,
+        ) -> QWidget:
+            return create_game_icon_label(text, icon_stem, icon_size=icon_size, bold=True, minimum_width=width)
+
+        def add_compact_field(
+            grid: QGridLayout,
+            row: int,
+            column_pair: int,
+            text: str,
+            editor: QWidget,
+            icon_stem: Optional[str] = None,
+            *,
+            label_width: int = 190,
+            icon_size: int = 30,
+            field_width: Optional[int] = None,
+        ) -> None:
+            base_col = column_pair * 2
+            grid.addWidget(
+                advanced_label(text, icon_stem, width=label_width, icon_size=icon_size),
+                row,
+                base_col,
+            )
+            if field_width is not None:
+                set_compact_field_width(editor, field_width)
+            grid.addWidget(editor, row, base_col + 1)
+            grid.setColumnStretch(base_col + 1, 1)
+
         # Title with modern styling
-        title = QLabel("🎯 Advanced Skill System Editor")
+        title = QLabel("Advanced Skill System Editor")
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("""
             QLabel {
-                color: white;
-                padding: 15px;
+                color: #f6fbfa;
+                padding: 14px;
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #667eea, stop:1 #764ba2);
-                border-radius: 8px;
-                border: none;
+                    stop:0 rgba(4, 35, 39, 230), stop:1 rgba(216, 135, 43, 210));
+                border-radius: 2px;
+                border: 1px solid rgba(143, 211, 207, 110);
             }
         """)
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         # Skill selection
-        skill_selection_group = QGroupBox("🔍 Skill Selection")
-        skill_selection_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #667eea;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #667eea;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        skill_selection_group = QGroupBox("Skill Selection")
+        skill_selection_group.setStyleSheet(advanced_section_style)
         skill_selection_layout = QHBoxLayout(skill_selection_group)
         skill_selection_layout.setSpacing(15)
 
-        skill_id_label = QLabel("🆔 Skill ID:")
-        skill_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        skill_selection_layout.addWidget(skill_id_label)
+        skill_selection_layout.addWidget(advanced_label("Skill ID:", TAB_ICON_STEMS.get("advanced_skills"), width=120))
 
         self.advanced_skill_id_edit = QSpinBox()
         self.advanced_skill_id_edit.setRange(0, 9999999)
@@ -8352,9 +8474,7 @@ class DigimonEditor(QMainWindow):
 
         skill_selection_layout.addSpacing(20)
 
-        skill_name_prefix = QLabel("📝 Skill Name:")
-        skill_name_prefix.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        skill_selection_layout.addWidget(skill_name_prefix)
+        skill_selection_layout.addWidget(advanced_label("Skill Name:", TAB_ICON_STEMS.get("skills"), width=145))
 
         self.advanced_skill_name_edit = QLineEdit()
         self.advanced_skill_name_edit.setPlaceholderText("(No skill selected)")
@@ -8362,14 +8482,15 @@ class DigimonEditor(QMainWindow):
         self.advanced_skill_name_edit.setStyleSheet("""
             QLineEdit {
                 font-weight: bold;
-                color: #667eea;
+                color: #88e9e0;
                 font-size: 11pt;
-                border: 2px solid #dee2e6;
-                border-radius: 6px;
+                background-color: #06181d;
+                border: 1px solid rgba(143, 211, 207, 145);
+                border-radius: 2px;
                 padding: 6px;
             }
             QLineEdit:focus {
-                border-color: #667eea;
+                border-color: rgba(244, 235, 213, 230);
             }
         """)
         skill_selection_layout.addWidget(self.advanced_skill_name_edit)
@@ -8378,25 +8499,8 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(skill_selection_group)
 
         # Skill description preview (read-only)
-        desc_group = QGroupBox("🧾 Skill Description (read-only)")
-        desc_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #c9d6ff;
-                border-radius: 8px;
-                margin-top: 8px;
-                padding-top: 12px;
-                background-color: white;
-                font-size: 10pt;
-            }
-            QGroupBox::title {
-                color: #667eea;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        desc_group = QGroupBox("Skill Description (read-only)")
+        desc_group.setStyleSheet(advanced_section_style)
         desc_layout = QVBoxLayout(desc_group)
         self.advanced_skill_desc = QPlainTextEdit()
         self.advanced_skill_desc.setReadOnly(True)
@@ -8406,30 +8510,13 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(desc_group)
 
         # Skill Browser
-        browser_group = QGroupBox("📚 Skill Browser")
-        browser_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #8fd3f4;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #4aa3c7;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        browser_group = QGroupBox("Skill Browser")
+        browser_group.setStyleSheet(advanced_section_style)
         browser_layout = QVBoxLayout(browser_group)
         browser_layout.setSpacing(10)
 
         browser_hint = QLabel("Search by name or ID, then load the selected skill.")
-        browser_hint.setStyleSheet("color: #555; font-size: 9pt;")
+        browser_hint.setStyleSheet(advanced_hint_style)
         browser_layout.addWidget(browser_hint)
 
         browser_row = QHBoxLayout()
@@ -8443,19 +8530,7 @@ class DigimonEditor(QMainWindow):
         browse_skill_button.setMinimumHeight(40)
         browse_skill_button.setMinimumWidth(110)
         browse_skill_button.setToolTip("Open the available skills dropdown")
-        browse_skill_button.setStyleSheet("""
-            QPushButton {
-                color: white;
-                background-color: #667eea;
-                border: none;
-                border-radius: 6px;
-                padding: 8px 12px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #5568d3;
-            }
-        """)
+        browse_skill_button.setStyleSheet(modern_action_button_style("#d8872b"))
         browse_skill_button.clicked.connect(self.open_skill_browser_dropdown)
         browser_row.addWidget(browse_skill_button)
 
@@ -8463,19 +8538,7 @@ class DigimonEditor(QMainWindow):
         load_skill_button.setMinimumHeight(40)
         load_skill_button.setMinimumWidth(96)
         load_skill_button.setToolTip("Load the selected skill into the editor fields")
-        load_skill_button.setStyleSheet("""
-            QPushButton {
-                color: white;
-                background-color: #10b981;
-                border: none;
-                border-radius: 6px;
-                padding: 8px 12px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #059669;
-            }
-        """)
+        load_skill_button.setStyleSheet(modern_action_button_style("#20d6a3"))
         load_skill_button.clicked.connect(self.load_skill_from_browser)
         browser_row.addWidget(load_skill_button)
         browser_layout.addLayout(browser_row)
@@ -8486,201 +8549,161 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(browser_group)
 
         # Basic skill properties
-        basic_group = QGroupBox("📊 Basic Properties")
-        basic_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #84fab0;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #2c9558;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        basic_layout = QFormLayout(basic_group)
-        basic_layout.setSpacing(12)
-        basic_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        basic_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        basic_group = QGroupBox("Basic Properties")
+        basic_group.setStyleSheet(advanced_section_style)
+        basic_layout = QGridLayout(basic_group)
+        basic_layout.setContentsMargins(18, 22, 18, 18)
+        basic_layout.setHorizontalSpacing(28)
+        basic_layout.setVerticalSpacing(12)
 
-        power_label = QLabel("⚡ Power:")
-        power_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        power_label.setMinimumWidth(180)
         self.skill_power_edit = QSpinBox()
         self.skill_power_edit.setRange(0, 9999)
         self.skill_power_edit.setMinimumWidth(150)
-        basic_layout.addRow(power_label, self.skill_power_edit)
+        self.skill_power_edit.setMaximumWidth(220)
 
-        sp_label = QLabel("💧 SP Cost:")
-        sp_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        sp_label.setMinimumWidth(180)
         self.skill_sp_cost_edit = QSpinBox()
         self.skill_sp_cost_edit.setRange(0, 999)
         self.skill_sp_cost_edit.setMinimumWidth(150)
-        basic_layout.addRow(sp_label, self.skill_sp_cost_edit)
+        self.skill_sp_cost_edit.setMaximumWidth(220)
 
-        cp_label = QLabel("⚙️ CP Cost:")
-        cp_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        cp_label.setMinimumWidth(180)
         self.skill_cp_cost_edit = QSpinBox()
         self.skill_cp_cost_edit.setRange(0, 9999)
         self.skill_cp_cost_edit.setMinimumWidth(150)
-        basic_layout.addRow(cp_label, self.skill_cp_cost_edit)
+        self.skill_cp_cost_edit.setMaximumWidth(220)
 
-        anim_label = QLabel("🎞️ Animation/Action ID:")
-        anim_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        anim_label.setMinimumWidth(180)
         self.skill_animation_id_edit = QSpinBox()
         self.skill_animation_id_edit.setRange(0, 999999)
         self.skill_animation_id_edit.setMinimumWidth(150)
-        basic_layout.addRow(anim_label, self.skill_animation_id_edit)
+        self.skill_animation_id_edit.setMaximumWidth(220)
 
-        effect_label = QLabel("✨ Effect ID:")
-        effect_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        effect_label.setMinimumWidth(180)
         self.skill_effect_id_edit = QSpinBox()
         self.skill_effect_id_edit.setRange(0, 999999)
         self.skill_effect_id_edit.setMinimumWidth(150)
-        basic_layout.addRow(effect_label, self.skill_effect_id_edit)
+        self.skill_effect_id_edit.setMaximumWidth(220)
 
-        accuracy_label = QLabel("🎯 Accuracy:")
-        accuracy_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        accuracy_label.setMinimumWidth(180)
         self.skill_accuracy_edit = QSpinBox()
         self.skill_accuracy_edit.setRange(0, 100)
         self.skill_accuracy_edit.setMinimumWidth(150)
-        basic_layout.addRow(accuracy_label, self.skill_accuracy_edit)
+        self.skill_accuracy_edit.setMaximumWidth(220)
 
-        crit_label = QLabel("💥 Critical Rate:")
-        crit_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        crit_label.setMinimumWidth(180)
         self.skill_crit_rate_edit = QSpinBox()
         self.skill_crit_rate_edit.setRange(0, 100)
         self.skill_crit_rate_edit.setMinimumWidth(150)
-        basic_layout.addRow(crit_label, self.skill_crit_rate_edit)
+        self.skill_crit_rate_edit.setMaximumWidth(220)
+
+        add_compact_field(basic_layout, 0, 0, "Power:", self.skill_power_edit, TAB_ICON_STEMS.get("battle"))
+        add_compact_field(basic_layout, 1, 0, "SP Cost:", self.skill_sp_cost_edit, STAT_ICON_STEMS.get("sp"))
+        add_compact_field(basic_layout, 2, 0, "CP Cost:", self.skill_cp_cost_edit, TAB_ICON_STEMS.get("advanced_skills"))
+        add_compact_field(basic_layout, 0, 1, "Animation/Action ID:", self.skill_animation_id_edit, TAB_ICON_STEMS.get("model"), label_width=230)
+        add_compact_field(basic_layout, 1, 1, "Effect ID:", self.skill_effect_id_edit, TAB_ICON_STEMS.get("skills"), label_width=230)
+        add_compact_field(basic_layout, 2, 1, "Accuracy:", self.skill_accuracy_edit, TAB_ICON_STEMS.get("advanced_skills"), label_width=230)
+        add_compact_field(basic_layout, 3, 0, "Critical Rate:", self.skill_crit_rate_edit, TAB_ICON_STEMS.get("battle"))
 
         layout.addWidget(basic_group)
 
         # Damage and targeting
-        damage_group = QGroupBox("🎯 Damage & Targeting")
-        damage_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #fa709a;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #e85c89;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        damage_layout = QFormLayout(damage_group)
-        damage_layout.setSpacing(12)
-        damage_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        damage_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        damage_group = QGroupBox("Damage & Targeting")
+        damage_group.setStyleSheet(advanced_section_style)
+        damage_layout = QGridLayout(damage_group)
+        damage_layout.setContentsMargins(18, 22, 18, 18)
+        damage_layout.setHorizontalSpacing(28)
+        damage_layout.setVerticalSpacing(12)
 
-        dtype_label = QLabel("💢 Damage Type:")
-        dtype_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        dtype_label.setMinimumWidth(180)
         self.skill_damage_type_combo = QComboBox()
         damage_types = ["None/Self", "Physical", "Magic", "Fixed damage at", "Fixed %", "Buff", "Major Damage"]
         self.skill_damage_type_combo.addItems(damage_types)
-        self.skill_damage_type_combo.setMinimumWidth(200)
-        damage_layout.addRow(dtype_label, self.skill_damage_type_combo)
+        apply_modern_combo_palette(self.skill_damage_type_combo)
+        self.skill_damage_type_combo.setMinimumWidth(260)
+        self.skill_damage_type_combo.setMaximumWidth(420)
 
-        element_label = QLabel("Element:")
-        element_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        element_label.setMinimumWidth(180)
         self.skill_element_combo = QComboBox()
         configure_game_icon_combo(self.skill_element_combo)
         for i in range(11):  # Elements 0-10
             element_name = self.loader.get_element_name(i)
             clean_name = self.loader.clean_ui_text(element_name)
             add_game_icon_combo_item(self.skill_element_combo, clean_name, i, ELEMENT_ICON_STEMS.get(i))
-        self.skill_element_combo.setMinimumWidth(200)
-        damage_layout.addRow(element_label, self.skill_element_combo)
+        self.skill_element_combo.setMinimumWidth(260)
+        self.skill_element_combo.setMaximumWidth(420)
 
-        min_hits_label = QLabel("🎲 Min Hits:")
-        min_hits_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        min_hits_label.setMinimumWidth(180)
         self.skill_min_hits_edit = QSpinBox()
         self.skill_min_hits_edit.setRange(1, 10)
         self.skill_min_hits_edit.setMinimumWidth(150)
-        damage_layout.addRow(min_hits_label, self.skill_min_hits_edit)
+        self.skill_min_hits_edit.setMaximumWidth(180)
 
-        max_hits_label = QLabel("🎲 Max Hits:")
-        max_hits_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        max_hits_label.setMinimumWidth(180)
         self.skill_max_hits_edit = QSpinBox()
         self.skill_max_hits_edit.setRange(1, 10)
         self.skill_max_hits_edit.setMinimumWidth(150)
-        damage_layout.addRow(max_hits_label, self.skill_max_hits_edit)
+        self.skill_max_hits_edit.setMaximumWidth(180)
+
+        add_compact_field(
+            damage_layout,
+            0,
+            0,
+            "Damage Type:",
+            self.skill_damage_type_combo,
+            TAB_ICON_STEMS.get("battle"),
+            field_width=320,
+        )
+        add_compact_field(
+            damage_layout,
+            1,
+            0,
+            "Element:",
+            self.skill_element_combo,
+            ELEMENT_ICON_STEMS.get(1),
+            icon_size=34,
+            field_width=320,
+        )
+        add_compact_field(
+            damage_layout,
+            0,
+            1,
+            "Min Hits:",
+            self.skill_min_hits_edit,
+            STAT_ICON_STEMS.get("atk"),
+            label_width=170,
+            icon_size=34,
+            field_width=170,
+        )
+        add_compact_field(
+            damage_layout,
+            1,
+            1,
+            "Max Hits:",
+            self.skill_max_hits_edit,
+            STAT_ICON_STEMS.get("spd"),
+            label_width=170,
+            icon_size=34,
+            field_width=170,
+        )
 
         layout.addWidget(damage_group)
 
         # Mode change
-        mode_group = QGroupBox("🔁 Mode Change")
-        mode_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #ffd166;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #c77d00;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        mode_group = QGroupBox("Mode Change")
+        mode_group.setStyleSheet(advanced_section_style)
         mode_layout = QVBoxLayout(mode_group)
-        mode_layout.setSpacing(10)
+        mode_layout.setContentsMargins(18, 22, 18, 18)
+        mode_layout.setSpacing(12)
 
-        mode_form = QFormLayout()
-        mode_form.setSpacing(10)
-        mode_form.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+        mode_hint = QLabel("Optional 003_skill_mode_change row. Use -1 for no mode change; otherwise the row below defines the source Digimon, flags, and 12 replacement skill slots.")
+        mode_hint.setStyleSheet(advanced_hint_style)
+        mode_hint.setWordWrap(True)
+        mode_layout.addWidget(mode_hint)
 
-        mode_change_label = QLabel("Mode Row ID (col 61):")
-        mode_change_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        mode_change_label.setMinimumWidth(220)
+        mode_top_grid = QGridLayout()
+        mode_top_grid.setHorizontalSpacing(28)
+        mode_top_grid.setVerticalSpacing(12)
         self.skill_mode_change_edit = QSpinBox()
         self.skill_mode_change_edit.setRange(-1, 99999999)
         self.skill_mode_change_edit.setMinimumWidth(150)
         self.skill_mode_change_edit.setToolTip("battle_skill column 61. Use -1 for no mode change; positive values must exist in 003_skill_mode_change.")
-        mode_form.addRow(mode_change_label, self.skill_mode_change_edit)
 
-        mode_source_label = QLabel("Source Digimon ID:")
-        mode_source_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        mode_source_label.setMinimumWidth(220)
         self.mode_change_source_digimon_edit = QSpinBox()
         self.mode_change_source_digimon_edit.setRange(0, 9999999)
         self.mode_change_source_digimon_edit.setMinimumWidth(150)
         self.mode_change_source_digimon_edit.setToolTip("003_skill_mode_change column 1: the Digimon whose mode-change skill set this row describes.")
-        mode_form.addRow(mode_source_label, self.mode_change_source_digimon_edit)
 
-        mode_flags_widget = QWidget()
-        mode_flags_layout = QHBoxLayout(mode_flags_widget)
-        mode_flags_layout.setContentsMargins(0, 0, 0, 0)
-        mode_flags_layout.setSpacing(8)
         self.mode_change_flag_4_edit = QSpinBox()
         self.mode_change_flag_4_edit.setRange(0, 99)
         self.mode_change_flag_4_edit.setValue(1)
@@ -8689,46 +8712,72 @@ class DigimonEditor(QMainWindow):
         self.mode_change_flag_5_edit.setRange(0, 99)
         self.mode_change_flag_5_edit.setValue(1)
         self.mode_change_flag_5_edit.setToolTip("003_skill_mode_change column 5. Official rows usually use 1; one official MagnaGarurumon row uses 2.")
-        mode_flags_layout.addWidget(QLabel("Col 4:"))
-        mode_flags_layout.addWidget(self.mode_change_flag_4_edit)
-        mode_flags_layout.addSpacing(12)
-        mode_flags_layout.addWidget(QLabel("Col 5:"))
-        mode_flags_layout.addWidget(self.mode_change_flag_5_edit)
-        mode_flags_layout.addStretch()
-        mode_form.addRow("Mode Flags:", mode_flags_widget)
+        for mode_spin in (
+            self.skill_mode_change_edit,
+            self.mode_change_source_digimon_edit,
+            self.mode_change_flag_4_edit,
+            self.mode_change_flag_5_edit,
+        ):
+            mode_spin.setMaximumWidth(220)
+
+        add_compact_field(mode_top_grid, 0, 0, "Mode Row ID (battle_skill col 61):", self.skill_mode_change_edit, TAB_ICON_STEMS.get("evolution"), label_width=285, field_width=170)
+        add_compact_field(mode_top_grid, 0, 1, "Source Digimon ID:", self.mode_change_source_digimon_edit, TAB_ICON_STEMS.get("basic"), label_width=205)
+        add_compact_field(mode_top_grid, 1, 0, "Mode Flag A (col 4):", self.mode_change_flag_4_edit, TAB_ICON_STEMS.get("advanced_skills"), label_width=285, field_width=170)
+        add_compact_field(mode_top_grid, 1, 1, "Mode Flag B (col 5):", self.mode_change_flag_5_edit, TAB_ICON_STEMS.get("advanced_skills"), label_width=205, field_width=170)
+        mode_layout.addLayout(mode_top_grid)
+
+        mode_skill_label = advanced_label("Mode Skill Set (12 skill IDs):", TAB_ICON_STEMS.get("skills"), width=285)
+        mode_layout.addWidget(mode_skill_label)
 
         mode_skills_widget = QWidget()
+        mode_skills_widget.setObjectName("modeChangeSkillsPanel")
+        mode_skills_widget.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        mode_skills_widget.setStyleSheet("""
+            QWidget#modeChangeSkillsPanel {
+                background-color: rgba(7, 29, 34, 170);
+                border: 1px solid rgba(143, 211, 207, 65);
+            }
+        """)
         mode_skills_grid = QGridLayout(mode_skills_widget)
-        mode_skills_grid.setContentsMargins(0, 0, 0, 0)
-        mode_skills_grid.setHorizontalSpacing(8)
-        mode_skills_grid.setVerticalSpacing(6)
+        mode_skills_grid.setContentsMargins(12, 12, 12, 12)
+        mode_skills_grid.setHorizontalSpacing(12)
+        mode_skills_grid.setVerticalSpacing(10)
         self.mode_change_skill_widgets = []
         for index in range(12):
             skill_spin = QSpinBox()
             skill_spin.setRange(0, 9999999)
-            skill_spin.setMinimumWidth(105)
+            skill_spin.setMinimumWidth(110)
+            skill_spin.setMaximumWidth(150)
             skill_spin.setToolTip(f"003_skill_mode_change skill slot {index + 1}")
             self.mode_change_skill_widgets.append(skill_spin)
-            row_index = index // 4
-            column_index = (index % 4) * 2
-            mode_skills_grid.addWidget(QLabel(f"{index + 1}:"), row_index, column_index)
+            row_index = index // 3
+            column_index = (index % 3) * 2
+            slot_label = QLabel(f"Skill {index + 1}:")
+            slot_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+            slot_label.setStyleSheet("color: #dce9ea; border: none; background: transparent;")
+            slot_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+            slot_label.setMinimumWidth(72)
+            mode_skills_grid.addWidget(slot_label, row_index, column_index)
             mode_skills_grid.addWidget(skill_spin, row_index, column_index + 1)
-        mode_form.addRow("Mode Skill Set:", mode_skills_widget)
-        mode_layout.addLayout(mode_form)
+            mode_skills_grid.setColumnStretch(column_index + 1, 1)
+        mode_layout.addWidget(mode_skills_widget)
 
         mode_button_row = QHBoxLayout()
         self.mode_change_use_current_button = QPushButton("Use Current Digimon")
         self.mode_change_use_current_button.setToolTip("Set source ID to the current Digimon, use ID*10+1 as the mode row, and copy signature skills into the mode row.")
+        self.mode_change_use_current_button.setStyleSheet(modern_action_button_style("#d8872b"))
         self.mode_change_use_current_button.clicked.connect(self.populate_mode_change_from_current_digimon)
         mode_button_row.addWidget(self.mode_change_use_current_button)
 
         self.mode_change_load_button = QPushButton("Load Mode Row")
         self.mode_change_load_button.setToolTip("Load 003_skill_mode_change data for the row ID above.")
+        self.mode_change_load_button.setStyleSheet(modern_action_button_style("#d8872b"))
         self.mode_change_load_button.clicked.connect(lambda: self.load_mode_change_row_for_current_skill(show_messages=True))
         mode_button_row.addWidget(self.mode_change_load_button)
 
         self.mode_change_clear_button = QPushButton("Clear Mode")
         self.mode_change_clear_button.setToolTip("Set the battle-skill mode pointer to -1 and clear the displayed row fields.")
+        self.mode_change_clear_button.setStyleSheet(modern_action_button_style("#d8872b"))
         self.mode_change_clear_button.clicked.connect(self.clear_mode_change_fields)
         mode_button_row.addWidget(self.mode_change_clear_button)
         mode_button_row.addStretch()
@@ -8736,97 +8785,60 @@ class DigimonEditor(QMainWindow):
 
         self.mode_change_status_label = QLabel("No mode row loaded.")
         self.mode_change_status_label.setWordWrap(True)
-        self.mode_change_status_label.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        self.mode_change_status_label.setStyleSheet(advanced_hint_style)
         mode_layout.addWidget(self.mode_change_status_label)
 
         layout.addWidget(mode_group)
 
         # Jogress battle-skill fields
-        jogress_group = QGroupBox("🧬 Jogress Battle Skill")
-        jogress_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #9b5de5;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #6f42c1;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        jogress_group = QGroupBox("Jogress Battle Skill")
+        jogress_group.setStyleSheet(advanced_section_style)
         jogress_layout = QFormLayout(jogress_group)
         jogress_layout.setSpacing(10)
         jogress_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
 
-        jogress_skill_label = QLabel("Jogress Flag/Type (col 63):")
-        jogress_skill_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_skill_label.setMinimumWidth(220)
         self.skill_jogress_skill_edit = QSpinBox()
         self.skill_jogress_skill_edit.setRange(0, 999999)
         self.skill_jogress_skill_edit.setMinimumWidth(150)
         self.skill_jogress_skill_edit.setToolTip("battle_skill column 63. Official Jogress skills usually use 1 here.")
-        jogress_layout.addRow(jogress_skill_label, self.skill_jogress_skill_edit)
+        jogress_layout.addRow(
+            advanced_label("Jogress Flag/Type (col 63):", TAB_ICON_STEMS.get("evolution"), width=240),
+            self.skill_jogress_skill_edit,
+        )
 
-        jogress_p1_label = QLabel("Partner A Digimon ID (col 64):")
-        jogress_p1_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_p1_label.setMinimumWidth(220)
         self.skill_jogress_p1_edit = QSpinBox()
         self.skill_jogress_p1_edit.setRange(-1, 9999999)
         self.skill_jogress_p1_edit.setMinimumWidth(150)
         self.skill_jogress_p1_edit.setToolTip("battle_skill column 64. Use -1 when this skill is not a Jogress skill.")
-        jogress_layout.addRow(jogress_p1_label, self.skill_jogress_p1_edit)
+        jogress_layout.addRow(
+            advanced_label("Partner A Digimon ID (col 64):", TAB_ICON_STEMS.get("basic"), width=240),
+            self.skill_jogress_p1_edit,
+        )
 
-        jogress_p2_label = QLabel("Partner B Digimon ID (col 66):")
-        jogress_p2_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        jogress_p2_label.setMinimumWidth(220)
         self.skill_jogress_p2_edit = QSpinBox()
         self.skill_jogress_p2_edit.setRange(-1, 9999999)
         self.skill_jogress_p2_edit.setMinimumWidth(150)
         self.skill_jogress_p2_edit.setToolTip("battle_skill column 66. Use -1 when this skill is not a Jogress skill.")
-        jogress_layout.addRow(jogress_p2_label, self.skill_jogress_p2_edit)
+        jogress_layout.addRow(
+            advanced_label("Partner B Digimon ID (col 66):", TAB_ICON_STEMS.get("basic"), width=240),
+            self.skill_jogress_p2_edit,
+        )
 
         self.jogress_skill_status_label = QLabel("These fields are for battle skills; evolution Jogress/DNA requirements are edited on the Evolution tab.")
         self.jogress_skill_status_label.setWordWrap(True)
-        self.jogress_skill_status_label.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        self.jogress_skill_status_label.setStyleSheet(advanced_hint_style)
         jogress_layout.addRow("", self.jogress_skill_status_label)
 
         layout.addWidget(jogress_group)
 
         # Advanced properties
-        advanced_group = QGroupBox("⚙️ Advanced Properties")
-        advanced_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #f093fb;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #c967cc;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        advanced_layout = QFormLayout(advanced_group)
-        advanced_layout.setSpacing(12)
-        advanced_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        advanced_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        advanced_group = QGroupBox("Advanced Properties")
+        advanced_group.setStyleSheet(advanced_section_style)
+        advanced_layout = QGridLayout(advanced_group)
+        advanced_layout.setContentsMargins(18, 22, 18, 18)
+        advanced_layout.setHorizontalSpacing(28)
+        advanced_layout.setVerticalSpacing(12)
 
-        prop1_label = QLabel("🔧 Additional Property 1:")
-        prop1_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        prop1_label.setMinimumWidth(220)
         self.skill_additional_prop1_combo = QComboBox()
         additional_props = [
             "None", "Lower HP = Higher damage", "Lower allies HP = Higher damage",
@@ -8838,12 +8850,19 @@ class DigimonEditor(QMainWindow):
             "More buffs = Higher damage"
         ]
         self.skill_additional_prop1_combo.addItems(additional_props)
+        apply_modern_combo_palette(self.skill_additional_prop1_combo)
         self.skill_additional_prop1_combo.setMinimumWidth(300)
-        advanced_layout.addRow(prop1_label, self.skill_additional_prop1_combo)
+        add_compact_field(
+            advanced_layout,
+            0,
+            0,
+            "Additional Property 1:",
+            self.skill_additional_prop1_combo,
+            TAB_ICON_STEMS.get("advanced_skills"),
+            label_width=210,
+            field_width=300,
+        )
 
-        prop2_label = QLabel("🔧 Additional Property 2:")
-        prop2_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        prop2_label.setMinimumWidth(220)
         self.skill_additional_prop2_combo = QComboBox()
         additional_effects = [
             "None", "No Effect", "Nullifies unfavorable compatibility",
@@ -8853,39 +8872,29 @@ class DigimonEditor(QMainWindow):
             "Attack as Free", "Attack as Variable"
         ]
         self.skill_additional_prop2_combo.addItems(additional_effects)
+        apply_modern_combo_palette(self.skill_additional_prop2_combo)
         self.skill_additional_prop2_combo.setMinimumWidth(300)
-        advanced_layout.addRow(prop2_label, self.skill_additional_prop2_combo)
+        add_compact_field(
+            advanced_layout,
+            0,
+            1,
+            "Additional Property 2:",
+            self.skill_additional_prop2_combo,
+            TAB_ICON_STEMS.get("advanced_skills"),
+            label_width=210,
+            field_width=300,
+        )
 
         layout.addWidget(advanced_group)
 
         # Conditional effects
-        conditional_group = QGroupBox("🔀 Conditional Effects")
-        conditional_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #8fd3f4;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #4aa3c7;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        conditional_layout = QFormLayout(conditional_group)
-        conditional_layout.setSpacing(12)
-        conditional_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        conditional_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        conditional_group = QGroupBox("Conditional Effects")
+        conditional_group.setStyleSheet(advanced_section_style)
+        conditional_layout = QGridLayout(conditional_group)
+        conditional_layout.setContentsMargins(18, 22, 18, 18)
+        conditional_layout.setHorizontalSpacing(28)
+        conditional_layout.setVerticalSpacing(12)
 
-        cond_type_label = QLabel("❓ Conditional Type:")
-        cond_type_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        cond_type_label.setMinimumWidth(220)
         self.skill_conditional_type_combo = QComboBox()
         conditional_types = [
             "None", "User has (de)buff", "Target has (de)buff", "Target attribute",
@@ -8894,76 +8903,71 @@ class DigimonEditor(QMainWindow):
             "Target HP ≤ X%", "Target SP ≥ X%", "Target SP ≤ X%", "Target KO'd"
         ]
         self.skill_conditional_type_combo.addItems(conditional_types)
+        apply_modern_combo_palette(self.skill_conditional_type_combo)
         self.skill_conditional_type_combo.setMinimumWidth(300)
-        conditional_layout.addRow(cond_type_label, self.skill_conditional_type_combo)
+        add_compact_field(
+            conditional_layout,
+            0,
+            0,
+            "Conditional Type:",
+            self.skill_conditional_type_combo,
+            TAB_ICON_STEMS.get("advanced_skills"),
+            label_width=210,
+            field_width=300,
+        )
 
-        cond_effect_label = QLabel("✨ Conditional Effect:")
-        cond_effect_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        cond_effect_label.setMinimumWidth(220)
         self.skill_conditional_effect_combo = QComboBox()
         conditional_effects = [
             "None", "+X% damage", "Increased Damage", "CRT Rate up",
             "Restore HP", "Restore SP", "Restore SP/HP", "Reduce Target SP"
         ]
         self.skill_conditional_effect_combo.addItems(conditional_effects)
+        apply_modern_combo_palette(self.skill_conditional_effect_combo)
         self.skill_conditional_effect_combo.setMinimumWidth(300)
-        conditional_layout.addRow(cond_effect_label, self.skill_conditional_effect_combo)
+        add_compact_field(
+            conditional_layout,
+            0,
+            1,
+            "Conditional Effect:",
+            self.skill_conditional_effect_combo,
+            TAB_ICON_STEMS.get("skills"),
+            label_width=210,
+            field_width=300,
+        )
 
-        cond_arg_label = QLabel("📊 Conditional Argument:")
-        cond_arg_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        cond_arg_label.setMinimumWidth(220)
         self.skill_conditional_arg_edit = QSpinBox()
         self.skill_conditional_arg_edit.setRange(0, 100)
         self.skill_conditional_arg_edit.setMinimumWidth(150)
-        conditional_layout.addRow(cond_arg_label, self.skill_conditional_arg_edit)
+        add_compact_field(
+            conditional_layout,
+            1,
+            0,
+            "Conditional Argument:",
+            self.skill_conditional_arg_edit,
+            TAB_ICON_STEMS.get("stats"),
+            label_width=210,
+            field_width=170,
+        )
 
         layout.addWidget(conditional_group)
 
         # Buff sets
-        buff_group = QGroupBox("✨ Buff Sets (up to 5)")
-        buff_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #fee140;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #d9b12f;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        buff_group = QGroupBox("Buff Sets (up to 5)")
+        buff_group.setStyleSheet(advanced_section_style)
         buff_layout = QVBoxLayout(buff_group)
-        buff_layout.setSpacing(8)
+        buff_layout.setContentsMargins(18, 22, 18, 18)
+        buff_layout.setSpacing(10)
 
         buff_tool_row = QHBoxLayout()
         buff_hint = QLabel("Skill rows use buff-set IDs. Create a set to combine existing battle_buff effects.")
-        buff_hint.setStyleSheet("color: #6c757d; font-size: 9pt;")
+        buff_hint.setStyleSheet(advanced_hint_style)
         buff_hint.setWordWrap(True)
         buff_tool_row.addWidget(buff_hint, 1)
 
         create_buff_button = QPushButton("+ Create Buff Set")
         create_buff_button.setMinimumHeight(38)
         create_buff_button.setToolTip("Build a new 002_buff_set row in the active mod, then use it in one of the buff-set slots below.")
-        create_buff_button.setStyleSheet("""
-            QPushButton {
-                color: white;
-                background-color: #d9a400;
-                border: none;
-                border-radius: 6px;
-                padding: 8px 12px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #c29100;
-            }
-        """)
+        create_buff_button.setStyleSheet(modern_action_button_style("#d8872b"))
         create_buff_button.clicked.connect(self.open_buff_set_creator)
         buff_tool_row.addWidget(create_buff_button)
         buff_layout.addLayout(buff_tool_row)
@@ -8971,21 +8975,34 @@ class DigimonEditor(QMainWindow):
         self.buff_set_widgets = []
         self.buff_set_combos = []
         self.buff_name_labels = []
-        buff_icons = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
         for i in range(5):
             buff_widget = QWidget()
+            buff_widget.setObjectName(f"buffSetRow{i}")
+            buff_widget.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+            buff_widget.setStyleSheet(f"""
+                QWidget#buffSetRow{i} {{
+                    background-color: rgba(7, 29, 34, 155);
+                    border: 1px solid rgba(143, 211, 207, 55);
+                    border-left: 4px solid #88e9e0;
+                }}
+            """)
             buff_widget_layout = QHBoxLayout(buff_widget)
+            buff_widget_layout.setContentsMargins(10, 8, 10, 8)
             buff_widget_layout.setSpacing(10)
 
-            buff_label = QLabel(f"{buff_icons[i]} Buff Set {i+1}:")
-            buff_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-            buff_label.setMinimumWidth(120)
+            buff_label = advanced_label(
+                f"Buff Set {i + 1}:",
+                TAB_ICON_STEMS.get("advanced_skills"),
+                width=150,
+                icon_size=28,
+            )
             buff_widget_layout.addWidget(buff_label)
 
             buff_set_edit = QSpinBox()
             buff_set_edit.setRange(0, 9999999)
             buff_set_edit.setObjectName(f"buff_set_{i}")
             buff_set_edit.setMinimumWidth(120)
+            buff_set_edit.setMaximumWidth(150)
             buff_set_edit.setToolTip("battle_skill buff-set ID. This points to a row in 002_buff_set, not a raw effect ID.")
             buff_widget_layout.addWidget(buff_set_edit)
 
@@ -9003,13 +9020,14 @@ class DigimonEditor(QMainWindow):
             buff_name_label.setObjectName(f"buff_name_{i}")
             buff_name_label.setStyleSheet("""
                 QLabel {
-                    color: #667eea;
-                    font-weight: bold;
+                    color: #88e9e0;
+                    font-weight: 700;
                     font-size: 10pt;
-                    padding: 5px 10px;
-                    background-color: #e7f5ff;
-                    border-radius: 4px;
-                    border-left: 3px solid #667eea;
+                    padding: 8px 10px;
+                    background-color: rgba(8, 41, 48, 185);
+                    border: 1px solid rgba(143, 211, 207, 55);
+                    border-left: 4px solid #88e9e0;
+                    border-radius: 2px;
                 }
             """)
             buff_name_label.setMinimumWidth(280)
@@ -9029,85 +9047,90 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(buff_group)
 
         # Special effects
-        special_group = QGroupBox("💫 Special Effects")
-        special_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #a18cd1;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #7d6aad;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        special_layout = QFormLayout(special_group)
-        special_layout.setSpacing(12)
-        special_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        special_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        special_group = QGroupBox("Special Effects")
+        special_group.setStyleSheet(advanced_section_style)
+        special_layout = QGridLayout(special_group)
+        special_layout.setContentsMargins(18, 22, 18, 18)
+        special_layout.setHorizontalSpacing(28)
+        special_layout.setVerticalSpacing(12)
 
-        hp_drain_label = QLabel("🩸 HP Drain %:")
-        hp_drain_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        hp_drain_label.setMinimumWidth(180)
         self.skill_hp_drain_edit = QSpinBox()
         self.skill_hp_drain_edit.setRange(0, 100)
         self.skill_hp_drain_edit.setMinimumWidth(150)
-        special_layout.addRow(hp_drain_label, self.skill_hp_drain_edit)
+        add_compact_field(
+            special_layout,
+            0,
+            0,
+            "HP Drain %:",
+            self.skill_hp_drain_edit,
+            STAT_ICON_STEMS.get("hp"),
+            field_width=170,
+        )
 
-        sp_drain_label = QLabel("💙 SP Drain %:")
-        sp_drain_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        sp_drain_label.setMinimumWidth(180)
         self.skill_sp_drain_edit = QSpinBox()
         self.skill_sp_drain_edit.setRange(0, 100)
         self.skill_sp_drain_edit.setMinimumWidth(150)
-        special_layout.addRow(sp_drain_label, self.skill_sp_drain_edit)
+        add_compact_field(
+            special_layout,
+            0,
+            1,
+            "SP Drain %:",
+            self.skill_sp_drain_edit,
+            STAT_ICON_STEMS.get("sp"),
+            field_width=170,
+        )
 
-        recoil_label = QLabel("💥 Recoil %:")
-        recoil_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        recoil_label.setMinimumWidth(180)
         self.skill_recoil_edit = QSpinBox()
         self.skill_recoil_edit.setRange(0, 100)
         self.skill_recoil_edit.setMinimumWidth(150)
-        special_layout.addRow(recoil_label, self.skill_recoil_edit)
+        add_compact_field(
+            special_layout,
+            1,
+            0,
+            "Recoil %:",
+            self.skill_recoil_edit,
+            TAB_ICON_STEMS.get("battle"),
+            field_width=170,
+        )
 
-        always_hits_label = QLabel("🎯 Special:")
-        always_hits_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        always_hits_label.setMinimumWidth(180)
         self.skill_always_hits_check = QCheckBox("Always Hits")
         self.skill_always_hits_check.setFont(QFont("Segoe UI", 10))
-        special_layout.addRow(always_hits_label, self.skill_always_hits_check)
+        add_compact_field(
+            special_layout,
+            1,
+            1,
+            "Special:",
+            self.skill_always_hits_check,
+            TAB_ICON_STEMS.get("advanced_skills"),
+            field_width=170,
+        )
 
         layout.addWidget(special_group)
 
         # Save button with modern styling
-        save_skill_button = QPushButton("💾 Save Skill Data")
+        save_skill_button = QPushButton("Save Skill Data")
         save_skill_button.clicked.connect(self.save_advanced_skill)
+        save_skill_button.setMinimumHeight(52)
         save_skill_button.setStyleSheet("""
             QPushButton {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #f093fb, stop:1 #f5576c);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                padding: 15px;
-                font-weight: bold;
-                font-size: 12pt;
-                margin-top: 10px;
+                background-color: #071b20;
+                color: #f7fffc;
+                border: 1px solid rgba(143, 211, 207, 150);
+                border-left: 5px solid #20d6a3;
+                border-radius: 2px;
+                padding: 13px 16px;
+                font-weight: 800;
+                font-size: 11pt;
+                margin-top: 8px;
             }
             QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #de7fe9, stop:1 #e34556);
+                background-color: rgba(35, 78, 77, 230);
+                border-color: rgba(235, 229, 210, 200);
+                border-left-color: #d8872b;
             }
             QPushButton:pressed {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #cd6fd7, stop:1 #d13443);
+                background-color: rgba(32, 214, 163, 170);
+                color: #ffffff;
             }
         """)
         layout.addWidget(save_skill_button)
@@ -9694,68 +9717,55 @@ class DigimonEditor(QMainWindow):
         layout = QVBoxLayout(scroll_content)
         layout.setSpacing(15)
         layout.setContentsMargins(10, 10, 10, 10)
+        battle_panel_style = modern_groupbox_style("rgba(136, 233, 224, 145)", "#88e9e0")
 
         # Title with modern styling
-        title = QLabel("⚔️ Battle & Enemy Data")
+        title = QLabel("Battle & Enemy Data")
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("""
             QLabel {
-                color: white;
-                padding: 15px;
+                color: #f5fffc;
+                padding: 13px 16px;
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #667eea, stop:1 #764ba2);
-                border-radius: 8px;
-                border: none;
+                    stop:0 rgba(5, 43, 48, 230),
+                    stop:0.76 rgba(13, 61, 60, 215),
+                    stop:1 rgba(216, 135, 43, 215));
+                border: 1px solid rgba(136, 233, 224, 135);
+                border-left: 4px solid #d8872b;
+                border-radius: 2px;
             }
         """)
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         # Battle enemy parameters
-        enemy_group = QGroupBox("👾 Enemy Parameters (44 columns)")
-        enemy_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #667eea;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #667eea;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        enemy_group = QGroupBox("Enemy Parameters (44 columns)")
+        enemy_group.setStyleSheet(battle_panel_style)
         enemy_layout = QFormLayout(enemy_group)
         enemy_layout.setSpacing(12)
         enemy_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         enemy_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
         # Enemy ID
-        enemy_id_label = QLabel("🆔 Enemy ID (Col 0):")
-        enemy_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        enemy_id_label.setMinimumWidth(220)
+        enemy_id_label = create_game_icon_label(
+            "Enemy ID (Col 0):", TAB_ICON_STEMS.get("advanced_skills"), bold=True, minimum_width=220
+        )
         self.enemy_id_edit = QLineEdit()
         self.enemy_id_edit.setMinimumWidth(200)
         enemy_layout.addRow(enemy_id_label, self.enemy_id_edit)
 
         # Base Digimon ID
-        base_id_label = QLabel("📌 Base Digimon ID (Col 2):")
-        base_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        base_id_label.setMinimumWidth(220)
+        base_id_label = create_game_icon_label(
+            "Base Digimon ID (Col 2):", TAB_ICON_STEMS.get("basic"), bold=True, minimum_width=220
+        )
         self.base_digimon_id_edit = QLineEdit()
         self.base_digimon_id_edit.setMinimumWidth(200)
         enemy_layout.addRow(base_id_label, self.base_digimon_id_edit)
 
         # AI Level
-        ai_level_label = QLabel("🤖 AI Level (Col 10):")
-        ai_level_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        ai_level_label.setMinimumWidth(220)
+        ai_level_label = create_game_icon_label(
+            "AI Level (Col 10):", TAB_ICON_STEMS.get("model"), bold=True, minimum_width=220
+        )
         self.ai_level_edit = QSpinBox()
         self.ai_level_edit.setRange(0, 50)
         self.ai_level_edit.setMinimumWidth(150)
@@ -9819,17 +9829,17 @@ class DigimonEditor(QMainWindow):
         enemy_layout.addRow(spd_label, self.battle_speed_edit)
 
         # AI behavior parameters
-        skill_id_label = QLabel("🎯 AI Skill ID (Col 36):")
-        skill_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        skill_id_label.setMinimumWidth(220)
+        skill_id_label = create_game_icon_label(
+            "AI Skill ID (Col 36):", TAB_ICON_STEMS.get("skills"), bold=True, minimum_width=220
+        )
         self.ai_skill_id_edit = QSpinBox()
         self.ai_skill_id_edit.setRange(0, 9999999)
         self.ai_skill_id_edit.setMinimumWidth(150)
         enemy_layout.addRow(skill_id_label, self.ai_skill_id_edit)
 
-        aggression_label = QLabel("💢 AI Aggression (Col 32):")
-        aggression_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        aggression_label.setMinimumWidth(220)
+        aggression_label = create_game_icon_label(
+            "AI Aggression (Col 32):", TAB_ICON_STEMS.get("battle"), bold=True, minimum_width=220
+        )
         self.ai_aggression_edit = QSpinBox()
         self.ai_aggression_edit.setRange(0, 100)
         self.ai_aggression_edit.setMinimumWidth(150)
@@ -9838,52 +9848,37 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(enemy_group)
 
         # Encounter groups
-        encounter_group = QGroupBox("🌍 Encounter Groups")
-        encounter_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #84fab0;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #2c9558;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        encounter_group = QGroupBox("Encounter Groups")
+        encounter_group.setStyleSheet(battle_panel_style)
         encounter_layout = QVBoxLayout(encounter_group)
         encounter_layout.setSpacing(10)
 
-        encounter_label = QLabel("📍 Appears in encounter groups:")
-        encounter_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        encounter_label = create_game_icon_label(
+            "Appears in encounter groups:", TAB_ICON_STEMS.get("languages"), bold=True, minimum_width=260
+        )
         encounter_layout.addWidget(encounter_label)
 
         self.encounter_list = QListWidget()
         self.encounter_list.setStyleSheet("""
             QListWidget {
-                border: 2px solid #dee2e6;
-                border-radius: 6px;
-                padding: 5px;
-                background-color: white;
+                color: #e8f2f1;
+                border: 1px solid rgba(136, 233, 224, 115);
+                border-radius: 2px;
+                padding: 6px;
+                background-color: rgba(2, 18, 23, 210);
             }
             QListWidget::item {
-                padding: 8px;
+                color: #e8f2f1;
+                padding: 8px 10px;
                 margin: 2px;
-                border-radius: 4px;
+                border-radius: 2px;
             }
             QListWidget::item:hover {
-                background-color: #e7f5ff;
+                background-color: rgba(35, 78, 77, 210);
             }
             QListWidget::item:selected {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #84fab0, stop:1 #8fd3f4);
-                color: white;
+                background-color: rgba(216, 135, 43, 220);
+                color: #ffffff;
             }
         """)
         encounter_layout.addWidget(self.encounter_list)
@@ -9891,40 +9886,12 @@ class DigimonEditor(QMainWindow):
         encounter_buttons = QHBoxLayout()
         encounter_buttons.setSpacing(10)
 
-        add_group_btn = QPushButton("➕ Add to Group")
-        add_group_btn.setStyleSheet("""
-            QPushButton {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #84fab0, stop:1 #8fd3f4);
-                color: white;
-                border: none;
-                border-radius: 6px;
-                padding: 10px 15px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #6ee89f, stop:1 #7bc9e8);
-            }
-        """)
+        add_group_btn = QPushButton("+ Add to Group")
+        add_group_btn.setStyleSheet(modern_action_button_style("#20d6a3"))
         encounter_buttons.addWidget(add_group_btn)
 
-        remove_group_btn = QPushButton("➖ Remove from Group")
-        remove_group_btn.setStyleSheet("""
-            QPushButton {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #fa709a, stop:1 #fee140);
-                color: white;
-                border: none;
-                border-radius: 6px;
-                padding: 10px 15px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #e85c89, stop:1 #ecd32f);
-            }
-        """)
+        remove_group_btn = QPushButton("- Remove from Group")
+        remove_group_btn.setStyleSheet(modern_action_button_style("#d8872b"))
         encounter_buttons.addWidget(remove_group_btn)
 
         encounter_layout.addLayout(encounter_buttons)
@@ -9932,40 +9899,23 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(encounter_group)
 
         # Battle formation
-        formation_group = QGroupBox("📐 Battle Formation")
-        formation_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #f093fb;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #c967cc;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
+        formation_group = QGroupBox("Battle Formation")
+        formation_group.setStyleSheet(battle_panel_style)
         formation_layout = QFormLayout(formation_group)
         formation_layout.setSpacing(12)
         formation_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         formation_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
-        form_id_label = QLabel("🆔 Formation ID:")
-        form_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        form_id_label.setMinimumWidth(180)
+        form_id_label = create_game_icon_label(
+            "Formation ID:", TAB_ICON_STEMS.get("advanced_skills"), bold=True, minimum_width=180
+        )
         self.formation_id_edit = QLineEdit()
         self.formation_id_edit.setMinimumWidth(200)
         formation_layout.addRow(form_id_label, self.formation_id_edit)
 
-        form_type_label = QLabel("📋 Formation Type:")
-        form_type_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        form_type_label.setMinimumWidth(180)
+        form_type_label = create_game_icon_label(
+            "Formation Type:", TAB_ICON_STEMS.get("languages"), bold=True, minimum_width=180
+        )
         self.formation_type_edit = QLineEdit()
         self.formation_type_edit.setMinimumWidth(200)
         formation_layout.addRow(form_type_label, self.formation_type_edit)
