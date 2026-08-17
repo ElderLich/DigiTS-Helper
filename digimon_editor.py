@@ -81,7 +81,7 @@ TEXT_LANGUAGE_FOLDERS = (
 
 APP_RESOURCE_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
 GAME_ICON_DIR = APP_RESOURCE_ROOT / "assets" / "game_icons"
-GAME_ICON_SIZE = QSize(24, 24)
+GAME_ICON_SIZE = QSize(32, 32)
 GAME_ICON_TILE_COLOR = QColor(8, 15, 28)
 TYPE_ICON_STEMS = {
     0: "ui_icon_type_000",  # Vaccine
@@ -171,18 +171,26 @@ def add_game_icon_combo_item(combo: QComboBox, text: str, user_data, icon_stem: 
         combo.addItem(icon, text, user_data)
 
 
-def add_game_icon_tab(tab_widget: QTabWidget, page: QWidget, text: str, icon_stem: Optional[str]) -> None:
+def add_game_icon_tab(
+    tab_widget: QTabWidget,
+    page: QWidget,
+    text: str,
+    icon_stem: Optional[str],
+    tooltip: Optional[str] = None,
+) -> None:
     icon = get_game_icon(icon_stem)
     if icon.isNull():
-        tab_widget.addTab(page, text)
+        index = tab_widget.addTab(page, text)
     else:
-        tab_widget.addTab(page, icon, text)
+        index = tab_widget.addTab(page, icon, text)
+    if tooltip:
+        tab_widget.setTabToolTip(index, tooltip)
 
 
 def create_game_icon_label(
     text: str,
     icon_stem: Optional[str],
-    icon_size: int = 20,
+    icon_size: int = 28,
     *,
     bold: bool = False,
     minimum_width: int = 0,
@@ -3516,11 +3524,11 @@ class ResistancesPage(QWizardPage):
             spin.setObjectName(f"resist_{resist_key}")
             spin.setToolTip(
                 f"Set {resist_name} resistance:\n"
-                "0 = Weak (150% damage - 1.5x)\n"
-                "1 = Normal (100% damage - 1.0x)\n"
-                "2 = Resist (75% damage - 0.75x)\n"
-                "3 = Null (50% damage - 0.5x)\n"
-                "4 = Absorb (heals instead of damages)"
+                "0 = Normal (100% damage - 1.0x)\n"
+                "1 = Weak (150% damage - 1.5x)\n"
+                "2 = Very Weak (200% damage - 2.0x)\n"
+                "3 = Resistant (50% damage - 0.5x)\n"
+                "4 = Immune (0% damage - no damage taken)"
             )
             self.resist_widgets[resist_key] = spin
             layout.addWidget(spin, row, col + 1)
@@ -5687,10 +5695,10 @@ class DigimonEditor(QMainWindow):
                 border-bottom: none;
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
-                padding: 10px 20px;
+                padding: 8px 12px;
                 margin-right: 2px;
                 font-weight: bold;
-                font-size: 11pt;
+                font-size: 10pt;
             }
             QTabBar::tab:selected {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -5886,8 +5894,9 @@ class DigimonEditor(QMainWindow):
     def create_left_panel(self) -> QWidget:
         """Create the left panel with Digimon list"""
         panel = QWidget()
+        panel.setObjectName("leftPanel")
         panel.setStyleSheet("""
-            QWidget {
+            QWidget#leftPanel {
                 background-color: white;
                 border-radius: 12px;
                 border: 2px solid #dee2e6;
@@ -6314,8 +6323,9 @@ class DigimonEditor(QMainWindow):
     def create_right_panel(self) -> QWidget:
         """Create the right panel with editor tabs"""
         panel = QWidget()
+        panel.setObjectName("rightPanel")
         panel.setStyleSheet("""
-            QWidget {
+            QWidget#rightPanel {
                 background-color: white;
                 border-radius: 12px;
                 border: 2px solid #dee2e6;
@@ -6347,7 +6357,7 @@ class DigimonEditor(QMainWindow):
 
         # Basic Info Tab
         self.basic_tab = self.create_basic_tab()
-        add_game_icon_tab(self.tab_widget, self.basic_tab, "Basic Info", TAB_ICON_STEMS.get("basic"))
+        add_game_icon_tab(self.tab_widget, self.basic_tab, "Basic", TAB_ICON_STEMS.get("basic"), "Basic Info")
 
         # Stats Tab
         self.stats_tab = self.create_stats_tab()
@@ -6359,7 +6369,13 @@ class DigimonEditor(QMainWindow):
 
         # Advanced Skills Tab
         self.advanced_skills_tab = self.create_advanced_skills_tab()
-        add_game_icon_tab(self.tab_widget, self.advanced_skills_tab, "Advanced Skills", TAB_ICON_STEMS.get("advanced_skills"))
+        add_game_icon_tab(
+            self.tab_widget,
+            self.advanced_skills_tab,
+            "Advanced",
+            TAB_ICON_STEMS.get("advanced_skills"),
+            "Advanced Skills",
+        )
 
         # Traits Tab
         self.traits_tab = TraitsEditor(self.loader)
@@ -6367,7 +6383,13 @@ class DigimonEditor(QMainWindow):
 
         # Model Tab
         self.model_tab = self.create_model_tab()
-        add_game_icon_tab(self.tab_widget, self.model_tab, "Model & Animation", TAB_ICON_STEMS.get("model"))
+        add_game_icon_tab(
+            self.tab_widget,
+            self.model_tab,
+            "Model",
+            TAB_ICON_STEMS.get("model"),
+            "Model & Animation",
+        )
 
         # Evolution Tab
         self.evolution_tab = self.create_evolution_tab()
@@ -6375,11 +6397,17 @@ class DigimonEditor(QMainWindow):
 
         # Battle Tab
         self.battle_tab = self.create_battle_tab()
-        add_game_icon_tab(self.tab_widget, self.battle_tab, "Battle Data", TAB_ICON_STEMS.get("battle"))
+        add_game_icon_tab(self.tab_widget, self.battle_tab, "Battle", TAB_ICON_STEMS.get("battle"), "Battle Data")
 
         # Multi Language Tab
         self.multi_language_tab = self.create_multi_language_tab()
-        add_game_icon_tab(self.tab_widget, self.multi_language_tab, "Other Languages", TAB_ICON_STEMS.get("languages"))
+        add_game_icon_tab(
+            self.tab_widget,
+            self.multi_language_tab,
+            "Languages",
+            TAB_ICON_STEMS.get("languages"),
+            "Other Languages",
+        )
 
         layout.addWidget(self.tab_widget)
 
