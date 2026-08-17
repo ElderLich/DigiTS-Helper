@@ -37,6 +37,12 @@ FIELD_GUIDE_CHR_ID_COLUMN = 3
 FIELD_GUIDE_DIGIMON_ID_COLUMN = 0
 FIELD_GUIDE_CUSTOM_MIN = 500
 FIELD_GUIDE_CUSTOM_MAX = 999
+DIGIMON_ID_SLOT_MIN = 1
+DIGIMON_ID_SLOT_SUGGESTED_MIN = 1000
+CHR_ID_SLOT_MIN = 1
+CHR_ID_SLOT_SUGGESTED_MIN = 1000
+SLOT_PICKER_BUFFER = 100
+SLOT_PICKER_MAX_ROWS = 5000
 PROFILE_WRAP_WIDTH = 50
 EVOLUTION_TYPE_NORMAL = 0
 EVOLUTION_TYPE_MODE_CHANGE = 2
@@ -50,6 +56,8 @@ RELATED_SOURCE_PROMPT = "Select source Digimon..."
 GEOM_TEXTURE_TOKEN_RE = re.compile(rb"[A-Za-z0-9_]{4,64}")
 GEOM_INDEXED_TEXTURE_RE = re.compile(r"^(?P<head>.*?)(?P<idx>\d{2})(?P<tail>[A-Za-z_]+)?$")
 TINY_EFFECT_TEXTURE_RE = re.compile(r"^chr\d+(?:e\d{2}|f\d{2}em)$", re.IGNORECASE)
+CHR_ID_SLOT_RE = re.compile(r"^(?:chr)?(?P<number>\d+)$", re.IGNORECASE)
+CHR_ID_SLOT_PREFIX_RE = re.compile(r"^chr(?P<number>\d+)", re.IGNORECASE)
 # digimon_status column 132 is a numeric status/profile reference. Official rows
 # usually mirror column 0, while recolors/model variants may point at a source
 # Digimon. It is not the Field Guide number from column 131.
@@ -437,6 +445,45 @@ def _clean_status_cell(value: str) -> str:
     return str(value).strip().strip('"')
 
 
+def parse_chr_id_slot(value: str, allow_prefix_match: bool = False) -> Optional[int]:
+    """Return the numeric chr slot from chrNNN or bare NNN text."""
+    clean_value = _clean_status_cell(value).strip()
+    if not clean_value:
+        return None
+
+    match = CHR_ID_SLOT_RE.match(clean_value)
+    if match:
+        return int(match.group("number"))
+
+    if allow_prefix_match:
+        match = CHR_ID_SLOT_PREFIX_RE.match(clean_value)
+        if match:
+            return int(match.group("number"))
+
+    return None
+
+
+def format_chr_id_slot(slot: int) -> str:
+    """Format a numeric Chr ID slot using the game's normal chrNNN style."""
+    if slot < 1000:
+        return f"chr{slot:03d}"
+    return f"chr{slot}"
+
+
+def normalize_chr_id_input(value: str) -> str:
+    """Normalize plain numeric Chr ID input while preserving custom text IDs."""
+    clean_value = _clean_status_cell(value).strip()
+    slot = parse_chr_id_slot(clean_value)
+    if slot is None:
+        return clean_value
+    return format_chr_id_slot(slot)
+
+
+def chr_id_collision_key(value: str) -> str:
+    """Return a case-insensitive key that treats 988 and chr988 as the same slot."""
+    return normalize_chr_id_input(value).casefold()
+
+
 def safe_evolution_int(value, default: int = 0) -> int:
     try:
         if value is None:
@@ -534,6 +581,373 @@ def jogress_partner_ids_from_conditions(conditions) -> List[int]:
         if partner_id > 0 and partner_id not in partner_ids:
             partner_ids.append(partner_id)
     return partner_ids
+
+
+def _status_identity_label(source_name: str, digimon_id, chr_id: str, char_key: str) -> str:
+    parts = []
+    clean_chr_id = _clean_status_cell(chr_id)
+    clean_digimon_id = _clean_status_cell(digimon_id)
+    clean_char_key = _clean_status_cell(char_key)
+    if clean_chr_id:
+        parts.append(clean_chr_id)
+    if clean_digimon_id:
+        parts.append(f"Digimon ID {clean_digimon_id}")
+    if clean_char_key:
+        parts.append(clean_char_key)
+    return f"{source_name}: {', '.join(parts) if parts else 'unknown row'}"
+
+
+def _dsts_loader_status_files_for_slot_scan(dsts_loader_root: Path) -> List[Path]:
+    status_dir = Path(dsts_loader_root) / "patch" / "data" / "digimon_status.mbe"
+    return sorted(status_dir.glob("*.ap.csv")) if status_dir.exists() else []
+
+
+def _dsts_loader_slot_source_label(dsts_loader_root: Path) -> str:
+    root = Path(dsts_loader_root)
+    if root.name.lower() in DSTS_LOADER_DIR_NAMES and (root.parent / "ModConfig.json").exists():
+        return f"Active Mod: {root.parent.name}"
+    return "Active Mod"
+
+
+def _add_status_rows_to_identity_slot_usage(
+    rows: List[List[str]],
+    source_name: str,
+    digimon_id_usage: Dict[int, List[str]],
+    chr_slot_usage: Dict[int, List[str]],
+    excluded_digimon_ids: Set[int],
+    excluded_chr_keys: Set[str],
+):
+    for row in rows[1:]:
+        if not row or not any(str(cell).strip() for cell in row):
+            continue
+
+        digimon_id = _parse_optional_int(row[FIELD_GUIDE_DIGIMON_ID_COLUMN]) if len(row) > FIELD_GUIDE_DIGIMON_ID_COLUMN else None
+        chr_id = _clean_status_cell(row[FIELD_GUIDE_CHR_ID_COLUMN]) if len(row) > FIELD_GUIDE_CHR_ID_COLUMN else ""
+        char_key = _clean_status_cell(row[2]) if len(row) > 2 else ""
+        label = _status_identity_label(source_name, digimon_id if digimon_id is not None else "", chr_id, char_key)
+
+        if digimon_id is not None and digimon_id > 0 and digimon_id not in excluded_digimon_ids:
+            digimon_id_usage.setdefault(digimon_id, []).append(label)
+
+        chr_slot = parse_chr_id_slot(chr_id, allow_prefix_match=True)
+        if chr_slot is not None and chr_slot > 0 and chr_id_collision_key(chr_id) not in excluded_chr_keys:
+            chr_slot_usage.setdefault(chr_slot, []).append(label)
+
+
+def collect_identity_slot_usage(
+    loader: Optional[MBELoader],
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> Tuple[Dict[int, List[str]], Dict[int, List[str]]]:
+    """Collect occupied Digimon ID and Chr ID slots from validation-relevant sources."""
+    digimon_id_usage: Dict[int, List[str]] = {}
+    chr_slot_usage: Dict[int, List[str]] = {}
+    if not loader:
+        return digimon_id_usage, chr_slot_usage
+
+    excluded_digimon_ids: Set[int] = set()
+    for value in exclude_digimon_ids or []:
+        try:
+            parsed = int(value)
+        except (TypeError, ValueError):
+            continue
+        if parsed > 0:
+            excluded_digimon_ids.add(parsed)
+
+    excluded_chr_keys = {
+        chr_id_collision_key(chr_id)
+        for chr_id in (exclude_chr_ids or [])
+        if _clean_status_cell(chr_id)
+    }
+
+    def scan_status_file(status_file: Path, source_name: str):
+        try:
+            _add_status_rows_to_identity_slot_usage(
+                loader.load_csv(status_file),
+                source_name,
+                digimon_id_usage,
+                chr_slot_usage,
+                excluded_digimon_ids,
+                excluded_chr_keys,
+            )
+        except Exception as exc:
+            print(f"Could not scan {source_name} ID slots: {exc}")
+
+    try:
+        base_file = loader._resolve_prefixed_file(loader.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv")
+        if base_file.exists():
+            scan_status_file(base_file, "Base")
+    except Exception as exc:
+        print(f"Could not scan base ID slots: {exc}")
+
+    try:
+        for dlc_id, status_file in loader.iter_dlc_csv_files("data", "digimon_status", "000_digimon_status_data.csv"):
+            scan_status_file(status_file, f"DLC addcont_{dlc_id}")
+    except Exception as exc:
+        print(f"Could not scan DLC ID slots: {exc}")
+
+    for digimon in getattr(loader, "imported_digimon", []):
+        try:
+            digimon_id = int(getattr(digimon, "id", 0))
+        except (TypeError, ValueError):
+            digimon_id = 0
+        chr_id = str(getattr(digimon, "chr_id", "")).strip()
+        char_key = str(getattr(digimon, "char_key", "")).strip()
+        name = str(getattr(digimon, "name", "")).strip()
+        source_name = f"Imported {name}" if name else "Imported"
+        label = _status_identity_label(
+            source_name,
+            digimon_id if digimon_id > 0 else "",
+            chr_id,
+            char_key,
+        )
+        if digimon_id > 0 and digimon_id not in excluded_digimon_ids:
+            digimon_id_usage.setdefault(digimon_id, []).append(label)
+        chr_slot = parse_chr_id_slot(chr_id, allow_prefix_match=True)
+        if chr_slot is not None and chr_slot > 0 and chr_id_collision_key(chr_id) not in excluded_chr_keys:
+            chr_slot_usage.setdefault(chr_slot, []).append(label)
+
+    for root in active_dsts_loader_roots or []:
+        if not root:
+            continue
+        root_path = Path(root)
+        source_label = _dsts_loader_slot_source_label(root_path)
+        for status_file in _dsts_loader_status_files_for_slot_scan(root_path):
+            scan_status_file(status_file, source_label)
+
+    return digimon_id_usage, chr_slot_usage
+
+
+def collect_digimon_id_usage(
+    loader: Optional[MBELoader],
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> Dict[int, List[str]]:
+    return collect_identity_slot_usage(
+        loader,
+        exclude_digimon_ids=exclude_digimon_ids,
+        active_dsts_loader_roots=active_dsts_loader_roots,
+    )[0]
+
+
+def collect_chr_id_slot_usage(
+    loader: Optional[MBELoader],
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> Dict[int, List[str]]:
+    return collect_identity_slot_usage(
+        loader,
+        exclude_chr_ids=exclude_chr_ids,
+        active_dsts_loader_roots=active_dsts_loader_roots,
+    )[1]
+
+
+def first_free_numeric_slot(usage: Dict[int, List[str]], start: int) -> int:
+    slot = max(1, start)
+    while slot in usage:
+        slot += 1
+    return slot
+
+
+def _slot_picker_bounds(
+    usage: Dict[int, List[str]],
+    current_slot: Optional[int],
+    first_free: int,
+    minimum_slot: int,
+    suggested_min: int,
+) -> Tuple[int, int, bool]:
+    candidates = [slot for slot in usage if slot > 0]
+    if current_slot and current_slot > 0:
+        candidates.append(current_slot)
+    if first_free > 0:
+        candidates.append(first_free)
+    candidates.append(suggested_min)
+
+    lower = max(1, minimum_slot)
+    upper = max(candidates) + SLOT_PICKER_BUFFER
+    upper = max(upper, suggested_min + SLOT_PICKER_BUFFER)
+    if upper - lower + 1 <= SLOT_PICKER_MAX_ROWS:
+        return lower, upper, False
+
+    anchor = current_slot if current_slot and current_slot > 0 else first_free
+    anchor = anchor if anchor and anchor > 0 else suggested_min
+    lower = max(minimum_slot, anchor - SLOT_PICKER_MAX_ROWS // 3)
+    upper = lower + SLOT_PICKER_MAX_ROWS - 1
+    if anchor > upper:
+        upper = anchor + SLOT_PICKER_MAX_ROWS // 3
+        lower = max(minimum_slot, upper - SLOT_PICKER_MAX_ROWS + 1)
+    return lower, upper, True
+
+
+def choose_numeric_slot(
+    parent: QWidget,
+    title: str,
+    usage: Dict[int, List[str]],
+    current_slot: Optional[int],
+    suggested_min: int,
+    minimum_slot: int,
+    slot_formatter,
+    intro: str,
+    no_free_message: str,
+) -> Optional[int]:
+    first_free = first_free_numeric_slot(usage, suggested_min)
+    lower, upper, truncated = _slot_picker_bounds(usage, current_slot, first_free, minimum_slot, suggested_min)
+
+    dialog = QDialog(parent)
+    dialog.setWindowTitle(title)
+    dialog.setMinimumSize(680, 680)
+
+    layout = QVBoxLayout(dialog)
+
+    info_text = intro
+    if truncated:
+        info_text += f" Showing {slot_formatter(lower)}-{slot_formatter(upper)} around the current/custom range."
+    info = QLabel(info_text)
+    info.setWordWrap(True)
+    layout.addWidget(info)
+
+    filter_edit = QLineEdit()
+    filter_edit.setPlaceholderText("Filter by ID, chr, source, or Free")
+    layout.addWidget(filter_edit)
+
+    slot_list = QListWidget()
+    slot_list.setAlternatingRowColors(True)
+
+    selected_item = None
+    first_free_item = None
+    for slot in range(lower, upper + 1):
+        display_slot = slot_formatter(slot)
+        occupied_by = usage.get(slot, [])
+        if occupied_by:
+            label = f"{display_slot}  occupied by {occupied_by[0]}"
+            if len(occupied_by) > 1:
+                label += f" (+{len(occupied_by) - 1} more)"
+        else:
+            label = f"{display_slot}  Free"
+
+        item = QListWidgetItem(label)
+        item.setData(Qt.ItemDataRole.UserRole, slot)
+        if occupied_by:
+            item.setBackground(QColor("#ffd6d6"))
+            item.setForeground(QColor("#7a1f1f"))
+            item.setToolTip("\n".join(occupied_by[:20]))
+            item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+        else:
+            item.setBackground(QColor("#eeeeee"))
+            item.setForeground(QColor("#4b5563"))
+            item.setToolTip(f"{display_slot} is Free")
+            if first_free_item is None and slot >= suggested_min:
+                first_free_item = item
+
+        slot_list.addItem(item)
+        if current_slot is not None and slot == current_slot:
+            selected_item = item
+
+    if selected_item and bool(selected_item.flags() & Qt.ItemFlag.ItemIsEnabled):
+        slot_list.setCurrentItem(selected_item)
+    elif first_free_item:
+        slot_list.setCurrentItem(first_free_item)
+
+    layout.addWidget(slot_list)
+
+    button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+    first_free_button = QPushButton("Use First Free Custom")
+    button_box.addButton(first_free_button, QDialogButtonBox.ButtonRole.ActionRole)
+
+    ok_button = button_box.button(QDialogButtonBox.StandardButton.Ok)
+
+    def update_ok_button():
+        item = slot_list.currentItem()
+        ok_button.setEnabled(item is not None and bool(item.flags() & Qt.ItemFlag.ItemIsEnabled))
+
+    def apply_filter(text: str):
+        query = text.strip().casefold()
+        for index in range(slot_list.count()):
+            item = slot_list.item(index)
+            item.setHidden(bool(query) and query not in item.text().casefold())
+
+    def use_first_free():
+        if first_free <= 0:
+            QMessageBox.warning(dialog, "No Free IDs", no_free_message)
+            return
+        for index in range(slot_list.count()):
+            item = slot_list.item(index)
+            if item.data(Qt.ItemDataRole.UserRole) == first_free:
+                slot_list.setCurrentItem(item)
+                dialog.accept()
+                return
+        QMessageBox.warning(dialog, "Slot Not Visible", f"{slot_formatter(first_free)} is free but outside the visible range.")
+
+    def accept_selected_item(item: QListWidgetItem):
+        if item and bool(item.flags() & Qt.ItemFlag.ItemIsEnabled):
+            dialog.accept()
+
+    filter_edit.textChanged.connect(apply_filter)
+    slot_list.currentItemChanged.connect(lambda _current, _previous: update_ok_button())
+    slot_list.itemDoubleClicked.connect(accept_selected_item)
+    first_free_button.clicked.connect(use_first_free)
+    button_box.accepted.connect(dialog.accept)
+    button_box.rejected.connect(dialog.reject)
+    layout.addWidget(button_box)
+    update_ok_button()
+
+    if dialog.exec() == QDialog.DialogCode.Accepted and slot_list.currentItem():
+        return int(slot_list.currentItem().data(Qt.ItemDataRole.UserRole))
+    return None
+
+
+def choose_digimon_id_slot(
+    parent: QWidget,
+    loader: Optional[MBELoader],
+    current_value: int = -1,
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> Optional[int]:
+    usage = collect_digimon_id_usage(loader, exclude_digimon_ids, active_dsts_loader_roots)
+    return choose_numeric_slot(
+        parent,
+        "Select Digimon ID",
+        usage,
+        current_value if current_value > 0 else None,
+        DIGIMON_ID_SLOT_SUGGESTED_MIN,
+        DIGIMON_ID_SLOT_MIN,
+        lambda slot: str(slot),
+        "Rows are sorted by Digimon ID. Gray rows are Free; red rows are already used by Base, DLC, imported data, or the active mod.",
+        "No free custom Digimon ID was found.",
+    )
+
+
+def choose_chr_id_slot(
+    parent: QWidget,
+    loader: Optional[MBELoader],
+    current_value: str = "",
+    exclude_chr_ids: Optional[Iterable[str]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> Optional[str]:
+    usage = collect_chr_id_slot_usage(loader, exclude_chr_ids, active_dsts_loader_roots)
+    current_slot = parse_chr_id_slot(current_value, allow_prefix_match=True)
+    chosen_slot = choose_numeric_slot(
+        parent,
+        "Select Chr ID",
+        usage,
+        current_slot,
+        CHR_ID_SLOT_SUGGESTED_MIN,
+        CHR_ID_SLOT_MIN,
+        format_chr_id_slot,
+        "Rows are sorted by Chr ID. Gray rows are Free; red rows are already used by Base, DLC, imported data, or the active mod.",
+        "No free custom Chr ID was found.",
+    )
+    return format_chr_id_slot(chosen_slot) if chosen_slot is not None else None
+
+
+def first_free_digimon_id(
+    loader: Optional[MBELoader],
+    exclude_digimon_ids: Optional[Iterable[int]] = None,
+    active_dsts_loader_roots: Optional[Iterable[Path]] = None,
+) -> int:
+    usage = collect_digimon_id_usage(loader, exclude_digimon_ids, active_dsts_loader_roots)
+    return first_free_numeric_slot(usage, DIGIMON_ID_SLOT_SUGGESTED_MIN)
 
 
 def collect_field_guide_usage(
@@ -728,10 +1142,10 @@ def choose_field_guide_id(
     return None
 
 
-def create_field_guide_slot_button() -> QPushButton:
-    """Create the shared visible button used to open the field guide slot picker."""
+def create_slot_picker_button(tooltip: str) -> QPushButton:
+    """Create the shared visible button used to open an ID slot picker."""
     button = QPushButton("Choose Slot...")
-    button.setToolTip("Show custom field guide slots and mark occupied IDs in light red")
+    button.setToolTip(tooltip)
     button.setMinimumWidth(130)
     button.setStyleSheet("""
         QPushButton {
@@ -747,6 +1161,11 @@ def create_field_guide_slot_button() -> QPushButton:
         }
     """)
     return button
+
+
+def create_field_guide_slot_button() -> QPushButton:
+    """Create the shared visible button used to open the field guide slot picker."""
+    return create_slot_picker_button("Show custom field guide slots and mark occupied IDs in light red")
 
 
 def get_skill_options(loader: Optional[MBELoader]) -> List[tuple]:
@@ -1405,7 +1824,8 @@ class DigimonCreationWizard(QWizard):
             self.new_digimon.id = basic_page.id_spin.value()
             self.new_digimon.name = basic_page.name_edit.text()
             self.new_digimon.char_key = basic_page.char_key_edit.text()
-            new_chr_id = basic_page.chr_id_edit.text()
+            new_chr_id = normalize_chr_id_input(basic_page.chr_id_edit.text())
+            basic_page.chr_id_edit.setText(new_chr_id)
             self.new_digimon.chr_id = new_chr_id
             self.new_digimon.field_guide_id = basic_page.field_guide_id_spin.value()
             self.new_digimon.script_id = self.new_digimon.id
@@ -2306,13 +2726,24 @@ class BasicInfoPage(QWizardPage):
         layout.setSpacing(15)
 
         # ID
+        id_widget = QWidget()
+        id_layout = QHBoxLayout(id_widget)
+        id_layout.setContentsMargins(0, 0, 0, 0)
+        id_layout.setSpacing(8)
+
         self.id_spin = QSpinBox()
         self.id_spin.setRange(1, 9999999)
-        # Find next available ID - check both base game and DLC
-        existing_ids = list(self.collect_existing_ids())
-        next_id = max(existing_ids) + 1 if existing_ids else 1000
+        next_id = first_free_digimon_id(
+            wizard.loader,
+            active_dsts_loader_roots=self.active_dsts_loader_roots(),
+        )
         self.id_spin.setValue(next_id)
-        layout.addRow("🆔 Digimon ID:", self.id_spin)
+        id_layout.addWidget(self.id_spin)
+
+        pick_id_button = create_slot_picker_button("Show Digimon ID slots and mark Free rows in gray")
+        pick_id_button.clicked.connect(self.pick_digimon_id)
+        id_layout.addWidget(pick_id_button)
+        layout.addRow("🆔 Digimon ID:", id_widget)
 
         # Name
         self.name_edit = QLineEdit()
@@ -2325,9 +2756,19 @@ class BasicInfoPage(QWizardPage):
         layout.addRow("🔑 Character Key:", self.char_key_edit)
 
         # Chr ID
+        chr_id_widget = QWidget()
+        chr_id_layout = QHBoxLayout(chr_id_widget)
+        chr_id_layout.setContentsMargins(0, 0, 0, 0)
+        chr_id_layout.setSpacing(8)
+
         self.chr_id_edit = QLineEdit()
         self.chr_id_edit.setPlaceholderText("e.g., chr1000")
-        layout.addRow("🔢 Chr ID:", self.chr_id_edit)
+        chr_id_layout.addWidget(self.chr_id_edit)
+
+        pick_chr_id_button = create_slot_picker_button("Show Chr ID slots and mark Free rows in gray")
+        pick_chr_id_button.clicked.connect(self.pick_chr_id)
+        chr_id_layout.addWidget(pick_chr_id_button)
+        layout.addRow("🔢 Chr ID:", chr_id_widget)
 
         # Field Guide ID
         field_guide_widget = QWidget()
@@ -2357,6 +2798,37 @@ class BasicInfoPage(QWizardPage):
 
         self.setLayout(layout)
 
+    def active_dsts_loader_roots(self) -> List[Path]:
+        """Return the active mod payload root from the parent editor, if any."""
+        parent_editor = self.wizard.parent()
+        if parent_editor and hasattr(parent_editor, "_active_dsts_loader_root"):
+            active_root = parent_editor._active_dsts_loader_root()
+            if active_root:
+                return [active_root]
+        return []
+
+    def pick_digimon_id(self):
+        """Open the occupied/free Digimon ID picker."""
+        chosen_id = choose_digimon_id_slot(
+            self,
+            self.wizard.loader,
+            self.id_spin.value(),
+            active_dsts_loader_roots=self.active_dsts_loader_roots(),
+        )
+        if chosen_id is not None:
+            self.id_spin.setValue(chosen_id)
+
+    def pick_chr_id(self):
+        """Open the occupied/free Chr ID picker."""
+        chosen_chr_id = choose_chr_id_slot(
+            self,
+            self.wizard.loader,
+            self.chr_id_edit.text().strip(),
+            active_dsts_loader_roots=self.active_dsts_loader_roots(),
+        )
+        if chosen_chr_id is not None:
+            self.chr_id_edit.setText(chosen_chr_id)
+
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
         chosen_id = choose_field_guide_id(
@@ -2370,27 +2842,10 @@ class BasicInfoPage(QWizardPage):
 
     def collect_existing_ids(self) -> Set[int]:
         """Collect Digimon IDs from base, DLC, and imported mod rows."""
-        existing_ids = set(self.wizard.loader.get_all_digimon_ids())
-        try:
-            for _dlc_id, dlc_status_file in self.wizard.loader.iter_dlc_csv_files(
-                "data", "digimon_status", "000_digimon_status_data.csv"
-            ):
-                dlc_rows = self.wizard.loader.load_csv(dlc_status_file)
-                for row in dlc_rows[1:]:
-                    if len(row) > 0 and row[0]:
-                        try:
-                            existing_ids.add(int(row[0]))
-                        except ValueError:
-                            continue
-        except Exception:
-            pass
-
-        for digimon in getattr(self.wizard.loader, "imported_digimon", []):
-            try:
-                existing_ids.add(int(getattr(digimon, "id", 0)))
-            except (TypeError, ValueError):
-                continue
-        return {digimon_id for digimon_id in existing_ids if digimon_id > 0}
+        return set(collect_digimon_id_usage(
+            self.wizard.loader,
+            active_dsts_loader_roots=self.active_dsts_loader_roots(),
+        ))
 
     def collect_existing_chr_ids(self) -> Set[str]:
         """Collect Chr IDs from base, DLC, and imported mod rows."""
@@ -2398,7 +2853,7 @@ class BasicInfoPage(QWizardPage):
         for from_dlc in (False, True):
             try:
                 existing_chr_ids.update(
-                    chr_id.strip().casefold()
+                    chr_id_collision_key(chr_id)
                     for chr_id in self.wizard.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
                     if chr_id
                 )
@@ -2408,7 +2863,13 @@ class BasicInfoPage(QWizardPage):
         for digimon in getattr(self.wizard.loader, "imported_digimon", []):
             chr_id = str(getattr(digimon, "chr_id", "")).strip()
             if chr_id:
-                existing_chr_ids.add(chr_id.casefold())
+                existing_chr_ids.add(chr_id_collision_key(chr_id))
+
+        for slot in collect_chr_id_slot_usage(
+            self.wizard.loader,
+            active_dsts_loader_roots=self.active_dsts_loader_roots(),
+        ):
+            existing_chr_ids.add(format_chr_id_slot(slot).casefold())
         return existing_chr_ids
 
     def validatePage(self):
@@ -2419,7 +2880,10 @@ class BasicInfoPage(QWizardPage):
         if not self.char_key_edit.text().strip():
             QMessageBox.warning(self, "Error", "Please enter a character key")
             return False
-        if not self.chr_id_edit.text().strip():
+        chr_id = normalize_chr_id_input(self.chr_id_edit.text())
+        if chr_id != self.chr_id_edit.text().strip():
+            self.chr_id_edit.setText(chr_id)
+        if not chr_id:
             QMessageBox.warning(self, "Error", "Please enter a Chr ID")
             return False
 
@@ -2433,8 +2897,7 @@ class BasicInfoPage(QWizardPage):
             )
             return False
 
-        chr_id = self.chr_id_edit.text().strip()
-        if chr_id.casefold() in self.collect_existing_chr_ids():
+        if chr_id_collision_key(chr_id) in self.collect_existing_chr_ids():
             QMessageBox.warning(
                 self,
                 "Chr ID Occupied",
@@ -4626,11 +5089,13 @@ class DigimonEditor(QMainWindow):
         new_char_key = self.current_digimon.char_key.strip()
         original_chr_id = (original_chr_id or "").strip()
         original_char_key = (original_char_key or "").strip()
+        new_chr_key = chr_id_collision_key(new_chr_id)
+        original_chr_key = chr_id_collision_key(original_chr_id)
 
         # If values haven't changed, no need to validate
         if (
             new_id == original_id
-            and new_chr_id.casefold() == original_chr_id.casefold()
+            and new_chr_key == original_chr_key
             and new_char_key.casefold() == original_char_key.casefold()
         ):
             return True
@@ -4648,8 +5113,8 @@ class DigimonEditor(QMainWindow):
                 return False
 
         # Check chr_id uniqueness
-        if new_chr_id.casefold() != original_chr_id.casefold():
-            if new_chr_id.casefold() in self._collect_used_chr_ids():
+        if new_chr_key != original_chr_key:
+            if new_chr_key in self._collect_used_chr_ids():
                 QMessageBox.warning(
                     self,
                     "Duplicate Chr ID",
@@ -4744,6 +5209,71 @@ class DigimonEditor(QMainWindow):
         finally:
             self.script_id_spin.blockSignals(False)
             self._syncing_status_reference = False
+
+    def _active_slot_picker_roots(self) -> List[Path]:
+        active_root = self._active_dsts_loader_root()
+        return [active_root] if active_root else []
+
+    def _slot_picker_identity_exclusions(self) -> dict:
+        """Return original row identity values to exclude from occupied slot scans."""
+        identity = getattr(self, "loaded_digimon_identity", {}) or {}
+        pending_new = bool(
+            identity.get("pending_new_mod_entry")
+            or (self.current_digimon and getattr(self.current_digimon, "pending_new_mod_entry", False))
+        )
+        if pending_new:
+            return {"digimon_ids": set(), "chr_ids": set()}
+
+        digimon_ids = set()
+        chr_ids = set()
+        if self.current_digimon:
+            try:
+                current_id = int(getattr(self.current_digimon, "id", 0))
+                if current_id > 0:
+                    digimon_ids.add(current_id)
+            except (TypeError, ValueError):
+                pass
+            current_chr_id = str(getattr(self.current_digimon, "chr_id", "")).strip()
+            if current_chr_id:
+                chr_ids.add(current_chr_id)
+
+        try:
+            identity_id = int(identity.get("id", 0))
+            if identity_id > 0:
+                digimon_ids.add(identity_id)
+        except (TypeError, ValueError):
+            pass
+        identity_chr_id = str(identity.get("chr_id", "")).strip()
+        if identity_chr_id:
+            chr_ids.add(identity_chr_id)
+
+        return {"digimon_ids": digimon_ids, "chr_ids": chr_ids}
+
+    def pick_digimon_id_slot(self):
+        """Open the occupied/free Digimon ID picker for the current form."""
+        exclusions = self._slot_picker_identity_exclusions()
+        chosen_id = choose_digimon_id_slot(
+            self,
+            self.loader,
+            self.id_spin.value(),
+            exclusions["digimon_ids"],
+            self._active_slot_picker_roots(),
+        )
+        if chosen_id is not None:
+            self.id_spin.setValue(chosen_id)
+
+    def pick_chr_id_slot(self):
+        """Open the occupied/free Chr ID picker for the current form."""
+        exclusions = self._slot_picker_identity_exclusions()
+        chosen_chr_id = choose_chr_id_slot(
+            self,
+            self.loader,
+            self.chr_id_edit.text().strip(),
+            exclusions["chr_ids"],
+            self._active_slot_picker_roots(),
+        )
+        if chosen_chr_id is not None:
+            self.chr_id_edit.setText(chosen_chr_id)
 
     def pick_field_guide_id(self):
         """Open the occupied/free field guide ID picker."""
@@ -5562,9 +6092,20 @@ class DigimonEditor(QMainWindow):
         id_label = QLabel("🆔 ID:")
         id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         main_info_layout.addWidget(id_label, 0, 0)
+
+        id_widget = QWidget()
+        id_layout = QHBoxLayout(id_widget)
+        id_layout.setContentsMargins(0, 0, 0, 0)
+        id_layout.setSpacing(8)
+
         self.id_spin = QSpinBox()
         self.id_spin.setRange(0, 9999999)
-        main_info_layout.addWidget(self.id_spin, 0, 1)
+        id_layout.addWidget(self.id_spin)
+
+        pick_id_button = create_slot_picker_button("Show Digimon ID slots and mark Free rows in gray")
+        pick_id_button.clicked.connect(self.pick_digimon_id_slot)
+        id_layout.addWidget(pick_id_button)
+        main_info_layout.addWidget(id_widget, 0, 1)
 
         # Character Key
         char_key_label = QLabel("🔑 Character Key:")
@@ -5577,8 +6118,19 @@ class DigimonEditor(QMainWindow):
         chr_id_label = QLabel("🔢 Chr ID:")
         chr_id_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
         main_info_layout.addWidget(chr_id_label, 2, 0)
+
+        chr_id_widget = QWidget()
+        chr_id_layout = QHBoxLayout(chr_id_widget)
+        chr_id_layout.setContentsMargins(0, 0, 0, 0)
+        chr_id_layout.setSpacing(8)
+
         self.chr_id_edit = QLineEdit()
-        main_info_layout.addWidget(self.chr_id_edit, 2, 1)
+        chr_id_layout.addWidget(self.chr_id_edit)
+
+        pick_chr_id_button = create_slot_picker_button("Show Chr ID slots and mark Free rows in gray")
+        pick_chr_id_button.clicked.connect(self.pick_chr_id_slot)
+        chr_id_layout.addWidget(pick_chr_id_button)
+        main_info_layout.addWidget(chr_id_widget, 2, 1)
 
         # Name
         name_label = QLabel("📛 Name:")
@@ -10230,7 +10782,7 @@ class DigimonEditor(QMainWindow):
         for from_dlc in (False, True):
             try:
                 used_chr_ids.update(
-                    chr_id.strip().casefold()
+                    chr_id_collision_key(chr_id)
                     for chr_id in self.loader.get_all_digimon_chr_ids(from_dlc=from_dlc)
                     if chr_id
                 )
@@ -10240,7 +10792,7 @@ class DigimonEditor(QMainWindow):
         for digimon in getattr(self.loader, "imported_digimon", []):
             chr_id = str(getattr(digimon, "chr_id", "")).strip()
             if chr_id:
-                used_chr_ids.add(chr_id.casefold())
+                used_chr_ids.add(chr_id_collision_key(chr_id))
 
         active_root = self._active_dsts_loader_root()
         if active_root:
@@ -10251,7 +10803,7 @@ class DigimonEditor(QMainWindow):
                         if len(row) > FIELD_GUIDE_CHR_ID_COLUMN:
                             chr_id = _clean_status_cell(row[FIELD_GUIDE_CHR_ID_COLUMN])
                             if chr_id:
-                                used_chr_ids.add(chr_id.casefold())
+                                used_chr_ids.add(chr_id_collision_key(chr_id))
             except Exception:
                 pass
 
@@ -12608,7 +13160,12 @@ class DigimonEditor(QMainWindow):
         # Basic Info
         self.current_digimon.id = self.id_spin.value()
         self.current_digimon.char_key = self.char_key_edit.text()
-        self.current_digimon.chr_id = self.chr_id_edit.text()
+        normalized_chr_id = normalize_chr_id_input(self.chr_id_edit.text())
+        if normalized_chr_id != self.chr_id_edit.text().strip():
+            self.chr_id_edit.blockSignals(True)
+            self.chr_id_edit.setText(normalized_chr_id)
+            self.chr_id_edit.blockSignals(False)
+        self.current_digimon.chr_id = normalized_chr_id
         self.current_digimon.name = self.name_edit.text()
         self.current_digimon.stage_id = self.stage_combo.currentData() if self.stage_combo.currentData() is not None else 0
         self.current_digimon.type_id = self.type_combo.currentData() if self.type_combo.currentData() is not None else 0
