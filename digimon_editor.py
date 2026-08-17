@@ -20,7 +20,7 @@ from PyQt6.QtWidgets import (
     QDialog, QDialogButtonBox, QWizard, QWizardPage, QFrame, QAbstractSpinBox,
     QAbstractScrollArea
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject
+from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer
 from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
@@ -1251,9 +1251,30 @@ def get_skill_options(loader: Optional[MBELoader]) -> List[tuple]:
     if not loader:
         return []
 
-    options = []
     try:
         skills_file = loader._resolve_prefixed_file(loader.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv")
+        skill_name_file = loader._resolve_prefixed_file(loader.text_path / "skill_name.mbe" / "000_Sheet1.csv")
+        signature_parts = []
+        for file_path in (skills_file, skill_name_file):
+            if file_path.exists():
+                stat = file_path.stat()
+                signature_parts.append((str(file_path.resolve()).casefold(), stat.st_mtime_ns, stat.st_size))
+            else:
+                signature_parts.append((str(file_path).casefold(), 0, 0))
+        signature = tuple(signature_parts)
+        if (
+            getattr(loader, "_digimon_editor_skill_options_signature", None) == signature
+            and getattr(loader, "_digimon_editor_skill_options_cache", None) is not None
+        ):
+            return list(loader._digimon_editor_skill_options_cache)
+    except Exception:
+        skills_file = None
+        signature = None
+
+    options = []
+    try:
+        if skills_file is None:
+            skills_file = loader._resolve_prefixed_file(loader.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv")
         if not skills_file.exists():
             return []
 
@@ -1280,7 +1301,11 @@ def get_skill_options(loader: Optional[MBELoader]) -> List[tuple]:
     except Exception as exc:
         print(f"Error loading skill options: {exc}")
 
-    return sorted(options, key=lambda option: option[0])
+    options = sorted(options, key=lambda option: option[0])
+    if signature is not None:
+        loader._digimon_editor_skill_options_signature = signature
+        loader._digimon_editor_skill_options_cache = list(options)
+    return options
 
 
 def configure_searchable_combo(combo: QComboBox):
@@ -1537,6 +1562,20 @@ def choose_skill_id(parent: QWidget, loader: Optional[MBELoader], title: str, cu
     return None
 
 
+class LazySkillCombo(QComboBox):
+    """Skill dropdown that fills its option list only when opened."""
+
+    def __init__(self, populate_callback):
+        super().__init__()
+        self._populate_callback = populate_callback
+        self._skill_options_populated = False
+
+    def showPopup(self):
+        if self._populate_callback:
+            self._populate_callback()
+        super().showPopup()
+
+
 class SkillEditor(QWidget):
     """Widget for editing signature and generic skills"""
     skillChanged = pyqtSignal()
@@ -1546,7 +1585,7 @@ class SkillEditor(QWidget):
         self.skill_type = skill_type
         self.loader = loader
         self.skill_widgets = []
-        self.skill_options = get_skill_options(loader)
+        self.skill_options = None
         self._syncing_skill_widgets = False
         self.setup_ui()
 
@@ -1631,12 +1670,10 @@ class SkillEditor(QWidget):
         layout.addWidget(skill_id)
 
         # Skill dropdown
-        skill_combo = QComboBox()
+        skill_combo = LazySkillCombo(lambda idx=index: self.populate_skill_combo(idx))
         skill_combo.setObjectName(f"skill_combo_{index}")
         configure_searchable_combo(skill_combo)
         skill_combo.addItem("Select a skill...", 0)
-        for skill_option_id, skill_label in self.skill_options:
-            skill_combo.addItem(skill_label, skill_option_id)
         skill_combo.activated.connect(lambda _combo_index, idx=index: self.on_skill_combo_selected(idx))
         layout.addWidget(skill_combo, 1)
 
@@ -1765,7 +1802,8 @@ class SkillEditor(QWidget):
                 skill_name = self.loader.get_skill_name(skill_id) if self.loader else f"Skill {skill_id}"
                 clean_name = self.loader.clean_ui_text(skill_name) if self.loader else skill_name
                 skill_combo.setCurrentIndex(0)
-                skill_combo.setEditText(f"Custom ID {skill_id}: {clean_name}")
+                label_prefix = "Custom ID" if getattr(skill_combo, "_skill_options_populated", False) else "ID"
+                skill_combo.setEditText(f"{label_prefix} {skill_id}: {clean_name}")
             else:
                 skill_combo.setCurrentIndex(0)
                 if skill_combo.lineEdit():
@@ -1780,6 +1818,28 @@ class SkillEditor(QWidget):
         if remove_button:
             remove_button.setEnabled(bool(skill_id_widget and skill_id_widget.value() > 0))
 
+    def populate_skill_combo(self, index: int):
+        """Populate one skill dropdown the first time the user opens it."""
+        skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
+        if not skill_combo or getattr(skill_combo, "_skill_options_populated", False):
+            self.update_skill_name(index)
+            return
+
+        if self.skill_options is None:
+            self.skill_options = get_skill_options(self.loader)
+
+        self._syncing_skill_widgets = True
+        try:
+            skill_combo.blockSignals(True)
+            for skill_option_id, skill_label in self.skill_options:
+                skill_combo.addItem(skill_label, skill_option_id)
+            skill_combo._skill_options_populated = True
+        finally:
+            skill_combo.blockSignals(False)
+            self._syncing_skill_widgets = False
+
+        self.update_skill_name(index)
+
     def update_all_skill_names(self):
         """Update skill names for all skill widgets"""
         for i in range(len(self.skill_widgets)):
@@ -1788,6 +1848,7 @@ class SkillEditor(QWidget):
     def open_skill_dropdown(self, index: int):
         skill_combo = self.skill_widgets[index].findChild(QComboBox, f"skill_combo_{index}")
         if skill_combo:
+            self.populate_skill_combo(index)
             skill_combo.setFocus(Qt.FocusReason.MouseFocusReason)
             skill_combo.showPopup()
 
@@ -4992,6 +5053,26 @@ class DigimonEditor(QMainWindow):
         self.localized_text_widgets: Dict[str, Dict[str, QWidget]] = {}
         self.setup_ui()
         self.connect_change_signals()
+        self._initial_digimon_list_loaded = False
+        self._show_startup_loading_state()
+        QTimer.singleShot(100, self._load_initial_digimon_list)
+
+    def _show_startup_loading_state(self):
+        """Show the shell immediately while the initial database list is queued."""
+        self.digimon_data = {}
+        self.digimon_entries = []
+        self.all_digimon_names = []
+        if hasattr(self, "digimon_list"):
+            self.digimon_list.blockSignals(True)
+            self.digimon_list.clear()
+            self.digimon_list.addItem("Loading Digimon list...")
+            self.digimon_list.blockSignals(False)
+
+    def _load_initial_digimon_list(self):
+        """Populate the database after the first window paint."""
+        if getattr(self, "_initial_digimon_list_loaded", False):
+            return
+        self._initial_digimon_list_loaded = True
         self.load_digimon_list()
 
     def mark_as_modified(self):
@@ -7159,7 +7240,7 @@ class DigimonEditor(QMainWindow):
         related_layout.addWidget(self.related_import_status_label, 4, 0, 1, 3)
 
         layout.addWidget(related_group)
-        self.populate_related_source_combo()
+        self.related_source_combo.addItem(RELATED_SOURCE_PROMPT, None)
 
         # Model Settings Group (from model_setting.mbe)
         settings_group = QGroupBox("Model Settings (model_setting.mbe)")
@@ -8321,8 +8402,10 @@ class DigimonEditor(QMainWindow):
 
         if hasattr(self.loader, 'imported_digimon'):
             for imported_digimon in self.loader.imported_digimon:
-                if imported_digimon.id == target_id and imported_digimon.evolution_conditions:
-                    return normalize_evolution_conditions(imported_digimon.evolution_conditions)
+                if imported_digimon.id == target_id:
+                    imported_digimon = self._ensure_imported_digimon_loaded(imported_digimon)
+                    if imported_digimon.evolution_conditions:
+                        return normalize_evolution_conditions(imported_digimon.evolution_conditions)
 
         def scan_condition_file(condition_file: Path) -> Optional[dict]:
             if not condition_file.exists():
@@ -10484,6 +10567,8 @@ class DigimonEditor(QMainWindow):
 
     def load_digimon_list(self):
         """Load list of available Digimon by selected source."""
+        if hasattr(self, "_initial_digimon_list_loaded"):
+            self._initial_digimon_list_loaded = True
         self._invalidate_evolution_picker_cache()
         source_mode = self.get_source_mode()
         source_requests = []
@@ -10610,6 +10695,7 @@ class DigimonEditor(QMainWindow):
                     for digimon in self.loader.imported_digimon:
                         if digimon.chr_id == chr_id:
                             self.current_digimon_from_dlc = False
+                            digimon = self._ensure_imported_digimon_loaded(digimon)
                             self.load_digimon_data(digimon)
                             return
 
@@ -10632,7 +10718,7 @@ class DigimonEditor(QMainWindow):
         if entry.get("imported") and hasattr(self.loader, "imported_digimon"):
             for digimon in self.loader.imported_digimon:
                 if digimon.chr_id == chr_id:
-                    return digimon
+                    return self._ensure_imported_digimon_loaded(digimon)
         return self.loader.get_digimon_by_chr_id(chr_id)
 
     def _active_mod_name_map(self, dsts_loader_root: Path) -> Dict[str, str]:
@@ -11759,7 +11845,7 @@ class DigimonEditor(QMainWindow):
 
             for status_file in status_files:
                 try:
-                    digimon_list = self._parse_digimon_status_csv(status_file, mod_root)
+                    digimon_list = self._parse_digimon_status_csv(status_file, mod_root, load_related=False)
                 except Exception as exc:
                     debug_log(f"Could not auto-load mod Digimon from {status_file}: {exc}")
                     continue
@@ -11784,6 +11870,45 @@ class DigimonEditor(QMainWindow):
 
         self.loader.imported_digimon.append(digimon)
         return True
+
+    def _ensure_imported_digimon_loaded(self, digimon: DigimonData) -> DigimonData:
+        """Load full related dsts-loader data for a lazily discovered mod entry."""
+        if not getattr(digimon, "imported_lazy_related_pending", False):
+            return digimon
+
+        root_text = getattr(digimon, "imported_dsts_loader_root", "")
+        if not root_text:
+            return digimon
+        root = Path(root_text)
+
+        status_files = []
+        lazy_status_file = getattr(digimon, "imported_lazy_status_file", "")
+        if lazy_status_file:
+            status_files.append(Path(lazy_status_file))
+        status_files.extend(path for path in self._dsts_loader_status_files(root) if path not in status_files)
+
+        for status_file in status_files:
+            try:
+                full_digimon_list = self._parse_digimon_status_csv(status_file, root, load_related=True)
+            except Exception as exc:
+                debug_log(f"Could not lazy-load imported Digimon from {status_file}: {exc}")
+                continue
+
+            for full_digimon in full_digimon_list:
+                if full_digimon.chr_id == digimon.chr_id or full_digimon.id == digimon.id:
+                    full_digimon.imported_source_label = getattr(
+                        digimon,
+                        "imported_source_label",
+                        self._mod_source_label(root),
+                    )
+                    if hasattr(self.loader, "imported_digimon"):
+                        for index, cached in enumerate(self.loader.imported_digimon):
+                            if cached is digimon or cached.chr_id == digimon.chr_id or cached.id == digimon.id:
+                                self.loader.imported_digimon[index] = full_digimon
+                                break
+                    return full_digimon
+
+        return digimon
 
     def _find_imported_digimon(self, digimon: DigimonData, original_chr_id: str = "") -> Optional[DigimonData]:
         """Find the imported record matching the active Digimon, even if chr_id changed in the form."""
@@ -11945,7 +12070,7 @@ class DigimonEditor(QMainWindow):
             import traceback
             traceback.print_exc()
 
-    def _parse_digimon_status_csv(self, csv_file: Path, base_path: Path):
+    def _parse_digimon_status_csv(self, csv_file: Path, base_path: Path, load_related: bool = True):
         """Parse a digimon_status_data.ap.csv and related files"""
         import csv
         from copy import deepcopy
@@ -12091,6 +12216,16 @@ class DigimonEditor(QMainWindow):
                 digimon.name = self._load_name_from_csv(name_file, digimon.char_key)
                 if not digimon.name:
                     digimon.name = digimon.char_key or digimon.chr_id or f"Digimon {digimon.id}"
+
+                if not load_related:
+                    digimon.imported_lazy_status_file = str(csv_file)
+                    digimon.imported_lazy_related_pending = True
+                    digimon.model_locator_data = {}
+                    digimon.model_locator_motion_data = []
+                    digimon.field_move_animation_data = []
+                    digimon.lod_model_data = {}
+                    digimon_list.append(digimon)
+                    continue
 
                 # Load profile from digimon_profile
                 profile_file = base_path / "patch_text01" / "text" / "digimon_profile.mbe"
@@ -12798,7 +12933,9 @@ class DigimonEditor(QMainWindow):
                 # Clear profile cache to reload updated profile text
                 self.loader._digimon_profiles_cache = None
                 # Clear char_names cache if it exists to force fresh name lookup
-                if hasattr(self.loader, '_char_names_cache'):
+                if hasattr(self.loader, '_invalidate_char_name_cache'):
+                    self.loader._invalidate_char_name_cache()
+                elif hasattr(self.loader, '_char_names_cache'):
                     self.loader._char_names_cache = None
                 # Refresh the digimon list to show any changes
                 self.load_digimon_list()
@@ -12823,7 +12960,9 @@ class DigimonEditor(QMainWindow):
                 # Clear profile cache to reload updated profile text
                 self.loader._digimon_profiles_cache = None
                 # Clear char_names cache if it exists to force fresh name lookup
-                if hasattr(self.loader, '_char_names_cache'):
+                if hasattr(self.loader, '_invalidate_char_name_cache'):
+                    self.loader._invalidate_char_name_cache()
+                elif hasattr(self.loader, '_char_names_cache'):
                     self.loader._char_names_cache = None
                 # Refresh the digimon list to show any changes
                 self.load_digimon_list()
@@ -13252,7 +13391,9 @@ class DigimonEditor(QMainWindow):
             if hasattr(self.loader, '_invalidate_digimon_status_cache'):
                 self.loader._invalidate_digimon_status_cache()
             self.loader._digimon_profiles_cache = None
-            if hasattr(self.loader, '_char_names_cache'):
+            if hasattr(self.loader, '_invalidate_char_name_cache'):
+                self.loader._invalidate_char_name_cache()
+            elif hasattr(self.loader, '_char_names_cache'):
                 self.loader._char_names_cache = None
 
             # Refresh list
