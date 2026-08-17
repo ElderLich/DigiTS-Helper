@@ -159,8 +159,25 @@ def get_game_icon(stem: Optional[str]) -> QIcon:
     return icon
 
 
-def configure_game_icon_combo(combo: QComboBox) -> None:
+def apply_modern_combo_palette(combo: QComboBox) -> None:
+    """Keep dropdown popups readable on the dark theme."""
     combo.setIconSize(GAME_ICON_SIZE)
+    view = combo.view()
+    if not view:
+        return
+    view.setIconSize(GAME_ICON_SIZE)
+    palette = view.palette()
+    palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
+    palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
+    palette.setColor(QPalette.ColorRole.Window, QColor("#06181d"))
+    palette.setColor(QPalette.ColorRole.Highlight, QColor("#d8872b"))
+    palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#ffffff"))
+    palette.setColor(QPalette.ColorRole.PlaceholderText, QColor("#8ea7a9"))
+    view.setPalette(palette)
+
+
+def configure_game_icon_combo(combo: QComboBox) -> None:
+    apply_modern_combo_palette(combo)
 
 
 def add_game_icon_combo_item(combo: QComboBox, text: str, user_data, icon_stem: Optional[str]) -> None:
@@ -212,11 +229,252 @@ def create_game_icon_label(
 
     text_label = QLabel(text)
     if bold:
-        text_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        text_label.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
     text_label.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft)
     layout.addWidget(text_label)
     layout.addStretch()
     return wrapper
+
+
+def modern_dialog_stylesheet() -> str:
+    """Shared dark translucent styling for editor dialogs and popups."""
+    return """
+        QDialog, QMessageBox, QWizard {
+            background-color: #041316;
+            color: #e8f2f1;
+        }
+        QLabel {
+            color: #dce9ea;
+            font-size: 10.5pt;
+        }
+        QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QComboBox {
+            background-color: #06181d;
+            color: #e8f2f1;
+            border: 1px solid rgba(143, 211, 207, 145);
+            border-radius: 2px;
+            padding: 8px;
+            font-size: 10.5pt;
+        }
+        QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus,
+        QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {
+            border-color: rgba(244, 235, 213, 230);
+            background-color: #0a2529;
+        }
+        QComboBox {
+            padding-right: 42px;
+        }
+        QComboBox::drop-down {
+            subcontrol-origin: padding;
+            subcontrol-position: top right;
+            width: 32px;
+            border-left: 1px solid rgba(143, 211, 207, 120);
+            background-color: #08262a;
+        }
+        QComboBox::down-arrow {
+            image: none;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 7px solid #d8872b;
+            margin-right: 10px;
+        }
+        QComboBox QAbstractItemView, QListWidget {
+            background-color: #06181d;
+            color: #e8f2f1;
+            border: 1px solid rgba(143, 211, 207, 140);
+            outline: 0;
+            font-size: 10.5pt;
+        }
+        QComboBox QAbstractItemView::item, QListWidget::item {
+            color: #e8f2f1;
+            min-height: 34px;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(143, 211, 207, 35);
+        }
+        QComboBox QAbstractItemView::item:hover, QListWidget::item:hover {
+            background-color: rgba(35, 78, 77, 210);
+            color: #ffffff;
+        }
+        QComboBox QAbstractItemView::item:selected, QListWidget::item:selected {
+            background-color: #d8872b;
+            color: #ffffff;
+        }
+        QListWidget::item:disabled {
+            color: #90a4a6;
+            background-color: rgba(58, 69, 72, 190);
+        }
+        QPushButton {
+            background-color: #071b20;
+            color: #f0f6f4;
+            border: 1px solid rgba(143, 211, 207, 130);
+            border-left: 4px solid #d8872b;
+            border-radius: 2px;
+            padding: 9px 14px;
+            font-weight: 700;
+            font-size: 10.5pt;
+        }
+        QPushButton:hover {
+            background-color: rgba(35, 78, 77, 230);
+            border-color: rgba(235, 229, 210, 200);
+        }
+        QPushButton:disabled {
+            color: rgba(230, 238, 238, 90);
+            background-color: rgba(12, 22, 27, 150);
+            border-color: rgba(111, 137, 137, 65);
+        }
+        QDialogButtonBox QPushButton {
+            min-width: 92px;
+        }
+        QScrollBar:vertical {
+            background: rgba(4, 16, 20, 180);
+            width: 12px;
+            margin: 0;
+        }
+        QScrollBar::handle:vertical {
+            background: rgba(186, 224, 216, 150);
+            min-height: 40px;
+            border-radius: 1px;
+        }
+        QScrollBar::handle:vertical:hover {
+            background: rgba(216, 135, 43, 220);
+        }
+        QScrollBar::add-line:vertical,
+        QScrollBar::sub-line:vertical {
+            height: 0px;
+            background: transparent;
+            border: none;
+        }
+    """
+
+
+MODERN_INLINE_STYLE_REPLACEMENTS = (
+    ("background-color: white;", "background-color: rgba(3, 18, 23, 172);"),
+    ("background-color: #ffffff;", "background-color: rgba(3, 18, 23, 172);"),
+    ("background: white;", "background: rgba(3, 18, 23, 172);"),
+    ("background-color: #f8f9fa;", "background-color: rgba(5, 24, 29, 180);"),
+    ("background: #f8f9fa;", "background: rgba(5, 24, 29, 180);"),
+    ("background: #f0f0f0;", "background: rgba(5, 24, 29, 180);"),
+    ("background-color: #e7f5ff;", "background-color: rgba(9, 41, 48, 180);"),
+    ("background-color: #eef4ff;", "background-color: rgba(9, 41, 48, 180);"),
+    ("background-color: #e9ecef;", "background-color: rgba(8, 24, 31, 190);"),
+    ("background: #f1f3f5;", "background: rgba(5, 24, 29, 180);"),
+    ("background-color: #fff3cd;", "background-color: rgba(95, 62, 18, 170);"),
+    ("background-color: #667eea;", "background-color: #071b20; border-left: 4px solid #d8872b;"),
+    ("background-color: #5568d3;", "background-color: rgba(35, 78, 77, 230);"),
+    ("background-color: #10b981;", "background-color: #071b20; border-left: 4px solid #20d6a3;"),
+    ("background-color: #059669;", "background-color: rgba(20, 70, 56, 230);"),
+    ("background-color: #2c9558;", "background-color: #071b20; border-left: 4px solid #20d6a3;"),
+    ("background-color: #247a49;", "background-color: rgba(20, 70, 56, 230);"),
+    ("background-color: #d9a400;", "background-color: #071b20; border-left: 4px solid #d8872b;"),
+    ("background-color: #c29100;", "background-color: rgba(80, 61, 17, 230);"),
+    ("stop:0 #667eea, stop:1 #764ba2", "stop:0 rgba(4, 35, 39, 230), stop:1 rgba(216, 135, 43, 210)"),
+    ("stop:0 #f8f9fa, stop:1 #e9ecef", "stop:0 rgba(4, 35, 39, 230), stop:1 rgba(216, 135, 43, 210)"),
+    ("color: #333333;", "color: #e8f2f1;"),
+    ("color: #495057;", "color: #dce9ea;"),
+    ("color: #667eea;", "color: #88e9e0;"),
+    ("color: #4c63d9;", "color: #88e9e0;"),
+    ("color: #4aa3c7;", "color: #88e9e0;"),
+    ("color: #2c9558;", "color: #20d6a3;"),
+    ("color: #087f5b;", "color: #20d6a3;"),
+    ("color: #c967cc;", "color: #d8872b;"),
+    ("color: #555;", "color: #bfd1d2;"),
+    ("color: #666;", "color: #a9c1c2;"),
+    ("color: #6c757d;", "color: #9fb7b8;"),
+    ("color: #adb5bd;", "color: rgba(230, 238, 238, 90);"),
+    ("border: 2px solid #dee2e6;", "border: 1px solid rgba(143, 211, 207, 105);"),
+    ("border-color: #dee2e6;", "border-color: rgba(143, 211, 207, 105);"),
+    ("border-radius: 8px;", "border-radius: 2px;"),
+    ("border-radius: 6px;", "border-radius: 2px;"),
+)
+
+
+def modernize_inline_light_styles(root: QWidget) -> None:
+    """Translate old inline light-panel styles into the modern dark surface."""
+    for widget in [root, *root.findChildren(QWidget)]:
+        style = widget.styleSheet()
+        if not style:
+            continue
+        updated = style
+        for old, new in MODERN_INLINE_STYLE_REPLACEMENTS:
+            updated = updated.replace(old, new)
+        if updated != style:
+            widget.setStyleSheet(updated)
+
+
+def apply_modern_dialog_theme(dialog: QDialog) -> None:
+    dialog.setStyleSheet(modern_dialog_stylesheet())
+    QTimer.singleShot(0, lambda: modernize_inline_light_styles(dialog))
+
+
+def modern_groupbox_style(accent: str = "#88e9e0", title_color: Optional[str] = None) -> str:
+    title = title_color or accent
+    return f"""
+        QGroupBox {{
+            color: #e8f2f1;
+            font-weight: 700;
+            border: 1px solid {accent};
+            border-radius: 2px;
+            margin-top: 18px;
+            padding: 18px 10px 10px 10px;
+            background-color: rgba(3, 18, 23, 185);
+            font-size: 11pt;
+        }}
+        QGroupBox::title {{
+            color: {title};
+            subcontrol-origin: margin;
+            left: 14px;
+            padding: 0 9px;
+            background-color: rgba(3, 18, 23, 235);
+        }}
+    """
+
+
+def modern_action_button_style(accent: str = "#d8872b", checked_accent: str = "#20d6a3") -> str:
+    return f"""
+        QPushButton {{
+            background-color: #071b20;
+            color: #f0f6f4;
+            border: 1px solid rgba(143, 211, 207, 130);
+            border-left: 4px solid {accent};
+            border-radius: 2px;
+            padding: 9px 14px;
+            font-weight: 700;
+            font-size: 10pt;
+        }}
+        QPushButton:hover {{
+            background-color: rgba(35, 78, 77, 230);
+            border-color: rgba(235, 229, 210, 200);
+        }}
+        QPushButton:pressed {{
+            background-color: rgba(216, 135, 43, 230);
+            color: #ffffff;
+        }}
+        QPushButton:checked {{
+            background-color: rgba(13, 66, 53, 230);
+            border-left-color: {checked_accent};
+            color: #ffffff;
+        }}
+        QPushButton:disabled {{
+            color: rgba(230, 238, 238, 90);
+            background-color: rgba(12, 22, 27, 150);
+            border-color: rgba(111, 137, 137, 65);
+            border-left-color: rgba(111, 137, 137, 80);
+        }}
+    """
+
+
+def prepare_modern_scroll_surface(scroll: QScrollArea, content: QWidget, object_name: str) -> None:
+    scroll.setFrameShape(QFrame.Shape.NoFrame)
+    scroll.setStyleSheet("QScrollArea { background: transparent; border: none; }")
+    scroll.viewport().setStyleSheet("background: transparent;")
+    content.setObjectName(object_name)
+    content.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+    content.setStyleSheet(f"""
+        QWidget#{object_name} {{
+            background-color: rgba(3, 18, 23, 150);
+        }}
+    """)
 
 
 def get_resistance_icon_stem(resistance_key: str) -> Optional[str]:
@@ -1083,6 +1341,7 @@ def choose_numeric_slot(
     dialog = QDialog(parent)
     dialog.setWindowTitle(title)
     dialog.setMinimumSize(680, 680)
+    apply_modern_dialog_theme(dialog)
 
     layout = QVBoxLayout(dialog)
 
@@ -1098,7 +1357,8 @@ def choose_numeric_slot(
     layout.addWidget(filter_edit)
 
     slot_list = QListWidget()
-    slot_list.setAlternatingRowColors(True)
+    slot_list.setAlternatingRowColors(False)
+    slot_list.setUniformItemSizes(True)
 
     selected_item = None
     first_free_item = None
@@ -1115,13 +1375,13 @@ def choose_numeric_slot(
         item = QListWidgetItem(label)
         item.setData(Qt.ItemDataRole.UserRole, slot)
         if occupied_by:
-            item.setBackground(QColor("#ffd6d6"))
-            item.setForeground(QColor("#7a1f1f"))
+            item.setBackground(QColor("#263539"))
+            item.setForeground(QColor("#91a4a6"))
             item.setToolTip("\n".join(occupied_by[:20]))
             item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
         else:
-            item.setBackground(QColor("#eeeeee"))
-            item.setForeground(QColor("#4b5563"))
+            item.setBackground(QColor("#092827"))
+            item.setForeground(QColor("#e8f2f1"))
             item.setToolTip(f"{display_slot} is Free")
             if first_free_item is None and slot >= suggested_min:
                 first_free_item = item
@@ -1139,6 +1399,7 @@ def choose_numeric_slot(
 
     button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
     first_free_button = QPushButton("Use First Free Custom")
+    first_free_button.setObjectName("firstFreeButton")
     button_box.addButton(first_free_button, QDialogButtonBox.ButtonRole.ActionRole)
 
     ok_button = button_box.button(QDialogButtonBox.StandardButton.Ok)
@@ -1199,7 +1460,7 @@ def choose_digimon_id_slot(
         DIGIMON_ID_SLOT_SUGGESTED_MIN,
         DIGIMON_ID_SLOT_MIN,
         lambda slot: str(slot),
-        "Rows are sorted by Digimon ID. Gray rows are Free; red rows are already used by Base, DLC, imported data, or the active mod.",
+        "Rows are sorted by Digimon ID. Bright rows are Free; dim rows are already used by Base, DLC, imported data, or the active mod.",
         "No free custom Digimon ID was found.",
     )
 
@@ -1221,7 +1482,7 @@ def choose_chr_id_slot(
         CHR_ID_SLOT_SUGGESTED_MIN,
         CHR_ID_SLOT_MIN,
         format_chr_id_slot,
-        "Rows are sorted by Chr ID. Gray rows are Free; red rows are already used by Base, DLC, imported data, or the active mod.",
+        "Rows are sorted by Chr ID. Bright rows are Free; dim rows are already used by Base, DLC, imported data, or the active mod.",
         "No free custom Chr ID was found.",
     )
     return format_chr_id_slot(chosen_slot) if chosen_slot is not None else None
@@ -1343,18 +1604,20 @@ def choose_field_guide_id(
     dialog = QDialog(parent)
     dialog.setWindowTitle("Select Field Guide ID")
     dialog.setMinimumSize(620, 640)
+    apply_modern_dialog_theme(dialog)
 
     layout = QVBoxLayout(dialog)
 
     info = QLabel(
         f"Custom Digimon field guide IDs use {FIELD_GUIDE_CUSTOM_MIN}-{FIELD_GUIDE_CUSTOM_MAX}. "
-        "Light red rows are already occupied in Base, DLC, or imported mod-loader data."
+        "Dim rows are already occupied in Base, DLC, or imported mod-loader data."
     )
     info.setWordWrap(True)
     layout.addWidget(info)
 
     guide_list = QListWidget()
-    guide_list.setAlternatingRowColors(True)
+    guide_list.setAlternatingRowColors(False)
+    guide_list.setUniformItemSizes(True)
 
     selected_item = None
     first_free_item = None
@@ -1370,11 +1633,13 @@ def choose_field_guide_id(
         item = QListWidgetItem(label)
         item.setData(Qt.ItemDataRole.UserRole, field_guide_id)
         if occupied_by:
-            item.setBackground(QColor("#ffd6d6"))
-            item.setForeground(QColor("#7a1f1f"))
+            item.setBackground(QColor("#263539"))
+            item.setForeground(QColor("#91a4a6"))
             item.setToolTip("\n".join(occupied_by[:20]))
             item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
         else:
+            item.setBackground(QColor("#092827"))
+            item.setForeground(QColor("#e8f2f1"))
             item.setToolTip(f"Field Guide ID {field_guide_id} is free")
             if first_free_item is None:
                 first_free_item = item
@@ -1392,6 +1657,7 @@ def choose_field_guide_id(
 
     button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
     first_free_button = QPushButton("Use First Free")
+    first_free_button.setObjectName("firstFreeButton")
     button_box.addButton(first_free_button, QDialogButtonBox.ButtonRole.ActionRole)
 
     ok_button = button_box.button(QDialogButtonBox.StandardButton.Ok)
@@ -1435,15 +1701,21 @@ def create_slot_picker_button(tooltip: str) -> QPushButton:
     button.setMinimumWidth(130)
     button.setStyleSheet("""
         QPushButton {
-            color: white;
-            background-color: #3f7de8;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 12px;
-            font-weight: bold;
+            color: #f0f6f4;
+            background-color: #071b20;
+            border: 1px solid rgba(143, 211, 207, 130);
+            border-left: 4px solid #d8872b;
+            border-radius: 2px;
+            padding: 8px 14px;
+            font-weight: 700;
+            text-align: center;
         }
         QPushButton:hover {
-            background-color: #316ad0;
+            background-color: rgba(35, 78, 77, 230);
+            border-color: rgba(235, 229, 210, 200);
+        }
+        QPushButton:pressed {
+            background-color: #d8872b;
         }
     """)
     return button
@@ -1525,24 +1797,28 @@ def configure_searchable_combo(combo: QComboBox):
     combo.view().setMinimumWidth(520)
     combo.setStyleSheet("""
         QComboBox {
-            color: #333333;
-            background-color: white;
-            border: 2px solid #dee2e6;
-            border-radius: 6px;
+            color: #e8f2f1;
+            background-color: #06181d;
+            border: 1px solid rgba(143, 211, 207, 145);
+            border-radius: 2px;
             padding: 7px 58px 7px 8px;
-            font-size: 10pt;
+            font-size: 10.5pt;
         }
         QComboBox:hover {
-            border-color: #cbd3da;
+            border-color: rgba(235, 229, 210, 190);
+        }
+        QComboBox:focus {
+            border-color: rgba(244, 235, 213, 230);
+            background-color: #0a2529;
         }
         QComboBox::drop-down {
             subcontrol-origin: padding;
             subcontrol-position: top right;
             width: 30px;
-            border-left: 1px solid #dee2e6;
-            background-color: #f8f9fa;
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
+            border-left: 1px solid rgba(143, 211, 207, 120);
+            background-color: #08262a;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
         }
         QComboBox::down-arrow {
             image: none;
@@ -1550,21 +1826,43 @@ def configure_searchable_combo(combo: QComboBox):
             height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-top: 6px solid #667eea;
+            border-top: 7px solid #d8872b;
             margin-right: 8px;
         }
         QComboBox::down-arrow:on {
-            border-top-color: #495057;
+            border-top-color: #ffffff;
         }
         QComboBox QAbstractItemView {
-            color: #333333;
-            background-color: white;
-            selection-background-color: #667eea;
+            color: #e8f2f1;
+            background-color: #06181d;
+            selection-background-color: #d8872b;
             selection-color: white;
+            border: 1px solid rgba(143, 211, 207, 140);
+            outline: 0;
+        }
+        QComboBox QAbstractItemView::item {
+            color: #e8f2f1;
+            min-height: 34px;
+            padding: 8px;
+        }
+        QComboBox QAbstractItemView::item:hover {
+            background-color: rgba(35, 78, 77, 210);
+            color: #ffffff;
         }
     """)
+    apply_modern_combo_palette(combo)
     if combo.lineEdit():
         combo.lineEdit().setClearButtonEnabled(True)
+        combo.lineEdit().setStyleSheet("""
+            QLineEdit {
+                background: transparent;
+                color: #e8f2f1;
+                border: none;
+                padding: 0 4px;
+                selection-background-color: #d8872b;
+                selection-color: #ffffff;
+            }
+        """)
     completer = combo.completer()
     if completer:
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
@@ -1583,6 +1881,7 @@ class BuffSetCreatorDialog(QDialog):
         target_label: str,
     ):
         super().__init__(parent)
+        apply_modern_dialog_theme(self)
         self.effect_combos: List[QComboBox] = []
         self.rate_spins: List[QSpinBox] = []
         self.change_spins: List[QSpinBox] = []
@@ -1743,6 +2042,7 @@ def choose_skill_id(parent: QWidget, loader: Optional[MBELoader], title: str, cu
     dialog = QDialog(parent)
     dialog.setWindowTitle(title)
     dialog.setMinimumWidth(560)
+    apply_modern_dialog_theme(dialog)
 
     layout = QVBoxLayout(dialog)
     label = QLabel("Type a skill name or ID, then choose it from the dropdown.")
@@ -1803,14 +2103,16 @@ class SkillEditor(QWidget):
         layout.setSpacing(8)
 
         hint = QLabel("Choose a skill from each slot dropdown, or type a skill ID directly.")
-        hint.setStyleSheet("color: #666; font-size: 9pt; padding: 4px;")
+        hint.setStyleSheet("color: #a9c1c2; font-size: 10pt; padding: 4px;")
         layout.addWidget(hint)
 
         # Skills container
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setStyleSheet("QScrollArea { background: transparent; border: none; }")
         scroll_widget = QWidget()
+        scroll_widget.setStyleSheet("background: transparent;")
         scroll_layout = QVBoxLayout(scroll_widget)
         scroll_layout.setContentsMargins(4, 4, 4, 4)
         scroll_layout.setSpacing(8)
@@ -1838,15 +2140,18 @@ class SkillEditor(QWidget):
         """Create a single skill input widget"""
         widget = QFrame()
         widget.setObjectName(f"skill_slot_{index}")
-        accent = "#667eea" if self.skill_type == "signature" else "#10b981"
-        soft_bg = "#f8faff" if self.skill_type == "signature" else "#f6fffb"
-        border_color = "#ccd5ff" if self.skill_type == "signature" else "#b7f4d5"
+        accent = "#7aa2ff" if self.skill_type == "signature" else "#20d6a3"
+        hover_bg = "rgba(31, 68, 82, 220)" if self.skill_type == "signature" else "rgba(20, 70, 56, 220)"
+        border_color = "rgba(143, 211, 207, 95)"
         widget.setStyleSheet(f"""
             QFrame#{widget.objectName()} {{
-                background-color: #ffffff;
+                background-color: rgba(5, 22, 28, 205);
                 border: 1px solid {border_color};
                 border-left: 4px solid {accent};
-                border-radius: 8px;
+                border-radius: 2px;
+            }}
+            QFrame#{widget.objectName()}:hover {{
+                background-color: {hover_bg};
             }}
         """)
         layout = QHBoxLayout()
@@ -1859,10 +2164,10 @@ class SkillEditor(QWidget):
         slot_title.setStyleSheet(f"""
             QLabel {{
                 font-weight: bold;
-                color: {accent};
-                background: {soft_bg};
-                border: 1px solid {border_color};
-                border-radius: 7px;
+                color: #ffffff;
+                background: rgba(8, 24, 31, 230);
+                border: 1px solid {accent};
+                border-radius: 2px;
                 padding: 6px 8px;
             }}
         """)
@@ -1891,15 +2196,17 @@ class SkillEditor(QWidget):
         open_dropdown_button.setToolTip("Open the skill dropdown for this slot")
         open_dropdown_button.setStyleSheet("""
             QPushButton {
-                color: white;
-                background-color: #667eea;
-                border: none;
-                border-radius: 6px;
+                color: #f0f6f4;
+                background-color: #071b20;
+                border: 1px solid rgba(143, 211, 207, 130);
+                border-left: 4px solid #d8872b;
+                border-radius: 2px;
                 padding: 8px 10px;
-                font-weight: bold;
+                font-weight: 700;
             }
             QPushButton:hover {
-                background-color: #5568d3;
+                background-color: rgba(35, 78, 77, 230);
+                border-color: rgba(235, 229, 210, 200);
             }
         """)
         open_dropdown_button.clicked.connect(lambda _checked=False, idx=index: self.open_skill_dropdown(idx))
@@ -1923,17 +2230,19 @@ class SkillEditor(QWidget):
             QPushButton {
                 color: white;
                 background-color: #e34556;
-                border: none;
-                border-radius: 6px;
+                border: 1px solid rgba(255, 135, 150, 120);
+                border-left: 4px solid #ff5f72;
+                border-radius: 2px;
                 padding: 8px 10px;
-                font-weight: bold;
+                font-weight: 700;
             }
             QPushButton:hover {
                 background-color: #c92f40;
             }
             QPushButton:disabled {
-                color: #9aa1aa;
-                background-color: #edf0f4;
+                color: rgba(230, 238, 238, 90);
+                background-color: rgba(12, 22, 27, 150);
+                border-color: rgba(111, 137, 137, 65);
             }
         """)
         remove_button.clicked.connect(lambda _checked=False, idx=index: self.clear_skill_slot(idx))
@@ -2116,14 +2425,18 @@ class DigimonCreationWizard(QWizard):
         self.button(QWizard.WizardButton.FinishButton).clicked.connect(self.finish_wizard)
 
         # Apply styling
-        self.setStyleSheet("""
+        self.setStyleSheet(modern_dialog_stylesheet() + """
             QWizard {
-                background-color: #f5f7fa;
+                background-color: #041316;
             }
             QWizardPage {
-                background-color: white;
-                border-radius: 8px;
+                background-color: rgba(3, 18, 23, 220);
+                border: 1px solid rgba(143, 211, 207, 105);
+                border-radius: 2px;
                 padding: 20px;
+            }
+            QWizard QLabel {
+                color: #dce9ea;
             }
         """)
 
@@ -3676,6 +3989,7 @@ class SkillsPage(QWizardPage):
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Select {skill_type.title()} Skill")
         dialog.setMinimumSize(500, 400)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
@@ -3908,6 +4222,7 @@ class EvolutionPage(QWizardPage):
         dialog = QDialog(self)
         dialog.setWindowTitle("Requirements to Obtain This Digimon")
         dialog.setMinimumWidth(500)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
@@ -4151,6 +4466,7 @@ class EvolutionPage(QWizardPage):
             dialog = QDialog(self)
             dialog.setWindowTitle("Select Evolution Target")
             dialog.setMinimumSize(500, 450)
+            apply_modern_dialog_theme(dialog)
 
             layout = QVBoxLayout(dialog)
 
@@ -4265,6 +4581,7 @@ class EvolutionPage(QWizardPage):
             dialog = QDialog(self)
             dialog.setWindowTitle("Select Pre-Evolution Source")
             dialog.setMinimumSize(550, 550)
+            apply_modern_dialog_theme(dialog)
 
             layout = QVBoxLayout(dialog)
 
@@ -4690,6 +5007,7 @@ class EvolutionPage(QWizardPage):
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Evolution Requirements → {target_name}")
         dialog.setMinimumWidth(500)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
@@ -5149,13 +5467,23 @@ class TraitsEditor(QWidget):
 
         # Title
         title = QLabel("Traits")
-        title.setFont(QFont("Arial", 12, QFont.Weight.Bold))
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
+        title.setStyleSheet("color: #f0f6f4; padding: 6px 0;")
         layout.addWidget(title)
 
         # Traits container
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setStyleSheet("QScrollArea { background: transparent; border: none; }")
         scroll_widget = QWidget()
+        scroll_widget.setStyleSheet("""
+            QWidget {
+                background-color: rgba(3, 18, 23, 172);
+                border: 1px solid rgba(143, 211, 207, 90);
+                border-radius: 2px;
+            }
+        """)
         scroll_layout = QGridLayout(scroll_widget)
         scroll_layout.setContentsMargins(8, 8, 8, 8)
         scroll_layout.setHorizontalSpacing(12)
@@ -5193,16 +5521,31 @@ class TraitsEditor(QWidget):
                 trait_name = clean_name if clean_name else f"Trait {i + 1}"
             checkbox = QCheckBox(trait_name)
             checkbox.setObjectName(f"trait_{i}")
-            checkbox.setMinimumHeight(30)
-            checkbox.setFont(QFont("Segoe UI", 10))
+            checkbox.setMinimumHeight(42)
+            checkbox.setFont(QFont("Segoe UI", 10, QFont.Weight.DemiBold))
             checkbox.setStyleSheet("""
                 QCheckBox {
-                    padding: 5px 8px;
-                    spacing: 8px;
+                    color: #dce9ea;
+                    padding: 8px 10px;
+                    spacing: 10px;
+                    background-color: rgba(5, 22, 28, 185);
+                    border: 1px solid rgba(143, 211, 207, 65);
+                    border-left: 4px solid rgba(143, 211, 207, 105);
+                    border-radius: 2px;
+                }
+                QCheckBox:hover {
+                    background-color: rgba(35, 78, 77, 205);
+                    border-color: rgba(235, 229, 210, 160);
                 }
                 QCheckBox::indicator {
                     width: 18px;
                     height: 18px;
+                    border: 1px solid rgba(190, 236, 231, 150);
+                    background-color: #06181d;
+                }
+                QCheckBox::indicator:checked {
+                    background-color: #d8872b;
+                    border-color: rgba(255, 239, 207, 220);
                 }
             """)
 
@@ -5349,6 +5692,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle("Configure Paths")
         dialog.setMinimumWidth(760)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
         info = QLabel(
@@ -5722,7 +6066,7 @@ class DigimonEditor(QMainWindow):
             f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}"
         )
         self.profile_text_stats_label.setStyleSheet(
-            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+            "color: #ff8c98; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #a9c1c2; font-size: 9pt;"
         )
 
     def setup_ui(self):
@@ -5959,6 +6303,7 @@ class DigimonEditor(QMainWindow):
             QWidget {
                 font-family: 'Segoe UI Variable Text', 'Segoe UI', Arial, sans-serif;
                 color: #dce9ea;
+                font-size: 10.5pt;
                 selection-background-color: #d8872b;
                 selection-color: #ffffff;
             }
@@ -5992,6 +6337,7 @@ class DigimonEditor(QMainWindow):
             }
             QLabel {
                 color: #dce9ea;
+                font-size: 10.5pt;
             }
             QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QComboBox {
                 background-color: rgba(5, 21, 26, 215);
@@ -6038,6 +6384,19 @@ class DigimonEditor(QMainWindow):
                 selection-background-color: #d8872b;
                 selection-color: #ffffff;
                 outline: 0;
+            }
+            QComboBox QAbstractItemView::item {
+                color: #e8f2f1;
+                min-height: 34px;
+                padding: 8px 10px;
+            }
+            QComboBox QAbstractItemView::item:hover {
+                background-color: rgba(35, 78, 77, 210);
+                color: #ffffff;
+            }
+            QComboBox QAbstractItemView::item:selected {
+                background-color: #d8872b;
+                color: #ffffff;
             }
             QGroupBox {
                 color: #e8f2f1;
@@ -6165,35 +6524,7 @@ class DigimonEditor(QMainWindow):
 
     def _modernize_inline_light_styles(self, root: QWidget):
         """Convert older inline light-panel styles to the modern dark surface."""
-        replacements = (
-            ("background-color: white;", "background-color: rgba(3, 18, 23, 172);"),
-            ("background-color: #ffffff;", "background-color: rgba(3, 18, 23, 172);"),
-            ("background: white;", "background: rgba(3, 18, 23, 172);"),
-            ("background-color: #f8f9fa;", "background-color: rgba(5, 24, 29, 180);"),
-            ("background: #f8f9fa;", "background: rgba(5, 24, 29, 180);"),
-            ("background: #f0f0f0;", "background: rgba(5, 24, 29, 180);"),
-            ("background-color: #e7f5ff;", "background-color: rgba(9, 41, 48, 180);"),
-            ("background-color: #fff3cd;", "background-color: rgba(95, 62, 18, 170);"),
-            ("color: #333333;", "color: #e8f2f1;"),
-            ("color: #495057;", "color: #dce9ea;"),
-            ("color: #555;", "color: #bfd1d2;"),
-            ("color: #666;", "color: #a9c1c2;"),
-            ("color: #6c757d;", "color: #9fb7b8;"),
-            ("color: #adb5bd;", "color: rgba(230, 238, 238, 90);"),
-            ("border: 2px solid #dee2e6;", "border: 1px solid rgba(143, 211, 207, 105);"),
-            ("border-color: #dee2e6;", "border-color: rgba(143, 211, 207, 105);"),
-            ("border-radius: 8px;", "border-radius: 2px;"),
-            ("border-radius: 6px;", "border-radius: 2px;"),
-        )
-        for widget in [root, *root.findChildren(QWidget)]:
-            style = widget.styleSheet()
-            if not style:
-                continue
-            updated = style
-            for old, new in replacements:
-                updated = updated.replace(old, new)
-            if updated != style:
-                widget.setStyleSheet(updated)
+        modernize_inline_light_styles(root)
 
     def create_left_panel(self) -> QWidget:
         """Create the left panel with Digimon list"""
@@ -6817,36 +7148,46 @@ class DigimonEditor(QMainWindow):
         classification_layout.setSpacing(10)
 
         # Stage with dropdown
-        stage_label = QLabel("⭐ Stage:")
-        stage_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        classification_layout.addWidget(stage_label, 0, 0)
+        classification_layout.addWidget(
+            create_game_icon_label("Stage:", TAB_ICON_STEMS.get("evolution"), icon_size=30, bold=True, minimum_width=170),
+            0,
+            0,
+        )
         self.stage_combo = QComboBox()
+        apply_modern_combo_palette(self.stage_combo)
         self.populate_stage_dropdown()
         classification_layout.addWidget(self.stage_combo, 0, 1)
 
         # Type ID with dropdown
-        type_label = QLabel("Type:")
-        type_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        classification_layout.addWidget(type_label, 1, 0)
+        classification_layout.addWidget(
+            create_game_icon_label("Type:", TYPE_ICON_STEMS.get(0), icon_size=30, bold=True, minimum_width=170),
+            1,
+            0,
+        )
         self.type_combo = QComboBox()
         configure_game_icon_combo(self.type_combo)
         self.populate_type_dropdown()
         classification_layout.addWidget(self.type_combo, 1, 1)
 
         # Personality with dropdown
-        personality_label = QLabel("Personality:")
-        personality_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        classification_layout.addWidget(personality_label, 2, 0)
+        classification_layout.addWidget(
+            create_game_icon_label("Personality:", get_personality_icon_stem(1), icon_size=30, bold=True, minimum_width=170),
+            2,
+            0,
+        )
         self.personality_combo = QComboBox()
         configure_game_icon_combo(self.personality_combo)
         self.populate_personality_dropdown()
         classification_layout.addWidget(self.personality_combo, 2, 1)
 
         # Tribe/Belong with dropdown
-        tribe_label = QLabel("🦁 Tribe (Belong):")
-        tribe_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        classification_layout.addWidget(tribe_label, 3, 0)
+        classification_layout.addWidget(
+            create_game_icon_label("Tribe (Belong):", TAB_ICON_STEMS.get("traits"), icon_size=30, bold=True, minimum_width=170),
+            3,
+            0,
+        )
         self.tribe_combo = QComboBox()
+        apply_modern_combo_palette(self.tribe_combo)
         self.populate_tribe_dropdown()
         self.tribe_combo.setToolTip("Tribe/species classification shown in Digimon profile")
         classification_layout.addWidget(self.tribe_combo, 3, 1)
@@ -7069,7 +7410,7 @@ class DigimonEditor(QMainWindow):
         longest_line = max(len(line) for line in lines)
         stats_label.setText(f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}")
         stats_label.setStyleSheet(
-            "color: #b02a37; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #666; font-size: 9pt;"
+            "color: #ff8c98; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #a9c1c2; font-size: 9pt;"
         )
 
     def _normalize_text_folder_name(self, folder: str) -> str:
@@ -7388,11 +7729,11 @@ class DigimonEditor(QMainWindow):
             return f"""
                 QGroupBox {{
                     font-weight: bold;
-                    border: 2px solid {accent};
-                    border-radius: 8px;
+                    border: 1px solid {accent};
+                    border-radius: 2px;
                     margin-top: 10px;
                     padding-top: 14px;
-                    background-color: white;
+                    background-color: rgba(3, 18, 23, 172);
                     font-size: 11pt;
                 }}
                 QGroupBox::title {{
@@ -7400,13 +7741,13 @@ class DigimonEditor(QMainWindow):
                     subcontrol-origin: margin;
                     left: 12px;
                     padding: 0 8px;
-                    background-color: white;
+                    background-color: rgba(3, 18, 23, 230);
                 }}
             """
 
         # Signature Skills Section
         sig_group = QGroupBox("Signature Skills (up to 12)")
-        sig_group.setStyleSheet(skill_group_style("#667eea", "#4c63d9"))
+        sig_group.setStyleSheet(skill_group_style("#7aa2ff", "#7aa2ff"))
         sig_layout = QVBoxLayout()
 
         self.signature_skills_editor = SkillEditor("signature", self.loader)
@@ -7417,7 +7758,7 @@ class DigimonEditor(QMainWindow):
 
         # Generic Skills Section
         gen_group = QGroupBox("Generic Skills (up to 4)")
-        gen_group.setStyleSheet(skill_group_style("#10b981", "#087f5b"))
+        gen_group.setStyleSheet(skill_group_style("#20d6a3", "#20d6a3"))
         gen_layout = QVBoxLayout()
 
         self.generic_skills_editor = SkillEditor("generic", self.loader)
@@ -7433,13 +7774,14 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Select {skill_type.title()} Skill")
         dialog.setMinimumSize(600, 500)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
         # Info label
         info_label = QLabel(f"Select a skill to add to the first empty slot in {skill_type} skills.")
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 8px; background-color: #f0f0f0; border-radius: 4px;")
+        info_label.setStyleSheet("color: #a9c1c2; padding: 8px; background-color: rgba(5, 24, 29, 180); border-radius: 2px;")
         layout.addWidget(info_label)
 
         # Search box
@@ -7528,9 +7870,9 @@ class DigimonEditor(QMainWindow):
         # Use scroll area for the tab content
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.Shape.NoFrame)
 
         scroll_content = QWidget()
+        prepare_modern_scroll_surface(scroll, scroll_content, "modelScrollContent")
         layout = QVBoxLayout(scroll_content)
 
         # Model Info Group
@@ -7954,6 +8296,7 @@ class DigimonEditor(QMainWindow):
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         scroll_content = QWidget()
+        prepare_modern_scroll_surface(scroll, scroll_content, "advancedSkillsScrollContent")
         layout = QVBoxLayout(scroll_content)
         layout.setSpacing(15)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -9021,31 +9364,34 @@ class DigimonEditor(QMainWindow):
     def _make_path_list_widget(self, selected_color: str, hover_color: str, min_height: int = 120) -> QListWidget:
         list_widget = QListWidget()
         list_widget.setMinimumHeight(min_height)
-        list_widget.setStyleSheet(f"""
-            QListWidget {{
-                border: 1px solid #ddd;
-                border-radius: 6px;
+        list_widget.setStyleSheet("""
+            QListWidget {
+                border: 1px solid rgba(143, 211, 207, 105);
+                border-radius: 2px;
                 padding: 5px;
-                background-color: white;
-            }}
-            QListWidget::item {{
+                background-color: rgba(4, 18, 23, 205);
+                color: #e8f2f1;
+            }
+            QListWidget::item {
                 padding: 8px;
-                border-radius: 4px;
+                border-radius: 2px;
                 margin: 2px;
-            }}
-            QListWidget::item:selected {{
-                background-color: {selected_color};
-                color: #1a1a1a;
-            }}
-            QListWidget::item:hover {{
-                background-color: {hover_color};
-            }}
+                border-bottom: 1px solid rgba(143, 211, 207, 32);
+            }
+            QListWidget::item:selected {
+                background-color: #d8872b;
+                color: #ffffff;
+            }
+            QListWidget::item:hover {
+                background-color: rgba(35, 78, 77, 210);
+                color: #ffffff;
+            }
         """)
         return list_widget
 
     def _add_path_box(self, parent_layout, title: str, attr_name: str, selected_color: str, hover_color: str, min_height: int = 120):
         box = QGroupBox(title)
-        box.setStyleSheet("QGroupBox { font-weight: bold; }")
+        box.setStyleSheet(modern_groupbox_style("rgba(136, 233, 224, 150)", "#88e9e0"))
         box_layout = QVBoxLayout(box)
         list_widget = self._make_path_list_widget(selected_color, hover_color, min_height)
         setattr(self, attr_name, list_widget)
@@ -9098,7 +9444,7 @@ class DigimonEditor(QMainWindow):
         if list_widget.count() == 0:
             item = QListWidgetItem(text)
             item.setData(Qt.ItemDataRole.UserRole, None)
-            item.setForeground(Qt.GlobalColor.darkGray)
+            item.setForeground(QColor("#7f9698"))
             list_widget.addItem(item)
 
     def create_evolution_tab(self) -> QWidget:
@@ -9344,6 +9690,7 @@ class DigimonEditor(QMainWindow):
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         scroll_content = QWidget()
+        prepare_modern_scroll_surface(scroll, scroll_content, "battleScrollContent")
         layout = QVBoxLayout(scroll_content)
         layout.setSpacing(15)
         layout.setContentsMargins(10, 10, 10, 10)
@@ -13216,6 +13563,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle("Create New Digimon")
         dialog.setMinimumWidth(400)
+        apply_modern_dialog_theme(dialog)
         layout = QVBoxLayout(dialog)
 
         # Instructions
@@ -13558,6 +13906,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle("Export Reloaded II Mod")
         dialog.setMinimumWidth(620)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
@@ -14063,6 +14412,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle("Add Evolution")
         dialog.setMinimumSize(550, 600)
+        apply_modern_dialog_theme(dialog)
         layout = QVBoxLayout(dialog)
 
         # Instructions
@@ -14317,6 +14667,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle(f"Evolution Requirements → {target_name}")
         dialog.setMinimumWidth(500)
+        apply_modern_dialog_theme(dialog)
 
         layout = QVBoxLayout(dialog)
 
@@ -14748,6 +15099,7 @@ class DigimonEditor(QMainWindow):
         dialog = QDialog(self)
         dialog.setWindowTitle("Add Pre-Evolution")
         dialog.setMinimumSize(550, 550)
+        apply_modern_dialog_theme(dialog)
         layout = QVBoxLayout(dialog)
 
         # Info banner
@@ -16876,77 +17228,52 @@ def main():
     app.setApplicationName("DTS Creator")
     app.setApplicationVersion("1.0")
 
-    # Fix for Windows 11 - Set global palette to ensure text is visible
+    # Dark global fallback palette for dialogs, popups, and widgets outside the main window.
     palette = app.palette()
-    palette.setColor(QPalette.ColorRole.WindowText, QColor("#333333"))
-    palette.setColor(QPalette.ColorRole.Text, QColor("#333333"))
-    palette.setColor(QPalette.ColorRole.ButtonText, QColor("#333333"))
-    palette.setColor(QPalette.ColorRole.Base, QColor("white"))
-    palette.setColor(QPalette.ColorRole.Window, QColor("#f8f9fa"))
-    palette.setColor(QPalette.ColorRole.Highlight, QColor("#667eea"))
+    palette.setColor(QPalette.ColorRole.WindowText, QColor("#dce9ea"))
+    palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
+    palette.setColor(QPalette.ColorRole.ButtonText, QColor("#f0f6f4"))
+    palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
+    palette.setColor(QPalette.ColorRole.Window, QColor("#041316"))
+    palette.setColor(QPalette.ColorRole.Highlight, QColor("#d8872b"))
     palette.setColor(QPalette.ColorRole.HighlightedText, QColor("white"))
-    palette.setColor(QPalette.ColorRole.PlaceholderText, QColor("#999999"))
+    palette.setColor(QPalette.ColorRole.PlaceholderText, QColor("#8ea7a9"))
     app.setPalette(palette)
 
-    # Global stylesheet to ensure text visibility on Windows 11
-    app.setStyleSheet("""
+    # Global stylesheet keeps dialogs and combo popups readable before any window-level style is applied.
+    app.setStyleSheet(modern_dialog_stylesheet() + """
         QComboBox, QListWidget, QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox {
-            color: #333333;
-            background-color: white;
-        }
-        QComboBox {
-            padding-right: 42px;
-        }
-        QComboBox::drop-down {
-            subcontrol-origin: padding;
-            subcontrol-position: top right;
-            width: 30px;
-            border-left: 1px solid #dee2e6;
-            background-color: #f8f9fa;
-        }
-        QComboBox::down-arrow {
-            image: none;
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 6px solid #667eea;
-            margin-right: 8px;
-        }
-        QComboBox QAbstractItemView {
-            color: #333333;
-            background-color: white;
-            selection-background-color: #667eea;
-            selection-color: white;
+            color: #e8f2f1;
+            background-color: #06181d;
         }
         QComboBox QAbstractItemView::item {
-            color: #333333;
+            color: #e8f2f1;
         }
         QListWidget::item {
-            color: #333333;
+            color: #e8f2f1;
         }
         QListWidget::item:selected {
             color: white;
-            background-color: #667eea;
+            background-color: #d8872b;
         }
         QTableWidget {
-            color: #333333;
-            background-color: white;
+            color: #e8f2f1;
+            background-color: #06181d;
         }
         QTableWidget::item {
-            color: #333333;
+            color: #e8f2f1;
         }
         QLabel {
-            color: #333333;
+            color: #dce9ea;
         }
         QGroupBox {
-            color: #333333;
+            color: #e8f2f1;
         }
         QCheckBox {
-            color: #333333;
+            color: #dce9ea;
         }
         QRadioButton {
-            color: #333333;
+            color: #dce9ea;
         }
     """)
 
