@@ -317,6 +317,8 @@ class MBELoader:
         self._location_names_cache = None
         self._battle_messages_cache = None
         self._char_names_cache = None
+        self._char_name_lookup_cache = {}
+        self._chr_id_char_key_lookup_cache = {}
         self._trait_names_cache = None
         self._jogress_skill_names_cache = None
         self._skill_explanations_cache = None
@@ -551,6 +553,12 @@ class MBELoader:
         """Invalidate the digimon status cache (call after saving)"""
         self._digimon_status_cache = None
         self._digimon_status_cache_file = None
+        self._chr_id_char_key_lookup_cache = {}
+
+    def _invalidate_char_name_cache(self):
+        """Invalidate cached char_key -> name lookups after text saves."""
+        self._char_names_cache = None
+        self._char_name_lookup_cache = {}
     
     def load_mbe_directory(self, mbe_path: Path) -> Dict[str, List[List[str]]]:
         """Load all CSV files in an .mbe directory"""
@@ -705,6 +713,68 @@ class MBELoader:
         
         return digimon
     
+    def _get_char_name_lookup(self, check_dlc: bool = True) -> Dict[str, str]:
+        """Return cached char_key -> display name rows for base and optional DLC text."""
+        cache_key = bool(check_dlc)
+        if cache_key in self._char_name_lookup_cache:
+            return self._char_name_lookup_cache[cache_key]
+
+        names: Dict[str, str] = {}
+
+        def add_name_file(name_file: Path):
+            if not name_file.exists():
+                return
+            rows = self.load_csv(name_file)
+            for row in rows[1:]:
+                if len(row) < 2:
+                    continue
+                row_key = row[0].strip('"')
+                row_name = row[1].strip('"')
+                if row_key and row_name:
+                    names.setdefault(row_key, row_name)
+
+        name_file = self._resolve_prefixed_file(self.text_path / "char_name.mbe" / "000_Sheet1.csv")
+        add_name_file(name_file)
+
+        if check_dlc:
+            for _dlc_id, dlc_name_file in self.iter_dlc_csv_files("text", "char_name", "000_Sheet1.csv"):
+                add_name_file(dlc_name_file)
+
+        self._char_name_lookup_cache[cache_key] = names
+        return names
+
+    def _get_chr_id_char_key_lookup(self, check_dlc: bool = True) -> Dict[str, str]:
+        """Return cached chr_id -> char_key rows for base and optional DLC status data."""
+        cache_key = bool(check_dlc)
+        if cache_key in self._chr_id_char_key_lookup_cache:
+            return self._chr_id_char_key_lookup_cache[cache_key]
+
+        lookup: Dict[str, str] = {}
+
+        def add_status_file(status_file: Path):
+            if not status_file.exists():
+                return
+            rows = self.load_csv(status_file)
+            for row in rows[1:]:
+                if len(row) <= 3:
+                    continue
+                chr_id = row[3].strip('"')
+                char_key = row[2].strip('"') if len(row) > 2 else ""
+                if chr_id and char_key:
+                    lookup.setdefault(chr_id, char_key)
+
+        status_file = self._resolve_prefixed_file(self.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv")
+        add_status_file(status_file)
+
+        if check_dlc:
+            for _dlc_id, dlc_status_file in self.iter_dlc_csv_files(
+                "data", "digimon_status", "000_digimon_status_data.csv"
+            ):
+                add_status_file(dlc_status_file)
+
+        self._chr_id_char_key_lookup_cache[cache_key] = lookup
+        return lookup
+
     def _get_digimon_name(self, char_key: str, check_dlc: bool = True) -> str:
         """Get Digimon name from text files
         
@@ -716,30 +786,8 @@ class MBELoader:
             Digimon name if found in char_name.mbe, None otherwise
         """
         # Normalize char_key (remove quotes for comparison)
-        normalized_key = char_key.strip('"')
-        
-        # Check base game first
-        name_file = self._resolve_prefixed_file(self.text_path / "char_name.mbe" / "000_Sheet1.csv")
-        if name_file.exists():
-            name_rows = self.load_csv(name_file)
-            for row in name_rows[1:]:  # Skip header
-                if len(row) >= 2:
-                    row_key = row[0].strip('"')
-                    if row_key == normalized_key:
-                        return row[1].strip('"')  # Also strip quotes from name
-        
-        # Check DLC if not found in base game
-        if check_dlc:
-            for _dlc_id, dlc_name_file in self.iter_dlc_csv_files("text", "char_name", "000_Sheet1.csv"):
-                dlc_name_rows = self.load_csv(dlc_name_file)
-                for row in dlc_name_rows[1:]:  # Skip header
-                    if len(row) >= 2:
-                        row_key = row[0].strip('"')
-                        if row_key == normalized_key:
-                            return row[1].strip('"')  # Also strip quotes from name
-        
-        # Name not found - return None instead of char_key
-        return None
+        normalized_key = str(char_key or "").strip('"')
+        return self._get_char_name_lookup(check_dlc).get(normalized_key)
     
     def _get_digimon_name_by_id(self, digimon_id: int, check_dlc: bool = True) -> str:
         """Get Digimon name by numeric ID
@@ -788,31 +836,7 @@ class MBELoader:
             chr_id: Character ID to look up
             check_dlc: If True, also check DLC files
         """
-        char_key = None
-        
-        # First check base game
-        status_file = self._resolve_prefixed_file(self.data_path / "digimon_status.mbe" / "000_digimon_status_data.csv")
-        if status_file.exists():
-            status_rows = self.load_csv(status_file)
-            for row in status_rows[1:]:  # Skip header
-                # Handle both quoted and unquoted chr_id
-                if len(row) > 3 and (row[3] == chr_id or row[3] == f'"{chr_id}"'):
-                    char_key = row[2] if len(row) > 2 else None
-                    break
-        
-        # Check DLC if not found in base game
-        if not char_key and check_dlc:
-            for _dlc_id, dlc_status_file in self.iter_dlc_csv_files(
-                "data", "digimon_status", "000_digimon_status_data.csv"
-            ):
-                dlc_status_rows = self.load_csv(dlc_status_file)
-                for row in dlc_status_rows[1:]:  # Skip header
-                    # Handle both quoted and unquoted chr_id
-                    if len(row) > 3 and (row[3] == chr_id or row[3] == f'"{chr_id}"'):
-                        char_key = row[2] if len(row) > 2 else None
-                        break
-                if char_key:
-                    break
+        char_key = self._get_chr_id_char_key_lookup(check_dlc).get(chr_id.strip('"'))
         
         if not char_key:
             return None
@@ -1755,6 +1779,7 @@ class MBELoader:
             
             # Invalidate cache after saving
             self._invalidate_digimon_status_cache()
+            self._invalidate_char_name_cache()
             
             print(f"Successfully saved Digimon {digimon.name} ({digimon.chr_id}) to {status_file}")
             return True
@@ -2633,6 +2658,8 @@ class MBELoader:
             
             # Clear cache so new name is loaded
             self._skill_names_cache = None
+            self._digimon_editor_skill_options_signature = None
+            self._digimon_editor_skill_options_cache = None
             
             return True
         except Exception as e:
