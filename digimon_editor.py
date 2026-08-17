@@ -260,6 +260,46 @@ def modern_dialog_stylesheet() -> str:
             border-color: rgba(244, 235, 213, 230);
             background-color: #0a2529;
         }
+        QSpinBox, QDoubleSpinBox {
+            padding-right: 42px;
+        }
+        QSpinBox::up-button, QDoubleSpinBox::up-button {
+            subcontrol-origin: border;
+            subcontrol-position: top right;
+            width: 30px;
+            height: 19px;
+            border-left: 1px solid rgba(143, 211, 207, 120);
+            border-bottom: 1px solid rgba(143, 211, 207, 70);
+            background-color: #08262a;
+        }
+        QSpinBox::down-button, QDoubleSpinBox::down-button {
+            subcontrol-origin: border;
+            subcontrol-position: bottom right;
+            width: 30px;
+            height: 19px;
+            border-left: 1px solid rgba(143, 211, 207, 120);
+            background-color: #08262a;
+        }
+        QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
+        QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
+            background-color: rgba(216, 135, 43, 150);
+        }
+        QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
+            image: none;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 6px solid #e8f2f1;
+        }
+        QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
+            image: none;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #e8f2f1;
+        }
         QComboBox {
             padding-right: 42px;
         }
@@ -800,7 +840,7 @@ class SpinBoxWheelGuard(QObject):
 
             if isinstance(guarded_widget, QComboBox) and guarded_widget.view().isVisible():
                 return False
-            if guarded_widget.property("allowWheelEdit") and self._focused_for_wheel(guarded_widget):
+            if self._focused_for_wheel(guarded_widget):
                 return False
 
             self._scroll_nearest_parent(guarded_widget, event)
@@ -6378,6 +6418,46 @@ class DigimonEditor(QMainWindow):
                 border: 1px solid rgba(244, 235, 213, 230);
                 background-color: rgba(8, 37, 41, 235);
             }
+            QSpinBox, QDoubleSpinBox {
+                padding-right: 42px;
+            }
+            QSpinBox::up-button, QDoubleSpinBox::up-button {
+                subcontrol-origin: border;
+                subcontrol-position: top right;
+                width: 30px;
+                height: 19px;
+                border-left: 1px solid rgba(131, 209, 202, 100);
+                border-bottom: 1px solid rgba(131, 209, 202, 65);
+                background-color: rgba(9, 34, 38, 190);
+            }
+            QSpinBox::down-button, QDoubleSpinBox::down-button {
+                subcontrol-origin: border;
+                subcontrol-position: bottom right;
+                width: 30px;
+                height: 19px;
+                border-left: 1px solid rgba(131, 209, 202, 100);
+                background-color: rgba(9, 34, 38, 190);
+            }
+            QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
+            QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
+                background-color: rgba(216, 135, 43, 150);
+            }
+            QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 6px solid #e8f2f1;
+            }
+            QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid #e8f2f1;
+            }
             QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled,
             QSpinBox:disabled, QDoubleSpinBox:disabled, QComboBox:disabled {
                 color: rgba(213, 226, 226, 90);
@@ -6556,6 +6636,7 @@ class DigimonEditor(QMainWindow):
         """Create the left panel with Digimon list"""
         panel = QWidget()
         panel.setObjectName("leftPanel")
+        panel.setMinimumWidth(420)
         panel.setStyleSheet("""
             QWidget#leftPanel {
                 background-color: rgba(4, 20, 25, 205);
@@ -6827,18 +6908,28 @@ class DigimonEditor(QMainWindow):
         """
 
         button_layout = QVBoxLayout()
-        button_layout.setSpacing(10)
+        button_layout.setSpacing(8)
+
+        def add_sidebar_gap() -> None:
+            button_layout.addSpacing(6)
+            separator = QWidget()
+            separator.setFixedHeight(1)
+            separator.setStyleSheet("background-color: rgba(190, 236, 231, 120); border-radius: 1px;")
+            button_layout.addWidget(separator)
+            button_layout.addSpacing(6)
 
         self.load_button = QPushButton("📖 Load Selected")
+        self.load_button.setMinimumHeight(44)
         self.load_button.clicked.connect(self.load_selected_digimon)
         self.load_button.setToolTip("Load the selected Digimon for editing")
         self.load_button.setStyleSheet(button_style.format(
-            color1="#667eea", color2="#764ba2",
-            hover1="#5568d3", hover2="#653b8e"
+            color1="#88e9e0", color2="#764ba2",
+            hover1="rgba(35, 78, 77, 215)", hover2="#653b8e"
         ))
         button_layout.addWidget(self.load_button)
 
         self.add_selected_to_mod_button = QPushButton("➕ Add Selected as New Entry")
+        self.add_selected_to_mod_button.setMinimumHeight(44)
         self.add_selected_to_mod_button.clicked.connect(self.add_selected_to_active_mod)
         self.add_selected_to_mod_button.setEnabled(False)
         self.add_selected_to_mod_button.setToolTip(
@@ -6847,11 +6938,12 @@ class DigimonEditor(QMainWindow):
         )
         self.add_selected_to_mod_button.setStyleSheet(button_style.format(
             color1="#14b8a6", color2="#0f766e",
-            hover1="#0f9f94", hover2="#115e59"
+            hover1="rgba(22, 117, 106, 215)", hover2="#115e59"
         ))
         button_layout.addWidget(self.add_selected_to_mod_button)
 
         self.new_button = QPushButton("➕ Create New")
+        self.new_button.setMinimumHeight(44)
         self.new_button.clicked.connect(self.launch_creation_wizard)
         self.new_button.setToolTip(
             "Create a new Digimon using the step-by-step wizard.\n"
@@ -6859,11 +6951,13 @@ class DigimonEditor(QMainWindow):
         )
         self.new_button.setStyleSheet(button_style.format(
             color1="#10b981", color2="#059669",
-            hover1="#059669", hover2="#047857"
+            hover1="rgba(20, 103, 83, 215)", hover2="#047857"
         ))
         button_layout.addWidget(self.new_button)
+        add_sidebar_gap()
 
         self.import_button = QPushButton("📥 Import Mod / dsts-loader")
+        self.import_button.setMinimumHeight(44)
         self.import_button.clicked.connect(self.import_from_dsts_loader)
         self.import_button.setToolTip(
             "Import Digimon from a Reloaded II mod folder or its dsts-loader payload.\n"
@@ -6871,34 +6965,12 @@ class DigimonEditor(QMainWindow):
         )
         self.import_button.setStyleSheet(button_style.format(
             color1="#f59e0b", color2="#d97706",
-            hover1="#d97706", hover2="#b45309"
+            hover1="rgba(126, 78, 21, 215)", hover2="#b45309"
         ))
         button_layout.addWidget(self.import_button)
 
-        self.remove_selected_from_mod_button = QPushButton("🗑️ Remove Selected from Mod")
-        self.remove_selected_from_mod_button.clicked.connect(self.remove_selected_from_active_mod)
-        self.remove_selected_from_mod_button.setEnabled(False)
-        self.remove_selected_from_mod_button.setToolTip(
-            "Remove the selected imported Digimon from its Reloaded II/dsts-loader mod files.\n"
-            "Use this to clean up entries that were added by mistake."
-        )
-        self.remove_selected_from_mod_button.setStyleSheet(button_style.format(
-            color1="#ef4444", color2="#b91c1c",
-            hover1="#dc2626", hover2="#991b1b"
-        ))
-        button_layout.addWidget(self.remove_selected_from_mod_button)
-
-        self.remove_button = QPushButton("🗑️ Remove from DLC")
-        self.remove_button.clicked.connect(self.remove_digimon_from_dlc)
-        self.remove_button.setEnabled(False)
-        self.remove_button.setToolTip("Permanently delete this Digimon from DLC files\nOnly works for DLC Digimon")
-        self.remove_button.setStyleSheet(button_style.format(
-            color1="#f5576c", color2="#f093fb",
-            hover1="#e34556", hover2="#de7fe9"
-        ))
-        button_layout.addWidget(self.remove_button)
-
         self.save_button = QPushButton("💾 Save to Loaded Source")
+        self.save_button.setMinimumHeight(44)
         self.save_button.clicked.connect(self.save_current_digimon)
         self.save_button.setEnabled(False)
         self.save_button.setToolTip(
@@ -6908,18 +6980,13 @@ class DigimonEditor(QMainWindow):
             "• Imported/active mod -> same remembered dsts-loader payload"
         )
         self.save_button.setStyleSheet(button_style.format(
-            color1="#f093fb", color2="#f5576c",
-            hover1="#de7fe9", hover2="#e34556"
+            color1="#20d6a3", color2="#f5576c",
+            hover1="rgba(20, 103, 83, 215)", hover2="#e34556"
         ))
         button_layout.addWidget(self.save_button)
 
-        # Separator line
-        separator = QWidget()
-        separator.setFixedHeight(2)
-        separator.setStyleSheet("background-color: #dee2e6; border-radius: 1px;")
-        button_layout.addWidget(separator)
-
         self.export_dlc_button = QPushButton("📦 Export / Copy Mod")
+        self.export_dlc_button.setMinimumHeight(44)
         self.export_dlc_button.clicked.connect(self.export_to_dlc)
         self.export_dlc_button.setEnabled(False)
         self.export_dlc_button.setToolTip(
@@ -6928,10 +6995,36 @@ class DigimonEditor(QMainWindow):
             f"Default folder: {get_default_mod_loader_path()}"
         )
         self.export_dlc_button.setStyleSheet(button_style.format(
-            color1="#4CAF50", color2="#45a049",
-            hover1="#45a049", hover2="#3d8b40"
+            color1="#d8872b", color2="#45a049",
+            hover1="rgba(126, 78, 21, 215)", hover2="#3d8b40"
         ))
         button_layout.addWidget(self.export_dlc_button)
+        add_sidebar_gap()
+
+        self.remove_selected_from_mod_button = QPushButton("🗑️ Remove Selected from Mod")
+        self.remove_selected_from_mod_button.setMinimumHeight(44)
+        self.remove_selected_from_mod_button.clicked.connect(self.remove_selected_from_active_mod)
+        self.remove_selected_from_mod_button.setEnabled(False)
+        self.remove_selected_from_mod_button.setToolTip(
+            "Remove the selected imported Digimon from its Reloaded II/dsts-loader mod files.\n"
+            "Use this to clean up entries that were added by mistake."
+        )
+        self.remove_selected_from_mod_button.setStyleSheet(button_style.format(
+            color1="#ef4444", color2="#b91c1c",
+            hover1="rgba(116, 39, 45, 215)", hover2="#991b1b"
+        ))
+        button_layout.addWidget(self.remove_selected_from_mod_button)
+
+        self.remove_button = QPushButton("🗑️ Remove from DLC")
+        self.remove_button.setMinimumHeight(44)
+        self.remove_button.clicked.connect(self.remove_digimon_from_dlc)
+        self.remove_button.setEnabled(False)
+        self.remove_button.setToolTip("Permanently delete this Digimon from DLC files\nOnly works for DLC Digimon")
+        self.remove_button.setStyleSheet(button_style.format(
+            color1="#f5576c", color2="#f093fb",
+            hover1="rgba(116, 39, 45, 215)", hover2="#de7fe9"
+        ))
+        button_layout.addWidget(self.remove_button)
 
         # Disabled for now: these utility actions are too easy to hit from the
         # main editor and are not part of the normal Reloaded II mod workflow.
@@ -8431,16 +8524,22 @@ class DigimonEditor(QMainWindow):
             icon_size: int = 30,
             field_width: Optional[int] = None,
         ) -> None:
-            base_col = column_pair * 2
-            grid.addWidget(
-                advanced_label(text, icon_stem, width=label_width, icon_size=icon_size),
-                row,
-                base_col,
-            )
+            field_row = QWidget()
+            field_layout = QHBoxLayout(field_row)
+            field_layout.setContentsMargins(0, 0, 0, 0)
+            field_layout.setSpacing(10)
+
+            label_widget = advanced_label(text, icon_stem, width=label_width, icon_size=icon_size)
+            label_widget.setMinimumWidth(label_width)
+            label_widget.setMaximumWidth(label_width)
+            field_layout.addWidget(label_widget)
             if field_width is not None:
                 set_compact_field_width(editor, field_width)
-            grid.addWidget(editor, row, base_col + 1)
-            grid.setColumnStretch(base_col + 1, 1)
+            field_layout.addWidget(editor)
+            field_layout.addStretch(1)
+
+            grid.addWidget(field_row, row, column_pair)
+            grid.setColumnStretch(column_pair, 1)
 
         # Title with modern styling
         title = QLabel("Advanced Skill System Editor")
@@ -8553,7 +8652,7 @@ class DigimonEditor(QMainWindow):
         basic_group.setStyleSheet(advanced_section_style)
         basic_layout = QGridLayout(basic_group)
         basic_layout.setContentsMargins(18, 22, 18, 18)
-        basic_layout.setHorizontalSpacing(28)
+        basic_layout.setHorizontalSpacing(20)
         basic_layout.setVerticalSpacing(12)
 
         self.skill_power_edit = QSpinBox()
@@ -8606,7 +8705,7 @@ class DigimonEditor(QMainWindow):
         damage_group.setStyleSheet(advanced_section_style)
         damage_layout = QGridLayout(damage_group)
         damage_layout.setContentsMargins(18, 22, 18, 18)
-        damage_layout.setHorizontalSpacing(28)
+        damage_layout.setHorizontalSpacing(20)
         damage_layout.setVerticalSpacing(12)
 
         self.skill_damage_type_combo = QComboBox()
@@ -8692,7 +8791,7 @@ class DigimonEditor(QMainWindow):
         mode_layout.addWidget(mode_hint)
 
         mode_top_grid = QGridLayout()
-        mode_top_grid.setHorizontalSpacing(28)
+        mode_top_grid.setHorizontalSpacing(20)
         mode_top_grid.setVerticalSpacing(12)
         self.skill_mode_change_edit = QSpinBox()
         self.skill_mode_change_edit.setRange(-1, 99999999)
@@ -8739,9 +8838,11 @@ class DigimonEditor(QMainWindow):
             }
         """)
         mode_skills_grid = QGridLayout(mode_skills_widget)
-        mode_skills_grid.setContentsMargins(12, 12, 12, 12)
+        mode_skills_grid.setContentsMargins(18, 12, 18, 12)
         mode_skills_grid.setHorizontalSpacing(12)
         mode_skills_grid.setVerticalSpacing(10)
+        for column in range(3):
+            mode_skills_grid.setColumnStretch(column, 1)
         self.mode_change_skill_widgets = []
         for index in range(12):
             skill_spin = QSpinBox()
@@ -8751,15 +8852,27 @@ class DigimonEditor(QMainWindow):
             skill_spin.setToolTip(f"003_skill_mode_change skill slot {index + 1}")
             self.mode_change_skill_widgets.append(skill_spin)
             row_index = index // 3
-            column_index = (index % 3) * 2
+            column_index = index % 3
+            skill_cell = QWidget()
+            skill_cell.setMaximumWidth(245)
+            skill_cell_layout = QHBoxLayout(skill_cell)
+            skill_cell_layout.setContentsMargins(0, 0, 0, 0)
+            skill_cell_layout.setSpacing(10)
             slot_label = QLabel(f"Skill {index + 1}:")
             slot_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
             slot_label.setStyleSheet("color: #dce9ea; border: none; background: transparent;")
             slot_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
             slot_label.setMinimumWidth(72)
-            mode_skills_grid.addWidget(slot_label, row_index, column_index)
-            mode_skills_grid.addWidget(skill_spin, row_index, column_index + 1)
-            mode_skills_grid.setColumnStretch(column_index + 1, 1)
+            skill_cell_layout.addWidget(slot_label)
+            skill_cell_layout.addWidget(skill_spin)
+            alignment = (
+                Qt.AlignmentFlag.AlignLeft
+                if column_index == 0
+                else Qt.AlignmentFlag.AlignHCenter
+                if column_index == 1
+                else Qt.AlignmentFlag.AlignRight
+            )
+            mode_skills_grid.addWidget(skill_cell, row_index, column_index, alignment=alignment)
         mode_layout.addWidget(mode_skills_widget)
 
         mode_button_row = QHBoxLayout()
@@ -8836,7 +8949,7 @@ class DigimonEditor(QMainWindow):
         advanced_group.setStyleSheet(advanced_section_style)
         advanced_layout = QGridLayout(advanced_group)
         advanced_layout.setContentsMargins(18, 22, 18, 18)
-        advanced_layout.setHorizontalSpacing(28)
+        advanced_layout.setHorizontalSpacing(20)
         advanced_layout.setVerticalSpacing(12)
 
         self.skill_additional_prop1_combo = QComboBox()
@@ -8892,7 +9005,7 @@ class DigimonEditor(QMainWindow):
         conditional_group.setStyleSheet(advanced_section_style)
         conditional_layout = QGridLayout(conditional_group)
         conditional_layout.setContentsMargins(18, 22, 18, 18)
-        conditional_layout.setHorizontalSpacing(28)
+        conditional_layout.setHorizontalSpacing(20)
         conditional_layout.setVerticalSpacing(12)
 
         self.skill_conditional_type_combo = QComboBox()
@@ -9051,7 +9164,7 @@ class DigimonEditor(QMainWindow):
         special_group.setStyleSheet(advanced_section_style)
         special_layout = QGridLayout(special_group)
         special_layout.setContentsMargins(18, 22, 18, 18)
-        special_layout.setHorizontalSpacing(28)
+        special_layout.setHorizontalSpacing(20)
         special_layout.setVerticalSpacing(12)
 
         self.skill_hp_drain_edit = QSpinBox()
