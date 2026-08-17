@@ -21,7 +21,7 @@ from PyQt6.QtWidgets import (
     QAbstractScrollArea
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer, QSize
-from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter
+from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLinearGradient, QPen
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
@@ -428,6 +428,39 @@ def build_reloaded_mod_config(mod_id: str, mod_name: str, author: str, descripti
         "CreatorUrl": "",
         "IsSeparator": False
     }
+
+
+class ModernEditorBackdropWidget(QWidget):
+    """Central widget that paints a modern translucent editor backdrop."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("modernEditorBackdrop")
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        gradient = QLinearGradient(0, 0, self.width(), self.height())
+        gradient.setColorAt(0.0, QColor(2, 13, 17))
+        gradient.setColorAt(0.45, QColor(7, 31, 35))
+        gradient.setColorAt(1.0, QColor(3, 18, 24))
+        painter.fillRect(self.rect(), gradient)
+
+        painter.fillRect(self.rect(), QColor(0, 10, 13, 92))
+
+        pen = QPen(QColor(119, 224, 213, 34))
+        pen.setWidth(1)
+        painter.setPen(pen)
+        for y in range(72, self.height(), 72):
+            painter.drawLine(0, y, self.width(), y)
+
+        painter.setPen(QPen(QColor(216, 135, 43, 42), 2))
+        painter.drawLine(34, 0, 34, self.height())
+        painter.drawLine(self.width() - 34, 0, self.width() - 34, self.height())
+
+        painter.setPen(QPen(QColor(222, 242, 239, 30), 1))
+        painter.drawRect(self.rect().adjusted(14, 14, -15, -15))
+        super().paintEvent(event)
 
 
 class SpinBoxWheelGuard(QObject):
@@ -5899,7 +5932,7 @@ class DigimonEditor(QMainWindow):
         """)
 
         # Central widget
-        central_widget = QWidget()
+        central_widget = ModernEditorBackdropWidget()
         self.setCentralWidget(central_widget)
 
         # Main layout
@@ -5914,6 +5947,253 @@ class DigimonEditor(QMainWindow):
         # Right panel - Editor
         right_panel = self.create_right_panel()
         main_layout.addWidget(right_panel, 3)
+        self.apply_modern_menu_theme()
+        self._modernize_inline_light_styles(self)
+
+    def apply_modern_menu_theme(self):
+        """Apply a modern translucent Options-menu inspired theme to the editor shell."""
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #031015;
+            }
+            QWidget {
+                font-family: 'Segoe UI Variable Text', 'Segoe UI', Arial, sans-serif;
+                color: #dce9ea;
+                selection-background-color: #d8872b;
+                selection-color: #ffffff;
+            }
+            QTabWidget::pane {
+                border: 1px solid rgba(156, 240, 235, 115);
+                border-radius: 2px;
+                background-color: rgba(4, 22, 27, 190);
+                padding: 8px;
+            }
+            QTabBar::tab {
+                background: rgba(5, 17, 22, 205);
+                color: #d8e7e8;
+                border: 1px solid rgba(153, 221, 220, 95);
+                border-bottom: none;
+                border-radius: 0;
+                padding: 8px 14px;
+                margin-right: 3px;
+                min-height: 34px;
+                font-weight: 700;
+                font-size: 10pt;
+            }
+            QTabBar::tab:selected {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 rgba(229, 128, 39, 230), stop:1 rgba(110, 63, 34, 220));
+                color: #ffffff;
+                border-color: rgba(239, 218, 176, 210);
+            }
+            QTabBar::tab:hover:!selected {
+                background: rgba(24, 69, 70, 220);
+                color: #ffffff;
+            }
+            QLabel {
+                color: #dce9ea;
+            }
+            QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QComboBox {
+                background-color: rgba(5, 21, 26, 215);
+                color: #e8f2f1;
+                border: 1px solid rgba(143, 211, 207, 105);
+                border-radius: 2px;
+                padding: 8px;
+                font-size: 10pt;
+            }
+            QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus,
+            QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {
+                border: 1px solid rgba(244, 235, 213, 230);
+                background-color: rgba(8, 37, 41, 235);
+            }
+            QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled,
+            QSpinBox:disabled, QDoubleSpinBox:disabled, QComboBox:disabled {
+                color: rgba(213, 226, 226, 90);
+                background-color: rgba(11, 19, 22, 150);
+                border-color: rgba(120, 151, 151, 55);
+            }
+            QComboBox {
+                padding-right: 42px;
+            }
+            QComboBox::drop-down {
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 32px;
+                border-left: 1px solid rgba(131, 209, 202, 100);
+                background-color: rgba(9, 34, 38, 190);
+            }
+            QComboBox::down-arrow {
+                image: none;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 7px solid #d8872b;
+                margin-right: 10px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: #06181d;
+                color: #e8f2f1;
+                border: 1px solid rgba(142, 221, 216, 160);
+                selection-background-color: #d8872b;
+                selection-color: #ffffff;
+                outline: 0;
+            }
+            QGroupBox {
+                color: #e8f2f1;
+                font-weight: 700;
+                border: 1px solid rgba(111, 206, 205, 125);
+                border-radius: 2px;
+                margin-top: 18px;
+                padding: 18px 10px 10px 10px;
+                background-color: rgba(3, 18, 23, 172);
+            }
+            QGroupBox::title {
+                color: #88e9e0;
+                subcontrol-origin: margin;
+                left: 14px;
+                padding: 0 9px;
+                background-color: rgba(3, 18, 23, 230);
+            }
+            QPushButton {
+                background: rgba(8, 24, 31, 220);
+                color: #f0f6f4;
+                border: 1px solid rgba(118, 211, 207, 110);
+                border-left: 4px solid #d8872b;
+                border-radius: 2px;
+                padding: 10px 14px;
+                font-weight: 700;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: rgba(38, 73, 71, 230);
+                border-color: rgba(235, 229, 210, 190);
+            }
+            QPushButton:pressed {
+                background: rgba(216, 135, 43, 230);
+                color: #ffffff;
+            }
+            QPushButton:disabled {
+                background: rgba(12, 22, 27, 150);
+                color: rgba(230, 238, 238, 90);
+                border-color: rgba(111, 137, 137, 55);
+                border-left-color: rgba(111, 137, 137, 75);
+            }
+            QListWidget, QTableWidget {
+                background-color: rgba(4, 18, 23, 205);
+                color: #e8f2f1;
+                border: 1px solid rgba(143, 211, 207, 105);
+                border-radius: 2px;
+                gridline-color: rgba(143, 211, 207, 70);
+            }
+            QListWidget::item {
+                color: #e8f2f1;
+                padding: 8px;
+                border-bottom: 1px solid rgba(143, 211, 207, 32);
+            }
+            QListWidget::item:hover {
+                background-color: rgba(35, 78, 77, 195);
+            }
+            QListWidget::item:selected {
+                background-color: #d8872b;
+                color: #ffffff;
+            }
+            QHeaderView::section {
+                background-color: rgba(5, 24, 29, 230);
+                color: #dce9ea;
+                border: 1px solid rgba(143, 211, 207, 80);
+                padding: 6px;
+                font-weight: 700;
+            }
+            QScrollArea {
+                background: transparent;
+                border: none;
+            }
+            QScrollBar:vertical {
+                background: rgba(4, 16, 20, 180);
+                width: 12px;
+                margin: 0;
+            }
+            QScrollBar::handle:vertical {
+                background: rgba(186, 224, 216, 150);
+                min-height: 42px;
+                border-radius: 1px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: rgba(216, 135, 43, 220);
+            }
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                height: 0px;
+                background: transparent;
+                border: none;
+            }
+            QScrollBar:horizontal {
+                background: rgba(4, 16, 20, 180);
+                height: 12px;
+                margin: 0;
+            }
+            QScrollBar::handle:horizontal {
+                background: rgba(186, 224, 216, 150);
+                min-width: 42px;
+                border-radius: 1px;
+            }
+            QScrollBar::handle:horizontal:hover {
+                background: rgba(216, 135, 43, 220);
+            }
+            QScrollBar::add-line:horizontal,
+            QScrollBar::sub-line:horizontal {
+                width: 0px;
+                background: transparent;
+                border: none;
+            }
+            QCheckBox {
+                color: #dce9ea;
+                spacing: 9px;
+            }
+            QCheckBox::indicator {
+                width: 16px;
+                height: 16px;
+                border: 1px solid rgba(190, 236, 231, 130);
+                background-color: rgba(6, 20, 25, 220);
+            }
+            QCheckBox::indicator:checked {
+                background-color: #d8872b;
+                border-color: rgba(255, 239, 207, 220);
+            }
+        """)
+
+    def _modernize_inline_light_styles(self, root: QWidget):
+        """Convert older inline light-panel styles to the modern dark surface."""
+        replacements = (
+            ("background-color: white;", "background-color: rgba(3, 18, 23, 172);"),
+            ("background-color: #ffffff;", "background-color: rgba(3, 18, 23, 172);"),
+            ("background: white;", "background: rgba(3, 18, 23, 172);"),
+            ("background-color: #f8f9fa;", "background-color: rgba(5, 24, 29, 180);"),
+            ("background: #f8f9fa;", "background: rgba(5, 24, 29, 180);"),
+            ("background: #f0f0f0;", "background: rgba(5, 24, 29, 180);"),
+            ("background-color: #e7f5ff;", "background-color: rgba(9, 41, 48, 180);"),
+            ("background-color: #fff3cd;", "background-color: rgba(95, 62, 18, 170);"),
+            ("color: #333333;", "color: #e8f2f1;"),
+            ("color: #495057;", "color: #dce9ea;"),
+            ("color: #555;", "color: #bfd1d2;"),
+            ("color: #666;", "color: #a9c1c2;"),
+            ("color: #6c757d;", "color: #9fb7b8;"),
+            ("color: #adb5bd;", "color: rgba(230, 238, 238, 90);"),
+            ("border: 2px solid #dee2e6;", "border: 1px solid rgba(143, 211, 207, 105);"),
+            ("border-color: #dee2e6;", "border-color: rgba(143, 211, 207, 105);"),
+            ("border-radius: 8px;", "border-radius: 2px;"),
+            ("border-radius: 6px;", "border-radius: 2px;"),
+        )
+        for widget in [root, *root.findChildren(QWidget)]:
+            style = widget.styleSheet()
+            if not style:
+                continue
+            updated = style
+            for old, new in replacements:
+                updated = updated.replace(old, new)
+            if updated != style:
+                widget.setStyleSheet(updated)
 
     def create_left_panel(self) -> QWidget:
         """Create the left panel with Digimon list"""
@@ -5921,9 +6201,9 @@ class DigimonEditor(QMainWindow):
         panel.setObjectName("leftPanel")
         panel.setStyleSheet("""
             QWidget#leftPanel {
-                background-color: white;
-                border-radius: 12px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(4, 20, 25, 205);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 105);
             }
         """)
         layout = QVBoxLayout(panel)
@@ -5935,12 +6215,12 @@ class DigimonEditor(QMainWindow):
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("""
             QLabel {
-                color: #667eea;
+                color: #f0f6f4;
                 padding: 12px;
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #f8f9fa, stop:1 #e9ecef);
-                border-radius: 8px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(5, 16, 22, 215);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 80);
+                border-left: 5px solid #d8872b;
             }
         """)
         layout.addWidget(title)
@@ -5949,9 +6229,9 @@ class DigimonEditor(QMainWindow):
         source_container = QWidget()
         source_container.setStyleSheet("""
             QWidget {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(5, 24, 29, 180);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 70);
                 padding: 8px;
             }
         """)
@@ -5960,7 +6240,7 @@ class DigimonEditor(QMainWindow):
 
         source_label = QLabel("📂 Source:")
         source_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        source_label.setStyleSheet("border: none; background: transparent; color: #667eea;")
+        source_label.setStyleSheet("border: none; background: transparent; color: #f0b044;")
         source_layout.addWidget(source_label)
 
         self.source_combo = QComboBox()
@@ -5981,23 +6261,23 @@ class DigimonEditor(QMainWindow):
         self.source_combo.setStyleSheet("""
             QComboBox {
                 border: none;
-                background: white;
-                border-radius: 6px;
+                background: rgba(6, 18, 24, 210);
+                border-radius: 2px;
                 padding: 6px 42px 6px 10px;
                 font-size: 10pt;
-                color: #333333;
+                color: #e8f2f1;
             }
             QComboBox:hover {
-                background: #f1f3f5;
+                background: rgba(26, 62, 64, 230);
             }
             QComboBox::drop-down {
                 subcontrol-origin: padding;
                 subcontrol-position: top right;
                 width: 30px;
-                border-left: 1px solid #dee2e6;
-                background-color: #f8f9fa;
-                border-top-right-radius: 6px;
-                border-bottom-right-radius: 6px;
+                border-left: 1px solid rgba(146, 232, 228, 70);
+                background-color: rgba(11, 39, 43, 210);
+                border-top-right-radius: 2px;
+                border-bottom-right-radius: 2px;
             }
             QComboBox::down-arrow {
                 image: none;
@@ -6005,25 +6285,25 @@ class DigimonEditor(QMainWindow):
                 height: 0;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                border-top: 6px solid #667eea;
+                border-top: 6px solid #d8872b;
                 margin-right: 8px;
             }
             QComboBox QAbstractItemView {
-                background: white;
-                color: #333333;
-                selection-background-color: #667eea;
+                background: #06181d;
+                color: #e8f2f1;
+                selection-background-color: #d8872b;
                 selection-color: white;
             }
             QComboBox QAbstractItemView::item {
-                color: #333333;
+                color: #e8f2f1;
                 padding: 5px;
             }
         """)
         # Fix for Windows 11 - explicitly set view palette
         source_view = self.source_combo.view()
         source_palette = source_view.palette()
-        source_palette.setColor(QPalette.ColorRole.Text, QColor("#333333"))
-        source_palette.setColor(QPalette.ColorRole.Base, QColor("white"))
+        source_palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
+        source_palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
         source_view.setPalette(source_palette)
         source_layout.addWidget(self.source_combo)
         layout.addWidget(source_container)
@@ -6032,9 +6312,9 @@ class DigimonEditor(QMainWindow):
         sort_container = QWidget()
         sort_container.setStyleSheet("""
             QWidget {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(5, 24, 29, 180);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 70);
                 padding: 8px;
             }
         """)
@@ -6043,7 +6323,7 @@ class DigimonEditor(QMainWindow):
 
         sort_label = QLabel("↕ Sort:")
         sort_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        sort_label.setStyleSheet("border: none; background: transparent; color: #667eea;")
+        sort_label.setStyleSheet("border: none; background: transparent; color: #f0b044;")
         sort_layout.addWidget(sort_label)
 
         self.sort_combo = QComboBox()
@@ -6054,8 +6334,8 @@ class DigimonEditor(QMainWindow):
         self.sort_combo.setStyleSheet(self.source_combo.styleSheet())
         sort_view = self.sort_combo.view()
         sort_palette = sort_view.palette()
-        sort_palette.setColor(QPalette.ColorRole.Text, QColor("#333333"))
-        sort_palette.setColor(QPalette.ColorRole.Base, QColor("white"))
+        sort_palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
+        sort_palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
         sort_view.setPalette(sort_palette)
         sort_layout.addWidget(self.sort_combo)
         layout.addWidget(sort_container)
@@ -6064,9 +6344,9 @@ class DigimonEditor(QMainWindow):
         search_container = QWidget()
         search_container.setStyleSheet("""
             QWidget {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(5, 24, 29, 180);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 70);
                 padding: 5px;
             }
         """)
@@ -6086,10 +6366,10 @@ class DigimonEditor(QMainWindow):
                 background: transparent;
                 font-size: 11pt;
                 padding: 5px;
-                color: #495057;
+                color: #e8f2f1;
             }
             QLineEdit:focus {
-                color: #667eea;
+                color: #ffffff;
             }
         """)
         self.search_box.textChanged.connect(self.filter_digimon_list)
@@ -6101,28 +6381,28 @@ class DigimonEditor(QMainWindow):
         self.digimon_list.currentTextChanged.connect(self.on_digimon_selected)
         self.digimon_list.setStyleSheet("""
             QComboBox {
-                background: white;
-                border: 2px solid #dee2e6;
-                border-radius: 8px;
+                background: rgba(6, 18, 24, 220);
+                border: 1px solid rgba(146, 232, 228, 85);
+                border-radius: 2px;
                 padding: 10px 46px 10px 10px;
                 font-size: 11pt;
-                color: #333333;
+                color: #e8f2f1;
             }
             QComboBox:hover {
-                border-color: #cbd3da;
-                background: #f8f9fa;
+                border-color: rgba(235, 229, 210, 190);
+                background: rgba(26, 62, 64, 230);
             }
             QComboBox:focus {
-                border-color: #667eea;
+                border-color: rgba(235, 229, 210, 220);
             }
             QComboBox::drop-down {
                 subcontrol-origin: padding;
                 subcontrol-position: top right;
                 width: 34px;
-                border-left: 1px solid #dee2e6;
-                background-color: #f8f9fa;
-                border-top-right-radius: 8px;
-                border-bottom-right-radius: 8px;
+                border-left: 1px solid rgba(146, 232, 228, 75);
+                background-color: rgba(11, 39, 43, 210);
+                border-top-right-radius: 2px;
+                border-bottom-right-radius: 2px;
             }
             QComboBox::down-arrow {
                 image: none;
@@ -6130,36 +6410,36 @@ class DigimonEditor(QMainWindow):
                 height: 0;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                border-top: 6px solid #667eea;
+                border-top: 6px solid #d8872b;
                 margin-right: 10px;
             }
             QComboBox QAbstractItemView {
-                background: white;
-                color: #333333;
-                selection-background-color: #667eea;
+                background: #06181d;
+                color: #e8f2f1;
+                selection-background-color: #d8872b;
                 selection-color: white;
-                border: 1px solid #dee2e6;
+                border: 1px solid rgba(146, 232, 228, 110);
                 padding: 5px;
             }
             QComboBox QAbstractItemView::item {
                 padding: 8px;
-                color: #333333;
+                color: #e8f2f1;
             }
             QComboBox QAbstractItemView::item:hover {
-                background-color: #e9ecef;
-                color: #333333;
+                background-color: rgba(35, 78, 77, 195);
+                color: #ffffff;
             }
             QComboBox QAbstractItemView::item:selected {
-                background-color: #667eea;
+                background-color: #d8872b;
                 color: white;
             }
         """)
         # Fix for Windows 11 - explicitly set view palette to ensure text is visible
         view = self.digimon_list.view()
         palette = view.palette()
-        palette.setColor(QPalette.ColorRole.Text, QColor("#333333"))
-        palette.setColor(QPalette.ColorRole.Base, QColor("white"))
-        palette.setColor(QPalette.ColorRole.Highlight, QColor("#667eea"))
+        palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
+        palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
+        palette.setColor(QPalette.ColorRole.Highlight, QColor("#d8872b"))
         palette.setColor(QPalette.ColorRole.HighlightedText, QColor("white"))
         view.setPalette(palette)
         layout.addWidget(self.digimon_list)
@@ -6167,22 +6447,25 @@ class DigimonEditor(QMainWindow):
         # Buttons with modern styling
         button_style = """
             QPushButton {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 {color1}, stop:1 {color2});
-                color: white;
-                border: none;
-                border-radius: 8px;
-                padding: 12px;
+                background: rgba(5, 18, 23, 220);
+                color: #f0f6f4;
+                border: 1px solid rgba(146, 232, 228, 80);
+                border-left: 4px solid {color1};
+                border-radius: 2px;
+                padding: 11px 12px;
                 font-weight: bold;
                 font-size: 10pt;
+                text-align: left;
             }}
             QPushButton:hover {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 {hover1}, stop:1 {hover2});
+                background: {hover1};
+                border-color: rgba(235, 229, 210, 190);
             }}
             QPushButton:disabled {{
-                background: #e9ecef;
-                color: #adb5bd;
+                background: rgba(12, 22, 27, 140);
+                color: rgba(230, 238, 238, 82);
+                border-color: rgba(111, 137, 137, 55);
+                border-left-color: rgba(111, 137, 137, 75);
             }}
         """
 
@@ -6326,17 +6609,19 @@ class DigimonEditor(QMainWindow):
         self.configure_paths_button.setMinimumHeight(42)
         self.configure_paths_button.setStyleSheet("""
             QPushButton {
-                background-color: #f8f9fa;
-                color: #333333;
-                border: 2px solid #adb5bd;
-                border-radius: 8px;
+                background-color: rgba(5, 18, 23, 220);
+                color: #e8f2f1;
+                border: 1px solid rgba(146, 232, 228, 90);
+                border-left: 4px solid #a8d5cf;
+                border-radius: 2px;
                 padding: 10px 14px;
                 font-weight: bold;
                 font-size: 10pt;
+                text-align: left;
             }
             QPushButton:hover {
-                border-color: #667eea;
-                background-color: #eef4ff;
+                border-color: rgba(235, 229, 210, 190);
+                background-color: rgba(35, 78, 77, 195);
             }
         """)
         layout.addWidget(self.configure_paths_button)
@@ -6350,9 +6635,9 @@ class DigimonEditor(QMainWindow):
         panel.setObjectName("rightPanel")
         panel.setStyleSheet("""
             QWidget#rightPanel {
-                background-color: white;
-                border-radius: 12px;
-                border: 2px solid #dee2e6;
+                background-color: rgba(4, 20, 25, 198);
+                border-radius: 2px;
+                border: 1px solid rgba(146, 232, 228, 105);
             }
         """)
         layout = QVBoxLayout(panel)
@@ -6365,11 +6650,11 @@ class DigimonEditor(QMainWindow):
         self.current_digimon_label.setStyleSheet("""
             QLabel {
                 color: white;
-                padding: 15px;
+                padding: 13px;
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #667eea, stop:1 #764ba2);
-                border-radius: 8px;
-                border: none;
+                    stop:0 rgba(4, 35, 39, 230), stop:0.72 rgba(17, 68, 67, 220), stop:1 rgba(216, 135, 43, 210));
+                border-radius: 2px;
+                border: 1px solid rgba(164, 238, 233, 120);
             }
         """)
         self.current_digimon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -6585,16 +6870,16 @@ class DigimonEditor(QMainWindow):
         self.profile_text_edit.setMinimumHeight(240)
         self.profile_text_edit.setStyleSheet("""
             QTextEdit {
-                background-color: white;
-                border: 2px solid #dee2e6;
-                border-radius: 6px;
+                background-color: rgba(4, 18, 23, 215);
+                border: 1px solid rgba(143, 211, 207, 105);
+                border-radius: 2px;
                 padding: 10px;
                 font-size: 10pt;
-                color: #495057;
+                color: #e8f2f1;
             }
             QTextEdit:focus {
-                border-color: #84fab0;
-                background-color: #f8f9fa;
+                border-color: rgba(244, 235, 213, 220);
+                background-color: rgba(8, 37, 41, 235);
             }
         """)
         profile_layout.addWidget(self.profile_text_edit, 1)
@@ -6674,16 +6959,16 @@ class DigimonEditor(QMainWindow):
             profile_edit.setMinimumHeight(260)
             profile_edit.setStyleSheet("""
                 QTextEdit {
-                    background-color: white;
-                    border: 2px solid #dee2e6;
-                    border-radius: 6px;
+                    background-color: rgba(4, 18, 23, 215);
+                    border: 1px solid rgba(143, 211, 207, 105);
+                    border-radius: 2px;
                     padding: 10px;
                     font-size: 10pt;
-                    color: #495057;
+                    color: #e8f2f1;
                 }
                 QTextEdit:focus {
-                    border-color: #84fab0;
-                    background-color: #f8f9fa;
+                    border-color: rgba(244, 235, 213, 220);
+                    background-color: rgba(8, 37, 41, 235);
                 }
             """)
             text_layout.addWidget(profile_edit, 2, 1)
@@ -6957,61 +7242,77 @@ class DigimonEditor(QMainWindow):
         """Create stats tab"""
         tab = QWidget()
         layout = QVBoxLayout(tab)
+        layout.setSpacing(12)
+
+        def option_row(label_widget: QWidget, value_widget: QWidget, helper_widget: Optional[QWidget] = None) -> QWidget:
+            row = QWidget()
+            row.setObjectName("optionSettingRow")
+            row.setMinimumHeight(46)
+            row.setStyleSheet("""
+                QWidget#optionSettingRow {
+                    background-color: rgba(4, 18, 23, 188);
+                    border: 1px solid rgba(143, 211, 207, 82);
+                    border-left: 4px solid rgba(216, 135, 43, 210);
+                    border-radius: 2px;
+                }
+                QWidget#optionSettingRow:hover {
+                    background-color: rgba(24, 62, 64, 205);
+                    border-color: rgba(232, 238, 227, 150);
+                }
+            """)
+            row_layout = QHBoxLayout(row)
+            row_layout.setContentsMargins(10, 5, 10, 5)
+            row_layout.setSpacing(10)
+            row_layout.addWidget(label_widget, 1)
+            row_layout.addStretch(1)
+            value_widget.setMinimumWidth(120)
+            value_widget.setMaximumWidth(150)
+            row_layout.addWidget(value_widget)
+            if helper_widget:
+                helper_widget.setMinimumWidth(112)
+                row_layout.addWidget(helper_widget)
+            return row
 
         # Base Stats Group
         stats_group = QGroupBox("Base Stats")
-        stats_layout = QGridLayout(stats_group)
+        stats_layout = QVBoxLayout(stats_group)
+        stats_layout.setSpacing(8)
 
         # Create stat spinboxes
         self.stat_widgets = {}
         stats = ["HP", "SP", "ATK", "DEF", "INT", "SPI", "SPD"]
 
-        for i, stat in enumerate(stats):
-            stats_layout.addWidget(create_game_icon_label(f"{stat}:", STAT_ICON_STEMS.get(stat.lower())), i, 0)
+        for stat in stats:
             spin = QSpinBox()
             spin.setRange(0, 9999)
             self.stat_widgets[stat.lower()] = spin
-            stats_layout.addWidget(spin, i, 1)
+            stats_layout.addWidget(option_row(
+                create_game_icon_label(f"{stat}:", STAT_ICON_STEMS.get(stat.lower()), icon_size=32, bold=True),
+                spin,
+            ))
 
         layout.addWidget(stats_group)
 
         # Growth Pattern Group
-        growth_group = QGroupBox("📈 Growth Pattern")
-        growth_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #f093fb;
-                border-radius: 8px;
-                margin-top: 12px;
-                padding-top: 15px;
-                background-color: white;
-                font-size: 11pt;
-            }
-            QGroupBox::title {
-                color: #c967cc;
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 8px;
-                background-color: white;
-            }
-        """)
-        growth_layout = QHBoxLayout(growth_group)
+        growth_group = QGroupBox("Growth Pattern")
+        growth_layout = QVBoxLayout(growth_group)
+        growth_layout.setSpacing(8)
 
         growth_label = QLabel("Growth Pattern (determines stat gains per level):")
         growth_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
-        growth_layout.addWidget(growth_label)
 
         self.growth_pattern_combo = QComboBox()
         for i in range(1, 19):  # Growth patterns 1-18
             self.growth_pattern_combo.addItem(f"Pattern {i}", i)
-        growth_layout.addWidget(self.growth_pattern_combo)
-        growth_layout.addStretch()
+        growth_layout.addWidget(option_row(growth_label, self.growth_pattern_combo))
 
         layout.addWidget(growth_group)
 
         # Elemental Resistances Group
         resist_group = QGroupBox("Elemental Resistances")
         resist_layout = QGridLayout(resist_group)
+        resist_layout.setHorizontalSpacing(12)
+        resist_layout.setVerticalSpacing(8)
 
         # Create resistance spinboxes with element names
         self.resist_widgets = {}
@@ -7040,8 +7341,7 @@ class DigimonEditor(QMainWindow):
 
         for i, (resist_key, resist_name) in enumerate(resistances):
             row = i // 2
-            col = (i % 2) * 3  # Changed to *3 to make room for label
-            resist_layout.addWidget(create_game_icon_label(f"{resist_name}:", get_resistance_icon_stem(resist_key)), row, col)
+            col = i % 2
 
             spin = QSpinBox()
             spin.setRange(0, 4)
@@ -7055,13 +7355,20 @@ class DigimonEditor(QMainWindow):
                 "4 = Immune (0% damage - no damage taken)"
             )
             self.resist_widgets[resist_key] = spin
-            resist_layout.addWidget(spin, row, col + 1)
 
             # Add label that updates based on value
             value_label = QLabel(resistance_labels[0])
             value_label.setObjectName(f"resist_label_{resist_key}")
-            value_label.setStyleSheet("color: #666; font-size: 9pt;")
-            resist_layout.addWidget(value_label, row, col + 2)
+            value_label.setStyleSheet("color: #bfe9e4; font-size: 9pt;")
+            resist_layout.addWidget(
+                option_row(
+                    create_game_icon_label(f"{resist_name}:", get_resistance_icon_stem(resist_key), icon_size=32, bold=True),
+                    spin,
+                    value_label,
+                ),
+                row,
+                col,
+            )
 
             # Connect to update label when value changes
             spin.valueChanged.connect(lambda v, label=value_label: label.setText(resistance_labels.get(v, "Unknown")))
