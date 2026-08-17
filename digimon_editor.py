@@ -11531,17 +11531,22 @@ class DigimonEditor(QMainWindow):
         """
         selected = Path(selected_path)
         candidates: List[Path] = []
+        containing_payload_root: Optional[Path] = None
 
         def add_candidate(path: Path):
             if path not in candidates:
                 candidates.append(path)
 
         add_candidate(selected)
+        if selected.exists() and selected.is_file():
+            add_candidate(selected.parent)
         for loader_name in DSTS_LOADER_DIR_NAMES:
             add_candidate(selected / loader_name)
 
         for parent in [selected, *selected.parents]:
             if parent.name.lower() in DSTS_LOADER_DIR_NAMES:
+                if containing_payload_root is None:
+                    containing_payload_root = parent
                 add_candidate(parent)
             for loader_name in DSTS_LOADER_DIR_NAMES:
                 add_candidate(parent / loader_name)
@@ -11562,6 +11567,9 @@ class DigimonEditor(QMainWindow):
 
         if not allow_create:
             return None
+
+        if containing_payload_root is not None:
+            return containing_payload_root
 
         if selected.name.lower() in DSTS_LOADER_DIR_NAMES:
             return selected
@@ -11766,6 +11774,26 @@ class DigimonEditor(QMainWindow):
         status_files = self._dsts_loader_status_files(loader_path)
 
         if not status_files:
+            payload_files = self._dsts_loader_ap_csv_files(loader_path)
+            if payload_files:
+                examples = []
+                for csv_file in payload_files[:5]:
+                    try:
+                        examples.append(str(csv_file.relative_to(loader_path)))
+                    except ValueError:
+                        examples.append(str(csv_file))
+                QMessageBox.warning(
+                    self,
+                    "Missing Status CSV",
+                    "The selected folder was resolved to this dsts-loader payload:\n"
+                    f"{loader_path}\n\n"
+                    "It contains .ap.csv files, but importing a Digimon requires:\n"
+                    "patch/data/digimon_status.mbe/000_digimon_status_data.ap.csv\n\n"
+                    "Found CSV examples:\n"
+                    + "\n".join(f"  - {example}" for example in examples)
+                )
+                return
+
             QMessageBox.warning(
                 self,
                 "No Files Found",
