@@ -9475,20 +9475,66 @@ class DigimonEditor(QMainWindow):
         tab = QWidget()
         layout = QVBoxLayout(tab)
         layout.setSpacing(15)
+        layout.setContentsMargins(10, 10, 10, 10)
+
+        evolution_panel_style = modern_groupbox_style("rgba(136, 233, 224, 150)", "#88e9e0")
+        evolution_hint_style = """
+            QLabel {
+                color: #dce9ea;
+                background-color: rgba(4, 18, 23, 165);
+                border: 1px solid rgba(143, 211, 207, 45);
+                border-left: 4px solid #88e9e0;
+                border-radius: 2px;
+                padding: 10px 12px;
+                font-size: 10pt;
+                font-weight: 500;
+            }
+        """
+        evolution_status_style = """
+            QLabel {
+                color: #e8f2f1;
+                background-color: rgba(6, 24, 29, 190);
+                border: 1px solid rgba(143, 211, 207, 45);
+                border-left: 4px solid #88e9e0;
+                border-radius: 2px;
+                padding: 8px 10px;
+                font-size: 10pt;
+            }
+        """
+        evolution_warning_style = """
+            QLabel {
+                color: #f0c982;
+                background-color: rgba(73, 48, 15, 165);
+                border: 1px solid rgba(216, 135, 43, 120);
+                border-left: 4px solid #d8872b;
+                border-radius: 2px;
+                padding: 9px 12px;
+                font-size: 9.5pt;
+            }
+        """
+
+        def configure_evolution_button(button: QPushButton, accent: str = "#d8872b", minimum_width: int = 150) -> None:
+            button.setMinimumHeight(40)
+            button.setMinimumWidth(minimum_width)
+            button.setStyleSheet(modern_action_button_style(accent))
 
         # Title
-        title = QLabel("🔄 Evolution Management")
-        title.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold))
+        title = QLabel("Evolution Management")
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("""
             QLabel {
-                color: #667eea;
-                padding: 15px;
+                color: #f5fffc;
+                padding: 13px 16px;
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #f8f9fa, stop:1 #e9ecef);
-                border-radius: 8px;
-                border: 2px solid #dee2e6;
+                    stop:0 rgba(5, 43, 48, 230),
+                    stop:0.76 rgba(13, 61, 60, 215),
+                    stop:1 rgba(216, 135, 43, 215));
+                border: 1px solid rgba(136, 233, 224, 135);
+                border-left: 4px solid #d8872b;
+                border-radius: 2px;
             }
         """)
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         # Instructions
@@ -9497,49 +9543,32 @@ class DigimonEditor(QMainWindow):
             "Then configure evolution paths (what this Digimon can evolve into) and view pre-evolutions."
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(evolution_hint_style)
         layout.addWidget(info_label)
 
         # Evolution Requirements section (for obtaining THIS Digimon)
-        req_group = QGroupBox("⭐ Requirements to Obtain This Digimon")
-        req_group.setStyleSheet("QGroupBox { font-weight: bold; font-size: 11pt; }")
+        req_group = QGroupBox("Requirements to Obtain This Digimon")
+        req_group.setStyleSheet(evolution_panel_style)
         req_layout = QVBoxLayout()
+        req_layout.setContentsMargins(18, 22, 18, 18)
+        req_layout.setSpacing(10)
 
         req_info = QLabel(
             "These are the requirements that other Digimon must meet to evolve INTO this Digimon.\n"
             "Leave values at 0 for no requirement."
         )
         req_info.setWordWrap(True)
-        req_info.setStyleSheet("color: #555; font-size: 10pt; font-weight: normal;")
+        req_info.setStyleSheet("color: #dce9ea; font-size: 10pt; font-weight: 500; border: none; background: transparent;")
         req_layout.addWidget(req_info)
 
-        action_button_style = """
-            QPushButton {
-                color: white;
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #667eea, stop:1 #764ba2);
-                border: none;
-                border-radius: 7px;
-                padding: 10px 16px;
-                font-size: 10pt;
-                font-weight: bold;
-                min-height: 24px;
-            }
-            QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #5568d3, stop:1 #653b8e);
-            }
-        """
-
         edit_req_btn = QPushButton("Edit Evolution Requirements")
-        edit_req_btn.setMinimumHeight(44)
         edit_req_btn.setToolTip("Open the full requirements editor for obtaining this Digimon")
-        edit_req_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(edit_req_btn, "#d8872b")
         edit_req_btn.clicked.connect(self.edit_evolution_requirements)
         req_layout.addWidget(edit_req_btn)
 
         self.requirements_label = QLabel("Mode: No Requirements (default)")
-        self.requirements_label.setStyleSheet("color: #666; padding: 5px; background: #f0f0f0; border-radius: 3px;")
+        self.requirements_label.setStyleSheet(evolution_status_style)
         self.requirements_label.setWordWrap(True)
         req_layout.addWidget(self.requirements_label)
 
@@ -9547,26 +9576,25 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(req_group)
 
         # Evolution paths section
-        evo_group = QGroupBox("➡️ Evolution Paths (What this Digimon evolves into)")
-        evo_group.setStyleSheet("QGroupBox { font-weight: bold; font-size: 11pt; }")
+        evo_group = QGroupBox("Evolution Paths (What this Digimon evolves into)")
+        evo_group.setStyleSheet(evolution_panel_style)
         evo_layout = QVBoxLayout()
+        evo_layout.setContentsMargins(18, 22, 18, 18)
+        evo_layout.setSpacing(12)
 
         evo_buttons = QHBoxLayout()
+        evo_buttons.setSpacing(8)
         add_evo_btn = QPushButton("Add Evolution Path")
-        add_evo_btn.setMinimumHeight(40)
-        add_evo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(add_evo_btn, "#20d6a3")
         add_evo_btn.clicked.connect(self.add_evolution)
         add_jogress_evo_btn = QPushButton("Add Jogress / DNA")
-        add_jogress_evo_btn.setMinimumHeight(40)
-        add_jogress_evo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(add_jogress_evo_btn, "#88e9e0")
         add_jogress_evo_btn.clicked.connect(lambda _checked=False: self.add_evolution(force_jogress=True))
         edit_evo_btn = QPushButton("Edit Selected Evolution")
-        edit_evo_btn.setMinimumHeight(40)
-        edit_evo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(edit_evo_btn, "#d8872b", 175)
         edit_evo_btn.clicked.connect(self.edit_evolution)
         remove_evo_btn = QPushButton("Remove Selected Evolution")
-        remove_evo_btn.setMinimumHeight(40)
-        remove_evo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(remove_evo_btn, "#d8872b", 205)
         remove_evo_btn.clicked.connect(self.remove_evolution)
         evo_buttons.addWidget(add_evo_btn)
         evo_buttons.addWidget(add_jogress_evo_btn)
@@ -9589,37 +9617,31 @@ class DigimonEditor(QMainWindow):
         layout.addWidget(evo_group)
 
         # Pre-evolution section
-        deevo_group = QGroupBox("⬅️ Pre-Evolutions (Digimon that evolve INTO this one)")
-        deevo_group.setStyleSheet("QGroupBox { font-weight: bold; font-size: 11pt; }")
+        deevo_group = QGroupBox("Pre-Evolutions (Digimon that evolve INTO this one)")
+        deevo_group.setStyleSheet(evolution_panel_style)
         deevo_layout = QVBoxLayout()
+        deevo_layout.setContentsMargins(18, 22, 18, 18)
+        deevo_layout.setSpacing(12)
 
         deevo_info = QLabel(
             "💡 Adding a pre-evolution creates an evolution entry where THAT Digimon evolves into THIS one.\n"
             "⚠️ Each Digimon can only have 6 evolution targets maximum. Base, DLC, and Reloaded II mod rows are counted."
         )
         deevo_info.setWordWrap(True)
-        deevo_info.setStyleSheet("""
-            color: #856404;
-            font-size: 9pt;
-            padding: 8px;
-            background-color: #fff3cd;
-            border-radius: 4px;
-        """)
+        deevo_info.setStyleSheet(evolution_warning_style)
         deevo_layout.addWidget(deevo_info)
 
         # Buttons for adding/removing pre-evolutions
         deevo_buttons = QHBoxLayout()
+        deevo_buttons.setSpacing(8)
         add_deevo_btn = QPushButton("Add Pre-Evolution")
-        add_deevo_btn.setMinimumHeight(40)
-        add_deevo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(add_deevo_btn, "#20d6a3")
         add_deevo_btn.clicked.connect(self.add_pre_evolution)
         add_jogress_deevo_btn = QPushButton("Add Jogress / DNA")
-        add_jogress_deevo_btn.setMinimumHeight(40)
-        add_jogress_deevo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(add_jogress_deevo_btn, "#88e9e0")
         add_jogress_deevo_btn.clicked.connect(lambda _checked=False: self.add_pre_evolution(force_jogress=True))
         remove_deevo_btn = QPushButton("Remove Selected Pre-Evolution")
-        remove_deevo_btn.setMinimumHeight(40)
-        remove_deevo_btn.setStyleSheet(action_button_style)
+        configure_evolution_button(remove_deevo_btn, "#d8872b", 230)
         remove_deevo_btn.clicked.connect(self.remove_pre_evolution)
         deevo_buttons.addWidget(add_deevo_btn)
         deevo_buttons.addWidget(add_jogress_deevo_btn)
