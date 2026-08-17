@@ -437,9 +437,43 @@ class SpinBoxWheelGuard(QObject):
         current = watched
         while current:
             if isinstance(current, (QAbstractSpinBox, QComboBox)):
+                if current.focusPolicy() == Qt.FocusPolicy.WheelFocus:
+                    current.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
                 return current
             current = current.parent()
         return None
+
+    def _focused_for_wheel(self, widget) -> bool:
+        focus_widget = QApplication.focusWidget()
+        return bool(widget.hasFocus() or (focus_widget and widget.isAncestorOf(focus_widget)))
+
+    def _scroll_nearest_parent(self, widget, event) -> bool:
+        scroll_parent = widget.parent()
+        while scroll_parent and not isinstance(scroll_parent, QAbstractScrollArea):
+            scroll_parent = scroll_parent.parent()
+
+        if not isinstance(scroll_parent, QAbstractScrollArea):
+            return False
+
+        pixel_delta = event.pixelDelta()
+        angle_delta = event.angleDelta()
+        if not pixel_delta.isNull():
+            delta_y = pixel_delta.y()
+            delta_x = pixel_delta.x()
+        else:
+            delta_y = angle_delta.y()
+            delta_x = angle_delta.x()
+
+        if delta_y:
+            scrollbar = scroll_parent.verticalScrollBar()
+            scrollbar.setValue(scrollbar.value() - delta_y)
+        elif delta_x:
+            scrollbar = scroll_parent.horizontalScrollBar()
+            scrollbar.setValue(scrollbar.value() - delta_x)
+        else:
+            return False
+        event.accept()
+        return True
 
     def eventFilter(self, watched, event):
         if event.type() == QEvent.Type.Wheel:
@@ -449,20 +483,10 @@ class SpinBoxWheelGuard(QObject):
 
             if isinstance(guarded_widget, QComboBox) and guarded_widget.view().isVisible():
                 return False
-            focus_widget = QApplication.focusWidget()
-            if guarded_widget.hasFocus() or (focus_widget and guarded_widget.isAncestorOf(focus_widget)):
+            if guarded_widget.property("allowWheelEdit") and self._focused_for_wheel(guarded_widget):
                 return False
 
-            scroll_parent = guarded_widget.parent()
-            while scroll_parent and not isinstance(scroll_parent, QAbstractScrollArea):
-                scroll_parent = scroll_parent.parent()
-
-            if isinstance(scroll_parent, QAbstractScrollArea):
-                delta = event.pixelDelta().y() if not event.pixelDelta().isNull() else event.angleDelta().y()
-                if delta:
-                    scrollbar = scroll_parent.verticalScrollBar()
-                    scrollbar.setValue(scrollbar.value() - delta)
-
+            self._scroll_nearest_parent(guarded_widget, event)
             return True
         return False
 
@@ -14789,16 +14813,13 @@ class DigimonEditor(QMainWindow):
 
 
     def export_csv(self):
-        """Export all CSV files with any changes made in the editor"""
-        # Update current digimon with form data if one is loaded
+        """Export CSV files without implicitly saving the loaded source first."""
+        # Keep the in-memory Digimon current for merge/export paths, but do not
+        # mutate its loaded source unless the user presses Save to Loaded Source.
         if self.current_digimon:
             if not self.validate_field_guide_id():
                 return
             self.update_digimon_from_form()
-            # Save changes to the original files first
-            if not self.loader.save_digimon_data(self.current_digimon):
-                QMessageBox.warning(self, "Warning", "Failed to save current Digimon changes")
-                return
 
         # Get directory to save to
         directory = QFileDialog.getExistingDirectory(
@@ -14901,10 +14922,17 @@ class DigimonEditor(QMainWindow):
             warning_text = ""
             if use_dsts_format:
                 output_path = resolved_dsts_path or self._resolve_dsts_loader_root(output_path, allow_create=True) or output_path
+                current_overlay_text = ""
+                if self.current_digimon:
+                    current_overlay_text = (
+                        "• The currently loaded Digimon will be overlaid from the editor after export, "
+                        "so unsaved form edits are included in the destination only\n"
+                    )
                 warning_text = (
                     "⚠️ WARNING: Exporting to dsts-loader format will:\n\n"
                     "• DELETE all existing files in the destination directory\n"
                     "• REPLACE them with only the DLC data currently in your DLC folder\n"
+                    f"{current_overlay_text}"
                     "• This means if you have other Digimon data in dsts-loader that isn't in your DLC folder, it will be LOST\n\n"
                     "Only the Digimon data currently in your DLC folder will be exported.\n\n"
                     "Do you want to continue?"
@@ -14914,6 +14942,7 @@ class DigimonEditor(QMainWindow):
                     "⚠️ WARNING: Exporting all CSV files will:\n\n"
                     "• DELETE all existing files in the destination directory\n"
                     "• REPLACE them with copies of all files from your Base/data and Base/text folders\n"
+                    "• Unsaved form edits are not saved back to the loaded source by Export; use Save to Loaded Source first if this standard export should include them\n"
                     "• Any files in the destination that don't exist in the source will be LOST\n\n"
                     "Do you want to continue?"
                 )
@@ -14931,6 +14960,22 @@ class DigimonEditor(QMainWindow):
 
             if use_dsts_format:
                 if self.exporter.export_for_dsts_loader(output_path):
+                    if self.current_digimon:
+                        original_identity = dict(getattr(self, "loaded_digimon_identity", {}) or {})
+                        if not self._merge_digimon_to_dsts_loader(
+                            output_path,
+                            self.current_digimon,
+                            original_identity,
+                            sync_form=False,
+                        ):
+                            QMessageBox.warning(
+                                self,
+                                "Partial Export",
+                                self._merge_failure_message(
+                                    "Exported the DLC CSV files, but failed to overlay the current Digimon edits"
+                                )
+                            )
+                            return
                     QMessageBox.information(
                         self,
                         "Success",
