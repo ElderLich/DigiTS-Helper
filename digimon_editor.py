@@ -2010,7 +2010,10 @@ class DigimonCreationWizard(QWizard):
                 f"Ready to use with dsts-loader! ✨"
             )
         else:
-            QMessageBox.warning(self, "Error", "Failed to export Digimon")
+            failure_message = "Failed to export Digimon"
+            if parent_editor and hasattr(parent_editor, "_merge_failure_message"):
+                failure_message = parent_editor._merge_failure_message(failure_message)
+            QMessageBox.warning(self, "Error", failure_message)
 
     def _update_chr_id_references(self, digimon: DigimonData, old_chr_id: str, new_chr_id: str):
         """Update all chr_id references in digimon data structures"""
@@ -12984,7 +12987,11 @@ class DigimonEditor(QMainWindow):
         merge_identity = {} if pending_new else original_identity
 
         if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon, merge_identity):
-            QMessageBox.warning(self, "Export Failed", "Failed to write dsts-loader files for the Reloaded II mod.")
+            QMessageBox.warning(
+                self,
+                "Export Failed",
+                self._merge_failure_message("Failed to write dsts-loader files for the Reloaded II mod.")
+            )
             return None
 
         self._set_active_dsts_loader_root(dsts_loader_root)
@@ -13117,7 +13124,11 @@ class DigimonEditor(QMainWindow):
                 )
             return True
         else:
-            QMessageBox.warning(self, "Error", "Failed to save to dsts-loader format")
+            QMessageBox.warning(
+                self,
+                "Error",
+                self._merge_failure_message("Failed to save to dsts-loader format")
+            )
             return False
 
     def save_to_dlc(self, digimon: DigimonData, chr_id_to_reload: str):
@@ -14440,7 +14451,11 @@ class DigimonEditor(QMainWindow):
                                 "Other Digimon data was preserved."
                             )
                         else:
-                            QMessageBox.warning(self, "Error", "Failed to merge Digimon data")
+                            QMessageBox.warning(
+                                self,
+                                "Error",
+                                self._merge_failure_message("Failed to merge Digimon data")
+                            )
                         return
                     # else continue with overwrite (below)
                 else:
@@ -14453,7 +14468,11 @@ class DigimonEditor(QMainWindow):
                             f"✅ {self.current_digimon.name} has been exported to dsts-loader!"
                         )
                     else:
-                        QMessageBox.warning(self, "Error", "Failed to export Digimon data")
+                        QMessageBox.warning(
+                            self,
+                            "Error",
+                            self._merge_failure_message("Failed to export Digimon data")
+                        )
                     return
 
             # Show warning about overwriting existing data (only for full export)
@@ -14532,6 +14551,15 @@ class DigimonEditor(QMainWindow):
         digimon.localized_text = export_text
         return export_text
 
+    def _set_merge_error(self, message: str):
+        """Remember the first concrete merge failure for the caller's message box."""
+        if not getattr(self, "last_merge_error_message", ""):
+            self.last_merge_error_message = message
+
+    def _merge_failure_message(self, fallback: str) -> str:
+        detail = getattr(self, "last_merge_error_message", "")
+        return f"{fallback}\n\n{detail}" if detail else fallback
+
     def _merge_localized_text_files(
         self,
         base_path: Path,
@@ -14540,7 +14568,7 @@ class DigimonEditor(QMainWindow):
         match_char_keys: Set[str],
         match_profile_keys: Set[str],
         match_ids: Set[str],
-    ):
+    ) -> bool:
         """Merge localized name/profile/belong rows into patch_textXX folders."""
         localized_text = self._localized_texts_for_export(digimon)
 
@@ -14568,7 +14596,7 @@ class DigimonEditor(QMainWindow):
             (patch_text / "belong.mbe").mkdir(parents=True, exist_ok=True)
 
             char_name_file = patch_text / "char_name.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(
+            if not self._merge_csv_row(
                 char_name_file,
                 digimon,
                 lambda path, row_digimon, name_text=export_values["name"]: wizard._write_char_name_ap_csv(
@@ -14577,10 +14605,11 @@ class DigimonEditor(QMainWindow):
                     name_text=name_text,
                 ),
                 lambda r: self._csv_cell(r, 0) in match_char_keys,
-            )
+            ):
+                return False
 
             profile_file = patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(
+            if not self._merge_csv_row(
                 profile_file,
                 digimon,
                 lambda path, row_digimon, profile_text=export_values["profile_text"], name_text=export_values["name"]: wizard._write_profile_ap_csv(
@@ -14591,10 +14620,11 @@ class DigimonEditor(QMainWindow):
                 ),
                 lambda r: self._csv_cell(r, 0) in match_profile_keys,
                 drop_malformed=True,
-            )
+            ):
+                return False
 
             belong_file = patch_text / "belong.mbe" / "000_Sheet1.ap.csv"
-            self._merge_csv_row(
+            if not self._merge_csv_row(
                 belong_file,
                 digimon,
                 lambda path, row_digimon, tribe_name=export_values["tribe_name"]: wizard._write_belong_ap_csv(
@@ -14603,7 +14633,10 @@ class DigimonEditor(QMainWindow):
                     tribe_name=tribe_name,
                 ),
                 lambda r: self._csv_cell(r, 0) in match_ids,
-            )
+            ):
+                return False
+
+        return True
 
     def _merge_digimon_to_dsts_loader(
         self,
@@ -14614,6 +14647,7 @@ class DigimonEditor(QMainWindow):
         sync_form: bool = True,
     ) -> bool:
         """Merge a single Digimon into existing dsts-loader files, preserving other entries"""
+        self.last_merge_error_message = ""
         try:
             from pathlib import Path
             import csv
@@ -14666,28 +14700,33 @@ class DigimonEditor(QMainWindow):
 
             # Merge digimon_status_data
             status_file = patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv"
-            self._merge_csv_row(
+            if not self._merge_csv_row(
                 status_file,
                 digimon,
                 wizard._write_digimon_status_ap_csv,
                 lambda r: cell(r, 3) in match_chr_ids or cell(r, 0) in match_ids,
-            )
+            ):
+                return False
 
             # Merge char_info
             char_info_file = patch_data / "char_info.mbe" / "000_char_info.ap.csv"
-            self._merge_csv_row(char_info_file, digimon, wizard._write_char_info_ap_csv, lambda r: cell(r, 0) in match_char_keys)
+            if not self._merge_csv_row(char_info_file, digimon, wizard._write_char_info_ap_csv, lambda r: cell(r, 0) in match_char_keys):
+                return False
 
             # Merge model_setting (if we have the data)
             if digimon.model_setting_data:
                 model_file = patch_data / "model_setting.mbe" / "000_model_setting.ap.csv"
-                self._merge_csv_row(model_file, digimon, wizard._write_model_setting_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
+                if not self._merge_csv_row(model_file, digimon, wizard._write_model_setting_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
+                    return False
 
             # Merge lod files
             lod_file = patch_data / "lod_chara.mbe" / "000_lod.ap.csv"
-            self._merge_csv_row(lod_file, digimon, wizard._write_lod_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
+            if not self._merge_csv_row(lod_file, digimon, wizard._write_lod_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
+                return False
 
             lod_model_file = patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv"
-            self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
+            if not self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
+                return False
 
             evolution_cond_file = patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv"
             jogress_cleanup_targets, jogress_cleanup_edges = self._jogress_cleanup_from_existing_conditions(
@@ -14697,13 +14736,14 @@ class DigimonEditor(QMainWindow):
 
             # Merge evolution files
             evolution_file = patch_data / "evolution.mbe" / "001_evolution_to.ap.csv"
-            self._merge_evolution_file(
+            if not self._merge_evolution_file(
                 evolution_file,
                 digimon,
                 wizard._write_evolution_ap_csv,
                 match_ids,
                 cleanup_entry_keys=jogress_cleanup_edges,
-            )
+            ):
+                return False
 
             condition_match_ids = set(match_ids)
             condition_match_ids.update(jogress_cleanup_targets)
@@ -14712,12 +14752,13 @@ class DigimonEditor(QMainWindow):
                     target_id = evo.get("to_id")
                     if target_id:
                         condition_match_ids.add(str(target_id))
-            self._merge_csv_row(
+            if not self._merge_csv_row(
                 evolution_cond_file,
                 digimon,
                 wizard._write_evolution_condition_ap_csv,
                 lambda r: cell(r, 0) in condition_match_ids
-            )
+            ):
+                return False
 
             # Merge anim_setting - need to handle special signature
             anim_ref = animation_ref or digimon.chr_id
@@ -14772,35 +14813,50 @@ class DigimonEditor(QMainWindow):
                     writer.writerow(anim_header)
                     for row in anim_existing_rows:
                         writer.writerow(row)
-            except Exception as e:
+            except PermissionError as e:
+                self._set_merge_error(
+                    f"Could not write {resolved_anim_file}.\n\n"
+                    f"{e}\n\nClose any CSV editor tabs or tools using this mod, then try again."
+                )
                 print(f"Error merging anim_setting: {e}")
                 if Path(temp_anim.name).exists():
                     Path(temp_anim.name).unlink()
+                return False
+            except Exception as e:
+                self._set_merge_error(f"Could not merge {resolved_anim_file}.\n\n{e}")
+                print(f"Error merging anim_setting: {e}")
+                if Path(temp_anim.name).exists():
+                    Path(temp_anim.name).unlink()
+                return False
 
             # Merge localized text files
-            self._merge_localized_text_files(
+            if not self._merge_localized_text_files(
                 base_path,
                 digimon,
                 wizard,
                 match_char_keys,
                 match_profile_keys,
                 match_ids,
-            )
+            ):
+                return False
 
             # Merge model_outline
             outline_file = app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv"
-            self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: cell(r, 0) in match_chr_ids)
+            if not self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
+                return False
 
             self.last_mvgl_cache_notice = self._clear_mvgl_fileloader_cache()
             return True
 
         except Exception as e:
+            if not getattr(self, "last_merge_error_message", ""):
+                self._set_merge_error(f"Could not merge Digimon data into {base_path}.\n\n{e}")
             print(f"Error merging Digimon to dsts-loader: {e}")
             import traceback
             traceback.print_exc()
             return False
 
-    def _merge_csv_row(self, filepath: Path, digimon_or_data, write_func, find_row_func, drop_malformed: bool = False):
+    def _merge_csv_row(self, filepath: Path, digimon_or_data, write_func, find_row_func, drop_malformed: bool = False) -> bool:
         """Merge a single row into a CSV file, preserving other rows"""
         import csv
         import tempfile
@@ -14824,11 +14880,14 @@ class DigimonEditor(QMainWindow):
                     new_rows = list(reader)
                 temp_file.unlink()  # Delete temp file
             else:
+                message = f"Could not create temporary CSV row file:\n\n{temp_file}"
+                self._set_merge_error(message)
                 print(f"Warning: Temp file {temp_file} was not created")
-                return
+                return False
 
             if not new_rows:
-                return  # No data to merge
+                self._set_merge_error(f"No row data was generated while merging:\n\n{filepath}")
+                return False
 
             # Read existing file if it exists
             existing_rows = []
@@ -14884,14 +14943,31 @@ class DigimonEditor(QMainWindow):
                     for row in existing_rows:
                         writer.writerow(row)
             else:
+                self._set_merge_error(f"No CSV header was available while merging:\n\n{filepath}")
                 print(f"Warning: No header available for {filepath.name}, skipping write")
+                return False
 
-        except Exception as e:
+            return True
+
+        except PermissionError as e:
+            self._set_merge_error(
+                f"Could not write {filepath}.\n\n"
+                f"{e}\n\nClose any CSV editor tabs or tools using this mod, then try again."
+            )
             print(f"Error merging {filepath.name}: {e}")
             import traceback
             traceback.print_exc()
             if temp_file.exists():
                 temp_file.unlink()
+            return False
+        except Exception as e:
+            self._set_merge_error(f"Could not merge {filepath}.\n\n{e}")
+            print(f"Error merging {filepath.name}: {e}")
+            import traceback
+            traceback.print_exc()
+            if temp_file.exists():
+                temp_file.unlink()
+            return False
 
     def _jogress_cleanup_from_existing_conditions(
         self,
@@ -14937,7 +15013,7 @@ class DigimonEditor(QMainWindow):
         write_func,
         match_ids: Optional[Iterable[str]] = None,
         cleanup_entry_keys: Optional[Iterable[Tuple[str, str]]] = None,
-    ):
+    ) -> bool:
         """Merge evolution data, removing old entries for this digimon first"""
         import csv
         match_ids = {str(value) for value in (match_ids or {digimon.id}) if str(value)}
@@ -15010,10 +15086,23 @@ class DigimonEditor(QMainWindow):
                 for row in filtered_rows:
                     writer.writerow(row)
 
-        except Exception as e:
+            return True
+
+        except PermissionError as e:
+            self._set_merge_error(
+                f"Could not write {filepath}.\n\n"
+                f"{e}\n\nClose any CSV editor tabs or tools using this mod, then try again."
+            )
             print(f"Error merging evolution file {filepath.name}: {e}")
             if temp_file.exists():
                 temp_file.unlink()
+            return False
+        except Exception as e:
+            self._set_merge_error(f"Could not merge {filepath}.\n\n{e}")
+            print(f"Error merging evolution file {filepath.name}: {e}")
+            if temp_file.exists():
+                temp_file.unlink()
+            return False
 
     def _is_dsts_loader_directory(self, path: Path) -> bool:
         """Check if the selected export path appears to be a dsts-loader directory."""
