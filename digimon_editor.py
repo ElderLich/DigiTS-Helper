@@ -254,6 +254,8 @@ def modern_dialog_stylesheet() -> str:
             border-radius: 2px;
             padding: 8px;
             font-size: 10.5pt;
+            selection-background-color: #d8872b;
+            selection-color: #ffffff;
         }
         QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus,
         QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {
@@ -897,12 +899,21 @@ class ClickOnlyItemSelectionGuard(QObject):
             current = current.parent()
         return None
 
+    def _is_open_combo_popup(self, view: QAbstractItemView) -> bool:
+        for widget in QApplication.allWidgets():
+            if isinstance(widget, QComboBox) and widget.view() is view and widget.view().isVisible():
+                return True
+        return False
+
     def eventFilter(self, watched, event):
         if event.type() not in (QEvent.Type.MouseMove, QEvent.Type.HoverMove):
             return False
 
         view = self._guarded_item_view(watched)
         if view is None:
+            return False
+
+        if self._is_open_combo_popup(view):
             return False
 
         if event.type() == QEvent.Type.MouseMove and event.buttons() != Qt.MouseButton.NoButton:
@@ -944,6 +955,13 @@ def install_spinbox_wheel_guard():
     if app and not hasattr(app, "_digimon_click_only_item_selection_guard"):
         app._digimon_click_only_item_selection_guard = ClickOnlyItemSelectionGuard(app)
         app.installEventFilter(app._digimon_click_only_item_selection_guard)
+
+
+def clear_text_edit_selection(edit: QTextEdit) -> None:
+    cursor = edit.textCursor()
+    cursor.clearSelection()
+    cursor.setPosition(len(edit.toPlainText()))
+    edit.setTextCursor(cursor)
 
 
 def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> str:
@@ -6222,6 +6240,7 @@ class DigimonEditor(QMainWindow):
         if formatted_text != self.profile_text_edit.toPlainText():
             self.profile_text_edit.setPlainText(formatted_text)
             self.mark_as_modified()
+        clear_text_edit_selection(self.profile_text_edit)
         self.update_profile_text_stats()
 
     def update_profile_text_stats(self):
@@ -7439,6 +7458,8 @@ class DigimonEditor(QMainWindow):
                 padding: 10px;
                 font-size: 10pt;
                 color: #e8f2f1;
+                selection-background-color: #d8872b;
+                selection-color: #ffffff;
             }
             QTextEdit:focus {
                 border-color: rgba(244, 235, 213, 220);
@@ -7528,6 +7549,8 @@ class DigimonEditor(QMainWindow):
                     padding: 10px;
                     font-size: 10pt;
                     color: #e8f2f1;
+                    selection-background-color: #d8872b;
+                    selection-color: #ffffff;
                 }
                 QTextEdit:focus {
                     border-color: rgba(244, 235, 213, 220);
@@ -7618,6 +7641,7 @@ class DigimonEditor(QMainWindow):
         if formatted_text != profile_edit.toPlainText():
             profile_edit.setPlainText(formatted_text)
             self.mark_as_modified()
+        clear_text_edit_selection(profile_edit)
         self.update_localized_profile_stats(folder)
 
     def update_localized_profile_stats(self, folder: str):
