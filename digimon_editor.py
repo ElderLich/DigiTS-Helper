@@ -83,6 +83,8 @@ APP_RESOURCE_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().paren
 GAME_ICON_DIR = APP_RESOURCE_ROOT / "assets" / "game_icons"
 GAME_ICON_SIZE = QSize(32, 32)
 GAME_ICON_TILE_COLOR = QColor(8, 15, 28)
+EDITOR_APP_ID = "DigiTSHelper.DTSCreator.DigimonEditor"
+EDITOR_ICON_STEM = "ui_icon_tab_0604"
 TYPE_ICON_STEMS = {
     0: "ui_icon_type_000",  # Vaccine
     1: "ui_icon_type_020",  # Data
@@ -157,6 +159,22 @@ def get_game_icon(stem: Optional[str]) -> QIcon:
         icon = QIcon(tile)
     _GAME_ICON_CACHE[stem] = icon
     return icon
+
+
+def get_editor_icon() -> QIcon:
+    """Return the editor's dark tile icon for title bars and taskbars."""
+    return get_game_icon(EDITOR_ICON_STEM)
+
+
+def set_windows_app_user_model_id() -> None:
+    """Give Windows a stable app identity so the taskbar uses our window icon."""
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(EDITOR_APP_ID)
+    except Exception:
+        pass
 
 
 def apply_modern_combo_palette(combo: QComboBox) -> None:
@@ -6245,6 +6263,7 @@ class DigimonEditor(QMainWindow):
 
     def setup_ui(self):
         self.setWindowTitle("DTS Creator - Digimon Editor")
+        self.setWindowIcon(get_editor_icon())
         # Set initial size smaller to fit most screens, window is resizable
         self.setGeometry(100, 100, 1400, 800)
 
@@ -17434,12 +17453,14 @@ class DigimonEditor(QMainWindow):
 
 
 def main():
+    set_windows_app_user_model_id()
     app = QApplication(sys.argv)
     install_spinbox_wheel_guard()
 
     # Set application properties
     app.setApplicationName("DTS Creator")
     app.setApplicationVersion("1.0")
+    app.setWindowIcon(get_editor_icon())
 
     # Dark global fallback palette for dialogs, popups, and widgets outside the main window.
     palette = app.palette()
@@ -17492,6 +17513,7 @@ def main():
 
     # Create and show main window
     window = DigimonEditor()
+    window.setWindowIcon(get_editor_icon())
     window.show()
 
     sys.exit(app.exec())
