@@ -6794,7 +6794,7 @@ class DigimonEditor(QMainWindow):
                 background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
                 border: 1px solid rgba(146, 232, 228, 100);
-                padding: 8px;
+                padding: 0px;
             }
         """)
         source_layout = QHBoxLayout(source_container)
@@ -6881,7 +6881,7 @@ class DigimonEditor(QMainWindow):
                 background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
                 border: 1px solid rgba(146, 232, 228, 100);
-                padding: 8px;
+                padding: 0px;
             }
         """)
         sort_layout = QHBoxLayout(sort_container)
