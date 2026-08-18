@@ -2548,6 +2548,8 @@ class DigimonCreationWizard(QWizard):
         self.template_digimon: Optional[DigimonData] = None
         self.new_digimon: Optional[DigimonData] = None
         self.last_export_path: Optional[Path] = None  # Store export path for later import
+        self.last_mod_root: Optional[Path] = None
+        self.export_succeeded = False
 
         self.setWindowTitle("✨ Digimon Creation Wizard - Export to dsts-loader")
         self.setMinimumSize(700, 600)
@@ -2640,7 +2642,11 @@ class DigimonCreationWizard(QWizard):
                 child.setStyleSheet(header_style)
 
     def finish_wizard(self):
-        """Called when wizard is finished - export to DLC"""
+        """Called when wizard is finished - export to Reloaded II mod."""
+        self.export_succeeded = False
+        self.last_export_path = None
+        self.last_mod_root = None
+
         try:
             # Get all data from pages
             template_page = self.page(0)
@@ -2773,62 +2779,43 @@ class DigimonCreationWizard(QWizard):
         # Get animation reference
         animation_ref = model_page.animation_ref_edit.text().strip() if model_page.animation_ref_edit.text().strip() else template_chr_id
 
-        # Ask user where to export. If the main editor has an imported mod
-        # loaded, default to that payload so adding a second Digimon naturally
-        # appends to the same Reloaded II mod instead of starting a new one.
         parent_editor = self.parent()
-        default_path = get_default_mod_loader_path()
-        if parent_editor and hasattr(parent_editor, "_active_dsts_loader_root"):
-            active_root = parent_editor._active_dsts_loader_root()
-            if active_root:
-                default_path = active_root
+        mod_root: Optional[Path] = None
+        output_path: Optional[Path] = None
 
-        export_dir = QFileDialog.getExistingDirectory(
-            self,
-            "Select Reloaded II Mod or dsts-loader Directory",
-            str(get_existing_directory_start(default_path)),
-            QFileDialog.Option.ShowDirsOnly
-        )
-
-        if not export_dir:
-            # Don't lose work if user cancels - ask if they want to retry or exit
-            reply = QMessageBox.question(
-                self,
-                "Export Cancelled",
-                "Do you want to go back and review your Digimon, or discard all changes?",
-                QMessageBox.StandardButton.Retry | QMessageBox.StandardButton.Discard,
-                QMessageBox.StandardButton.Retry
-            )
-
-            if reply == QMessageBox.StandardButton.Retry:
-                # Go back to review page
-                self.back()
-                return
-            else:
-                # User chose to discard - close wizard
-                return
-
-        selected_export_path = Path(export_dir)
-        output_path = selected_export_path
-        if parent_editor and hasattr(parent_editor, "_resolve_dsts_loader_root"):
-            output_path = parent_editor._resolve_dsts_loader_root(selected_export_path, allow_create=True) or selected_export_path
-
-        # Store export path for later import
-        self.last_export_path = output_path
-
-        # Export to dsts-loader format. Prefer the editor merge path so existing
-        # Digimon rows in a loaded mod are preserved when adding another entry.
         try:
-            if parent_editor and hasattr(parent_editor, "_merge_digimon_to_dsts_loader"):
-                success = parent_editor._merge_digimon_to_dsts_loader(
-                    output_path,
+            if parent_editor and hasattr(parent_editor, "export_digimon_to_reloaded_mod"):
+                mod_root = parent_editor.export_digimon_to_reloaded_mod(
                     self.new_digimon,
+                    {"pending_new_mod_entry": True},
                     animation_ref=animation_ref,
                     sync_form=False,
                 )
-                if success and hasattr(parent_editor, "_set_active_dsts_loader_root"):
-                    parent_editor._set_active_dsts_loader_root(output_path)
+                success = mod_root is not None
+                if success:
+                    output_path = mod_root / "dsts-loader"
             else:
+                # Standalone fallback: keep the older direct dsts-loader export path.
+                default_path = get_default_mod_loader_path()
+                export_dir = QFileDialog.getExistingDirectory(
+                    self,
+                    "Select dsts-loader Directory",
+                    str(get_existing_directory_start(default_path)),
+                    QFileDialog.Option.ShowDirsOnly
+                )
+                if not export_dir:
+                    reply = QMessageBox.question(
+                        self,
+                        "Export Cancelled",
+                        "Do you want to go back and review your Digimon, or discard all changes?",
+                        QMessageBox.StandardButton.Retry | QMessageBox.StandardButton.Discard,
+                        QMessageBox.StandardButton.Retry
+                    )
+                    if reply == QMessageBox.StandardButton.Retry:
+                        self.back()
+                    return
+
+                output_path = Path(export_dir)
                 success = self._export_to_dsts_loader(output_path, self.new_digimon, animation_ref)
         except Exception as e:
             import traceback
@@ -2845,28 +2832,27 @@ class DigimonCreationWizard(QWizard):
             return
 
         if success:
+            self.export_succeeded = True
+            self.last_mod_root = mod_root
+            self.last_export_path = output_path
+            destination_text = (
+                f"Reloaded II mod folder:\n{mod_root}\n\n"
+                f"dsts-loader payload:\n{output_path}"
+                if mod_root
+                else f"dsts-loader payload:\n{output_path}"
+            )
+            cache_notice = ""
+            if parent_editor and hasattr(parent_editor, "_consume_mvgl_cache_notice"):
+                cache_notice = parent_editor._consume_mvgl_cache_notice()
             QMessageBox.information(
                 self,
                 "Success! 🎉",
-                f"✅ {self.new_digimon.name} has been successfully exported!\n\n"
+                f"✅ {self.new_digimon.name} has been successfully exported as a Reloaded II mod!\n\n"
                 f"ID: {self.new_digimon.id}\n"
                 f"Chr ID: {self.new_digimon.chr_id}\n"
                 f"Animation Reference: {animation_ref}\n\n"
-                f"📁 Files created in dsts-loader format:\n\n"
-                f"patch/data/:\n"
-                f"  • digimon_status_data.ap.csv\n"
-                f"  • char_info.ap.csv\n"
-                f"  • model_setting.ap.csv\n"
-                f"  • lod.ap.csv + lod_model.ap.csv\n"
-                f"  • evolution_to.ap.csv + evolution_condition.ap.csv\n"
-                f"  • same_animation_data.ap.csv\n\n"
-                f"patch_text01/text/:\n"
-                f"  • char_name.ap.csv\n"
-                f"  • digimon_profile.ap.csv\n"
-                f"  • belong.ap.csv\n\n"
-                f"app_0/data/:\n"
-                f"  • model_outline_battle.ap.csv\n\n"
-                f"Ready to use with dsts-loader! ✨"
+                f"{destination_text}"
+                f"{cache_notice}"
             )
         else:
             failure_message = "Failed to export Digimon"
@@ -12571,13 +12557,13 @@ class DigimonEditor(QMainWindow):
         wizard = DigimonCreationWizard(self, self.loader)
         wizard.exec()
 
-        # Inform user if a new Digimon was created
-        if wizard.new_digimon:
+        # Inform user if a new Digimon was exported
+        if getattr(wizard, "export_succeeded", False) and wizard.new_digimon:
             # Ask if they want to import it for editing
             reply = QMessageBox.question(
                 self,
                 "Digimon Created",
-                f"✅ {wizard.new_digimon.name} has been exported to dsts-loader format!\n\n"
+                f"✅ {wizard.new_digimon.name} has been exported as a Reloaded II mod!\n\n"
                 f"Would you like to import it for editing?\n"
                 f"(This will import the Digimon from the folder you just exported to)",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
@@ -14266,7 +14252,13 @@ class DigimonEditor(QMainWindow):
         self.last_mvgl_cache_notice = ""
         return f"\n\n{notice}" if notice else ""
 
-    def export_digimon_to_reloaded_mod(self, digimon: DigimonData, original_identity: Optional[dict] = None) -> Optional[Path]:
+    def export_digimon_to_reloaded_mod(
+        self,
+        digimon: DigimonData,
+        original_identity: Optional[dict] = None,
+        animation_ref: Optional[str] = None,
+        sync_form: bool = True,
+    ) -> Optional[Path]:
         """Create/update a Reloaded II mod folder and merge this Digimon into dsts-loader files."""
         options = self.get_reloaded_mod_export_options(digimon)
         if not options:
@@ -14283,7 +14275,13 @@ class DigimonEditor(QMainWindow):
         )
         merge_identity = {} if pending_new else original_identity
 
-        if not self._merge_digimon_to_dsts_loader(dsts_loader_root, digimon, merge_identity):
+        if not self._merge_digimon_to_dsts_loader(
+            dsts_loader_root,
+            digimon,
+            merge_identity,
+            animation_ref=animation_ref,
+            sync_form=sync_form,
+        ):
             QMessageBox.warning(
                 self,
                 "Export Failed",
