@@ -7063,20 +7063,6 @@ class DigimonEditor(QMainWindow):
         ))
         button_layout.addWidget(self.load_button)
 
-        self.add_selected_to_mod_button = QPushButton("➕ Add Selected as New Entry")
-        self.add_selected_to_mod_button.setMinimumHeight(50)
-        self.add_selected_to_mod_button.clicked.connect(self.add_selected_to_active_mod)
-        self.add_selected_to_mod_button.setEnabled(False)
-        self.add_selected_to_mod_button.setToolTip(
-            "Load the selected base/DLC/imported Digimon as a pending entry for the active mod.\n"
-            "You choose the new ID, Chr ID, Character Key, and Field Guide slot before saving."
-        )
-        self.add_selected_to_mod_button.setStyleSheet(button_style.format(
-            color1="#14b8a6", color2="#0f766e",
-            hover1="rgba(22, 117, 106, 215)", hover2="#115e59"
-        ))
-        button_layout.addWidget(self.add_selected_to_mod_button)
-
         self.new_button = QPushButton("➕ Create New")
         self.new_button.setMinimumHeight(50)
         self.new_button.clicked.connect(self.launch_creation_wizard)
@@ -11688,8 +11674,6 @@ class DigimonEditor(QMainWindow):
         self.load_button.setEnabled(has_selection)
         entry = getattr(self, "digimon_data", {}).get(display_name) if has_selection else None
         is_imported_entry = isinstance(entry, dict) and bool(entry.get("imported"))
-        if hasattr(self, "add_selected_to_mod_button"):
-            self.add_selected_to_mod_button.setEnabled(has_selection and self._active_dsts_loader_root() is not None)
         if hasattr(self, "remove_selected_from_mod_button"):
             self.remove_selected_from_mod_button.setEnabled(is_imported_entry and self._active_dsts_loader_root() is not None)
 
@@ -12047,74 +12031,6 @@ class DigimonEditor(QMainWindow):
                 pass
 
         return used_char_keys
-
-    def add_selected_to_active_mod(self):
-        """Load the selected Digimon as an unsaved new entry for the active mod."""
-        active_root = self._active_dsts_loader_root()
-        if not active_root:
-            QMessageBox.warning(
-                self,
-                "No Active Mod",
-                "Import or export a Reloaded II mod first.\n\n"
-                "After a mod is loaded, this button can add the selected Digimon as a new entry in that same dsts-loader payload."
-            )
-            return
-
-        entry = self._selected_digimon_entry()
-        if not entry:
-            QMessageBox.warning(self, "No Selection", "Select a Digimon from the list first.")
-            return
-
-        if self.has_unsaved_changes:
-            reply = QMessageBox.question(
-                self,
-                "Unsaved Changes",
-                f"You have unsaved changes to {self.current_digimon.name if self.current_digimon else 'the current Digimon'}.\n\n"
-                "Do you want to save before adding a new mod entry?",
-                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
-                QMessageBox.StandardButton.Save
-            )
-            if reply == QMessageBox.StandardButton.Cancel:
-                return
-            if reply == QMessageBox.StandardButton.Save:
-                self.save_current_digimon()
-                if self.has_unsaved_changes:
-                    return
-
-        template = self._digimon_from_entry(entry)
-        if not template:
-            QMessageBox.warning(self, "Load Failed", "Could not load the selected Digimon as a template.")
-            return
-
-        from copy import deepcopy
-        new_digimon = deepcopy(template)
-        source_name = template.name or entry.get("name", "Digimon")
-        source_chr_id = template.chr_id
-        animation_ref = getattr(template, "animation_ref", "") or source_chr_id
-
-        # Keep the template's visible identity intact. The editor marks this as a
-        # pending mod entry so Save/Export will require the user-selected final
-        # IDs instead of silently inventing chr/id/key values.
-        new_digimon.pending_new_mod_entry = True
-        new_digimon.template_id = getattr(template, "id", "")
-        new_digimon.template_chr_id = source_chr_id
-        new_digimon.template_char_key = getattr(template, "char_key", "")
-        new_digimon.animation_ref = animation_ref
-        self._mark_import_source(new_digimon, active_root)
-
-        self.current_digimon_from_dlc = False
-        self.load_digimon_data(new_digimon)
-        self.current_digimon_label.setText(f"📝 New Entry Template: {source_name} ({source_chr_id}) *")
-        self.mark_as_modified()
-
-        QMessageBox.information(
-            self,
-            "Template Loaded",
-            f"✅ Loaded {source_name} as a new pending mod entry.\n\n"
-            f"Template: {source_name} ({source_chr_id})\n"
-            f"Active mod:\n{active_root}\n\n"
-            "Choose the new Digimon ID, Chr ID, Character Key, and Field Guide slot, then use Save to Loaded Source."
-        )
 
     def _csv_cell(self, row: List[str], index: int) -> str:
         """Return a cleaned CSV cell, or an empty string when the column is missing."""
