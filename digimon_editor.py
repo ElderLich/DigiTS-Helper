@@ -6758,52 +6758,57 @@ class DigimonEditor(QMainWindow):
         """Create the left panel with Digimon list"""
         panel = QWidget()
         panel.setObjectName("leftPanel")
-        panel.setMinimumWidth(420)
+        panel.setMinimumWidth(450)
         panel.setStyleSheet("""
             QWidget#leftPanel {
-                background-color: rgba(4, 20, 25, 205);
+                background-color: rgba(4, 20, 25, 225);
                 border-radius: 2px;
-                border: 1px solid rgba(146, 232, 228, 105);
+                border: 1px solid rgba(146, 232, 228, 135);
             }
         """)
         layout = QVBoxLayout(panel)
-        layout.setContentsMargins(15, 15, 15, 15)
-        layout.setSpacing(12)
+        layout.setContentsMargins(18, 18, 18, 18)
+        layout.setSpacing(13)
 
         # Title
         title = QLabel("📚 Digimon Database")
-        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
+        title.setMinimumHeight(56)
+        title.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold))
         title.setStyleSheet("""
             QLabel {
                 color: #f0f6f4;
-                padding: 12px;
+                padding: 14px 15px;
                 background-color: rgba(5, 16, 22, 215);
                 border-radius: 2px;
-                border: 1px solid rgba(146, 232, 228, 80);
-                border-left: 5px solid #d8872b;
+                border: 1px solid rgba(146, 232, 228, 115);
+                border-left: 6px solid #d8872b;
             }
         """)
         layout.addWidget(title)
 
         # Source selector (Base Game vs DLC)
         source_container = QWidget()
+        source_container.setMinimumHeight(56)
         source_container.setStyleSheet("""
             QWidget {
-                background-color: rgba(5, 24, 29, 180);
+                background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
-                border: 1px solid rgba(146, 232, 228, 70);
+                border: 1px solid rgba(146, 232, 228, 100);
                 padding: 8px;
             }
         """)
         source_layout = QHBoxLayout(source_container)
-        source_layout.setContentsMargins(10, 5, 10, 5)
+        source_layout.setContentsMargins(12, 7, 10, 7)
+        source_layout.setSpacing(12)
 
         source_label = QLabel("📂 Source:")
-        source_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        source_label.setMinimumWidth(110)
+        source_label.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
         source_label.setStyleSheet("border: none; background: transparent; color: #f0b044;")
         source_layout.addWidget(source_label)
 
         self.source_combo = QComboBox()
+        self.source_combo.setMinimumHeight(40)
         self.source_combo.addItem("Base + DLC + Mods", "all")
         self.source_combo.addItem("Base Game", "base")
         self.source_combo.addItem("DLC (addcont_01-03,17)", "dlc")
@@ -6823,8 +6828,8 @@ class DigimonEditor(QMainWindow):
                 border: none;
                 background: rgba(6, 18, 24, 210);
                 border-radius: 2px;
-                padding: 6px 42px 6px 10px;
-                font-size: 10pt;
+                padding: 8px 46px 8px 12px;
+                font-size: 11pt;
                 color: #e8f2f1;
             }
             QComboBox:hover {
@@ -6833,7 +6838,7 @@ class DigimonEditor(QMainWindow):
             QComboBox::drop-down {
                 subcontrol-origin: padding;
                 subcontrol-position: top right;
-                width: 30px;
+                width: 34px;
                 border-left: 1px solid rgba(146, 232, 228, 70);
                 background-color: rgba(11, 39, 43, 210);
                 border-top-right-radius: 2px;
@@ -6870,23 +6875,27 @@ class DigimonEditor(QMainWindow):
 
         # Sort selector
         sort_container = QWidget()
+        sort_container.setMinimumHeight(56)
         sort_container.setStyleSheet("""
             QWidget {
-                background-color: rgba(5, 24, 29, 180);
+                background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
-                border: 1px solid rgba(146, 232, 228, 70);
+                border: 1px solid rgba(146, 232, 228, 100);
                 padding: 8px;
             }
         """)
         sort_layout = QHBoxLayout(sort_container)
-        sort_layout.setContentsMargins(10, 5, 10, 5)
+        sort_layout.setContentsMargins(12, 7, 10, 7)
+        sort_layout.setSpacing(12)
 
         sort_label = QLabel("↕ Sort:")
-        sort_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        sort_label.setMinimumWidth(110)
+        sort_label.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
         sort_label.setStyleSheet("border: none; background: transparent; color: #f0b044;")
         sort_layout.addWidget(sort_label)
 
         self.sort_combo = QComboBox()
+        self.sort_combo.setMinimumHeight(40)
         self.sort_combo.addItem("Name", "name")
         self.sort_combo.addItem("Chr ID", "chr_id")
         self.sort_combo.setToolTip("Sort the Digimon list by display name or chr ID")
@@ -6902,19 +6911,21 @@ class DigimonEditor(QMainWindow):
 
         # Search box
         search_container = QWidget()
+        search_container.setMinimumHeight(54)
         search_container.setStyleSheet("""
             QWidget {
-                background-color: rgba(5, 24, 29, 180);
+                background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
-                border: 1px solid rgba(146, 232, 228, 70);
-                padding: 5px;
+                border: 1px solid rgba(146, 232, 228, 110);
+                padding: 6px;
             }
         """)
         search_layout = QHBoxLayout(search_container)
-        search_layout.setContentsMargins(10, 5, 10, 5)
+        search_layout.setContentsMargins(12, 6, 12, 6)
+        search_layout.setSpacing(10)
 
         search_icon = QLabel("🔎")
-        search_icon.setFont(QFont("Segoe UI", 12))
+        search_icon.setFont(QFont("Segoe UI", 14))
         search_icon.setStyleSheet("border: none; background: transparent;")
         search_layout.addWidget(search_icon)
 
@@ -6924,7 +6935,7 @@ class DigimonEditor(QMainWindow):
             QLineEdit {
                 border: none;
                 background: transparent;
-                font-size: 11pt;
+                font-size: 12pt;
                 padding: 5px;
                 color: #e8f2f1;
             }
@@ -6938,14 +6949,15 @@ class DigimonEditor(QMainWindow):
 
         # Digimon list
         self.digimon_list = QComboBox()
+        self.digimon_list.setMinimumHeight(50)
         self.digimon_list.currentTextChanged.connect(self.on_digimon_selected)
         self.digimon_list.setStyleSheet("""
             QComboBox {
                 background: rgba(6, 18, 24, 220);
-                border: 1px solid rgba(146, 232, 228, 85);
+                border: 1px solid rgba(146, 232, 228, 120);
                 border-radius: 2px;
-                padding: 10px 46px 10px 10px;
-                font-size: 11pt;
+                padding: 12px 48px 12px 12px;
+                font-size: 11.5pt;
                 color: #e8f2f1;
             }
             QComboBox:hover {
@@ -7004,17 +7016,30 @@ class DigimonEditor(QMainWindow):
         view.setPalette(palette)
         layout.addWidget(self.digimon_list)
 
+        self.digimon_count_label = QLabel("0 Digimon")
+        self.digimon_count_label.setStyleSheet("""
+            QLabel {
+                color: #88e9e0;
+                font-size: 9.5pt;
+                font-weight: 700;
+                padding: 0 2px 2px 2px;
+                background: transparent;
+                border: none;
+            }
+        """)
+        layout.addWidget(self.digimon_count_label)
+
         # Buttons with modern styling
         button_style = """
             QPushButton {{
                 background: rgba(5, 18, 23, 220);
                 color: #f0f6f4;
-                border: 1px solid rgba(146, 232, 228, 80);
-                border-left: 4px solid {color1};
+                border: 1px solid rgba(146, 232, 228, 105);
+                border-left: 5px solid {color1};
                 border-radius: 2px;
-                padding: 11px 12px;
+                padding: 13px 15px;
                 font-weight: bold;
-                font-size: 10pt;
+                font-size: 11pt;
                 text-align: left;
             }}
             QPushButton:hover {{
@@ -7022,10 +7047,10 @@ class DigimonEditor(QMainWindow):
                 border-color: rgba(235, 229, 210, 190);
             }}
             QPushButton:disabled {{
-                background: rgba(12, 22, 27, 140);
-                color: rgba(230, 238, 238, 82);
-                border-color: rgba(111, 137, 137, 55);
-                border-left-color: rgba(111, 137, 137, 75);
+                background: rgba(8, 19, 23, 175);
+                color: rgba(210, 226, 226, 125);
+                border-color: rgba(111, 137, 137, 85);
+                border-left-color: rgba(111, 137, 137, 115);
             }}
         """
 
@@ -7033,15 +7058,15 @@ class DigimonEditor(QMainWindow):
         button_layout.setSpacing(8)
 
         def add_sidebar_gap() -> None:
-            button_layout.addSpacing(6)
+            button_layout.addSpacing(8)
             separator = QWidget()
-            separator.setFixedHeight(1)
-            separator.setStyleSheet("background-color: rgba(190, 236, 231, 120); border-radius: 1px;")
+            separator.setFixedHeight(2)
+            separator.setStyleSheet("background-color: rgba(190, 236, 231, 135); border-radius: 1px;")
             button_layout.addWidget(separator)
-            button_layout.addSpacing(6)
+            button_layout.addSpacing(8)
 
         self.load_button = QPushButton("📖 Load Selected")
-        self.load_button.setMinimumHeight(44)
+        self.load_button.setMinimumHeight(50)
         self.load_button.clicked.connect(self.load_selected_digimon)
         self.load_button.setToolTip("Load the selected Digimon for editing")
         self.load_button.setStyleSheet(button_style.format(
@@ -7051,7 +7076,7 @@ class DigimonEditor(QMainWindow):
         button_layout.addWidget(self.load_button)
 
         self.add_selected_to_mod_button = QPushButton("➕ Add Selected as New Entry")
-        self.add_selected_to_mod_button.setMinimumHeight(44)
+        self.add_selected_to_mod_button.setMinimumHeight(50)
         self.add_selected_to_mod_button.clicked.connect(self.add_selected_to_active_mod)
         self.add_selected_to_mod_button.setEnabled(False)
         self.add_selected_to_mod_button.setToolTip(
@@ -7065,7 +7090,7 @@ class DigimonEditor(QMainWindow):
         button_layout.addWidget(self.add_selected_to_mod_button)
 
         self.new_button = QPushButton("➕ Create New")
-        self.new_button.setMinimumHeight(44)
+        self.new_button.setMinimumHeight(50)
         self.new_button.clicked.connect(self.launch_creation_wizard)
         self.new_button.setToolTip(
             "Create a new Digimon using the step-by-step wizard.\n"
@@ -7079,7 +7104,7 @@ class DigimonEditor(QMainWindow):
         add_sidebar_gap()
 
         self.import_button = QPushButton("📥 Import Mod / dsts-loader")
-        self.import_button.setMinimumHeight(44)
+        self.import_button.setMinimumHeight(50)
         self.import_button.clicked.connect(self.import_from_dsts_loader)
         self.import_button.setToolTip(
             "Import Digimon from a Reloaded II mod folder or its dsts-loader payload.\n"
@@ -7092,7 +7117,7 @@ class DigimonEditor(QMainWindow):
         button_layout.addWidget(self.import_button)
 
         self.save_button = QPushButton("💾 Save to Loaded Source")
-        self.save_button.setMinimumHeight(44)
+        self.save_button.setMinimumHeight(50)
         self.save_button.clicked.connect(self.save_current_digimon)
         self.save_button.setEnabled(False)
         self.save_button.setToolTip(
@@ -7108,7 +7133,7 @@ class DigimonEditor(QMainWindow):
         button_layout.addWidget(self.save_button)
 
         self.export_dlc_button = QPushButton("📦 Export / Copy Mod")
-        self.export_dlc_button.setMinimumHeight(44)
+        self.export_dlc_button.setMinimumHeight(50)
         self.export_dlc_button.clicked.connect(self.export_to_dlc)
         self.export_dlc_button.setEnabled(False)
         self.export_dlc_button.setToolTip(
@@ -7124,7 +7149,7 @@ class DigimonEditor(QMainWindow):
         add_sidebar_gap()
 
         self.remove_selected_from_mod_button = QPushButton("🗑️ Remove Selected from Mod")
-        self.remove_selected_from_mod_button.setMinimumHeight(44)
+        self.remove_selected_from_mod_button.setMinimumHeight(50)
         self.remove_selected_from_mod_button.clicked.connect(self.remove_selected_from_active_mod)
         self.remove_selected_from_mod_button.setEnabled(False)
         self.remove_selected_from_mod_button.setToolTip(
@@ -7138,7 +7163,7 @@ class DigimonEditor(QMainWindow):
         button_layout.addWidget(self.remove_selected_from_mod_button)
 
         self.remove_button = QPushButton("🗑️ Remove from DLC")
-        self.remove_button.setMinimumHeight(44)
+        self.remove_button.setMinimumHeight(50)
         self.remove_button.clicked.connect(self.remove_digimon_from_dlc)
         self.remove_button.setEnabled(False)
         self.remove_button.setToolTip("Permanently delete this Digimon from DLC files\nOnly works for DLC Digimon")
@@ -7178,17 +7203,17 @@ class DigimonEditor(QMainWindow):
 
         self.configure_paths_button = QPushButton("⚙️ Configure Paths")
         self.configure_paths_button.clicked.connect(self.configure_paths)
-        self.configure_paths_button.setMinimumHeight(42)
+        self.configure_paths_button.setMinimumHeight(50)
         self.configure_paths_button.setStyleSheet("""
             QPushButton {
                 background-color: rgba(5, 18, 23, 220);
                 color: #e8f2f1;
-                border: 1px solid rgba(146, 232, 228, 90);
-                border-left: 4px solid #a8d5cf;
+                border: 1px solid rgba(146, 232, 228, 120);
+                border-left: 5px solid #a8d5cf;
                 border-radius: 2px;
-                padding: 10px 14px;
+                padding: 13px 15px;
                 font-weight: bold;
-                font-size: 10pt;
+                font-size: 11pt;
                 text-align: left;
             }
             QPushButton:hover {
@@ -11579,6 +11604,12 @@ class DigimonEditor(QMainWindow):
             self.digimon_list.setCurrentText(previous_text)
         self.digimon_list.blockSignals(False)
         self.on_digimon_selected(self.digimon_list.currentText())
+        if hasattr(self, "digimon_count_label"):
+            total_entries = len(getattr(self, "digimon_entries", []))
+            if filter_text:
+                self.digimon_count_label.setText(f"{len(display_names)} shown of {total_entries}")
+            else:
+                self.digimon_count_label.setText(f"{len(display_names)} Digimon")
 
         self.all_digimon_names = display_names.copy()
 
@@ -11648,6 +11679,8 @@ class DigimonEditor(QMainWindow):
             else:
                 message = "(No Digimon found)"
             self.digimon_list.addItem(message)
+            if hasattr(self, "digimon_count_label"):
+                self.digimon_count_label.setText("0 Digimon")
             self.all_digimon_names = []
 
     def on_source_changed(self):
