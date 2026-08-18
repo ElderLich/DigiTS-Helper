@@ -6798,7 +6798,7 @@ class DigimonEditor(QMainWindow):
             }
         """)
         source_layout = QHBoxLayout(source_container)
-        source_layout.setContentsMargins(12, 7, 10, 7)
+        source_layout.setContentsMargins(12, 7, 0, 7)
         source_layout.setSpacing(12)
 
         source_label = QLabel("📂 Source:")
@@ -6870,7 +6870,7 @@ class DigimonEditor(QMainWindow):
         source_palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
         source_palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
         source_view.setPalette(source_palette)
-        source_layout.addWidget(self.source_combo)
+        source_layout.addWidget(self.source_combo, 1)
         layout.addWidget(source_container)
 
         # Sort selector
@@ -6885,7 +6885,7 @@ class DigimonEditor(QMainWindow):
             }
         """)
         sort_layout = QHBoxLayout(sort_container)
-        sort_layout.setContentsMargins(12, 7, 10, 7)
+        sort_layout.setContentsMargins(12, 7, 0, 7)
         sort_layout.setSpacing(12)
 
         sort_label = QLabel("↕ Sort:")
@@ -6906,7 +6906,7 @@ class DigimonEditor(QMainWindow):
         sort_palette.setColor(QPalette.ColorRole.Text, QColor("#e8f2f1"))
         sort_palette.setColor(QPalette.ColorRole.Base, QColor("#06181d"))
         sort_view.setPalette(sort_palette)
-        sort_layout.addWidget(self.sort_combo)
+        sort_layout.addWidget(self.sort_combo, 1)
         layout.addWidget(sort_container)
 
         # Search box
