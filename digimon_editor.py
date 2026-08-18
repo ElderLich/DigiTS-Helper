@@ -14624,32 +14624,29 @@ class DigimonEditor(QMainWindow):
         info_label.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info_label)
 
-        slot_status_label = QLabel()
-        slot_status_label.setWordWrap(True)
-        if source_id <= 0:
+        slot_status_label = None
+        if source_id <= 0 or source_slot_count >= 5:
+            slot_status_label = QLabel()
+            slot_status_label.setWordWrap(True)
+        if source_id <= 0 and slot_status_label:
             slot_status_label.setText(
                 "Evolution slots: set the current Digimon ID first to count base, DLC, mod, and pending paths."
             )
             slot_status_label.setStyleSheet(modern_status_panel_style("#88e9e0"))
-        elif source_slot_count >= 6:
+        elif source_slot_count >= 6 and slot_status_label:
             slot_status_label.setText(
                 f"❌ {source_name} has {source_slot_count}/6 evolution slots used (0 free). "
                 "Remove an existing path before adding another."
             )
             slot_status_label.setStyleSheet(modern_warning_panel_style())
-        elif source_slot_count >= 5:
+        elif source_slot_count >= 5 and slot_status_label:
             slot_status_label.setText(
                 f"⚠️ {source_name} has {source_slot_count}/6 evolution slots used "
                 f"({source_free_slots} free)."
             )
             slot_status_label.setStyleSheet(modern_status_panel_style("#d8872b"))
-        else:
-            slot_status_label.setText(
-                f"✅ {source_name} has {source_slot_count}/6 evolution slots used "
-                f"({source_free_slots} free)."
-            )
-            slot_status_label.setStyleSheet(modern_status_panel_style("#20d6a3"))
-        layout.addWidget(slot_status_label)
+        if slot_status_label:
+            layout.addWidget(slot_status_label)
 
         path_type_combo = QComboBox()
         path_type_combo.addItem("Normal evolution", EVOLUTION_TYPE_NORMAL)
@@ -14674,6 +14671,10 @@ class DigimonEditor(QMainWindow):
         search_edit.setPlaceholderText("Search Digimon...")
         list_layout.addWidget(search_edit)
 
+        target_count_label = QLabel("Select a target to see that Digimon's own outgoing evolution slots.")
+        target_count_label.setStyleSheet(modern_muted_text_style())
+        list_layout.addWidget(target_count_label)
+
         target_list = QListWidget()
         target_list.setMinimumHeight(300)
 
@@ -14681,9 +14682,51 @@ class DigimonEditor(QMainWindow):
         # on each list item so the dialog does not need to parse labels.
         picker_entries = self._evolution_picker_entries()
         for entry in picker_entries:
-            item = QListWidgetItem(entry["label"])
-            item.setData(100, entry)
+            target_count = self.get_evolution_count_for_digimon(entry["id"])
+            target_free_slots = max(0, 6 - target_count)
+            if target_count >= 6:
+                status = "❌ FULL"
+            elif target_count >= 5:
+                status = f"⚠️ {target_count}/6 used, {target_free_slots} free"
+            else:
+                status = f"✅ {target_count}/6 used, {target_free_slots} free"
+
+            item = QListWidgetItem(
+                f"{entry['name']} [{status}] ({entry['chr_id']}) - ID: {entry['id']} [{entry['source']}]"
+            )
+            item_data = dict(entry)
+            item_data["evo_count"] = target_count
+            item.setData(100, item_data)
+            if target_count >= 6:
+                item.setForeground(Qt.GlobalColor.red)
+            elif target_count >= 5:
+                item.setForeground(Qt.GlobalColor.darkYellow)
             target_list.addItem(item)
+
+        def update_target_count():
+            current = target_list.currentItem()
+            if not current:
+                return
+            data = current.data(100)
+            if not data:
+                return
+            count = data.get("evo_count", 0)
+            free_slots = max(0, 6 - count)
+            if count >= 6:
+                status = "FULL"
+                color = "#ff6b7d"
+            elif count >= 5:
+                status = f"{free_slots} free"
+                color = "#d8872b"
+            else:
+                status = f"{free_slots} free"
+                color = "#20d6a3"
+            target_count_label.setText(
+                f"{data.get('name', 'Target')} outgoing slots: {count}/6 used ({status})."
+            )
+            target_count_label.setStyleSheet(modern_status_panel_style(color))
+
+        target_list.currentItemChanged.connect(lambda: update_target_count())
 
         # Filter on search
         def filter_digimon(text):
