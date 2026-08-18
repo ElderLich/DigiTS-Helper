@@ -6788,9 +6788,10 @@ class DigimonEditor(QMainWindow):
 
         # Source selector (Base Game vs DLC)
         source_container = QWidget()
+        source_container.setObjectName("leftSourceRow")
         source_container.setMinimumHeight(56)
         source_container.setStyleSheet("""
-            QWidget {
+            QWidget#leftSourceRow {
                 background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
                 border: 1px solid rgba(146, 232, 228, 100);
@@ -6798,7 +6799,7 @@ class DigimonEditor(QMainWindow):
             }
         """)
         source_layout = QHBoxLayout(source_container)
-        source_layout.setContentsMargins(12, 7, 0, 7)
+        source_layout.setContentsMargins(12, 7, 1, 7)
         source_layout.setSpacing(12)
 
         source_label = QLabel("📂 Source:")
@@ -6875,9 +6876,10 @@ class DigimonEditor(QMainWindow):
 
         # Sort selector
         sort_container = QWidget()
+        sort_container.setObjectName("leftSortRow")
         sort_container.setMinimumHeight(56)
         sort_container.setStyleSheet("""
-            QWidget {
+            QWidget#leftSortRow {
                 background-color: rgba(5, 24, 29, 205);
                 border-radius: 2px;
                 border: 1px solid rgba(146, 232, 228, 100);
@@ -6885,7 +6887,7 @@ class DigimonEditor(QMainWindow):
             }
         """)
         sort_layout = QHBoxLayout(sort_container)
-        sort_layout.setContentsMargins(12, 7, 0, 7)
+        sort_layout.setContentsMargins(12, 7, 1, 7)
         sort_layout.setSpacing(12)
 
         sort_label = QLabel("↕ Sort:")
