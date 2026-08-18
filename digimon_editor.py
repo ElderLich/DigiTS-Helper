@@ -9768,8 +9768,8 @@ class DigimonEditor(QMainWindow):
         req_info.setStyleSheet("color: #dce9ea; font-size: 10pt; font-weight: 500; border: none; background: transparent;")
         req_layout.addWidget(req_info)
 
-        edit_req_btn = QPushButton("Edit Evolution Requirements")
-        edit_req_btn.setToolTip("Open the full requirements editor for obtaining this Digimon")
+        edit_req_btn = QPushButton("Edit This Digimon's Requirements")
+        edit_req_btn.setToolTip("Edit the requirements other Digimon must meet to evolve into this Digimon")
         configure_evolution_button(edit_req_btn, "#d8872b")
         edit_req_btn.clicked.connect(self.edit_evolution_requirements)
         req_layout.addWidget(edit_req_btn)
@@ -9797,8 +9797,9 @@ class DigimonEditor(QMainWindow):
         add_jogress_evo_btn = QPushButton("Add Jogress / DNA")
         configure_evolution_button(add_jogress_evo_btn, "#88e9e0")
         add_jogress_evo_btn.clicked.connect(lambda _checked=False: self.add_evolution(force_jogress=True))
-        edit_evo_btn = QPushButton("Edit Selected Evolution")
-        configure_evolution_button(edit_evo_btn, "#d8872b", 175)
+        edit_evo_btn = QPushButton("Edit Target Requirements")
+        edit_evo_btn.setToolTip("Edit the requirements for the selected target Digimon")
+        configure_evolution_button(edit_evo_btn, "#d8872b", 205)
         edit_evo_btn.clicked.connect(self.edit_evolution)
         remove_evo_btn = QPushButton("Remove Selected Evolution")
         configure_evolution_button(remove_evo_btn, "#d8872b", 205)
@@ -15170,7 +15171,7 @@ class DigimonEditor(QMainWindow):
             ("evolution_list", "evolution_jogress_list", "evolution_mode_change_list")
         )
         if current_index is None:
-            QMessageBox.warning(self, "Warning", "Please select an evolution to edit")
+            QMessageBox.warning(self, "Warning", "Please select an evolution target to edit")
             return
 
         if current_index >= len(self.current_digimon.evolution_paths):
@@ -15223,7 +15224,7 @@ class DigimonEditor(QMainWindow):
             self.update_evolution_tab(self.current_digimon)
 
             self.mark_as_modified()
-            QMessageBox.information(self, "Success", f"Evolution requirements updated for {to_name}")
+            QMessageBox.information(self, "Success", f"Target requirements updated for {to_name}")
 
     # Old evolution dialog has been replaced with _show_evolution_requirements_dialog
 
