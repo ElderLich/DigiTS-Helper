@@ -14570,11 +14570,46 @@ class DigimonEditor(QMainWindow):
         apply_modern_dialog_theme(dialog)
         layout = QVBoxLayout(dialog)
 
+        source_id = safe_evolution_int(getattr(self.current_digimon, "id", 0), 0)
+        source_name = getattr(self.current_digimon, "name", "") or f"ID {source_id}"
+        source_slot_count = self.get_evolution_count_for_digimon(source_id) if source_id > 0 else 0
+        source_free_slots = max(0, 6 - source_slot_count)
+
         # Instructions
-        info_label = QLabel("Select a Digimon from the list below, or enter a custom Digimon name/ID in the text field.")
+        info_label = QLabel(
+            "Select a target Digimon below, or enter a custom Digimon name/ID. "
+            "Adding a path uses one outgoing evolution slot on the currently edited Digimon."
+        )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #666; padding: 10px; background-color: #f8f9fa; border-radius: 6px;")
+        info_label.setStyleSheet(modern_info_panel_style())
         layout.addWidget(info_label)
+
+        slot_status_label = QLabel()
+        slot_status_label.setWordWrap(True)
+        if source_id <= 0:
+            slot_status_label.setText(
+                "Evolution slots: set the current Digimon ID first to count base, DLC, mod, and pending paths."
+            )
+            slot_status_label.setStyleSheet(modern_status_panel_style("#88e9e0"))
+        elif source_slot_count >= 6:
+            slot_status_label.setText(
+                f"❌ {source_name} has {source_slot_count}/6 evolution slots used (0 free). "
+                "Remove an existing path before adding another."
+            )
+            slot_status_label.setStyleSheet(modern_warning_panel_style())
+        elif source_slot_count >= 5:
+            slot_status_label.setText(
+                f"⚠️ {source_name} has {source_slot_count}/6 evolution slots used "
+                f"({source_free_slots} free)."
+            )
+            slot_status_label.setStyleSheet(modern_status_panel_style("#d8872b"))
+        else:
+            slot_status_label.setText(
+                f"✅ {source_name} has {source_slot_count}/6 evolution slots used "
+                f"({source_free_slots} free)."
+            )
+            slot_status_label.setStyleSheet(modern_status_panel_style("#20d6a3"))
+        layout.addWidget(slot_status_label)
 
         path_type_combo = QComboBox()
         path_type_combo.addItem("Normal evolution", EVOLUTION_TYPE_NORMAL)
@@ -14651,6 +14686,10 @@ class DigimonEditor(QMainWindow):
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         buttons.accepted.connect(dialog.accept)
         buttons.rejected.connect(dialog.reject)
+        ok_button = buttons.button(QDialogButtonBox.StandardButton.Ok)
+        if ok_button and source_id > 0 and source_slot_count >= 6:
+            ok_button.setEnabled(False)
+            ok_button.setToolTip("This Digimon already has 6 evolution targets. Remove one before adding another.")
         layout.addWidget(buttons)
 
         if dialog.exec() == QDialog.DialogCode.Accepted:
@@ -14754,6 +14793,26 @@ class DigimonEditor(QMainWindow):
                 if existing:
                     QMessageBox.warning(self, "Already Exists", f"Evolution to Digimon ID {target_digimon_id} already exists!")
                     return
+
+                if source_id > 0:
+                    source_targets = self._evolution_targets_for_digimon(source_id)
+                    target_key = str(target_digimon_id)
+                    if target_key in source_targets:
+                        QMessageBox.warning(
+                            self,
+                            "Already Exists",
+                            f"Evolution to Digimon ID {target_digimon_id} already exists in base, DLC, mod, or pending data!"
+                        )
+                        return
+                    if len(source_targets) >= 6:
+                        QMessageBox.warning(
+                            self,
+                            "Evolution Limit Reached",
+                            f"Cannot add evolution to Digimon ID {target_digimon_id}.\n\n"
+                            f"{source_name} already has 6 evolution targets.\n"
+                            f"Remove an existing path before adding another."
+                        )
+                        return
 
                 selected_evolution_type = safe_evolution_int(path_type_combo.currentData(), EVOLUTION_TYPE_NORMAL)
                 new_conditions = {}
