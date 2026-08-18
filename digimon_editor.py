@@ -9971,109 +9971,91 @@ class DigimonEditor(QMainWindow):
         # Battle enemy parameters
         enemy_group = QGroupBox("Enemy Parameters (44 columns)")
         enemy_group.setStyleSheet(battle_panel_style)
-        enemy_layout = QFormLayout(enemy_group)
-        enemy_layout.setSpacing(12)
-        enemy_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        enemy_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        enemy_layout = QGridLayout(enemy_group)
+        enemy_layout.setContentsMargins(18, 24, 18, 18)
+        enemy_layout.setHorizontalSpacing(28)
+        enemy_layout.setVerticalSpacing(12)
+
+        def add_battle_field(
+            row: int,
+            column_pair: int,
+            text: str,
+            editor: QWidget,
+            icon_stem: Optional[str],
+            *,
+            label_width: int = 220,
+            field_width: int = 190,
+        ) -> None:
+            field_row = QWidget()
+            field_layout = QHBoxLayout(field_row)
+            field_layout.setContentsMargins(0, 0, 0, 0)
+            field_layout.setSpacing(10)
+
+            label_widget = create_game_icon_label(
+                text, icon_stem, bold=True, minimum_width=label_width
+            )
+            label_widget.setMinimumWidth(label_width)
+            label_widget.setMaximumWidth(label_width)
+            field_layout.addWidget(label_widget)
+
+            set_compact_field_width(editor, field_width)
+            field_layout.addWidget(editor)
+            field_layout.addStretch(1)
+
+            enemy_layout.addWidget(field_row, row, column_pair)
+            enemy_layout.setColumnStretch(column_pair, 1)
 
         # Enemy ID
-        enemy_id_label = create_game_icon_label(
-            "Enemy ID (Col 0):", TAB_ICON_STEMS.get("advanced_skills"), bold=True, minimum_width=220
-        )
         self.enemy_id_edit = QLineEdit()
-        self.enemy_id_edit.setMinimumWidth(200)
-        enemy_layout.addRow(enemy_id_label, self.enemy_id_edit)
+        add_battle_field(0, 0, "Enemy ID (Col 0):", self.enemy_id_edit, TAB_ICON_STEMS.get("advanced_skills"))
 
         # Base Digimon ID
-        base_id_label = create_game_icon_label(
-            "Base Digimon ID (Col 2):", TAB_ICON_STEMS.get("basic"), bold=True, minimum_width=220
-        )
         self.base_digimon_id_edit = QLineEdit()
-        self.base_digimon_id_edit.setMinimumWidth(200)
-        enemy_layout.addRow(base_id_label, self.base_digimon_id_edit)
+        add_battle_field(0, 1, "Base Digimon ID (Col 2):", self.base_digimon_id_edit, TAB_ICON_STEMS.get("basic"))
 
         # AI Level
-        ai_level_label = create_game_icon_label(
-            "AI Level (Col 10):", TAB_ICON_STEMS.get("model"), bold=True, minimum_width=220
-        )
         self.ai_level_edit = QSpinBox()
         self.ai_level_edit.setRange(0, 50)
-        self.ai_level_edit.setMinimumWidth(150)
-        enemy_layout.addRow(ai_level_label, self.ai_level_edit)
+        add_battle_field(1, 0, "AI Level (Col 10):", self.ai_level_edit, TAB_ICON_STEMS.get("model"))
 
-        # Battle stats (columns 17-23)
-        hp_label = create_game_icon_label(
-            "Battle HP (Col 17):", STAT_ICON_STEMS.get("hp"), bold=True, minimum_width=220
-        )
-        self.battle_hp_edit = QSpinBox()
-        self.battle_hp_edit.setRange(1, 99999)
-        self.battle_hp_edit.setMinimumWidth(150)
-        enemy_layout.addRow(hp_label, self.battle_hp_edit)
-
-        sp_label = create_game_icon_label(
-            "Battle SP (Col 18):", STAT_ICON_STEMS.get("sp"), bold=True, minimum_width=220
-        )
-        self.battle_sp_edit = QSpinBox()
-        self.battle_sp_edit.setRange(1, 9999)
-        self.battle_sp_edit.setMinimumWidth(150)
-        enemy_layout.addRow(sp_label, self.battle_sp_edit)
-
-        atk_label = create_game_icon_label(
-            "Battle ATK (Col 19):", STAT_ICON_STEMS.get("atk"), bold=True, minimum_width=220
-        )
-        self.battle_attack_edit = QSpinBox()
-        self.battle_attack_edit.setRange(1, 9999)
-        self.battle_attack_edit.setMinimumWidth(150)
-        enemy_layout.addRow(atk_label, self.battle_attack_edit)
-
-        def_label = create_game_icon_label(
-            "Battle DEF (Col 20):", STAT_ICON_STEMS.get("def"), bold=True, minimum_width=220
-        )
-        self.battle_defense_edit = QSpinBox()
-        self.battle_defense_edit.setRange(1, 9999)
-        self.battle_defense_edit.setMinimumWidth(150)
-        enemy_layout.addRow(def_label, self.battle_defense_edit)
-
-        int_label = create_game_icon_label(
-            "Battle INT (Col 21):", STAT_ICON_STEMS.get("int"), bold=True, minimum_width=220
-        )
-        self.battle_intelligence_edit = QSpinBox()
-        self.battle_intelligence_edit.setRange(1, 9999)
-        self.battle_intelligence_edit.setMinimumWidth(150)
-        enemy_layout.addRow(int_label, self.battle_intelligence_edit)
-
-        spi_label = create_game_icon_label(
-            "Battle SPI (Col 22):", STAT_ICON_STEMS.get("spi"), bold=True, minimum_width=220
-        )
-        self.battle_spirit_edit = QSpinBox()
-        self.battle_spirit_edit.setRange(1, 9999)
-        self.battle_spirit_edit.setMinimumWidth(150)
-        enemy_layout.addRow(spi_label, self.battle_spirit_edit)
-
-        spd_label = create_game_icon_label(
-            "Battle SPD (Col 23):", STAT_ICON_STEMS.get("spd"), bold=True, minimum_width=220
-        )
-        self.battle_speed_edit = QSpinBox()
-        self.battle_speed_edit.setRange(1, 9999)
-        self.battle_speed_edit.setMinimumWidth(150)
-        enemy_layout.addRow(spd_label, self.battle_speed_edit)
-
-        # AI behavior parameters
-        skill_id_label = create_game_icon_label(
-            "AI Skill ID (Col 36):", TAB_ICON_STEMS.get("skills"), bold=True, minimum_width=220
-        )
+        skill_id_label_text = "AI Skill ID (Col 36):"
         self.ai_skill_id_edit = QSpinBox()
         self.ai_skill_id_edit.setRange(0, 9999999)
-        self.ai_skill_id_edit.setMinimumWidth(150)
-        enemy_layout.addRow(skill_id_label, self.ai_skill_id_edit)
+        add_battle_field(1, 1, skill_id_label_text, self.ai_skill_id_edit, TAB_ICON_STEMS.get("skills"))
 
-        aggression_label = create_game_icon_label(
-            "AI Aggression (Col 32):", TAB_ICON_STEMS.get("battle"), bold=True, minimum_width=220
-        )
+        # Battle stats (columns 17-23)
+        self.battle_hp_edit = QSpinBox()
+        self.battle_hp_edit.setRange(1, 99999)
+        add_battle_field(2, 0, "Battle HP (Col 17):", self.battle_hp_edit, STAT_ICON_STEMS.get("hp"))
+
+        self.battle_sp_edit = QSpinBox()
+        self.battle_sp_edit.setRange(1, 9999)
+        add_battle_field(2, 1, "Battle SP (Col 18):", self.battle_sp_edit, STAT_ICON_STEMS.get("sp"))
+
+        self.battle_attack_edit = QSpinBox()
+        self.battle_attack_edit.setRange(1, 9999)
+        add_battle_field(3, 0, "Battle ATK (Col 19):", self.battle_attack_edit, STAT_ICON_STEMS.get("atk"))
+
+        self.battle_defense_edit = QSpinBox()
+        self.battle_defense_edit.setRange(1, 9999)
+        add_battle_field(3, 1, "Battle DEF (Col 20):", self.battle_defense_edit, STAT_ICON_STEMS.get("def"))
+
+        self.battle_intelligence_edit = QSpinBox()
+        self.battle_intelligence_edit.setRange(1, 9999)
+        add_battle_field(4, 0, "Battle INT (Col 21):", self.battle_intelligence_edit, STAT_ICON_STEMS.get("int"))
+
+        self.battle_spirit_edit = QSpinBox()
+        self.battle_spirit_edit.setRange(1, 9999)
+        add_battle_field(4, 1, "Battle SPI (Col 22):", self.battle_spirit_edit, STAT_ICON_STEMS.get("spi"))
+
+        self.battle_speed_edit = QSpinBox()
+        self.battle_speed_edit.setRange(1, 9999)
+        add_battle_field(5, 0, "Battle SPD (Col 23):", self.battle_speed_edit, STAT_ICON_STEMS.get("spd"))
+
+        # AI behavior parameters
         self.ai_aggression_edit = QSpinBox()
         self.ai_aggression_edit.setRange(0, 100)
-        self.ai_aggression_edit.setMinimumWidth(150)
-        enemy_layout.addRow(aggression_label, self.ai_aggression_edit)
+        add_battle_field(5, 1, "AI Aggression (Col 32):", self.ai_aggression_edit, TAB_ICON_STEMS.get("battle"))
 
         layout.addWidget(enemy_group)
 
