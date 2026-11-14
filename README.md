@@ -118,6 +118,27 @@ is **in progress**; this editor does not convert Unity prefabs or sound banks.
 
 ## Development
 
+### Blender model packages
+
+In **Model Animation → Import Blender Model Package**, select the
+`model-package.json` produced by Time Stranger Importer. Its model name must
+match the selected Chr ID. The dialog reviews the exact changed/removed files
+and verifies local and external dependency hashes before installation. Set the
+extracted resource path to the package's matching native resources; differing
+mod overrides fail validation. Close the game before applying the reviewed plan.
+
+Updates replace only files previously managed by this workflow. Modified user
+files and unmanaged conflicts are rejected. Identical preexisting resources
+remain unowned, and other package references protect shared resources. Obsolete
+owned files can be removed after hash verification. Backups and receipts live
+beside `dsts-loader`, in `.digits-asset-backups` and `.digits-asset-packages`.
+Write failures restore changed files; backup paths identify manual recovery if
+the filesystem also prevents rollback. No gameplay rows or model IDs are changed.
+
+This accepts the existing single-model package contract. It verifies package
+integrity and installation, not native rendering. Full effect/camera/audio/LOD
+packages and skill-table routing remain release work.
+
 ```powershell
 py -m unittest discover -s tests -v
 $files = Get-ChildItem -File -Filter *.py | ForEach-Object { $_.FullName }
