@@ -60,6 +60,11 @@ model IDs. They are sparse DLC supplements, not a full alternate-platform dump.
 
 ## Models and Digimon
 
+Follow-up: all 29 non-LOD filenames have now been rendered and traced. They are
+three unnamed human NPC models and 26 scenery/prop/effect models; none is a
+Digimon. See [the complete identity investigation](switch-model-identities-2026-11-15.md)
+for visual descriptions, Windows counterparts, and the local preview gallery.
+
 - **0 Switch-only `chrNNN` model IDs**; **36 Windows-only model IDs**.
 - **0 Switch-only Digimon status IDs**; **32 Windows-only status IDs**.
   These are table records, not a playable roster count. The absent Switch rows
