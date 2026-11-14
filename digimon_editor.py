@@ -28,7 +28,6 @@ from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
 from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, CHRONO_HEADER, CHRONO_STAGES,
                         chrono_forms_for, find_table, read_table,
                         load_optional_model_tables, validate_typed_row)
-from Asset_Packages import plan_model_package, install_model_package, ensure_game_closed
 
 
 DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
@@ -8465,14 +8464,6 @@ class DigimonEditor(QMainWindow):
         self.related_import_status_label.setStyleSheet("color: #666; font-size: 9pt;")
         related_layout.addWidget(self.related_import_status_label, 4, 0, 1, 3)
 
-        self.import_asset_package_button = QPushButton("Import Blender Model Package…")
-        self.import_asset_package_button.setToolTip(
-            "Review and install a Time Stranger Importer model-package.json for this Chr ID. "
-            "Checks file hashes and dependencies, preserves unrelated assets, and backs up managed updates."
-        )
-        self.import_asset_package_button.clicked.connect(self.import_blender_model_package)
-        related_layout.addWidget(self.import_asset_package_button, 5, 1, 1, 2)
-
         layout.addWidget(related_group)
         self.related_source_combo.addItem(RELATED_SOURCE_PROMPT, None)
 
@@ -11729,57 +11720,6 @@ class DigimonEditor(QMainWindow):
             QMessageBox.information(self, "Related Files Imported", message)
         else:
             QMessageBox.warning(self, "Import Failed", message)
-
-    def import_blender_model_package(self):
-        """Review a concrete native asset package before changing the selected mod."""
-        if not self.current_digimon:
-            QMessageBox.warning(self, "No Digimon Loaded", "Load or create the target Digimon first.")
-            return
-        target_id = self.chr_id_edit.text().strip().strip('"')
-        manifest, _ = QFileDialog.getOpenFileName(
-            self, "Select Blender Model Package", "", "Model package (model-package.json)")
-        if not manifest:
-            return
-        target = self._related_import_root_for_current_digimon()
-        if not target:
-            selected = QFileDialog.getExistingDirectory(self, "Select Target Mod / dsts-loader",
-                str(get_existing_directory_start(get_default_mod_loader_path())))
-            if not selected:
-                return
-            target = self._resolve_dsts_loader_root(Path(selected), allow_create=False)
-        if not target:
-            QMessageBox.warning(self, "Invalid Mod", "Choose an existing mod with a dsts-loader folder.")
-            return
-        native = self.related_extract_path_edit.text().strip()
-        if native and (Path(native) / 'patch').is_dir():
-            native = str(Path(native) / 'patch')
-        try:
-            plan = plan_model_package(Path(manifest).parent, target, target_id, native or None)
-            review = QMessageBox(self)
-            review.setWindowTitle("Review Blender Model Package")
-            review.setIcon(QMessageBox.Icon.Question)
-            review.setText(f"Install {plan['model']} into {target}?\n\n"
-                f"{len(plan['changes'])} files to write, {len(plan['removals'])} obsolete managed files to remove, "
-                f"{len(plan['unchanged'])} identical files retained.\n"
-                f"{len(plan['external'])} external dependencies verified.\n\n"
-                "Original managed files are backed up outside dsts-loader. "
-                "The package must be tested in game after installation.")
-            review.setDetailedText("Write:\n" + '\n'.join(plan['changes']) +
-                "\nRemove previously managed:\n" + '\n'.join(plan['removals']) +
-                "\nPackage scope:\n" + '\n'.join(map(str, plan['limitations'])))
-            review.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
-            review.setDefaultButton(QMessageBox.StandardButton.Cancel)
-            if review.exec() != QMessageBox.StandardButton.Ok:
-                return
-            ensure_game_closed()
-            result = install_model_package(plan)
-        except (OSError, ValueError, RuntimeError) as error:
-            QMessageBox.warning(self, "Package Not Installed", str(error))
-            return
-        message = (f"{result['model']}: {result['written']} written, {result['removed']} removed, "
-                   f"{result['unchanged']} unchanged. Backup: {result['backup']}")
-        self.related_import_status_label.setText(message)
-        QMessageBox.information(self, "Model Package Installed", message)
 
     def refresh_digimon_list_view(self):
         """Apply current sort/filter settings to the Digimon combo box."""

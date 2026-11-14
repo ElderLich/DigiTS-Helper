@@ -76,21 +76,6 @@ My Mod/
     └── patch_text01/text/
 ```
 
-To bring in an exported native model, open **Model Animation → Import Blender
-Model Package…** and select Time Stranger Importer's `model-package.json`.
-The package's model name must match the selected Chr ID; export to the intended
-target ID first. Set the related extracted-resource folder when the package
-uses external native shaders or images. The review shows the exact writes,
-previously managed removals, unchanged files and verified dependencies.
-
-Installation checks that Time Stranger is closed, preserves unmanaged files
-and resources used by other installed packages, and backs up changed managed
-files outside `dsts-loader`. Failed writes roll back. Later updates remove only
-unchanged files owned by the previous package; edited files require explicit
-resolution. The current format covers one native mesh model and its declared
-dependencies. Full effect, audio, scene, LOD and gameplay-table packages remain
-in development, and successful installation still needs an in-game test.
-
 Optional tables are included when source data exists. For example,
 `model_locator.mbe` needs a captured locator reference, and
 `002_chronodevolution.ap.csv` needs known form IDs. The latter controls
@@ -132,27 +117,6 @@ Native New Century skill-effect, camera and audio conversion for in-game use
 is **in progress**; this editor does not convert Unity prefabs or sound banks.
 
 ## Development
-
-### Blender model packages
-
-In **Model Animation → Import Blender Model Package**, select the
-`model-package.json` produced by Time Stranger Importer. Its model name must
-match the selected Chr ID. The dialog reviews the exact changed/removed files
-and verifies local and external dependency hashes before installation. Set the
-extracted resource path to the package's matching native resources; differing
-mod overrides fail validation. Close the game before applying the reviewed plan.
-
-Updates replace only files previously managed by this workflow. Modified user
-files and unmanaged conflicts are rejected. Identical preexisting resources
-remain unowned, and other package references protect shared resources. Obsolete
-owned files can be removed after hash verification. Backups and receipts live
-beside `dsts-loader`, in `.digits-asset-backups` and `.digits-asset-packages`.
-Write failures restore changed files; backup paths identify manual recovery if
-the filesystem also prevents rollback. No gameplay rows or model IDs are changed.
-
-This accepts the existing single-model package contract. It verifies package
-integrity and installation, not native rendering. Full effect/camera/audio/LOD
-packages and skill-table routing remain release work.
 
 ```powershell
 py -m unittest discover -s tests -v
