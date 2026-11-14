@@ -16,7 +16,7 @@ skills, buffs and evolution data, inspect MBE tables, and build Reloaded II
 | **Advanced skills** | Skill properties, compatibility rules, buff sets and custom buff definitions |
 | **Mod import/export** | Load existing payloads, merge edits, or export a separate Reloaded II mod |
 | **MBE editor** | Inspect and edit binary MBE tables and CSV sheets |
-| **MVGL Tools GUI** | Extract/repack archives and MBE tables through MVGLToolsCLI |
+| **MVGL Tools GUI** | Extract PC/Switch archives and MBE tables; PC repacking through MVGLToolsCLI |
 
 The editor reads Base, DLC (`addcont_01`–`03`, `17`) and imported mod data.
 Related model tables include all ten LOD slots, locator references and motion
@@ -53,6 +53,45 @@ in `_internal` or alongside the GUI. The older MBE repack helpers use
 different command-line interfaces; use the supplied backend for each workflow.
 See the [extraction guide](https://hyotan-dev.github.io/dstsworkshop/tutorials/extractdata/)
 for preparing game data.
+
+### Switch extraction
+
+In **MVGL Tools GUI**, select **Time Stranger (Switch)**, then **Extract MVGL
+Archive**. Batch mode reads `.mvgl` and `.cpk` files recursively, including DLC
+subfolders. The default source is `D:\Emulators\Ryujinx\Games\Extracted`, and the
+default output is `D:\Digimon Modding\Time Stranger - Switch - Extracted`.
+Inputs must already be decrypted game archives; NSP/NCA extraction is separate.
+
+Switch archives use different MVGL record widths from PC. `Switch_Archives.py`
+handles both `nx64` and `ounce64` variants directly; the bundled MVGLToolsCLI
+v2.0.3 cannot unpack these Switch archives. CPK support covers the named,
+uncompressed media containers found in the supplied game files. Unsupported
+compression/container layouts fail explicitly. The Python extractor optionally
+uses `lz4` for faster decompression and includes a fallback.
+
+Each archive keeps its own folder, including numbered `nx_patch` layers and
+nested DLC. CPK folders retain `.cpk`, avoiding collisions with matching MVGL
+names. `_switch_extraction` contains completion records and SHA-256 manifests.
+Repeated extraction verifies existing files and skips identical content;
+different existing files are preserved unless the CLI's `--overwrite` is used.
+
+**Extract MBE Tables From Folder** uses the existing MBE backend. Its Switch
+filter includes base, numbered patches, all DLC, and English text. Tables go
+under `Tables/nx64` or `Tables/ounce64`, with later numbered patches applied
+after base tables. Disable the filter to retain every language and original
+archive layer. Sparse `ounce64` DLC files are kept separate from the `nx64`
+base game.
+
+Switch support covers extraction and table inspection. The main Digimon
+editor's Base/DLC loading and Reloaded II mod exports still target PC;
+**Configure Paths** does not import the isolated Switch table layout. Switch
+repacking, deployment, and cross-platform asset compatibility are not provided.
+
+For command-line extraction (Python 3.11 or newer):
+
+```powershell
+py -u Switch_Archives.py "D:\Emulators\Ryujinx\Games\Extracted" "D:\Digimon Modding\Time Stranger - Switch - Extracted"
+```
 
 ## Mod workflow
 

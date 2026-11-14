@@ -175,17 +175,26 @@ class MVGLToolsGUI:
     FILE_TYPES = [
         ("All Files", "*.*"),
         ("MVGL Files", "*.mvgl"),
+        ("CPK Files", "*.cpk"),
         ("MBE Files", "*.mbe"),
         ("AFS2 Files", "*.afs2"),
         ("BIN Files", "*.bin"),
     ]
     DSTS_DEFAULT_SOURCE_DIR = Path(r"D:\Digimon Modding\Time Stranger Extracted")
-    DSTS_TEXT_ARCHIVE_RE = re.compile(r"_text(\d{2})\.dx11$", re.IGNORECASE)
-    DSTS_ADDCONT_ARCHIVE_RE = re.compile(r"^addcont_(\d{2})(?:_text(\d{2}))?\.dx11$", re.IGNORECASE)
-    DSTS_BASE_TEXT_ARCHIVE_RE = re.compile(r"^(app|patch)_text(\d{2})\.dx11$", re.IGNORECASE)
+    SWITCH_DEFAULT_ARCHIVE_DIR = Path(r"D:\Emulators\Ryujinx\Games\Extracted")
+    SWITCH_DEFAULT_EXTRACTED_DIR = Path(r"D:\Digimon Modding\Time Stranger - Switch - Extracted")
+    DSTS_ARCHIVE_RE = re.compile(r"\.(dx11|nx64|ounce64)(?:\.cpk)?$", re.IGNORECASE)
+    DSTS_TEXT_ARCHIVE_RE = re.compile(r"_text(\d{2})\.(?:dx11|nx64|ounce64)(?:\.cpk)?$", re.IGNORECASE)
+    DSTS_ADDCONT_ARCHIVE_RE = re.compile(
+        r"^addcont_(\d{2})(?:_text(\d{2})|_dev)?\.(dx11|nx64|ounce64)(?:\.cpk)?$", re.IGNORECASE
+    )
+    DSTS_BASE_TEXT_ARCHIVE_RE = re.compile(
+        r"^(app|patch|nx_patch_\d+)_text(\d{2})\.(dx11|nx64|ounce64)(?:\.cpk)?$", re.IGNORECASE
+    )
     DSTS_ENGLISH_TEXT_CODE = "01"
     DSTS_EDITOR_DLC_IDS = ("01", "02", "03", "17")
     DSTS_BASE_ARCHIVES = ("app_0.dx11", "patch.dx11")
+    SWITCH_OPERATIONS = ("unpack-mvgl", "unpack-mbe", "unpack-mbe-dir", "dump-structures")
 
     def __init__(self, root):
         self.root = root
@@ -197,6 +206,9 @@ class MVGLToolsGUI:
         self.default_mbe_extract_dir = self.app_dir
         self.default_mbe_source_dir = self.DSTS_DEFAULT_SOURCE_DIR
         self.mode_paths = {}
+        self.game_mode_paths = {"dsts": self.mode_paths}
+        self.game_batch_modes = {"dsts": False}
+        self.active_game = "dsts"
         self.active_mode = None
         self.operation_menu_window = None
 
@@ -223,13 +235,14 @@ class MVGLToolsGUI:
         games = [
             ("DSCS (PC)", "dscs"),
             ("DSCS (Console/Decrypted)", "dscs-console"),
-            ("Time Stranger", "dsts"),
+            ("Time Stranger (PC)", "dsts"),
+            ("Time Stranger (Switch)", "dsts-switch"),
             ("The Hundred Line", "thl")
         ]
         
         for i, (label, value) in enumerate(games):
             ttk.Radiobutton(game_frame, text=label, variable=self.game_var, 
-                          value=value, command=self.on_game_change).grid(row=0, column=i, padx=5, sticky=tk.W)
+                          value=value, command=self.on_game_change).grid(row=i // 3, column=i % 3, padx=5, sticky=tk.W)
         
         # Mode Selection
         row += 1
@@ -416,7 +429,16 @@ class MVGLToolsGUI:
 
     def get_operation_labels(self):
         """Return operation labels in the display order."""
-        return tuple(self.get_operation_label(mode) for mode in self.OPERATION_ORDER)
+        modes = self.SWITCH_OPERATIONS if self.is_switch() else self.OPERATION_ORDER
+        return tuple(self.get_operation_label(mode) for mode in modes)
+
+    def is_switch(self):
+        return self.game_var.get() == "dsts-switch"
+
+    def cli_game(self, game=None):
+        """Switch tables use the same EXPA/MBE schema; its archives use our reader."""
+        selected = game or self.game_var.get()
+        return "dsts" if selected == "dsts-switch" else selected
 
     def get_mode_for_label(self, label):
         """Map a friendly operation label back to the CLI mode."""
@@ -432,6 +454,17 @@ class MVGLToolsGUI:
 
     def get_operation_description(self, mode):
         """Return the human-readable description for a CLI operation mode."""
+        if self.is_switch() and mode == "unpack-mvgl":
+            return (
+                "Extracts Switch .mvgl or .cpk archives, including nested DLC folders in batch mode. "
+                "Keeps nx64 and ounce64 variants and patch layers in separate folders."
+            )
+        if self.is_switch() and mode == "unpack-mbe-dir":
+            return (
+                "Extracts Switch MBE tables. The default filter includes base, numbered patches, "
+                "all DLC and English text. Each platform gets a separate Base/DLC layout; "
+                "newer numbered patches override older base tables."
+            )
         return self.OPERATION_DESCRIPTIONS.get(mode, "")
 
     def format_operation_help(self, mode):
@@ -571,7 +604,11 @@ class MVGLToolsGUI:
         source = saved_paths.get("source", "")
         target = saved_paths.get("target", "")
 
-        if mode == "unpack-mbe-dir":
+        if mode == "unpack-mvgl" and self.is_switch():
+            if self.batch_var.get():
+                source = source or str(self.SWITCH_DEFAULT_ARCHIVE_DIR)
+            target = target or str(self.SWITCH_DEFAULT_EXTRACTED_DIR)
+        elif mode == "unpack-mbe-dir":
             unpacked_mvgl_target = self.mode_paths.get("unpack-mvgl", {}).get("target", "")
             source = source or str(self.default_mbe_source_dir)
             if previous_mode == "unpack-mvgl":
@@ -589,7 +626,25 @@ class MVGLToolsGUI:
         self.target_var.set(target)
 
     def on_game_change(self):
-        """Refresh game-specific option states."""
+        """Keep each game's extraction paths separate and refresh supported operations."""
+        self.hide_operation_menu()
+        game = self.game_var.get()
+        if game != self.active_game:
+            self.save_current_mode_paths(self.active_mode)
+            if self.active_mode == "unpack-mvgl":
+                self.game_batch_modes[self.active_game] = self.batch_var.get()
+            self.game_mode_paths[self.active_game] = self.mode_paths
+            self.mode_paths = self.game_mode_paths.setdefault(game, {})
+            self.active_game = game
+            self.active_mode = None
+            self.default_mbe_source_dir = (
+                self.SWITCH_DEFAULT_EXTRACTED_DIR if self.is_switch() else self.DSTS_DEFAULT_SOURCE_DIR
+            )
+            self.default_mbe_extract_dir = (
+                self.SWITCH_DEFAULT_EXTRACTED_DIR / "Tables" if self.is_switch() else self.app_dir
+            )
+            if self.is_switch() and self.get_selected_mode() not in self.SWITCH_OPERATIONS:
+                self.mode_var.set(self.get_operation_label("unpack-mvgl"))
         self.on_mode_change()
 
     def set_browse_button_states(self, source_kind, target_kind):
@@ -607,6 +662,10 @@ class MVGLToolsGUI:
         self.operation_dropdown_tooltip.hide()
 
         if previous_mode != mode:
+            if previous_mode == "unpack-mvgl":
+                self.game_batch_modes[self.active_game] = self.batch_var.get()
+            if mode == "unpack-mvgl":
+                self.batch_var.set(self.game_batch_modes.get(self.active_game, self.is_switch()))
             if previous_mode is not None:
                 self.save_current_mode_paths(previous_mode)
             self.apply_mode_paths(mode, previous_mode)
@@ -635,7 +694,15 @@ class MVGLToolsGUI:
             config = self.get_operation_config(mode)
             self.set_browse_button_states(config["source"], config["target"])
 
-        dsts_filter_supported = mode == "unpack-mbe-dir" and self.game_var.get() == "dsts"
+        self.batch_check.config(text=(
+            "Batch extract MVGL + CPK archives, including DLC subfolders"
+            if self.is_switch() else "Batch extract a folder of MVGL archives"
+        ))
+        self.dsts_base_english_only_check.config(text=(
+            "Switch: Base + patches + all DLC, English; separate nx64/ounce64 tables"
+            if self.is_switch() else "Time Stranger: extract editor layout (Base + DLC 01-03/17 English)"
+        ))
+        dsts_filter_supported = mode == "unpack-mbe-dir" and self.game_var.get() in ("dsts", "dsts-switch")
         if dsts_filter_supported:
             self.dsts_base_english_only_check.state(['!disabled'])
         else:
@@ -713,29 +780,38 @@ class MVGLToolsGUI:
         """Return whether DSTS MBE extraction should use the editor-ready archive set."""
         return (
             mode == "unpack-mbe-dir"
-            and self.game_var.get() == "dsts"
+            and self.game_var.get() in ("dsts", "dsts-switch")
             and self.dsts_base_english_only_var.get()
         )
 
     def get_dsts_archive_name(self, source_path, item_path):
-        """Find the top .dx11 archive folder for a nested MBE path."""
+        """Find an archive layer, including DLC subfolders and platform suffixes."""
         try:
             relative_path = item_path.relative_to(source_path)
-            if relative_path.parts and relative_path.parts[0].lower().endswith(".dx11"):
-                return relative_path.parts[0]
+            for part in relative_path.parts[:-1]:
+                if self.DSTS_ARCHIVE_RE.search(part):
+                    return part
         except ValueError:
             pass
 
         current_path = item_path if item_path.is_dir() else item_path.parent
         for candidate in (current_path, *current_path.parents):
-            if candidate.name.lower().endswith(".dx11"):
+            if self.DSTS_ARCHIVE_RE.search(candidate.name):
                 return candidate.name
 
         return ""
 
     def should_include_dsts_archive(self, archive_name):
-        """Include base app/patch archives plus DLC 01-03/17 English archives."""
+        """Select the game's base/patch/DLC layers without mixing platforms."""
         archive_name = archive_name.lower()
+        platform_match = self.DSTS_ARCHIVE_RE.search(archive_name)
+        if not platform_match:
+            return False
+        platform = platform_match.group(1)
+        if (platform != "dx11") != self.is_switch():
+            return False
+        if self.is_switch() and re.fullmatch(r"(?:app_0|nx_patch_\d+)\.(?:nx64|ounce64)(?:\.cpk)?", archive_name):
+            return True
         if archive_name in self.DSTS_BASE_ARCHIVES:
             return True
 
@@ -745,20 +821,22 @@ class MVGLToolsGUI:
 
         addcont_match = self.DSTS_ADDCONT_ARCHIVE_RE.match(archive_name)
         if addcont_match:
+            if "_dev." in archive_name and not self.is_switch():
+                return False
             dlc_id = addcont_match.group(1)
             text_code = addcont_match.group(2)
             return (
-                dlc_id in self.DSTS_EDITOR_DLC_IDS
+                (self.is_switch() or dlc_id in self.DSTS_EDITOR_DLC_IDS)
                 and (text_code is None or text_code == self.DSTS_ENGLISH_TEXT_CODE)
             )
 
         return False
 
     def get_dsts_archive_context(self, item_path):
-        """Return the containing .dx11 archive and the path inside it."""
+        """Return the containing archive layer and the path inside it."""
         current_path = item_path if item_path.is_dir() else item_path.parent
         for candidate in (current_path, *current_path.parents):
-            if candidate.name.lower().endswith(".dx11"):
+            if self.DSTS_ARCHIVE_RE.search(candidate.name):
                 try:
                     return candidate, candidate.name, current_path.relative_to(candidate)
                 except ValueError:
@@ -776,6 +854,9 @@ class MVGLToolsGUI:
         section = parts[0].lower() if parts else ""
         tail = Path(*parts[1:]) if len(parts) > 1 else Path()
         archive_lower = archive_name.lower()
+        platform = self.DSTS_ARCHIVE_RE.search(archive_lower).group(1)
+        if platform != "dx11":
+            target_path = target_path / platform
 
         addcont_match = self.DSTS_ADDCONT_ARCHIVE_RE.match(archive_lower)
         if addcont_match:
@@ -784,7 +865,9 @@ class MVGLToolsGUI:
             dlc_folder = f"addcont_{dlc_id}"
             if text_code:
                 dlc_folder += f"_text{text_code}"
-            dlc_folder += ".dx11"
+            elif "_dev." in archive_lower:
+                dlc_folder += "_dev"
+            dlc_folder += f".{platform}"
 
             if section in ("data", "text", "message"):
                 return target_path / "DLC" / dlc_folder / section / "mbe" / tail
@@ -799,6 +882,20 @@ class MVGLToolsGUI:
             return target_path / "Base" / "message" / tail
 
         return target_path / "Base" / tail
+
+    def mbe_folder_sort_key(self, folder_path):
+        """Apply base tables before numbered Switch patches, in numeric order."""
+        _path, name, _inside = self.get_dsts_archive_context(folder_path)
+        patch = re.match(r"nx_patch_(\d+)(?:_|\.)", name, re.IGNORECASE)
+        if patch:
+            priority = (1, int(patch.group(1)))
+        elif name.lower().startswith("patch.") or name.lower().startswith("patch_text"):
+            priority = (1, 0)
+        elif name.lower().startswith("addcont_"):
+            priority = (2, 0)
+        else:
+            priority = (0, 0)
+        return (*priority, str(folder_path).casefold())
 
     def create_mbe_scan_summary(self, filter_enabled):
         """Create mutable scan counters for recursive MBE operations."""
@@ -818,6 +915,7 @@ class MVGLToolsGUI:
         """Build recursive MBE commands while preserving paths under the target."""
         filter_dsts_text = self.should_filter_dsts_text_archives(mode)
         scan = self.create_mbe_scan_summary(filter_dsts_text)
+        game = self.cli_game(game)
 
         if mode == "unpack-mbe-dir":
             folder_files = {}
@@ -845,7 +943,7 @@ class MVGLToolsGUI:
                 folder_files.setdefault(file_path.parent, []).append(file_path)
 
             commands = []
-            for folder_path, mbe_files in sorted(folder_files.items()):
+            for folder_path, mbe_files in sorted(folder_files.items(), key=lambda item: self.mbe_folder_sort_key(item[0])):
                 relative_folder = folder_path.relative_to(source_path)
                 output_folder = None
                 if filter_dsts_text:
@@ -909,7 +1007,10 @@ class MVGLToolsGUI:
 
         self.log_output(f"Scan: found {scan['total_files']} .mbe file(s).\n")
         if scan["filter_enabled"]:
-            self.log_output("Filter: editor layout, base app/patch + addcont_01/02/03/17 + English text01 only.\n")
+            if self.is_switch():
+                self.log_output("Filter: separate nx64/ounce64 tables, base + numbered patches + all DLC + English text01.\n")
+            else:
+                self.log_output("Filter: editor layout, base app/patch + addcont_01/02/03/17 + English text01 only.\n")
             self.log_output(
                 f"Included: {len(scan['included_archives'])} archive(s), "
                 f"{scan['included_files']} .mbe file(s).\n"
@@ -952,19 +1053,35 @@ class MVGLToolsGUI:
             messagebox.showerror("Error", "Please select a target file or folder.")
             return
         
-        # Check if CLI exists
-        if not os.path.exists(self.cli_path):
+        game = self.game_var.get()
+        mode = self.get_selected_mode()
+        switch_extraction = self.is_switch() and mode == "unpack-mvgl"
+        if self.is_switch() and mode not in self.SWITCH_OPERATIONS:
+            messagebox.showerror("Error", "Switch support currently covers archive and table extraction.")
+            return
+
+        # Switch archive extraction uses the bundled Python reader, not MVGLToolsCLI.
+        if not switch_extraction and not os.path.exists(self.cli_path):
             messagebox.showerror("Error", f"MVGLToolsCLI.exe not found at:\n{self.cli_path}\n\nPlease ensure the executable is in the _internal folder or current directory.")
             return
         
         # Build command
-        game = self.game_var.get()
-        mode = self.get_selected_mode()
         self.save_current_mode_paths(mode)
         source_path = self.normalize_user_path(self.source_var.get())
         target_path = self.normalize_user_path(self.target_var.get())
         source = str(source_path)
         target = str(target_path)
+
+        if switch_extraction:
+            validation_error = self.validate_paths(mode, source_path, target_path, batch_mode=self.batch_var.get())
+            if validation_error:
+                messagebox.showerror("Error", validation_error)
+                return
+            self.log_output(f"\nExtracting Switch MVGL/CPK archives: {source_path} -> {target_path}\n")
+            self.execute_btn.config(state='disabled', text='Running...')
+            thread = threading.Thread(target=self.run_switch_extraction, args=(source_path, target_path), daemon=True)
+            thread.start()
+            return
 
         # Batch mode (only for unpack-mvgl)
         if self.batch_var.get():
@@ -1045,7 +1162,7 @@ class MVGLToolsGUI:
             thread.start()
             return
         
-        cmd = [self.cli_path, f"--game={game}", f"--mode={mode}", source, target]
+        cmd = [self.cli_path, f"--game={self.cli_game(game)}", f"--mode={mode}", source, target]
         
         # Add compression option for pack-mvgl
         if mode == "pack-mvgl":
@@ -1066,6 +1183,20 @@ class MVGLToolsGUI:
         thread.daemon = True
         thread.start()
     
+    def run_switch_extraction(self, source, target):
+        """Keep decompression and archive IO off the Tk event thread."""
+        try:
+            from Switch_Archives import extract
+            if source.is_file():
+                layer_name = source.stem + (".cpk" if source.suffix.lower() == ".cpk" else "")
+                target = target / layer_name
+            extract(source, target, log=lambda message: self.root.after(0, self.log_output, str(message).rstrip() + "\n"))
+            self.root.after(0, self.log_output, "\n✓ Switch extraction completed successfully!\n")
+        except Exception as error:
+            self.root.after(0, self.log_output, f"\n✗ Switch extraction failed: {error}\n")
+        finally:
+            self.root.after(0, self.execute_btn.config, {'state': 'normal', 'text': 'Execute'})
+
     def _run_cli_command(self, cmd):
         """Run a CLI command and stream output; returns the return code"""
         process = subprocess.Popen(
