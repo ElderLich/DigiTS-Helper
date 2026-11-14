@@ -1,5 +1,7 @@
 """Archive/table planning regressions; no installed game files are changed."""
 from pathlib import Path
+from functools import wraps
+import subprocess
 import sys
 import tempfile
 import tkinter as tk
@@ -8,8 +10,30 @@ from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+TK_CHILD_FLAG = "--isolated-tk"
+RUNNING_TK_CHILD = __name__ == "__main__" and TK_CHILD_FLAG in sys.argv
+if RUNNING_TK_CHILD:
+    sys.argv.remove(TK_CHILD_FLAG)
 
 from mvgl_tools_gui import MVGLToolsGUI
+
+
+def isolated_tk(test_method):
+    """Keep Tcl/Tk teardown out of the process used by the PyQt editor tests."""
+    @wraps(test_method)
+    def run(self):
+        if RUNNING_TK_CHILD:
+            return test_method(self)
+        result = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve()), TK_CHILD_FLAG, "-v",
+             f"{type(self).__name__}.{test_method.__name__}"],
+            cwd=ROOT, capture_output=True, text=True, timeout=30,
+        )
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 0, output)
+        if "Tk display unavailable:" in output:
+            self.skipTest(output.strip())
+    return run
 
 
 class Value:
@@ -111,6 +135,8 @@ class SwitchGUIPlanningTests(unittest.TestCase):
 
 class SwitchGUIStateTests(unittest.TestCase):
     def setUp(self):
+        if not RUNNING_TK_CHILD:
+            return
         try:
             self.root = tk.Tk()
         except tk.TclError as error:
@@ -127,6 +153,7 @@ class SwitchGUIStateTests(unittest.TestCase):
         self.gui.mode_var.set(self.gui.get_operation_label(mode))
         self.gui.on_mode_change()
 
+    @isolated_tk
     def test_game_switch_restores_user_paths_and_batch_choice(self):
         gui = self.gui
         gui.source_var.set("pc-input")
@@ -146,6 +173,7 @@ class SwitchGUIStateTests(unittest.TestCase):
         self.assertFalse(gui.batch_var.get())
         self.assertEqual((gui.source_var.get(), gui.target_var.get()), ("one.nx64.mvgl", "switch-output"))
 
+    @isolated_tk
     def test_switch_table_defaults_and_archive_choice_survive_operation_changes(self):
         gui = self.gui
         self.select_game("dsts-switch")
@@ -155,6 +183,7 @@ class SwitchGUIStateTests(unittest.TestCase):
         self.select_operation("unpack-mvgl")
         self.assertTrue(gui.batch_var.get())
 
+    @isolated_tk
     def test_game_switch_closes_old_menu_and_resets_unsupported_operation(self):
         gui = self.gui
         self.select_operation("pack-mvgl")

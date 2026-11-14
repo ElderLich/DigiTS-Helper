@@ -14,6 +14,7 @@ os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 os.chdir(ROOT)
 
 from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QEvent
 import digimon_editor as gui
 from Data_Loader import DigimonData, MBELoader
 from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, chrono_forms_for,
@@ -32,6 +33,16 @@ class ModRoundtripTests(unittest.TestCase):
         cls.editor = gui.DigimonEditor()
         cls.editor._clear_mvgl_fileloader_cache = lambda: ''
         cls.editor._load_initial_digimon_list = lambda: None
+
+    @classmethod
+    def tearDownClass(cls):
+        # Dispose native widgets while QApplication and Python event filters are
+        # still alive, rather than relying on interpreter shutdown order.
+        cls.editor.close()
+        cls.editor.deleteLater()
+        cls.app.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+        cls.app.processEvents()
+        cls.editor = None
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()

@@ -18,6 +18,9 @@ exclusivity.
 - Windows archives: `D:\Programs\Steam\steamapps\common\Digimon Story Time Stranger\gamedata`.
   These include the CPK media omitted from the existing extracted tree at
   `D:\Digimon Modding\Time Stranger Extracted`.
+  All **196,663 Windows MVGL paths and uncompressed sizes** match that extracted
+  tree, with no missing/extra paths or size mismatches; this check did not hash
+  every existing Windows extracted file.
 - Extracted **115 archives**: **110 MVGL + 5 CPK**, **208,973 files**,
   **31,303,966,143 bytes** (31.30 GB / 29.15 GiB). No archive failures.
 - Verified every output file against its manifest size and re-read SHA-256 for
@@ -117,6 +120,13 @@ differ in content. Other extensions use size only: **28,694** differ in size
 and **53,882** have matching sizes with content unverified. A differing hash
 does not distinguish platform conversion from semantic content changes.
 
+| Common extension | Matching content variant | Different content |
+| --- | ---: | ---: |
+| `.geom` | 0 | 14,669 |
+| `.mbe` | 3,221 | 47 |
+| `.lua` | 1,178 | 41 |
+| `.nlst` | 12,497 | 2,172 |
+
 Detailed local evidence is saved beside the extraction in `Comparison`:
 
 - `comparison.md`, `summary.json`, `common_paths.csv`, `only_switch.csv`,
@@ -125,6 +135,7 @@ Detailed local evidence is saved beside the extraction in `Comparison`:
 - `variant-reference-hits.json` / `variant-table-rows.json`: NPC/music table
   references used to distinguish variants and DLC coverage.
 - `extraction-verification.json`: post-extraction checks.
+- `windows-baseline-check.json`: existing Windows extraction coverage check.
 - `ounce64/`: independent comparison of the four sparse alternate variants.
 
 The source changes and regression tests are in this repository; extracted game
@@ -134,3 +145,8 @@ Reproduce extraction/comparison using the commands in the main README. Switch
 MBE samples were also parsed by `MBEEditor._parse_mbe_data` and exported by the
 bundled MVGLToolsCLI with `--game=dsts --mode=unpack-mbe`. Main-editor loading,
 Switch repacking, and mod deployment are outside the implemented support.
+
+Validation: all **41 regression tests** pass with process exit 0, and every
+top-level helper Python module compiles. Tk state checks run in subprocesses;
+the existing Qt test editor is explicitly destroyed before interpreter shutdown
+to avoid a native teardown crash observed during full-suite validation.
