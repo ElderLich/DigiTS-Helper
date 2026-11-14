@@ -185,6 +185,11 @@ def plan_model_package(package, dsts_loader, expected_model, native_root=None):
             raise ValueError(f'Unknown ownership receipt: {other_path.name}')
         references = {name.casefold(): metadata for name, metadata in
                       _index(other.get('referenced_files', other.get('managed_files', {}))).items()}
+        for name, metadata in _index(other.get('external_native_dependencies', {})).items():
+            folded_name = name.casefold()
+            if folded_name in references and references[folded_name] != metadata:
+                raise ValueError(f'Conflicting dependency hashes in ownership receipt: {other_path.name}')
+            references[folded_name] = metadata
         for name in changes + removals:
             if name.casefold() in references and (name not in files or files[name] != references[name.casefold()]):
                 raise ValueError(f'{name} is also referenced by package {other.get("model")}; update that dependency explicitly first')

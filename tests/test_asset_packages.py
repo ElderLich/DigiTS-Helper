@@ -170,6 +170,22 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Case-only'):
             self.plan()
 
+    def test_external_reference_from_other_package_protects_managed_file(self):
+        assets.install_model_package(self.plan())
+        other = self.target.parent / '.digits-asset-packages/chr99124.json'
+        meta = self.manifest['files']['images/shared.img']
+        other.write_text(json.dumps({'format': assets.RECEIPT, 'model': 'chr99124',
+            'managed_files': {}, 'referenced_files': {},
+            'external_native_dependencies': {'images/shared.img': meta}}))
+        self.files['images/shared.img'] = b'changed shared shader'
+        self.build()
+        with self.assertRaisesRegex(ValueError, 'also referenced'):
+            self.plan()
+        del self.files['images/shared.img']
+        self.build()
+        with self.assertRaisesRegex(ValueError, 'also referenced'):
+            self.plan()
+
 
 if __name__ == '__main__':
     unittest.main()
