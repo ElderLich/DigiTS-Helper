@@ -76,6 +76,21 @@ My Mod/
     └── patch_text01/text/
 ```
 
+To bring in an exported native model, open **Model Animation → Import Blender
+Model Package…** and select Time Stranger Importer's `model-package.json`.
+The package's model name must match the selected Chr ID; export to the intended
+target ID first. Set the related extracted-resource folder when the package
+uses external native shaders or images. The review shows the exact writes,
+previously managed removals, unchanged files and verified dependencies.
+
+Installation checks that Time Stranger is closed, preserves unmanaged files
+and resources used by other installed packages, and backs up changed managed
+files outside `dsts-loader`. Failed writes roll back. Later updates remove only
+unchanged files owned by the previous package; edited files require explicit
+resolution. The current format covers one native mesh model and its declared
+dependencies. Full effect, audio, scene, LOD and gameplay-table packages remain
+in development, and successful installation still needs an in-game test.
+
 Optional tables are included when source data exists. For example,
 `model_locator.mbe` needs a captured locator reference, and
 `002_chronodevolution.ap.csv` needs known form IDs. The latter controls
