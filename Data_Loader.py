@@ -10,6 +10,7 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from pathlib import Path
 import shutil
+from Mod_Tables import load_optional_model_tables
 
 
 def normalize_status_reference_id(digimon_id: int, field_guide_id: int, reference_id: int) -> int:
@@ -130,6 +131,8 @@ class DigimonData:
     evolution_paths: List[Dict[str, Any]] = field(default_factory=list)  # Evolution targets
     evolution_conditions: List[Dict[str, Any]] = field(default_factory=list)  # Evolution requirements
     deevolution_sources: List[Dict[str, Any]] = field(default_factory=list)  # What can evolve into this
+    chronodevolution_forms: List[int] = field(default_factory=list)
+    chronodevolution_source_id: int = 0
     battle_enemy_data: Dict[str, Any] = field(default_factory=dict)  # Battle enemy parameters
     growth_curves: List[Dict[str, Any]] = field(default_factory=list)  # Level-based growth data
     
@@ -1185,6 +1188,11 @@ class MBELoader:
     
     def _load_evolution_data(self, digimon: DigimonData):
         """Load evolution paths and conditions"""
+        # Preserve all optional model and Chronomon forms, including unexposed
+        # LOD columns. DLC roots overlay the base tables when present.
+        roots = [self.data_path]
+        roots.extend(root for _dlc_id, root in self.iter_dlc_data_roots())
+        load_optional_model_tables(digimon, roots)
         # Load evolution targets (what this Digimon can evolve into)
         # Check base game first
         evolution_to_file = self._resolve_prefixed_file(self.data_path / "evolution.mbe" / "001_evolution_to.csv")
@@ -2382,7 +2390,8 @@ class MBELoader:
                         "hp_drain": safe_int_value(row[43], 0) if len(row) > 43 else 0,
                         "sp_drain": safe_int_value(row[44], 0) if len(row) > 44 else 0,
                         "recoil": safe_int_value(row[45], 0) if len(row) > 45 else 0,
-                        "always_hits": bool(safe_int_value(row[39], 0)) if len(row) > 39 else False,
+                        "always_hits": str(row[39]).lower() in {'true', '1'} if len(row) > 39 else False,
+                        "conditional_effect_arg": safe_int_value(row[50], 0) if len(row) > 50 else 0,
                         "buff_set_0": safe_int_value(row[52], 0) if len(row) > 52 else 0,
                         "buff_set_1": safe_int_value(row[54], 0) if len(row) > 54 else 0,
                         "buff_set_2": safe_int_value(row[56], 0) if len(row) > 56 else 0,
@@ -2412,70 +2421,41 @@ class MBELoader:
         rows = self.load_csv(skill_file)
         skill_id = skill_data.get("skill_id", 0)
         
-        # Find and update the skill row
-        for i, row in enumerate(rows[1:], 1):  # Skip header
-            if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
-                # Update the row with new data
-                if len(row) > 4: row[4] = str(skill_data.get("name_id", skill_id))  # Use skill_id as name_id if not specified
-                if len(row) > 5: row[5] = str(skill_data.get("description_id", 0))
-                if len(row) > 10: row[10] = str(skill_data.get("animation_id", 0))
-                if len(row) > 12: row[12] = str(skill_data.get("effect_id", 0))
-                if len(row) > 33: row[33] = str(skill_data.get("target_type", 1))  # Save target_type (column 33)
-                if len(row) > 22: row[22] = str(skill_data.get("damage_type", 0))
-                if len(row) > 23: row[23] = str(skill_data.get("power", 0))
-                if len(row) > 26: row[26] = str(skill_data.get("additional_property_1", 0))
-                if len(row) > 27: row[27] = str(skill_data.get("additional_property", 0))
-                if len(row) > 28: row[28] = str(skill_data.get("element", 0))
-                if len(row) > 34: row[34] = str(skill_data.get("min_hits", 1))
-                if len(row) > 35: row[35] = str(skill_data.get("max_hits", 1))
-                if len(row) > 36: row[36] = str(skill_data.get("sp_cost", 0))
-                if len(row) > 38: row[38] = str(skill_data.get("cp_cost", 0))
-                if len(row) > 39: row[39] = str(1 if skill_data.get("always_hits", False) else 0)
-                if len(row) > 40: row[40] = str(skill_data.get("accuracy", 0))
-                if len(row) > 42: row[42] = str(skill_data.get("crit_rate", 0))
-                if len(row) > 43: row[43] = str(skill_data.get("hp_drain", 0))
-                if len(row) > 44: row[44] = str(skill_data.get("sp_drain", 0))
-                if len(row) > 45: row[45] = str(skill_data.get("recoil", 0))
-                if len(row) > 46: row[46] = str(skill_data.get("conditional_type", 0))
-                if len(row) > 47: row[47] = str(skill_data.get("conditional_effect", 0))
-                if len(row) > 49: row[49] = str(skill_data.get("conditional_arg", 0))
-                if len(row) > 52: row[52] = str(skill_data.get("buff_set_0", 0))
-                if len(row) > 54: row[54] = str(skill_data.get("buff_set_1", 0))
-                if len(row) > 56: row[56] = str(skill_data.get("buff_set_2", 0))
-                if len(row) > 58: row[58] = str(skill_data.get("buff_set_3", 0))
-                if len(row) > 60: row[60] = str(skill_data.get("buff_set_4", 0))
-                if len(row) > 61: row[61] = str(skill_data.get("mode_change_id", -1))
-                if len(row) > 63: row[63] = str(skill_data.get("jogress_skill_id", 0))
-                if len(row) > 64: row[64] = str(skill_data.get("jogress_partner_1", -1))
-                if len(row) > 66: row[66] = str(skill_data.get("jogress_partner_2", -1))
-                break
-        
-        # Write back to file (preserve exact CSV format with quotes)
+        # Update only fields supplied by the caller. Hidden name, description,
+        # target and engine-specific columns must survive an ordinary UI save.
+        fields = {
+            'name_id': 4, 'description_id': 5, 'animation_id': 10, 'effect_id': 12,
+            'target_type': 33, 'damage_type': 22, 'power': 23,
+            'additional_property_1': 26, 'additional_property': 27, 'element': 28,
+            'min_hits': 34, 'max_hits': 35, 'sp_cost': 36, 'cp_cost': 38,
+            'always_hits': 39, 'accuracy': 40, 'crit_rate': 42,
+            'hp_drain': 43, 'sp_drain': 44, 'recoil': 45,
+            'conditional_type': 46, 'conditional_effect': 47,
+            'conditional_arg': 49, 'conditional_effect_arg': 50,
+            'buff_set_0': 52, 'buff_set_1': 54, 'buff_set_2': 56,
+            'buff_set_3': 58, 'buff_set_4': 60, 'mode_change_id': 61,
+            'jogress_skill_id': 63, 'jogress_partner_1': 64, 'jogress_partner_2': 66,
+        }
+        found = False
+        for row in rows[1:]:
+            if row and safe_int_value(row[0], -1) == skill_id:
+                found = True
+                for key, column in fields.items():
+                    if key in skill_data and column < len(row):
+                        value = skill_data[key]
+                        if key == 'always_hits':
+                            value = 1 if value else 0
+                        row[column] = str(value)
+        if not found:
+            return False
         try:
-            with open(skill_file, 'w', encoding='utf-8') as f:
-                for row in rows:
-                    f.write(','.join(row) + '\n')
-            
-            # Save skill name if provided
-            if "skill_name" in skill_data and skill_data["skill_name"]:
-                self.save_skill_name(skill_id, skill_data["skill_name"])
-            
-            # Save target_type if provided
-            if "target_type" in skill_data:
-                # Update target_type in the skill row (column 33)
-                for i, row in enumerate(rows[1:], 1):
-                    if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
-                        if len(row) > 33:
-                            row[33] = str(skill_data.get("target_type", 1))
-                        # Write back again with target_type
-                        with open(skill_file, 'w', encoding='utf-8') as f:
-                            for write_row in rows:
-                                f.write(','.join(write_row) + '\n')
-                        break
-            
+            with open(skill_file, 'w', encoding='utf-8', newline='') as output:
+                csv.writer(output).writerows(rows)
+            if skill_data.get('skill_name'):
+                return self.save_skill_name(skill_id, skill_data['skill_name'])
             return True
-        except Exception as e:
-            print(f"Error saving skill data: {e}")
+        except (OSError, ValueError) as exc:
+            print(f'Error saving skill data: {exc}')
             return False
 
     def _mode_change_header_from_disk(self) -> List[str]:

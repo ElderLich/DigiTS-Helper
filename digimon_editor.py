@@ -25,6 +25,9 @@ from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLine
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, CHRONO_HEADER, CHRONO_STAGES,
+                        chrono_forms_for, find_table, read_table,
+                        load_optional_model_tables, validate_typed_row)
 
 
 DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
@@ -2038,6 +2041,64 @@ def configure_searchable_combo(combo: QComboBox):
         completer.setFilterMode(Qt.MatchFlag.MatchContains)
 
 
+class BuffDefinitionDialog(QDialog):
+    """Clone/edit complete battle_buff rows without guessing unknown meanings."""
+
+    def __init__(self, parent, records):
+        super().__init__(parent)
+        self.records = records
+        self.setWindowTitle('Create / Edit Buff Definition')
+        self.resize(760, 740)
+        apply_modern_dialog_theme(self)
+        layout = QVBoxLayout(self)
+        hint = QLabel('Choose an existing definition as a template, then set its ID and values. '
+                      'This writes battle_buff in the active mod. Use that effect ID inside a buff set. '
+                      'Unknown engine columns retain their original values; new IDs reuse existing engine behavior.')
+        hint.setWordWrap(True)
+        layout.addWidget(hint)
+        self.source_combo = QComboBox()
+        configure_searchable_combo(self.source_combo)
+        for effect_id, record in sorted(records.items()):
+            self.source_combo.addItem(record['label'], effect_id)
+        layout.addWidget(self.source_combo)
+        self.table = QTableWidget(0, 2)
+        self.table.setHorizontalHeaderLabels(['Source column', 'Value'])
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        layout.addWidget(self.table)
+        self.source_combo.currentIndexChanged.connect(self.load_template)
+        self.load_template()
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def load_template(self):
+        record = self.records.get(self.source_combo.currentData())
+        if not record:
+            return
+        self.header = list(record['header'])
+        self.table.setRowCount(len(self.header))
+        for index, column in enumerate(self.header):
+            label = QTableWidgetItem(column + (' (effect ID)' if index == 0 else ''))
+            label.setFlags(label.flags() & ~Qt.ItemFlag.ItemIsEditable)
+            self.table.setItem(index, 0, label)
+            item = QTableWidgetItem(record['row'][index] if index < len(record['row']) else '')
+            if column.startswith('empty'):
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+            self.table.setItem(index, 1, item)
+
+    def accept(self):
+        try:
+            self.row = validate_typed_row(self.header, [self.table.item(i, 1).text() for i in range(self.table.rowCount())])
+            if int(self.row[0]) <= 0:
+                raise ValueError('The effect ID must be positive.')
+        except ValueError as exc:
+            QMessageBox.warning(self, 'Invalid Buff Definition', str(exc))
+            return
+        super().accept()
+
+
 class BuffSetCreatorDialog(QDialog):
     """Create one battle_skill 002_buff_set row from existing effect IDs."""
 
@@ -2081,8 +2142,8 @@ class BuffSetCreatorDialog(QDialog):
         self.unknown_001_spin = QSpinBox()
         self.unknown_001_spin.setRange(-1, 9999999)
         self.unknown_001_spin.setValue(-1)
-        self.unknown_001_spin.setToolTip("002_buff_set column unknown_001. Official rows usually use -1.")
-        form.addWidget(QLabel("unknown_001:"), 0, 2)
+        self.unknown_001_spin.setToolTip('Column 1: buff_message text ID; -1 uses an automatic message.')
+        form.addWidget(QLabel('Message ID:'), 0, 2)
         form.addWidget(self.unknown_001_spin, 0, 3)
 
         self.unknown_002_spin = QSpinBox()
@@ -2168,11 +2229,28 @@ class BuffSetCreatorDialog(QDialog):
             if reply != QMessageBox.StandardButton.Yes:
                 return
 
-        if not any(combo.currentData() for combo in self.effect_combos):
+        try:
+            effects = [self.effect_id(combo) for combo in self.effect_combos]
+        except ValueError as exc:
+            QMessageBox.warning(self, 'Unknown Effect', str(exc))
+            return
+        if not any(effects):
             QMessageBox.warning(self, "No Effects", "Choose at least one effect before creating a buff set.")
             return
 
         super().accept()
+
+    @staticmethod
+    def effect_id(combo):
+        text = combo.currentText().strip()
+        if text.isdigit():
+            value = int(text)
+            if value > 2147483647:
+                raise ValueError('Effect IDs must fit in a signed 32-bit integer.')
+            return value
+        if combo.currentIndex() >= 0 and text == combo.itemText(combo.currentIndex()):
+            return safe_evolution_int(combo.currentData(), 0)
+        raise ValueError('Select a known effect or type a numeric effect ID.')
 
     def buff_set_data(self) -> Dict[str, object]:
         effects = []
@@ -2182,7 +2260,7 @@ class BuffSetCreatorDialog(QDialog):
             self.change_spins,
             self.turn_spins,
         ):
-            effect_id = safe_evolution_int(combo.currentData(), 0)
+            effect_id = self.effect_id(combo)
             if effect_id <= 0:
                 continue
             effects.append({
@@ -2902,11 +2980,10 @@ class DigimonCreationWizard(QWizard):
                         if isinstance(item, str) and old_chr_id_clean in item:
                             value[idx] = item.replace(old_chr_id_clean, new_chr_id_clean)
 
-        # Update model_locator_data
+        # A locator reference names an asset, not the destination character.
+        # Keep the source LOC asset until the user provides a replacement.
         if digimon.model_locator_data:
-            for key, value in digimon.model_locator_data.items():
-                if isinstance(value, str) and old_chr_id_clean in value:
-                    digimon.model_locator_data[key] = value.replace(old_chr_id_clean, new_chr_id_clean)
+            digimon.model_locator_data['chr_id'] = new_chr_id_clean
 
         # Update model_locator_motion_data - update motion keys
         for motion_entry in digimon.model_locator_motion_data:
@@ -2981,10 +3058,14 @@ class DigimonCreationWizard(QWizard):
             if digimon.model_setting_data:
                 self._write_model_setting_ap_csv(patch_data / "model_setting.mbe" / "000_model_setting.ap.csv", digimon)
 
-            # Export lod data
-            if digimon.lod_data:
-                self._write_lod_ap_csv(patch_data / "lod_chara.mbe" / "000_lod.ap.csv", digimon)
-                self._write_lod_model_ap_csv(patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv", digimon)
+            # LOD defaults are required even for templates without explicit rows.
+            self._write_lod_ap_csv(patch_data / "lod_chara.mbe" / "000_lod.ap.csv", digimon)
+            self._write_lod_model_ap_csv(patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv", digimon)
+            for folder, filename, writer, present in self._optional_mod_tables(digimon):
+                if present:
+                    destination = patch_data / folder / filename
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    writer(destination, digimon)
 
             # Export animation reference
             self._write_anim_setting_ap_csv(patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv", digimon.chr_id, animation_ref)
@@ -3221,13 +3302,9 @@ class DigimonCreationWizard(QWizard):
     def _write_lod_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write lod.ap.csv"""
         header = 'string2 0,float 1,float 2,float 3,float 4,float 5,float 6,float 7,float 8,float 9,float 10'
-        parts = [
-            f'"{self._escape_csv_value(digimon.chr_id)}"',
-            str(digimon.lod_data.get('lod_distance_1', 20)),
-            str(digimon.lod_data.get('lod_distance_2', 65)),
-            str(digimon.lod_data.get('lod_distance_3', 500)),
-            '0', '0', '0', '0', '0', '0', '0'
-        ]
+        defaults = [20, 65, 500] + [0] * 7
+        parts = [digimon.chr_id] + [str(digimon.lod_data.get(f'lod_distance_{i}', defaults[i - 1]))
+                                  for i in range(1, 11)]
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
@@ -3236,17 +3313,52 @@ class DigimonCreationWizard(QWizard):
     def _write_lod_model_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write lod_model.ap.csv"""
         header = 'string2 0,string2 1,string2 2,string2 3,string2 4,string2 5,string2 6,string2 7,string2 8,string2 9,string2 10'
-        escaped_chr_id = self._escape_csv_value(digimon.chr_id)
-        parts = [
-            f'"{escaped_chr_id}"',
-            '""',  # empty string
-            f'"{escaped_chr_id}_LOD_2"',  # LOD model name
-            '""', '""', '""', '""', '""', '""', '""', '""'  # 8 empty strings
-        ]
+        source = digimon.lod_model_data
+        parts = list(source.get('raw_data', [])) or [digimon.chr_id, '', f'{digimon.chr_id}_LOD_2'] + [''] * 8
+        parts = (parts + [''] * 11)[:11]
+        old_chr = str(parts[0] or source.get('chr_id', digimon.chr_id)).strip('"')
+        # Keep custom LOD filenames; rekey only names derived from the old model.
+        if old_chr and old_chr != digimon.chr_id:
+            parts = [digimon.chr_id + value[len(old_chr):] if value.startswith(old_chr + '_') else value
+                     for value in parts]
+        parts[0] = digimon.chr_id
+        if source.get('lod_model_ref'):
+            reference = source['lod_model_ref']
+            parts[2] = digimon.chr_id + reference[len(old_chr):] if old_chr and reference.startswith(old_chr + '_') else reference
 
         with open(filepath, 'w', encoding='utf-8', newline='') as f:
             f.write(header + '\n')
             f.write(format_dsts_typed_csv_row(header, parts) + '\n')
+
+    def _optional_mod_tables(self, digimon):
+        return (
+            ('model_locator.mbe', '000_model_locator.ap.csv', self._write_model_locator_ap_csv, bool(digimon.model_locator_data)),
+            ('model_locator.mbe', '001_model_locator_motion.ap.csv', self._write_model_locator_motion_ap_csv, bool(digimon.model_locator_motion_data)),
+            ('evolution.mbe', '002_chronodevolution.ap.csv', self._write_chronodevolution_ap_csv, bool(digimon.chronodevolution_forms)),
+        )
+
+    def _write_model_locator_ap_csv(self, filepath, digimon):
+        with open(filepath, 'w', encoding='utf-8', newline='') as output:
+            write_dsts_typed_csv_rows(output, ['string3 0', 'string3 1'],
+                                     [[digimon.chr_id, digimon.model_locator_data['locator_ref']]])
+
+    def _write_model_locator_motion_ap_csv(self, filepath, digimon):
+        rows = []
+        for entry in digimon.model_locator_motion_data:
+            key = entry['motion_key']
+            # The suffix is an animation key, not a substring replacement.
+            if '_' in key:
+                key = digimon.chr_id + '_' + key.split('_', 1)[1]
+            rows.append([key, entry['motion_name']])
+        with open(filepath, 'w', encoding='utf-8', newline='') as output:
+            write_dsts_typed_csv_rows(output, ['string3 0', 'string3 1'], rows)
+
+    def _write_chronodevolution_ap_csv(self, filepath, digimon):
+        forms = chrono_forms_for(digimon)
+        if len(forms) != 6:
+            raise ValueError('Chrono Devolution requires six explicit stage form IDs.')
+        with open(filepath, 'w', encoding='utf-8', newline='') as output:
+            write_dsts_typed_csv_rows(output, CHRONO_HEADER, [[str(digimon.id), ''] + [str(value) for value in forms]])
 
     def _write_anim_setting_ap_csv(self, filepath: Path, chr_id: str, animation_ref: str):
         """Write same_animation_data.ap.csv"""
@@ -8840,8 +8952,11 @@ class DigimonEditor(QMainWindow):
         damage_layout.setVerticalSpacing(12)
 
         self.skill_damage_type_combo = QComboBox()
-        damage_types = ["None/Self", "Physical", "Magic", "Fixed damage at", "Fixed %", "Buff", "Major Damage"]
-        self.skill_damage_type_combo.addItems(damage_types)
+        damage_types = {0: 'None', 1: 'Physical', 2: 'Magic', 4: 'Fixed Damage',
+                        5: 'Fixed Damage (%)', 6: 'Buff', 8: 'Healing',
+                        9: 'Fixed Healing', 11: 'Major Damage'}
+        for damage_id, label in damage_types.items():
+            self.skill_damage_type_combo.addItem(f'{damage_id}: {label}', damage_id)
         apply_modern_combo_palette(self.skill_damage_type_combo)
 
         self.skill_element_combo = QComboBox()
@@ -9089,14 +9204,11 @@ class DigimonEditor(QMainWindow):
         )
 
         self.skill_additional_prop2_combo = QComboBox()
-        additional_effects = [
-            "None", "No Effect", "Nullifies unfavorable compatibility",
-            "Inverts stat changes", "Steals stat changes", "Recovers beyond Max HP",
-            "Consumes all SP", "Nullifies attribute compatibility",
-            "Attack as Vaccine", "Attack as Data", "Attack as Virus",
-            "Attack as Free", "Attack as Variable"
-        ]
-        self.skill_additional_prop2_combo.addItems(additional_effects)
+        # Column 27 has gaps at IDs 1, 2 and 4. Never use a compact
+        # dropdown's index as the game ID (old saves wrote nullify as 2).
+        for effect_id in range(15):
+            label = "None" if effect_id == 0 else self.loader.get_additional_property_effect_name(effect_id)
+            self.skill_additional_prop2_combo.addItem(f"{effect_id}: {label}", effect_id)
         apply_modern_combo_palette(self.skill_additional_prop2_combo)
         self.skill_additional_prop2_combo.setMinimumWidth(300)
         add_compact_field(
@@ -9144,9 +9256,10 @@ class DigimonEditor(QMainWindow):
         self.skill_conditional_effect_combo = QComboBox()
         conditional_effects = [
             "None", "+X% damage", "Increased Damage", "CRT Rate up",
-            "Restore HP", "Restore SP", "Restore SP/HP", "Reduce Target SP"
+            "Apply target buff set", "Restore HP", "Restore SP", "Restore SP/HP", "Reduce Target SP"
         ]
-        self.skill_conditional_effect_combo.addItems(conditional_effects)
+        for effect_id, label in enumerate(conditional_effects):
+            self.skill_conditional_effect_combo.addItem(f'{effect_id}: {label}', effect_id)
         apply_modern_combo_palette(self.skill_conditional_effect_combo)
         self.skill_conditional_effect_combo.setMinimumWidth(300)
         add_compact_field(
@@ -9161,7 +9274,7 @@ class DigimonEditor(QMainWindow):
         )
 
         self.skill_conditional_arg_edit = QSpinBox()
-        self.skill_conditional_arg_edit.setRange(0, 100)
+        self.skill_conditional_arg_edit.setRange(-32768, 32767)
         self.skill_conditional_arg_edit.setMinimumWidth(150)
         add_compact_field(
             conditional_layout,
@@ -9174,6 +9287,12 @@ class DigimonEditor(QMainWindow):
             field_width=170,
         )
 
+        self.skill_conditional_effect_arg_edit = QSpinBox()
+        self.skill_conditional_effect_arg_edit.setRange(-32768, 32767)
+        self.skill_conditional_effect_arg_edit.setToolTip('Column 50: percentage used by the selected conditional effect.')
+        add_compact_field(conditional_layout, 1, 1, 'Effect Argument:',
+                          self.skill_conditional_effect_arg_edit, TAB_ICON_STEMS.get('stats'),
+                          label_width=210, field_width=170)
         layout.addWidget(conditional_group)
 
         # Buff sets
@@ -9184,7 +9303,7 @@ class DigimonEditor(QMainWindow):
         buff_layout.setSpacing(10)
 
         buff_tool_row = QHBoxLayout()
-        buff_hint = QLabel("Skill rows use buff-set IDs. Create a set to combine existing battle_buff effects.")
+        buff_hint = QLabel('Combine effect IDs into a buff set, then assign the set to the skill. Active-mod buff definitions are included.')
         buff_hint.setStyleSheet(advanced_hint_style)
         buff_hint.setWordWrap(True)
         buff_tool_row.addWidget(buff_hint, 1)
@@ -9195,6 +9314,11 @@ class DigimonEditor(QMainWindow):
         create_buff_button.setStyleSheet(modern_action_button_style("#d8872b"))
         create_buff_button.clicked.connect(self.open_buff_set_creator)
         buff_tool_row.addWidget(create_buff_button)
+        definition_button = QPushButton('Edit Buff Definitions')
+        definition_button.setMinimumHeight(38)
+        definition_button.setStyleSheet(modern_action_button_style('#88e9e0'))
+        definition_button.clicked.connect(self.open_buff_definition_editor)
+        buff_tool_row.addWidget(definition_button)
         buff_layout.addLayout(buff_tool_row)
 
         self.buff_set_widgets = []
@@ -9216,9 +9340,9 @@ class DigimonEditor(QMainWindow):
             buff_widget_layout.setSpacing(10)
 
             buff_label = advanced_label(
-                f"Buff Set {i + 1}:",
+                ('Condition check:', 'Apply to target:', 'Apply to user:', 'Remove from target:', 'Remove from user:')[i],
                 TAB_ICON_STEMS.get("advanced_skills"),
-                width=150,
+                width=185,
                 icon_size=28,
             )
             buff_widget_layout.addWidget(buff_label)
@@ -9797,6 +9921,12 @@ class DigimonEditor(QMainWindow):
         self.requirements_label.setWordWrap(True)
         req_layout.addWidget(self.requirements_label)
 
+        chrono_button = QPushButton('Edit Chrono Devolution Forms')
+        chrono_button.setToolTip('Choose the six forms used by Chronomon in the final boss fight.')
+        configure_evolution_button(chrono_button, '#88e9e0')
+        chrono_button.clicked.connect(self.edit_chronodevolution_forms)
+        req_layout.addWidget(chrono_button)
+
         req_group.setLayout(req_layout)
         layout.addWidget(req_group)
 
@@ -9891,6 +10021,37 @@ class DigimonEditor(QMainWindow):
         layout.addStretch()
 
         return tab
+
+    def edit_chronodevolution_forms(self):
+        if not self.current_digimon:
+            return
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Chrono Devolution Forms')
+        apply_modern_dialog_theme(dialog)
+        layout = QVBoxLayout(dialog)
+        hint = QLabel('Forms used by Chronomon during the final boss fight. Enter Digimon IDs; '
+                      'use -1 for unused stages above the current form. These are separate from normal evolution paths.')
+        hint.setWordWrap(True)
+        layout.addWidget(hint)
+        form = QFormLayout()
+        values = chrono_forms_for(self.current_digimon) or [-1] * 6
+        widgets = []
+        for label, value in zip(CHRONO_STAGES, values):
+            spin = QSpinBox()
+            spin.setRange(-1, 2147483647)
+            spin.setValue(value)
+            spin.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            widgets.append(spin)
+            form.addRow(label + ' ID:', spin)
+        layout.addLayout(form)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self.current_digimon.chronodevolution_forms = [spin.value() for spin in widgets]
+            self.current_digimon.chronodevolution_source_id = self.current_digimon.id
+            self.mark_as_modified()
 
     def create_evolution_tree_tab(self) -> QWidget:
         """Create a visual evolution tree tab (like Digimon evolution chart)"""
@@ -12172,6 +12333,17 @@ class DigimonEditor(QMainWindow):
             ),
         }
 
+        for layer in ('app_0', 'patch'):
+            data_root = root / layer / 'data'
+            for folder, stem, predicate in (
+                ('model_locator.mbe', 'model_locator', matches_chr),
+                ('model_locator.mbe', 'model_locator_motion',
+                 lambda row: any(self._csv_cell(row, 0).startswith(key + '_') for key in chr_ids)),
+                ('evolution.mbe', 'chronodevolution', matches_id),
+            ):
+                removals[f'{layer}/{stem}'] = self._remove_rows_from_mod_csv(
+                    find_table(data_root, folder, stem, True), predicate)
+
         for patch_text_dir in self._iter_patch_text_dirs(root):
             folder = self._normalize_text_folder_name(patch_text_dir.name)
             patch_text = patch_text_dir / "text"
@@ -13241,11 +13413,11 @@ class DigimonEditor(QMainWindow):
                 digimon.localized_text = self._load_localized_text_from_dsts_loader(base_path, digimon)
                 self._apply_english_localized_text_to_digimon(digimon)
 
-                # Initialize other required data structures
-                digimon.model_locator_data = {}
-                digimon.model_locator_motion_data = []
+                # Preserve optional rows from both archive layers. Previously
+                # every import discarded locators and custom LOD mappings.
+                load_optional_model_tables(digimon,
+                    [base_path / 'app_0' / 'data', base_path / 'patch' / 'data'], prefer_ap=True)
                 digimon.field_move_animation_data = []
-                digimon.lod_model_data = {}
 
                 digimon_list.append(digimon)
 
@@ -16086,6 +16258,21 @@ class DigimonEditor(QMainWindow):
             if not self._merge_csv_row(lod_model_file, digimon, wizard._write_lod_model_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
                 return False
 
+            for folder, filename, writer, present in wizard._optional_mod_tables(digimon):
+                if not present:
+                    continue
+                optional_file = patch_data / folder / filename
+                optional_file.parent.mkdir(parents=True, exist_ok=True)
+                optional_file = self._resolve_prefixed_file(optional_file)
+                if 'chronodevolution' in filename:
+                    matches = lambda r: cell(r, 0) in match_ids
+                elif 'motion' in filename:
+                    matches = lambda r: any(cell(r, 0).startswith(key + '_') for key in match_chr_ids)
+                else:
+                    matches = lambda r: cell(r, 0) in match_chr_ids
+                if not self._merge_csv_row(optional_file, digimon, writer, matches):
+                    return False
+
             evolution_cond_file = patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv"
             jogress_cleanup_targets, jogress_cleanup_edges = self._jogress_cleanup_from_existing_conditions(
                 evolution_cond_file,
@@ -16870,7 +17057,7 @@ class DigimonEditor(QMainWindow):
 
         active_root = self._active_skill_data_root()
         if active_root:
-            contexts.append((active_root, True, "Active Mod"))
+            contexts.insert(0, (active_root, True, "Active Mod"))
         contexts.append((None, False, "Base Workspace"))
         try:
             for dlc_id, dlc_root in self.loader.iter_dlc_data_roots():
@@ -16910,6 +17097,7 @@ class DigimonEditor(QMainWindow):
             print(f"Error loading buff set data from {buff_set_file}: {exc}")
             return {}
 
+        definitions = self._buff_definition_records()
         slot_starts = range(6, 57, 5)
         for row in rows[1:]:
             if not row:
@@ -16926,7 +17114,7 @@ class DigimonEditor(QMainWindow):
                 rate = safe_evolution_int(row[start + 1] if len(row) > start + 1 else 0, 0)
                 change_percent = safe_evolution_int(row[start + 2] if len(row) > start + 2 else 0, 0)
                 turn_override = safe_evolution_int(row[start + 3] if len(row) > start + 3 else 0, 0)
-                name = self.loader.get_buff_name(effect_id)
+                name = definitions.get(effect_id, {}).get('name') or self.loader.get_buff_name(effect_id)
                 entries.append({
                     "effect_id": effect_id,
                     "name": name,
@@ -17019,59 +17207,85 @@ class DigimonEditor(QMainWindow):
             candidate += 1
         return candidate
 
+    def _buff_definition_records(self):
+        records = {}
+        contexts = list(self._buff_set_contexts())
+        active = self._active_dsts_loader_root()
+        if active:
+            contexts.insert(0, (active / 'patch' / 'data', True, 'Active Mod'))
+            contexts.insert(1, (active / 'app_0' / 'data', True, 'Active Mod app_0'))
+        for data_root, prefer_ap, label in contexts:
+            root = data_root if data_root is not None else self.loader.data_path
+            rows = read_table(root, 'battle_buff.mbe', 'battle_buff', prefer_ap)
+            names = {}
+            if active and str(label).startswith('Active Mod'):
+                for row in read_table(active / 'patch_text01' / 'text', 'buff_name.mbe', 'Sheet1', True)[1:]:
+                    if len(row) >= 2:
+                        names[safe_evolution_int(row[0], 0)] = self.loader.clean_ui_text(row[1])
+            for row in rows[1:]:
+                effect_id = safe_evolution_int(row[0] if row else 0, 0)
+                if effect_id <= 0 or effect_id in records:
+                    continue
+                name = names.get(effect_id) or self.loader.get_buff_name(effect_id)
+                if not name or name == 'None':
+                    name = f'Buff {effect_id}'
+                records[effect_id] = {'header': rows[0], 'row': list(row),
+                                      'name': name, 'label': f'ID {effect_id}: {name} [{label}]'}
+        return records
+
     def _available_buff_effect_options(self) -> List[Tuple[int, str]]:
-        """Return known battle_buff effect IDs for creator dropdowns."""
-        options: Dict[int, str] = {}
-
-        for effect_id, name in getattr(self.loader, "BUFF_ID_NAMES", {}).items():
-            if effect_id > 0 and name and name != "None":
-                options[effect_id] = f"ID {effect_id}: {name}"
-
+        options = {effect_id: record['label'] for effect_id, record in self._buff_definition_records().items()}
         for data_root, prefer_ap, _source_label in self._buff_set_contexts():
             for entries in self._load_buff_set_map(data_root, prefer_ap).values():
                 for entry in entries:
-                    effect_id = safe_evolution_int(entry.get("effect_id"), 0)
-                    if effect_id <= 0 or effect_id in options:
-                        continue
-                    name = self.loader.get_buff_name(effect_id)
-                    options[effect_id] = f"ID {effect_id}: {name}"
-
-        try:
-            battle_buff_file = self.loader._resolve_prefixed_file(self.loader.data_path / "battle_buff.mbe" / "000_battle_buff.csv")
-            for row in self.loader.load_csv(battle_buff_file)[1:]:
-                for column in (0, 6):
-                    effect_id = safe_evolution_int(row[column] if len(row) > column else 0, 0)
-                    if effect_id <= 0 or effect_id in options:
-                        continue
-                    name = self.loader.get_buff_name(effect_id)
-                    options[effect_id] = f"ID {effect_id}: {name}"
-        except Exception as exc:
-            debug_log(f"Could not load battle_buff effect options: {exc}")
-
+                    effect_id = entry['effect_id']
+                    options.setdefault(effect_id, f"ID {effect_id}: {entry['name']}")
         return sorted(options.items())
 
-    def _buff_set_header_for_save(self, target_file: Path) -> List[str]:
-        """Return an existing/official buff-set header for creator output."""
-        for source_file in (target_file, self._buff_set_csv_path(None, prefer_ap=False)):
-            if source_file.exists():
-                try:
-                    rows = self.loader.load_csv(source_file)
-                    if rows:
-                        return list(rows[0])
-                except Exception:
-                    pass
+    def _save_buff_definition_to_active_mod(self, header, row):
+        root = self._active_skill_data_root()
+        if not root:
+            return False, None, 'Load a Reloaded II mod first.'
+        try:
+            row = validate_typed_row(header, row)
+            if int(row[0]) <= 0:
+                raise ValueError('The effect ID must be positive.')
+            target = find_table(root, 'battle_buff.mbe', 'battle_buff', True)
+            # Runtime edits must be patches, never rewrite a full replacement CSV.
+            if not target.name.endswith('.ap.csv'):
+                target = target.with_name('000_battle_buff.ap.csv')
+            target.parent.mkdir(parents=True, exist_ok=True)
+            def write_row(path, unused):
+                with open(path, 'w', encoding='utf-8', newline='') as output:
+                    write_dsts_typed_csv_rows(output, header, [row])
+            success = self._merge_csv_row(target, None, write_row, lambda existing: self._csv_cell(existing, 0) == row[0])
+            self._buff_set_cache.clear()
+            return success, target, getattr(self, 'last_merge_error_message', '')
+        except (OSError, ValueError) as exc:
+            return False, None, f'{exc}\nClose any CSV editor tabs using this mod and try again.'
 
-        header = ["set_id", "unknown_001", "unknown_002", "unknown_003", "empty_004", "empty_005"]
-        for slot_index in range(1, 12):
-            header.extend([
-                f"buff_{slot_index:02d}_effect",
-                f"buff_{slot_index:02d}_rate",
-                f"buff_{slot_index:02d}_change_percent",
-                f"buff_{slot_index:02d}_turn_override",
-            ])
-            if slot_index < 11:
-                header.append(f"empty_{slot_index * 5 + 5:03d}")
-        return header
+    def open_buff_definition_editor(self):
+        if not self._active_skill_data_root():
+            QMessageBox.warning(self, 'No Active Mod', 'Load a Reloaded II mod first.')
+            return
+        records = self._buff_definition_records()
+        if not records:
+            QMessageBox.warning(self, 'No Buff Definitions', 'Extract battle_buff.mbe CSV data first.')
+            return
+        dialog = BuffDefinitionDialog(self, records)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+        success, target, message = self._save_buff_definition_to_active_mod(dialog.header, dialog.row)
+        if not success:
+            QMessageBox.warning(self, 'Buff Definition Not Saved', message)
+            return
+        self.populate_buff_set_combos()
+        QMessageBox.information(self, 'Buff Definition Saved', f"Effect {dialog.row[0]} saved to {target}.\nUse this effect ID in Create Buff Set.")
+
+    def _buff_set_header_for_save(self, target_file: Path) -> List[str]:
+        # Base workspace headers are human-friendly labels. Runtime patches
+        # require the captured 60-column MBE type schema instead.
+        return list(BUFF_SET_HEADER)
 
     def _make_buff_set_row(self, buff_set_data: Dict[str, object], column_count: int) -> List[str]:
         """Build a 002_buff_set row from dialog data."""
@@ -17111,7 +17325,10 @@ class DigimonEditor(QMainWindow):
             return False, None, "Load or create a Reloaded II mod first. Buff sets are written to the active mod, not Base/DLC files."
 
         buff_set_file = self._buff_set_csv_path(data_root, prefer_ap=True)
-        buff_set_file.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            buff_set_file.parent.mkdir(parents=True, exist_ok=True)
+        except OSError as exc:
+            return False, buff_set_file, f'Could not create the buff-set folder:\n{exc}'
         resolved_file = self._resolve_prefixed_file(buff_set_file)
         if not resolved_file.exists():
             resolved_file = buff_set_file
@@ -17126,8 +17343,6 @@ class DigimonEditor(QMainWindow):
                 with open(resolved_file, "r", encoding="utf-8", newline="") as f:
                     reader = csv.reader(f)
                     existing_header = next(reader, None)
-                    if existing_header:
-                        header = existing_header
                     rows = [row for row in reader if any(cell.strip() for cell in row)]
             except PermissionError:
                 return False, resolved_file, "Could not read the buff-set CSV. Close any CSV editor tab that has it open, then try again."
@@ -17186,14 +17401,14 @@ class DigimonEditor(QMainWindow):
         set_id = safe_evolution_int(buff_set_data.get("set_id"), 0)
         self.populate_buff_set_combos()
 
-        assigned_slot = None
-        for index, widget in enumerate(getattr(self, "buff_set_widgets", [])):
-            if widget.value() == 0:
-                widget.setValue(set_id)
-                assigned_slot = index + 1
-                break
-
-        slot_message = f"\n\nAssigned to Buff Set slot {assigned_slot}." if assigned_slot else "\n\nNo empty skill buff slot was available, so the set was only created."
+        # Slot 0 checks a condition; it never applies the new buff. Only
+        # auto-fill the target application slot, never a condition/removal slot.
+        widgets = getattr(self, 'buff_set_widgets', [])
+        assigned = len(widgets) > 1 and widgets[1].value() == 0
+        if assigned:
+            widgets[1].setValue(set_id)
+        slot_message = ('\n\nAssigned to Apply to target. Save the skill to apply the change.' if assigned else
+                        '\n\nSelect this set in the desired skill field, then save the skill.')
         QMessageBox.information(
             self,
             "Buff Set Saved",
@@ -17302,8 +17517,11 @@ class DigimonEditor(QMainWindow):
 
                 # Set damage type
                 damage_type = skill_data.get("damage_type", 0)
-                if damage_type < self.skill_damage_type_combo.count():
-                    self.skill_damage_type_combo.setCurrentIndex(damage_type)
+                damage_index = self.skill_damage_type_combo.findData(damage_type)
+                if damage_index < 0:
+                    self.skill_damage_type_combo.addItem(f'{damage_type}: Unknown (preserved)', damage_type)
+                    damage_index = self.skill_damage_type_combo.count() - 1
+                self.skill_damage_type_combo.setCurrentIndex(damage_index)
 
                 # Set element
                 element = skill_data.get("element", 0)
@@ -17321,8 +17539,11 @@ class DigimonEditor(QMainWindow):
                     self.skill_additional_prop1_combo.setCurrentIndex(prop1)
 
                 prop2 = skill_data.get("additional_property", 0)
-                if prop2 < self.skill_additional_prop2_combo.count():
-                    self.skill_additional_prop2_combo.setCurrentIndex(prop2)
+                prop2_index = self.skill_additional_prop2_combo.findData(prop2)
+                if prop2_index < 0:
+                    self.skill_additional_prop2_combo.addItem(f"{prop2}: Unknown (preserved)", prop2)
+                    prop2_index = self.skill_additional_prop2_combo.count() - 1
+                self.skill_additional_prop2_combo.setCurrentIndex(prop2_index)
 
                 # Set conditional effects
                 cond_type = skill_data.get("conditional_type", 0)
@@ -17330,10 +17551,14 @@ class DigimonEditor(QMainWindow):
                     self.skill_conditional_type_combo.setCurrentIndex(cond_type)
 
                 cond_effect = skill_data.get("conditional_effect", 0)
-                if cond_effect < self.skill_conditional_effect_combo.count():
-                    self.skill_conditional_effect_combo.setCurrentIndex(cond_effect)
+                effect_index = self.skill_conditional_effect_combo.findData(cond_effect)
+                if effect_index < 0:
+                    self.skill_conditional_effect_combo.addItem(f'{cond_effect}: Unknown (preserved)', cond_effect)
+                    effect_index = self.skill_conditional_effect_combo.count() - 1
+                self.skill_conditional_effect_combo.setCurrentIndex(effect_index)
 
                 self.skill_conditional_arg_edit.setValue(skill_data.get("conditional_arg", 0))
+                self.skill_conditional_effect_arg_edit.setValue(skill_data.get("conditional_effect_arg", 0))
 
                 # Set buff sets
                 for i, widget in enumerate(self.buff_set_widgets):
@@ -17361,6 +17586,27 @@ class DigimonEditor(QMainWindow):
             self.advanced_skill_desc.setPlainText("")
             self.clear_mode_change_fields()
             self.populate_buff_set_combos()
+
+    def _prepare_skill_mod_patch(self, skill_id, source_root=None, source_prefer_ap=False):
+        """Copy only the selected source skill into the active mod before editing."""
+        root = self._active_skill_data_root()
+        if not root:
+            return None
+        target = root / 'battle_skill.mbe' / '000_battle_skill_list.ap.csv'
+        target = self._resolve_prefixed_file(target)
+        if self.loader.load_skill_data(skill_id, root, True):
+            return root
+        source = self.loader.load_skill_data(skill_id, source_root, source_prefer_ap)
+        row = source.get('raw_data', [])
+        if len(row) != len(SKILL_HEADER):
+            raise ValueError('The source skill does not have the supported 73-column layout.')
+        target.parent.mkdir(parents=True, exist_ok=True)
+        def write_source(path, unused):
+            with open(path, 'w', encoding='utf-8', newline='') as output:
+                write_dsts_typed_csv_rows(output, SKILL_HEADER, [row])
+        if not self._merge_csv_row(target, None, write_source, lambda existing: self._csv_cell(existing, 0) == str(skill_id)):
+            raise OSError(getattr(self, 'last_merge_error_message', 'Could not create the skill patch.'))
+        return root
 
     def save_advanced_skill(self):
         """Save the current skill data"""
@@ -17390,6 +17636,18 @@ class DigimonEditor(QMainWindow):
         prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
         source_label = getattr(self, "current_advanced_skill_source_label", "Base/DLC Workspace")
 
+        if self._active_skill_data_root():
+            try:
+                data_root = self._prepare_skill_mod_patch(skill_id, data_root, prefer_ap)
+            except (OSError, ValueError) as exc:
+                QMessageBox.warning(self, 'Skill Not Saved', str(exc))
+                return
+            prefer_ap = True
+            source_label = 'Active Mod'
+            self.current_advanced_skill_data_root = data_root
+            self.current_advanced_skill_prefer_ap = True
+            self.current_advanced_skill_source_label = source_label
+
         # Collect all form data
         skill_data = {
             "skill_id": skill_id,
@@ -17404,15 +17662,16 @@ class DigimonEditor(QMainWindow):
             "jogress_partner_2": self.skill_jogress_p2_edit.value(),
             "accuracy": self.skill_accuracy_edit.value(),
             "crit_rate": self.skill_crit_rate_edit.value(),
-            "damage_type": self.skill_damage_type_combo.currentIndex(),
+            "damage_type": self.skill_damage_type_combo.currentData(),
             "element": self.skill_element_combo.currentData(),
             "min_hits": self.skill_min_hits_edit.value(),
             "max_hits": self.skill_max_hits_edit.value(),
             "additional_property_1": self.skill_additional_prop1_combo.currentIndex(),
-            "additional_property": self.skill_additional_prop2_combo.currentIndex(),
+            "additional_property": self.skill_additional_prop2_combo.currentData(),
             "conditional_type": self.skill_conditional_type_combo.currentIndex(),
-            "conditional_effect": self.skill_conditional_effect_combo.currentIndex(),
+            "conditional_effect": self.skill_conditional_effect_combo.currentData(),
             "conditional_arg": self.skill_conditional_arg_edit.value(),
+            "conditional_effect_arg": self.skill_conditional_effect_arg_edit.value(),
             "hp_drain": self.skill_hp_drain_edit.value(),
             "sp_drain": self.skill_sp_drain_edit.value(),
             "recoil": self.skill_recoil_edit.value(),
