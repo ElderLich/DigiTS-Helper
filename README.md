@@ -93,6 +93,22 @@ For command-line extraction (Python 3.11 or newer):
 py -u Switch_Archives.py "D:\Emulators\Ryujinx\Games\Extracted" "D:\Digimon Modding\Time Stranger - Switch - Extracted"
 ```
 
+Compare either raw archive folders or extracted trees with `Compare_Assets.py`:
+
+```powershell
+py Compare_Assets.py --windows "D:\Programs\Steam\steamapps\common\Digimon Story Time Stranger\gamedata" --switch "D:\Emulators\Ryujinx\Games\Extracted" --output "D:\Digimon Modding\Time Stranger - Switch - Extracted\Comparison" --hash-ext ".geom,.mbe,.lua,.nlst"
+```
+
+The comparison normalizes archive names, path case, and numbered patch layers;
+it keeps language, DLC, and CPK variants identifiable. Without `--hash-ext`,
+equal size is reported as unverified, not equal content. Generated `Tables`
+and `_switch_extraction` directories are excluded from extracted-tree inputs.
+Use a report folder outside the input trees. `--switch-platform ounce64`
+compares the sparse alternate-platform DLC separately. Results include model
+IDs, extra LOD filenames, provenance CSVs, and a Markdown summary. See the
+[2026-11-15 comparison](Research/switch-windows-audit-2026-11-15.md) for the
+supplied dump's findings and the DLC coverage caveat.
+
 ## Mod workflow
 
 1. **Load a mod or choose a template.** Adding a new entry stages a copy; choose
