@@ -6,6 +6,7 @@ import re
 import struct
 import tempfile
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 from PyQt6.QtCore import QLockFile, Qt
@@ -155,7 +156,8 @@ def apply_unlock(plan):
             os.fsync(file.fileno())
         if _aes(temporary.read_bytes(), encrypt=False) != plain:
             raise OSError("Could not verify the encrypted save before replacement.")
-        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=path.name + ".pre-guide-",
+        backup_prefix = f"{path.name}.pre-guide-{datetime.now():%Y%m%d-%H%M%S}-"
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=backup_prefix,
                                          suffix=".bak", delete=False) as file:
             backup = Path(file.name)
             file.write(original)
@@ -175,10 +177,70 @@ def apply_unlock(plan):
             lock.unlock()
 
 
+def _steam_client_paths():
+    if os.name == "nt":
+        import winreg
+
+        for hive, value, view in (
+            (winreg.HKEY_CURRENT_USER, "SteamPath", 0),
+            (winreg.HKEY_LOCAL_MACHINE, "InstallPath", winreg.KEY_WOW64_32KEY),
+            (winreg.HKEY_LOCAL_MACHINE, "InstallPath", winreg.KEY_WOW64_64KEY),
+        ):
+            try:
+                with winreg.OpenKey(hive, r"Software\Valve\Steam", 0, winreg.KEY_READ | view) as key:
+                    folder, _ = winreg.QueryValueEx(key, value)
+                    if folder:
+                        yield Path(folder)
+            except OSError:
+                continue
+    for variable in ("ProgramFiles(x86)", "ProgramFiles"):
+        if folder := os.environ.get(variable):
+            yield Path(folder) / "Steam"
+
+
+def _steam_metadata(path):
+    try:
+        return path.read_text(encoding="utf-8-sig")
+    except (OSError, UnicodeError):
+        return ""
+
+
+def find_steam_save_directory():
+    """Locate the installed game's savedata folder across the user's Steam libraries."""
+    libraries = []
+    for client in dict.fromkeys(_steam_client_paths()):
+        libraries.append(client)
+        metadata = _steam_metadata(client / "steamapps" / "libraryfolders.vdf")
+        # Modern entries use "path". Older Steam clients keyed library paths by number.
+        for value in re.findall(r'^\s*"(?:path|\d+)"\s*"([^"\r\n]+)"', metadata, re.MULTILINE):
+            library = Path(value.replace("\\\\", "\\"))
+            if library.is_absolute():
+                libraries.append(library)
+
+    fallback = None
+    for library in dict.fromkeys(libraries):
+        steamapps = library / "steamapps"
+        common = steamapps / "common"
+        manifest = _steam_metadata(steamapps / "appmanifest_1984270.acf")
+        install = re.search(r'^\s*"installdir"\s*"([^"\r\n]+)"', manifest, re.MULTILINE)
+        if install:
+            folder = install.group(1)
+            if folder not in (".", "..") and Path(folder).name == folder:
+                saves = common / folder / "gamedata" / "savedata"
+                if saves.is_dir():
+                    return saves
+        standard = common / "Digimon Story Time Stranger" / "gamedata" / "savedata"
+        if fallback is None and standard.is_dir():
+            fallback = standard
+    return fallback
+
+
 def open_field_guide_unlock(parent, digimon_ids, *, inventory_warnings=()):
+    directory = find_steam_save_directory()
     chosen, _ = QFileDialog.getOpenFileName(
-        parent, "Choose a Time Stranger PC save slot", "",
-        "Time Stranger slots (savedata*.dat);;All files (*)")
+        parent, "Choose a save slot (autosave is 0000.bin or savedata00.dat)",
+        str(directory) if directory else "",
+        "Time Stranger slots (????.bin savedata*.dat);;Autosave only (0000.bin savedata00.dat);;All files (*)")
     if not chosen:
         return
     try:
@@ -187,7 +249,8 @@ def open_field_guide_unlock(parent, digimon_ids, *, inventory_warnings=()):
         box = QMessageBox(parent)
         box.setWindowTitle(title)
         box.setTextFormat(Qt.TextFormat.PlainText)
-        box.setText(f"{plan.path.name} · {len(plan.ids)} catalogued species")
+        label = "Autosave" if plan.path.name.casefold() in {"0000.bin", "savedata00.dat"} else "Save slot"
+        box.setText(f"{label} · {plan.path.name} · {len(plan.ids)} catalogued species")
         message = (f"Already registered: {plan.existing}\n"
                    f"Register existing records: {plan.updated}\n"
                    f"Add records for newly catalogued species: {plan.added}")
@@ -207,6 +270,7 @@ def open_field_guide_unlock(parent, digimon_ids, *, inventory_warnings=()):
             backup = apply_unlock(plan)
             if backup is not None:
                 QMessageBox.information(parent, title, f"Registered {plan.updated + plan.added} species.\n\n"
-                                        f"Original save backup:\n{backup}")
+                                        f"Original save backup:\n{backup}\n\n"
+                                        f"To restore, close the game and copy this backup over {plan.path.name}.")
     except (ValueError, OSError) as exc:
         QMessageBox.warning(parent, "Field Guide", str(exc))

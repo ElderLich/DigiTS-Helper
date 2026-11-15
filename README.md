@@ -121,10 +121,15 @@ Select **Slot conflicts** to find shared numbers, select a mod row, and use
 status CSV before changing the assignment.
 
 To make species visible without evolving them, close the game and choose
-**Field Guide → Unlock Field Guide…**. Select a Windows PC version 5
-`savedata*.dat` slot and review the counts for the base game, DLC and installed
-mod catalogue. **Apply** saves a backup beside the selected slot and registers
-the listed species. Run this again after installing another species mod.
+**Field Guide → Unlock Field Guide…**. The picker opens the game's
+`gamedata\savedata` folder in your Steam library. Open your account folder
+and choose **0000.bin** for the autosave. The Steam userdata copy is named
+`savedata00.dat`. The **Autosave only** filter shows these two filenames.
+Review the counts for the base game, DLC and installed
+mod catalogue. **Apply** creates a dated, byte-verified backup beside the
+selected slot before registering species. To restore, close the game and copy
+the backup over the original slot filename. Run the unlocker again after
+installing another species mod.
 
 ### Creating and editing mods
 

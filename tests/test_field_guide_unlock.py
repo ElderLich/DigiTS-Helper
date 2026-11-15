@@ -5,10 +5,63 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from PyQt6.QtCore import QDir
+
 from field_guide_unlock import (
     AUX_OFFSET, CAPACITY, GUIDE_OFFSET, RECORD_SIZE, REGISTERED, SAVE_SIZE,
-    _aes, apply_unlock, preview_unlock,
+    _aes, apply_unlock, find_steam_save_directory, open_field_guide_unlock, preview_unlock,
 )
+
+
+class SteamSaveLocationTests(unittest.TestCase):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        self.client = self.root / "Custom Steam"
+        self.apps = self.client / "steamapps"
+        self.apps.mkdir(parents=True)
+        self.registry = patch("field_guide_unlock._steam_client_paths", return_value=[self.client])
+        self.registry.start()
+        self.addCleanup(self.registry.stop)
+
+    def make_saves(self, library, name="Digimon Story Time Stranger"):
+        folder = library / "steamapps" / "common" / name / "gamedata" / "savedata"
+        folder.mkdir(parents=True)
+        return folder
+
+    def test_picker_defaults_to_game_and_shows_both_slot_naming_schemes(self):
+        expected = self.make_saves(self.client)
+        with patch("field_guide_unlock.QFileDialog.getOpenFileName", return_value=("", "")) as picker:
+            open_field_guide_unlock(None, [])
+        _, _, folder, filters = picker.call_args.args
+        self.assertEqual(Path(folder), expected)
+        patterns = filters.split("(", 1)[1].split(")", 1)[0].split()
+        for name in ("0000.bin", "0123.bin", "savedata01.dat"):
+            self.assertTrue(QDir.match(patterns, name))
+        for name in ("slot_0000.bin", "sysdata_dx11.bin", "0000.bin.pre-guide-test.bak"):
+            self.assertFalse(QDir.match(patterns, name))
+        autosaves = filters.split("Autosave only (", 1)[1].split(")", 1)[0].split()
+        self.assertEqual(autosaves, ["0000.bin", "savedata00.dat"])
+
+    def test_manifest_in_secondary_library_takes_priority_over_stale_folder(self):
+        self.make_saves(self.client)
+        library = self.root / "Game Library"
+        expected = self.make_saves(library, "Time Stranger Custom")
+        escaped = str(library).replace("\\", "\\\\")
+        (self.apps / "libraryfolders.vdf").write_text(
+            f'"libraryfolders"\n{{\n"1"\n{{\n"path" "{escaped}"\n"apps"\n{{\n"1984270" "12345"\n}}\n}}\n}}',
+            encoding="utf-8-sig")
+        (library / "steamapps/appmanifest_1984270.acf").write_text(
+            '"AppState"\n{\n"installdir" "Time Stranger Custom"\n}', encoding="utf-8")
+        self.assertEqual(find_steam_save_directory(), expected)
+
+    def test_legacy_library_and_missing_game(self):
+        library = self.root / "Games"
+        (self.apps / "libraryfolders.vdf").write_text(
+            f'"LibraryFolders"\n{{\n"1" "{library.as_posix()}"\n}}', encoding="utf-8")
+        self.assertIsNone(find_steam_save_directory())
+        self.assertEqual(self.make_saves(library), find_steam_save_directory())
 
 
 @unittest.skipUnless(os.name == "nt", "PC save encryption uses Windows CNG")
