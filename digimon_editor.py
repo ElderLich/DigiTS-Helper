@@ -6645,8 +6645,12 @@ class DigimonEditor(QMainWindow):
         main_layout.setContentsMargins(15, 15, 15, 15)
 
         # Left panel - Digimon list
-        left_panel = self.create_left_panel()
-        main_layout.addWidget(left_panel, 1)
+        sidebar = QScrollArea()
+        sidebar.setFrameShape(QFrame.Shape.NoFrame)
+        sidebar.setWidgetResizable(True)
+        sidebar.setMinimumWidth(450)
+        sidebar.setWidget(self.create_left_panel())
+        main_layout.addWidget(sidebar, 1)
 
         # Right panel - Editor
         right_panel = self.create_right_panel()
@@ -6930,7 +6934,6 @@ class DigimonEditor(QMainWindow):
         """Create the left panel with Digimon list"""
         panel = QWidget()
         panel.setObjectName("leftPanel")
-        panel.setMinimumWidth(450)
         panel.setStyleSheet("""
             QWidget#leftPanel {
                 background-color: rgba(4, 20, 25, 225);
@@ -7332,6 +7335,23 @@ class DigimonEditor(QMainWindow):
             hover1="rgba(116, 39, 45, 215)", hover2="#de7fe9"
         ))
         button_layout.addWidget(self.remove_button)
+        add_sidebar_gap()
+
+        guide_label = QLabel("Field Guide")
+        guide_label.setStyleSheet("color: #88e9e0; font-weight: bold;")
+        button_layout.addWidget(guide_label)
+        for text, tooltip, handler in (
+            ("Installed Mod Slots…", "Review installed mods and change conflicting Field Guide slots.",
+             self.show_installed_field_guide_slots),
+            ("Unlock Field Guide…", "Register species in a save slot with a backup of the original.",
+             self.show_field_guide_unlock),
+        ):
+            button = QPushButton(text)
+            button.setMinimumHeight(50)
+            button.setStyleSheet(button_style.format(color1="#88e9e0", hover1="rgba(35, 78, 77, 215)"))
+            button.setToolTip(tooltip)
+            button.clicked.connect(handler)
+            button_layout.addWidget(button)
 
         # Disabled for now: these utility actions are too easy to hit from the
         # main editor and are not part of the normal Reloaded II mod workflow.
