@@ -13,6 +13,21 @@ import shutil
 from Mod_Tables import load_optional_model_tables
 
 
+TRAIT_COLUMNS = range(19, 61)
+PIXIE_COLUMN = 51  # The native membership test reads this column as a nonzero int32.
+
+
+def read_trait_flags(row):
+    flags = []
+    for column in TRAIT_COLUMNS:
+        value = row[column].strip().lower() if column < len(row) and row[column] else ""
+        if column == PIXIE_COLUMN and re.fullmatch(r"[+-]?[0-9]+", value):
+            flags.append(int(value) != 0)
+        else:
+            flags.append(value in ("1", "true", "yes"))
+    return flags
+
+
 def normalize_status_reference_id(digimon_id: int, field_guide_id: int, reference_id: int) -> int:
     """Return a safe digimon_status column 132 value.
 
@@ -390,7 +405,7 @@ class MBELoader:
                 "baseDEF": 67, "baseINT": 68, "baseSPI": 69, "baseSPD": 70,
                 "growthPatternId": 71,  # Growth pattern (1-18)
                 # Traits
-                "traitsBaseIdx": 19,  # next 41 are trait bool flags
+                "traitsBaseIdx": TRAIT_COLUMNS.start,
                 # Elemental resistance - CORRECTED ORDER (v3 - FIXED!)
                 "resNull": 7, "resFire": 8, "resWater": 9, "resIce": 10,
                 "resGrass": 11, "resWind": 12, "resElec": 13, "resGround": 14,
@@ -687,14 +702,7 @@ class MBELoader:
                 # Always add the skill, even if ID is 0 (preserves level information)
                 digimon.generic_skills.append({"id": skill_id, "level": skill_level})
         
-        # Traits (boolean flags starting from traitsBaseIdx)
-        # Handle multiple boolean formats: "1", "true", "True", "TRUE"
-        traits_start = headers["traitsBaseIdx"]
-        for i in range(41):  # 41 trait flags
-            if traits_start + i < len(digimon_row):
-                val = digimon_row[traits_start + i].strip().lower() if digimon_row[traits_start + i] else ''
-                trait_value = val in ('1', 'true', 'yes')
-                digimon.traits.append(trait_value)
+        digimon.traits = read_trait_flags(digimon_row)
         
         # Field guide and status/profile reference IDs
         digimon.field_guide_id = int(digimon_row[headers["fieldGuideId"]]) if digimon_row[headers["fieldGuideId"]] else -1
@@ -1744,11 +1752,9 @@ class MBELoader:
                     row[headers[skill_id_key]] = str(skill_id)
                     row[headers[skill_level_key]] = str(skill_level)
             
-            # Traits (boolean flags starting at traitsBaseIdx)
-            traits_start = headers["traitsBaseIdx"]
-            for i, trait_value in enumerate(digimon.traits):
-                if traits_start + i < len(row):
-                    row[traits_start + i] = "1" if trait_value else "0"
+            for column, enabled in zip(TRAIT_COLUMNS, digimon.traits):
+                if column < len(row):
+                    row[column] = "1" if enabled else "0"
             
             # Field guide and status/profile reference IDs
             if "fieldGuideId" in headers:
@@ -2779,10 +2785,8 @@ class DLCExporter:
         """
         bool_indices = set()
         
-        # For digimon_status: columns 19-59, 52-59, 124-125 are boolean
         if 'digimon_status' in file_type:
-            bool_indices.update(range(19, 60))  # Columns 19-59
-            bool_indices.update(range(52, 60))  # Columns 52-59 (overlap, but fine)
+            bool_indices.update(column for column in TRAIT_COLUMNS if column != PIXIE_COLUMN)
             bool_indices.update([124, 125])     # Columns 124-125
         
         # Check header for explicit bool markers
@@ -3448,8 +3452,7 @@ class DLCExporter:
             
             # Columns 7-17: ELEMENTAL RESISTANCES (already set below, don't overwrite!)
             
-            # Columns 19-59: Boolean flags (must be 0 or 1, never empty)
-            for col_idx in range(19, 60):
+            for col_idx in TRAIT_COLUMNS:
                 if col_idx < len(row):
                     if row[col_idx] == '' or row[col_idx] == '""':
                         row[col_idx] = "0"  # Default to 0 if not set
@@ -3507,11 +3510,9 @@ class DLCExporter:
                     row[headers[skill_id_key]] = str(skill_id)
                     row[headers[skill_level_key]] = str(skill_level)
             
-            # Traits (boolean flags starting at traitsBaseIdx)
-            traits_start = headers["traitsBaseIdx"]
-            for i, trait_value in enumerate(digimon.traits):
-                if traits_start + i < len(row):
-                    row[traits_start + i] = "1" if trait_value else "0"
+            for column, enabled in zip(TRAIT_COLUMNS, digimon.traits):
+                if column < len(row):
+                    row[column] = "1" if enabled else "0"
             
             # Field guide and status/profile reference IDs
             if "fieldGuideId" in headers:

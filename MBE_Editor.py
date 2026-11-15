@@ -310,7 +310,8 @@ class MBEEditor(QMainWindow):
             )
             self.clear_all()
     
-    def _parse_mbe_data(self, f):
+    @classmethod
+    def _parse_mbe_data(cls, f):
         try:
             magic = f.read(4)
             if magic != b'EXPA':
@@ -344,7 +345,7 @@ class MBEEditor(QMainWindow):
                 if sheet_name_size < 0 or sheet_name_size > 1000:
                     raise ValueError(f"Invalid sheet name size {sheet_name_size} for sheet {sheet_idx + 1} at offset {offset}")
                 
-                sheet_name = self._read_padded_string_from_file(f, sheet_name_size)
+                sheet_name = cls._read_padded_string_from_file(f, sheet_name_size)
                 
                 num_cols_bytes = f.read(4)
                 if len(num_cols_bytes) < 4:
@@ -489,7 +490,7 @@ class MBEEditor(QMainWindow):
                         if size < 0 or size > 10000:
                             raise ValueError(f"Invalid string size {size} for string {str_idx + 1} in CHNK section")
                         
-                        text = self._read_padded_string_from_file(f, size)
+                        text = cls._read_padded_string_from_file(f, size)
                         if offset in string_map:
                             s_idx, r_idx, c_idx = string_map[offset]
                             all_sheets[s_idx]['rows'][r_idx][c_idx] = text
@@ -1127,7 +1128,8 @@ class MBEEditor(QMainWindow):
 
     # --- Funções Auxiliares e de Eventos (sem alterações) ---
 
-    def _read_padded_string_from_file(self, f, size):
+    @staticmethod
+    def _read_padded_string_from_file(f, size):
         if size <= 0: return ""
         return f.read(size).decode('utf-8', errors='ignore').rstrip('\x00')
 

@@ -23,7 +23,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
-from Data_Loader import DigimonData, MBELoader
+from Data_Loader import DigimonData, MBELoader, TRAIT_COLUMNS
 
 
 class CSVExporter:
@@ -140,10 +140,8 @@ class CSVExporter:
         row[17] = str(digimon.res_dark)
         row[18] = '""'  # empty column with quotes
         
-        # Traits (boolean flags starting at index 19)
-        for i, trait in enumerate(digimon.traits):
-            if 19 + i < len(row):
-                row[19 + i] = "1" if trait else "0"
+        for column, enabled in zip(TRAIT_COLUMNS, digimon.traits):
+            row[column] = "1" if enabled else "0"
         
         # Base personality and stats
         row[61] = str(digimon.base_personality)

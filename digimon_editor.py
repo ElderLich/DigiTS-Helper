@@ -23,8 +23,9 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, pyqtSignal, QEvent, QObject, QTimer, QSize
 from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLinearGradient, QPen
 
-from Data_Loader import MBELoader, DigimonData, DLCExporter
+from Data_Loader import MBELoader, DigimonData, DLCExporter, PIXIE_COLUMN, TRAIT_COLUMNS, read_trait_flags
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+from trait_names import TraitRenameDialog, english_mod_names
 from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, CHRONO_HEADER, CHRONO_STAGES,
                         chrono_forms_for, find_table, read_table,
                         load_optional_model_tables, validate_typed_row)
@@ -3127,21 +3128,12 @@ class DigimonCreationWizard(QWizard):
         parts.append(str(digimon.res_dark))
         parts.append('')  # 18 empty
 
-        # Traits part 1 (19-50 bool) - 32 traits
-        for i in range(32):
-            if i < len(digimon.traits):
-                parts.append("true" if digimon.traits[i] else "false")
+        for index, column in enumerate(TRAIT_COLUMNS):
+            enabled = index < len(digimon.traits) and digimon.traits[index]
+            if column == PIXIE_COLUMN:
+                parts.append("1" if enabled else "0")
             else:
-                parts.append("false")
-
-        parts.append("0")  # 51 int32
-
-        # Traits part 2 (52-60 bool) - 9 traits
-        for i in range(32, 41):
-            if i < len(digimon.traits):
-                parts.append("true" if digimon.traits[i] else "false")
-            else:
-                parts.append("false")
+                parts.append("true" if enabled else "false")
 
         parts.append(str(digimon.base_personality))  # 61 int32
         parts.append("1")  # 62
@@ -3611,8 +3603,16 @@ class TemplateSelectionPage(QWizardPage):
         layout.addWidget(info_label)
 
         # Template selection
-        layout.addWidget(QLabel("\n🔍 Template Digimon:"))
-        self.template_combo = QComboBox()
+        search_label = QLabel("Search templates")
+        self.template_search = QLineEdit()
+        self.template_search.setPlaceholderText("Type a Digimon name or character ID, e.g. Gallantmon or chr813")
+        self.template_search.setClearButtonEnabled(True)
+        search_label.setBuddy(self.template_search)
+        layout.addWidget(search_label)
+        layout.addWidget(self.template_search)
+        self.template_list = QListWidget()
+        self.template_list.setAccessibleName("Matching Digimon templates")
+        layout.addWidget(self.template_list, 1)
 
         # Populate with all Digimon
         chr_ids = wizard.loader.get_all_digimon_chr_ids()
@@ -3641,15 +3641,10 @@ class TemplateSelectionPage(QWizardPage):
             if not name or name.startswith("char_") or name == chr_id:
                 continue  # Skip - no proper name found
 
-            self.template_combo.addItem(f"{name} ({chr_id})", chr_id)
-
-        # Default to chr805 (Darkshadow)
-        default_index = self.template_combo.findData("chr805")
-        if default_index >= 0:
-            self.template_combo.setCurrentIndex(default_index)
-
-        self.template_combo.currentIndexChanged.connect(self.on_template_changed)
-        layout.addWidget(self.template_combo)
+            item = QListWidgetItem(f"{name} ({chr_id})", self.template_list)
+            item.setData(Qt.ItemDataRole.UserRole, chr_id)
+            if chr_id == "chr805":
+                self.template_list.setCurrentItem(item)
 
         # Preview info
         self.preview_label = QLabel("")
@@ -3657,34 +3652,58 @@ class TemplateSelectionPage(QWizardPage):
         self.preview_label.setStyleSheet(modern_status_panel_style())
         layout.addWidget(self.preview_label)
 
-        layout.addStretch()
         self.setLayout(layout)
 
-        # Load initial preview
+        if self.template_list.currentRow() < 0 and self.template_list.count():
+            self.template_list.setCurrentRow(0)
+        self.template_list.currentItemChanged.connect(self.on_template_changed)
+        self.template_search.textChanged.connect(self.filter_templates)
         self.on_template_changed()
+
+    def filter_templates(self, text):
+        query = text.strip().casefold()
+        matches = []
+        for row in range(self.template_list.count()):
+            item = self.template_list.item(row)
+            visible = query in item.text().casefold()
+            item.setHidden(not visible)
+            if visible:
+                matches.append(row)
+        if len(matches) == 1:
+            self.template_list.setCurrentRow(matches[0])
+        elif self.template_list.currentRow() not in matches:
+            self.template_list.setCurrentRow(-1)
+        if not matches:
+            self.preview_label.setText("No matching templates.")
+        elif self.template_list.currentItem() is None:
+            self.preview_label.setText("Select a matching Digimon to preview its template.")
+        else:
+            self.template_list.scrollToItem(self.template_list.currentItem())
 
     def on_template_changed(self):
         """Update preview when template changes"""
-        chr_id = self.template_combo.currentData()
-        if chr_id:
-            digimon = self.wizard.loader.get_digimon_by_chr_id(chr_id)
-            if digimon:
-                # Ensure all model data is loaded
-                self.wizard.loader._load_model_data(digimon)
-                # Ensure all extended data is loaded
-                self.wizard.loader._load_extended_character_data(digimon)
+        item = self.template_list.currentItem()
+        digimon = self.wizard.loader.get_digimon_by_chr_id(item.data(Qt.ItemDataRole.UserRole)) if item else None
+        self.wizard.template_digimon = digimon
+        if digimon:
+            self.wizard.loader._load_model_data(digimon)
+            self.wizard.loader._load_extended_character_data(digimon)
+            self.preview_label.setText(
+                f"📊 Template Preview:\n"
+                f"Name: {digimon.name}\n"
+                f"ID: {digimon.id} | Stage: {self.wizard.loader.get_generation_name(digimon.stage_id)}\n"
+                f"HP: {digimon.base_hp} | ATK: {digimon.base_atk} | DEF: {digimon.base_def}\n"
+                f"Signature Skills: {len([s for s in digimon.signature_skills if s.get('id', 0) > 0])}\n"
+                f"Model Data: {'✅' if digimon.model_setting_data else '❌'}\n"
+                f"LOD Data: {'✅' if digimon.lod_data else '❌'}\n"
+                f"Field Animation: {'✅' if digimon.field_move_animation_data else '❌'}"
+            )
+        else:
+            self.preview_label.setText("Could not load this template." if item else "Select a template Digimon.")
+        self.completeChanged.emit()
 
-                self.wizard.template_digimon = digimon
-                self.preview_label.setText(
-                    f"📊 Template Preview:\n"
-                    f"Name: {digimon.name}\n"
-                    f"ID: {digimon.id} | Stage: {self.wizard.loader.get_generation_name(digimon.stage_id)}\n"
-                    f"HP: {digimon.base_hp} | ATK: {digimon.base_atk} | DEF: {digimon.base_def}\n"
-                    f"Signature Skills: {len([s for s in digimon.signature_skills if s.get('id', 0) > 0])}\n"
-                    f"Model Data: {'✅' if digimon.model_setting_data else '❌'}\n"
-                    f"LOD Data: {'✅' if digimon.lod_data else '❌'}\n"
-                    f"Field Animation: {'✅' if digimon.field_move_animation_data else '❌'}"
-                )
+    def isComplete(self):
+        return self.wizard.template_digimon is not None
 
     def validatePage(self):
         """Validate that a template is selected"""
@@ -5711,7 +5730,7 @@ class ReviewPage(QWizardPage):
 
     def initializePage(self):
         """Update review text when page is shown"""
-        template_page = self.wizard.page(0)
+        template = self.wizard.template_digimon
         basic_page = self.wizard.page(1)
         class_page = self.wizard.page(2)
         profile_page = self.wizard.page(3)  # New page
@@ -5750,7 +5769,7 @@ class ReviewPage(QWizardPage):
         <tr><td style="padding: 5px;"><b>Pre-Evolutions:</b></td><td style="padding: 5px;">{len(evolution_page.deevolution_sources)}</td></tr>
         <tr><td style="padding: 5px;"><b>Animation Reference:</b></td><td style="padding: 5px;">{model_page.animation_ref_edit.text()}</td></tr>
         </table>
-        <p><b>Template:</b> {template_page.template_combo.currentText()}</p>
+        <p><b>Template:</b> {template.name} ({template.chr_id})</p>
         """
 
         self.review_text.setHtml(review_html)
@@ -5758,6 +5777,8 @@ class ReviewPage(QWizardPage):
 
 class TraitsEditor(QWidget):
     """Widget for editing Digimon traits (boolean flags)"""
+
+    rename_requested = pyqtSignal()
 
     def __init__(self, loader=None):
         super().__init__()
@@ -5772,10 +5793,16 @@ class TraitsEditor(QWidget):
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         # Title
-        title = QLabel("Traits")
+        self.title = title = QLabel("Traits")
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("color: #f0f6f4; padding: 6px 0;")
-        layout.addWidget(title)
+        actions = QHBoxLayout()
+        actions.addWidget(title)
+        actions.addStretch()
+        rename = QPushButton("Rename trait for mod…")
+        rename.clicked.connect(self.rename_requested)
+        actions.addWidget(rename)
+        layout.addLayout(actions)
 
         # Traits container
         scroll = QScrollArea()
@@ -5790,7 +5817,7 @@ class TraitsEditor(QWidget):
                 border-radius: 2px;
             }
         """)
-        scroll_layout = QGridLayout(scroll_widget)
+        self.trait_grid = scroll_layout = QGridLayout(scroll_widget)
         scroll_layout.setContentsMargins(8, 8, 8, 8)
         scroll_layout.setHorizontalSpacing(12)
         scroll_layout.setVerticalSpacing(8)
@@ -5798,34 +5825,9 @@ class TraitsEditor(QWidget):
         for column in range(3):
             scroll_layout.setColumnStretch(column, 1)
 
-        # Trait descriptions for tooltips
-        trait_descriptions = {
-            0: "Searcher - Find items more easily",
-            1: "Fighter - Better at combat",
-            2: "Brainy - Higher INT growth",
-            3: "Defender - Higher DEF growth",
-            4: "Nimble - Higher SPD growth",
-            5: "Builder - Better at construction",
-            6: "Durable - Higher HP growth",
-            7: "Lively - Higher SP growth",
-            8: "Fire Specialist - Fire attacks more effective",
-            9: "Water Specialist - Water attacks more effective",
-            10: "Plant Specialist - Grass attacks more effective",
-            11: "Earth Specialist - Ground attacks more effective",
-            12: "Wind Specialist - Wind attacks more effective",
-            13: "Electricity Specialist - Electric attacks more effective",
-            14: "Light Specialist - Light attacks more effective",
-            15: "Dark Specialist - Dark attacks more effective"
-        }
-
-        # Create 41 trait checkboxes in a grid
-        for i in range(41):
-            trait_name = f"Trait {i + 1}"
-            if self.loader:
-                trait_name = self.loader.get_trait_name(i)
-                clean_name = self.loader.clean_ui_text(trait_name)
-                trait_name = clean_name if clean_name else f"Trait {i + 1}"
-            checkbox = QCheckBox(trait_name)
+        # Keep the backing list in game ID order for loading and saving.
+        for i in range(len(TRAIT_COLUMNS)):
+            checkbox = QCheckBox()
             checkbox.setObjectName(f"trait_{i}")
             checkbox.setMinimumHeight(42)
             checkbox.setFont(QFont("Segoe UI", 10, QFont.Weight.DemiBold))
@@ -5855,22 +5857,27 @@ class TraitsEditor(QWidget):
                 }
             """)
 
-            # Add tooltip if available
-            if i in trait_descriptions:
-                checkbox.setToolTip(trait_descriptions[i])
-            else:
-                checkbox.setToolTip(f"{trait_name} - Check to enable this trait")
-
             self.trait_checkboxes.append(checkbox)
 
-            row = i // 3
-            col = i % 3
-            scroll_layout.addWidget(checkbox, row, col)
-
+        self.set_names({})
         scroll.setWidget(scroll_widget)
         layout.addWidget(scroll, 1)
-
         self.setLayout(layout)
+
+    def set_names(self, overrides):
+        for i, checkbox in enumerate(self.trait_checkboxes):
+            name = overrides.get(str(i))
+            if name is None and self.loader:
+                name = self.loader.clean_ui_text(self.loader.get_trait_name(i))
+            checkbox.setText(name or f"Trait {i + 1}")
+            checkbox.setToolTip(f"{checkbox.text()} · Trait ID {i} · Status column {TRAIT_COLUMNS[i]}")
+            self.trait_grid.removeWidget(checkbox)
+        rows = (len(self.trait_checkboxes) + 2) // 3
+        alphabetical = sorted(self.trait_checkboxes, key=lambda checkbox: checkbox.text().casefold())
+        for position, checkbox in enumerate(alphabetical):
+            self.trait_grid.addWidget(checkbox, position % rows, position // rows)
+            if position:
+                QWidget.setTabOrder(alphabetical[position - 1], checkbox)
 
     def load_traits(self, traits: List[bool]):
         """Load traits into checkboxes"""
@@ -6190,6 +6197,9 @@ class DigimonEditor(QMainWindow):
         for widget in self.resist_widgets.values():
             widget.valueChanged.connect(self.mark_as_modified)
 
+        for checkbox in self.traits_tab.trait_checkboxes:
+            checkbox.clicked.connect(self.mark_as_modified)
+
         # Model settings
         self.model_id_edit.textChanged.connect(self.mark_as_modified)
         self.motion_id_edit.textChanged.connect(self.mark_as_modified)
@@ -6389,6 +6399,42 @@ class DigimonEditor(QMainWindow):
                        if row.digimon_id is not None and row.digimon_id > 0
                        and row.slot is not None and row.slot >= 0}
         open_field_guide_unlock(self, digimon_ids, inventory_warnings=inventory.warnings)
+
+    def _trait_mod_root(self):
+        source = getattr(self.current_digimon, "imported_dsts_loader_root", "")
+        return Path(source) if source else self._active_dsts_loader_root()
+
+    def _refresh_trait_names(self, root):
+        try:
+            names = english_mod_names(root)
+        except (ValueError, OSError) as exc:
+            self.traits_tab.title.setText(f"Traits · Could not read mod names ({exc})")
+            self.traits_tab.set_names({})
+            return
+        self.traits_tab.set_names(names)
+        self.traits_tab.title.setText(f"Traits · {root.parent.name}" if names else "Traits")
+
+    def rename_mod_trait(self):
+        root = self._trait_mod_root()
+        if root is None:
+            folder = QFileDialog.getExistingDirectory(self, "Choose a mod for the trait name",
+                                                       str(get_default_mod_loader_path()))
+            if not folder:
+                return
+            selected = Path(folder)
+            known_mod = selected.name.lower() in DSTS_LOADER_DIR_NAMES or (selected / "ModConfig.json").is_file()
+            root = self._resolve_dsts_loader_root(selected, allow_create=known_mod)
+            if root is None:
+                QMessageBox.warning(self, "Rename trait", "Select a mod folder containing a dsts-loader payload.")
+                return
+        languages = [(folder.replace("patch_", "app_", 1), name) for folder, name in TEXT_LANGUAGE_FOLDERS]
+        english_csv = self.loader._resolve_prefixed_file(self.loader.text_path / "digimon_class_name.mbe" / "000_Sheet1.csv")
+        dialog = TraitRenameDialog(root, languages, get_default_extracted_game_path(), english_csv, self)
+        apply_modern_dialog_theme(dialog)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self._refresh_trait_names(root)
+            notice = self._clear_mvgl_fileloader_cache() if root.resolve().is_relative_to(get_default_mod_loader_path().resolve()) else ""
+            self.statusBar().showMessage(f"Saved {dialog.language.currentText()} trait name in {root.parent.name}. {notice}", 10000)
 
     def show_installed_field_guide_slots(self):
         from field_guide_slots_dialog import FieldGuideSlotsDialog
@@ -7462,6 +7508,7 @@ class DigimonEditor(QMainWindow):
 
         # Traits Tab
         self.traits_tab = TraitsEditor(self.loader)
+        self.traits_tab.rename_requested.connect(self.rename_mod_trait)
         add_game_icon_tab(self.tab_widget, self.traits_tab, "Traits", TAB_ICON_STEMS.get("traits"))
 
         # Model Tab
@@ -12622,6 +12669,7 @@ class DigimonEditor(QMainWindow):
         self.generic_skills_editor.update_all_skill_names()
 
         # Traits
+        self._refresh_trait_names(self._trait_mod_root())
         self.traits_tab.load_traits(digimon.traits)
 
         # Model data
@@ -12975,6 +13023,8 @@ class DigimonEditor(QMainWindow):
         root = Path(dsts_loader_root)
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
+        if hasattr(self, "traits_tab"):
+            self._refresh_trait_names(self._trait_mod_root())
         self._invalidate_evolution_picker_cache()
         if hasattr(self, "skill_browser_combo"):
             self.populate_skill_browser()
@@ -13338,12 +13388,7 @@ class DigimonEditor(QMainWindow):
                     digimon.res_light = int(row[16]) if row[16] else 0
                     digimon.res_dark = int(row[17]) if row[17] else 0
 
-                # Parse traits (columns 19-60)
-                # Handle multiple boolean formats: "true", "True", "1", "TRUE"
-                digimon.traits = []
-                for i in range(19, min(61, len(row))):
-                    val = row[i].strip().lower() if row[i] else ''
-                    digimon.traits.append(val in ('true', '1', 'yes'))
+                digimon.traits = read_trait_flags(row)
 
                 # Parse base stats (columns 64-70)
                 if len(row) > 70:

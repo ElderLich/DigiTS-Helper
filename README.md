@@ -133,6 +133,17 @@ installing another species mod.
 
 ### Creating and editing mods
 
+In **Create New → Select Template**, type any part of a Digimon name or character
+ID in **Search templates**. The list filters as you type and shows the character
+ID beside each name so you can distinguish variants.
+
+The **Traits** tab lists traits alphabetically down each column. Choose
+**Rename trait for mod…**, select the language and trait, then enter its new
+name. This replaces the displayed name for every Digimon using that trait while
+the mod is active. Trait assignments and game effects keep their original IDs.
+The editor previews English names. For another language, configure the extracted
+game folder so the editor can preserve the other names in that language.
+
 1. **Load a mod or choose a template.** Adding a new entry stages a copy; choose
    its Digimon ID, Chr ID, character key and Field Guide ID before saving.
 2. **Edit the data.** The editor checks ID collisions and keeps related rows

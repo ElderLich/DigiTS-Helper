@@ -17,7 +17,8 @@ os.chdir(ROOT)
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import QEvent
 import digimon_editor as gui
-from Data_Loader import DigimonData, MBELoader
+from Data_Loader import DigimonData, MBELoader, read_trait_flags
+from trait_names import TraitNameSheet, english_mod_names
 from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, chrono_forms_for,
                         load_optional_model_tables, read_table)
 
@@ -102,6 +103,68 @@ class ModRoundtripTests(unittest.TestCase):
             self.assertEqual(gui.load_path_settings()[gui.PATH_SETTINGS_MODS_KEY], 'updated')
             self.assertTrue((self.root / gui.PATH_SETTINGS_FILE_NAME).is_file())
             self.assertIn('original', legacy.read_text(encoding='utf-8'))
+
+    def test_template_filter_clears_hidden_selection_and_resolves_character_id(self):
+        wizard = SimpleNamespace(loader=self.editor.loader, template_digimon=None)
+        page = gui.TemplateSelectionPage(wizard)
+        self.assertEqual(wizard.template_digimon.chr_id, 'chr805')
+        page.template_search.setText('LaNtMoN')
+        hits = [page.template_list.item(i).text() for i in range(page.template_list.count())
+                if not page.template_list.item(i).isHidden()]
+        self.assertIn('Gallantmon (chr126)', hits)
+        self.assertIn('Gallantmon (chr813)', hits)
+        self.assertFalse(page.isComplete())
+        page.template_search.setText('CHR813')
+        self.assertEqual(wizard.template_digimon.chr_id, 'chr813')
+        page.template_search.setText('no such template')
+        self.assertFalse(page.isComplete())
+        self.assertIn('No matching', page.preview_label.text())
+        page.deleteLater()
+
+    def test_sorted_traits_keep_native_indices_through_export_and_import(self):
+        tab = self.editor.traits_tab
+        labels = [tab.trait_grid.itemAtPosition(row, col).widget().text()
+                  for col in range(3) for row in range(14)]
+        self.assertEqual(labels, sorted(labels, key=str.casefold))
+        specimen = self.specimen()
+        table = self.root / 'patch/data/digimon_status.mbe/000_digimon_status_data.ap.csv'
+        table.parent.mkdir(parents=True)
+        class Writer:
+            _escape_csv_value = gui.DigimonCreationWizard._escape_csv_value
+        writer = Writer()
+        exporter = gui.CSVExporter()
+        for i in range(42):
+            flags = [n == i for n in range(42)]
+            tab.load_traits(flags)
+            specimen.traits = tab.get_traits()
+            gui.DigimonCreationWizard._write_digimon_status_ap_csv(writer, table, specimen)
+            row = read_csv(table)[1]
+            self.assertEqual(row[51], str(int(i == 32)))
+            self.assertEqual(read_trait_flags(row), flags)
+            self.assertEqual(read_trait_flags(exporter._create_digimon_status_row(specimen)), flags)
+        parsed, = self.editor._parse_digimon_status_csv(table, self.root, load_related=False)
+        self.assertEqual(parsed.traits, specimen.traits)
+        row[51] = '-2'
+        self.assertTrue(read_trait_flags(row)[32])
+
+    def test_mod_trait_rename_preserves_other_names_and_detects_stale_edits(self):
+        english_csv = ROOT / 'Base/text/digimon_class_name.mbe/000_Sheet1.csv'
+        source = read_csv(english_csv)[1:]
+        args = self.root, 'app_text01', self.root.parent / 'missing dump', english_csv
+        first = TraitNameSheet.load(*args)
+        stale = TraitNameSheet.load(*args)
+        self.assertTrue(first.rename(0, 'Azure, "Knight"'))
+        with self.assertRaisesRegex(ValueError, 'changed'):
+            stale.rename(1, 'Pantheon')
+        reopened = TraitNameSheet.load(*args)
+        self.assertTrue(reopened.rename(1, 'Pantheon'))
+        rows = read_csv(reopened.path)
+        expected = [[key, {'0': 'Azure, "Knight"', '1': 'Pantheon'}.get(key, name)] for key, name in source]
+        self.assertEqual(rows, [['string2 0', 'string 1'], *expected])
+        self.assertEqual(english_mod_names(self.root), dict(expected))
+        self.assertEqual(read_csv(english_csv)[1:], source)
+        with self.assertRaisesRegex(ValueError, 'extracted game folder'):
+            TraitNameSheet.load(self.root, 'app_text02', args[2], english_csv)
 
     def test_runtime_headers_match_captured_native_schema_report(self):
         report = (ROOT / 'Header Reports/DSTS_Header_Report.md').read_text(encoding='utf-8')
