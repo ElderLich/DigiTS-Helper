@@ -6428,9 +6428,6 @@ class DigimonEditor(QMainWindow):
     def setup_ui(self):
         self.setWindowTitle("Time Stranger Mod Studio — Digimon Editor")
         self.setWindowIcon(get_editor_icon())
-        guide_menu = self.menuBar().addMenu("Field Guide")
-        guide_menu.addAction("Installed mod slots…", self.show_installed_field_guide_slots)
-        guide_menu.addAction("Unlock Field Guide…", self.show_field_guide_unlock)
         # Set initial size smaller to fit most screens, window is resizable
         self.setGeometry(100, 100, 1400, 800)
 

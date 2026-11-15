@@ -115,13 +115,13 @@ supplied dump's findings and the DLC coverage caveat.
 
 ### Field Guide
 
-Choose **Field Guide → Installed mod slots…** to search by mod, species, or slot.
+In the sidebar’s **Field Guide** section, choose **Installed Mod Slots…** to search by mod, species, or slot.
 Select **Slot conflicts** to find shared numbers, select a mod row, and use
 **Change slot…** to pick a free custom slot. The editor backs up the selected
 status CSV before changing the assignment.
 
 To make species visible without evolving them, close the game and choose
-**Field Guide → Unlock Field Guide…**. The picker opens the game's
+**Unlock Field Guide…** in the same section. The picker opens the game's
 `gamedata\savedata` folder in your Steam library. Open your account folder
 and choose **0000.bin** for the autosave. The Steam userdata copy is named
 `savedata00.dat`. The **Autosave only** filter shows these two filenames.
