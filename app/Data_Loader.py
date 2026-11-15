@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import shutil
 from Mod_Tables import load_optional_model_tables
+from profile_text import format_profile_text_for_game
 
 if TYPE_CHECKING:
     from skill_records import SkillRecord
@@ -2232,112 +2233,25 @@ class MBELoader:
         return self._belong_names_cache.get(str(belong_id), f"Belong_{belong_id}")
     
     def get_digimon_profile(self, digimon_id: int) -> str:
-        """Get localized digimon profile by digimon ID"""
+        """Load authored line breaks from base and DLC Field Guide text."""
         if self._digimon_profiles_cache is None:
-            # Profile file uses special keys like "digimon_0002_profile"
-            # and profiles span multiple rows
             self._digimon_profiles_cache = {}
-            file_path = self._resolve_prefixed_file(self.text_path / "digimon_profile.mbe" / "000_Sheet1.csv")
-            
-            if file_path.exists():
-                try:
-                    rows = self.load_csv(file_path)
-                    current_profile_id = None
-                    current_profile_text = []
-                    
-                    for row in rows[1:]:  # Skip header
-                        if len(row) >= 1:
-                            # Check if this is a new profile entry
-                            key = row[0].strip('"').strip() if row[0] else ""
-                            if key.startswith('digimon_') and key.endswith('_profile'):
-                                # Save previous profile if exists
-                                if current_profile_id is not None and current_profile_text:
-                                    # Join with space and clean up multiple spaces/newlines
-                                    profile_full_text = ' '.join(current_profile_text).strip()
-                                    # Replace multiple spaces/newlines with single space
-                                    profile_full_text = re.sub(r'\s+', ' ', profile_full_text)
-                                    if profile_full_text:
-                                        self._digimon_profiles_cache[current_profile_id] = profile_full_text
-                                
-                                # Start new profile
-                                try:
-                                    id_str = key.replace('digimon_', '').replace('_profile', '')
-                                    current_profile_id = int(id_str)
-                                    # Get text from column 1 - csv.reader handles multi-line quoted fields
-                                    if len(row) > 1 and row[1]:
-                                        # csv.reader already handles multi-line quoted fields, so row[1] contains the full text
-                                        profile_text = row[1].strip()
-                                        # Replace newlines with spaces and clean up
-                                        profile_text = profile_text.replace('\n', ' ').replace('\r', ' ')
-                                        profile_text = re.sub(r'\s+', ' ', profile_text).strip()
-                                        if profile_text:
-                                            self._digimon_profiles_cache[current_profile_id] = profile_text
-                                            current_profile_text = []  # Already saved, clear for next
-                                        else:
-                                            current_profile_text = []
-                                    else:
-                                        current_profile_text = []
-                                except ValueError:
-                                    current_profile_id = None
-                                    current_profile_text = []
-                            elif current_profile_id is not None:
-                                # This is a continuation row (for old CSV format without proper quoting)
-                                # Check both columns for text
-                                continuation_text = None
-                                # Check column 0 first (most continuation rows have text here)
-                                if len(row) >= 1 and row[0]:
-                                    col0_text = row[0].strip('"').strip()
-                                    # Remove trailing newline if present
-                                    col0_text = col0_text.rstrip('\n\r')
-                                    # Make sure it's not a new profile key and not empty
-                                    if col0_text and not col0_text.startswith('digimon_'):
-                                        continuation_text = col0_text
-                                # If column 0 doesn't have text, check column 1
-                                if not continuation_text and len(row) > 1 and row[1]:
-                                    col1_text = row[1].strip('"').strip()
-                                    if col1_text:
-                                        col1_text = col1_text.rstrip('\n\r')
-                                        # Make sure it's not a new profile key
-                                        if not col1_text.startswith('digimon_'):
-                                            continuation_text = col1_text
-                                
-                                if continuation_text:
-                                    current_profile_text.append(continuation_text)
-                    
-                    # Save the last profile
-                    if current_profile_id is not None and current_profile_text:
-                        # Join with space and clean up multiple spaces/newlines
-                        profile_full_text = ' '.join(current_profile_text).strip()
-                        # Replace multiple spaces with single space
-                        profile_full_text = re.sub(r'\s+', ' ', profile_full_text)
-                        if profile_full_text:
-                            self._digimon_profiles_cache[current_profile_id] = profile_full_text
-                        
-                except Exception as e:
-                    print(f"Error loading digimon profiles: {e}")
-            
-            # Also load DLC profiles
-            for _dlc_id, dlc_profile_file in self.iter_dlc_csv_files("text", "digimon_profile", "000_Sheet1.csv"):
-                try:
-                    rows = self.load_csv(dlc_profile_file)
-                    for row in rows[1:]:  # Skip header
-                        if len(row) >= 2:
-                            key = row[0].strip('"').strip() if row[0] else ""
-                            if key.startswith('digimon_') and key.endswith('_profile'):
-                                try:
-                                    id_str = key.replace('digimon_', '').replace('_profile', '')
-                                    profile_id = int(id_str)
-                                    if row[1]:
-                                        profile_text = row[1].strip()
-                                        profile_text = profile_text.replace('\n', ' ').replace('\r', ' ')
-                                        profile_text = re.sub(r'\s+', ' ', profile_text).strip()
-                                        if profile_text:
-                                            self._digimon_profiles_cache[profile_id] = profile_text
-                                except ValueError:
-                                    pass
-                except Exception as e:
-                    print(f"Error loading DLC digimon profiles: {e}")
-        
+            base = self._resolve_prefixed_file(self.text_path / "digimon_profile.mbe" / "000_Sheet1.csv")
+            paths = [base] if base.is_file() else []
+            paths.extend(path for _, path in self.iter_dlc_csv_files("text", "digimon_profile", "000_Sheet1.csv"))
+            for path in paths:
+                current_id = None
+                for row in self.load_csv(path)[1:]:
+                    key = row[0].strip().strip('"') if row else ""
+                    match = re.fullmatch(r"digimon_(\d+)_profile", key)
+                    if match:
+                        current_id = int(match[1])
+                        self._digimon_profiles_cache[current_id] = ",".join(row[1:])
+                    elif current_id is not None:
+                        # Older exports store physical continuation lines as CSV rows.
+                        text = ",".join(row[1:] if row and not row[0] else row)
+                        previous = self._digimon_profiles_cache[current_id]
+                        self._digimon_profiles_cache[current_id] = previous + ("\n" if previous else "") + text
         return self._digimon_profiles_cache.get(digimon_id, "")
     
     def _load_battle_buff_effect_aliases(self) -> Dict[int, int]:
@@ -3821,7 +3735,7 @@ class DLCExporter:
                 rows = [['string2 0', 'string 1']]
             
             profile_key = f'digimon_{digimon.id:04d}_profile'
-            profile_text = digimon.profile_text if digimon.profile_text else f"Profile for {digimon.name}"
+            profile_text = format_profile_text_for_game(digimon.profile_text or f"Profile for {digimon.name}")
             
             # Check if entry exists
             entry_found = False
@@ -3834,25 +3748,10 @@ class DLCExporter:
             if not entry_found:
                 rows.append([profile_key, profile_text])
             
-            # Ensure strings are quoted - add quotes if not present
-            for row in rows[1:]:  # Skip header
-                if len(row) > 0 and not row[0].startswith('"'):
-                    row[0] = f'"{row[0]}"'
-                if len(row) > 1 and not row[1].startswith('"'):
-                    row[1] = f'"{row[1]}"'
-            
-            # Write file manually to preserve quotes and handle multi-line strings properly
-            # csv.writer would strip/re-add quotes, so we write manually
             with open(file_path, 'w', encoding='utf-8', newline='') as f:
-                # Write header
-                f.write(','.join(rows[0]) + '\n')
-                # Write data rows manually to preserve quotes and handle multi-line strings
-                for row in rows[1:]:
-                    # Join with commas, but preserve newlines within quoted strings
-                    # csv.writer would handle this, but we need manual control for quotes
-                    row_str = ','.join(row)
-                    f.write(row_str + '\n')
-            
+                csv.writer(f, lineterminator='\n').writerow(rows[0])
+                csv.writer(f, quoting=csv.QUOTE_ALL, lineterminator='\n').writerows(rows[1:])
+
             print(f"✅ Saved to digimon_profile_dlc17.mbe")
             return True
         except Exception as e:

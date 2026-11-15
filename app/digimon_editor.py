@@ -7,7 +7,6 @@ import os
 import json
 import re
 import shutil
-import textwrap
 import time
 from pathlib import Path
 from typing import Optional, List, Dict, Iterable, Set, Tuple
@@ -25,6 +24,7 @@ from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLine
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter, PIXIE_COLUMN, TRAIT_COLUMNS, read_trait_flags
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+from profile_text import format_profile_text_for_game, profile_line_stats
 from studio_paths import studio_root, table_root
 from skill_records import MAX_SKILL_ID, SkillCatalog, commit_skill_records, skill_record_transaction, save_skill_name_override
 from skill_author_dialog import create_skill_dialog
@@ -61,7 +61,6 @@ CHR_ID_SLOT_MIN = 1
 CHR_ID_SLOT_SUGGESTED_MIN = 1000
 SLOT_PICKER_BUFFER = 100
 SLOT_PICKER_MAX_ROWS = 5000
-PROFILE_WRAP_WIDTH = 50
 EVOLUTION_CONDITION_HEADER = (
     "int32 0,empty 1,int32 2,int32 3,int32 4,int32 5,int32 6,int32 7,"
     "int32 8,int32 9,int32 10,int32 11,int32 12,int32 13,int32 14,"
@@ -753,34 +752,6 @@ def clear_text_edit_selection(edit: QTextEdit) -> None:
     cursor.clearSelection()
     cursor.setPosition(len(edit.toPlainText()))
     edit.setTextCursor(cursor)
-
-
-def format_profile_text_for_game(text: str, width: int = PROFILE_WRAP_WIDTH) -> str:
-    """Normalize profile text into hard-wrapped lines that fit the in-game profile panel."""
-    # Normalize copied text first so Windows, Unix, and pasted multiline descriptions
-    # are handled the same way before wrapping.
-    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
-    wrapped_lines: List[str] = []
-
-    for paragraph in normalized.split("\n"):
-        # Collapse accidental spacing inside each paragraph, but preserve intentional
-        # paragraph breaks as blank lines in the final profile text.
-        paragraph = " ".join(paragraph.split())
-        if not paragraph:
-            if wrapped_lines and wrapped_lines[-1]:
-                wrapped_lines.append("")
-            continue
-
-        # The game profile panel expects hard line breaks. Relying on QTextEdit's
-        # visual wrapping would look correct in the editor but export a bad CSV cell.
-        wrapped_lines.extend(textwrap.wrap(
-            paragraph,
-            width=width,
-            break_long_words=False,
-            break_on_hyphens=False
-        ))
-
-    return "\n".join(wrapped_lines).strip()
 
 
 def digimon_profile_key(digimon_id: int) -> str:
@@ -3399,7 +3370,7 @@ class DigimonCreationWizard(QWizard):
             writer = csv.writer(f, quoting=csv.QUOTE_ALL)
             writer.writerow([digimon.char_key, display_name])
 
-    def _write_profile_ap_csv(self, filepath: Path, digimon: DigimonData, profile_text: Optional[str] = None, name_text: Optional[str] = None):
+    def _write_profile_ap_csv(self, filepath: Path, digimon: DigimonData, profile_text: Optional[str] = None, name_text: Optional[str] = None, *, english: bool = True):
         """Write digimon_profile.ap.csv"""
         import csv
 
@@ -3409,7 +3380,7 @@ class DigimonCreationWizard(QWizard):
             profile = digimon.profile_text if digimon.profile_text else f"A mysterious Digimon known as {fallback_name}."
         else:
             profile = profile_text
-        profile = format_profile_text_for_game(profile)
+        profile = format_profile_text_for_game(profile, english=english)
 
         profile_key = digimon_profile_key(digimon.id)
 
@@ -3984,8 +3955,8 @@ class ProfilePage(QWizardPage):
 
         # Info label
         info = QLabel(
-            "The profile text will be automatically wrapped to 50 characters per line for proper in-game display.\n"
-            "You can enter it as one paragraph or pre-format it with line breaks."
+            "English profiles use the Field Guide font widths. Leave a blank line between paragraphs.\n"
+            "X Antibody headings and pasted apostrophes are formatted automatically."
         )
         info.setWordWrap(True)
         info.setStyleSheet(modern_info_panel_style())
@@ -3994,6 +3965,7 @@ class ProfilePage(QWizardPage):
         # Profile text editor
         layout.addWidget(QLabel("Profile Text:"))
         self.profile_edit = QTextEdit()
+        self.profile_edit.setAcceptRichText(False)
         self.profile_edit.setPlaceholderText("Enter Digimon profile/description here...")
         self.profile_edit.setMinimumHeight(200)
         layout.addWidget(self.profile_edit)
@@ -4019,14 +3991,7 @@ class ProfilePage(QWizardPage):
         """Update character counter"""
         text = self.profile_edit.toPlainText()
         char_count = len(text)
-        lines = text.splitlines() or [""]
-        longest_line = max(len(line) for line in lines)
-        self.char_count_label.setText(
-            f"Characters: {char_count} | Lines: {len(lines)} | Longest line: {longest_line}/{PROFILE_WRAP_WIDTH}"
-        )
-        self.char_count_label.setStyleSheet(
-            "color: #ff8b93; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else modern_muted_text_style()
-        )
+        self.char_count_label.setText(f"Characters: {char_count} | {profile_line_stats(text)}")
 
     def apply_game_format(self):
         """Wrap profile text to the in-game profile width."""
@@ -5126,14 +5091,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         if not hasattr(self, "profile_text_stats_label"):
             return
         text = self.profile_text_edit.toPlainText()
-        lines = text.splitlines() or [""]
-        longest_line = max(len(line) for line in lines)
-        self.profile_text_stats_label.setText(
-            f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}"
-        )
-        self.profile_text_stats_label.setStyleSheet(
-            "color: #ff8c98; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #a9c1c2; font-size: 9pt;"
-        )
+        self.profile_text_stats_label.setText(profile_line_stats(text))
 
     def show_field_guide_unlock(self):
         from field_guide_slots import scan_inventory
@@ -6445,6 +6403,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         profile_layout = QVBoxLayout(profile_group)
 
         self.profile_text_edit = QTextEdit()
+        self.profile_text_edit.setAcceptRichText(False)
         self.profile_text_edit.setPlaceholderText("Enter Digimon description/profile text...")
         self.profile_text_edit.setMinimumHeight(240)
         self.profile_text_edit.setStyleSheet("""
@@ -6537,6 +6496,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
             profile_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
             text_layout.addWidget(profile_label, 2, 0, Qt.AlignmentFlag.AlignTop)
             profile_edit = QTextEdit()
+            profile_edit.setAcceptRichText(False)
             profile_edit.setMinimumHeight(260)
             profile_edit.setStyleSheet("""
                 QTextEdit {
@@ -6634,7 +6594,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         if not widgets:
             return
         profile_edit = widgets["profile_text"]
-        formatted_text = format_profile_text_for_game(profile_edit.toPlainText())
+        formatted_text = format_profile_text_for_game(profile_edit.toPlainText(), english=folder == ENGLISH_TEXT_FOLDER)
         if formatted_text != profile_edit.toPlainText():
             profile_edit.setPlainText(formatted_text)
             self.mark_as_modified()
@@ -6649,12 +6609,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         profile_edit = widgets["profile_text"]
         stats_label = widgets["stats_label"]
         text = profile_edit.toPlainText()
-        lines = text.splitlines() or [""]
-        longest_line = max(len(line) for line in lines)
-        stats_label.setText(f"Lines: {len(lines)} | Longest: {longest_line}/{PROFILE_WRAP_WIDTH}")
-        stats_label.setStyleSheet(
-            "color: #ff8c98; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #a9c1c2; font-size: 9pt;"
-        )
+        stats_label.setText(profile_line_stats(text))
 
     def _normalize_text_folder_name(self, folder: str) -> str:
         """Normalize text language ids to patch_textXX folder names."""
@@ -12913,6 +12868,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
                     row_digimon,
                     profile_text=profile_text,
                     name_text=name_text,
+                    english=folder == ENGLISH_TEXT_FOLDER,
                 ),
                 lambda r: self._csv_cell(r, 0) in match_profile_keys,
                 drop_malformed=True,

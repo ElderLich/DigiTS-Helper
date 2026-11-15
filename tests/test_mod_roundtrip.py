@@ -394,6 +394,35 @@ class ModRoundtripTests(unittest.TestCase):
             captured = re.findall(r'^\| \d+ \| `([^`]+)`', section, re.MULTILINE)
             self.assertEqual(header, captured)
 
+    def test_field_guide_profiles_keep_native_layout_and_repair_flattened_english(self):
+        native = {key: value.replace('\r\n', '\n') for key, value in read_csv(
+            ROOT / 'data/DLC/addcont_03_text01.dx11/text/mbe/digimon_profile_dlc03.mbe/000_Sheet1.csv')[1:]}
+        self.assertEqual(self.editor.loader.get_digimon_profile(358), native['digimon_0358_profile'])
+        for profile in native.values():
+            self.assertEqual(gui.format_profile_text_for_game(profile), profile)
+
+        specimen = self.specimen()
+        specimen.profile_text = ("First paragraph.\r\n\r\nLast sentence. ■Effects of\n"
+                                 "the X Antibody on Testmon’s DigiCore: Testmon (X Antibody)` s "
+                                 "power is called “Thunder”.")
+        expected = ("First paragraph.\n\nLast sentence.\n\n■Effects of the X Antibody on "
+                    "Testmon's DigiCore:\nTestmon (X Antibody)'s power is called \"Thunder\".")
+        self.editor.profile_text_edit.setPlainText(specimen.profile_text)
+        self.editor.format_current_profile_text()
+        self.assertEqual(self.editor.profile_text_edit.toPlainText(), expected)
+        self.assertFalse(self.editor.profile_text_edit.acceptRichText())
+        french = "L’énergie de l’attaque."
+        specimen.localized_text = {'patch_text03': {'profile_text': french}}
+        self.assertTrue(self.editor._merge_digimon_to_dsts_loader(self.root, specimen, sync_form=False))
+        for folder, value in [('patch_text01', expected), ('patch_text03', french)]:
+            table = self.root / folder / 'text/digimon_profile.mbe'
+            self.assertEqual(self.editor._load_profile_from_csv(table, specimen.id), value)
+            self.assertEqual(len(read_csv(table / '000_Sheet1.ap.csv')), 2)
+        self.assertEqual(gui.format_profile_text_for_game(expected), expected)
+        wide = gui.format_profile_text_for_game(" ".join(["WWW"] * 25))
+        narrow = gui.format_profile_text_for_game(" ".join(["iii"] * 25))
+        self.assertGreater(len(wide.splitlines()), len(narrow.splitlines()))
+
     def test_mod_merge_and_import_keep_optional_rows_and_other_digimon(self):
         first, other = self.specimen(), self.specimen(55016)
         for specimen in (first, other):
