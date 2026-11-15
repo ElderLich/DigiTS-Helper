@@ -9,6 +9,7 @@ Time_Stranger_Mod_Studio_Paths.json
 build/
 dist/
 New Extracted/
+tests/
 
 .vscode/
 .idea/
