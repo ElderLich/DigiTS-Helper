@@ -6,11 +6,14 @@ import os
 import csv
 import json
 import re
-from typing import Dict, List, Optional, Any
+from typing import TYPE_CHECKING, Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from pathlib import Path
 import shutil
 from Mod_Tables import load_optional_model_tables
+
+if TYPE_CHECKING:
+    from skill_records import SkillRecord
 
 
 TRAIT_COLUMNS = range(19, 61)
@@ -168,6 +171,7 @@ class DigimonData:
     # update the same files without asking the user to browse again.
     imported_dsts_loader_root: str = ""
     imported_mod_root: str = ""
+    pending_skill_records: Dict[int, "SkillRecord"] = field(default_factory=dict, init=False, repr=False)
 
 
 class MBELoader:
@@ -2396,6 +2400,46 @@ class MBELoader:
         text = ' '.join(text.split())
         return text.strip()
     
+    @staticmethod
+    def decode_skill_row(row, source_file: Path) -> Dict[str, Any]:
+        return {
+            "skill_id": safe_int_value(row[0], 0),
+            "name_id": safe_int_value(row[4], 0) if len(row) > 4 else 0,
+            "description_id": safe_int_value(row[5], 0) if len(row) > 5 else 0,
+            "animation_id": safe_int_value(row[10], 0) if len(row) > 10 else 0,
+            "effect_id": safe_int_value(row[12], 0) if len(row) > 12 else 0,
+            "power": safe_int_value(row[23], 0) if len(row) > 23 else 0,
+            "sp_cost": safe_int_value(row[36], 0) if len(row) > 36 else 0,
+            "cp_cost": safe_int_value(row[38], 0) if len(row) > 38 else 0,
+            "accuracy": safe_int_value(row[40], 0) if len(row) > 40 else 0,
+            "crit_rate": safe_int_value(row[42], 0) if len(row) > 42 else 0,
+            "damage_type": safe_int_value(row[22], 0) if len(row) > 22 else 0,
+            "element": safe_int_value(row[28], 0) if len(row) > 28 else 0,
+            "min_hits": safe_int_value(row[34], 1) if len(row) > 34 else 1,
+            "max_hits": safe_int_value(row[35], 1) if len(row) > 35 else 1,
+            "additional_property_1": safe_int_value(row[26], 0) if len(row) > 26 else 0,
+            "additional_property": safe_int_value(row[27], 0) if len(row) > 27 else 0,
+            "conditional_type": safe_int_value(row[46], 0) if len(row) > 46 else 0,
+            "conditional_effect": safe_int_value(row[47], 0) if len(row) > 47 else 0,
+            "conditional_arg": safe_int_value(row[49], 0) if len(row) > 49 else 0,
+            "hp_drain": safe_int_value(row[43], 0) if len(row) > 43 else 0,
+            "sp_drain": safe_int_value(row[44], 0) if len(row) > 44 else 0,
+            "recoil": safe_int_value(row[45], 0) if len(row) > 45 else 0,
+            "always_hits": str(row[39]).lower() in {'true', '1'} if len(row) > 39 else False,
+            "conditional_effect_arg": safe_int_value(row[50], 0) if len(row) > 50 else 0,
+            "buff_set_0": safe_int_value(row[52], 0) if len(row) > 52 else 0,
+            "buff_set_1": safe_int_value(row[54], 0) if len(row) > 54 else 0,
+            "buff_set_2": safe_int_value(row[56], 0) if len(row) > 56 else 0,
+            "buff_set_3": safe_int_value(row[58], 0) if len(row) > 58 else 0,
+            "buff_set_4": safe_int_value(row[60], 0) if len(row) > 60 else 0,
+            "mode_change_id": safe_int_value(row[61], -1) if len(row) > 61 else -1,
+            "jogress_skill_id": safe_int_value(row[63], 0) if len(row) > 63 else 0,
+            "jogress_partner_1": safe_int_value(row[64], -1) if len(row) > 64 else -1,
+            "jogress_partner_2": safe_int_value(row[66], -1) if len(row) > 66 else -1,
+            "source_file": str(source_file),
+            "raw_data": row,
+        }
+
     def load_skill_data(
         self,
         skill_id: int,
@@ -2408,43 +2452,7 @@ class MBELoader:
             rows = self.load_csv(skill_file)
             for row in rows[1:]:  # Skip header
                 if len(row) > 0 and safe_int_value(row[0], -1) == skill_id:
-                    return {
-                        "skill_id": safe_int_value(row[0], 0),
-                        "name_id": safe_int_value(row[4], 0) if len(row) > 4 else 0,
-                        "description_id": safe_int_value(row[5], 0) if len(row) > 5 else 0,
-                        "animation_id": safe_int_value(row[10], 0) if len(row) > 10 else 0,
-                        "effect_id": safe_int_value(row[12], 0) if len(row) > 12 else 0,
-                        "power": safe_int_value(row[23], 0) if len(row) > 23 else 0,
-                        "sp_cost": safe_int_value(row[36], 0) if len(row) > 36 else 0,
-                        "cp_cost": safe_int_value(row[38], 0) if len(row) > 38 else 0,
-                        "accuracy": safe_int_value(row[40], 0) if len(row) > 40 else 0,
-                        "crit_rate": safe_int_value(row[42], 0) if len(row) > 42 else 0,
-                        "damage_type": safe_int_value(row[22], 0) if len(row) > 22 else 0,
-                        "element": safe_int_value(row[28], 0) if len(row) > 28 else 0,
-                        "min_hits": safe_int_value(row[34], 1) if len(row) > 34 else 1,
-                        "max_hits": safe_int_value(row[35], 1) if len(row) > 35 else 1,
-                        "additional_property_1": safe_int_value(row[26], 0) if len(row) > 26 else 0,
-                        "additional_property": safe_int_value(row[27], 0) if len(row) > 27 else 0,
-                        "conditional_type": safe_int_value(row[46], 0) if len(row) > 46 else 0,
-                        "conditional_effect": safe_int_value(row[47], 0) if len(row) > 47 else 0,
-                        "conditional_arg": safe_int_value(row[49], 0) if len(row) > 49 else 0,
-                        "hp_drain": safe_int_value(row[43], 0) if len(row) > 43 else 0,
-                        "sp_drain": safe_int_value(row[44], 0) if len(row) > 44 else 0,
-                        "recoil": safe_int_value(row[45], 0) if len(row) > 45 else 0,
-                        "always_hits": str(row[39]).lower() in {'true', '1'} if len(row) > 39 else False,
-                        "conditional_effect_arg": safe_int_value(row[50], 0) if len(row) > 50 else 0,
-                        "buff_set_0": safe_int_value(row[52], 0) if len(row) > 52 else 0,
-                        "buff_set_1": safe_int_value(row[54], 0) if len(row) > 54 else 0,
-                        "buff_set_2": safe_int_value(row[56], 0) if len(row) > 56 else 0,
-                        "buff_set_3": safe_int_value(row[58], 0) if len(row) > 58 else 0,
-                        "buff_set_4": safe_int_value(row[60], 0) if len(row) > 60 else 0,
-                        "mode_change_id": safe_int_value(row[61], -1) if len(row) > 61 else -1,
-                        "jogress_skill_id": safe_int_value(row[63], 0) if len(row) > 63 else 0,
-                        "jogress_partner_1": safe_int_value(row[64], -1) if len(row) > 64 else -1,
-                        "jogress_partner_2": safe_int_value(row[66], -1) if len(row) > 66 else -1,
-                        "source_file": str(skill_file),
-                        "raw_data": row,
-                    }
+                    return self.decode_skill_row(row, skill_file)
         return {}
     
     def save_skill_data(
@@ -2665,22 +2673,20 @@ class MBELoader:
             found = False
             for i, row in enumerate(rows[1:], 1):
                 if len(row) > 0 and row[0].strip('"') == str(skill_id):
-                    rows[i] = [f'"{skill_id}"', f'"{skill_name}"']
+                    rows[i] = [str(skill_id), skill_name]
                     found = True
                     break
             
             if not found:
-                rows.append([f'"{skill_id}"', f'"{skill_name}"'])
+                rows.append([str(skill_id), skill_name])
             
             # Write back to file
             with open(skill_name_file, 'w', encoding='utf-8', newline='') as f:
-                for row in rows:
-                    f.write(','.join(row) + '\n')
+                csv.writer(f).writerow(rows[0])
+                csv.writer(f, quoting=csv.QUOTE_ALL).writerows(rows[1:])
             
             # Clear cache so new name is loaded
             self._skill_names_cache = None
-            self._digimon_editor_skill_options_signature = None
-            self._digimon_editor_skill_options_cache = None
             
             return True
         except Exception as e:

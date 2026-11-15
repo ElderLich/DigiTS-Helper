@@ -172,6 +172,18 @@ table. Edit it through **Evolution → Edit Chrono Devolution Forms**.
 
 ## Skills & buffs
 
+To build a skill list for a loaded mod, open **Advanced → Skill Browser → New skill…**.
+Search for a template by name or ID, or choose **Basic attack defaults**. Give
+the skill its own English name and accept or change the suggested free ID.
+The template supplies its battle properties and native animation and effect
+references. Any mod supplying those assets must also be available in the game.
+
+Select the new skill under **Skills → Signature Skills** or **Generic Skills**,
+then choose **Save to Loaded Source**. You can also click **New skill…** on a
+slot to clone and replace its current skill in one step. In the creation wizard,
+use **Step 7 → Skills**. **Finish** saves the assigned new definitions together
+with the Digimon.
+
 - **Nullify unfavorable compatibility:** Advanced Skills → Additional Property
   2 → value **3**. Value **9** is the attribute-only variant.
 - **Buff sets:** combine up to eleven effect IDs. Choose known effects or enter

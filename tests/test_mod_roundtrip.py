@@ -1,5 +1,6 @@
 """Regression tests run against temporary mod payloads, never installed mods."""
 import csv
+from copy import deepcopy
 import os
 import re
 from pathlib import Path
@@ -226,6 +227,103 @@ class ModRoundtripTests(unittest.TestCase):
         self.editor.load_digimon_data(reopened)
         self.assertEqual(self.editor.evolution_jogress_list.count(), 2)
         self.assertIn('ID: 675', self.editor.evolution_mode_change_list.item(0).text())
+
+    def test_loaded_leviamon_create_assign_edit_and_reopen_skills(self):
+        editor = self.editor
+        digimon = deepcopy(editor.loader.get_digimon_by_chr_id('chr037'))
+        digimon.id, digimon.chr_id, digimon.name = 761, 'chr761', 'Leviamon (X Antibody)'
+        digimon.imported_dsts_loader_root = str(self.root)
+        definitions = {20371: (39_900_001, "Biting Crush Triadens"), 20372: (39_900_002, "Seventh Lightning")}
+
+        def create(parent, catalog, template_id, **options):
+            skill_id, name = definitions[template_id]
+            return catalog.create(skill_id, name, template_id=template_id)
+
+        with patch.object(editor, 'skill_mod_roots', return_value=[self.root]), \
+                patch.object(gui, 'create_skill_dialog', side_effect=create), \
+                patch.object(gui.QMessageBox, 'information'), \
+                patch.object(gui.QMessageBox, 'warning') as warning:
+            editor.load_digimon_data(digimon)
+            self.assertEqual(editor.advanced_skill_name_edit.text(), "Biting Crush")
+            # Create one definition in the browser before assigning it, then clone the other in its slot.
+            slots = editor.signature_skills_editor
+            editor.create_advanced_skill()
+            self.assertEqual(editor.advanced_skill_id_edit.value(), 39_900_001)
+            self.assertEqual(slots.get_skills()[0]['id'], 20371)
+            slots.populate_skill_combo(0)
+            combo = slots.skill_widgets[0].findChild(gui.QComboBox)
+            choice = combo.findData(39_900_001)
+            self.assertGreater(choice, 0)
+            combo.setCurrentIndex(choice)
+            combo.activated.emit(choice)
+            slots.create_skill_for_slot(1)
+            self.assertTrue(editor._merge_digimon_to_dsts_loader(self.root, digimon))
+            status = self.root / 'patch/data/digimon_status.mbe/000_digimon_status_data.ap.csv'
+            reopened, = editor._parse_digimon_status_csv(status, self.root)
+            self.assertEqual(reopened.signature_skills[:2], [{"id": 39_900_001, "slot": 1},
+                                                            {"id": 39_900_002, "slot": 2}])
+            editor.load_digimon_data(reopened)
+            for donor, (new_id, name) in definitions.items():
+                catalog = editor.skill_catalog()
+                self.assertEqual(catalog.records[new_id].row[6:], catalog.records[donor].row[6:])
+                self.assertIn(name, editor.generic_skills_editor.available_skills()[new_id])
+                self.assertGreaterEqual(editor.skill_browser_combo.findData(new_id), 0)
+
+            editor.advanced_skill_id_edit.setValue(39_900_002)
+            self.assertEqual(editor.advanced_skill_name_edit.text(), "Seventh Lightning")
+            previous = list(editor.skill_catalog().records[39_900_002].row)
+            editor.skill_power_edit.setValue(127)
+            editor.advanced_skill_name_edit.setText('Seventh Lightning, revised')
+            editor.save_advanced_skill()
+            previous[23] = '127'
+            updated = editor.skill_catalog().records[39_900_002]
+            self.assertEqual(list(updated.row), previous)
+            self.assertEqual(updated.name, 'Seventh Lightning, revised')
+            self.assertEqual(editor.skill_catalog().records[20372].name, 'Tail Strike')
+            warning.assert_not_called()
+
+    def test_wizard_skill_drafts_survive_failed_finish_and_export_with_slots(self):
+        editor = self.editor
+        with patch.object(editor, 'skill_mod_roots', return_value=[self.root]):
+            wizard = gui.DigimonCreationWizard(editor, editor.loader)
+            self.addCleanup(wizard.deleteLater)
+            wizard.page(0).template_search.setText('chr037')
+            basic, skills = wizard.page(1), wizard.page(6)
+            basic.id_spin.setValue(55020)
+            basic.chr_id_edit.setText('chr55020')
+            basic.char_key_edit.setText('WIZARD_TEST')
+            basic.name_edit.setText('Wizard skill test')
+            skills.initializePage()
+            skills.signature_skills_editor.load_skills([{'id': 20371, 'slot': 1}])
+            draft = wizard.skill_catalog().create(900_001, 'Biting Crush Triadens', template_id=20371)
+            with patch.object(gui, 'create_skill_dialog', return_value=draft):
+                skills.signature_skills_editor.create_skill_for_slot(0)
+            self.assertFalse(list(self.root.rglob('*.csv')))
+            wizard.setStartId(9)
+            wizard.show()
+            self.app.processEvents()
+
+            def export(digimon, identity, **options):
+                if editor._merge_digimon_to_dsts_loader(self.root, digimon, original_identity=identity, **options):
+                    return self.root.parent
+                return None
+
+            with patch.object(editor, 'export_digimon_to_reloaded_mod', side_effect=export), \
+                    patch.object(gui.QMessageBox, 'information'), patch.object(gui.QMessageBox, 'warning'), \
+                    patch.object(gui.QMessageBox, 'critical') as error:
+                finish = wizard.button(gui.QWizard.WizardButton.FinishButton)
+                with patch.object(editor, '_write_digimon_mod_tables', return_value=False):
+                    finish.click()
+                self.assertFalse(wizard.export_succeeded)
+                self.assertTrue(wizard.isVisible())
+                self.assertFalse(list(self.root.rglob('*.csv')))
+                finish.click()
+                self.assertTrue(wizard.export_succeeded)
+                self.assertEqual(wizard.result(), gui.QDialog.DialogCode.Accepted)
+                error.assert_not_called()
+            status = self.root / 'patch/data/digimon_status.mbe/000_digimon_status_data.ap.csv'
+            self.assertEqual(read_csv(status)[1][72:75], ['900001', '', '1'])
+            self.assertEqual(editor.skill_catalog().records[900_001].name, 'Biting Crush Triadens')
 
     def test_template_filter_clears_hidden_selection_and_resolves_character_id(self):
         wizard = SimpleNamespace(loader=self.editor.loader, template_digimon=None)

@@ -25,6 +25,8 @@ from PyQt6.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QPainter, QLine
 
 from Data_Loader import MBELoader, DigimonData, DLCExporter, PIXIE_COLUMN, TRAIT_COLUMNS, read_trait_flags
 from CSV_Exporter import CSVExporter, repack_mbe_files, repack_dlc_mbe_files
+from skill_records import MAX_SKILL_ID, SkillCatalog, commit_skill_records, skill_record_transaction, save_skill_name_override
+from skill_author_dialog import create_skill_dialog
 from editor_theme import (
     apply_modern_dialog_theme, modern_action_button_style, modern_groupbox_style,
     modern_info_panel_style, modern_muted_text_style, modern_status_panel_style, modern_warning_panel_style,
@@ -431,6 +433,40 @@ def get_existing_directory_start(path: Path) -> Path:
             return Path.cwd()
         current = parent
     return current if current.exists() else Path.cwd()
+
+
+def reloaded_mod_payloads(active_root: Optional[Path] = None) -> List[Tuple[Path, str]]:
+    """List dsts-loader payloads from the Reloaded II mods folder plus the active payload."""
+    roots: List[Tuple[Path, str]] = []
+    seen = set()
+
+    def add_root(root: Path, label: str):
+        try:
+            key = str(root.resolve()).casefold()
+        except Exception:
+            key = str(root).casefold()
+        if key in seen:
+            return
+        if not root.exists():
+            return
+        seen.add(key)
+        roots.append((root, label))
+
+    mods_root = get_default_mod_loader_path()
+    if mods_root.exists():
+        for mod_dir in sorted((path for path in mods_root.iterdir() if path.is_dir()), key=lambda path: path.name.casefold()):
+            for loader_name in sorted(DSTS_LOADER_DIR_NAMES):
+                candidate = mod_dir / loader_name
+                if candidate.exists():
+                    add_root(candidate, f"Mod: {mod_dir.name}")
+
+    if active_root:
+        active_label = "Active Mod"
+        if (active_root.parent / "ModConfig.json").is_file():
+            active_label = f"Active Mod: {active_root.parent.name}"
+        add_root(active_root, active_label)
+
+    return roots
 
 
 def get_default_mod_loader_path() -> Path:
@@ -1527,66 +1563,14 @@ def create_field_guide_slot_button() -> QPushButton:
     return create_slot_picker_button("Show custom field guide slots and mark occupied IDs in light red")
 
 
-def get_skill_options(loader: Optional[MBELoader]) -> List[tuple]:
+def get_skill_options(loader: Optional[MBELoader], catalog=None) -> List[tuple]:
     """Return available skills as (skill_id, display_label) pairs."""
-    if not loader:
-        return []
-
-    try:
-        skills_file = loader._resolve_prefixed_file(loader.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv")
-        skill_name_file = loader._resolve_prefixed_file(loader.text_path / "skill_name.mbe" / "000_Sheet1.csv")
-        signature_parts = []
-        for file_path in (skills_file, skill_name_file):
-            if file_path.exists():
-                stat = file_path.stat()
-                signature_parts.append((str(file_path.resolve()).casefold(), stat.st_mtime_ns, stat.st_size))
-            else:
-                signature_parts.append((str(file_path).casefold(), 0, 0))
-        signature = tuple(signature_parts)
-        if (
-            getattr(loader, "_digimon_editor_skill_options_signature", None) == signature
-            and getattr(loader, "_digimon_editor_skill_options_cache", None) is not None
-        ):
-            return list(loader._digimon_editor_skill_options_cache)
-    except Exception:
-        skills_file = None
-        signature = None
-
-    options = []
-    try:
-        if skills_file is None:
-            skills_file = loader._resolve_prefixed_file(loader.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv")
-        if not skills_file.exists():
+    if catalog is None:
+        if loader is None:
             return []
-
-        rows = loader.load_csv(skills_file)
-        seen = set()
-        for row in rows[1:]:
-            if not row or not row[0]:
-                continue
-            try:
-                skill_id = int(row[0])
-            except (ValueError, TypeError):
-                continue
-            if skill_id in seen:
-                continue
-            seen.add(skill_id)
-
-            skill_name = loader.get_skill_name(skill_id)
-            if skill_name and skill_name != f"skill_{skill_id}":
-                skill_name = loader.clean_ui_text(skill_name)
-            if not skill_name or skill_name == str(skill_id) or skill_name.startswith("Skill_"):
-                skill_name = row[4].strip('"') if len(row) > 4 and row[4] else f"Skill {skill_id}"
-
-            options.append((skill_id, f"ID {skill_id}: {skill_name}"))
-    except Exception as exc:
-        print(f"Error loading skill options: {exc}")
-
-    options = sorted(options, key=lambda option: option[0])
-    if signature is not None:
-        loader._digimon_editor_skill_options_signature = signature
-        loader._digimon_editor_skill_options_cache = list(options)
-    return options
+        catalog = SkillCatalog.load(loader)
+    return [(skill_id, f"ID {skill_id}: {record.name}")
+            for skill_id, record in sorted(catalog.records.items())]
 
 
 def configure_searchable_combo(combo: QComboBox):
@@ -1908,9 +1892,9 @@ class BuffSetCreatorDialog(QDialog):
         }
 
 
-def choose_skill_id(parent: QWidget, loader: Optional[MBELoader], title: str, current_skill_id: int = 0) -> Optional[int]:
+def choose_skill_id(parent: QWidget, loader: Optional[MBELoader], title: str, current_skill_id: int = 0, *, catalog=None) -> Optional[int]:
     """Open a compact searchable skill dropdown and return the selected skill ID."""
-    options = get_skill_options(loader)
+    options = get_skill_options(loader, catalog)
     if not options:
         QMessageBox.warning(parent, "No Skills Found", "Could not load battle_skill.mbe skill data.")
         return None
@@ -1964,10 +1948,14 @@ class SkillEditor(QWidget):
     """Widget for editing signature and generic skills"""
     skillChanged = pyqtSignal()
 
-    def __init__(self, skill_type: str = "signature", loader=None):
+    def __init__(self, skill_type: str = "signature", loader=None, *, catalog_provider=None, create_skill=None,
+                 compact=False):
         super().__init__()
         self.skill_type = skill_type
         self.loader = loader
+        self.catalog_provider = catalog_provider
+        self.create_skill = create_skill
+        self.compact = compact
         self.skill_widgets = []
         self.skill_options = None
         self._syncing_skill_widgets = False
@@ -1978,7 +1966,9 @@ class SkillEditor(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
 
-        hint = QLabel("Choose a skill from each slot dropdown, or type a skill ID directly.")
+        hint = QLabel("Choose a skill by name or ID. New skill lets you use this slot’s skill as a template."
+                      if self.create_skill else "Choose a skill by name or ID.")
+        hint.setWordWrap(True)
         hint.setStyleSheet("color: #a9c1c2; font-size: 10pt; padding: 4px;")
         layout.addWidget(hint)
 
@@ -2002,7 +1992,9 @@ class SkillEditor(QWidget):
         scroll_layout.addStretch()
 
         scroll.setWidget(scroll_widget)
-        if self.skill_type == "generic":
+        if self.compact:
+            scroll.setMinimumHeight(180)
+        elif self.skill_type == "generic":
             scroll.setMinimumHeight(190)
             scroll.setMaximumHeight(235)
         else:
@@ -2030,9 +2022,15 @@ class SkillEditor(QWidget):
                 background-color: {hover_bg};
             }}
         """)
-        layout = QHBoxLayout()
+        layout = QVBoxLayout() if self.compact else QHBoxLayout()
         layout.setContentsMargins(10, 8, 10, 8)
         layout.setSpacing(8)
+        choice_row = details_row = layout
+        if self.compact:
+            choice_row = QHBoxLayout()
+            details_row = QHBoxLayout()
+            layout.addLayout(choice_row)
+            layout.addLayout(details_row)
 
         slot_title = QLabel(f"Slot {index + 1}")
         slot_title.setMinimumWidth(58)
@@ -2047,28 +2045,29 @@ class SkillEditor(QWidget):
                 padding: 6px 8px;
             }}
         """)
-        layout.addWidget(slot_title)
+        choice_row.addWidget(slot_title)
 
         # Skill ID with name display
-        layout.addWidget(QLabel("ID:"))
+        details_row.addWidget(QLabel("ID:"))
         skill_id = QSpinBox()
-        skill_id.setRange(0, 9999999)
+        skill_id.setRange(0, MAX_SKILL_ID)
         skill_id.setObjectName(f"skill_id_{index}")
-        skill_id.setMinimumWidth(110)
+        skill_id.setMinimumWidth(160)
         skill_id.valueChanged.connect(lambda _value, idx=index: self.on_skill_value_changed(idx))
-        layout.addWidget(skill_id)
+        details_row.addWidget(skill_id)
 
         # Skill dropdown
         skill_combo = LazySkillCombo(lambda idx=index: self.populate_skill_combo(idx))
         skill_combo.setObjectName(f"skill_combo_{index}")
         configure_searchable_combo(skill_combo)
+        skill_combo.setMinimumWidth(240 if self.compact else 260)
         skill_combo.addItem("Select a skill...", 0)
         skill_combo.activated.connect(lambda _combo_index, idx=index: self.on_skill_combo_selected(idx))
-        layout.addWidget(skill_combo, 1)
+        choice_row.addWidget(skill_combo, 1)
 
         open_dropdown_button = QPushButton("+ Select")
         open_dropdown_button.setObjectName(f"add_skill_{index}")
-        open_dropdown_button.setMinimumWidth(86)
+        open_dropdown_button.setMinimumWidth(90)
         open_dropdown_button.setToolTip("Open the skill dropdown for this slot")
         open_dropdown_button.setStyleSheet("""
             QPushButton {
@@ -2086,21 +2085,30 @@ class SkillEditor(QWidget):
             }
         """)
         open_dropdown_button.clicked.connect(lambda _checked=False, idx=index: self.open_skill_dropdown(idx))
-        layout.addWidget(open_dropdown_button)
+        choice_row.addWidget(open_dropdown_button)
+        if self.create_skill is not None:
+            create_button = QPushButton("New skill…")
+            create_button.setObjectName(f"create_skill_{index}")
+            create_button.setToolTip("Create a skill and assign it to this slot. You can copy an existing skill.")
+            create_button.setStyleSheet(modern_action_button_style("#88e9e0"))
+            create_button.clicked.connect(lambda _checked=False, idx=index: self.create_skill_for_slot(idx))
+            choice_row.addWidget(create_button)
 
         # Skill Level/Slot
         slot_label = "Learn Slot:" if self.skill_type == "signature" else "Level:"
-        layout.addWidget(QLabel(slot_label))
+        details_row.addWidget(QLabel(slot_label))
         skill_level = QSpinBox()
-        skill_level.setRange(0, 100)
+        skill_level.setRange(-1, 100)
         skill_level.setObjectName(f"skill_level_{index}")
-        skill_level.setMinimumWidth(90)
+        skill_level.setMinimumWidth(95)
         skill_level.valueChanged.connect(self.skillChanged.emit)
-        layout.addWidget(skill_level)
+        details_row.addWidget(skill_level)
+        if self.compact:
+            details_row.addStretch()
 
         remove_button = QPushButton("- Remove")
         remove_button.setObjectName(f"remove_skill_{index}")
-        remove_button.setMinimumWidth(90)
+        remove_button.setMinimumWidth(92)
         remove_button.setToolTip("Clear this skill slot")
         remove_button.setStyleSheet("""
             QPushButton {
@@ -2122,7 +2130,7 @@ class SkillEditor(QWidget):
             }
         """)
         remove_button.clicked.connect(lambda _checked=False, idx=index: self.clear_skill_slot(idx))
-        layout.addWidget(remove_button)
+        details_row.addWidget(remove_button)
 
         widget.setLayout(layout)
         return widget
@@ -2174,9 +2182,8 @@ class SkillEditor(QWidget):
             skill_id = skill_id_widget.value()
             skill_level = skill_level_widget.value()
 
-            if skill_id > 0:
-                level_key = "slot" if self.skill_type == "signature" else "level"
-                skills.append({"id": skill_id, level_key: skill_level})
+            level_key = "slot" if self.skill_type == "signature" else "level"
+            skills.append({"id": skill_id, level_key: skill_level})
 
         return skills
 
@@ -2192,11 +2199,9 @@ class SkillEditor(QWidget):
             if combo_index >= 0:
                 skill_combo.setCurrentIndex(combo_index)
             elif skill_id > 0:
-                skill_name = self.loader.get_skill_name(skill_id) if self.loader else f"Skill {skill_id}"
-                clean_name = self.loader.clean_ui_text(skill_name) if self.loader else skill_name
-                skill_combo.setCurrentIndex(0)
-                label_prefix = "Custom ID" if getattr(skill_combo, "_skill_options_populated", False) else "ID"
-                skill_combo.setEditText(f"{label_prefix} {skill_id}: {clean_name}")
+                label = self.available_skills().get(skill_id, f"Custom ID {skill_id}")
+                skill_combo.addItem(label, skill_id)
+                skill_combo.setCurrentIndex(skill_combo.count() - 1)
             else:
                 skill_combo.setCurrentIndex(0)
                 if skill_combo.lineEdit():
@@ -2218,13 +2223,12 @@ class SkillEditor(QWidget):
             self.update_skill_name(index)
             return
 
-        if self.skill_options is None:
-            self.skill_options = get_skill_options(self.loader)
-
         self._syncing_skill_widgets = True
         try:
             skill_combo.blockSignals(True)
-            for skill_option_id, skill_label in self.skill_options:
+            skill_combo.clear()
+            skill_combo.addItem("Select a skill...", 0)
+            for skill_option_id, skill_label in self.available_skills().items():
                 skill_combo.addItem(skill_label, skill_option_id)
             skill_combo._skill_options_populated = True
         finally:
@@ -2232,6 +2236,27 @@ class SkillEditor(QWidget):
             self._syncing_skill_widgets = False
 
         self.update_skill_name(index)
+
+    def available_skills(self):
+        if self.skill_options is None:
+            catalog = self.catalog_provider() if self.catalog_provider else None
+            self.skill_options = dict(get_skill_options(self.loader, catalog))
+        return self.skill_options
+
+    def refresh_skill_options(self):
+        self.skill_options = None
+        for i, widget in enumerate(self.skill_widgets):
+            combo = widget.findChild(QComboBox, f"skill_combo_{i}")
+            combo._skill_options_populated = False
+            combo.clear()
+            combo.addItem("Select a skill...", 0)
+            self.update_skill_name(i)
+
+    def create_skill_for_slot(self, index: int):
+        skill_id = self.skill_widgets[index].findChild(QSpinBox, f"skill_id_{index}")
+        record = self.create_skill(skill_id.value())
+        if record is not None:
+            skill_id.setValue(record.skill_id)
 
     def update_all_skill_names(self):
         """Update skill names for all skill widgets"""
@@ -2329,39 +2354,7 @@ class StudioEvolutionPaths(EvolutionPathControls):
         return None
 
     def _iter_reloaded_mod_dsts_loader_roots(self) -> List[Tuple[Path, str]]:
-        """List dsts-loader payloads from the Reloaded II mods folder plus the active payload."""
-        roots: List[Tuple[Path, str]] = []
-        seen = set()
-
-        def add_root(root: Path, label: str):
-            try:
-                key = str(root.resolve()).casefold()
-            except Exception:
-                key = str(root).casefold()
-            if key in seen:
-                return
-            if not root.exists():
-                return
-            seen.add(key)
-            roots.append((root, label))
-
-        mods_root = get_default_mod_loader_path()
-        if mods_root.exists():
-            for mod_dir in sorted((path for path in mods_root.iterdir() if path.is_dir()), key=lambda path: path.name.casefold()):
-                for loader_name in sorted(DSTS_LOADER_DIR_NAMES):
-                    candidate = mod_dir / loader_name
-                    if candidate.exists():
-                        add_root(candidate, f"Mod: {mod_dir.name}")
-
-        active_root = self._active_dsts_loader_root()
-        if active_root:
-            active_label = "Active Mod"
-            inferred = self._infer_reloaded_mod_root(active_root)
-            if inferred:
-                active_label = f"Active Mod: {inferred.name}"
-            add_root(active_root, active_label)
-
-        return roots
+        return reloaded_mod_payloads(self._active_dsts_loader_root())
 
     def _invalidate_evolution_picker_cache(self):
         """Discard cached data used by the evolution add dialogs."""
@@ -2552,6 +2545,7 @@ class DigimonCreationWizard(QWizard):
     def __init__(self, parent=None, loader=None):
         super().__init__(parent)
         self.loader = loader
+        self._skill_catalog_cache = None
         self.template_digimon: Optional[DigimonData] = None
         self.new_digimon: Optional[DigimonData] = None
         self.last_export_path: Optional[Path] = None  # Store export path for later import
@@ -2582,7 +2576,6 @@ class DigimonCreationWizard(QWizard):
         self.addPage(ReviewPage(self))
 
         # Connect signals
-        self.button(QWizard.WizardButton.FinishButton).clicked.connect(self.finish_wizard)
         self.currentIdChanged.connect(lambda _page_id: QTimer.singleShot(0, self._modernize_wizard_chrome))
 
         # Apply styling
@@ -2622,6 +2615,19 @@ class DigimonCreationWizard(QWizard):
         """)
         QTimer.singleShot(0, self._modernize_wizard_chrome)
 
+    def _skill_mod_roots(self):
+        editor = self.parent()
+        if isinstance(editor, DigimonEditor):
+            return editor.skill_mod_roots()
+        return [root for root, _ in reloaded_mod_payloads()]
+
+    def skill_catalog(self):
+        if self._skill_catalog_cache is None:
+            editor = self.parent()
+            active = editor._loaded_mod_payload() if isinstance(editor, DigimonEditor) else None
+            self._skill_catalog_cache = SkillCatalog.load(self.loader, self._skill_mod_roots(), active)
+        return self._skill_catalog_cache
+
     def _modernize_wizard_chrome(self):
         """Darken QWizard's native title/subtitle chrome and old inline panels."""
         modernize_inline_light_styles(self)
@@ -2647,6 +2653,14 @@ class DigimonCreationWizard(QWizard):
             ):
                 child.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
                 child.setStyleSheet(header_style)
+
+    def validateCurrentPage(self):
+        if not super().validateCurrentPage():
+            return False
+        if self.currentPage().isFinalPage():
+            self.finish_wizard()
+            return self.export_succeeded
+        return True
 
     def finish_wizard(self):
         """Called when wizard is finished - export to Reloaded II mod."""
@@ -2756,6 +2770,11 @@ class DigimonCreationWizard(QWizard):
             # Skills
             self.new_digimon.signature_skills = skills_page.signature_skills_editor.get_skills()
             self.new_digimon.generic_skills = skills_page.generic_skills_editor.get_skills()
+            slots = self.new_digimon.signature_skills + self.new_digimon.generic_skills
+            self.new_digimon.pending_skill_records = {
+                slot["id"]: skills_page.skill_drafts[slot["id"]] for slot in slots
+                if slot["id"] in skills_page.skill_drafts
+            }
 
             # Evolution paths (from EvolutionPage)
             self.new_digimon.evolution_paths = deepcopy(evolution_page.current_digimon.evolution_paths)
@@ -2820,6 +2839,8 @@ class DigimonCreationWizard(QWizard):
                     )
                     if reply == QMessageBox.StandardButton.Retry:
                         self.back()
+                    else:
+                        self.reject()
                     return
 
                 output_path = Path(export_dir)
@@ -2937,74 +2958,71 @@ class DigimonCreationWizard(QWizard):
         return value
 
     def _export_to_dsts_loader(self, base_path: Path, digimon: DigimonData, animation_ref: str) -> bool:
-        """Export digimon to dsts-loader format (.ap.csv files)"""
+        drafts = digimon.pending_skill_records
         try:
-            from pathlib import Path
-            import csv
-
-            # Create directory structure
-            patch_data = base_path / "patch" / "data"
-            patch_text = base_path / "patch_text01" / "text"
-            app_data = base_path / "app_0" / "data"
-
-            # Create all needed directories
-            (patch_data / "digimon_status.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_data / "char_info.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_data / "model_setting.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_data / "lod_chara.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_data / "evolution.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_data / "anim_setting.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_text / "char_name.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_text / "digimon_profile.mbe").mkdir(parents=True, exist_ok=True)
-            (patch_text / "belong.mbe").mkdir(parents=True, exist_ok=True)
-            (app_data / "model_outline.mbe").mkdir(parents=True, exist_ok=True)
-
-            # Export digimon_status_data
-            self._write_digimon_status_ap_csv(patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv", digimon)
-
-            # Export char_info
-            self._write_char_info_ap_csv(patch_data / "char_info.mbe" / "000_char_info.ap.csv", digimon)
-
-            # Export model_setting
-            if digimon.model_setting_data:
-                self._write_model_setting_ap_csv(patch_data / "model_setting.mbe" / "000_model_setting.ap.csv", digimon)
-
-            # LOD defaults are required even for templates without explicit rows.
-            self._write_lod_ap_csv(patch_data / "lod_chara.mbe" / "000_lod.ap.csv", digimon)
-            self._write_lod_model_ap_csv(patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv", digimon)
-            for folder, filename, writer, present in self._optional_mod_tables(digimon):
-                if present:
-                    destination = patch_data / folder / filename
-                    destination.parent.mkdir(parents=True, exist_ok=True)
-                    writer(destination, digimon)
-
-            # Export animation reference
-            self._write_anim_setting_ap_csv(patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv", digimon.chr_id, animation_ref)
-
-            # Export evolution data (includes both evolutions FROM this Digimon and pre-evolutions TO this Digimon)
-            if digimon.evolution_paths or digimon.deevolution_sources:
-                self._write_evolution_ap_csv(patch_data / "evolution.mbe" / "001_evolution_to.ap.csv", digimon)
-                self._write_evolution_condition_ap_csv(patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv", digimon)
-
-            # Export char_name
-            self._write_char_name_ap_csv(patch_text / "char_name.mbe" / "000_Sheet1.ap.csv", digimon)
-
-            # Export digimon_profile (always export, even if empty - use default text)
-            self._write_profile_ap_csv(patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv", digimon)
-
-            # Export belong (classification text)
-            self._write_belong_ap_csv(patch_text / "belong.mbe" / "000_Sheet1.ap.csv", digimon)
-
-            # Export model_outline
-            self._write_model_outline_ap_csv(app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv", digimon)
-
-            return True
-
-        except Exception as e:
-            print(f"Error exporting to dsts-loader: {e}")
-            import traceback
-            traceback.print_exc()
+            with skill_record_transaction(base_path, drafts.values(), self.loader, self._skill_mod_roots() if drafts else ()):
+                self._write_standalone_digimon(base_path, digimon, animation_ref)
+        except (OSError, ValueError) as exc:
+            QMessageBox.warning(self, "Export failed", str(exc))
             return False
+        drafts.clear()
+        return True
+
+    def _write_standalone_digimon(self, base_path: Path, digimon: DigimonData, animation_ref: str):
+        # Create directory structure
+        patch_data = base_path / "patch" / "data"
+        patch_text = base_path / "patch_text01" / "text"
+        app_data = base_path / "app_0" / "data"
+
+        # Create all needed directories
+        (patch_data / "digimon_status.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_data / "char_info.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_data / "model_setting.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_data / "lod_chara.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_data / "evolution.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_data / "anim_setting.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_text / "char_name.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_text / "digimon_profile.mbe").mkdir(parents=True, exist_ok=True)
+        (patch_text / "belong.mbe").mkdir(parents=True, exist_ok=True)
+        (app_data / "model_outline.mbe").mkdir(parents=True, exist_ok=True)
+
+        # Export char_info
+        self._write_char_info_ap_csv(patch_data / "char_info.mbe" / "000_char_info.ap.csv", digimon)
+
+        # Export model_setting
+        if digimon.model_setting_data:
+            self._write_model_setting_ap_csv(patch_data / "model_setting.mbe" / "000_model_setting.ap.csv", digimon)
+
+        # LOD defaults are required even for templates without explicit rows.
+        self._write_lod_ap_csv(patch_data / "lod_chara.mbe" / "000_lod.ap.csv", digimon)
+        self._write_lod_model_ap_csv(patch_data / "lod_chara.mbe" / "001_lod_model.ap.csv", digimon)
+        for folder, filename, writer, present in self._optional_mod_tables(digimon):
+            if present:
+                destination = patch_data / folder / filename
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                writer(destination, digimon)
+
+        # Export animation reference
+        self._write_anim_setting_ap_csv(patch_data / "anim_setting.mbe" / "001_same_animation_data.ap.csv", digimon.chr_id, animation_ref)
+
+        # Export evolution data (includes both evolutions FROM this Digimon and pre-evolutions TO this Digimon)
+        if digimon.evolution_paths or digimon.deevolution_sources:
+            self._write_evolution_ap_csv(patch_data / "evolution.mbe" / "001_evolution_to.ap.csv", digimon)
+            self._write_evolution_condition_ap_csv(patch_data / "evolution.mbe" / "000_evolution_condition.ap.csv", digimon)
+
+        # Export char_name
+        self._write_char_name_ap_csv(patch_text / "char_name.mbe" / "000_Sheet1.ap.csv", digimon)
+
+        # Export digimon_profile (always export, even if empty - use default text)
+        self._write_profile_ap_csv(patch_text / "digimon_profile.mbe" / "000_Sheet1.ap.csv", digimon)
+
+        # Export belong (classification text)
+        self._write_belong_ap_csv(patch_text / "belong.mbe" / "000_Sheet1.ap.csv", digimon)
+
+        # Export model_outline
+        self._write_model_outline_ap_csv(app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv", digimon)
+
+        self._write_digimon_status_ap_csv(patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv", digimon)
 
     def _write_digimon_status_ap_csv(self, filepath: Path, digimon: DigimonData):
         """Write digimon_status_data.ap.csv"""
@@ -4183,43 +4201,45 @@ class SkillsPage(QWizardPage):
     def __init__(self, wizard):
         super().__init__()
         self.wizard = wizard
+        self.skill_drafts = {}
+        self._template_key = None
         self.setTitle("⚔️ Step 7: Skills")
         self.setSubTitle("Configure signature and generic skills for your Digimon")
 
         layout = QVBoxLayout()
 
-        # Instructions
-        info_label = QLabel(
-            "Configure the Digimon's skills.\n"
-            "Signature skills are unique moves, while generic skills are common abilities.\n"
-            "Click 'Add Skill' to select from a list, or enter skill ID manually."
-        )
-        info_label.setWordWrap(True)
-        info_label.setStyleSheet(modern_info_panel_style())
-        layout.addWidget(info_label)
-
-        # Signature Skills
-        sig_group = QGroupBox("Signature Skills (up to 12)")
-        sig_group.setStyleSheet(modern_groupbox_style("rgba(122, 162, 255, 150)", "#7aa2ff"))
-        sig_layout = QVBoxLayout()
-
-        self.signature_skills_editor = SkillEditor("signature", wizard.loader)
-        sig_layout.addWidget(self.signature_skills_editor)
-        sig_group.setLayout(sig_layout)
-        layout.addWidget(sig_group)
-
-        # Generic Skills
-        gen_group = QGroupBox("Generic Skills (up to 4)")
-        gen_group.setStyleSheet(modern_groupbox_style("rgba(32, 214, 163, 150)", "#20d6a3"))
-        gen_layout = QVBoxLayout()
-
-        self.generic_skills_editor = SkillEditor("generic", wizard.loader)
-        gen_layout.addWidget(self.generic_skills_editor)
-        gen_group.setLayout(gen_layout)
-        layout.addWidget(gen_group)
-
-        layout.addStretch()
+        groups = QTabWidget()
+        groups.setStyleSheet("""
+            QTabWidget::pane { background-color: #04171b; border: 1px solid #536c70; padding: 6px; }
+            QTabBar::tab { background-color: #071b20; color: #dce9ea; border: 1px solid #536c70; padding: 7px 12px; }
+            QTabBar::tab:selected { background-color: #174444; color: #ffffff; border-color: #88e9e0; }
+        """)
+        self.signature_skills_editor = SkillEditor("signature", wizard.loader,
+                                                  catalog_provider=wizard.skill_catalog,
+                                                  create_skill=self.create_skill, compact=True)
+        groups.addTab(self.signature_skills_editor, "Signature skills (12 slots)")
+        self.generic_skills_editor = SkillEditor("generic", wizard.loader,
+                                                catalog_provider=wizard.skill_catalog,
+                                                create_skill=self.create_skill, compact=True)
+        groups.addTab(self.generic_skills_editor, "Generic skills (4 slots)")
+        layout.addWidget(groups)
         self.setLayout(layout)
+
+    def create_skill(self, template_id):
+        try:
+            catalog = self.wizard.skill_catalog()
+            record = create_skill_dialog(self, catalog, template_id,
+                                         destination_hint="Skills assigned to a slot are saved when you finish the wizard.")
+            if record is not None:
+                catalog.add_draft(record)
+        except (ValueError, OSError) as exc:
+            QMessageBox.warning(self, "Could not create skill", str(exc))
+            return None
+        if record is not None:
+            self.skill_drafts[record.skill_id] = record
+            for editor in (self.signature_skills_editor, self.generic_skills_editor):
+                editor.refresh_skill_options()
+        return record
 
     def add_skill(self, skill_type: str):
         """Show dialog to select a skill from list"""
@@ -4265,31 +4285,9 @@ class SkillsPage(QWizardPage):
                 self.add_skill_to_editor(skill_type, skill_id)
 
     def populate_skill_list(self, skill_list: QListWidget):
-        """Populate skill list with all available skills"""
-        try:
-            skills_file = self.wizard.loader.data_path / "battle_skill.mbe" / "000_battle_skill_list.csv"
-            skills_file = self.wizard.loader._resolve_prefixed_file(skills_file)
-            if not skills_file.exists():
-                return
-
-            rows = self.wizard.loader.load_csv(skills_file)
-
-            for row in rows[1:]:
-                if not row or len(row) < 1:
-                    continue
-
-                try:
-                    skill_id = int(row[0])
-                    skill_name = self.wizard.loader.get_skill_name(skill_id)
-                    if skill_name and skill_name != f"skill_{skill_id}":
-                        skill_name = self.wizard.loader.clean_ui_text(skill_name)
-                        item = QListWidgetItem(f"ID {skill_id}: {skill_name}")
-                        item.setData(Qt.ItemDataRole.UserRole, skill_id)
-                        skill_list.addItem(item)
-                except (ValueError, IndexError, TypeError):
-                    continue
-        except Exception as e:
-            print(f"Error loading skills: {e}")
+        for skill_id, label in self.signature_skills_editor.available_skills().items():
+            item = QListWidgetItem(label, skill_list)
+            item.setData(Qt.ItemDataRole.UserRole, skill_id)
 
     def add_skill_to_editor(self, skill_type: str, skill_id: int):
         """Add a skill to the appropriate editor"""
@@ -4304,12 +4302,15 @@ class SkillsPage(QWizardPage):
                 break
 
     def initializePage(self):
-        """Load skills from template when page is shown"""
-        if self.wizard.template_digimon:
-            self.signature_skills_editor.load_skills(self.wizard.template_digimon.signature_skills)
-            self.generic_skills_editor.load_skills(self.wizard.template_digimon.generic_skills)
-            self.signature_skills_editor.update_all_skill_names()
-            self.generic_skills_editor.update_all_skill_names()
+        """Keep assigned skills when returning to this page with the same template."""
+        template = self.wizard.template_digimon
+        if template is None:
+            return
+        key = (template.id, template.chr_id)
+        if key != self._template_key:
+            self.signature_skills_editor.load_skills(template.signature_skills)
+            self.generic_skills_editor.load_skills(template.generic_skills)
+            self._template_key = key
 
 
 class EvolutionPage(QWizardPage, StudioEvolutionPaths):
@@ -4644,6 +4645,8 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.current_digimon_from_dlc = False
         self.active_dsts_loader_root: Optional[Path] = None
         self.active_reloaded_mod_root: Optional[Path] = None
+        self._skill_catalog_cache = None
+        self._skill_catalog_root = None
         self.has_unsaved_changes = False
         self._related_source_entries_cache: Optional[List[dict]] = None
         self._evolution_picker_entries_cache: Optional[List[dict]] = None
@@ -5139,7 +5142,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
                        and row.slot is not None and row.slot >= 0}
         open_field_guide_unlock(self, digimon_ids, inventory_warnings=inventory.warnings)
 
-    def _trait_mod_root(self):
+    def _loaded_mod_payload(self):
         source = getattr(self.current_digimon, "imported_dsts_loader_root", "")
         return Path(source) if source else self._active_dsts_loader_root()
 
@@ -5154,7 +5157,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.traits_tab.title.setText(f"Traits · {root.parent.name}" if names else "Traits")
 
     def rename_mod_trait(self):
-        root = self._trait_mod_root()
+        root = self._loaded_mod_payload()
         if root is None:
             folder = QFileDialog.getExistingDirectory(self, "Choose a mod for the trait name",
                                                        str(get_default_mod_loader_path()))
@@ -6982,7 +6985,8 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         sig_group.setStyleSheet(skill_group_style("#7aa2ff", "#7aa2ff"))
         sig_layout = QVBoxLayout()
 
-        self.signature_skills_editor = SkillEditor("signature", self.loader)
+        self.signature_skills_editor = SkillEditor("signature", self.loader, catalog_provider=self.skill_catalog,
+                                                  create_skill=self.create_mod_skill)
         self.signature_skills_editor.skillChanged.connect(self.mark_as_modified)
         sig_layout.addWidget(self.signature_skills_editor)
         sig_group.setLayout(sig_layout)
@@ -6993,7 +6997,8 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         gen_group.setStyleSheet(skill_group_style("#20d6a3", "#20d6a3"))
         gen_layout = QVBoxLayout()
 
-        self.generic_skills_editor = SkillEditor("generic", self.loader)
+        self.generic_skills_editor = SkillEditor("generic", self.loader, catalog_provider=self.skill_catalog,
+                                                create_skill=self.create_mod_skill)
         self.generic_skills_editor.skillChanged.connect(self.mark_as_modified)
         gen_layout.addWidget(self.generic_skills_editor)
         gen_group.setLayout(gen_layout)
@@ -7679,7 +7684,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         skill_selection_layout.addWidget(advanced_label("Skill ID:", TAB_ICON_STEMS.get("advanced_skills"), width=120))
 
         self.advanced_skill_id_edit = QSpinBox()
-        self.advanced_skill_id_edit.setRange(0, 9999999)
+        self.advanced_skill_id_edit.setRange(0, MAX_SKILL_ID)
         self.advanced_skill_id_edit.setMinimumWidth(150)
         self.advanced_skill_id_edit.valueChanged.connect(self.update_advanced_skill_display)
         skill_selection_layout.addWidget(self.advanced_skill_id_edit)
@@ -7753,6 +7758,11 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         load_skill_button.setStyleSheet(modern_action_button_style("#20d6a3"))
         load_skill_button.clicked.connect(self.load_skill_from_browser)
         browser_row.addWidget(load_skill_button)
+        create_button = QPushButton("New skill…")
+        create_button.setToolTip("Create a skill from this template or start with basic attack settings.")
+        create_button.setStyleSheet(modern_action_button_style("#88e9e0"))
+        create_button.clicked.connect(self.create_advanced_skill)
+        browser_row.addWidget(create_button)
         browser_layout.addLayout(browser_row)
 
         # Populate skill list
@@ -7930,7 +7940,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.mode_change_skill_widgets = []
         for index in range(12):
             skill_spin = QSpinBox()
-            skill_spin.setRange(0, 9999999)
+            skill_spin.setRange(0, MAX_SKILL_ID)
             set_compact_field_width(skill_spin, 150)
             skill_spin.setToolTip(f"003_skill_mode_change skill slot {index + 1}")
             self.mode_change_skill_widgets.append(skill_spin)
@@ -8532,7 +8542,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
 
         skill_id_label_text = "AI Skill ID (Col 36):"
         self.ai_skill_id_edit = QSpinBox()
-        self.ai_skill_id_edit.setRange(0, 9999999)
+        self.ai_skill_id_edit.setRange(0, MAX_SKILL_ID)
         add_battle_field(1, 1, skill_id_label_text, self.ai_skill_id_edit, TAB_ICON_STEMS.get("skills"))
 
         # Battle stats (columns 17-23)
@@ -10416,6 +10426,8 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.current_digimon = digimon
         self._loading_digimon_form = True
         self._remember_loaded_identity(digimon)
+        if self._skill_catalog_root != self._loaded_mod_payload():
+            self.refresh_skill_catalog()
         self.current_digimon_label.setText(f"✏️ Editing: {digimon.name} ({digimon.chr_id})")
 
         # Clear unsaved changes flag when loading new Digimon
@@ -10522,9 +10534,12 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         # Update skill names for all skills
         self.signature_skills_editor.update_all_skill_names()
         self.generic_skills_editor.update_all_skill_names()
+        first_skill = next((slot["id"] for slot in digimon.signature_skills if slot.get("id", 0) > 0), 0)
+        self.advanced_skill_id_edit.setValue(first_skill)
+        self.update_advanced_skill_display()
 
         # Traits
-        self._refresh_trait_names(self._trait_mod_root())
+        self._refresh_trait_names(self._loaded_mod_payload())
         self.traits_tab.load_traits(digimon.traits)
 
         # Model data
@@ -10827,10 +10842,11 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.active_dsts_loader_root = root
         self.active_reloaded_mod_root = self._infer_reloaded_mod_root(root)
         if hasattr(self, "traits_tab"):
-            self._refresh_trait_names(self._trait_mod_root())
+            self._refresh_trait_names(self._loaded_mod_payload())
         self._invalidate_evolution_picker_cache()
         if hasattr(self, "skill_browser_combo"):
-            self.populate_skill_browser()
+            self.refresh_skill_catalog()
+            self.update_advanced_skill_display()
         if hasattr(self, "buff_set_combos"):
             self.populate_buff_set_combos()
         if hasattr(self, "digimon_list"):
@@ -11206,8 +11222,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
                     if len(row) > idx + 2:
                         skill_id = int(row[idx]) if row[idx] else 0
                         slot = int(row[idx + 2]) if row[idx + 2] else 0
-                        if skill_id > 0:
-                            digimon.signature_skills.append({'id': skill_id, 'slot': slot})
+                        digimon.signature_skills.append({'id': skill_id, 'slot': slot})
 
                 # Parse generic skills (every 3 columns starting at 108)
                 digimon.generic_skills = []
@@ -11216,8 +11231,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
                     if len(row) > idx + 2:
                         skill_id = int(row[idx]) if row[idx] else 0
                         level = int(row[idx + 2]) if row[idx + 2] else 0
-                        if skill_id > 0:
-                            digimon.generic_skills.append({'id': skill_id, 'level': level})
+                        digimon.generic_skills.append({'id': skill_id, 'level': level})
 
                 # Parse model type and animation set (columns 121-122)
                 if len(row) > 122:
@@ -12922,6 +12936,28 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         sync_form: bool = True,
     ) -> bool:
         """Merge a single Digimon into existing dsts-loader files, preserving other entries"""
+        drafts = digimon.pending_skill_records
+        if not drafts:
+            return self._write_digimon_mod_tables(base_path, digimon, original_identity, animation_ref, sync_form)
+        try:
+            with skill_record_transaction(base_path, drafts.values(), self.loader, self.skill_mod_roots()):
+                if not self._write_digimon_mod_tables(base_path, digimon, original_identity, animation_ref, sync_form):
+                    raise OSError(self._merge_failure_message("Could not save the Digimon using the new skills."))
+        except (OSError, ValueError) as exc:
+            self._set_merge_error(str(exc))
+            return False
+        drafts.clear()
+        self._skill_catalog_cache = None
+        return True
+
+    def _write_digimon_mod_tables(
+        self,
+        base_path: Path,
+        digimon: DigimonData,
+        original_identity: Optional[dict] = None,
+        animation_ref: Optional[str] = None,
+        sync_form: bool = True,
+    ) -> bool:
         self.last_merge_error_message = ""
         try:
             from pathlib import Path
@@ -12972,16 +13008,6 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
 
             def cell(row, index: int) -> str:
                 return row[index].strip('"') if len(row) > index and row[index] else ""
-
-            # Merge digimon_status_data
-            status_file = patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv"
-            if not self._merge_csv_row(
-                status_file,
-                digimon,
-                wizard._write_digimon_status_ap_csv,
-                lambda r: cell(r, 3) in match_chr_ids or cell(r, 0) in match_ids,
-            ):
-                return False
 
             # Merge char_info
             char_info_file = patch_data / "char_info.mbe" / "000_char_info.ap.csv"
@@ -13130,6 +13156,16 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
             # Merge model_outline
             outline_file = app_data / "model_outline.mbe" / "000_model_outline_battle.ap.csv"
             if not self._merge_csv_row(outline_file, digimon, wizard._write_model_outline_ap_csv, lambda r: cell(r, 0) in match_chr_ids):
+                return False
+
+            # Merge digimon_status_data
+            status_file = patch_data / "digimon_status.mbe" / "000_digimon_status_data.ap.csv"
+            if not self._merge_csv_row(
+                status_file,
+                digimon,
+                wizard._write_digimon_status_ap_csv,
+                lambda r: cell(r, 3) in match_chr_ids or cell(r, 0) in match_ids,
+            ):
                 return False
 
             self.last_mvgl_cache_notice = self._clear_mvgl_fileloader_cache()
@@ -13506,84 +13542,80 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         for tribe_name in sorted(unique_tribes):
             self.tribe_combo.addItem(tribe_name)
 
-    def _active_skill_data_root(self) -> Optional[Path]:
-        active_root = self._active_dsts_loader_root()
-        return active_root / "patch" / "data" if active_root else None
+    def skill_mod_roots(self):
+        return [root for root, _ in self._iter_reloaded_mod_dsts_loader_roots()]
 
-    def _skill_name_map_from_mod(self, dsts_loader_root: Path) -> Dict[str, str]:
-        names: Dict[str, str] = {}
-        skill_name_dir = dsts_loader_root / "patch_text01" / "text" / "skill_name.mbe"
-        if not skill_name_dir.exists():
-            return names
+    def skill_catalog(self):
+        root = self._loaded_mod_payload()
+        if self._skill_catalog_cache is None or root != self._skill_catalog_root:
+            self._skill_catalog_cache = SkillCatalog.load(self.loader, self.skill_mod_roots(), root)
+            self._skill_catalog_root = root
+        return self._skill_catalog_cache
 
-        for csv_file in sorted(skill_name_dir.glob("*.ap.csv")):
-            try:
-                rows = self.loader.load_csv(csv_file)
-            except Exception:
-                continue
-            for row in rows[1:]:
-                if len(row) >= 2:
-                    key = _clean_status_cell(row[0])
-                    value = _clean_status_cell(row[1])
-                    if key and value:
-                        names[key] = value
-        return names
+    def refresh_skill_catalog(self):
+        self._skill_catalog_cache = None
+        for editor in (self.signature_skills_editor, self.generic_skills_editor):
+            editor.refresh_skill_options()
+        self.populate_skill_browser()
 
-    def _active_mod_skill_options(self) -> List[tuple]:
-        """Return skill browser options from the active Reloaded II mod payload."""
-        active_root = self._active_dsts_loader_root()
-        if not active_root:
-            return []
+    def _choose_skill_mod(self):
+        root = self._loaded_mod_payload()
+        if root is not None:
+            return root
+        folder = QFileDialog.getExistingDirectory(self, "Choose a mod for the skill definition",
+                                                   str(get_default_mod_loader_path()))
+        if not folder:
+            return None
+        selected = Path(folder)
+        known_mod = selected.name.lower() in DSTS_LOADER_DIR_NAMES or (selected / "ModConfig.json").is_file()
+        root = self._resolve_dsts_loader_root(selected, allow_create=known_mod)
+        if root is None:
+            QMessageBox.warning(self, "Skill destination", "Choose a Reloaded II mod or its dsts-loader folder.")
+        return root
 
-        skill_file = self._resolve_prefixed_file(
-            active_root / "patch" / "data" / "battle_skill.mbe" / "000_battle_skill_list.ap.csv"
-        )
-        if not skill_file.exists():
-            return []
-
-        names = self._skill_name_map_from_mod(active_root)
-        options = []
-        seen = set()
+    def create_mod_skill(self, template_id=0, *, assigning=True):
+        root = self._choose_skill_mod()
+        if root is None:
+            return None
         try:
-            rows = self.loader.load_csv(skill_file)
-            for row in rows[1:]:
-                if not row or not row[0]:
-                    continue
-                try:
-                    skill_id = int(_clean_status_cell(row[0]))
-                except (TypeError, ValueError):
-                    continue
-                if skill_id in seen:
-                    continue
-                seen.add(skill_id)
+            roots = self.skill_mod_roots()
+            catalog = SkillCatalog.load(self.loader, roots, root)
+            hint = f"The skill definition will be saved to {root.parent.name}."
+            if assigning:
+                hint += " Save the Digimon to keep its slot assignment."
+            record = create_skill_dialog(self, catalog, template_id, destination_hint=hint)
+            if record is None:
+                return None
+            commit_skill_records(root, [record], self.loader, roots)
+        except (OSError, ValueError) as exc:
+            QMessageBox.warning(self, "Skill not created", str(exc))
+            return None
+        if self._loaded_mod_payload() != root:
+            self._set_active_dsts_loader_root(root)
+        else:
+            self.refresh_skill_catalog()
+        if root.resolve().is_relative_to(get_default_mod_loader_path().resolve()):
+            self._clear_mvgl_fileloader_cache()
+        return record
 
-                name_id = _clean_status_cell(row[4]) if len(row) > 4 else ""
-                skill_name = names.get(str(skill_id)) or names.get(name_id) or self.loader.get_skill_name(skill_id)
-                skill_name = self.loader.clean_ui_text(skill_name) if skill_name else ""
-                if not skill_name or skill_name.startswith("Skill_"):
-                    skill_name = name_id or f"Skill {skill_id}"
-                options.append((skill_id, f"ID {skill_id}: {skill_name} [Active Mod]"))
-        except Exception as exc:
-            print(f"Error loading active mod skill options: {exc}")
-        return sorted(options, key=lambda option: option[0])
+    def create_advanced_skill(self):
+        record = self.create_mod_skill(self.advanced_skill_id_edit.value(), assigning=False)
+        if record:
+            self.advanced_skill_id_edit.setValue(record.skill_id)
+
+    def _active_skill_data_root(self) -> Optional[Path]:
+        root = self._loaded_mod_payload()
+        return root / "patch" / "data" if root else None
 
     def _load_advanced_skill_data(self, skill_id: int) -> Dict[str, object]:
-        """Load a skill for the advanced editor, preferring the active mod payload."""
-        active_data_root = self._active_skill_data_root()
-        if active_data_root:
-            skill_data = self.loader.load_skill_data(skill_id, data_root=active_data_root, prefer_ap=True)
-            if skill_data:
-                skill_data["_data_root"] = active_data_root
-                skill_data["_prefer_ap"] = True
-                skill_data["_source_label"] = "Active Mod"
-                return skill_data
-
-        skill_data = self.loader.load_skill_data(skill_id)
-        if skill_data:
-            skill_data["_data_root"] = None
-            skill_data["_prefer_ap"] = False
-            skill_data["_source_label"] = "Base/DLC Workspace"
-        return skill_data
+        record = self.skill_catalog().records.get(skill_id)
+        if record is None:
+            return {}
+        data = self.loader.decode_skill_row(record.row, record.source_file)
+        data.update(_data_root=record.source_file.parent.parent,
+                    _prefer_ap=record.source_file.name.endswith(".ap.csv"),
+                    _source_label=record.source, _name=record.name, _description=record.description)
+        return data
 
     def _advanced_skill_contexts(self) -> List[tuple]:
         """Return mode-change lookup contexts, with the current skill source first."""
@@ -13725,16 +13757,8 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         self.skill_browser_combo.clear()
         self.skill_browser_combo.addItem("Select a skill...", 0)
 
-        seen_skill_ids = set()
-        for skill_id, label in self._active_mod_skill_options():
-            self.skill_browser_combo.addItem(label, skill_id)
-            seen_skill_ids.add(skill_id)
-            if skill_id == current_skill_id:
-                self.skill_browser_combo.setCurrentIndex(self.skill_browser_combo.count() - 1)
-
-        for skill_id, label in get_skill_options(self.loader):
-            if skill_id in seen_skill_ids:
-                continue
+        for skill_id, record in sorted(self.skill_catalog().records.items()):
+            label = f"ID {skill_id}: {record.name} [{record.source}]"
             self.skill_browser_combo.addItem(label, skill_id)
             if skill_id == current_skill_id:
                 self.skill_browser_combo.setCurrentIndex(self.skill_browser_combo.count() - 1)
@@ -13756,7 +13780,7 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         """Load a skill from the browser dropdown."""
         if hasattr(item, "data"):
             skill_id = item.data(Qt.ItemDataRole.UserRole)
-        elif isinstance(item, int) and hasattr(self, "skill_browser_combo"):
+        elif type(item) is int and hasattr(self, "skill_browser_combo"):
             skill_id = self.skill_browser_combo.itemData(item)
         elif hasattr(self, "skill_browser_combo"):
             skill_id = self.skill_browser_combo.currentData()
@@ -14227,17 +14251,10 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
                 self.current_advanced_skill_source_label = str(skill_data.get("_source_label", "Base/DLC Workspace"))
                 self.populate_buff_set_combos()
 
-                # Update skill name
-                skill_name = self.loader.get_skill_name(skill_id)
-                clean_name = self.loader.clean_ui_text(skill_name)
-                self.advanced_skill_name_edit.setText(clean_name if clean_name else "")
-
-                # Show description (from skill_explanation.mbe if available)
-                description_text = self.loader.get_skill_explanation(skill_id)
-                if description_text:
-                    self.advanced_skill_desc.setPlainText(description_text)
-                else:
-                    self.advanced_skill_desc.setPlainText("No description found for this skill.")
+                self.advanced_skill_name_edit.setText(skill_data["_name"])
+                self.advanced_skill_desc.setPlainText(
+                    skill_data["_description"] or "The game generates the description from the skill properties."
+                )
 
                 # Update all form fields with loaded data
                 self.skill_power_edit.setValue(skill_data.get("power", 0))
@@ -14325,70 +14342,12 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
             self.clear_mode_change_fields()
             self.populate_buff_set_combos()
 
-    def _prepare_skill_mod_patch(self, skill_id, source_root=None, source_prefer_ap=False):
-        """Copy only the selected source skill into the active mod before editing."""
-        root = self._active_skill_data_root()
-        if not root:
-            return None
-        target = root / 'battle_skill.mbe' / '000_battle_skill_list.ap.csv'
-        target = self._resolve_prefixed_file(target)
-        if self.loader.load_skill_data(skill_id, root, True):
-            return root
-        source = self.loader.load_skill_data(skill_id, source_root, source_prefer_ap)
-        row = source.get('raw_data', [])
-        if len(row) != len(SKILL_HEADER):
-            raise ValueError('The source skill does not have the supported 73-column layout.')
-        target.parent.mkdir(parents=True, exist_ok=True)
-        def write_source(path, unused):
-            with open(path, 'w', encoding='utf-8', newline='') as output:
-                write_dsts_typed_csv_rows(output, SKILL_HEADER, [row])
-        if not self._merge_csv_row(target, None, write_source, lambda existing: self._csv_cell(existing, 0) == str(skill_id)):
-            raise OSError(getattr(self, 'last_merge_error_message', 'Could not create the skill patch.'))
-        return root
+        self._loaded_skill_values = self._advanced_skill_values()
+        self._loaded_mode_values = self._mode_change_data_from_widgets()
 
-    def save_advanced_skill(self):
-        """Save the current skill data"""
-        skill_id = self.advanced_skill_id_edit.value()
-        if skill_id <= 0:
-            QMessageBox.warning(self, "Error", "Please enter a valid skill ID")
-            return
-
-        mode_change_data = self._mode_change_data_from_widgets()
-        if mode_change_data["mode_change_id"] > 0:
-            if mode_change_data["source_digimon_id"] <= 0:
-                QMessageBox.warning(
-                    self,
-                    "Mode Change Source Missing",
-                    "Mode Change ID is positive, but the 003_skill_mode_change row has no Source Digimon ID."
-                )
-                return
-            if not mode_change_data["skill_ids"]:
-                QMessageBox.warning(
-                    self,
-                    "Mode Change Skills Missing",
-                    "Mode Change ID is positive, but the 003_skill_mode_change row has no skill IDs."
-                )
-                return
-
-        data_root = getattr(self, "current_advanced_skill_data_root", None)
-        prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
-        source_label = getattr(self, "current_advanced_skill_source_label", "Base/DLC Workspace")
-
-        if self._active_skill_data_root():
-            try:
-                data_root = self._prepare_skill_mod_patch(skill_id, data_root, prefer_ap)
-            except (OSError, ValueError) as exc:
-                QMessageBox.warning(self, 'Skill Not Saved', str(exc))
-                return
-            prefer_ap = True
-            source_label = 'Active Mod'
-            self.current_advanced_skill_data_root = data_root
-            self.current_advanced_skill_prefer_ap = True
-            self.current_advanced_skill_source_label = source_label
-
-        # Collect all form data
+    def _advanced_skill_values(self):
         skill_data = {
-            "skill_id": skill_id,
+            "skill_id": self.advanced_skill_id_edit.value(),
             "power": self.skill_power_edit.value(),
             "sp_cost": self.skill_sp_cost_edit.value(),
             "cp_cost": self.skill_cp_cost_edit.value(),
@@ -14420,31 +14379,123 @@ class DigimonEditor(QMainWindow, StudioEvolutionPaths):
         for i, widget in enumerate(self.buff_set_widgets):
             skill_data[f"buff_set_{i}"] = widget.value()
 
+        return skill_data
+
+    def _prepare_skill_mod_patch(self, skill_id, *, payload=None):
+        """Copy only the selected source skill into the active mod before editing."""
+        root = payload / "patch" / "data" if payload else self._active_skill_data_root()
+        if not root:
+            return None
+        target = root / 'battle_skill.mbe' / '000_battle_skill_list.ap.csv'
+        target = self._resolve_prefixed_file(target)
+        if self.loader.load_skill_data(skill_id, root, True):
+            return root
+        record = self.skill_catalog().records.get(skill_id)
+        row = record.row if record else ()
+        if len(row) != len(SKILL_HEADER):
+            raise ValueError('The source skill does not have the supported 73-column layout.')
+        target.parent.mkdir(parents=True, exist_ok=True)
+        def write_source(path, unused):
+            with open(path, 'w', encoding='utf-8', newline='') as output:
+                write_dsts_typed_csv_rows(output, SKILL_HEADER, [row])
+        if not self._merge_csv_row(target, None, write_source, lambda existing: self._csv_cell(existing, 0) == str(skill_id)):
+            raise OSError(getattr(self, 'last_merge_error_message', 'Could not create the skill patch.'))
+        return root
+
+    def save_advanced_skill(self):
+        """Save the current skill data"""
+        skill_id = self.advanced_skill_id_edit.value()
+        if skill_id <= 0:
+            QMessageBox.warning(self, "Error", "Please enter a valid skill ID")
+            return
+
+        record = self.skill_catalog().records.get(skill_id)
+        if record is None:
+            QMessageBox.warning(self, "Skill not found", "Choose an existing skill or use New skill to create one.")
+            return
+        skill_name = self.advanced_skill_name_edit.text().strip()
+        if not skill_name:
+            QMessageBox.warning(self, "Skill name", "Enter a name for this skill.")
+            return
+
+        mode_change_data = self._mode_change_data_from_widgets()
+        mode_edited = mode_change_data != self._loaded_mode_values and mode_change_data["mode_change_id"] > 0
+        if mode_edited:
+            if mode_change_data["source_digimon_id"] <= 0:
+                QMessageBox.warning(
+                    self,
+                    "Mode Change Source Missing",
+                    "Mode Change ID is positive, but the 003_skill_mode_change row has no Source Digimon ID."
+                )
+                return
+            if not mode_change_data["skill_ids"]:
+                QMessageBox.warning(
+                    self,
+                    "Mode Change Skills Missing",
+                    "Mode Change ID is positive, but the 003_skill_mode_change row has no skill IDs."
+                )
+                return
+
+        data_root = getattr(self, "current_advanced_skill_data_root", None)
+        prefer_ap = bool(getattr(self, "current_advanced_skill_prefer_ap", False))
+        source_label = getattr(self, "current_advanced_skill_source_label", "Base/DLC Workspace")
+
+        payload = self._loaded_mod_payload()
+        if payload is None and record.source != "Base":
+            payload = self._choose_skill_mod()
+            if payload is None:
+                return
+        if payload:
+            try:
+                data_root = self._prepare_skill_mod_patch(skill_id, payload=payload)
+            except (OSError, ValueError) as exc:
+                QMessageBox.warning(self, 'Skill Not Saved', str(exc))
+                return
+            prefer_ap = True
+            source_label = 'Active Mod'
+            self.current_advanced_skill_data_root = data_root
+            self.current_advanced_skill_prefer_ap = True
+            self.current_advanced_skill_source_label = source_label
+
+        values = self._advanced_skill_values()
+        skill_data = {key: value for key, value in values.items()
+                      if key == "skill_id" or value != self._loaded_skill_values.get(key)}
+
         # Save skill data
         skill_saved = self.loader.save_skill_data(skill_data, data_root=data_root, prefer_ap=prefer_ap)
         mode_saved = True
-        if skill_saved and mode_change_data["mode_change_id"] > 0:
+        if skill_saved and mode_edited:
             mode_saved = self.loader.save_skill_mode_change_data(
                 mode_change_data,
                 data_root=data_root,
                 prefer_ap=prefer_ap,
             )
 
-        # Save skill name if it was edited
-        skill_name = self.advanced_skill_name_edit.text().strip()
         name_saved = True
-        if skill_name and skill_name != "Skill not found" and not prefer_ap:
-            name_saved = self.loader.save_skill_name(skill_id, skill_name)
+        if skill_saved and skill_name != record.name:
+            name_key = int(record.row[4])
+            if payload:
+                try:
+                    save_skill_name_override(payload, name_key, skill_name)
+                except (OSError, ValueError) as exc:
+                    QMessageBox.warning(self, "Skill name not saved", str(exc))
+                    return
+            else:
+                name_saved = self.loader.save_skill_name(name_key, skill_name)
 
-        # Show result message
         if skill_saved and mode_saved and name_saved:
+            if payload and payload.resolve().is_relative_to(get_default_mod_loader_path().resolve()):
+                self._clear_mvgl_fileloader_cache()
+            if payload and self._loaded_mod_payload() != payload:
+                self._set_active_dsts_loader_root(payload)
+            else:
+                self.refresh_skill_catalog()
+                self.update_advanced_skill_display()
             QMessageBox.information(self, "Success", f"Skill {skill_id} saved successfully to {source_label}!")
         elif skill_saved and not mode_saved:
             QMessageBox.warning(self, "Partial Success", f"Skill {skill_id} saved, but the mode-change row could not be saved.")
         elif skill_saved:
             QMessageBox.warning(self, "Partial Success", f"Skill {skill_id} saved, but skill name could not be saved.")
-        elif name_saved:
-            QMessageBox.warning(self, "Partial Success", f"Skill name saved, but skill data could not be saved.")
         else:
             QMessageBox.critical(self, "Error", "Failed to save skill data and name")
 
