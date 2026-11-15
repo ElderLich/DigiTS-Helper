@@ -1,11 +1,13 @@
 import csv
 from dataclasses import replace
 from pathlib import Path
+import sys
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 import skill_records as sk
 
 
@@ -22,7 +24,7 @@ class NativeSkillTests(unittest.TestCase):
         self.loader = SimpleNamespace(data_path=self.data, text_path=self.text,
                                       iter_dlc_data_roots=lambda: [("01", dlc_data)],
                                       iter_dlc_text_roots=lambda: [("01", dlc_text)])
-        base = Path(__file__).resolve().parents[1] / "Base/data/battle_skill.mbe/000_battle_skill_list.csv"
+        base = Path(__file__).resolve().parents[1] / "data/Base/data/battle_skill.mbe/000_battle_skill_list.csv"
         with base.open(encoding="utf-8", newline="") as f:
             header, *rows = csv.reader(f)
         self.donors = {int(row[0]): row for row in rows if row and row[0] in {"10011", "20371", "20372"}}

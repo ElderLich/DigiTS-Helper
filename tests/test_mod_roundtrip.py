@@ -11,9 +11,8 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "app"))
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
-os.chdir(ROOT)
 
 from PyQt6.QtWidgets import QApplication, QToolTip
 from PyQt6.QtCore import QEvent, Qt
@@ -369,7 +368,7 @@ class ModRoundtripTests(unittest.TestCase):
         self.assertTrue(read_trait_flags(row)[32])
 
     def test_mod_trait_rename_preserves_other_names_and_detects_stale_edits(self):
-        english_csv = ROOT / 'Base/text/digimon_class_name.mbe/000_Sheet1.csv'
+        english_csv = ROOT / 'data/Base/text/digimon_class_name.mbe/000_Sheet1.csv'
         source = read_csv(english_csv)[1:]
         args = self.root, 'app_text01', self.root.parent / 'missing dump', english_csv
         first = TraitNameSheet.load(*args)
@@ -388,7 +387,7 @@ class ModRoundtripTests(unittest.TestCase):
             TraitNameSheet.load(self.root, 'app_text02', args[2], english_csv)
 
     def test_runtime_headers_match_captured_native_schema_report(self):
-        report = (ROOT / 'Header Reports/DSTS_Header_Report.md').read_text(encoding='utf-8')
+        report = (ROOT / 'reference/Header Reports/DSTS_Header_Report.md').read_text(encoding='utf-8')
         skill_section = report.split('## battle_skill.json', 1)[1].split('\n## ', 1)[0]
         for name, header in [('battle_skill_list', SKILL_HEADER), ('buff_set', BUFF_SET_HEADER)]:
             section = skill_section.split('### ' + name + '\n', 1)[1].split('\n### ', 1)[0]

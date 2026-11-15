@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import sys
 import struct
 import tempfile
 import unittest
@@ -7,6 +8,7 @@ from unittest.mock import patch
 
 from PyQt6.QtCore import QDir
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from field_guide_unlock import (
     AUX_OFFSET, CAPACITY, GUIDE_OFFSET, RECORD_SIZE, REGISTERED, SAVE_SIZE,
     _aes, apply_unlock, find_steam_save_directory, open_field_guide_unlock, preview_unlock,

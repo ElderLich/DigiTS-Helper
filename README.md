@@ -6,18 +6,18 @@ A Windows desktop toolkit for *Digimon Story: Time Stranger*: edit Digimon,
 skills, buffs and evolution data, inspect MBE tables, and build Reloaded II
 `dsts-loader` mods from extracted game files.
 
-[Get started](#get-started) · [Mod workflow](#mod-workflow) · [Skills & buffs](#skills--buffs) · [Credits](#credits)
+[Get started](#get-started) · [Art Studio](#time-stranger-art-studio) · [Mod workflow](#mod-workflow) · [Skills & buffs](#skills--buffs) · [Credits](#credits)
 
 ## What it does
 
 | Tool | Purpose |
 | --- | --- |
 | **Digimon editor** | Stats, names, profiles, Field Guide entries, traits, skills, evolution paths and model references |
+| **Art Studio** | Create native dot sprites from sprite sheets and profile pictures from models or transparent PNG artwork |
 | **Field Guide** | Review installed mods and slot conflicts, change a mod's slot, or register catalogued species in a PC save |
 | **Advanced skills** | Skill properties, compatibility rules, buff sets and custom buff definitions |
 | **Mod import/export** | Load existing payloads, merge edits, or export a separate Reloaded II mod |
-| **MBE editor** | Inspect and edit binary MBE tables and CSV sheets |
-| **MVGL Tools GUI** | Extract PC/Switch archives and MBE tables; PC repacking through MVGLToolsCLI |
+| **MVGL Tools** | Extract PC/Switch archives and MBE tables; PC repacking through MVGLToolsCLI |
 
 The editor reads Base, DLC (`addcont_01`–`03`, `17`) and imported mod data.
 Related model tables include all ten LOD slots, locator references and motion
@@ -26,66 +26,67 @@ paths.
 
 ## Get started
 
-Use a Windows Python installation with **PyQt6**. The archive GUI also uses
-Tkinter, included with the standard Windows Python installer.
-
-Run these commands **from this repository's folder**:
-
-```powershell
-py -m pip install PyQt6
-py digimon_editor.py
-```
-
-Other tools launch independently:
+On Windows, double-click **Time Stranger Mod Studio.cmd** to edit Digimon
+and mods. Double-click **Time Stranger Art Studio.cmd** for sprites and
+portraits. Each launcher opens its executable in `dist/` when available.
+Otherwise it starts the application from `app/` using the Windows Python
+launcher. Install the source dependencies once if you use that route.
 
 ```powershell
-py MBE_Editor.py
-py mvgl_tools_gui.py
+py -m pip install -r dependencies/requirements.txt
 ```
 
-The main editor expects extracted tables under `Base/data` and `Base/text`,
-with optional DLC data under `DLC`. Use **Configure Paths** to set your extracted
+For archives, double-click **MVGL Tools.cmd**. For Lua scripts, double-click
+**Lua Decompiler.cmd**. Both launchers are in the repository root. MVGL Tools
+uses Tkinter, included with the standard Windows Python installer. Lua
+decompilation also requires Java.
+
+The main editor reads extracted base tables from `data/Base/data` and
+`data/Base/text`, with optional DLC tables under `data/DLC`. Use **Configure Paths** to set your extracted
 game folder and Reloaded II Mods folder. Machine-specific paths are saved in
 the ignored `Time_Stranger_Mod_Studio_Paths.json` file. Existing installations
 can keep their saved paths when upgrading.
 
-For archive operations, place `MVGLToolsCLI.exe` and its accompanying resources
-in `_internal` or alongside the GUI. The older MBE repack helpers use
-`DSCSToolsCLI.exe` from the repository folder. These are separate tools with
-different command-line interfaces; use the supplied backend for each workflow.
+Bundled tools live under `dependencies/`. The MVGL backend and its support
+files are in `mvgl/`, CPK tools are in `cpk/`, DSCSTools is in `dscs/`
+and the Lua decompiler is in `unluac/`.
 See the [extraction guide](https://hyotan-dev.github.io/dstsworkshop/tutorials/extractdata/)
 for preparing game data.
 
 ### Time Stranger Art Studio
 
-Open **Time Stranger Art Studio.exe** to make dot sprites and profile pictures
-independently of the Digimon editor. To run from source, install PyQt6 and
-Pillow and run `py art_studio.pyw`. Build the Windows executable with
-`py -m PyInstaller art_studio.spec` after installing PyInstaller.
+Open **Time Stranger Art Studio.cmd** from the repository root.
 
 - **Dot Sprites** opens an existing sprite sheet or native dot atlas. Select a
   16 × 16 source frame and click its position in the four-frame game atlas.
   The enlarged preview keeps the pixels square. Enter the Digimon ID, choose
   the mod or staging folder and click **Export dot sprite**.
-- **Portraits** opens a GLB, glTF or native GEOM model. Choose the view, click
-  **Render preview**, then drag a square around the face. Enter the icon ID
-  from the Digimon's `char_info` row, choose the mod or staging folder and
-  click **Save profile picture**. Portrait rendering uses Blender. GEOM also
-  requires Time Stranger Importer, and BC7 export uses NVIDIA Texture Tools'
-  `nvcompress.exe`. The app can prompt for the executables on first use.
+- **Portraits** opens a GLB, glTF, native GEOM or an existing transparent
+  PNG. For a model, adjust **Camera turn** and **Tilt** before clicking **Render
+  preview**. Drag a square around the face and check **Game portrait**.
+  The preview applies the tutorial's teal color treatment, red/blue channel
+  offset, selective black adjustment and hard shadow. Its opacity includes
+  the model and its shadow. **Save styled PNG…** saves a 512 × 512 cutout.
+  To install a game icon, enter the icon ID from the Digimon's `char_info`
+  row, choose the mod or staging folder and click **Save profile picture**.
+  This creates a 512 × 512 BC7 texture with ten mip levels.
 
 Both tabs write to `dsts-loader/patch/images` in the chosen mod. For Leviamon X,
 Digimon ID 761 and icon ID 761 produce `dot761.img` and `ui_chara_icon_761.img`.
+Model capture uses Blender. GEOM requires the Time Stranger Importer addon.
+Native portrait export uses NVIDIA Texture Tools' `nvcompress.exe`. The app
+can prompt for either executable on first use. Sprite sheets and transparent
+PNG inputs open directly.
 
 ### Switch extraction
 
-In **MVGL Tools GUI**, select **Time Stranger (Switch)**, then **Extract MVGL
+In **MVGL Tools**, select **Time Stranger (Switch)**, then **Extract MVGL
 Archive**. Batch mode reads `.mvgl` and `.cpk` files recursively, including DLC
 subfolders. The default source is `D:\Emulators\Ryujinx\Games\Extracted`, and the
 default output is `D:\Digimon Modding\Time Stranger - Switch - Extracted`.
 Inputs must already be decrypted game archives; NSP/NCA extraction is separate.
 
-Switch archives use different MVGL record widths from PC. `Switch_Archives.py`
+Switch archives use different MVGL record widths from PC. `app/Switch_Archives.py`
 handles both `nx64` and `ounce64` variants directly; the bundled MVGLToolsCLI
 v2.0.3 cannot unpack these Switch archives. CPK support covers the named,
 uncompressed media containers found in the supplied game files. Unsupported
@@ -113,13 +114,13 @@ repacking, deployment, and cross-platform asset compatibility are not provided.
 For command-line extraction (Python 3.11 or newer):
 
 ```powershell
-py -u Switch_Archives.py "D:\Emulators\Ryujinx\Games\Extracted" "D:\Digimon Modding\Time Stranger - Switch - Extracted"
+py -u app/Switch_Archives.py "D:\Emulators\Ryujinx\Games\Extracted" "D:\Digimon Modding\Time Stranger - Switch - Extracted"
 ```
 
-Compare either raw archive folders or extracted trees with `Compare_Assets.py`:
+Compare either raw archive folders or extracted trees with `app/Compare_Assets.py`.
 
 ```powershell
-py Compare_Assets.py --windows "D:\Programs\Steam\steamapps\common\Digimon Story Time Stranger\gamedata" --switch "D:\Emulators\Ryujinx\Games\Extracted" --output "D:\Digimon Modding\Time Stranger - Switch - Extracted\Comparison" --hash-ext ".geom,.mbe,.lua,.nlst"
+py app/Compare_Assets.py --windows "D:\Programs\Steam\steamapps\common\Digimon Story Time Stranger\gamedata" --switch "D:\Emulators\Ryujinx\Games\Extracted" --output "D:\Digimon Modding\Time Stranger - Switch - Extracted\Comparison" --hash-ext ".geom,.mbe,.lua,.nlst"
 ```
 
 The comparison normalizes archive names, path case, and numbered patch layers;
@@ -128,9 +129,8 @@ equal size is reported as unverified, not equal content. Generated `Tables`
 and `_switch_extraction` directories are excluded from extracted-tree inputs.
 Use a report folder outside the input trees. `--switch-platform ounce64`
 compares the sparse alternate-platform DLC separately. Results include model
-IDs, extra LOD filenames, provenance CSVs, and a Markdown summary. See the
-[2026-11-15 comparison](Research/switch-windows-audit-2026-11-15.md) for the
-supplied dump's findings and the DLC coverage caveat.
+IDs, extra LOD filenames, provenance CSVs, and a Markdown summary in the chosen
+output folder.
 
 ## Mod workflow
 
@@ -220,17 +220,17 @@ in the mod's patch. Buff definitions and sets are saved immediately; save the
 skill afterward to assign the set. Extract packed `.mbe` replacements to CSV
 before importing them through this workflow.
 
-See the [mod/skill audit](Research/mod-skill-audit-2026-11-14.md) and
+See the [mod/skill audit](reference/Research/mod-skill-audit-2026-11-14.md) and
 [Workshop skill reference](https://hyotan-dev.github.io/dstsworkshop/documentation/mbe/battle_skill/)
 for the table mappings and validation details.
 
 ## How it works
 
-`Data_Loader.py` resolves Base, DLC and mod tables. `digimon_editor.py` presents
-those rows as connected editors; `CSV_Exporter.py` and `Mod_Tables.py` preserve
-runtime headers and merge changes into the mod layout. `MBE_Editor.py` handles
-direct table inspection, while `mvgl_tools_gui.py` runs the external archive
-tools.
+The Python sources and application assets live in `app/`. `Data_Loader.py`
+resolves Base, DLC and mod tables. `digimon_editor.py` presents those rows in the
+editor. `CSV_Exporter.py` and `Mod_Tables.py` preserve runtime headers and merge
+changes into the mod layout. MVGL Tools extracts and repacks native archives
+and tables using the bundled backend.
 
 For model and animation conversion, use the companion
 [Time Stranger Importer](https://github.com/ElderLich/Time-Stranger-Importer).
@@ -239,11 +239,18 @@ is **in progress**; this editor does not convert Unity prefabs or sound banks.
 
 ## Development
 
+From the repository root, run the tests or build the Windows applications.
+
 ```powershell
 py -m unittest discover -s tests -v
-$files = Get-ChildItem -File -Filter *.py | ForEach-Object { $_.FullName }
-py -m py_compile @files
+py -m compileall -q app
+py -m pip install PyInstaller
+py -m PyInstaller packaging/art_studio.spec
+py -m PyInstaller packaging/digimon_editor.spec
 ```
+
+The packager writes the executables to `dist/`. The `reference/` folder
+holds the header reports, Lua files and research notes.
 
 The regression suite uses temporary mod payloads and offscreen PyQt checks.
 It covers import/export roundtrips, optional model tables, skill overrides,

@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -13,6 +14,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtWidgets import QApplication, QComboBox, QDialogButtonBox
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from field_guide_slots import change_slot, scan_inventory
 from field_guide_slots_dialog import FieldGuideSlotsDialog
 

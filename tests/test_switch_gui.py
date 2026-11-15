@@ -9,7 +9,7 @@ import unittest
 from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "app"))
 TK_CHILD_FLAG = "--isolated-tk"
 RUNNING_TK_CHILD = __name__ == "__main__" and TK_CHILD_FLAG in sys.argv
 if RUNNING_TK_CHILD:

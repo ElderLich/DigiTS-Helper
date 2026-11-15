@@ -7,7 +7,7 @@ import hashlib
 from unittest.mock import patch
 from types import SimpleNamespace
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from Compare_Assets import Asset, asset_digest, compare, inventory, parse_layer, write_report
 
 

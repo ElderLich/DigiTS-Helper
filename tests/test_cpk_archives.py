@@ -1,9 +1,11 @@
 import hashlib
 from pathlib import Path
+import sys
 import struct
 import tempfile
 import unittest
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from CPK_Archives import (CPKError, copy_cpk_entry, inventory_cpk,
                           read_cpk_entry)
 

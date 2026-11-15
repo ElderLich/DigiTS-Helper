@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -7,6 +8,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PyQt6 import sip
 from PyQt6.QtWidgets import QApplication, QComboBox, QPushButton, QSpinBox
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from Data_Loader import MBELoader
 from digimon_editor import DigimonCreationWizard
 from skill_author_dialog import SkillAuthorDialog
@@ -17,7 +19,7 @@ class SkillAuthorUITests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QApplication.instance() or QApplication([])
-        base = Path(__file__).resolve().parents[1] / "Base"
+        base = Path(__file__).resolve().parents[1] / "data/Base"
         cls.loader = MBELoader(base / "data", base / "text")
         cls.catalog = SkillCatalog.load(cls.loader)
 

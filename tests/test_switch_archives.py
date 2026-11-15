@@ -1,9 +1,11 @@
 import json
 from pathlib import Path
+import sys
 import struct
 import tempfile
 import unittest
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from Switch_Archives import (
     ArchiveError, _decompress_lz4_python, archive_output_relative, extract,
     inventory_archive, read_entry, safe_relative_path,

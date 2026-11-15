@@ -1,6 +1,7 @@
 import io
 import os
 from pathlib import Path
+import sys
 import struct
 import tempfile
 import unittest
@@ -10,6 +11,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PIL import Image
 from PyQt6.QtWidgets import QApplication, QFileDialog, QMessageBox
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from dot_sprite_tool import DotSpriteTab, FrameGrid, encode_dot, output_path, save_texture
 
 
