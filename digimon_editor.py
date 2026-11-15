@@ -623,6 +623,50 @@ def get_personality_icon_stem(personality_id: int) -> Optional[str]:
     return None
 
 
+def show_selected_option_tooltip(combo: QComboBox) -> None:
+    def update_tooltip(index):
+        combo.setToolTip(combo.itemData(index, Qt.ItemDataRole.ToolTipRole) or "")
+
+    update_tooltip(combo.currentIndex())
+    combo.currentIndexChanged.connect(update_tooltip)
+
+
+def populate_personality_options(combo: QComboBox, loader: MBELoader) -> None:
+    configure_game_icon_combo(combo)
+    for personality_id in range(17):
+        name = loader.clean_ui_text(loader.get_personality_name(personality_id))
+        add_game_icon_combo_item(combo, name, personality_id, get_personality_icon_stem(personality_id))
+        effect = loader.get_personality_effect(personality_id)
+        tooltip = f"{name}\n{effect}" if personality_id else effect
+        combo.setItemData(combo.count() - 1, tooltip, Qt.ItemDataRole.ToolTipRole)
+    show_selected_option_tooltip(combo)
+
+
+def growth_pattern_tooltip(loader: MBELoader, pattern_id: int) -> str:
+    bands = loader.get_growth_pattern_bands(pattern_id)
+    if not bands:
+        return (f"Growth Pattern {pattern_id} sets base stat gains per level.\n"
+                "The level data for this pattern is unavailable.")
+    rows = []
+    for start, end, gains in bands:
+        levels = str(start) if start == end else f"{start}–{end}"
+        cells = "".join(f'<td align="right">{value}</td>' for value in gains)
+        rows.append(f"<tr><td>{levels}</td>{cells}</tr>")
+    # Custom sheets can change every level. Keep the popup within the viewport.
+    if len(rows) > 6:
+        rows = rows[:3] + ['<tr><td colspan="8" align="center">…</td></tr>'] + rows[-2:]
+    headings = "".join(f"<th>{stat}</th>" for stat in ("Level", "HP", "SP", "ATK", "DEF", "INT", "SPI", "SPD"))
+    return (f"<b>Growth Pattern {pattern_id}</b><br>Base stat gains per level"
+            f'<table cellspacing="5"><tr>{headings}</tr>{"".join(rows)}</table>')
+
+
+def populate_growth_options(combo: QComboBox, loader: MBELoader, label: str) -> None:
+    for pattern_id in range(1, 19):
+        combo.addItem(f"{label} {pattern_id}", pattern_id)
+        combo.setItemData(combo.count() - 1, growth_pattern_tooltip(loader, pattern_id), Qt.ItemDataRole.ToolTipRole)
+    show_selected_option_tooltip(combo)
+
+
 def get_app_settings_dir() -> Path:
     """Return the folder where portable per-PC settings should be stored."""
     if getattr(sys, "frozen", False):
@@ -3964,19 +4008,12 @@ class ClassificationPage(QWizardPage):
 
         # Growth Pattern
         self.growth_combo = QComboBox()
-        for i in range(1, 19):  # Growth patterns 1-18
-            self.growth_combo.addItem(f"Growth Pattern {i}", i)
-        self.growth_combo.setToolTip("Growth curve pattern (1-18) - determines stat growth per level")
+        populate_growth_options(self.growth_combo, wizard.loader, "Growth Pattern")
         layout.addRow("📈 Growth Pattern:", self.growth_combo)
 
         # Personality
         self.personality_combo = QComboBox()
-        configure_game_icon_combo(self.personality_combo)
-        for i in range(17):
-            personality_name = wizard.loader.get_personality_name(i)
-            clean_name = wizard.loader.clean_ui_text(personality_name)
-            add_game_icon_combo_item(self.personality_combo, clean_name, i, get_personality_icon_stem(i))
-        self.personality_combo.setToolTip("Digimon personality type (affects skill learning)")
+        populate_personality_options(self.personality_combo, wizard.loader)
         layout.addRow("Personality:", self.personality_combo)
 
         # Set defaults from template
@@ -7666,8 +7703,7 @@ class DigimonEditor(QMainWindow):
             0,
         )
         self.personality_combo = QComboBox()
-        configure_game_icon_combo(self.personality_combo)
-        self.populate_personality_dropdown()
+        populate_personality_options(self.personality_combo, self.loader)
         classification_layout.addWidget(self.personality_combo, 2, 1)
 
         # Tribe/Belong with dropdown
@@ -8138,8 +8174,7 @@ class DigimonEditor(QMainWindow):
         growth_label.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
 
         self.growth_pattern_combo = QComboBox()
-        for i in range(1, 19):  # Growth patterns 1-18
-            self.growth_pattern_combo.addItem(f"Pattern {i}", i)
+        populate_growth_options(self.growth_pattern_combo, self.loader, "Pattern")
         growth_layout.addWidget(option_row(growth_label, self.growth_pattern_combo))
 
         layout.addWidget(growth_group)
@@ -16851,13 +16886,6 @@ class DigimonEditor(QMainWindow):
             type_name = self.loader.get_type_name(i)
             clean_name = self.loader.clean_ui_text(type_name)
             add_game_icon_combo_item(self.type_combo, clean_name, i, TYPE_ICON_STEMS.get(i))
-
-    def populate_personality_dropdown(self):
-        """Populate the personality dropdown with localized names"""
-        for i in range(17):  # Personalities 0-16
-            personality_name = self.loader.get_personality_name(i)
-            clean_name = self.loader.clean_ui_text(personality_name)
-            add_game_icon_combo_item(self.personality_combo, clean_name, i, get_personality_icon_stem(i))
 
     def populate_tribe_dropdown(self):
         """Populate the tribe dropdown with unique tribes from belong.mbe"""

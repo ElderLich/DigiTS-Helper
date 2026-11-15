@@ -343,6 +343,7 @@ class MBELoader:
         self._skill_auto_explanations_cache = None
         self._generation_names_cache = None
         self._personality_names_cache = None
+        self._personality_effects_cache = None
         self._item_names_cache = None
         self._belong_names_cache = None
         self._digimon_profiles_cache = None
@@ -2179,6 +2180,40 @@ class MBELoader:
         if self._personality_names_cache is None:
             self._personality_names_cache = self._load_text_file("personality_name.mbe")
         return self._personality_names_cache.get(str(personality_id), f"Personality_{personality_id}")
+
+    def get_personality_effect(self, personality_id: int) -> str:
+        if personality_id == 0:
+            return "No base personality is assigned."
+        if self._personality_effects_cache is None:
+            self._personality_effects_cache = self._load_text_file("personality_effect.mbe")
+        effect = self._personality_effects_cache.get(str(personality_id), "")
+        # Inline colors wrap the stat name, e.g. {fc7ATK}.
+        effect = re.sub(r"\{fc\d+([^{}]*)\}", r"\1", effect)
+        return self.clean_ui_text(effect) or "The game data has no effect description for this personality."
+
+    def get_growth_pattern_bands(self, pattern_id: int) -> list[tuple[int, int, list[int]]]:
+        """Group consecutive levels with the same seven base stat gains."""
+        filename = f"{pattern_id - 1:03d}_digimon_growth_{pattern_id}.csv"
+        path = self._data_csv_path(None, "digimon_growth.mbe", filename)
+        bands = []
+        if not path.is_file():
+            return bands
+        for row in self.load_csv(path)[1:]:
+            if not row:
+                continue
+            if len(row) < 8:
+                return []
+            try:
+                level, *gains = map(int, row[:8])
+            except ValueError:
+                return []
+            if level < 2:
+                continue  # Level 1 is the starting level.
+            if bands and bands[-1][1] + 1 == level and bands[-1][2] == gains:
+                bands[-1] = (bands[-1][0], level, gains)
+            else:
+                bands.append((level, level, gains))
+        return bands
     
     def get_item_name(self, item_id: int) -> str:
         """Get localized item name by item ID"""

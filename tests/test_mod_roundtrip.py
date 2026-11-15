@@ -14,8 +14,9 @@ sys.path.insert(0, str(ROOT))
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 os.chdir(ROOT)
 
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import QEvent
+from PyQt6.QtWidgets import QApplication, QToolTip
+from PyQt6.QtCore import QEvent, Qt
+from PyQt6.QtGui import QHelpEvent
 import digimon_editor as gui
 from Data_Loader import DigimonData, MBELoader, read_trait_flags
 from trait_names import TraitNameSheet, english_mod_names
@@ -103,6 +104,39 @@ class ModRoundtripTests(unittest.TestCase):
             self.assertEqual(gui.load_path_settings()[gui.PATH_SETTINGS_MODS_KEY], 'updated')
             self.assertTrue((self.root / gui.PATH_SETTINGS_FILE_NAME).is_file())
             self.assertIn('original', legacy.read_text(encoding='utf-8'))
+
+    def test_classification_tooltips_follow_template_and_hovered_row(self):
+        template = self.specimen()
+        template.growth_pattern_id = 2
+        template.personality_id = 16
+        page = gui.ClassificationPage(SimpleNamespace(loader=self.editor.loader, template_digimon=template))
+        self.addCleanup(page.close)
+        page.show()
+        self.app.processEvents()
+
+        for combo, editor_combo, selected, hover_id, text, hover_text in (
+            (page.growth_combo, self.editor.growth_pattern_combo, 2, 1, '2–20', '2–35'),
+            (page.personality_combo, self.editor.personality_combo, 16, 11, 'INT and HP', 'DEF and ATK'),
+        ):
+            self.assertEqual(combo.currentData(), selected)
+            self.assertIn(text, combo.toolTip())
+            combo.showPopup()
+            view = combo.view()
+            row = combo.findData(hover_id)
+            index = combo.model().index(row, 0)
+            view.scrollTo(index)
+            self.app.processEvents()
+            pos = view.visualRect(index).center()
+            self.assertEqual(view.indexAt(pos), index)
+            event = QHelpEvent(QEvent.Type.ToolTip, pos, view.viewport().mapToGlobal(pos))
+            self.app.sendEvent(view.viewport(), event)
+            self.assertIn(hover_text, QToolTip.text())
+            self.assertEqual(QToolTip.text(), editor_combo.itemData(editor_combo.findData(hover_id), Qt.ItemDataRole.ToolTipRole))
+            self.assertEqual(combo.currentData(), selected)
+            combo.hidePopup()
+            combo.setCurrentIndex(row)
+            self.assertIn(hover_text, combo.toolTip())
+            QToolTip.hideText()
 
     def test_template_filter_clears_hidden_selection_and_resolves_character_id(self):
         wizard = SimpleNamespace(loader=self.editor.loader, template_digimon=None)
