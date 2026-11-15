@@ -56,6 +56,27 @@ different command-line interfaces; use the supplied backend for each workflow.
 See the [extraction guide](https://hyotan-dev.github.io/dstsworkshop/tutorials/extractdata/)
 for preparing game data.
 
+### Time Stranger Art Studio
+
+Open **Time Stranger Art Studio.exe** to make dot sprites and profile pictures
+independently of the Digimon editor. To run from source, install PyQt6 and
+Pillow and run `py art_studio.pyw`. Build the Windows executable with
+`py -m PyInstaller art_studio.spec` after installing PyInstaller.
+
+- **Dot Sprites** opens an existing sprite sheet or native dot atlas. Select a
+  16 × 16 source frame and click its position in the four-frame game atlas.
+  The enlarged preview keeps the pixels square. Enter the Digimon ID, choose
+  the mod or staging folder and click **Export dot sprite**.
+- **Portraits** opens a GLB, glTF or native GEOM model. Choose the view, click
+  **Render preview**, then drag a square around the face. Enter the icon ID
+  from the Digimon's `char_info` row, choose the mod or staging folder and
+  click **Save profile picture**. Portrait rendering uses Blender. GEOM also
+  requires Time Stranger Importer, and BC7 export uses NVIDIA Texture Tools'
+  `nvcompress.exe`. The app can prompt for the executables on first use.
+
+Both tabs write to `dsts-loader/patch/images` in the chosen mod. For Leviamon X,
+Digimon ID 761 and icon ID 761 produce `dot761.img` and `ui_chara_icon_761.img`.
+
 ### Switch extraction
 
 In **MVGL Tools GUI**, select **Time Stranger (Switch)**, then **Extract MVGL
