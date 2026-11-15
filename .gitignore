@@ -4,6 +4,7 @@ __pycache__/
 *.log
 *.tmp
 DigiTS_Helper_Paths.json
+Time_Stranger_Mod_Studio_Paths.json
 
 build/
 dist/

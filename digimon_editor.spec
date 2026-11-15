@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['Digimon_Editor.py'],
+    ['digimon_editor.py'],
     pathex=[],
     binaries=[],
     datas=[('assets', 'assets')],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='Digimon_Editor',
+    name='Time Stranger Mod Studio',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

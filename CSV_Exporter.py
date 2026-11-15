@@ -1,5 +1,5 @@
 """
-CSV Exporter for DTS Creator.
+CSV exporter for Time Stranger Mod Studio.
 
 This module writes Digimon data back into the unpacked MVGLTools CSV layout.
 There are two export shapes to keep separate:

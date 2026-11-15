@@ -1,5 +1,5 @@
 """
-Data loader for DTS Creator - loads and parses .mbe directories and CSV files
+Data loader for Time Stranger Mod Studio. Loads and parses .mbe directories and CSV files.
 """
 
 import os

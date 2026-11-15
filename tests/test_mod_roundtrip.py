@@ -3,6 +3,7 @@ import csv
 import os
 import re
 from pathlib import Path
+from types import SimpleNamespace
 import sys
 import tempfile
 import unittest
@@ -66,6 +67,41 @@ class ModRoundtripTests(unittest.TestCase):
             chronodevolution_forms=[387, 307, identity, -1, -1, -1],
             chronodevolution_source_id=identity,
         )
+
+    def test_edit_installed_guide_slot_preserves_form_edits_and_other_mods(self):
+        current = self.specimen()
+        current.imported_dsts_loader_root = str(self.root)
+        other = self.specimen()
+        other.imported_dsts_loader_root = str(self.root.parent / 'Other' / 'dsts-loader')
+        self.editor.current_digimon = current
+        self.editor._remember_loaded_identity(current)
+        self.editor.field_guide_id_spin.setValue(601)
+        self.editor.has_unsaved_changes = True
+        with patch.object(self.editor.loader, 'imported_digimon', [current, other], create=True):
+            change = SimpleNamespace(payload=self.root, digimon_id=current.id, new_slot=602)
+            self.editor._sync_edited_field_guide_slot(change)
+            self.assertEqual(self.editor.field_guide_id_spin.value(), 602)
+            self.assertEqual(self.editor.loaded_digimon_identity['field_guide_id'], 602)
+            self.assertEqual(current.field_guide_id, 602)
+            self.assertEqual(other.field_guide_id, 601)
+            self.editor.field_guide_id_spin.setValue(650)
+            change.new_slot = 603
+            self.editor._sync_edited_field_guide_slot(change)
+            self.assertEqual(self.editor.field_guide_id_spin.value(), 650)
+            self.assertEqual(self.editor.loaded_digimon_identity['field_guide_id'], 603)
+            self.assertTrue(self.editor.has_unsaved_changes)
+        self.editor.has_unsaved_changes = False
+
+    def test_renamed_editor_reads_previous_path_settings(self):
+        legacy = self.root / gui.LEGACY_PATH_SETTINGS_FILE_NAME
+        legacy.write_text('{"reloaded_mods_path":"original"}', encoding='utf-8')
+        with patch.object(gui, 'get_app_settings_dir', return_value=self.root), patch.object(gui, '_PATH_SETTINGS_CACHE', None):
+            self.assertEqual(gui.load_path_settings()[gui.PATH_SETTINGS_MODS_KEY], 'original')
+            gui.save_path_settings({gui.PATH_SETTINGS_MODS_KEY: 'updated'})
+            gui._PATH_SETTINGS_CACHE = None
+            self.assertEqual(gui.load_path_settings()[gui.PATH_SETTINGS_MODS_KEY], 'updated')
+            self.assertTrue((self.root / gui.PATH_SETTINGS_FILE_NAME).is_file())
+            self.assertIn('original', legacy.read_text(encoding='utf-8'))
 
     def test_runtime_headers_match_captured_native_schema_report(self):
         report = (ROOT / 'Header Reports/DSTS_Header_Report.md').read_text(encoding='utf-8')

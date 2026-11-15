@@ -1,5 +1,5 @@
 """
-DTS Creator - Digimon Editor GUI using PyQt6
+Time Stranger Mod Studio – Digimon Editor GUI using PyQt6
 """
 
 import sys
@@ -32,7 +32,8 @@ from Mod_Tables import (BUFF_SET_HEADER, SKILL_HEADER, CHRONO_HEADER, CHRONO_STA
 
 DEFAULT_MOD_LOADER_PATH = Path(r"D:\Digimon Modding\Programs\Reloaded II\Mods")
 DEFAULT_EXTRACTED_GAME_PATH = Path(r"D:\Digimon Modding\Time Stranger Extracted")
-PATH_SETTINGS_FILE_NAME = "DigiTS_Helper_Paths.json"
+PATH_SETTINGS_FILE_NAME = "Time_Stranger_Mod_Studio_Paths.json"
+LEGACY_PATH_SETTINGS_FILE_NAME = "DigiTS_Helper_Paths.json"
 PATH_SETTINGS_MODS_KEY = "reloaded_mods_path"
 PATH_SETTINGS_EXTRACTED_KEY = "extracted_game_path"
 FIELD_GUIDE_ID_COLUMN = 131
@@ -66,7 +67,7 @@ CHR_ID_SLOT_PREFIX_RE = re.compile(r"^chr(?P<number>\d+)", re.IGNORECASE)
 # Digimon. It is not the Field Guide number from column 131.
 STATUS_REFERENCE_ID_COLUMN = 132
 RELOADED_SUPPORTED_APP_ID = "digimon story time stranger.exe"
-DEBUG_LOGGING = os.environ.get("DIGITS_HELPER_DEBUG", "").lower() in {"1", "true", "yes", "on"}
+DEBUG_LOGGING = os.environ.get("TIME_STRANGER_MOD_STUDIO_DEBUG", os.environ.get("DIGITS_HELPER_DEBUG", "")).lower() in {"1", "true", "yes", "on"}
 DSTS_LOADER_DIR_NAMES = {"dsts-loader", "dts-loader"}
 TEXT_LANGUAGE_FOLDERS = (
     ("patch_text00", "Japanese"),
@@ -86,7 +87,7 @@ APP_RESOURCE_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().paren
 GAME_ICON_DIR = APP_RESOURCE_ROOT / "assets" / "game_icons"
 GAME_ICON_SIZE = QSize(32, 32)
 GAME_ICON_TILE_COLOR = QColor(8, 15, 28)
-EDITOR_APP_ID = "DigiTSHelper.DTSCreator.DigimonEditor"
+EDITOR_APP_ID = "TimeStranger.ModStudio.DigimonEditor"
 EDITOR_ICON_STEM = "ui_icon_tab_0604"
 TYPE_ICON_STEMS = {
     0: "ui_icon_type_000",  # Vaccine
@@ -640,6 +641,8 @@ def load_path_settings() -> Dict[str, str]:
         return dict(_PATH_SETTINGS_CACHE)
 
     config_path = get_path_settings_file()
+    if not config_path.exists():
+        config_path = config_path.with_name(LEGACY_PATH_SETTINGS_FILE_NAME)
     try:
         with open(config_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -716,7 +719,7 @@ def get_mvgl_fileloader_cache_path() -> Path:
 
 
 def debug_log(message: str) -> None:
-    """Print reverse-engineering diagnostics only when DIGITS_HELPER_DEBUG is enabled."""
+    """Print reverse-engineering diagnostics when debug logging is enabled."""
     if DEBUG_LOGGING:
         print(f"DEBUG: {message}")
 
@@ -5999,7 +6002,7 @@ class DigimonEditor(QMainWindow):
 
         layout = QVBoxLayout(dialog)
         info = QLabel(
-            "Set these folders for this PC. They are saved in a local JSON file beside DigiTS Helper, "
+            "Set these folders for this PC. They are saved in a local JSON file beside Time Stranger Mod Studio, "
             "so shared copies of the editor do not need hardcoded personal paths."
         )
         info.setWordWrap(True)
@@ -6373,9 +6376,61 @@ class DigimonEditor(QMainWindow):
             "color: #ff8c98; font-size: 9pt;" if longest_line > PROFILE_WRAP_WIDTH else "color: #a9c1c2; font-size: 9pt;"
         )
 
+    def show_field_guide_unlock(self):
+        from field_guide_slots import scan_inventory
+        from field_guide_unlock import open_field_guide_unlock
+
+        try:
+            inventory = scan_inventory(get_default_mod_loader_path(), self.loader)
+        except (OSError, ValueError) as exc:
+            QMessageBox.warning(self, "Field Guide", str(exc))
+            return
+        digimon_ids = {row.digimon_id for row in inventory.entries
+                       if row.digimon_id is not None and row.digimon_id > 0
+                       and row.slot is not None and row.slot >= 0}
+        open_field_guide_unlock(self, digimon_ids, inventory_warnings=inventory.warnings)
+
+    def show_installed_field_guide_slots(self):
+        from field_guide_slots_dialog import FieldGuideSlotsDialog
+
+        dialog = FieldGuideSlotsDialog(get_default_mod_loader_path(), self.loader, self)
+        apply_modern_dialog_theme(dialog)
+        dialog.exec()
+        for change in dialog.changes:
+            self._sync_edited_field_guide_slot(change)
+        if any(change.mod.parent == get_default_mod_loader_path().resolve() for change in dialog.changes):
+            notice = self._clear_mvgl_fileloader_cache()
+            if notice:
+                QMessageBox.information(self, "Field Guide slots", notice)
+
+    def _sync_edited_field_guide_slot(self, change):
+        """Refresh the edited source row while retaining pending form edits."""
+        payload = change.payload.resolve()
+        for digimon in getattr(self.loader, "imported_digimon", ()):
+            source = getattr(digimon, "imported_dsts_loader_root", "")
+            if source and digimon.id == change.digimon_id and Path(source).resolve() == payload:
+                digimon.field_guide_id = change.new_slot
+
+        identity = getattr(self, "loaded_digimon_identity", {}) or {}
+        source = identity.get("imported_dsts_loader_root")
+        if (self.current_digimon is None or identity.get("pending_new_mod_entry")
+                or identity.get("id") != change.digimon_id or not source
+                or Path(source).resolve() != payload):
+            return
+        if self.field_guide_id_spin.value() == identity.get("field_guide_id"):
+            blocked = self.field_guide_id_spin.blockSignals(True)
+            try:
+                self.field_guide_id_spin.setValue(change.new_slot)
+            finally:
+                self.field_guide_id_spin.blockSignals(blocked)
+        identity["field_guide_id"] = self.current_digimon.field_guide_id = change.new_slot
+
     def setup_ui(self):
-        self.setWindowTitle("DTS Creator - Digimon Editor")
+        self.setWindowTitle("Time Stranger Mod Studio — Digimon Editor")
         self.setWindowIcon(get_editor_icon())
+        guide_menu = self.menuBar().addMenu("Field Guide")
+        guide_menu.addAction("Installed mod slots…", self.show_installed_field_guide_slots)
+        guide_menu.addAction("Unlock Field Guide…", self.show_field_guide_unlock)
         # Set initial size smaller to fit most screens, window is resizable
         self.setGeometry(100, 100, 1400, 800)
 
@@ -17717,7 +17772,7 @@ def main():
     install_spinbox_wheel_guard()
 
     # Set application properties
-    app.setApplicationName("DTS Creator")
+    app.setApplicationName("Time Stranger Mod Studio")
     app.setApplicationVersion("1.0")
     app.setWindowIcon(get_editor_icon())
 

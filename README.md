@@ -1,4 +1,4 @@
-# DigiTS Helper
+# Time Stranger Mod Studio
 
 **Build Digimon mods. Keep the tables connected.**
 
@@ -13,6 +13,7 @@ skills, buffs and evolution data, inspect MBE tables, and build Reloaded II
 | Tool | Purpose |
 | --- | --- |
 | **Digimon editor** | Stats, names, profiles, Field Guide entries, traits, skills, evolution paths and model references |
+| **Field Guide** | Review installed mods and slot conflicts, change a mod's slot, or register catalogued species in a PC save |
 | **Advanced skills** | Skill properties, compatibility rules, buff sets and custom buff definitions |
 | **Mod import/export** | Load existing payloads, merge edits, or export a separate Reloaded II mod |
 | **MBE editor** | Inspect and edit binary MBE tables and CSV sheets |
@@ -45,7 +46,8 @@ py mvgl_tools_gui.py
 The main editor expects extracted tables under `Base/data` and `Base/text`,
 with optional DLC data under `DLC`. Use **Configure Paths** to set your extracted
 game folder and Reloaded II Mods folder. Machine-specific paths are saved in
-the ignored `DigiTS_Helper_Paths.json` file.
+the ignored `Time_Stranger_Mod_Studio_Paths.json` file. Existing installations
+can keep their saved paths when upgrading.
 
 For archive operations, place `MVGLToolsCLI.exe` and its accompanying resources
 in `_internal` or alongside the GUI. The older MBE repack helpers use
@@ -110,6 +112,21 @@ IDs, extra LOD filenames, provenance CSVs, and a Markdown summary. See the
 supplied dump's findings and the DLC coverage caveat.
 
 ## Mod workflow
+
+### Field Guide
+
+Choose **Field Guide → Installed mod slots…** to search by mod, species, or slot.
+Select **Slot conflicts** to find shared numbers, select a mod row, and use
+**Change slot…** to pick a free custom slot. The editor backs up the selected
+status CSV before changing the assignment.
+
+To make species visible without evolving them, close the game and choose
+**Field Guide → Unlock Field Guide…**. Select a Windows PC version 5
+`savedata*.dat` slot and review the counts for the base game, DLC and installed
+mod catalogue. **Apply** saves a backup beside the selected slot and registers
+the listed species. Run this again after installing another species mod.
+
+### Creating and editing mods
 
 1. **Load a mod or choose a template.** Adding a new entry stages a copy; choose
    its Digimon ID, Chr ID, character key and Field Guide ID before saving.

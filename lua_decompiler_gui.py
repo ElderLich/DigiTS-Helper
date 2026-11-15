@@ -98,7 +98,7 @@ class LuaDecompilerGUI(QMainWindow):
         
     def init_ui(self):
         """Initialize the user interface"""
-        self.setWindowTitle("Lua Decompiler - DTS Creator")
+        self.setWindowTitle("Time Stranger Mod Studio — Lua Decompiler")
         self.setMinimumSize(800, 700)
         
         # Central widget
