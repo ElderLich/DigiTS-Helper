@@ -138,6 +138,95 @@ class ModRoundtripTests(unittest.TestCase):
             self.assertIn(hover_text, combo.toolTip())
             QToolTip.hideText()
 
+    def test_wizard_groups_template_paths_and_retains_edits_on_back(self):
+        wizard = gui.DigimonCreationWizard(self.editor, self.editor.loader)
+        self.addCleanup(wizard.deleteLater)
+        templates, basic, page = wizard.page(0), wizard.page(1), wizard.page(7)
+        templates.template_search.setText('chr037')  # Leviamon, as in the reported example
+        basic.id_spin.setValue(55015)
+        wizard.setStartId(7)
+        wizard.show()
+        self.app.processEvents()
+        self.assertEqual(page.deevolution_list.count(), 3)
+        for row, name in enumerate(('Whamon', 'WaruSeadramon', 'SkullSeadramon')):
+            self.assertIn(name, page.deevolution_list.item(row).text())
+        self.assertIsNone(page.evolution_mode_change_list.item(0).data(Qt.ItemDataRole.UserRole))
+
+        templates.template_search.setText('chr088')  # Omnimon
+        page.initializePage()
+        self.assertEqual(page.deevolution_jogress_list.count(), 2)
+        self.assertEqual(page.deevolution_mode_change_list.count(), 2)
+        self.assertEqual(page.evolution_mode_change_list.count(), 2)
+        template_paths = list(wizard.template_digimon.evolution_paths)
+        removed = page.evolution_mode_change_list.item(1)
+        removed_id = page.current_digimon.evolution_paths[removed.data(Qt.ItemDataRole.UserRole)]['to_id']
+        page.evolution_mode_change_list.setCurrentItem(removed)
+        with patch.object(gui.QMessageBox, 'question', return_value=gui.QMessageBox.StandardButton.Yes), \
+                patch.object(gui.QMessageBox, 'information'):
+            page.remove_evolution()
+        with patch.object(page, '_iter_reloaded_mod_dsts_loader_roots', return_value=[]), \
+                patch.object(gui.QMessageBox, 'warning') as warning:
+            wizard.next()
+        warning.assert_not_called()
+        self.assertEqual(wizard.currentId(), 8)
+        wizard.back()
+        self.assertEqual(wizard.currentId(), 7)
+        self.assertNotIn(removed_id, [p['to_id'] for p in page.current_digimon.evolution_paths])
+        self.assertEqual(wizard.template_digimon.evolution_paths, template_paths)
+        self.assertTrue(all(p['from_id'] == 88 for p in template_paths))
+        self.assertTrue(all(p['from_id'] == 55015 for p in page.current_digimon.evolution_paths))
+
+    def test_wizard_dna_and_mode_change_export_and_reopen(self):
+        wizard = gui.DigimonCreationWizard(self.editor, self.editor.loader)
+        self.addCleanup(wizard.deleteLater)
+        wizard.page(0).template_search.setText('chr678')  # MagnaGarurumon
+        basic, page = wizard.page(1), wizard.page(7)
+        basic.id_spin.setValue(55015)
+        basic.chr_id_edit.setText('chr55015')
+        basic.name_edit.setText('Wizard test')
+        basic.char_key_edit.setText('WIZARD_TEST')
+        page.initializePage()
+        self.assertIn('ID: 104', page.evolution_jogress_list.item(0).text())
+
+        def select_dna(dialog):
+            self.assertEqual(dialog.findChild(gui.QComboBox).currentText(), 'Jogress / DNA')
+            dialog.findChild(gui.QTabWidget).setCurrentIndex(1)
+            dialog.findChild(gui.QSpinBox).setValue(55017)
+            return gui.QDialog.DialogCode.Accepted
+
+        with patch.object(page, '_iter_reloaded_mod_dsts_loader_roots', return_value=[]), \
+                patch.object(gui.QDialog, 'exec', select_dna), patch.object(gui.QMessageBox, 'information'), \
+                patch.object(page, '_show_evolution_requirements_dialog',
+                             return_value={'jogressDbIdA': 55015, 'jogressDbIdB': 55016}):
+            page.add_evolution(force_jogress=True)
+        self.assertEqual(page.evolution_jogress_list.count(), 2)
+        # Revisiting Basic Info must also update the authored DNA partner ID.
+        basic.id_spin.setValue(55020)
+        page.initializePage()
+
+        def export(digimon, identity, **options):
+            self.assertTrue(self.editor._merge_digimon_to_dsts_loader(
+                self.root, digimon, original_identity=identity, **options))
+            return self.root.parent
+
+        with patch.object(self.editor, 'export_digimon_to_reloaded_mod', side_effect=export), \
+                patch.object(gui.QMessageBox, 'critical') as error, patch.object(gui.QMessageBox, 'information'):
+            wizard.finish_wizard()
+        error.assert_not_called()
+        self.assertTrue(wizard.export_succeeded)
+        folder = self.root / 'patch/data/evolution.mbe'
+        edges = {(int(r[1]), int(r[3]), int(r[5])) for r in read_csv(folder / '001_evolution_to.ap.csv')[1:]}
+        self.assertEqual(edges, {(55020, 104, 0), (55020, 675, 2), (675, 55020, 2),
+                                 (670, 55020, 0), (55020, 55017, 0), (55016, 55017, 0)})
+        conditions = {int(r[0]): r for r in read_csv(folder / '000_evolution_condition.ap.csv')[1:]}
+        self.assertEqual(set(conditions), {55020, 55017})
+        self.assertEqual((conditions[55017][24], conditions[55017][27]), ('55020', '55016'))
+        status = self.root / 'patch/data/digimon_status.mbe/000_digimon_status_data.ap.csv'
+        reopened, = self.editor._parse_digimon_status_csv(status, self.root)
+        self.editor.load_digimon_data(reopened)
+        self.assertEqual(self.editor.evolution_jogress_list.count(), 2)
+        self.assertIn('ID: 675', self.editor.evolution_mode_change_list.item(0).text())
+
     def test_template_filter_clears_hidden_selection_and_resolves_character_id(self):
         wizard = SimpleNamespace(loader=self.editor.loader, template_digimon=None)
         page = gui.TemplateSelectionPage(wizard)
